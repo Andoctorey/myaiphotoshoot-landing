@@ -97,5 +97,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Contact
 
-Your Name - [@androctorey](https://x.com/androctorey)
-Project Link: [https://github.com/yourusername/myaiphotoshoot-landing](https://github.com/yourusername/myaiphotoshoot-landing)
+Your Name - [@andoctorey](https://x.com/andoctorey)
+Project Link: [https://github.com/Andoctorey/myaiphotoshoot-landing](https://github.com/Andoctorey/myaiphotoshoot-landing)
