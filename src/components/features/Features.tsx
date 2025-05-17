@@ -53,7 +53,7 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="py-12 bg-white">
+    <section id="features" className="py-12 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div
@@ -66,19 +66,19 @@ export default function Features() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative p-6 bg-white rounded-2xl shadow-xl border border-gray-100 hover:border-purple-100 transition-colors duration-300"
+              className="relative p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 hover:border-purple-100 dark:hover:border-purple-800 transition-colors duration-300"
             >
               <div className="absolute top-6 left-6">
                 <feature.icon
-                  className="h-8 w-8 text-purple-600"
+                  className="h-8 w-8 text-purple-600 dark:text-purple-400"
                   aria-hidden="true"
                 />
               </div>
               <div className="ml-16">
-                <h3 className="text-xl font-medium text-gray-900">
+                <h3 className="text-xl font-medium text-gray-900 dark:text-white">
                   {feature.name}
                 </h3>
-                <p className="mt-2 text-base text-gray-500">
+                <p className="mt-2 text-base text-gray-500 dark:text-gray-300">
                   {feature.description}
                 </p>
               </div>

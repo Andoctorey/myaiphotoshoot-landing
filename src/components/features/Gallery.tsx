@@ -138,8 +138,8 @@ export default function Gallery() {
 
   if (error && galleryItems.length === 0) {
     return (
-      <div className="mt-12 text-center p-8 bg-red-50 rounded-lg">
-        <p className="text-red-600">{error}</p>
+      <div className="mt-12 text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg">
+        <p className="text-red-600 dark:text-red-400">{error}</p>
         <button 
           onClick={() => {
             fetchAttemptedRef.current = false;
@@ -171,10 +171,10 @@ export default function Gallery() {
       {galleryItems.length === 0 && loading ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-pulse flex space-x-4">
-            <div className="h-12 w-12 bg-purple-200 rounded-full"></div>
+            <div className="h-12 w-12 bg-purple-200 dark:bg-purple-800 rounded-full"></div>
             <div className="space-y-4">
-              <div className="h-4 w-36 bg-purple-200 rounded"></div>
-              <div className="h-4 w-24 bg-purple-200 rounded"></div>
+              <div className="h-4 w-36 bg-purple-200 dark:bg-purple-800 rounded"></div>
+              <div className="h-4 w-24 bg-purple-200 dark:bg-purple-800 rounded"></div>
             </div>
           </div>
         </div>
@@ -201,7 +201,7 @@ export default function Gallery() {
               />
               
               {/* Hover overlay with prompt */}
-              <div className="absolute inset-0 bg-black/70 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
+              <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
                 <div className="max-h-full">
                   <p className="text-white text-xs">
                     {item.prompt}
@@ -214,8 +214,8 @@ export default function Gallery() {
       )}
 
       {error && galleryItems.length > 0 && (
-        <div className="mt-4 p-3 bg-red-50 rounded-lg text-center">
-          <p className="text-red-600 text-sm">{error}</p>
+        <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-center">
+          <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
         </div>
       )}
 
@@ -224,7 +224,7 @@ export default function Gallery() {
           <button
             onClick={loadMore}
             disabled={loading}
-            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 disabled:cursor-not-allowed"
+            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed"
           >
             {loading ? 'Loading...' : 'Load More'}
           </button>

@@ -38,7 +38,7 @@ export default function Download() {
   };
 
   return (
-    <section id="download" className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section id="download" className="py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -47,10 +47,10 @@ export default function Download() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
             {t('title')}
           </h2>
-          <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             {t('description')}
           </p>
         </motion.div>
@@ -67,7 +67,7 @@ export default function Download() {
               href={getAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative h-[600px] w-[300px] rounded-[36px] overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300"
+              className="relative h-[600px] w-[300px] rounded-[36px] overflow-hidden shadow-xl dark:shadow-purple-900/20 transform hover:scale-105 transition-transform duration-300"
             >
               <Image
                 src="/images/screenshot_1.jpg"
@@ -89,18 +89,18 @@ export default function Download() {
             className="flex flex-col items-center lg:items-start"
           >
             {/* Platform options */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t('choosePlatform')}</h3>
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg dark:shadow-purple-900/20 w-full max-w-md">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">{t('choosePlatform')}</h3>
               
               {/* Web App */}
               <div className="mb-8 text-center">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">{t('webApp.title')}</h4>
-                <p className="text-gray-600 mb-4">{t('webApp.description')}</p>
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">{t('webApp.title')}</h4>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">{t('webApp.description')}</p>
                 <a
                   href="https://app.myaiphotoshoot.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 transition duration-150 ease-in-out"
+                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 transition duration-150 ease-in-out"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -111,8 +111,8 @@ export default function Download() {
               
               {/* Mobile Apps */}
               <div className="text-center">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">{t('mobileApps.title')}</h4>
-                <p className="text-gray-600 mb-4">{t('mobileApps.description')}</p>
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">{t('mobileApps.title')}</h4>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">{t('mobileApps.description')}</p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start items-center">
                   {/* Google Play Button */}

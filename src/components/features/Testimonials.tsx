@@ -14,7 +14,7 @@ export default function UserGallery() {
   });
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-purple-50" id="gallery">
+    <section className="py-24 bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950" id="gallery">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Gallery Section */}
         <div ref={galleryRef}>
@@ -24,10 +24,10 @@ export default function UserGallery() {
             transition={{ duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h3 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
               {t('title')}
             </h3>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
               {t('description')}
             </p>
           </motion.div>
