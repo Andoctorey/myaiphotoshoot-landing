@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  // In Tailwind 4, darkMode: 'class' is no longer needed when using @custom-variant
+  // But we keep it for backward compatibility with older Tailwind versions
+  darkMode: 'class',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -77,7 +78,9 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/images/icon_32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/icon_16.png" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
