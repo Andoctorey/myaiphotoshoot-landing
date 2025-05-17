@@ -63,6 +63,7 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code", // You'll need to replace this with your actual Google verification code
   },
+  colorScheme: 'light dark',
 };
 
 export default function RootLayout({
@@ -73,6 +74,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="color-scheme" content="light dark" />
         <link rel="icon" href="/images/favicon.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/icon_32.png" />
