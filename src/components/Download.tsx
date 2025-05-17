@@ -56,28 +56,31 @@ export default function Download() {
           >
             {/* Platform options */}
             <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Choose Your Platform</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Choose Your Platform</h3>
               
               {/* Web App */}
-              <div className="mb-8">
+              <div className="mb-8 text-center">
                 <h4 className="text-lg font-semibold text-gray-800 mb-3">Web App</h4>
                 <p className="text-gray-600 mb-4">Use directly in your browser, no installation required</p>
                 <a
                   href="https://app.myaiphotoshoot.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out"
+                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 transition duration-150 ease-in-out"
                 >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
                   Launch Web App
                 </a>
               </div>
               
               {/* Mobile Apps */}
-              <div>
+              <div className="text-center">
                 <h4 className="text-lg font-semibold text-gray-800 mb-3">Mobile Apps</h4>
                 <p className="text-gray-600 mb-4">Download our native apps for the best experience</p>
                 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start items-center">
                   {/* Google Play Button */}
                   <a 
                     href='https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'
@@ -88,7 +91,7 @@ export default function Download() {
                     <img 
                       alt='Get it on Google Play' 
                       src='/images/google-play-badge.png'
-                      className="h-[48px] w-auto"
+                      className="h-[100px] w-[180px] object-contain"
                     />
                   </a>
                   
@@ -102,32 +105,13 @@ export default function Download() {
                     <img 
                       alt='Download on the App Store' 
                       src='/images/app-store-badge.svg'
-                      className="h-[48px] w-auto"
+                      className="h-[50px] w-[180px] object-contain"
                     />
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Features list */}
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-md w-full">
-              <div className="flex items-start">
-                <svg className="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                <span className="text-gray-700">Fast generation</span>
-              </div>
-              <div className="flex items-start">
-                <svg className="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                <span className="text-gray-700">High quality</span>
-              </div>
-              <div className="flex items-start">
-                <svg className="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                <span className="text-gray-700">Secure storage</span>
-              </div>
-              <div className="flex items-start">
-                <svg className="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                <span className="text-gray-700">Easy sharing</span>
-              </div>
-            </div>
           </motion.div>
         </div>
       </div>
