@@ -85,10 +85,10 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                     >
                       <Link
                         href={`/photo/${prev.id}`}
-                        className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors duration-200"
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                         aria-label="Previous photo"
                       >
-                        <ChevronLeftIcon className="h-8 w-8" />
+                        <ChevronLeftIcon className="h-5 w-5" />
                       </Link>
                     </motion.div>
                   )}
@@ -100,10 +100,10 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                     >
                       <Link
                         href={`/photo/${next.id}`}
-                        className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors duration-200"
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                         aria-label="Next photo"
                       >
-                        <ChevronRightIcon className="h-8 w-8" />
+                        <ChevronRightIcon className="h-5 w-5" />
                       </Link>
                     </motion.div>
                   )}
@@ -124,10 +124,10 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                   >
                     <Link
                       href={`/photo/${prev.id}`}
-                      className="p-2 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors duration-200"
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                       aria-label="Previous photo"
                     >
-                      <ChevronLeftIcon className="h-6 w-6" />
+                      <ChevronLeftIcon className="h-5 w-5" />
                     </Link>
                   </motion.div>
                 )}
@@ -138,10 +138,10 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                   >
                     <Link
                       href={`/photo/${next.id}`}
-                      className="p-2 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors duration-200"
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                       aria-label="Next photo"
                     >
-                      <ChevronRightIcon className="h-6 w-6" />
+                      <ChevronRightIcon className="h-5 w-5" />
                     </Link>
                   </motion.div>
                 )}
