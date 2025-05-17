@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -14,7 +15,12 @@ export default function Gallery() {
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
   const fetchAttemptedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  // Extract locale from pathname (first segment)
+  const locale = pathname.split('/')[1];
+  
   // Unified function to fetch gallery items (handles both initial load and pagination)
   const fetchGalleryItems = async (pageNumber: number, isInitialLoad: boolean = false) => {
     // For initial load, we should proceed even if loading is true
@@ -190,7 +196,7 @@ export default function Gallery() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: index * 0.02 }}
               className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
-              onClick={() => window.location.href = `/photo/${item.id}`}
+              onClick={() => router.push(`/${locale}/photo/${item.id}`)}
             >
               <Image
                 src={`${item.public_url}?width=420`}
