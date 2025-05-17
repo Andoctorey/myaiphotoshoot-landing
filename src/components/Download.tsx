@@ -1,12 +1,37 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function Download() {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const [deviceType, setDeviceType] = useState<'ios' | 'android' | 'desktop'>('desktop');
+
+  useEffect(() => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(userAgent)) {
+      setDeviceType('ios');
+    } else if (/android/.test(userAgent)) {
+      setDeviceType('android');
+    } else {
+      setDeviceType('desktop');
+    }
+  }, []);
+
+  const getAppUrl = () => {
+    switch (deviceType) {
+      case 'ios':
+        return 'https://apps.apple.com/app/id6744860178';
+      case 'android':
+        return 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1';
+      default:
+        return 'https://app.myaiphotoshoot.com';
+    }
+  };
 
   return (
     <section id="download" className="py-24 bg-gradient-to-b from-white to-gray-50">
@@ -27,16 +52,19 @@ export default function Download() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* App Mockup */}
+          {/* App Screenshot */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex justify-center lg:justify-end relative"
           >
-            <div className="relative h-[600px] w-[300px] rounded-[36px] overflow-hidden border-8 border-gray-800 shadow-xl">
-              <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/30 to-transparent opacity-40 pointer-events-none" />
-              <div className="absolute top-0 w-[120px] h-[30px] bg-gray-800 left-1/2 -translate-x-1/2 rounded-b-[14px] z-10" />
+            <a
+              href={getAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative h-[600px] w-[300px] rounded-[36px] overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300"
+            >
               <Image
                 src="/images/screenshot_1.jpg"
                 alt="MyAIPhotoShoot App"
@@ -44,7 +72,7 @@ export default function Download() {
                 className="object-cover"
                 priority
               />
-            </div>
+            </a>
           </motion.div>
 
           {/* Download Options */}
@@ -112,7 +140,6 @@ export default function Download() {
                 </div>
               </div>
             </div>
-
           </motion.div>
         </div>
       </div>
