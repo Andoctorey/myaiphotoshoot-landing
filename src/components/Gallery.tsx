@@ -56,6 +56,8 @@ export default function Gallery() {
   }, []);
 
   const fetchGalleryItems = async () => {
+    if (loading) return; // Prevent concurrent fetches
+
     try {
       setLoading(true);
       setError(null);

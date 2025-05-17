@@ -3,10 +3,11 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Gallery from './Gallery';
-import { useTranslations } from '@/lib/utils';
+import { useTranslations, useLocale } from '@/lib/utils';
 
 export default function UserGallery() {
   const t = useTranslations('gallery');
+  const locale = useLocale();
   const { ref: galleryRef, inView: galleryInView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -31,7 +32,7 @@ export default function UserGallery() {
             </p>
           </motion.div>
           
-          <Gallery />
+          <Gallery key={locale} />
         </div>
       </div>
     </section>
