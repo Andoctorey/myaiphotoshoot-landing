@@ -15,67 +15,33 @@ export default function Footer() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-xl font-bold mb-4">My AI Photo Shoot</h3>
             <p className="text-gray-400 mb-4">
               Transform your selfies into stunning AI-generated photos with our cutting-edge technology.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Twitter
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Instagram
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Facebook
-              </a>
-            </div>
           </div>
 
           <div>
             <h4 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
-              Product
+              Links
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href="#features" className="text-gray-400 hover:text-white transition-colors">
-                  Features
+                <a href="/legal" className="text-gray-400 hover:text-white transition-colors">
+                  Legal Information
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="text-gray-400 hover:text-white transition-colors">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  FAQ
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
-              Legal
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Cookie Policy
+                <a 
+                  href="https://x.com/andoctorey" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Twitter (X) - Feature requests & bug reports
                 </a>
               </li>
             </ul>
