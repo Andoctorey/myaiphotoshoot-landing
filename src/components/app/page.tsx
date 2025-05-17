@@ -1,12 +1,12 @@
 'use client';
 
-import Hero from '@/components/Hero';
-import Features from '@/components/Features';
-import UserGallery from '@/components/Testimonials';
-import Pricing from '@/components/Pricing';
-import Download from '@/components/Download';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import Hero from '@/components/features/Hero';
+import Features from '@/components/features/Features';
+import UserGallery from '@/components/features/Testimonials';
+import Pricing from '@/components/features/Pricing';
+import Download from '@/components/features/Download';
+import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/Footer';
 
 export default function Home() {
   return (
