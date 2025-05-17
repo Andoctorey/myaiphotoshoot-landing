@@ -74,7 +74,12 @@ export default function Gallery() {
       if (data.length === 0) {
         setHasMore(false);
       } else {
-        setGalleryItems((prevItems) => [...prevItems, ...data]);
+        setGalleryItems((prevItems) => {
+          const newItems = data.filter(
+            (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
+          );
+          return [...prevItems, ...newItems];
+        });
         setPage((prevPage) => prevPage + 1);
       }
     } catch (error) {
