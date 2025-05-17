@@ -90,5 +90,19 @@
     "twitter": "Twitter (X)",
     "support": "Support",
     "copyright": "© 2023 My AI Photo Shoot. All rights reserved."
+  },
+  "photoPage": {
+    "breadcrumb": {
+      "home": "Home",
+      "gallery": "Gallery",
+      "photo": "Photo"
+    },
+    "photoNotFound": "Photo Not Found",
+    "photoNotFoundDesc": "The requested photo could not be found.",
+    "prompt": "Prompt",
+    "createSimilar": "Train AI with Your Photos to Create Similar Style",
+    "title": "My AI Photo Shoot",
+    "prevPhoto": "Previous photo",
+    "nextPhoto": "Next photo"
   }
 } 

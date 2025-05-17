@@ -8,14 +8,17 @@ import Breadcrumb from '@/components/layout/Breadcrumb'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface PhotoPageClientProps {
   photo: GalleryItem;
   prev: GalleryItem | null;
   next: GalleryItem | null;
+  locale: string;
 }
 
-export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientProps) {
+export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPageClientProps) {
+  const t = useTranslations('photoPage');
   const photoRef = useRef<HTMLDivElement>(null);
 
   const scrollToPhoto = () => {
@@ -62,9 +65,9 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
         <div className="max-w-3xl mx-auto">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
-              { label: 'Gallery', href: '/#gallery' },
-              { label: 'Photo' }
+              { label: t('breadcrumb.home'), href: `/${locale}` },
+              { label: t('breadcrumb.gallery'), href: `/${locale}/#gallery` },
+              { label: t('breadcrumb.photo') }
             ]}
           />
           <motion.div 
@@ -104,9 +107,9 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
                       <Link
-                        href={`/photo/${prev.id}`}
+                        href={`/${locale}/photo/${prev.id}`}
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                        aria-label="Previous photo"
+                        aria-label={t('prevPhoto')}
                       >
                         <ChevronLeftIcon className="h-5 w-5" />
                       </Link>
@@ -119,9 +122,9 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
                       <Link
-                        href={`/photo/${next.id}`}
+                        href={`/${locale}/photo/${next.id}`}
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                        aria-label="Next photo"
+                        aria-label={t('nextPhoto')}
                       >
                         <ChevronRightIcon className="h-5 w-5" />
                       </Link>
@@ -143,9 +146,9 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href={`/photo/${prev.id}`}
+                      href={`/${locale}/photo/${prev.id}`}
                       className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                      aria-label="Previous photo"
+                      aria-label={t('prevPhoto')}
                     >
                       <ChevronLeftIcon className="h-5 w-5" />
                     </Link>
@@ -157,9 +160,9 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link
-                      href={`/photo/${next.id}`}
+                      href={`/${locale}/photo/${next.id}`}
                       className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                      aria-label="Next photo"
+                      aria-label={t('nextPhoto')}
                     >
                       <ChevronRightIcon className="h-5 w-5" />
                     </Link>
@@ -174,11 +177,11 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
               className="p-6"
             >
               <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                My Ai Photo Shoot
+                {t('title')}
               </h1>
               <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-600">
                 <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-                  Prompt
+                  {t('prompt')}
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300 text-lg">
                   {photo.prompt}
@@ -193,7 +196,7 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
                   href={`https://myaiphotoshoot.com/#generate?id=${photo.id}`}
                   className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
                 >
-                  Train AI with Your Photos to Create Similar Style
+                  {t('createSimilar')}
                 </Link>
               </motion.div>
             </motion.div>

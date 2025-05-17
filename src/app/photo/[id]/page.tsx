@@ -1,10 +1,12 @@
 import { Metadata } from 'next'
 import { GalleryItem } from '@/types/gallery'
 import PhotoPageClient from './PhotoPageClient';
+import { getTranslations } from 'next-intl/server';
 
 interface PhotoPageProps {
   params: {
-    id: string
+    id: string;
+    locale?: string;
   }
 }
 
@@ -61,6 +63,7 @@ async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null
 
 export async function generateMetadata({ params }: PhotoPageProps): Promise<Metadata> {
   const photo = await getPhotoData(params.id)
+  const locale = params.locale || 'en' // Default to English if no locale is provided
   
   if (!photo) {
     return {
@@ -71,6 +74,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
   
   const title = `Professional Portrait: ${photo.prompt} | MyAIPhotoShoot`
   const description = `View this AI-generated professional portrait created with the prompt: ${photo.prompt}`
+  const url = `https://myaiphotoshoot.com/${locale}/photo/${params.id}`
   
   return {
     title,
@@ -83,7 +87,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
       publishedTime: photo.created_at,
       modifiedTime: photo.created_at,
       siteName: 'MyAIPhotoShoot',
-      url: `https://myaiphotoshoot.com/photo/${params.id}`,
+      url,
     },
     twitter: {
       card: 'summary_large_image',
@@ -93,7 +97,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
       creator: '@myaiphotoshoot',
     },
     alternates: {
-      canonical: `https://myaiphotoshoot.com/photo/${params.id}`,
+      canonical: url,
     },
   }
 }
@@ -101,17 +105,19 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
 export default async function PhotoPage({ params }: PhotoPageProps) {
   const photo = await getPhotoData(params.id)
   const { prev, next } = await getAdjacentPhotos(params.id)
+  const locale = params.locale || 'en' // Default to English if no locale is provided
+  const t = await getTranslations({ locale, namespace: 'photoPage' });
 
   if (!photo) {
     return (
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Photo Not Found</h1>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">The requested photo could not be found.</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('photoNotFound')}</h1>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">{t('photoNotFoundDesc')}</p>
         </div>
       </div>
     )
   }
 
-  return <PhotoPageClient photo={photo} prev={prev} next={next} />
+  return <PhotoPageClient photo={photo} prev={prev} next={next} locale={locale} />
 } 

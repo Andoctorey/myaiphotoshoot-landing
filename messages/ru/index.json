@@ -90,5 +90,19 @@
     "twitter": "Twitter (X)",
     "support": "Поддержка",
     "copyright": "© 2023 My AI Photo Shoot. Все права защищены."
+  },
+  "photoPage": {
+    "breadcrumb": {
+      "home": "Главная",
+      "gallery": "Галерея",
+      "photo": "Фото"
+    },
+    "photoNotFound": "Фото не найдено",
+    "photoNotFoundDesc": "Запрашиваемое фото не найдено.",
+    "prompt": "Запрос",
+    "createSimilar": "Обучите ИИ на ваших фото для создания похожего стиля",
+    "title": "My AI Photo Shoot",
+    "prevPhoto": "Предыдущее фото",
+    "nextPhoto": "Следующее фото"
   }
 } 
