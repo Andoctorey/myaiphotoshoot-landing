@@ -7,12 +7,72 @@ import { GalleryItem } from '@/types/gallery';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
+  const fetchAttemptedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Unified function to fetch gallery items (handles both initial load and pagination)
+  const fetchGalleryItems = async (pageNumber: number, isInitialLoad: boolean = false) => {
+    // For initial load, we should proceed even if loading is true
+    // For pagination loads, prevent concurrent fetches
+    if (!isInitialLoad && loading) return;
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // Options for fetch - use caching for initial load
+      const options: RequestInit | undefined = isInitialLoad ? { cache: 'force-cache' as RequestCache } : undefined;
+      
+      const response = await fetch(
+        `https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=${pageNumber}&limit=24`,
+        options
+      );
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch gallery items');
+      }
+      
+      const data = await response.json();
+      
+      if (data.length === 0) {
+        setHasMore(false);
+      } else {
+        if (isInitialLoad) {
+          // For initial load, replace the gallery items
+          setGalleryItems(data);
+        } else {
+          // For pagination, append to existing items
+          setGalleryItems((prevItems) => {
+            const newItems = data.filter(
+              (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
+            );
+            return [...prevItems, ...newItems];
+          });
+        }
+        
+        // Increment page for next fetch
+        setPage(pageNumber + 1);
+        
+        // Reset fetch attempt flag so we can fetch again if needed
+        fetchAttemptedRef.current = false;
+      }
+    } catch (error) {
+      console.error('Error fetching gallery items:', error);
+      setError('Unable to load gallery images. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch initial data
+  useEffect(() => {
+    fetchGalleryItems(1, true); // Initial load with page 1 and caching
+  }, []);
 
   // Set initial display count based on screen size
   useEffect(() => {
@@ -45,52 +105,17 @@ export default function Gallery() {
 
   // Ensure we load enough items for initial display
   useEffect(() => {
-    if (galleryItems.length < displayCount && !loading && hasMore) {
-      fetchGalleryItems();
+    // Only trigger this effect when we need more items AND haven't attempted this fetch yet
+    if (galleryItems.length < displayCount && !loading && hasMore && !fetchAttemptedRef.current) {
+      fetchAttemptedRef.current = true; // Mark that we've attempted to fetch more
+      fetchGalleryItems(page);
     }
-  }, [displayCount, galleryItems.length, loading, hasMore]);
-
-  // Initial data fetch
-  useEffect(() => {
-    fetchGalleryItems();
-  }, []);
-
-  const fetchGalleryItems = async () => {
-    if (loading) return; // Prevent concurrent fetches
-
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetch(
-        `https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=${page}&limit=24`
-      );
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch gallery items');
-      }
-      
-      const data = await response.json();
-      
-      if (data.length === 0) {
-        setHasMore(false);
-      } else {
-        setGalleryItems((prevItems) => {
-          const newItems = data.filter(
-            (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
-          );
-          return [...prevItems, ...newItems];
-        });
-        setPage((prevPage) => prevPage + 1);
-      }
-    } catch (error) {
-      console.error('Error fetching gallery items:', error);
-      setError('Unable to load gallery images. Please try again later.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [displayCount, galleryItems.length, page]);
 
   const loadMore = () => {
+    // Reset fetch attempt flag when user manually requests more items
+    fetchAttemptedRef.current = false;
+    
     // Get number of columns based on current viewport
     let columnsCount = 5; // Default desktop
     if (window.innerWidth < 640) {
@@ -116,7 +141,10 @@ export default function Gallery() {
       <div className="mt-12 text-center p-8 bg-red-50 rounded-lg">
         <p className="text-red-600">{error}</p>
         <button 
-          onClick={() => fetchGalleryItems()}
+          onClick={() => {
+            fetchAttemptedRef.current = false;
+            fetchGalleryItems(1, true);
+          }}
           className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
         >
           Try Again
