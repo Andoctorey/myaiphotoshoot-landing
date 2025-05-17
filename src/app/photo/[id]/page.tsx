@@ -1,9 +1,6 @@
 import { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
 import { GalleryItem } from '@/types/gallery'
-import Script from 'next/script'
-import Breadcrumb from '@/components/Breadcrumb'
+import PhotoPageClient from './PhotoPageClient'
 
 interface PhotoPageProps {
   params: {
@@ -32,6 +29,33 @@ async function getPhotoData(id: string): Promise<GalleryItem | null> {
   } catch (error) {
     console.error('Error fetching photo:', error);
     return null;
+  }
+}
+
+async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null; next: GalleryItem | null }> {
+  try {
+    const response = await fetch(`https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=1&limit=100`, {
+      next: { revalidate: 3600 }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch gallery data');
+    }
+
+    const data = await response.json();
+    const currentIndex = data.findIndex((item: GalleryItem) => item.id === id);
+    
+    if (currentIndex === -1) {
+      return { prev: null, next: null };
+    }
+
+    return {
+      prev: currentIndex > 0 ? data[currentIndex - 1] : null,
+      next: currentIndex < data.length - 1 ? data[currentIndex + 1] : null
+    };
+  } catch (error) {
+    console.error('Error fetching adjacent photos:', error);
+    return { prev: null, next: null };
   }
 }
 
@@ -76,6 +100,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
   const photo = await getPhotoData(params.id)
+  const { prev, next } = await getAdjacentPhotos(params.id)
 
   if (!photo) {
     return (
@@ -88,73 +113,5 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
     )
   }
 
-  // Create JSON-LD structured data
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ImageObject',
-    contentUrl: photo.public_url,
-    description: photo.prompt,
-    name: `Professional Portrait: ${photo.prompt}`,
-    datePublished: photo.created_at,
-    dateModified: photo.created_at,
-    creator: {
-      '@type': 'Organization',
-      name: 'MyAIPhotoShoot',
-      url: 'https://myaiphotoshoot.com'
-    }
-  }
-
-  return (
-    <>
-      <Script
-        id="photo-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <Breadcrumb
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Gallery', href: '/#gallery' },
-              { label: 'Photo' }
-            ]}
-          />
-          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-            <div className="relative aspect-square w-full">
-              <Image
-                src={photo.public_url}
-                alt={photo.prompt}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
-            <div className="p-6">
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                Professional Portrait
-              </h1>
-              <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-200">
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                  Prompt
-                </h2>
-                <p className="text-gray-700 text-lg">
-                  {photo.prompt}
-                </p>
-              </div>
-              <div className="flex justify-center">
-                <Link
-                  href={`https://myaiphotoshoot.com/#generate?id=${params.id}`}
-                  className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
-                >
-                  Train AI with Your Photos to Create Similar Style
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+  return <PhotoPageClient photo={photo} prev={prev} next={next} />
 } 
