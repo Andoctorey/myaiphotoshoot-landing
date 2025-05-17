@@ -1,25 +1,7 @@
-'use client';
-
-import Hero from '@/components/Hero';
-import Features from '@/components/Features';
-import UserGallery from '@/components/Testimonials';
-import Pricing from '@/components/Pricing';
-import Download from '@/components/Download';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import { redirect } from 'next/navigation';
+import { defaultLocale } from '@/i18n/request';
 
 export default function Home() {
-  return (
-    <>
-      <Navigation />
-      <main className="min-h-screen">
-        <Hero />
-        <Features />
-        <UserGallery />
-        <Pricing />
-        <Download />
-      </main>
-      <Footer />
-    </>
-  );
+  // Redirect to the default locale
+  redirect(`/${defaultLocale}`);
 }

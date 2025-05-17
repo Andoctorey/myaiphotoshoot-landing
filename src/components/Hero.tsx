@@ -1,6 +1,11 @@
+'use client';
+
 import { motion } from 'framer-motion';
+import { useTranslations } from '@/lib/utils';
 
 export default function Hero() {
+  const t = useTranslations('hero');
+
   return (
     <section className="pt-24 pb-4 bg-gradient-to-b from-purple-50 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,12 +16,11 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Transform Your Selfies Into
-              <span className="text-purple-600"> Stunning AI Photos</span>
+              {t('title')}
+              <span className="text-purple-600"> {t('titleHighlight')}</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-4">
-              Create thousands of professional, AI-enhanced photos perfect for social media,
-              profile pictures, or creative projects!
+              {t('description')}
             </p>
           </motion.div>
         </div>

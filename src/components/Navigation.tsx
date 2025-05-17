@@ -1,16 +1,27 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-const navItems = [
-  { name: 'Features', href: '#features' },
-  { name: 'Gallery', href: '#gallery' },
-  { name: 'Pricing', href: '#pricing' },
-];
+import { useTranslations, useLocale } from '@/lib/utils';
+import { usePathname, useRouter } from 'next/navigation';
+import { locales } from '@/i18n/request';
 
 export default function Navigation() {
+  const t = useTranslations('navigation');
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+  
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  
+  const navItems = [
+    { name: t('features'), href: '#features' },
+    { name: t('gallery'), href: '#gallery' },
+    { name: t('pricing'), href: '#pricing' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +36,18 @@ export default function Navigation() {
   // Close mobile menu when clicking on a link
   const handleNavLinkClick = () => {
     setMobileMenuOpen(false);
+  };
+  
+  // Handle language change
+  const handleLanguageChange = (newLocale: string) => {
+    // Get the path without the locale prefix
+    const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
+    
+    // Navigate to the same page with the new locale
+    router.push(`/${newLocale}${pathWithoutLocale}`);
+    
+    // Close the language menu
+    setIsLanguageMenuOpen(false);
   };
 
   return (
@@ -66,8 +89,40 @@ export default function Navigation() {
                 href="#download"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-on bg-primary hover:bg-primary-dark hover:text-primary-on-dark transition duration-150 ease-in-out"
               >
-                Download Now
+                {t('download')}
               </a>
+              
+              {/* Language selector dropdown */}
+              <div className="relative">
+                <button
+                  className="flex items-center text-on-surface hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150"
+                  onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+                >
+                  <span className="uppercase">{locale}</span>
+                  <svg className="ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                
+                {isLanguageMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="py-1" role="menu" aria-orientation="vertical">
+                      {locales.map((l) => (
+                        <button
+                          key={l}
+                          onClick={() => handleLanguageChange(l)}
+                          className={`block w-full text-left px-4 py-2 text-sm ${
+                            l === locale ? 'bg-gray-100 text-primary' : 'text-gray-700'
+                          } hover:bg-gray-100`}
+                          role="menuitem"
+                        >
+                          {l === 'en' ? 'English' : 'Русский'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           
@@ -124,8 +179,25 @@ export default function Navigation() {
                 className="block text-on-surface hover:text-primary px-3 py-2 rounded-md text-base font-medium bg-primary text-primary-on hover:bg-primary-dark hover:text-primary-on-dark transition-colors duration-150"
                 onClick={handleNavLinkClick}
               >
-                Download Now
+                {t('download')}
               </a>
+              
+              {/* Language selector in mobile menu */}
+              <div className="mt-3 pt-3 border-t border-gray-200">
+                <div className="px-2 space-y-1">
+                  {locales.map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => handleLanguageChange(l)}
+                      className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                        l === locale ? 'bg-gray-100 text-primary' : 'text-gray-700'
+                      } hover:bg-gray-100`}
+                    >
+                      {l === 'en' ? 'English' : 'Русский'}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}
