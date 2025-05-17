@@ -2,7 +2,7 @@
 
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
-import Testimonials from '@/components/Testimonials';
+import UserGallery from '@/components/Testimonials';
 import Pricing from '@/components/Pricing';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -14,7 +14,7 @@ export default function Home() {
       <main className="min-h-screen">
         <Hero />
         <Features />
-        <Testimonials />
+        <UserGallery />
         <Pricing />
       </main>
       <Footer />
