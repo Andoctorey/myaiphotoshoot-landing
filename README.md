@@ -6,6 +6,8 @@ A modern, SEO-optimized landing page for My AI Photo Shoot - an AI-powered photo
 
 **App Website: [myaiphotoshoot.com](https://myaiphotoshoot.com)**
 
+**Main Project: [GitHub Repository](https://github.com/Andoctorey/myaiphotoshoot.com)** - This project is open source!
+
 ## Features
 
 - 🎨 Modern, responsive design

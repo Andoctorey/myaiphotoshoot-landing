@@ -36,12 +36,32 @@ export default function Footer() {
               </li>
               <li>
                 <a 
+                  href="https://github.com/Andoctorey/myaiphotoshoot.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Open Source
+                </a>
+              </li>
+              <li>
+                <a 
                   href="https://x.com/andoctorey" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  Twitter (X) - Feature requests & bug reports
+                  Twitter (X)
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://twitter.com/messages/compose?recipient_id=2884868299" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Support
                 </a>
               </li>
             </ul>
