@@ -19,35 +19,9 @@ export default function Hero() {
               Create thousands of professional, AI-enhanced photos perfect for social media,
               profile pictures, or creative projects!
             </p>
-            
-            <a
-              href="#features"
-              className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out"
-            >
-              Discover Features
-            </a>
           </motion.div>
           
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-12"
-          >
-            <div className="relative w-full max-w-4xl mx-auto">
-              <Image
-                src="/hero-image.jpg"
-                alt="AI Photo Shoot Examples"
-                width={1200}
-                height={675}
-                className="rounded-xl shadow-2xl"
-                priority
-              />
-              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-6 py-2 rounded-full shadow-lg">
-                <p className="text-sm text-gray-600">Powered by Flux.1 Technology</p>
-              </div>
-            </div>
-          </motion.div>
+
         </div>
       </div>
       
