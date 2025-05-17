@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { GalleryItem } from '@/types/gallery'
 import Script from 'next/script'
+import Breadcrumb from '@/components/Breadcrumb'
 
 interface PhotoPageProps {
   params: {
@@ -12,7 +13,7 @@ interface PhotoPageProps {
 
 async function getPhotoData(id: string): Promise<GalleryItem | null> {
   try {
-    const response = await fetch(`https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=1&limit=1000`, {
+    const response = await fetch(`https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=1&limit=100`, {
       next: { revalidate: 3600 } // Revalidate every hour
     });
     
@@ -44,13 +45,31 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
     }
   }
   
+  const title = `Professional Portrait: ${photo.prompt} | MyAIPhotoShoot`
+  const description = `View this AI-generated professional portrait created with the prompt: ${photo.prompt}`
+  
   return {
-    title: `AI Generated Photo - ${photo.prompt}`,
-    description: `View this AI generated photo created with the prompt: ${photo.prompt}`,
+    title,
+    description,
     openGraph: {
-      title: `AI Generated Photo - ${photo.prompt}`,
-      description: `View this AI generated photo created with the prompt: ${photo.prompt}`,
+      title,
+      description,
       images: [photo.public_url],
+      type: 'article',
+      publishedTime: photo.created_at,
+      modifiedTime: photo.created_at,
+      siteName: 'MyAIPhotoShoot',
+      url: `https://myaiphotoshoot.com/photo/${params.id}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [photo.public_url],
+      creator: '@myaiphotoshoot',
+    },
+    alternates: {
+      canonical: `https://myaiphotoshoot.com/photo/${params.id}`,
     },
   }
 }
@@ -75,7 +94,7 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
     '@type': 'ImageObject',
     contentUrl: photo.public_url,
     description: photo.prompt,
-    name: `AI Generated Photo - ${photo.prompt}`,
+    name: `Professional Portrait: ${photo.prompt}`,
     datePublished: photo.created_at,
     dateModified: photo.created_at,
     creator: {
@@ -94,6 +113,13 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
       />
       <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Gallery', href: '/#gallery' },
+              { label: 'Photo' }
+            ]}
+          />
           <div className="bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="relative aspect-square w-full">
               <Image
@@ -107,7 +133,7 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
             </div>
             <div className="p-6">
               <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                AI Generated Photo
+                Professional Portrait
               </h1>
               <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-200">
                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
