@@ -3,14 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-interface GalleryItem {
-  id: string;
-  created_at: string;
-  public_url: string;
-  prompt: string;
-  person_description: string;
-}
+import { GalleryItem } from '@/types/gallery';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -161,7 +154,8 @@ export default function Gallery() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: index * 0.02 }}
-              className="relative aspect-square overflow-hidden rounded-sm"
+              className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
+              onClick={() => window.location.href = `/photo/${item.id}`}
             >
               <Image
                 src={`${item.public_url}?width=420`}
