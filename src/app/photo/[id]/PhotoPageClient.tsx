@@ -58,7 +58,7 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <Breadcrumb
             items={[
@@ -71,7 +71,7 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white shadow-lg rounded-lg overflow-hidden"
+            className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden"
           >
             <div ref={photoRef} className="relative aspect-square w-full group">
               <motion.div
@@ -173,14 +173,14 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
               transition={{ delay: 0.4 }}
               className="p-6"
             >
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 My Ai Photo Shoot
               </h1>
-              <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-200">
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-600">
+                <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                   Prompt
                 </h2>
-                <p className="text-gray-700 text-lg">
+                <p className="text-gray-700 dark:text-gray-300 text-lg">
                   {photo.prompt}
                 </p>
               </div>

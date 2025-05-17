@@ -104,10 +104,10 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
 
   if (!photo) {
     return (
-      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Photo Not Found</h1>
-          <p className="mt-4 text-gray-600">The requested photo could not be found.</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Photo Not Found</h1>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">The requested photo could not be found.</p>
         </div>
       </div>
     )
