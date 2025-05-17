@@ -1,9 +1,13 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useTranslations } from '@/lib/utils';
 
 export default function Download() {
+  const t = useTranslations('download');
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -44,10 +48,10 @@ export default function Download() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-            Get Started Today
+            {t('title')}
           </h2>
           <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-            Download our app and create stunning AI photos in minutes
+            {t('description')}
           </p>
         </motion.div>
 
@@ -86,12 +90,12 @@ export default function Download() {
           >
             {/* Platform options */}
             <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Choose Your Platform</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t('choosePlatform')}</h3>
               
               {/* Web App */}
               <div className="mb-8 text-center">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">Web App</h4>
-                <p className="text-gray-600 mb-4">Use directly in your browser, no installation required</p>
+                <h4 className="text-lg font-semibold text-gray-800 mb-3">{t('webApp.title')}</h4>
+                <p className="text-gray-600 mb-4">{t('webApp.description')}</p>
                 <a
                   href="https://app.myaiphotoshoot.com"
                   target="_blank"
@@ -101,14 +105,14 @@ export default function Download() {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
-                  Launch Web App
+                  {t('webApp.button')}
                 </a>
               </div>
               
               {/* Mobile Apps */}
               <div className="text-center">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">Mobile Apps</h4>
-                <p className="text-gray-600 mb-4">Download our native apps for the best experience</p>
+                <h4 className="text-lg font-semibold text-gray-800 mb-3">{t('mobileApps.title')}</h4>
+                <p className="text-gray-600 mb-4">{t('mobileApps.description')}</p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start items-center">
                   {/* Google Play Button */}
@@ -119,7 +123,7 @@ export default function Download() {
                     className="transform hover:scale-105 transition duration-150"
                   >
                     <img 
-                      alt='Get it on Google Play' 
+                      alt={t('mobileApps.googlePlay')} 
                       src='/images/google-play-badge.png'
                       className="h-[100px] w-[180px] object-contain"
                     />
@@ -133,7 +137,7 @@ export default function Download() {
                     className="transform hover:scale-105 transition duration-150"
                   >
                     <img 
-                      alt='Download on the App Store' 
+                      alt={t('mobileApps.appStore')} 
                       src='/images/app-store-badge.svg'
                       className="h-[50px] w-[180px] object-contain"
                     />

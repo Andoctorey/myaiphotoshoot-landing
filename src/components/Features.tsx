@@ -1,5 +1,8 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useTranslations } from '@/lib/utils';
 import {
   CameraIcon,
   ShieldCheckIcon,
@@ -9,44 +12,45 @@ import {
   AdjustmentsHorizontalIcon,
 } from '@heroicons/react/24/outline';
 
-const features = [
-  {
-    name: 'Easy Selfie Upload',
-    description: 'Upload 10-20 selfies easily from your phone or social media. Vary your angles and expressions for best results.',
-    icon: CameraIcon,
-  },
-  {
-    name: 'Advanced AI Technology',
-    description: 'Powered by Flux.1, delivering exceptional photo realism and creative detail in every image.',
-    icon: SparklesIcon,
-  },
-  {
-    name: 'Privacy First',
-    description: 'Control your data with public/private gallery options and permanent deletion whenever you choose.',
-    icon: ShieldCheckIcon,
-  },
-  {
-    name: 'Affordable Pricing',
-    description: 'Clear one-time AI training cost and just $0.03 per generated photo. No hidden fees or subscriptions.',
-    icon: CurrencyDollarIcon,
-  },
-  {
-    name: 'Thousands of Styles',
-    description: 'Generate thousands of unique photos with our "Surprise Me!" feature and custom photo prompts.',
-    icon: PhotoIcon,
-  },
-  {
-    name: 'Easy Customization',
-    description: 'Enhance your prompts for personalized outcomes and create similar masterpieces from public photos.',
-    icon: AdjustmentsHorizontalIcon,
-  },
-];
-
 export default function Features() {
+  const t = useTranslations('features');
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const features = [
+    {
+      name: t('easySelfieUpload.title'),
+      description: t('easySelfieUpload.description'),
+      icon: CameraIcon,
+    },
+    {
+      name: t('advancedAI.title'),
+      description: t('advancedAI.description'),
+      icon: SparklesIcon,
+    },
+    {
+      name: t('privacyFirst.title'),
+      description: t('privacyFirst.description'),
+      icon: ShieldCheckIcon,
+    },
+    {
+      name: t('affordablePricing.title'),
+      description: t('affordablePricing.description'),
+      icon: CurrencyDollarIcon,
+    },
+    {
+      name: t('thousandsOfStyles.title'),
+      description: t('thousandsOfStyles.description'),
+      icon: PhotoIcon,
+    },
+    {
+      name: t('easyCustomization.title'),
+      description: t('easyCustomization.description'),
+      icon: AdjustmentsHorizontalIcon,
+    },
+  ];
 
   return (
     <section id="features" className="py-12 bg-white">

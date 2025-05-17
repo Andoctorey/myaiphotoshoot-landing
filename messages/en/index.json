@@ -13,25 +13,82 @@
   },
   "features": {
     "title": "Features",
-    "description": "Discover what makes our AI photo generation special"
+    "description": "Discover what makes our AI photo generation special",
+    "easySelfieUpload": {
+      "title": "Easy Selfie Upload",
+      "description": "Upload 10-20 selfies easily from your phone or social media. Vary your angles and expressions for best results."
+    },
+    "advancedAI": {
+      "title": "Advanced AI Technology",
+      "description": "Powered by Flux.1, delivering exceptional photo realism and creative detail in every image."
+    },
+    "privacyFirst": {
+      "title": "Privacy First",
+      "description": "Control your data with public/private gallery options and permanent deletion whenever you choose."
+    },
+    "affordablePricing": {
+      "title": "Affordable Pricing",
+      "description": "Clear one-time AI training cost and just $0.03 per generated photo. No hidden fees or subscriptions."
+    },
+    "thousandsOfStyles": {
+      "title": "Thousands of Styles",
+      "description": "Generate thousands of unique photos with our \"Surprise Me!\" feature and custom photo prompts."
+    },
+    "easyCustomization": {
+      "title": "Easy Customization",
+      "description": "Enhance your prompts for personalized outcomes and create similar masterpieces from public photos."
+    }
+  },
+  "gallery": {
+    "title": "User Gallery",
+    "description": "Real AI-generated photos created by our users"
   },
   "pricing": {
-    "title": "Pricing",
-    "description": "Choose a plan that works for you",
-    "monthly": "Monthly",
-    "yearly": "Yearly",
-    "save": "Save",
-    "button": "Get Started"
+    "title": "Simple, Transparent Pricing",
+    "description": "No hidden fees, no subscriptions. Pay only for what you use.",
+    "payAsYouGo": "Pay As You Go",
+    "perfectFor": "Perfect for anyone who wants to create stunning AI-generated photos without commitments.",
+    "whatsIncluded": "What's included",
+    "features": {
+      "training": "AI model training",
+      "unlimited": "Unlimited photo generation",
+      "custom": "Custom photo prompts",
+      "privacy": "Public/private gallery options",
+      "social": "Social sharing features",
+      "download": "Download in high resolution",
+      "support": "24/7 customer support",
+      "updates": "Regular AI model updates"
+    },
+    "price": "$0.03",
+    "perPhoto": "per photo",
+    "getStarted": "Get started",
+    "oneTimeFee": "One-time AI training fee:",
+    "oneTimeFeeAmount": "Starting from $4.99"
   },
   "download": {
-    "title": "Download Our App",
-    "description": "Available on iOS and Android",
-    "appStore": "Download on App Store",
-    "googlePlay": "Get it on Google Play"
+    "title": "Get Started Today",
+    "description": "Download our app and create stunning AI photos in minutes",
+    "choosePlatform": "Choose Your Platform",
+    "webApp": {
+      "title": "Web App",
+      "description": "Use directly in your browser, no installation required",
+      "button": "Launch Web App"
+    },
+    "mobileApps": {
+      "title": "Mobile Apps",
+      "description": "Download our native apps for the best experience",
+      "googlePlay": "Get it on Google Play",
+      "appStore": "Download on the App Store"
+    }
   },
   "footer": {
-    "copyright": "© 2023 My AI Photo Shoot. All rights reserved.",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service"
+    "title": "My AI Photo Shoot",
+    "description": "Transform your selfies into stunning AI-generated photos with our cutting-edge technology.",
+    "links": "Links",
+    "legal": "Legal Information",
+    "openSource": "Open Source",
+    "twitter": "Twitter (X)",
+    "support": "Support",
+    "copyright": "© 2023 My AI Photo Shoot. All rights reserved."
   }
 } 

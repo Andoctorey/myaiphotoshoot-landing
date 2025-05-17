@@ -1,8 +1,12 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Gallery from './Gallery';
+import { useTranslations } from '@/lib/utils';
 
 export default function UserGallery() {
+  const t = useTranslations('gallery');
   const { ref: galleryRef, inView: galleryInView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -20,10 +24,10 @@ export default function UserGallery() {
             className="text-center mb-8"
           >
             <h3 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              User Gallery
+              {t('title')}
             </h3>
             <p className="mt-4 text-lg text-gray-600">
-              Real AI-generated photos created by our users
+              {t('description')}
             </p>
           </motion.div>
           
