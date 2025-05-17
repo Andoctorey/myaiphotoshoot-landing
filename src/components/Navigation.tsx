@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const navItems = [
   { name: 'Features', href: '#features' },
@@ -23,7 +24,7 @@ export default function Navigation() {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        isScrolled ? 'bg-surface/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -33,7 +34,14 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <a href="#" className="flex items-center">
-              <span className="text-xl font-bold text-gray-900">My AI Photo Shoot</span>
+              <Image 
+                src="/images/icon_192.png" 
+                alt="My AI Photo Shoot" 
+                width={44} 
+                height={44} 
+                className="h-11 w-auto"
+                priority
+              />
             </a>
           </div>
           <div className="hidden md:block">
@@ -42,14 +50,14 @@ export default function Navigation() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150"
+                  className="text-on-surface hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150"
                 >
                   {item.name}
                 </a>
               ))}
               <a
                 href="#download"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-on bg-primary hover:bg-primary-dark hover:text-primary-on-dark transition duration-150 ease-in-out"
               >
                 Download Now
               </a>
