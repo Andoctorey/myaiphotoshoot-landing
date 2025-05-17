@@ -49,20 +49,12 @@ export default function Features() {
   });
 
   return (
-    <section id="features" className="py-24 bg-white">
+    <section id="features" className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-            Transform Your Photos with AI Magic
-          </h2>
-          <p className="mt-4 text-xl text-gray-600">
-            Experience professional-grade photography with our cutting-edge features
-          </p>
-        </div>
 
         <div
           ref={ref}
-          className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
           {features.map((feature, index) => (
             <motion.div
