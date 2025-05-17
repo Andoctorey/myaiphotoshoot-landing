@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { GalleryItem } from '@/types/gallery'
-import PhotoPageClient from './PhotoPageClient'
+import PhotoPageClient from './PhotoPageClient';
 
 interface PhotoPageProps {
   params: {
