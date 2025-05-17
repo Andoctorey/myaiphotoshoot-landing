@@ -35,24 +35,17 @@ export default function Download() {
               <p className="text-xl text-gray-600 mb-6">Download Mobile Apps:</p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                {/* Google Play Button - Following Play Store brand guidelines */}
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.myaiphotoshoot"
+                {/* Google Play Button */}
+                <a 
+                  href='https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-900 transition-colors duration-150 w-48 h-14"
                 >
-                  <div className="flex items-center">
-                    <div className="mr-3">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3.609 1.814L13.792 12 3.609 22.186a1.89 1.89 0 0 1-.513-1.28V3.094c0-.476.186-.926.513-1.28zm11.267 4.852l2.868 1.656L5.47 1.065a2.287 2.287 0 0 1 .29-.05c.668 0 1.304.298 1.75.835l7.365 4.816zM21.001 12l-3.395 1.963-3.337-3.301 3.062-3.053L21 9.618c.631.366 1 1.001 1 1.715s-.369 1.348-1 1.667zm-6.173 3.609l-8.469 4.883c-.29.335-1.005.723-1.89.399-.078-.028-.153-.06-.224-.097l10.583-10.38 3.114 1.795-3.114 3.4z" />
-                      </svg>
-                    </div>
-                    <div className="flex flex-col items-start">
-                      <span className="text-xs">GET IT ON</span>
-                      <span className="text-base font-medium">Google Play</span>
-                    </div>
-                  </div>
+                  <img 
+                    alt='Get it on Google Play' 
+                    src='/images/google-play-badge.png'
+                    className="h-14"
+                  />
                 </a>
                 
                 {/* App Store Button - Following Apple brand guidelines */}
