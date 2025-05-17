@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { GalleryItem } from '@/types/gallery'
+import Script from 'next/script'
 
 interface PhotoPageProps {
   params: {
@@ -68,42 +69,66 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
     )
   }
 
+  // Create JSON-LD structured data
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ImageObject',
+    contentUrl: photo.public_url,
+    description: photo.prompt,
+    name: `AI Generated Photo - ${photo.prompt}`,
+    datePublished: photo.created_at,
+    dateModified: photo.created_at,
+    creator: {
+      '@type': 'Organization',
+      name: 'MyAIPhotoShoot',
+      url: 'https://myaiphotoshoot.com'
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="relative aspect-square w-full">
-            <Image
-              src={photo.public_url}
-              alt={photo.prompt}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
-              AI Generated Photo
-            </h1>
-            <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-200">
-              <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Prompt
-              </h2>
-              <p className="text-gray-700 text-lg">
-                {photo.prompt}
-              </p>
+    <>
+      <Script
+        id="photo-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div className="relative aspect-square w-full">
+              <Image
+                src={photo.public_url}
+                alt={photo.prompt}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             </div>
-            <div className="flex justify-center">
-              <Link
-                href={`https://myaiphotoshoot.com/#generate?id=${params.id}`}
-                className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
-              >
-                Train AI with Your Photos to Create Similar Style
-              </Link>
+            <div className="p-6">
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                AI Generated Photo
+              </h1>
+              <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-gray-200">
+                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  Prompt
+                </h2>
+                <p className="text-gray-700 text-lg">
+                  {photo.prompt}
+                </p>
+              </div>
+              <div className="flex justify-center">
+                <Link
+                  href={`https://myaiphotoshoot.com/#generate?id=${params.id}`}
+                  className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
+                >
+                  Train AI with Your Photos to Create Similar Style
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 } 
