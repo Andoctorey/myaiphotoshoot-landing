@@ -69,6 +69,7 @@ export default function Download() {
                 src="/images/screenshot_1.jpg"
                 alt="MyAIPhotoShoot App"
                 fill
+                sizes="(max-width: 768px) 100vw, 300px"
                 className="object-cover"
                 priority
               />
