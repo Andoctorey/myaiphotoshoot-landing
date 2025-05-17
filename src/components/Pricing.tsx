@@ -79,7 +79,7 @@ export default function Pricing() {
             </div>
             <div className="mt-4 text-sm">
               <p className="font-medium text-gray-900">One-time AI training fee:</p>
-              <p className="text-gray-500">Starting from $9.99</p>
+              <p className="text-gray-500">Starting from $4.99</p>
             </div>
           </div>
         </motion.div>
