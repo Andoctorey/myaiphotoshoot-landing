@@ -44,7 +44,7 @@ export default function Navigation() {
     const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
     
     // Navigate to the same page with the new locale
-    router.push(`/${newLocale}${pathWithoutLocale}`);
+    router.push(`/${newLocale}${pathWithoutLocale}`, { scroll: false });
     
     // Close the language menu
     setIsLanguageMenuOpen(false);
