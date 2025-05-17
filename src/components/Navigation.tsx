@@ -87,7 +87,7 @@ export default function Navigation() {
               ))}
               <a
                 href="#download"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-on bg-primary hover:bg-primary-dark hover:text-primary-on-dark transition duration-150 ease-in-out"
+                className="text-purple-600 hover:text-purple-800 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150"
               >
                 {t('download')}
               </a>
@@ -176,7 +176,7 @@ export default function Navigation() {
               ))}
               <a
                 href="#download"
-                className="block text-gray-900 hover:text-primary px-3 py-2 rounded-md text-base font-medium bg-primary text-primary-on hover:bg-primary-dark hover:text-primary-on-dark transition-colors duration-150"
+                className="block text-purple-600 hover:text-purple-800 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2"
                 onClick={handleNavLinkClick}
               >
                 {t('download')}
