@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
+import Gallery from './Gallery';
 
 const testimonials = [
   {
@@ -24,13 +25,18 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
-  const { ref, inView } = useInView({
+  const { ref: testimonialsRef, inView: testimonialsInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+  
+  const { ref: galleryRef, inView: galleryInView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-purple-50">
+    <section className="py-24 bg-gradient-to-b from-white to-purple-50" id="testimonials">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -42,14 +48,14 @@ export default function Testimonials() {
         </div>
 
         <div
-          ref={ref}
+          ref={testimonialsRef}
           className="mt-20 grid grid-cols-1 gap-8 md:grid-cols-3"
         >
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.author}
               initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={testimonialsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white p-8 rounded-2xl shadow-xl relative"
             >
@@ -73,6 +79,25 @@ export default function Testimonials() {
               </div>
             </motion.div>
           ))}
+        </div>
+        
+        {/* Gallery Section */}
+        <div ref={galleryRef} className="mt-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={galleryInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-8"
+          >
+            <h3 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+              User Gallery
+            </h3>
+            <p className="mt-4 text-lg text-gray-600">
+              Real AI-generated photos created by our users
+            </p>
+          </motion.div>
+          
+          <Gallery />
         </div>
       </div>
     </section>

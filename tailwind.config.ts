@@ -27,9 +27,28 @@ const config: Config = {
           },
         },
       },
+      textShadow: {
+        DEFAULT: '0 1px 2px rgba(0, 0, 0, 0.8)',
+      },
+      gridTemplateColumns: {
+        'auto-fit': 'repeat(auto-fit, minmax(420px, 1fr))',
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    // @ts-ignore - Ignoring the type issue with addUtilities
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.text-shadow': {
+          textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)',
+        },
+        '.text-shadow-none': {
+          textShadow: 'none',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 };
 
 export default config; 
