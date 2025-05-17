@@ -39,10 +39,10 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: any;
 }) {
   const resolvedParams = await params;
-  const { locale } = resolvedParams;
+  const locale = resolvedParams.locale as string;
   let messages;
   try {
     messages = (await import(`../../../messages/${locale}/index.json`)).default;
@@ -52,18 +52,8 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/images/favicon.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/images/icon_32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/images/icon_16.png" />
-      </head>
-      <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      {children}
+    </NextIntlClientProvider>
   );
 } 
