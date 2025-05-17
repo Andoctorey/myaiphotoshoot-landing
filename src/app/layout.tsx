@@ -1,9 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  colorScheme: 'light dark',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://myaiphotoshoot.com"),
@@ -63,7 +67,6 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code", // You'll need to replace this with your actual Google verification code
   },
-  colorScheme: 'light dark',
 };
 
 export default function RootLayout({
