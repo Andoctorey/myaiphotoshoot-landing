@@ -53,7 +53,7 @@ export default function Navigation() {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 bg-white/0 dark:bg-gray-900/0 backdrop-blur-0 data-[scrolled=true]:bg-white/80 data-[scrolled=true]:dark:bg-gray-900/80 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm data-[scrolled=true]:dark:shadow-gray-900"
+      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 bg-white/0 dark:bg-black/80 backdrop-blur-sm data-[scrolled=true]:bg-white/80 data-[scrolled=true]:dark:bg-gray-900/80 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm data-[scrolled=true]:dark:shadow-gray-900"
       data-scrolled={isScrolled}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
