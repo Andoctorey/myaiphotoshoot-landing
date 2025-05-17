@@ -7,6 +7,7 @@ import Script from 'next/script'
 import Breadcrumb from '@/components/Breadcrumb'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 
 interface PhotoPageClientProps {
   photo: GalleryItem;
@@ -15,6 +16,25 @@ interface PhotoPageClientProps {
 }
 
 export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientProps) {
+  const photoRef = useRef<HTMLDivElement>(null);
+
+  const scrollToPhoto = () => {
+    if (photoRef.current) {
+      const headerOffset = 80; // Approximate header height
+      const elementPosition = photoRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    scrollToPhoto();
+  }, [photo.id]); // Scroll when photo changes
+
   // Create JSON-LD structured data
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -53,7 +73,7 @@ export default function PhotoPageClient({ photo, prev, next }: PhotoPageClientPr
             transition={{ duration: 0.5 }}
             className="bg-white shadow-lg rounded-lg overflow-hidden"
           >
-            <div className="relative aspect-square w-full group">
+            <div ref={photoRef} className="relative aspect-square w-full group">
               <motion.div
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
