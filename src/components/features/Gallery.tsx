@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
 import { useRouter, usePathname } from 'next/navigation';
 import { env } from '@/lib/env';
+import { LoadingSpinner, ButtonSpinner } from '@/components/ui/LoadingSpinner';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -187,14 +188,8 @@ export default function Gallery() {
       </div>
 
       {galleryItems.length === 0 && loading ? (
-        <div className="flex justify-center items-center h-64" aria-live="polite" aria-busy="true">
-          <div className="animate-pulse flex space-x-4" aria-label="Loading gallery...">
-            <div className="h-12 w-12 bg-purple-200 dark:bg-purple-800 rounded-full"></div>
-            <div className="space-y-4">
-              <div className="h-4 w-36 bg-purple-200 dark:bg-purple-800 rounded"></div>
-              <div className="h-4 w-24 bg-purple-200 dark:bg-purple-800 rounded"></div>
-            </div>
-          </div>
+        <div className="h-64" aria-live="polite" aria-busy="true">
+          <LoadingSpinner size="lg" label="Loading gallery..." />
         </div>
       ) : (
         <div 
@@ -254,7 +249,12 @@ export default function Gallery() {
             aria-label={loading ? "Loading more gallery images" : "Load more gallery images"}
             aria-busy={loading}
           >
-            {loading ? 'Loading...' : 'Load More'}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <ButtonSpinner />
+                Loading...
+              </span>
+            ) : 'Load More'}
           </button>
         </div>
       )}
