@@ -33,13 +33,8 @@ export default function Gallery() {
       setLoading(true);
       setError(null);
       
-      // Options for fetch - use caching for initial load
-      const options: RequestInit | undefined = isInitialLoad ? { cache: 'force-cache' as RequestCache } : undefined;
-      
-      const response = await fetch(
-        `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${pageNumber}&limit=24`,
-        options
-      );
+      // Use the new API route with ISR
+      const response = await fetch(`/${locale}/gallery-data?page=${pageNumber}&limit=24`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch gallery items');
