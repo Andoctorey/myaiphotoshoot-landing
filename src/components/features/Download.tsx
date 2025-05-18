@@ -70,11 +70,11 @@ export default function Download() {
               className="relative h-[600px] w-[300px] rounded-[36px] overflow-hidden shadow-xl dark:shadow-purple-900/20 transform hover:scale-105 transition-transform duration-300"
             >
               <Image
-                src="/images/screenshot_1.jpg"
+                src="/images/screenshot_ios.png"
                 alt="MyAIPhotoShoot App"
                 fill
                 sizes="(max-width: 768px) 100vw, 300px"
-                className="object-cover"
+                className="object-contain"
                 priority
               />
             </a>
