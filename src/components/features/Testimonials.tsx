@@ -49,7 +49,7 @@ export default function UserGallery() {
             </p>
           </motion.div>
           
-          {galleryInView && <Gallery key={locale} />}
+          <Gallery key={locale} />
         </div>
       </div>
     </section>
