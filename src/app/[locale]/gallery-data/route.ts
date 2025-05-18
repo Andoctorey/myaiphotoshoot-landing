@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { env } from '@/lib/env';
 import { withRevalidate } from '@/lib/cache';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Hardcoded from DEFAULT_REVALIDATE_SECONDS
 
 export async function GET(request: Request) {
