@@ -14,7 +14,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
 import { useRouter } from '@/i18n/routing';
-import { LoadingSpinner, ButtonSpinner } from '@/components/ui/LoadingSpinner';
+import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
 import { useTranslations } from '@/lib/utils';
