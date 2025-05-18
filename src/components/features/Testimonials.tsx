@@ -2,8 +2,24 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import Gallery from './Gallery';
+import dynamic from 'next/dynamic';
 import { useTranslations, useLocale } from '@/lib/utils';
+
+// Dynamically import Gallery with loading fallback
+const Gallery = dynamic(() => import('./Gallery'), {
+  loading: () => (
+    <div className="flex justify-center items-center h-64">
+      <div className="animate-pulse flex space-x-4">
+        <div className="h-12 w-12 bg-purple-200 dark:bg-purple-800 rounded-full"></div>
+        <div className="space-y-4">
+          <div className="h-4 w-36 bg-purple-200 dark:bg-purple-800 rounded"></div>
+          <div className="h-4 w-24 bg-purple-200 dark:bg-purple-800 rounded"></div>
+        </div>
+      </div>
+    </div>
+  ),
+  ssr: false // Disable server-side rendering as this is a client component with data fetching
+});
 
 export default function UserGallery() {
   const t = useTranslations('gallery');
@@ -32,7 +48,7 @@ export default function UserGallery() {
             </p>
           </motion.div>
           
-          <Gallery key={locale} />
+          {galleryInView && <Gallery key={locale} />}
         </div>
       </div>
     </section>
