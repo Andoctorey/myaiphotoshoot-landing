@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next'
 import { GalleryItem } from '@/types/gallery'
+import { env } from '@/lib/env'
 
 async function getAllPhotos(): Promise<GalleryItem[]> {
   try {
     const response = await fetch(
-      'https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=1&limit=100',
+      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=100`,
       { next: { revalidate: 3600 } } // Revalidate every hour
     );
     

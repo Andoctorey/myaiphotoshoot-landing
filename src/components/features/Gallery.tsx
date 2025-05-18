@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
 import { useRouter, usePathname } from 'next/navigation';
+import { env } from '@/lib/env';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -35,7 +36,7 @@ export default function Gallery() {
       const options: RequestInit | undefined = isInitialLoad ? { cache: 'force-cache' as RequestCache } : undefined;
       
       const response = await fetch(
-        `https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=${pageNumber}&limit=24`,
+        `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${pageNumber}&limit=24`,
         options
       );
       

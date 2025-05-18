@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { GalleryItem } from '@/types/gallery'
 import PhotoPageClient from './PhotoPageClient';
 import { getTranslations } from 'next-intl/server';
+import { env } from '@/lib/env';
 
 interface PhotoPageProps {
   params: {
@@ -12,7 +13,7 @@ interface PhotoPageProps {
 
 async function getPhotoData(id: string): Promise<GalleryItem | null> {
   try {
-    const response = await fetch(`https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=1&limit=100`, {
+    const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=100`, {
       next: { revalidate: 3600 } // Revalidate every hour
     });
     
@@ -36,7 +37,7 @@ async function getPhotoData(id: string): Promise<GalleryItem | null> {
 
 async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null; next: GalleryItem | null }> {
   try {
-    const response = await fetch(`https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/public-gallery?page=1&limit=100`, {
+    const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=100`, {
       next: { revalidate: 3600 }
     });
     
