@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useTranslations, useLocale } from '@/lib/utils';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/request';
