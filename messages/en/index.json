@@ -41,7 +41,9 @@
   },
   "gallery": {
     "title": "User Gallery",
-    "description": "Real AI-generated photos created by our users"
+    "description": "Real AI-generated photos created by our users",
+    "loadMore": "Load More",
+    "loading": "Loading..."
   },
   "pricing": {
     "title": "Simple, Transparent Pricing",

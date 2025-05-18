@@ -8,11 +8,14 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 // Dynamically import Gallery with loading fallback
 const Gallery = dynamic(() => import('./Gallery'), {
-  loading: () => (
-    <div className="h-64">
-      <LoadingSpinner size="lg" label="Loading gallery..." />
-    </div>
-  ),
+  loading: () => {
+    const t = useTranslations('gallery');
+    return (
+      <div className="h-64">
+        <LoadingSpinner size="lg" label={t('loading')} />
+      </div>
+    );
+  },
   ssr: false // Disable server-side rendering as this is a client component with data fetching
 });
 

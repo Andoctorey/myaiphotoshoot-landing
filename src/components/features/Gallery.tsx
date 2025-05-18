@@ -17,8 +17,10 @@ import { useRouter } from '@/i18n/routing';
 import { LoadingSpinner, ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
+import { useTranslations } from '@/lib/utils';
 
 export default function Gallery() {
+  const t = useTranslations('gallery');
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -192,7 +194,7 @@ export default function Gallery() {
 
       {galleryItems.length === 0 && isLoading ? (
         <div className="h-64" aria-live="polite" aria-busy="true">
-          <LoadingSpinner size="lg" label="Loading gallery..." />
+          <LoadingSpinner size="lg" label={t('loading')} />
         </div>
       ) : (
         <div 
@@ -249,15 +251,15 @@ export default function Gallery() {
             onClick={loadMore}
             disabled={isLoading}
             className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            aria-label={isLoading ? "Loading more gallery images" : "Load more gallery images"}
+            aria-label={isLoading ? t('loading') : t('loadMore')}
             aria-busy={isLoading}
           >
             {isLoading ? (
               <span className="flex items-center gap-2">
                 <ButtonSpinner />
-                Loading...
+                {t('loading')}
               </span>
-            ) : 'Load More'}
+            ) : t('loadMore')}
           </button>
         </div>
       )}
