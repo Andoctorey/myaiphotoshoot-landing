@@ -19,6 +19,11 @@ import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
 import { useTranslations } from '@/lib/utils';
 
+// Placeholder component for images while they're loading
+const ImagePlaceholder = () => (
+  <div className="relative aspect-square overflow-hidden rounded-sm bg-gray-200 dark:bg-gray-800 animate-pulse" />
+);
+
 export default function Gallery() {
   const t = useTranslations('gallery');
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -192,18 +197,21 @@ export default function Gallery() {
         </ul>
       </div>
 
-      {galleryItems.length === 0 && isLoading ? (
-        <div className="h-64" aria-live="polite" aria-busy="true">
-          <LoadingSpinner size="lg" label={t('loading')} />
-        </div>
-      ) : (
-        <div 
-          ref={containerRef}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2"
-          role="grid"
-          aria-label="Gallery of AI-generated photos"
-        >
-          {displayedItems.map((item, index) => (
+      {/* Always show the grid to maintain layout consistency */}
+      <div 
+        ref={containerRef}
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2"
+        role="grid"
+        aria-label="Gallery of AI-generated photos"
+      >
+        {/* When loading and no items available yet, show placeholders */}
+        {galleryItems.length === 0 ? (
+          Array.from({ length: displayCount }).map((_, index) => (
+            <ImagePlaceholder key={`placeholder-${index}`} />
+          ))
+        ) : (
+          /* Show actual gallery items once available */
+          displayedItems.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0 }}
@@ -217,6 +225,7 @@ export default function Gallery() {
               aria-label={`AI photo with prompt: ${item.prompt}`}
               style={{ outline: 'none' }}
             >
+              <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
               <Image
                 src={`${item.public_url}?width=420`}
                 alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
@@ -235,9 +244,9 @@ export default function Gallery() {
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
 
       {error && galleryItems.length > 0 && (
         <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-center" role="alert" aria-live="polite">
