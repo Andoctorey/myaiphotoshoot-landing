@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * This script optimizes images in the public directory
+ * This script only generates WebP versions of JPG/PNG files if they don't already exist
  * Run with: node optimize-images.js
  */
 
@@ -27,46 +27,39 @@ if (!fs.existsSync(IMAGE_DIR)) {
   fs.mkdirSync(IMAGE_DIR, { recursive: true });
 }
 
-// Process all images in the public/images directory
+// Only generates WebP versions of images if they don't already exist
 async function optimizeImages() {
   const files = fs.readdirSync(IMAGE_DIR);
+  const existingFiles = new Set(files);
   
   for (const file of files) {
     const filePath = path.join(IMAGE_DIR, file);
     const stats = fs.statSync(filePath);
     
-    if (stats.isFile() && /\.(jpg|jpeg|png|webp)$/i.test(file)) {
-      const outputPath = path.join(IMAGE_DIR, file);
-      
-      console.log(`Optimizing ${file}...`);
+    if (stats.isFile() && /\.(jpg|jpeg|png)$/i.test(file)) {
       
       try {
-        await sharp(filePath)
-          .webp({ quality: 80 }) // Convert to WebP with 80% quality
-          .toFile(outputPath.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+        // Check if WebP version already exists
+        const webpFilename = file.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        const webpPath = path.join(IMAGE_DIR, webpFilename);
         
-        // Also create optimized versions of original format
-        if (file.endsWith('.jpg') || file.endsWith('.jpeg')) {
+        if (!existingFiles.has(webpFilename)) {
+          console.log(`Generating WebP for ${file}...`);
           await sharp(filePath)
-            .jpeg({ quality: 85, mozjpeg: true })
-            .toFile(outputPath + '.optimized');
-          fs.renameSync(outputPath + '.optimized', outputPath);
-        } else if (file.endsWith('.png')) {
-          await sharp(filePath)
-            .png({ quality: 85, compressionLevel: 9 })
-            .toFile(outputPath + '.optimized');
-          fs.renameSync(outputPath + '.optimized', outputPath);
+            .webp({ quality: 80 })
+            .toFile(webpPath);
         }
       } catch (err) {
-        console.error(`Error optimizing ${file}:`, err);
+        console.error(`Error processing ${file}:`, err);
       }
     }
+    // Skip any WebP files completely
   }
   
-  console.log('Image optimization complete!');
+  console.log('Image processing complete!');
 }
 
 optimizeImages().catch(err => {
-  console.error('Error during image optimization:', err);
+  console.error('Error during image processing:', err);
   process.exit(1);
 }); 
