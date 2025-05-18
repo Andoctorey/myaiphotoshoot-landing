@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
 import { locales } from "@/i18n/request";
 import { NextIntlClientProvider } from 'next-intl';
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
@@ -39,14 +36,14 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: any;
+  params: { locale: string };
 }) {
   const resolvedParams = await params;
   const locale = resolvedParams.locale as string;
   let messages;
   try {
     messages = (await import(`../../../messages/${locale}/index.json`)).default;
-  } catch (error) {
+  } catch {
     // Fallback to English if the locale doesn't exist
     messages = (await import(`../../../messages/en/index.json`)).default;
   }

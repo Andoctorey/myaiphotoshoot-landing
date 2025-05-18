@@ -122,9 +122,11 @@ export default function Download() {
                     rel="noopener noreferrer"
                     className="transform hover:scale-105 transition duration-150"
                   >
-                    <img 
+                    <Image 
                       alt={t('mobileApps.googlePlay')} 
                       src='/images/google-play-badge.png'
+                      width={180}
+                      height={100}
                       className="h-[100px] w-[180px] object-contain"
                     />
                   </a>
@@ -136,9 +138,11 @@ export default function Download() {
                     rel="noopener noreferrer"
                     className="transform hover:scale-105 transition duration-150"
                   >
-                    <img 
+                    <Image 
                       alt={t('mobileApps.appStore')} 
                       src='/images/app-store-badge.svg'
+                      width={180}
+                      height={50}
                       className="h-[50px] w-[180px] object-contain"
                     />
                   </a>

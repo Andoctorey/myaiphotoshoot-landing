@@ -119,7 +119,7 @@ export default function Gallery() {
       fetchAttemptedRef.current = true; // Mark that we've attempted to fetch more
       fetchMoreGalleryItems(page);
     }
-  }, [displayCount, galleryItems.length, page, isLoading]);
+  }, [displayCount, galleryItems.length, page, isLoading, hasMore, fetchMoreGalleryItems]);
 
   const loadMore = () => {
     // Reset fetch attempt flag when user manually requests more items

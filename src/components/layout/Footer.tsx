@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useTranslations } from '@/lib/utils';
+import Link from 'next/link';
 
 export default function Footer() {
   const t = useTranslations('footer');
@@ -34,12 +35,12 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2" aria-labelledby="footer-links-heading">
               <li>
-                <a 
+                <Link 
                   href="/legal" 
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
                 >
                   {t('legal')}
-                </a>
+                </Link>
               </li>
               <li>
                 <a 
