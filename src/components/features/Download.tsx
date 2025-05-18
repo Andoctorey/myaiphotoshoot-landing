@@ -69,12 +69,14 @@ export default function Download() {
               rel="noopener noreferrer"
               className="relative h-[600px] w-[300px] rounded-[36px] overflow-hidden shadow-xl dark:shadow-purple-900/20 transform hover:scale-105 transition-transform duration-300"
             >
+              {/* Background matching page gradient */}
+              <div className="absolute inset-0 bg-gray-50 dark:bg-gray-800"></div>
               <Image
                 src="/images/screenshot_ios.png"
                 alt="MyAIPhotoShoot App"
                 fill
                 sizes="(max-width: 768px) 100vw, 300px"
-                className="object-contain"
+                className="object-contain z-10 relative"
                 priority
               />
             </a>

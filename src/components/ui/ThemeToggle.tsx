@@ -31,7 +31,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       onKeyDown={handleKeyDown}
-      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={`Current theme: ${modeText}`}
       role="switch"
