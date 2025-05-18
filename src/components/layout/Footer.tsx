@@ -12,7 +12,7 @@ export default function Footer() {
   });
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-900 text-white py-12" role="contentinfo" aria-label="Site footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -29,12 +29,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4" id="footer-links-heading">
               {t('links')}
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-2" aria-labelledby="footer-links-heading">
               <li>
-                <a href="/legal" className="text-gray-400 hover:text-white transition-colors">
+                <a 
+                  href="/legal" 
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                >
                   {t('legal')}
                 </a>
               </li>
@@ -43,7 +46,8 @@ export default function Footer() {
                   href="https://github.com/Andoctorey/myaiphotoshoot.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                  aria-label={`${t('openSource')} (opens in new tab)`}
                 >
                   {t('openSource')}
                 </a>
@@ -53,7 +57,8 @@ export default function Footer() {
                   href="https://x.com/andoctorey" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                  aria-label={`${t('twitter')} (opens in new tab)`}
                 >
                   {t('twitter')}
                 </a>
@@ -63,7 +68,8 @@ export default function Footer() {
                   href="https://twitter.com/messages/compose?recipient_id=2884868299" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                  aria-label={`${t('support')} (opens in new tab)`}
                 >
                   {t('support')}
                 </a>

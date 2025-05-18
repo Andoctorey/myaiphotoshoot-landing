@@ -12,17 +12,33 @@ export default function ThemeToggle() {
     setMounted(true);
   }, []);
 
+  // Handle keyboard events for accessibility
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleTheme();
+    }
+  };
+
   if (!mounted) {
-    return <div className="w-10 h-10"></div>; // Empty placeholder with same size
+    return <div className="w-10 h-10" aria-hidden="true"></div>; // Empty placeholder with same size
   }
+
+  const isDark = theme === 'dark';
+  const modeText = isDark ? 'dark' : 'light';
 
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none"
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      onKeyDown={handleKeyDown}
+      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={`Current theme: ${modeText}`}
+      role="switch"
+      aria-checked={isDark}
+      tabIndex={0}
     >
-      {theme === 'dark' ? (
+      {isDark ? (
         // Sun icon for dark mode
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +47,7 @@ export default function ThemeToggle() {
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -47,6 +64,7 @@ export default function ThemeToggle() {
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"

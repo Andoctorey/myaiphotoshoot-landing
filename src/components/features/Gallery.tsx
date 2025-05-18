@@ -137,6 +137,14 @@ export default function Gallery() {
     setDisplayCount((prev) => prev + columnsCount * 4);
   };
 
+  // Handle keyboard navigation for gallery items
+  const handleKeyDown = (e: React.KeyboardEvent, itemId: string) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      router.push(`/${locale}/photo/${itemId}`);
+    }
+  };
+
   // Get only the items we need to display
   const displayedItems = galleryItems.slice(0, displayCount);
 
@@ -145,14 +153,15 @@ export default function Gallery() {
 
   if (error && galleryItems.length === 0) {
     return (
-      <div className="mt-12 text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg">
+      <div className="mt-12 text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg" role="alert" aria-live="polite">
         <p className="text-red-600 dark:text-red-400">{error}</p>
         <button 
           onClick={() => {
             fetchAttemptedRef.current = false;
             fetchGalleryItems(1, true);
           }}
-          className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+          className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          aria-label="Try loading gallery again"
         >
           Try Again
         </button>
@@ -161,7 +170,9 @@ export default function Gallery() {
   }
 
   return (
-    <div className="mt-12">
+    <div className="mt-12" aria-labelledby="gallery-heading">
+      <h2 id="gallery-heading" className="sr-only">AI-Generated Photo Gallery Examples</h2>
+      
       {/* Hidden content for SEO - will be indexed but not visible */}
       <div className="sr-only">
         <h4>AI-Generated Photo Gallery Examples</h4>
@@ -176,8 +187,8 @@ export default function Gallery() {
       </div>
 
       {galleryItems.length === 0 && loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-pulse flex space-x-4">
+        <div className="flex justify-center items-center h-64" aria-live="polite" aria-busy="true">
+          <div className="animate-pulse flex space-x-4" aria-label="Loading gallery...">
             <div className="h-12 w-12 bg-purple-200 dark:bg-purple-800 rounded-full"></div>
             <div className="space-y-4">
               <div className="h-4 w-36 bg-purple-200 dark:bg-purple-800 rounded"></div>
@@ -189,6 +200,8 @@ export default function Gallery() {
         <div 
           ref={containerRef}
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2"
+          role="grid"
+          aria-label="Gallery of AI-generated photos"
         >
           {displayedItems.map((item, index) => (
             <motion.div
@@ -198,17 +211,22 @@ export default function Gallery() {
               transition={{ duration: 0.3, delay: index * 0.02 }}
               className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
               onClick={() => router.push(`/${locale}/photo/${item.id}`)}
+              onKeyDown={(e) => handleKeyDown(e, item.id)}
+              tabIndex={0}
+              role="gridcell"
+              aria-label={`AI photo with prompt: ${item.prompt}`}
+              style={{ outline: 'none' }}
             >
               <Image
                 src={`${item.public_url}?width=420`}
-                alt={`AI generated photo`}
+                alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                 className="object-cover"
               />
               
               {/* Hover overlay with prompt */}
-              <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
+              <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
                 <div className="max-h-full">
                   <p className="text-white text-xs">
                     {item.prompt}
@@ -221,7 +239,7 @@ export default function Gallery() {
       )}
 
       {error && galleryItems.length > 0 && (
-        <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-center">
+        <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-center" role="alert" aria-live="polite">
           <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
         </div>
       )}
@@ -231,7 +249,9 @@ export default function Gallery() {
           <button
             onClick={loadMore}
             disabled={loading}
-            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed"
+            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            aria-label={loading ? "Loading more gallery images" : "Load more gallery images"}
+            aria-busy={loading}
           >
             {loading ? 'Loading...' : 'Load More'}
           </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations, useLocale } from '@/lib/utils';
@@ -17,6 +17,8 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const languageMenuRef = useRef<HTMLDivElement>(null);
+  const languageButtonRef = useRef<HTMLButtonElement>(null);
   
   const navItems = [
     { name: t('features'), href: '#features' },
@@ -33,6 +35,40 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Add event listener for ESC key to close menus
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsLanguageMenuOpen(false);
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Add click outside listener to close language menu
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        languageMenuRef.current &&
+        languageButtonRef.current &&
+        !languageMenuRef.current.contains(e.target as Node) &&
+        !languageButtonRef.current.contains(e.target as Node)
+      ) {
+        setIsLanguageMenuOpen(false);
+      }
+    };
+
+    if (isLanguageMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isLanguageMenuOpen]);
 
   // Close mobile menu when clicking on a link
   const handleNavLinkClick = () => {
@@ -58,14 +94,19 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      role="banner"
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <a href="#" className="flex items-center">
+            <a 
+              href="#" 
+              className="flex items-center"
+              aria-label="My AI Photo Shoot - Home"
+            >
               <Image 
                 src="/images/icon_192.png" 
-                alt="My AI Photo Shoot" 
+                alt="My AI Photo Shoot logo" 
                 width={44} 
                 height={44} 
                 className="h-11 w-auto"
@@ -77,19 +118,19 @@ export default function Navigation() {
             </a>
           </div>
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
+            <div className="ml-10 flex items-center space-x-4" role="navigation">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300"
+                  className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                 >
                   {item.name}
                 </a>
               ))}
               <a
                 href="#download"
-                className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200"
+                className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
                 {t('download')}
               </a>
@@ -100,18 +141,28 @@ export default function Navigation() {
               {/* Language selector dropdown */}
               <div className="relative">
                 <button
-                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300"
+                  ref={languageButtonRef}
+                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                   onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+                  aria-expanded={isLanguageMenuOpen}
+                  aria-haspopup="listbox"
+                  aria-controls="language-menu"
                 >
                   <span className="uppercase">{locale}</span>
-                  <svg className="ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <svg className="ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
                 
                 {isLanguageMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5">
-                    <div className="py-1" role="menu" aria-orientation="vertical">
+                  <div 
+                    ref={languageMenuRef}
+                    id="language-menu"
+                    className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5"
+                    role="listbox"
+                    aria-labelledby="language-dropdown"
+                  >
+                    <div className="py-1" role="presentation">
                       {locales.map((l) => (
                         <button
                           key={l}
@@ -120,8 +171,10 @@ export default function Navigation() {
                             l === locale 
                               ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
                               : 'text-gray-700 dark:text-gray-300'
-                          } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300`}
-                          role="menuitem"
+                          } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:bg-purple-50 dark:focus:bg-purple-900/50 focus:text-purple-700 dark:focus:text-purple-300`}
+                          role="option"
+                          aria-selected={l === locale}
+                          tabIndex={0}
                         >
                           {l === 'en' ? 'English' : 'Русский'}
                         </button>
@@ -137,14 +190,19 @@ export default function Navigation() {
           <div className="md:hidden flex items-center gap-2">
             <ThemeToggle />
             <button
-              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none ${
+              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
                 isScrolled
                   ? 'text-gray-900 hover:text-primary dark:text-gray-100 dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700'
                   : 'text-gray-900 hover:text-primary dark:text-white dark:hover:text-purple-300 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              <span className="sr-only">Open main menu</span>
+              <span className="sr-only">
+                {mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
+              </span>
               {mobileMenuOpen ? (
                 <svg
                   className="block h-6 w-6"
@@ -174,28 +232,30 @@ export default function Navigation() {
         
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md mt-2 shadow-lg dark:shadow-gray-900">
+          <div id="mobile-menu" className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md mt-2 shadow-lg dark:shadow-gray-900" role="menu">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150"
+                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                   onClick={handleNavLinkClick}
+                  role="menuitem"
                 >
                   {item.name}
                 </a>
               ))}
               <a
                 href="#download"
-                className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2"
+                className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                 onClick={handleNavLinkClick}
+                role="menuitem"
               >
                 {t('download')}
               </a>
               
               {/* Language selector in mobile menu */}
-              <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+              <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" role="group" aria-label="Language selection">
                 <div className="px-2 space-y-1">
                   {locales.map((l) => (
                     <button
@@ -205,7 +265,8 @@ export default function Navigation() {
                         l === locale 
                           ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
                           : 'text-gray-700 dark:text-gray-300'
-                      } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300`}
+                      } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`}
+                      aria-pressed={l === locale}
                     >
                       {l === 'en' ? 'English' : 'Русский'}
                     </button>
