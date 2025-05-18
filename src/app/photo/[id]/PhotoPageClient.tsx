@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { GalleryItem } from '@/types/gallery'
 import Script from 'next/script'
-import Breadcrumb from '@/components/layout/Breadcrumb'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
@@ -63,13 +62,21 @@ export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPage
       />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          <Breadcrumb
-            items={[
-              { label: t('breadcrumb.home'), href: `/${locale}` },
-              { label: t('breadcrumb.gallery'), href: `/${locale}/#gallery` },
-              { label: t('breadcrumb.photo') }
-            ]}
-          />
+          {/* My AI Photo Shoot Header with Gallery Link */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6 text-center"
+          >
+            <Link 
+              href={`/${locale}/#gallery`}
+              className="inline-block text-2xl font-bold text-purple-600 hover:text-purple-700 transition-colors duration-200"
+            >
+              My AI Photo Shoot
+            </Link>
+          </motion.div>
+          
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -176,10 +183,7 @@ export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPage
               transition={{ delay: 0.4 }}
               className="p-6"
             >
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                {t('title')}
-              </h1>
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-600">
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
                 <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                   {t('prompt')}
                 </h2>
@@ -187,18 +191,6 @@ export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPage
                   {photo.prompt}
                 </p>
               </div>
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex justify-center"
-              >
-                <Link
-                  href={`https://myaiphotoshoot.com/#generate?id=${photo.id}`}
-                  className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
-                >
-                  {t('createSimilar')}
-                </Link>
-              </motion.div>
             </motion.div>
           </motion.div>
         </div>
