@@ -12,6 +12,10 @@ echo "🚀 Preparing to deploy myaiphotoshoot-landing..."
 echo "🧹 Cleaning build artifacts..."
 rm -rf .next out
 
+# Optimize images
+echo "🖼️ Optimizing images..."
+node optimize-images.js
+
 # Build the Next.js app for static export
 echo "🔨 Building for static export..."
 npm run build
@@ -22,8 +26,11 @@ if [ ! -d "out" ]; then
   exit 1
 fi
 
-# Deploy to Cloudflare Pages
+# Deploy to Cloudflare Pages with optimized settings
 echo "🌩️ Deploying to Cloudflare Pages..."
-npx wrangler pages deploy out --project-name=myaiphotoshoot-landing --commit-dirty=true
+npx wrangler pages deploy out \
+  --project-name=myaiphotoshoot-landing \
+  --commit-dirty=true \
+  --branch=production
 
 echo "✅ Deployment complete! Your site will be available at myaiphotoshoot-landing.pages.dev" 
