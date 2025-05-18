@@ -101,14 +101,16 @@ export default function Navigation() {
               className="flex items-center"
               aria-label="My AI Photo Shoot - Home"
             >
-              <Image 
-                src="/images/icon_192.png" 
-                alt="My AI Photo Shoot logo" 
-                width={44} 
-                height={44} 
-                className="h-11 w-auto"
-                priority
-              />
+              <div className="h-11 w-11 relative">
+                <picture>
+                  <source srcSet="/images/icon_192.webp" type="image/webp" />
+                  <img 
+                    src="/images/icon_192.png" 
+                    alt="My AI Photo Shoot logo" 
+                    className="h-full w-auto"
+                  />
+                </picture>
+              </div>
               <span className="ml-2 text-lg font-medium text-gray-900 dark:text-white md:block">
                 My AI Photo Shoot
               </span>

@@ -71,14 +71,16 @@ export default function Download() {
             >
               {/* Background matching page gradient */}
               <div className="absolute inset-0 bg-gray-50 dark:bg-gray-800"></div>
-              <Image
-                src="/images/screenshot_ios.png"
-                alt="MyAIPhotoShoot App"
-                fill
-                sizes="(max-width: 768px) 100vw, 300px"
-                className="object-contain z-10 relative"
-                priority
-              />
+              <div className="relative z-10 w-full h-full">
+                <picture>
+                  <source srcSet="/images/screenshot_ios.webp" type="image/webp" />
+                  <img
+                    src="/images/screenshot_ios.png"
+                    alt="MyAIPhotoShoot App"
+                    className="object-contain w-full h-full"
+                  />
+                </picture>
+              </div>
             </a>
           </motion.div>
 
@@ -124,13 +126,16 @@ export default function Download() {
                     rel="noopener noreferrer"
                     className="transform hover:scale-105 transition duration-150"
                   >
-                    <Image 
-                      alt={t('mobileApps.googlePlay')} 
-                      src='/images/google-play-badge.png'
-                      width={180}
-                      height={100}
-                      className="h-[100px] w-[180px] object-contain"
-                    />
+                    <picture>
+                      <source srcSet="/images/google-play-badge.webp" type="image/webp" />
+                      <img 
+                        alt={t('mobileApps.googlePlay')} 
+                        src='/images/google-play-badge.png'
+                        width={180}
+                        height={100}
+                        className="h-[100px] w-[180px] object-contain"
+                      />
+                    </picture>
                   </a>
                   
                   {/* App Store Button */}

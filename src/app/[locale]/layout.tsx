@@ -9,18 +9,29 @@ export const metadata: Metadata = {
   keywords: ["AI photo shoot", "selfie transformation", "AI photography", "professional photos", "AI portraits", "photo generation", "AI image enhancement"],
   icons: {
     icon: [
-      { url: '/images/favicon.png' },
-      { url: '/images/icon_16.png', sizes: '16x16' },
-      { url: '/images/icon_32.png', sizes: '32x32' },
+      { url: '/images/favicon.webp', type: 'image/webp' },
+      { url: '/images/favicon.png', type: 'image/png' },
+      { url: '/images/icon_16.webp', sizes: '16x16', type: 'image/webp' },
+      { url: '/images/icon_16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/images/icon_32.webp', sizes: '32x32', type: 'image/webp' },
+      { url: '/images/icon_32.png', sizes: '32x32', type: 'image/png' },
     ],
     apple: [
-      { url: '/images/icon_180.png', sizes: '180x180' },
+      { url: '/images/icon_180.webp', sizes: '180x180', type: 'image/webp' },
+      { url: '/images/icon_180.png', sizes: '180x180', type: 'image/png' },
     ],
     other: [
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
+        url: '/images/icon_180.webp',
+        type: 'image/webp'
+      },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
         url: '/images/icon_180.png',
+        type: 'image/png'
       },
     ],
   },

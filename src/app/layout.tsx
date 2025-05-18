@@ -17,18 +17,29 @@ export const metadata: Metadata = {
   keywords: ["AI photo shoot", "selfie transformation", "AI photography", "professional photos", "AI portraits", "photo generation", "AI image enhancement"],
   icons: {
     icon: [
-      { url: '/images/favicon.png' },
-      { url: '/images/icon_16.png', sizes: '16x16' },
-      { url: '/images/icon_32.png', sizes: '32x32' },
+      { url: '/images/favicon.webp', type: 'image/webp' },
+      { url: '/images/favicon.png', type: 'image/png' },
+      { url: '/images/icon_16.webp', sizes: '16x16', type: 'image/webp' },
+      { url: '/images/icon_16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/images/icon_32.webp', sizes: '32x32', type: 'image/webp' },
+      { url: '/images/icon_32.png', sizes: '32x32', type: 'image/png' },
     ],
     apple: [
-      { url: '/images/icon_180.png', sizes: '180x180' },
+      { url: '/images/icon_180.webp', sizes: '180x180', type: 'image/webp' },
+      { url: '/images/icon_180.png', sizes: '180x180', type: 'image/png' },
     ],
     other: [
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
+        url: '/images/icon_180.webp',
+        type: 'image/webp'
+      },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
         url: '/images/icon_180.png',
+        type: 'image/png'
       },
     ],
   },
@@ -76,10 +87,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="color-scheme" content="light dark" />
-        <link rel="icon" href="/images/favicon.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.png" />
+        <link rel="icon" href="/images/favicon.png" type="image/png" />
+        <link rel="icon" href="/images/favicon.webp" type="image/webp" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.png" type="image/png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.webp" type="image/webp" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/icon_32.png" />
+        <link rel="icon" type="image/webp" sizes="32x32" href="/images/icon_32.webp" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/icon_16.png" />
+        <link rel="icon" type="image/webp" sizes="16x16" href="/images/icon_16.webp" />
       </head>
       <body className={inter.className}>
         <ErrorBoundary>
