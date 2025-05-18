@@ -6,16 +6,19 @@ import dynamic from 'next/dynamic';
 import { useTranslations, useLocale } from '@/lib/utils';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
+// Create a proper loading component
+const GalleryLoading = () => {
+  const t = useTranslations('gallery');
+  return (
+    <div className="h-64">
+      <LoadingSpinner size="lg" label={t('loading')} />
+    </div>
+  );
+};
+
 // Dynamically import Gallery with loading fallback
 const Gallery = dynamic(() => import('./Gallery'), {
-  loading: () => {
-    const t = useTranslations('gallery');
-    return (
-      <div className="h-64">
-        <LoadingSpinner size="lg" label={t('loading')} />
-      </div>
-    );
-  },
+  loading: GalleryLoading,
   ssr: false // Disable server-side rendering as this is a client component with data fetching
 });
 
