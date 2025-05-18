@@ -13,7 +13,7 @@ interface PhotoPageProps {
 }
 
 // Add static generation with revalidation
-export const revalidate = DEFAULT_REVALIDATE_SECONDS;
+export const revalidate = 3600; // Hardcoded from DEFAULT_REVALIDATE_SECONDS
 
 // Fallback data for when the API fails
 const FALLBACK_PHOTO: GalleryItem | null = null;

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { env } from '@/lib/env';
-import { DEFAULT_REVALIDATE_SECONDS, withRevalidate } from '@/lib/cache';
+import { withRevalidate } from '@/lib/cache';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = DEFAULT_REVALIDATE_SECONDS;
+export const revalidate = 3600; // Hardcoded from DEFAULT_REVALIDATE_SECONDS
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
