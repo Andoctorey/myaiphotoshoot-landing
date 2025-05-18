@@ -2,6 +2,18 @@ import { MetadataRoute } from 'next'
 import { GalleryItem } from '@/types/gallery'
 import { fetchGalleryPhotos } from '@/lib/fetcher'
 
+/**
+ * Sitemap generator
+ * 
+ * STATIC EXPORT NOTE:
+ * This sitemap is generated at build time for Cloudflare Pages static hosting.
+ * It fetches all photos once during build and creates a static sitemap.xml file.
+ */
+
+// Add static export configuration
+export const dynamic = 'force-static';
+export const revalidate = 3600; // 1 hour revalidation
+
 // Fallback data for when the API fails
 const FALLBACK_PHOTOS: GalleryItem[] = [];
 

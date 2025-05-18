@@ -2,17 +2,31 @@ import { NextResponse } from 'next/server';
 import { env } from '@/lib/env';
 import { withRevalidate } from '@/lib/cache';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600; // Hardcoded from DEFAULT_REVALIDATE_SECONDS
+/**
+ * Gallery data API route
+ * 
+ * STATIC EXPORT NOTE:
+ * This route is configured for static generation to work with Cloudflare Pages.
+ * It returns a fixed dataset generated at build time and cannot process dynamic query parameters.
+ * Client-side pagination is handled directly via the Supabase API in the Gallery component.
+ */
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const page = searchParams.get('page') || '1';
-  const limit = searchParams.get('limit') || '24';
+export const dynamic = 'force-static';
+export const revalidate = 3600; // 1 hour revalidation
 
+// Required for static export with dynamic route parameters
+export function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'ru' }
+  ];
+}
+
+// Simplified static version - always returns first page of results
+export async function GET() {
   try {
     const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${page}&limit=${limit}`,
+      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=24`,
       withRevalidate()
     );
     

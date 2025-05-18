@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations, useLocale } from '@/lib/utils';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/request';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 
@@ -77,11 +77,8 @@ export default function Navigation() {
   
   // Handle language change
   const handleLanguageChange = (newLocale: string) => {
-    // Get the path without the locale prefix
-    const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
-    
-    // Navigate to the same page with the new locale
-    router.push(`/${newLocale}${pathWithoutLocale}`, { scroll: false });
+    // Navigate to the same page with the new locale using static-compatible router
+    router.push(pathname, { locale: newLocale, scroll: false });
     
     // Close the language menu
     setIsLanguageMenuOpen(false);

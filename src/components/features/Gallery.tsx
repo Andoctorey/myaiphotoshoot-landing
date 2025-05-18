@@ -1,12 +1,22 @@
 'use client';
 
+/**
+ * Gallery Component
+ * 
+ * STATIC EXPORT NOTE:
+ * Since we're using Cloudflare Pages static hosting without server components,
+ * this component fetches data directly from Supabase on the client side.
+ * The gallery-data API route exists only to provide an initial static dataset at build time.
+ */
+
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { LoadingSpinner, ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { useGallery } from '@/hooks/useSWRGallery';
+import { env } from '@/lib/env';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -16,12 +26,8 @@ export default function Gallery() {
   const fetchAttemptedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const pathname = usePathname();
   
-  // Extract locale from pathname (first segment)
-  const locale = pathname.split('/')[1];
-  
-  // Use SWR hook for fetching gallery data
+  // Use SWR hook for fetching gallery data directly from Supabase
   const { gallery, isLoading, isError, error, mutate } = useGallery({ 
     page: 1, 
     limit: 24,
@@ -47,13 +53,12 @@ export default function Gallery() {
     }
   }, [gallery, page]);
 
-  // Unified function to fetch more gallery items for pagination - wrapped in useCallback
+  // Fetch additional gallery items for pagination directly from Supabase
   const fetchMoreGalleryItems = useCallback(async (pageNumber: number) => {
     if (isLoading) return;
 
     try {
-      // Use the API route with ISR
-      const response = await fetch(`/${locale}/gallery-data?page=${pageNumber}&limit=24`);
+      const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${pageNumber}&limit=24`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch gallery items');
@@ -81,7 +86,7 @@ export default function Gallery() {
     } catch (error) {
       console.error('Error fetching more gallery items:', error);
     }
-  }, [isLoading, locale, setGalleryItems, setPage, setHasMore]); // Add all dependencies
+  }, [isLoading, setGalleryItems, setPage, setHasMore]);
 
   // Set initial display count based on screen size
   useEffect(() => {
@@ -143,7 +148,7 @@ export default function Gallery() {
   const handleKeyDown = (e: React.KeyboardEvent, itemId: string) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      router.push(`/${locale}/photo/${itemId}`);
+      router.push(`/photo/${itemId}`);
     }
   };
 
@@ -203,7 +208,7 @@ export default function Gallery() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: index * 0.02 }}
               className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
-              onClick={() => router.push(`/${locale}/photo/${item.id}`)}
+              onClick={() => router.push(`/photo/${item.id}`)}
               onKeyDown={(e) => handleKeyDown(e, item.id)}
               tabIndex={0}
               role="gridcell"

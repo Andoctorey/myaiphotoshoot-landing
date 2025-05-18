@@ -3,6 +3,15 @@ import { GalleryItem } from '@/types/gallery';
 import { fetcher } from '@/lib/fetcher';
 import { env } from '@/lib/env';
 
+/**
+ * Gallery data hook using SWR
+ * 
+ * STATIC EXPORT NOTE:
+ * Since we're using Cloudflare Pages static hosting without server components,
+ * all data fetching happens client-side using SWR. This hook fetches gallery
+ * data directly from Supabase rather than using server-rendered API routes.
+ */
+
 interface UseGalleryOptions {
   page?: number;
   limit?: number;
@@ -14,6 +23,7 @@ export function useGallery({
   limit = 100,
   fallbackData = []
 }: UseGalleryOptions = {}) {
+  // Direct fetch from Supabase Function URL for static Cloudflare Pages deployment
   const url = `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${page}&limit=${limit}`;
   
   const { data, error, isLoading, isValidating, mutate } = useSWR<GalleryItem[]>(
