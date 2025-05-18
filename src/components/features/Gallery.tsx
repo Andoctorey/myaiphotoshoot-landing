@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
@@ -47,8 +47,8 @@ export default function Gallery() {
     }
   }, [gallery, page]);
 
-  // Unified function to fetch more gallery items for pagination
-  const fetchMoreGalleryItems = async (pageNumber: number) => {
+  // Unified function to fetch more gallery items for pagination - wrapped in useCallback
+  const fetchMoreGalleryItems = useCallback(async (pageNumber: number) => {
     if (isLoading) return;
 
     try {
@@ -81,7 +81,7 @@ export default function Gallery() {
     } catch (error) {
       console.error('Error fetching more gallery items:', error);
     }
-  };
+  }, [isLoading, locale, setGalleryItems, setPage, setHasMore]); // Add all dependencies
 
   // Set initial display count based on screen size
   useEffect(() => {

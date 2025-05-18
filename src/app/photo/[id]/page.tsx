@@ -3,7 +3,6 @@ import { GalleryItem } from '@/types/gallery'
 import PhotoPageClient from './PhotoPageClient';
 import { getTranslations } from 'next-intl/server';
 import { fetchGalleryPhotos } from '@/lib/fetcher';
-import { DEFAULT_REVALIDATE_SECONDS } from '@/lib/cache';
 
 interface PhotoPageProps {
   params: {
