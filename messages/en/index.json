@@ -4,56 +4,56 @@
     "features": "Features",
     "gallery": "Gallery",
     "pricing": "Pricing",
-    "download": "Download App"
+    "download": "Download AI Photo App"
   },
   "hero": {
     "title": "Transform Your Selfies Into",
-    "titleHighlight": "Stunning AI Photos",
-    "description": "Create thousands of professional, AI-enhanced photos perfect for social media, profile pictures, or creative projects!"
+    "titleHighlight": "Stunning AI-Generated Photos",
+    "description": "Create thousands of professional, AI-generated photos perfect for social media, profile pictures, or creative projects with our advanced AI photo generator!"
   },
   "features": {
     "title": "Features",
     "description": "Discover what makes our AI photo generation special",
     "easySelfieUpload": {
       "title": "Easy Selfie Upload",
-      "description": "Upload 10-20 selfies easily from your phone or social media. Vary your angles and expressions for best results."
+      "description": "Upload 10-20 selfies easily from your phone or social media to start generating your AI photos. Vary your angles and expressions for the best AI-generated results."
     },
     "advancedAI": {
       "title": "Advanced AI Technology",
-      "description": "Powered by Flux.1, delivering exceptional photo realism and creative detail in every image."
+      "description": "Our AI photo generator is powered by Flux.1, ensuring exceptional realism and creative detail in every AI-generated photo."
     },
     "privacyFirst": {
       "title": "Privacy First",
-      "description": "Control your data with public/private gallery options and permanent deletion whenever you choose."
+      "description": "Control your AI photo data with public/private gallery options and permanent deletion whenever you choose."
     },
     "affordablePricing": {
       "title": "Affordable Pricing",
-      "description": "Clear one-time AI training cost and just $0.03 per generated photo. No hidden fees or subscriptions."
+      "description": "Enjoy clear, one-time AI training costs and just $0.03 per AI-generated photo. No hidden fees or subscriptions with our AI photo app."
     },
     "thousandsOfStyles": {
       "title": "Thousands of Styles",
-      "description": "Generate thousands of unique photos with our \"Surprise Me!\" feature and custom photo prompts."
+      "description": "Generate thousands of unique AI photos with our \"Surprise Me!\" feature and custom photo prompts in our AI photo generator."
     },
     "easyCustomization": {
       "title": "Easy Customization",
-      "description": "Enhance your prompts for personalized outcomes and create similar masterpieces from public photos."
+      "description": "Enhance your prompts for personalized AI-generated photos and create similar masterpieces from public photos in our gallery."
     }
   },
   "gallery": {
-    "title": "User Gallery",
-    "description": "Real AI-generated photos created by our users",
+    "title": "Public Gallery",
+    "description": "Fresh from our users: the latest AI-generated photos.",
     "loadMore": "Load More",
     "loading": "Loading..."
   },
   "pricing": {
     "title": "Simple, Transparent Pricing",
-    "description": "No hidden fees, no subscriptions. Pay only for what you use.",
+    "description": "No hidden fees, no subscriptions. Pay only for the AI photos you create.",
     "payAsYouGo": "Pay As You Go",
     "perfectFor": "Perfect for anyone who wants to create stunning AI-generated photos without commitments.",
     "whatsIncluded": "What's included",
     "features": {
-      "training": "AI model training",
-      "unlimited": "Unlimited photo generation",
+      "training": "AI photo model training",
+      "unlimited": "Unlimited AI photo generation",
       "custom": "Custom photo prompts",
       "privacy": "Public/private gallery options",
       "social": "Social sharing features",
@@ -63,13 +63,13 @@
     },
     "price": "$0.03",
     "perPhoto": "per photo",
-    "getStarted": "Get started",
+    "getStarted": "Get started with AI Photos",
     "oneTimeFee": "One-time AI training fee:",
     "oneTimeFeeAmount": "Starting from $4.99"
   },
   "download": {
     "title": "Get Started Today",
-    "description": "Download our app and create stunning AI photos in minutes",
+    "description": "Download our AI photo app and start creating stunning AI-generated photos in minutes",
     "choosePlatform": "Choose Your Platform",
     "webApp": {
       "title": "Web App",
@@ -78,7 +78,7 @@
     },
     "mobileApps": {
       "title": "Mobile Apps",
-      "description": "Download our native apps for the best experience",
+      "description": "Download our native AI photo apps for the best AI photo generation experience",
       "googlePlay": "Get it on Google Play",
       "appStore": "Download on the App Store"
     }
@@ -91,20 +91,15 @@
     "openSource": "Open Source",
     "twitter": "Twitter (X)",
     "support": "Support",
-    "copyright": "© 2023 My AI Photo Shoot. All rights reserved."
+    "copyright": "© 2025 My AI Photo Shoot. All rights reserved."
   },
   "photoPage": {
-    "breadcrumb": {
-      "home": "Home",
-      "gallery": "Gallery",
-      "photo": "Photo"
-    },
     "photoNotFound": "Photo Not Found",
     "photoNotFoundDesc": "The requested photo could not be found.",
-    "prompt": "Prompt",
-    "createSimilar": "Train AI with Your Photos to Create Similar Style",
+    "prompt": "AI Photo Prompt",
+    "createSimilar": "Train AI with Your Photos to Create Similar AI Photos",
     "title": "My AI Photo Shoot",
     "prevPhoto": "Previous photo",
     "nextPhoto": "Next photo"
   }
-} 
+}
