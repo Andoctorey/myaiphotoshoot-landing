@@ -1,22 +1,17 @@
 import { MetadataRoute } from 'next'
 import { GalleryItem } from '@/types/gallery'
-import { env } from '@/lib/env'
+import { fetchGalleryPhotos } from '@/lib/fetcher'
+
+// Fallback data for when the API fails
+const FALLBACK_PHOTOS: GalleryItem[] = [];
 
 async function getAllPhotos(): Promise<GalleryItem[]> {
   try {
-    const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=100`,
-      { next: { revalidate: 3600 } } // Revalidate every hour
-    );
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch gallery data');
-    }
-
-    return response.json();
+    // Use our new fetcher utility with better error handling
+    return await fetchGalleryPhotos<GalleryItem[]>();
   } catch (error) {
     console.error('Error fetching photos for sitemap:', error);
-    return [];
+    return FALLBACK_PHOTOS;
   }
 }
 

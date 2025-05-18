@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import { GalleryItem } from '@/types/gallery'
 import PhotoPageClient from './PhotoPageClient';
 import { getTranslations } from 'next-intl/server';
-import { env } from '@/lib/env';
-import { DEFAULT_REVALIDATE_SECONDS, withRevalidate } from '@/lib/cache';
+import { fetchGalleryPhotos } from '@/lib/fetcher';
+import { DEFAULT_REVALIDATE_SECONDS } from '@/lib/cache';
 
 interface PhotoPageProps {
   params: {
@@ -15,18 +15,14 @@ interface PhotoPageProps {
 // Add static generation with revalidation
 export const revalidate = DEFAULT_REVALIDATE_SECONDS;
 
+// Fallback data for when the API fails
+const FALLBACK_PHOTO: GalleryItem | null = null;
+const FALLBACK_ADJACENT = { prev: null, next: null };
+
 async function getPhotoData(id: string): Promise<GalleryItem | null> {
   try {
-    const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=100`, 
-      withRevalidate()
-    );
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch gallery data');
-    }
-
-    const data = await response.json();
+    // Use our new fetcher utility with better error handling
+    const data = await fetchGalleryPhotos<GalleryItem[]>();
     const photo = data.find((item: GalleryItem) => item.id === id);
     
     if (!photo) {
@@ -36,26 +32,18 @@ async function getPhotoData(id: string): Promise<GalleryItem | null> {
     return photo;
   } catch (error) {
     console.error('Error fetching photo:', error);
-    return null;
+    return FALLBACK_PHOTO;
   }
 }
 
 async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null; next: GalleryItem | null }> {
   try {
-    const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=100`,
-      withRevalidate()
-    );
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch gallery data');
-    }
-
-    const data = await response.json();
+    // Use our new fetcher utility with better error handling
+    const data = await fetchGalleryPhotos<GalleryItem[]>();
     const currentIndex = data.findIndex((item: GalleryItem) => item.id === id);
     
     if (currentIndex === -1) {
-      return { prev: null, next: null };
+      return FALLBACK_ADJACENT;
     }
 
     return {
@@ -64,23 +52,15 @@ async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null
     };
   } catch (error) {
     console.error('Error fetching adjacent photos:', error);
-    return { prev: null, next: null };
+    return FALLBACK_ADJACENT;
   }
 }
 
 // Add generateStaticParams for key pages to pre-render at build time
 export async function generateStaticParams() {
   try {
-    const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=20`,
-      withRevalidate()
-    );
-    
-    if (!response.ok) {
-      return [];
-    }
-    
-    const data = await response.json();
+    // Use our new fetcher utility with a smaller limit
+    const data = await fetchGalleryPhotos<GalleryItem[]>(1, 20);
     
     // Generate params for the most recent 20 photos
     return data.map((item: GalleryItem) => ({

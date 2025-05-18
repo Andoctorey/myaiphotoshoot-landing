@@ -5,15 +5,13 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
 import { useRouter, usePathname } from 'next/navigation';
-import { env } from '@/lib/env';
 import { LoadingSpinner, ButtonSpinner } from '@/components/ui/LoadingSpinner';
+import { useGallery } from '@/hooks/useSWRGallery';
 
 export default function Gallery() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
   const fetchAttemptedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,17 +21,38 @@ export default function Gallery() {
   // Extract locale from pathname (first segment)
   const locale = pathname.split('/')[1];
   
-  // Unified function to fetch gallery items (handles both initial load and pagination)
-  const fetchGalleryItems = async (pageNumber: number, isInitialLoad: boolean = false) => {
-    // For initial load, we should proceed even if loading is true
-    // For pagination loads, prevent concurrent fetches
-    if (!isInitialLoad && loading) return;
+  // Use SWR hook for fetching gallery data
+  const { gallery, isLoading, isError, error, mutate } = useGallery({ 
+    page: 1, 
+    limit: 24,
+  });
+
+  // Update local state when gallery data changes from SWR
+  useEffect(() => {
+    if (gallery.length > 0) {
+      setGalleryItems(prevItems => {
+        if (page === 1) {
+          return gallery;
+        } else {
+          const newItems = gallery.filter(
+            (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
+          );
+          return [...prevItems, ...newItems];
+        }
+      });
+      
+      if (gallery.length < 24) {
+        setHasMore(false);
+      }
+    }
+  }, [gallery, page]);
+
+  // Unified function to fetch more gallery items for pagination
+  const fetchMoreGalleryItems = async (pageNumber: number) => {
+    if (isLoading) return;
 
     try {
-      setLoading(true);
-      setError(null);
-      
-      // Use the new API route with ISR
+      // Use the API route with ISR
       const response = await fetch(`/${locale}/gallery-data?page=${pageNumber}&limit=24`);
       
       if (!response.ok) {
@@ -45,18 +64,13 @@ export default function Gallery() {
       if (data.length === 0) {
         setHasMore(false);
       } else {
-        if (isInitialLoad) {
-          // For initial load, replace the gallery items
-          setGalleryItems(data);
-        } else {
-          // For pagination, append to existing items
-          setGalleryItems((prevItems) => {
-            const newItems = data.filter(
-              (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
-            );
-            return [...prevItems, ...newItems];
-          });
-        }
+        // For pagination, append to existing items
+        setGalleryItems((prevItems) => {
+          const newItems = data.filter(
+            (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
+          );
+          return [...prevItems, ...newItems];
+        });
         
         // Increment page for next fetch
         setPage(pageNumber + 1);
@@ -65,17 +79,9 @@ export default function Gallery() {
         fetchAttemptedRef.current = false;
       }
     } catch (error) {
-      console.error('Error fetching gallery items:', error);
-      setError('Unable to load gallery images. Please try again later.');
-    } finally {
-      setLoading(false);
+      console.error('Error fetching more gallery items:', error);
     }
   };
-
-  // Fetch initial data
-  useEffect(() => {
-    fetchGalleryItems(1, true); // Initial load with page 1 and caching
-  }, []);
 
   // Set initial display count based on screen size
   useEffect(() => {
@@ -109,11 +115,11 @@ export default function Gallery() {
   // Ensure we load enough items for initial display
   useEffect(() => {
     // Only trigger this effect when we need more items AND haven't attempted this fetch yet
-    if (galleryItems.length < displayCount && !loading && hasMore && !fetchAttemptedRef.current) {
+    if (galleryItems.length < displayCount && !isLoading && hasMore && !fetchAttemptedRef.current) {
       fetchAttemptedRef.current = true; // Mark that we've attempted to fetch more
-      fetchGalleryItems(page);
+      fetchMoreGalleryItems(page);
     }
-  }, [displayCount, galleryItems.length, page]);
+  }, [displayCount, galleryItems.length, page, isLoading]);
 
   const loadMore = () => {
     // Reset fetch attempt flag when user manually requests more items
@@ -147,15 +153,12 @@ export default function Gallery() {
   // Determine if we need to show the "Load More" button
   const canLoadMore = hasMore || galleryItems.length > displayCount;
 
-  if (error && galleryItems.length === 0) {
+  if (isError && galleryItems.length === 0) {
     return (
       <div className="mt-12 text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg" role="alert" aria-live="polite">
-        <p className="text-red-600 dark:text-red-400">{error}</p>
+        <p className="text-red-600 dark:text-red-400">Unable to load gallery images. Please try again later.</p>
         <button 
-          onClick={() => {
-            fetchAttemptedRef.current = false;
-            fetchGalleryItems(1, true);
-          }}
+          onClick={() => mutate()}
           className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           aria-label="Try loading gallery again"
         >
@@ -182,7 +185,7 @@ export default function Gallery() {
         </ul>
       </div>
 
-      {galleryItems.length === 0 && loading ? (
+      {galleryItems.length === 0 && isLoading ? (
         <div className="h-64" aria-live="polite" aria-busy="true">
           <LoadingSpinner size="lg" label="Loading gallery..." />
         </div>
@@ -239,12 +242,12 @@ export default function Gallery() {
         <div className="flex justify-center mt-8">
           <button
             onClick={loadMore}
-            disabled={loading}
+            disabled={isLoading}
             className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            aria-label={loading ? "Loading more gallery images" : "Load more gallery images"}
-            aria-busy={loading}
+            aria-label={isLoading ? "Loading more gallery images" : "Load more gallery images"}
+            aria-busy={isLoading}
           >
-            {loading ? (
+            {isLoading ? (
               <span className="flex items-center gap-2">
                 <ButtonSpinner />
                 Loading...
