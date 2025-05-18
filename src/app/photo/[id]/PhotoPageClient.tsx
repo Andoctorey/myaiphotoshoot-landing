@@ -191,6 +191,19 @@ export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPage
                   {photo.prompt}
                 </p>
               </div>
+              
+              <motion.div 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex justify-center mt-4"
+              >
+                <Link
+                  href={`https://app.myaiphotoshoot.com`}
+                  className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 transition-colors duration-200"
+                >
+                  {t('createSimilar')}
+                </Link>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
