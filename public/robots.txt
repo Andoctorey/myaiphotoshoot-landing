@@ -1,15 +1,9 @@
-# robots.txt for MyAIPhotoShoot
+# *
 User-agent: *
 Allow: /
 
-# Disallow admin and API routes
-Disallow: /api/
-Disallow: /admin/
-Disallow: /_next/
-Disallow: /static/
+# Host
+Host: https://myaiphotoshoot.com
 
-# Sitemap
+# Sitemaps
 Sitemap: https://myaiphotoshoot.com/sitemap.xml
-
-# Crawl-delay for all bots
-Crawl-delay: 10 
