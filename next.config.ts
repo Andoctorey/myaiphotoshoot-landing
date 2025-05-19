@@ -29,6 +29,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  
+  // Increase memory and timeout limits to handle large static site generation
+  experimental: {
+    // Increase parallel workers based on memory
+    memoryBasedWorkersCount: true,
+  },
+  
   // Removed rewrites section as it's not compatible with static export
 };
 

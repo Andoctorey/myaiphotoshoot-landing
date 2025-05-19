@@ -7,22 +7,19 @@ import { fetchGalleryPhotos } from '@/lib/fetcher'
  * 
  * STATIC EXPORT NOTE:
  * This sitemap is generated at build time for Cloudflare Pages static hosting.
- * It fetches all gallery photos with pagination to handle any number of photos.
+ * It fetches all photos from the database using pagination.
  */
 
 // Add static export configuration
 export const dynamic = 'force-static';
 export const revalidate = 3600; // 1 hour revalidation
 
-// Fallback data for when the API fails
-const FALLBACK_PHOTOS: GalleryItem[] = [];
-
 // API page size limit
 const PAGE_SIZE = 100;
 
 /**
  * Fetch all photos with pagination
- * Handles the API's limit of 100 items per page
+ * Uses the gallery API with pagination to get all photos
  */
 async function getAllPhotos(): Promise<GalleryItem[]> {
   try {
@@ -56,14 +53,13 @@ async function getAllPhotos(): Promise<GalleryItem[]> {
     
   } catch (error) {
     console.error('Error fetching photos for sitemap:', error);
-    return FALLBACK_PHOTOS;
+    return [];
   }
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const photos = await getAllPhotos();
   const baseUrl = 'https://myaiphotoshoot.com';
-
+  
   // Add static pages
   const staticPages = [
     {
@@ -74,14 +70,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Add dynamic photo pages with their images
-  const photoPages = photos.map((photo) => ({
-    url: `${baseUrl}/en/photo/${photo.id}`,
-    lastModified: new Date(photo.created_at),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-    images: [photo.public_url],
-  }));
-
-  return [...staticPages, ...photoPages];
+  try {
+    // Fetch all photos with complete data
+    const photos = await getAllPhotos();
+    
+    // Create photo entries with all available data
+    const photoEntries = photos.map((photo) => ({
+      url: `${baseUrl}/en/photo/${photo.id}`,
+      lastModified: new Date(photo.created_at),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+      images: [photo.public_url],
+    }));
+    
+    return [...staticPages, ...photoEntries];
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+    // Return just the static pages if we can't fetch photos
+    return staticPages;
+  }
 } 

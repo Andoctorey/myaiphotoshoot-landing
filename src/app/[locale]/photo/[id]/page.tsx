@@ -11,17 +11,45 @@ interface PhotoPageProps {
   }>;
 }
 
-// For static export, we'll need to generate paths for all photos in the gallery
-// and handle non-gallery photos with client-side fallbacks
+// For static export, we'll need to generate paths for all photos
 export async function generateStaticParams() {
   try {
-    // Fetch all gallery photos to include in static export
-    const data = await fetchGalleryPhotos<GalleryItem[]>();
+    // Fetch all gallery photos with pagination
+    let allPhotos: GalleryItem[] = [];
+    let currentPage = 1;
+    let hasMorePhotos = true;
+    const PAGE_SIZE = 100;
     
+    console.log('Fetching photos for static generation...');
+    
+    // Continue fetching pages until we get an empty response
+    while (hasMorePhotos) {
+      const photos = await fetchGalleryPhotos<GalleryItem[]>(currentPage, PAGE_SIZE);
+      
+      if (photos.length === 0) {
+        // No more photos to fetch
+        hasMorePhotos = false;
+      } else {
+        // Add photos to our collection
+        allPhotos = [...allPhotos, ...photos];
+        
+        // Check if we got fewer photos than the page size, meaning we've reached the end
+        if (photos.length < PAGE_SIZE) {
+          hasMorePhotos = false;
+        } else {
+          // Move to the next page
+          currentPage++;
+        }
+      }
+    }
+    
+    console.log(`Generating static params for ${allPhotos.length} photos across ${currentPage} pages`);
+    
+    // Generate routes for each locale and photo ID combination
     return locales.flatMap((locale) =>
-      data.map((item: GalleryItem) => ({
+      allPhotos.map((photo) => ({
         locale,
-        id: item.id,
+        id: photo.id,
       }))
     );
   } catch (error) {

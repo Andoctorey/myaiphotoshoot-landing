@@ -16,6 +16,10 @@ rm -rf .next out
 echo "🖼️ Optimizing images..."
 node optimize-images.js
 
+# Increase memory limit for Node.js to handle large static site generation
+echo "💪 Setting higher memory limit for build process..."
+export NODE_OPTIONS="--max-old-space-size=4096"
+
 # Build the Next.js app for static export
 echo "🔨 Building for static export..."
 npm run build
