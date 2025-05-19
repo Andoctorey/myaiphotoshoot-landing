@@ -43,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Add dynamic photo pages with their images
   const photoPages = photos.map((photo) => ({
-    url: `${baseUrl}/photo/${photo.id}`,
+    url: `${baseUrl}/en/photo/${photo.id}`,
     lastModified: new Date(photo.created_at),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
