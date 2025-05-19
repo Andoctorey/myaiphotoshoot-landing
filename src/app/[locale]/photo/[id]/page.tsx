@@ -1,6 +1,6 @@
 import PhotoPageClient from '@/app/photo/[id]/PhotoPageClient';
 import { locales } from '@/i18n/request';
-import { fetchGalleryPhotos } from '@/lib/fetcher';
+import { fetchGalleryPhotos, fetchPhotoById } from '@/lib/fetcher';
 import type { GalleryItem } from '@/types/gallery';
 import { notFound } from 'next/navigation';
 
@@ -21,11 +21,6 @@ export async function generateStaticParams() {
   );
 }
 
-async function getPhotoData(id: string): Promise<GalleryItem | null> {
-  const data = await fetchGalleryPhotos<GalleryItem[]>();
-  return data.find((item) => item.id === id) || null;
-}
-
 async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null; next: GalleryItem | null }> {
   const data = await fetchGalleryPhotos<GalleryItem[]>();
   const currentIndex = data.findIndex((item) => item.id === id);
@@ -37,7 +32,7 @@ async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
   const { id, locale } = await params;
-  const photo = await getPhotoData(id);
+  const photo = await fetchPhotoById(id);
   const { prev, next } = await getAdjacentPhotos(id);
   if (!photo) return notFound();
   return <PhotoPageClient photo={photo} prev={prev} next={next} locale={locale} />;
