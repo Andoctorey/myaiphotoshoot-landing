@@ -7,7 +7,8 @@ import { fetchGalleryPhotos } from '@/lib/fetcher'
  * 
  * STATIC EXPORT NOTE:
  * This sitemap is generated at build time for Cloudflare Pages static hosting.
- * It fetches all photos once during build and creates a static sitemap.xml file.
+ * It fetches all gallery photos shown on the homepage.
+ * For external photos not in the gallery, the pages will be generated based on individual access.
  */
 
 // Add static export configuration

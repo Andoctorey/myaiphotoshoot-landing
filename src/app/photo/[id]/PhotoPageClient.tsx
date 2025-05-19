@@ -14,9 +14,10 @@ interface PhotoPageClientProps {
   prev: GalleryItem | null;
   next: GalleryItem | null;
   locale: string;
+  showNavigation?: boolean;
 }
 
-export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPageClientProps) {
+export default function PhotoPageClient({ photo, prev, next, locale, showNavigation = true }: PhotoPageClientProps) {
   const t = useTranslations('photoPage');
   const photoRef = useRef<HTMLDivElement>(null);
 
@@ -101,17 +102,59 @@ export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPage
               </motion.div>
               
               {/* Navigation Arrows - Desktop */}
-              <AnimatePresence>
+              {showNavigation && (
+                <AnimatePresence>
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 hidden md:flex"
+                  >
+                    {prev && (
+                      <motion.div
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      >
+                        <Link
+                          href={`/${locale}/photo/${prev.id}`}
+                          className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
+                          aria-label={t('prevPhoto')}
+                        >
+                          <ChevronLeftIcon className="h-5 w-5" />
+                        </Link>
+                      </motion.div>
+                    )}
+                    {next && (
+                      <motion.div
+                        initial={{ x: 20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      >
+                        <Link
+                          href={`/${locale}/photo/${next.id}`}
+                          className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
+                          aria-label={t('nextPhoto')}
+                        >
+                          <ChevronRightIcon className="h-5 w-5" />
+                        </Link>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              )}
+
+              {/* Mobile Navigation */}
+              {showNavigation && (
                 <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 hidden md:flex"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="md:hidden absolute inset-x-0 bottom-0 flex justify-between items-center px-4 py-4 bg-gradient-to-t from-black/50 to-transparent"
                 >
                   {prev && (
                     <motion.div
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <Link
                         href={`/${locale}/photo/${prev.id}`}
@@ -124,9 +167,8 @@ export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPage
                   )}
                   {next && (
                     <motion.div
-                      initial={{ x: 20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <Link
                         href={`/${locale}/photo/${next.id}`}
@@ -138,44 +180,7 @@ export default function PhotoPageClient({ photo, prev, next, locale }: PhotoPage
                     </motion.div>
                   )}
                 </motion.div>
-              </AnimatePresence>
-
-              {/* Mobile Navigation */}
-              <motion.div 
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="md:hidden absolute inset-x-0 bottom-0 flex justify-between items-center px-4 py-4 bg-gradient-to-t from-black/50 to-transparent"
-              >
-                {prev && (
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Link
-                      href={`/${locale}/photo/${prev.id}`}
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                      aria-label={t('prevPhoto')}
-                    >
-                      <ChevronLeftIcon className="h-5 w-5" />
-                    </Link>
-                  </motion.div>
-                )}
-                {next && (
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Link
-                      href={`/${locale}/photo/${next.id}`}
-                      className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                      aria-label={t('nextPhoto')}
-                    >
-                      <ChevronRightIcon className="h-5 w-5" />
-                    </Link>
-                  </motion.div>
-                )}
-              </motion.div>
+              )}
             </div>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
