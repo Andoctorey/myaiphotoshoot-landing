@@ -7,8 +7,7 @@ import { fetchGalleryPhotos } from '@/lib/fetcher'
  * 
  * STATIC EXPORT NOTE:
  * This sitemap is generated at build time for Cloudflare Pages static hosting.
- * It fetches all gallery photos shown on the homepage.
- * For external photos not in the gallery, the pages will be generated based on individual access.
+ * It fetches all gallery photos with pagination to handle any number of photos.
  */
 
 // Add static export configuration
@@ -18,10 +17,43 @@ export const revalidate = 3600; // 1 hour revalidation
 // Fallback data for when the API fails
 const FALLBACK_PHOTOS: GalleryItem[] = [];
 
+// API page size limit
+const PAGE_SIZE = 100;
+
+/**
+ * Fetch all photos with pagination
+ * Handles the API's limit of 100 items per page
+ */
 async function getAllPhotos(): Promise<GalleryItem[]> {
   try {
-    // Use our new fetcher utility with better error handling
-    return await fetchGalleryPhotos<GalleryItem[]>();
+    let allPhotos: GalleryItem[] = [];
+    let currentPage = 1;
+    let hasMorePhotos = true;
+    
+    // Continue fetching pages until we get an empty response
+    while (hasMorePhotos) {
+      const photos = await fetchGalleryPhotos<GalleryItem[]>(currentPage, PAGE_SIZE);
+      
+      if (photos.length === 0) {
+        // No more photos to fetch
+        hasMorePhotos = false;
+      } else {
+        // Add photos to our collection
+        allPhotos = [...allPhotos, ...photos];
+        
+        // Check if we got fewer photos than the page size, meaning we've reached the end
+        if (photos.length < PAGE_SIZE) {
+          hasMorePhotos = false;
+        } else {
+          // Move to the next page
+          currentPage++;
+        }
+      }
+    }
+    
+    console.log(`Sitemap: Fetched ${allPhotos.length} total photos across ${currentPage} pages`);
+    return allPhotos;
+    
   } catch (error) {
     console.error('Error fetching photos for sitemap:', error);
     return FALLBACK_PHOTOS;
