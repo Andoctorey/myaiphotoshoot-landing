@@ -19,10 +19,13 @@ export default function Navigation() {
   const languageMenuRef = useRef<HTMLDivElement>(null);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
   
+  // Check if we're on the home page
+  const isHomePage = pathname === '/' || pathname === `/${locale}`;
+  
   const navItems = [
-    { name: t('features'), href: '#features' },
-    { name: t('gallery'), href: '#gallery' },
-    { name: t('pricing'), href: '#pricing' },
+    { name: t('features'), href: isHomePage ? '#features' : `/${locale}#features` },
+    { name: t('gallery'), href: isHomePage ? '#gallery' : `/${locale}#gallery` },
+    { name: t('pricing'), href: isHomePage ? '#pricing' : `/${locale}#pricing` },
   ];
 
   useEffect(() => {
@@ -96,7 +99,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <a 
-              href="#" 
+              href={isHomePage ? "#" : `/${locale}`} 
               className="flex items-center"
               aria-label="My AI Photo Shoot - Home"
             >
@@ -127,7 +130,7 @@ export default function Navigation() {
                 </a>
               ))}
               <a
-                href="#download"
+                href={isHomePage ? "#download" : `/${locale}#download`}
                 className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
                 {t('download')}
@@ -244,7 +247,7 @@ export default function Navigation() {
                 </a>
               ))}
               <a
-                href="#download"
+                href={isHomePage ? "#download" : `/${locale}#download`}
                 className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                 onClick={handleNavLinkClick}
                 role="menuitem"

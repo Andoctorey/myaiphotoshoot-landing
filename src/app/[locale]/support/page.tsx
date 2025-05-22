@@ -8,7 +8,7 @@ export default function SupportPage() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen">
+      <main className="min-h-screen pt-24">
         <SupportForm />
       </main>
       <Footer />
