@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { env } from '@/lib/env';
 
 export default function SupportForm() {
   const t = useTranslations('supportPage');
@@ -52,7 +53,7 @@ export default function SupportForm() {
     setSubmitStatus('idle');
     
     try {
-      const response = await fetch('/api/support', {
+      const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/support`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,10 +66,12 @@ export default function SupportForm() {
         setEmail('');
         setMessage('');
       } else {
+        console.error('Support form submission failed:', await response.text());
         setSubmitStatus('error');
       }
-    } catch {
+    } catch (error) {
       // Handle error
+      console.error('Support form submission error:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
