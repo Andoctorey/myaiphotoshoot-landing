@@ -35,5 +35,3 @@ echo "🌩️ Deploying to Cloudflare Pages..."
 npx wrangler pages deploy out \
   --project-name=myaiphotoshoot-landing \
   --commit-dirty=true \
-
-echo "✅ Deployment complete! Your site will be available at myaiphotoshoot-landing.pages.dev" 
