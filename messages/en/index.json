@@ -101,5 +101,23 @@
     "title": "My AI Photo Shoot",
     "prevPhoto": "Previous photo",
     "nextPhoto": "Next photo"
+  },
+  "supportPage": {
+    "title": "Support",
+    "description": "Need help with our My AI Photo Shoot? Contact us and we'll get back to you as soon as possible.",
+    "form": {
+      "email": "Email address",
+      "message": "Your message",
+      "submit": "Send message",
+      "emailPlaceholder": "your@email.com",
+      "messagePlaceholder": "Please describe your issue or question...",
+      "success": "Thank you! Your message has been sent successfully.",
+      "error": "An error occurred. Please try again later.",
+      "emailRequired": "Email is required",
+      "messageRequired": "Message is required",
+      "invalidEmail": "Please enter a valid email address",
+      "privacyNotice": "By submitting this form, you agree that we will use your email address only to respond to your inquiry and won't share it with third parties.",
+      "responseTime": "We typically respond to all inquiries within 24-48 hours."
+    }
   }
 }

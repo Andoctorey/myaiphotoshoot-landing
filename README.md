@@ -49,6 +49,21 @@ yarn dev
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+### Setting up MailerSend for the Support Form
+
+1. Create an account at [MailerSend](https://app.mailersend.com/)
+2. Create an API token with email sending permissions
+3. Create a domain and verify it according to MailerSend instructions
+4. Create a `.env.local` file in the project root with the following variables:
+
+```bash
+MAILERSEND_API_KEY=your_api_key_here
+MAILERSEND_FROM_EMAIL=support@yourdomain.com
+MAILERSEND_TO_EMAIL=your_email@example.com
+```
+
+Note: The `MAILERSEND_FROM_EMAIL` must use a domain that's verified in your MailerSend account.
+
 ## Project Structure
 
 ```
@@ -75,6 +90,7 @@ src/
 - [Framer Motion](https://www.framer.com/motion/) - Animations
 - [React Intersection Observer](https://github.com/thebuilder/react-intersection-observer) - Scroll animations
 - [Heroicons](https://heroicons.com/) - Icons
+- [MailerSend](https://www.mailersend.com/) - Email delivery for support form
 
 ## SEO Features
 

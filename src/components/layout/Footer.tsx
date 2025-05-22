@@ -4,9 +4,13 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useTranslations } from '@/lib/utils';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
   const t = useTranslations('footer');
+  const pathname = usePathname();
+  const locale = pathname?.split('/')[1] || 'en';
+  
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -65,15 +69,12 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://twitter.com/messages/compose?recipient_id=2884868299" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <Link 
+                  href={`/${locale}/support`} 
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
-                  aria-label={`${t('support')} (opens in new tab)`}
                 >
                   {t('support')}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

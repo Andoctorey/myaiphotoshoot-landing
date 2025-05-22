@@ -1,5 +1,6 @@
-import createNextIntlPlugin from 'next-intl/plugin';
-import type { NextConfig } from "next";
+// @ts-check
+
+const createNextIntlPlugin = require('next-intl/plugin');
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -10,8 +11,9 @@ const withNextIntl = createNextIntlPlugin();
  * We use 'output: export' to generate static files without server-side rendering.
  * All routes must be compatible with static generation.
  */
-const nextConfig: NextConfig = {
+const nextConfig = {
   output: 'export', // Required for Cloudflare Pages static hosting
+  trailingSlash: true, // Helps with static export route matching
 
   /* config options here */
   images: {
@@ -39,4 +41,4 @@ const nextConfig: NextConfig = {
   // Removed rewrites section as it's not compatible with static export
 };
 
-export default withNextIntl(nextConfig);
+module.exports = withNextIntl(nextConfig);
