@@ -6,7 +6,7 @@ A modern, SEO-optimized landing page for My AI Photo Shoot - an AI-powered photo
 
 **App Website: [myaiphotoshoot.com](https://myaiphotoshoot.com)**
 
-**Main Project: [GitHub Repository](https://github.com/Andoctorey/myaiphotoshoot.com)** - This project is open source!
+**Main Project: [GitHub Repository](https://github.com/Andoctorey/myaiphotoshoot-kmp)** - This project is open source!
 
 ## Features
 
@@ -49,20 +49,17 @@ yarn dev
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Setting up MailerSend for the Support Form
+### Setting up Supabase for the Support Form
 
-1. Create an account at [MailerSend](https://app.mailersend.com/)
-2. Create an API token with email sending permissions
-3. Create a domain and verify it according to MailerSend instructions
-4. Create a `.env.local` file in the project root with the following variables:
+The support form uses Supabase Edge Functions to handle support requests. The application is pre-configured to use the default Supabase Functions URL, but you can customize it by setting the environment variable:
+
+1. Create a `.env.local` file in the project root with the following variable (optional):
 
 ```bash
-MAILERSEND_API_KEY=your_api_key_here
-MAILERSEND_FROM_EMAIL=support@yourdomain.com
-MAILERSEND_TO_EMAIL=your_email@example.com
+NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL=your_supabase_functions_url
 ```
 
-Note: The `MAILERSEND_FROM_EMAIL` must use a domain that's verified in your MailerSend account.
+Note: If not provided, the application will use the default Supabase Functions URL configured in the project.
 
 ## Project Structure
 
@@ -90,7 +87,7 @@ src/
 - [Framer Motion](https://www.framer.com/motion/) - Animations
 - [React Intersection Observer](https://github.com/thebuilder/react-intersection-observer) - Scroll animations
 - [Heroicons](https://heroicons.com/) - Icons
-- [MailerSend](https://www.mailersend.com/) - Email delivery for support form
+- [Supabase](https://supabase.com/) - Backend and support form handling
 
 ## SEO Features
 

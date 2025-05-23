@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MailerSend, EmailParams, Sender, Recipient } from 'mailersend';
 import { env } from '@/lib/env';
 
 export async function POST(request: NextRequest) {
@@ -23,55 +22,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if API key is configured
-    if (!env.MAILERSEND_API_KEY) {
-      console.error('MailerSend API key is not configured');
+    // Check if Supabase Functions URL is configured
+    if (!env.SUPABASE_FUNCTIONS_URL) {
+      console.error('Supabase Functions URL is not configured');
       return NextResponse.json(
-        { error: 'Email service not configured' },
+        { error: 'Support service not configured' },
         { status: 500 }
       );
     }
 
-    // Initialize MailerSend
-    const mailerSend = new MailerSend({
-      apiKey: env.MAILERSEND_API_KEY,
+    // Send support request to Supabase function
+    const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/support`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        message,
+      }),
     });
 
-    // Set up email parameters
-    const sentFrom = new Sender(env.MAILERSEND_FROM_EMAIL, 'Support Form');
-    const recipients = [new Recipient(env.MAILERSEND_TO_EMAIL, 'Support Team')];
-    
-    // Create email object with both plain text and HTML versions
-    const emailParams = new EmailParams()
-      .setFrom(sentFrom)
-      .setTo(recipients)
-      .setReplyTo(new Sender(email, 'User'))
-      .setSubject('New Support Request')
-      .setHtml(`
-        <div>
-          <h2>New Support Request</h2>
-          <p><strong>From:</strong> ${email}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, '<br>')}</p>
-        </div>
-      `)
-      .setText(`
-New Support Request
-From: ${email}
-Message:
-${message}
-      `);
-
-    // Send the email
-    await mailerSend.email.send(emailParams);
+    if (!response.ok) {
+      throw new Error(`Supabase function responded with status: ${response.status}`);
+    }
 
     // Return success response
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error sending support email:', error);
+    console.error('Error sending support request:', error);
     
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      { error: 'Failed to send support request' },
       { status: 500 }
     );
   }
