@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
     ? photo.prompt.substring(0, 197) + '...' 
     : photo.prompt;
 
-  const title = `AI Photo: ${truncatedPrompt}`;
-  const description = `Check out this amazing AI-generated photo created with My AI Photo Shoot: ${truncatedPrompt}`;
+  const title = `My AI Photo Shoot`;
+  const description = `${truncatedPrompt}`;
   const imageUrl = photo.public_url;
   const photoUrl = `https://myaiphotoshoot.com/photo/${photo.id}`;
 
