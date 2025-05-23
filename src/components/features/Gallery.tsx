@@ -17,6 +17,7 @@ import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
 import Link from 'next/link';
+import { useTranslations } from '@/lib/utils';
 
 // Placeholder component for images while they're loading
 const ImagePlaceholder = () => (
@@ -24,6 +25,7 @@ const ImagePlaceholder = () => (
 );
 
 export default function Gallery() {
+  const t = useTranslations('gallery');
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -261,15 +263,15 @@ export default function Gallery() {
             onClick={loadMore}
             disabled={isLoading}
             className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            aria-label={isLoading ? "Loading..." : "Load More"}
+            aria-label={isLoading ? t('loading') : t('loadMore')}
             aria-busy={isLoading}
           >
             {isLoading ? (
               <span className="flex items-center gap-2">
                 <ButtonSpinner />
-                Loading...
+                {t('loading')}
               </span>
-            ) : "Load More"}
+            ) : t('loadMore')}
           </button>
         </div>
       )}
