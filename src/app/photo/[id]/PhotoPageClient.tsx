@@ -7,6 +7,7 @@ import Script from 'next/script'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface PhotoPageClientProps {
   photo: GalleryItem;
@@ -18,6 +19,7 @@ interface PhotoPageClientProps {
 
 export default function PhotoPageClient({ photo, prev, next, locale, showNavigation = true }: PhotoPageClientProps) {
   const photoRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const scrollToPhoto = () => {
     if (photoRef.current) {
@@ -35,6 +37,13 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
   useEffect(() => {
     scrollToPhoto();
   }, [photo.id]); // Scroll when photo changes
+
+  const handleBackToGallery = () => {
+    // Store scroll intent in sessionStorage
+    sessionStorage.setItem('scrollToGallery', 'true');
+    // Navigate to home page
+    window.location.href = `/${locale}/#gallery`;
+  };
 
   // Create JSON-LD structured data
   const jsonLd = {
@@ -61,19 +70,25 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
       />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          {/* My AI Photo Shoot Header with Gallery Link */}
+          {/* Back to Gallery Navigation */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-6 text-center"
+            className="mb-6"
           >
-            <Link 
-              href={`/${locale}/#gallery`}
-              className="inline-block text-2xl font-bold text-purple-600 hover:text-purple-700 transition-colors duration-200"
+            <button
+              onClick={handleBackToGallery}
+              className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 transition-colors duration-200 group"
             >
-              My AI Photo Shoot
-            </Link>
+              <ChevronLeftIcon className="h-5 w-5 transition-transform duration-200 group-hover:-translate-x-1" />
+              <span className="text-lg font-semibold">Back to Gallery</span>
+            </button>
+            <div className="text-center mt-2">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                My AI Photo Shoot
+              </h1>
+            </div>
           </motion.div>
           
           <motion.div 
