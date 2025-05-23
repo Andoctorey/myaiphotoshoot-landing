@@ -2,11 +2,72 @@ import PhotoPageClient from './PhotoPageClient';
 import { fetchGalleryPhotos, fetchPhotoById } from '@/lib/fetcher';
 import type { GalleryItem } from '@/types/gallery';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 interface PhotoPageProps {
   params: Promise<{
     id: string;
   }>;
+}
+
+// Generate dynamic metadata for social sharing
+export async function generateMetadata({ params }: PhotoPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const photo = await fetchPhotoById(id);
+
+  if (!photo) {
+    return {
+      title: 'Photo Not Found - My AI Photo Shoot',
+      description: 'The requested photo was not found.',
+    };
+  }
+
+  // Truncate prompt if too long for social sharing
+  const truncatedPrompt = photo.prompt.length > 200 
+    ? photo.prompt.substring(0, 197) + '...' 
+    : photo.prompt;
+
+  const title = `AI Photo: ${truncatedPrompt}`;
+  const description = `Check out this amazing AI-generated photo created with My AI Photo Shoot: ${truncatedPrompt}`;
+  const imageUrl = photo.public_url;
+  const photoUrl = `https://myaiphotoshoot.com/photo/${photo.id}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: photoUrl,
+      siteName: 'My AI Photo Shoot',
+      images: [
+        {
+          url: imageUrl,
+          width: 1024,
+          height: 1024,
+          alt: photo.prompt,
+          type: 'image/jpeg',
+        },
+      ],
+      locale: 'en_US',
+      type: 'article',
+      publishedTime: photo.created_at,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [imageUrl],
+      creator: '@myaiphotoshoot',
+      site: '@myaiphotoshoot',
+    },
+    // Additional meta tags for better social sharing
+    other: {
+      'og:image:width': '1024',
+      'og:image:height': '1024',
+      'twitter:image:alt': photo.prompt,
+    },
+  };
 }
 
 // For static export, we'll need to generate paths for all photos
