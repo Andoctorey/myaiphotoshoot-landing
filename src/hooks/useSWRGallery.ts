@@ -32,6 +32,9 @@ export function useGallery({
     {
       revalidateOnFocus: false,
       revalidateIfStale: false,
+      revalidateOnReconnect: false,
+      refreshWhenOffline: false,
+      refreshWhenHidden: false,
       fallbackData,
       dedupingInterval: 3600000, // 1 hour in milliseconds
     }

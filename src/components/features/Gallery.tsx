@@ -30,6 +30,7 @@ export default function Gallery() {
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
+  const [manuallyLoadedMore, setManuallyLoadedMore] = useState<boolean>(false); // Track if user manually loaded more
   const fetchAttemptedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -39,13 +40,39 @@ export default function Gallery() {
     limit: 24,
   });
 
+  // Initialize state from sessionStorage on mount to persist user's "show more" progress
+  useEffect(() => {
+    const savedDisplayCount = sessionStorage.getItem('gallery-display-count');
+    const savedManuallyLoaded = sessionStorage.getItem('gallery-manually-loaded');
+    
+    if (savedDisplayCount) {
+      const count = parseInt(savedDisplayCount, 10);
+      if (count > 20) { // Only restore if user had loaded more than initial
+        setDisplayCount(count);
+        setManuallyLoadedMore(true);
+      }
+    }
+    
+    if (savedManuallyLoaded === 'true') {
+      setManuallyLoadedMore(true);
+    }
+  }, []);
+
+  // Save state to sessionStorage whenever it changes
+  useEffect(() => {
+    sessionStorage.setItem('gallery-display-count', displayCount.toString());
+    sessionStorage.setItem('gallery-manually-loaded', manuallyLoadedMore.toString());
+  }, [displayCount, manuallyLoadedMore]);
+
   // Update local state when gallery data changes from SWR
   useEffect(() => {
     if (gallery.length > 0) {
       setGalleryItems(prevItems => {
-        if (page === 1) {
+        // Only replace if we don't have any items yet or if we're explicitly on page 1 and haven't manually loaded more
+        if (prevItems.length === 0 || (page === 1 && !manuallyLoadedMore)) {
           return gallery;
         } else {
+          // Otherwise, merge new items avoiding duplicates
           const newItems = gallery.filter(
             (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
           );
@@ -57,7 +84,7 @@ export default function Gallery() {
         setHasMore(false);
       }
     }
-  }, [gallery, page]);
+  }, [gallery, page, manuallyLoadedMore]);
 
   // Fetch additional gallery items for pagination directly from Supabase
   const fetchMoreGalleryItems = useCallback(async (pageNumber: number) => {
@@ -112,16 +139,48 @@ export default function Gallery() {
         initialCount = 16;
       }
       
-      setDisplayCount(initialCount);
+      // Only update displayCount if it hasn't been manually increased
+      // This prevents Android Chrome mobile resize events from resetting the gallery
+      setDisplayCount(prevCount => {
+        // If user has manually loaded more items (displayCount > initialCount), preserve it
+        if (manuallyLoadedMore && prevCount > initialCount) {
+          return prevCount;
+        }
+        return initialCount;
+      });
     }
     
-    // Call initially
-    updateDisplayCount();
+    // Debounce resize events to prevent rapid successive calls on Android Chrome
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedUpdateDisplayCount = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateDisplayCount, 150); // 150ms debounce
+    };
     
-    // Add resize listener
-    window.addEventListener('resize', updateDisplayCount);
-    return () => window.removeEventListener('resize', updateDisplayCount);
-  }, []);
+    // Call initially only if we haven't restored from sessionStorage
+    const savedDisplayCount = sessionStorage.getItem('gallery-display-count');
+    if (!savedDisplayCount || parseInt(savedDisplayCount, 10) <= 20) {
+      updateDisplayCount();
+    }
+    
+    // Add debounced resize listener
+    window.addEventListener('resize', debouncedUpdateDisplayCount);
+    
+    // Cleanup function to clear sessionStorage on page unload
+    const handleBeforeUnload = () => {
+      // Clear sessionStorage when navigating away from the page
+      sessionStorage.removeItem('gallery-display-count');
+      sessionStorage.removeItem('gallery-manually-loaded');
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', debouncedUpdateDisplayCount);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [manuallyLoadedMore]);
 
   // Ensure we load enough items for initial display
   useEffect(() => {
@@ -133,6 +192,9 @@ export default function Gallery() {
   }, [displayCount, galleryItems.length, page, isLoading, hasMore, fetchMoreGalleryItems]);
 
   const loadMore = () => {
+    // Mark that user has manually loaded more items
+    setManuallyLoadedMore(true);
+    
     // Reset fetch attempt flag when user manually requests more items
     fetchAttemptedRef.current = false;
     
@@ -277,4 +339,4 @@ export default function Gallery() {
       )}
     </div>
   );
-} 
+}
