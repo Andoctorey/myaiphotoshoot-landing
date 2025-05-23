@@ -129,13 +129,13 @@ export default function Navigation() {
                   />
                 </picture>
               </div>
-              <span className="ml-2 text-lg font-medium text-gray-900 dark:text-white md:block">
+              <span className="ltr:ml-2 rtl:mr-2 text-lg font-medium text-gray-900 dark:text-white md:block">
                 My AI Photo Shoot
               </span>
             </a>
           </div>
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4" role="navigation">
+            <div className="ltr:ml-10 rtl:mr-10 flex items-center ltr:space-x-4 rtl:space-x-reverse" role="navigation">
               {navItems.map((item) => (
                 <a
                   key={item.name}
@@ -166,7 +166,7 @@ export default function Navigation() {
                   aria-controls="language-menu"
                 >
                   <span className="uppercase">{locale}</span>
-                  <svg className="ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <svg className="ltr:ml-1 rtl:mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
@@ -175,7 +175,7 @@ export default function Navigation() {
                   <div 
                     ref={languageMenuRef}
                     id="language-menu"
-                    className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
+                    className="absolute ltr:right-0 rtl:left-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
                     role="listbox"
                     aria-labelledby="language-dropdown"
                   >
@@ -193,8 +193,8 @@ export default function Navigation() {
                           aria-selected={l === locale}
                           tabIndex={0}
                         >
-                          <span className="flex-1 text-left">{getLanguageDisplayName(l)}</span>
-                          <span className="ml-2 text-xs text-gray-500 dark:text-gray-400 uppercase">{l}</span>
+                          <span className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
+                          <span className="ltr:ml-2 rtl:mr-2 text-xs text-gray-500 dark:text-gray-400 uppercase">{l}</span>
                         </button>
                       ))}
                     </div>
@@ -286,8 +286,8 @@ export default function Navigation() {
                       } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`}
                       aria-pressed={l === locale}
                     >
-                      <span className="flex-1 text-left">{getLanguageDisplayName(l)}</span>
-                      <span className="ml-2 text-sm text-gray-500 dark:text-gray-400 uppercase">{l}</span>
+                      <span className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
+                      <span className="ltr:ml-2 rtl:mr-2 text-sm text-gray-500 dark:text-gray-400 uppercase">{l}</span>
                     </button>
                   ))}
                 </div>

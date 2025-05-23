@@ -3,8 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import DirectionHandler from "@/components/layout/DirectionHandler";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// RTL language codes
+const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur'];
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
@@ -97,6 +101,7 @@ export default function RootLayout({
         <link rel="icon" type="image/webp" sizes="16x16" href="/images/icon_16.webp" />
       </head>
       <body className={inter.className}>
+        <DirectionHandler />
         <ErrorBoundary>
           <ThemeProvider>{children}</ThemeProvider>
         </ErrorBoundary>

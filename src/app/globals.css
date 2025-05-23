@@ -35,6 +35,26 @@
   .dark textarea::placeholder {
     color: rgba(156, 163, 175, 0.8);
   }
+
+  /* RTL-specific styles */
+  [dir="rtl"] {
+    text-align: right;
+  }
+
+  [dir="rtl"] input,
+  [dir="rtl"] textarea {
+    text-align: right;
+  }
+
+  /* Better Arabic font rendering */
+  [dir="rtl"] {
+    font-family: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+  }
+
+  /* RTL-specific form styling */
+  [dir="rtl"] .form-input {
+    text-align: right;
+  }
 }
 
 html {

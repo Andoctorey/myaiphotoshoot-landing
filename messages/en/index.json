@@ -40,8 +40,8 @@
     }
   },
   "gallery": {
-    "title": "Community Showcase",
-    "description": "Fresh from our users: the latest AI-generated photos.",
+    "title": "Public Gallery",
+    "description": "Fresh photos from our users: the latest AI-generated photos.",
      "loadMore": "Show More",
     "loading": "Loading..."
   },

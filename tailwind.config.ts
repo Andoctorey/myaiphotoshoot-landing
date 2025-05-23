@@ -39,6 +39,12 @@ const config: Config = {
     },
   },
   plugins: [
+    // Custom RTL variants that work with all Tailwind versions
+    // @ts-ignore
+    function ({ addVariant }) {
+      addVariant('ltr', '[dir="ltr"] &');
+      addVariant('rtl', '[dir="rtl"] &');
+    },
     // @ts-ignore - Ignoring the type issue with addUtilities
     function ({ addUtilities }) {
       const newUtilities = {

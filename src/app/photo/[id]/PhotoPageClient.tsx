@@ -79,7 +79,8 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
               onClick={handleBackToGallery}
               className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 transition-colors duration-200 group"
             >
-              <ChevronLeftIcon className="h-5 w-5 transition-transform duration-200 group-hover:-translate-x-1" />
+              <ChevronLeftIcon className="h-5 w-5 transition-transform duration-200 group-hover:ltr:-translate-x-1 group-hover:rtl:translate-x-1 ltr:block rtl:hidden" />
+              <ChevronRightIcon className="h-5 w-5 transition-transform duration-200 group-hover:ltr:-translate-x-1 group-hover:rtl:translate-x-1 ltr:hidden rtl:block" />
               <span className="text-lg font-semibold">Back to Gallery</span>
             </button>
             <div className="text-center mt-2">
@@ -131,7 +132,8 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                           className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                           aria-label="Previous Photo"
                         >
-                          <ChevronLeftIcon className="h-5 w-5" />
+                          <ChevronLeftIcon className="h-5 w-5 ltr:block rtl:hidden" />
+                          <ChevronRightIcon className="h-5 w-5 ltr:hidden rtl:block" />
                         </Link>
                       </motion.div>
                     )}
@@ -146,7 +148,8 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                           className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                           aria-label="Next Photo"
                         >
-                          <ChevronRightIcon className="h-5 w-5" />
+                          <ChevronRightIcon className="h-5 w-5 ltr:block rtl:hidden" />
+                          <ChevronLeftIcon className="h-5 w-5 ltr:hidden rtl:block" />
                         </Link>
                       </motion.div>
                     )}
@@ -172,7 +175,8 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                         aria-label="Previous Photo"
                       >
-                        <ChevronLeftIcon className="h-5 w-5" />
+                        <ChevronLeftIcon className="h-5 w-5 ltr:block rtl:hidden" />
+                        <ChevronRightIcon className="h-5 w-5 ltr:hidden rtl:block" />
                       </Link>
                     </motion.div>
                   )}
@@ -186,7 +190,8 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
                         aria-label="Next Photo"
                       >
-                        <ChevronRightIcon className="h-5 w-5" />
+                        <ChevronRightIcon className="h-5 w-5 ltr:block rtl:hidden" />
+                        <ChevronLeftIcon className="h-5 w-5 ltr:hidden rtl:block" />
                       </Link>
                     </motion.div>
                   )}

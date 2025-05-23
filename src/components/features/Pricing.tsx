@@ -49,7 +49,7 @@ export default function Pricing() {
             </p>
             <div className="mt-8">
               <div className="flex items-center">
-                <h4 className="flex-shrink-0 pr-4 text-base font-semibold text-purple-600 dark:text-purple-400">
+                <h4 className="flex-shrink-0 ltr:pr-4 rtl:pl-4 text-base font-semibold text-purple-600 dark:text-purple-400">
                   {t('whatsIncluded')}
                 </h4>
                 <div className="flex-1 border-t border-gray-200 dark:border-gray-700" />
@@ -60,7 +60,7 @@ export default function Pricing() {
                     <div className="flex-shrink-0">
                       <CheckIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
                     </div>
-                    <p className="ml-3 text-sm text-gray-700 dark:text-gray-300">{feature}</p>
+                    <p className="ltr:ml-3 rtl:mr-3 text-sm text-gray-700 dark:text-gray-300">{feature}</p>
                   </li>
                 ))}
               </ul>
@@ -69,7 +69,7 @@ export default function Pricing() {
           <div className="py-8 px-6 text-center bg-gray-50 dark:bg-gray-700 lg:flex-shrink-0 lg:flex lg:flex-col lg:justify-center lg:p-12">
             <div className="mt-4 flex items-center justify-center text-5xl font-extrabold text-gray-900 dark:text-white">
               <span>{t('price')}</span>
-              <span className="ml-3 text-xl font-medium text-gray-500 dark:text-gray-300">{t('perPhoto')}</span>
+              <span className="ltr:ml-3 rtl:mr-3 text-xl font-medium text-gray-500 dark:text-gray-300">{t('perPhoto')}</span>
             </div>
             <div className="mt-6">
               <div className="rounded-md shadow">

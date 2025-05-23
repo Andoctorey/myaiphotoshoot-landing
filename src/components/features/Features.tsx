@@ -83,13 +83,13 @@ export default function Features() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 hover:border-purple-100 dark:hover:border-purple-800 transition-colors duration-300"
             >
-              <div className="absolute top-6 left-6">
+              <div className="absolute top-6 ltr:left-6 rtl:right-6">
                 <feature.icon
                   className="h-8 w-8 text-purple-600 dark:text-purple-400"
                   aria-hidden="true"
                 />
               </div>
-              <div className="ml-16">
+              <div className="ltr:ml-16 rtl:mr-16">
                 <h3 className="text-xl font-medium text-gray-900 dark:text-white">
                   {feature.name}
                 </h3>
