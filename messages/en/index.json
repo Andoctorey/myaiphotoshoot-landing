@@ -93,15 +93,6 @@
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. All rights reserved."
   },
-  "photoPage": {
-    "photoNotFound": "Photo Not Found",
-    "photoNotFoundDesc": "The requested photo could not be found.",
-    "prompt": "AI Photo Prompt",
-    "createSimilar": "Get Your AI Portrait",
-    "title": "My AI Photo Shoot",
-    "prevPhoto": "Previous photo",
-    "nextPhoto": "Next photo"
-  },
   "supportPage": {
     "title": "Support",
     "description": "Need help with our My AI Photo Shoot? Contact us and we'll get back to you as soon as possible.",

@@ -13,11 +13,10 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
-import { useRouter } from '@/i18n/routing';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
-import { useTranslations } from '@/lib/utils';
+import Link from 'next/link';
 
 // Placeholder component for images while they're loading
 const ImagePlaceholder = () => (
@@ -25,14 +24,12 @@ const ImagePlaceholder = () => (
 );
 
 export default function Gallery() {
-  const t = useTranslations('gallery');
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
   const fetchAttemptedRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
   
   // Use SWR hook for fetching gallery data directly from Supabase
   const { gallery, isLoading, isError, error, mutate } = useGallery({ 
@@ -155,7 +152,7 @@ export default function Gallery() {
   const handleKeyDown = (e: React.KeyboardEvent, itemId: string) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      router.push(`/photo/${itemId}`);
+      window.location.href = `/photo/${itemId}`;
     }
   };
 
@@ -212,38 +209,42 @@ export default function Gallery() {
         ) : (
           /* Show actual gallery items once available */
           displayedItems.map((item, index) => (
-            <motion.div
+            <Link
               key={item.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.02 }}
-              className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
-              onClick={() => router.push(`/photo/${item.id}`)}
-              onKeyDown={(e) => handleKeyDown(e, item.id)}
-              tabIndex={0}
-              role="gridcell"
-              aria-label={`AI photo with prompt: ${item.prompt}`}
-              style={{ outline: 'none' }}
+              href={`/photo/${item.id}`}
+              className="block"
             >
-              <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
-              <Image
-                src={`${item.public_url}?width=420`}
-                alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                className="object-cover"
-                priority={index === 0}
-              />
-              
-              {/* Hover overlay with prompt */}
-              <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
-                <div className="max-h-full">
-                  <p className="text-white text-xs">
-                    {item.prompt}
-                  </p>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.02 }}
+                className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
+                onKeyDown={(e) => handleKeyDown(e, item.id)}
+                tabIndex={0}
+                role="gridcell"
+                aria-label={`AI photo with prompt: ${item.prompt}`}
+                style={{ outline: 'none' }}
+              >
+                <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
+                <Image
+                  src={`${item.public_url}?width=420`}
+                  alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                  className="object-cover"
+                  priority={index === 0}
+                />
+                
+                {/* Hover overlay with prompt */}
+                <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
+                  <div className="max-h-full">
+                    <p className="text-white text-xs">
+                      {item.prompt}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           ))
         )}
       </div>
@@ -260,15 +261,15 @@ export default function Gallery() {
             onClick={loadMore}
             disabled={isLoading}
             className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            aria-label={isLoading ? t('loading') : t('loadMore')}
+            aria-label={isLoading ? "Loading..." : "Load More"}
             aria-busy={isLoading}
           >
             {isLoading ? (
               <span className="flex items-center gap-2">
                 <ButtonSpinner />
-                {t('loading')}
+                Loading...
               </span>
-            ) : t('loadMore')}
+            ) : "Load More"}
           </button>
         </div>
       )}

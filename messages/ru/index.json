@@ -93,15 +93,6 @@
     "support": "Поддержка",
     "copyright": "© 2025 My AI Photo Shoot. Все права защищены."
   },
-  "photoPage": {
-    "photoNotFound": "Фото не найдено",
-    "photoNotFoundDesc": "Запрошенное фото не найдено.",
-    "prompt": "AI-фото промпт",
-    "createSimilar": "Обучите AI на своих фото, чтобы создать похожие AI-фотографии",
-    "title": "My AI Photo Shoot",
-    "prevPhoto": "Предыдущее фото",
-    "nextPhoto": "Следующее фото"
-  },
   "supportPage": {
     "title": "Поддержка",
     "description": "Нужна помощь с нашим AI-генератором фото? Свяжитесь с нашей командой, и мы ответим вам как можно скорее.",

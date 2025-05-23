@@ -1,14 +1,12 @@
-import PhotoPageClient from '@/app/photo/[id]/PhotoPageClient';
-import { locales } from '@/i18n/request';
+import PhotoPageClient from './PhotoPageClient';
 import { fetchGalleryPhotos, fetchPhotoById } from '@/lib/fetcher';
 import type { GalleryItem } from '@/types/gallery';
 import { notFound } from 'next/navigation';
 
 interface PhotoPageProps {
-  params: Promise<{
+  params: {
     id: string;
-    locale: string;
-  }>;
+  };
 }
 
 // For static export, we'll need to generate paths for all photos
@@ -43,15 +41,12 @@ export async function generateStaticParams() {
       }
     }
     
-    console.log(`Generating static params for ${allPhotos.length} photos across ${currentPage} pages`);
+    console.log(`Generating static params for ${allPhotos.length} photos`);
     
-    // Generate routes for each locale and photo ID combination
-    return locales.flatMap((locale) =>
-      allPhotos.map((photo) => ({
-        locale,
-        id: photo.id,
-      }))
-    );
+    // Generate routes without locale
+    return allPhotos.map((photo) => ({
+      id: photo.id,
+    }));
   } catch (error) {
     console.error('Error generating static params:', error);
     return [];
@@ -88,9 +83,10 @@ async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null
 }
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
-  const { id, locale } = await params;
+  const { id } = params;
   const photo = await fetchPhotoById(id);
   const { prev, next, showNavigation } = await getAdjacentPhotos(id);
   if (!photo) return notFound();
-  return <PhotoPageClient photo={photo} prev={prev} next={next} locale={locale} showNavigation={showNavigation} />;
+  
+  return <PhotoPageClient photo={photo} prev={prev} next={next} locale="en" showNavigation={showNavigation} />;
 } 

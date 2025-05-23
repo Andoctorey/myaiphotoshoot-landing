@@ -60,7 +60,7 @@ async function getAllPhotos(): Promise<GalleryItem[]> {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://myaiphotoshoot.com';
   
-  // Add static pages
+  // Add static pages (English and Russian for main and support)
   const staticPages = [
     {
       url: baseUrl,
@@ -98,23 +98,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch all photos with complete data
     const photos = await getAllPhotos();
     
-    // Create photo entries with all available data for both languages
-    const photoEntries = photos.flatMap((photo) => [
-      {
-        url: `${baseUrl}/en/photo/${photo.id}`,
-        lastModified: new Date(photo.created_at),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-        images: [photo.public_url],
-      },
-      {
-        url: `${baseUrl}/ru/photo/${photo.id}`,
-        lastModified: new Date(photo.created_at),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-        images: [photo.public_url],
-      }
-    ]);
+    // Create photo entries without locale prefix
+    const photoEntries = photos.map((photo) => ({
+      url: `${baseUrl}/photo/${photo.id}`,
+      lastModified: new Date(photo.created_at),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+      images: [photo.public_url],
+    }));
     
     return [...staticPages, ...photoEntries];
   } catch (error) {

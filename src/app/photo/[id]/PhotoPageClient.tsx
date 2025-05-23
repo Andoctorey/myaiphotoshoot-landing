@@ -7,7 +7,6 @@ import Script from 'next/script'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { useTranslations } from 'next-intl'
 
 interface PhotoPageClientProps {
   photo: GalleryItem;
@@ -18,7 +17,6 @@ interface PhotoPageClientProps {
 }
 
 export default function PhotoPageClient({ photo, prev, next, locale, showNavigation = true }: PhotoPageClientProps) {
-  const t = useTranslations('photoPage');
   const photoRef = useRef<HTMLDivElement>(null);
 
   const scrollToPhoto = () => {
@@ -116,9 +114,9 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       >
                         <Link
-                          href={`/${locale}/photo/${prev.id}`}
+                          href={`/photo/${prev.id}`}
                           className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                          aria-label={t('prevPhoto')}
+                          aria-label="Previous Photo"
                         >
                           <ChevronLeftIcon className="h-5 w-5" />
                         </Link>
@@ -131,9 +129,9 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       >
                         <Link
-                          href={`/${locale}/photo/${next.id}`}
+                          href={`/photo/${next.id}`}
                           className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                          aria-label={t('nextPhoto')}
+                          aria-label="Next Photo"
                         >
                           <ChevronRightIcon className="h-5 w-5" />
                         </Link>
@@ -157,9 +155,9 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link
-                        href={`/${locale}/photo/${prev.id}`}
+                        href={`/photo/${prev.id}`}
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                        aria-label={t('prevPhoto')}
+                        aria-label="Previous Photo"
                       >
                         <ChevronLeftIcon className="h-5 w-5" />
                       </Link>
@@ -171,9 +169,9 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link
-                        href={`/${locale}/photo/${next.id}`}
+                        href={`/photo/${next.id}`}
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-black/50 transition-colors duration-200"
-                        aria-label={t('nextPhoto')}
+                        aria-label="Next Photo"
                       >
                         <ChevronRightIcon className="h-5 w-5" />
                       </Link>
@@ -190,7 +188,7 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
             >
               <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
                 <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-                  {t('prompt')}
+                  Prompt
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300 text-lg">
                   {photo.prompt}
@@ -206,7 +204,7 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                   href={`https://app.myaiphotoshoot.com`}
                   className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 transition-colors duration-200"
                 >
-                  {t('createSimilar')}
+                  Create Similar Photo
                 </Link>
               </motion.div>
             </motion.div>
