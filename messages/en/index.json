@@ -4,7 +4,7 @@
     "features": "Features",
     "gallery": "Gallery",
     "pricing": "Pricing",
-    "download": "Download AI Photo App"
+    "download": "Get Started"
   },
   "hero": {
     "title": "Transform Your Selfies Into",
@@ -14,10 +14,6 @@
   "features": {
     "title": "Features",
     "description": "Discover what makes our AI photo generation special",
-    "easySelfieUpload": {
-      "title": "Easy Selfie Upload",
-      "description": "Upload 10-20 selfies easily from your phone or social media to start generating your AI photos. Vary your angles and expressions for the best AI-generated results."
-    },
     "advancedAI": {
       "title": "Advanced AI Technology",
       "description": "Our AI photo generator is powered by Flux.1, ensuring exceptional realism and creative detail in every AI-generated photo."
@@ -37,6 +33,10 @@
     "easyCustomization": {
       "title": "Easy Customization",
       "description": "Enhance your prompts for personalized AI-generated photos and create similar masterpieces from public photos in our gallery."
+    },
+    "multiplatform": {
+      "title": "Available Everywhere",
+      "description": "Access your AI photo studio from anywhere with our mobile apps for iOS and Android, or use our web app on any device. Your photos sync seamlessly across all platforms."
     }
   },
   "gallery": {
@@ -68,7 +68,7 @@
     "oneTimeFeeAmount": "Starting from $4.99"
   },
   "download": {
-    "title": "Get Started Today",
+    "title": "Get Started Now",
     "description": "Download our AI photo app and start creating stunning AI-generated photos in minutes",
     "choosePlatform": "Choose Your Platform",
     "webApp": {

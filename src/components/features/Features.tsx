@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useTranslations } from '@/lib/utils';
 import {
-  CameraIcon,
   ShieldCheckIcon,
   SparklesIcon,
   CurrencyDollarIcon,
   PhotoIcon,
   AdjustmentsHorizontalIcon,
+  DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
 
 export default function Features() {
@@ -20,11 +20,6 @@ export default function Features() {
   });
 
   const features = [
-    {
-      name: t('easySelfieUpload.title'),
-      description: t('easySelfieUpload.description'),
-      icon: CameraIcon,
-    },
     {
       name: t('advancedAI.title'),
       description: t('advancedAI.description'),
@@ -49,6 +44,11 @@ export default function Features() {
       name: t('easyCustomization.title'),
       description: t('easyCustomization.description'),
       icon: AdjustmentsHorizontalIcon,
+    },
+    {
+      name: t('multiplatform.title'),
+      description: t('multiplatform.description'),
+      icon: DevicePhoneMobileIcon,
     },
   ];
 
