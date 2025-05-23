@@ -13,9 +13,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://myaiphotoshoot.com"),
-  title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
-  description: "Transform your selfies into professional, AI-enhanced photos with My AI Photo Shoot. Create thousands of unique, stunning images perfect for social media and professional use.",
-  keywords: ["AI photo shoot", "selfie transformation", "AI photography", "professional photos", "AI portraits", "photo generation", "AI image enhancement"],
+  title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
+  description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
+  keywords: ["AI photo shoot", "selfie transformation", "AI-generated photos", "professional photography", "portrait enhancement", "creative photo prompts", "affordable AI photos", "privacy-focused photo app", "Flux.1 AI", "photo editing app"],
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
-    description: "Transform your selfies into professional, AI-enhanced photos with My AI Photo Shoot. Create thousands of unique, stunning images perfect for social media and professional use.",
+    title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
+    description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
     url: "https://myaiphotoshoot.com",
     siteName: "My AI Photo Shoot",
     images: [
@@ -70,8 +70,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
-    description: "Transform your selfies into professional, AI-enhanced photos with My AI Photo Shoot. Create thousands of unique, stunning images perfect for social media and professional use.",
+    title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
+    description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
     images: ["/og-image.png"],
     creator: "@myaiphotoshoot",
     site: "@myaiphotoshoot",
