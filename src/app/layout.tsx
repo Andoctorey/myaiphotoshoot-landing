@@ -16,6 +16,14 @@ export const metadata: Metadata = {
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
   description: "Transform your selfies into professional, AI-enhanced photos with My AI Photo Shoot. Create thousands of unique, stunning images perfect for social media and professional use.",
   keywords: ["AI photo shoot", "selfie transformation", "AI photography", "professional photos", "AI portraits", "photo generation", "AI image enhancement"],
+  authors: [{ name: "My AI Photo Shoot" }],
+  creator: "My AI Photo Shoot",
+  publisher: "My AI Photo Shoot",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   icons: {
     icon: [
       { url: '/images/favicon.webp', type: 'image/webp' },
@@ -51,7 +59,7 @@ export const metadata: Metadata = {
     siteName: "My AI Photo Shoot",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "My AI Photo Shoot - Transform your selfies with AI",
@@ -64,7 +72,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
     description: "Transform your selfies into professional, AI-enhanced photos with My AI Photo Shoot. Create thousands of unique, stunning images perfect for social media and professional use.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
+    creator: "@myaiphotoshoot",
+    site: "@myaiphotoshoot",
   },
   robots: {
     index: true,
@@ -88,6 +98,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="color-scheme" content="light dark" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="application-name" content="My AI Photo Shoot" />
+        <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="canonical" href="https://myaiphotoshoot.com" />
         <link rel="icon" href="/images/favicon.png" type="image/png" />
         <link rel="icon" href="/images/favicon.webp" type="image/webp" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.png" type="image/png" />
