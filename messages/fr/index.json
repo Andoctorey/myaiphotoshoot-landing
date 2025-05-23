@@ -7,77 +7,77 @@
     "download": "Commencer"
   },
   "hero": {
-    "title": "Transformez vos Selfies en",
-    "titleHighlight": "Portraits IA Époustouflants",
-    "description": "Créez instantanément des milliers de photos hyperréalistes générées par IA pour les réseaux sociaux, photos de profil, marketing ou projets personnels avec notre studio photo IA de nouvelle génération."
+    "title": "Transformez vos selfies en",
+    "titleHighlight": "portraits IA époustouflants",
+    "description": "Créez instantanément des milliers de photographies hyperréalistes générées par IA pour les réseaux sociaux, photos de profil, marketing ou projets personnels avec notre studio photo nouvelle génération."
   },
   "features": {
-    "title": "Fonctionnalités Principales",
+    "title": "Fonctionnalités principales",
     "description": "Pourquoi notre générateur de photos IA domine le marché",
     "advancedAI": {
-      "title": "Moteur IA de Nouvelle Génération",
+      "title": "Moteur IA nouvelle génération",
       "description": "Alimenté par les modèles d'apprentissage profond Flux.1™ pour un réalisme, des détails et un contrôle créatif inégalés dans chaque image générée par IA."
     },
     "privacyFirst": {
-      "title": "Contrôle de Confidentialité Intégré",
-      "description": "Choisissez des galeries publiques ou privées, et supprimez définitivement vos photos à tout moment—vos données, votre façon."
+      "title": "Contrôle de confidentialité intégré",
+      "description": "Choisissez entre galeries publiques ou privées, et supprimez définitivement vos photos à tout moment—vos données sous votre contrôle."
     },
     "affordablePricing": {
-      "title": "Tarifs Transparents et Abordables",
-      "description": "Pas d'abonnements, pas de surprises. Formation IA unique à partir de 4,99$ + seulement 0,03$ par image—évoluez sans coûts d'évolution."
+      "title": "Tarifs transparents et économiques",
+      "description": "Aucun abonnement, aucune surprise. Formation IA unique à partir de 4,99$ + seulement 0,03$ par image—évoluez sans coûts supplémentaires."
     },
     "thousandsOfStyles": {
-      "title": "Styles Créatifs Infinis",
-      "description": "Explorez les préréglages intégrés ou appuyez sur \"Surprenez-moi !\" pour générer instantanément des milliers de rendus de style IA uniques."
+      "title": "Styles créatifs infinis",
+      "description": "Explorez les préréglages intégrés ou cliquez sur \"Surprenez-moi !\" pour générer instantanément des milliers de styles IA uniques."
     },
     "easyCustomization": {
-      "title": "Constructeur de Prompts Intuitif",
-      "description": "Affinez vos prompts ou remixez les photos de la galerie publique pour des images IA sur mesure de qualité professionnelle en quelques secondes."
+      "title": "Générateur de prompts intuitif",
+      "description": "Affinez précisément vos prompts ou remixez les photos de la galerie publique pour créer des images IA professionnelles et personnalisées en quelques secondes."
     },
     "multiplatform": {
-      "title": "Accès Multi-plateforme",
-      "description": "Utilisez notre application web ou applications natives iOS et Android—synchronisez automatiquement votre bibliothèque de photos IA sur tous les appareils."
+      "title": "Accès multiplateforme",
+      "description": "Utilisez notre application web ou applications natives iOS et Android—synchronisez automatiquement votre bibliothèque de photos IA sur tous vos appareils."
     }
   },
   "gallery": {
-    "title": "Vitrine Communautaire",
-    "description": "Frais de nos utilisateurs : les dernières photos générées par IA.",
-    "loadMore": "Afficher Plus",
+    "title": "Galerie publique",
+    "description": "Photos fraîches de nos utilisateurs : les dernières images générées par IA.",
+    "loadMore": "Afficher plus",
     "loading": "Chargement..."
   },
   "pricing": {
-    "title": "Tarification Simple au Paiement à l'Usage",
-    "description": "Ne payez que ce que vous utilisez. Pas de frais mensuels—juste une génération de photos IA puissante à une fraction du coût.",
-    "payAsYouGo": "Paiement à l'Usage",
-    "perfectFor": "Idéal pour les influenceurs, entreprises, créateurs et quiconque désire des images IA époustouflantes.",
-    "whatsIncluded": "Tout ce que Vous Obtenez",
+    "title": "Système simple de paiement à l'usage",
+    "description": "Payez uniquement ce que vous utilisez. Aucun frais mensuel—génération puissante de photos IA à une fraction du coût.",
+    "payAsYouGo": "Paiement à l'usage",
+    "perfectFor": "Idéal pour les influenceurs, entreprises, créateurs de contenu et tous ceux qui recherchent des images IA époustouflantes.",
+    "whatsIncluded": "Tout ce que vous obtenez",
     "features": {
       "training": "Formation de modèle IA personnalisé",
       "unlimited": "Génération d'images illimitée",
       "custom": "Personnalisation avancée des prompts",
       "privacy": "Options de galerie privée et publique",
-      "social": "Partage social facile",
+      "social": "Partage facile sur les réseaux sociaux",
       "download": "Téléchargements haute résolution",
-      "support": "Support expert 24/7",
+      "support": "Support expert 24h/24 7j/7",
       "updates": "Améliorations IA continues"
     },
     "price": "0,03$",
     "perPhoto": "par image",
-    "getStarted": "Commencer à Générer Maintenant",
-    "oneTimeFee": "Frais uniques de formation IA",
+    "getStarted": "Commencer à générer",
+    "oneTimeFee": "Frais unique de formation IA",
     "oneTimeFeeAmount": "À partir de 4,99$"
   },
   "download": {
-    "title": "Commencez à Générer Aujourd'hui",
+    "title": "Commencez à créer dès aujourd'hui",
     "description": "Téléchargez notre studio photo IA ou lancez l'application web—créez des images IA professionnelles en moins d'une minute.",
-    "choosePlatform": "Choisissez Votre Plateforme",
+    "choosePlatform": "Choisissez votre plateforme",
     "webApp": {
-      "title": "Application Web",
-      "description": "Aucune installation nécessaire. Accédez instantanément à votre studio IA dans n'importe quel navigateur.",
-      "button": "Lancer Maintenant"
+      "title": "Application web",
+      "description": "Aucune installation nécessaire. Accès instantané à votre studio IA dans n'importe quel navigateur.",
+      "button": "Lancer maintenant"
     },
     "mobileApps": {
-      "title": "Applications Mobiles",
+      "title": "Applications mobiles",
       "description": "Applications natives complètes pour iOS et Android—créez des images IA en déplacement.",
       "googlePlay": "Obtenir sur Google Play",
       "appStore": "Télécharger sur l'App Store"
@@ -85,29 +85,29 @@
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Créez, personnalisez et partagez de superbes photos générées par IA—alimentées par l'apprentissage profond de pointe.",
-    "links": "Liens Rapides",
+    "description": "Créez, personnalisez et partagez de superbes photographies générées par IA—alimentées par une technologie d'apprentissage profond de pointe.",
+    "links": "Liens rapides",
     "legal": "Légal",
-    "openSource": "Source Ouverte",
+    "openSource": "Code source ouvert",
     "twitter": "Twitter (X)",
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. Tous droits réservés."
   },
   "supportPage": {
-    "title": "Support Client",
-    "description": "Vous rencontrez un problème ou avez une question ? Notre équipe de support est prête à aider sous 24-48 heures.",
+    "title": "Support client",
+    "description": "Vous rencontrez un problème ou avez une question ? Notre équipe de support est prête à vous aider sous 24-48 heures.",
     "form": {
-      "email": "Adresse E-mail",
-      "message": "Votre Message",
+      "email": "Adresse e-mail",
+      "message": "Votre message",
       "submit": "Envoyer",
       "emailPlaceholder": "vous@exemple.com",
       "messagePlaceholder": "Décrivez votre problème ou question...",
-      "success": "Merci ! Nous avons reçu votre message et répondrons bientôt.",
+      "success": "Merci ! Nous avons reçu votre message et vous répondrons bientôt.",
       "error": "Oups ! Quelque chose s'est mal passé. Veuillez réessayer plus tard.",
       "emailRequired": "L'e-mail est requis",
       "messageRequired": "Le message est requis",
-      "invalidEmail": "Veuillez entrer un e-mail valide",
-      "privacyNotice": "Nous n'utiliserons votre e-mail que pour répondre et ne le partagerons jamais avec des tiers.",
+      "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+      "privacyNotice": "Nous n'utiliserons votre e-mail que pour vous répondre et ne le partagerons jamais avec des tiers.",
       "responseTime": "Attendez-vous à une réponse sous 24 heures."
     }
   }

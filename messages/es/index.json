@@ -1,104 +1,104 @@
 {
   "navigation": {
     "home": "Inicio",
-    "features": "Características",
+    "features": "Funciones",
     "gallery": "Galería",
     "pricing": "Precios",
     "download": "Comenzar"
   },
   "hero": {
-    "title": "Transforma tus Selfies en",
-    "titleHighlight": "Impresionantes Retratos Generados por IA",
-    "description": "Crea instantáneamente miles de fotos hiperrealistas generadas por IA para redes sociales, fotos de perfil, marketing o proyectos personales con nuestro estudio de fotos IA de nueva generación."
+    "title": "Transforma tus selfies en",
+    "titleHighlight": "impresionantes retratos generados por IA",
+    "description": "Crea instantáneamente miles de fotografías hiperrealistas generadas por IA para redes sociales, fotos de perfil, marketing o proyectos personales con nuestro estudio fotográfico de nueva generación."
   },
   "features": {
-    "title": "Características Principales",
+    "title": "Funciones principales",
     "description": "Por qué nuestro generador de fotos IA lidera el mercado",
     "advancedAI": {
-      "title": "Motor IA de Nueva Generación",
+      "title": "Motor de IA de nueva generación",
       "description": "Impulsado por modelos de aprendizaje profundo Flux.1™ para un realismo, detalle y control creativo incomparables en cada imagen generada por IA."
     },
     "privacyFirst": {
-      "title": "Control de Privacidad Integrado",
-      "description": "Elige galerías públicas o privadas, y elimina permanentemente tus fotos en cualquier momento—tus datos, tu forma."
+      "title": "Control de privacidad integrado",
+      "description": "Elige entre galerías públicas o privadas, y elimina permanentemente tus fotos en cualquier momento—tus datos bajo tu control."
     },
     "affordablePricing": {
-      "title": "Precios Transparentes y de Bajo Costo",
-      "description": "Sin suscripciones, sin sorpresas. Entrenamiento IA único desde $4.99 + solo $0.03 por imagen—escala sin costos de escalamiento."
+      "title": "Precios transparentes y económicos",
+      "description": "Sin suscripciones, sin sorpresas. Entrenamiento único de IA desde $4.99 + solo $0.03 por imagen—escala sin costos adicionales."
     },
     "thousandsOfStyles": {
-      "title": "Estilos Creativos Infinitos",
-      "description": "Explora presets integrados o presiona \"¡Sorpréndeme!\" para generar miles de representaciones de estilo IA únicas al instante."
+      "title": "Estilos creativos infinitos",
+      "description": "Explora presets incluidos o presiona \"¡Sorpréndeme!\" para generar miles de estilos únicos de IA al instante."
     },
     "easyCustomization": {
-      "title": "Constructor de Prompts Intuitivo",
-      "description": "Ajusta finamente tus prompts o remezcla fotos de la galería pública para imágenes IA profesionales personalizadas en segundos."
+      "title": "Constructor de prompts intuitivo",
+      "description": "Ajusta con precisión tus prompts o remezcla fotos de la galería pública para crear imágenes IA profesionales y personalizadas en segundos."
     },
     "multiplatform": {
-      "title": "Acceso Multiplataforma",
-      "description": "Usa nuestra aplicación web o aplicaciones nativas iOS y Android—sincroniza automáticamente tu biblioteca de fotos IA en todos los dispositivos."
+      "title": "Acceso multiplataforma",
+      "description": "Usa nuestra aplicación web o apps nativas para iOS y Android—sincroniza automáticamente tu biblioteca de fotos IA en todos los dispositivos."
     }
   },
   "gallery": {
-    "title": "Escaparate de la Comunidad",
-    "description": "Fresco de nuestros usuarios: las últimas fotos generadas por IA.",
-    "loadMore": "Mostrar Más",
+    "title": "Galería pública",
+    "description": "Fotos frescas de nuestros usuarios: las últimas imágenes generadas por IA.",
+    "loadMore": "Mostrar más",
     "loading": "Cargando..."
   },
   "pricing": {
-    "title": "Precios Simples de Pago por Uso",
-    "description": "Solo paga por lo que uses. Sin tarifas mensuales—solo generación de fotos IA potente a una fracción del costo.",
-    "payAsYouGo": "Pago por Uso",
-    "perfectFor": "Ideal para influencers, empresas, creadores y cualquiera que desee imágenes IA impresionantes.",
-    "whatsIncluded": "Todo lo que Obtienes",
+    "title": "Sistema simple de pago por uso",
+    "description": "Paga solo por lo que uses. Sin tarifas mensuales—generación potente de fotos IA a una fracción del costo.",
+    "payAsYouGo": "Pago por uso",
+    "perfectFor": "Ideal para influencers, empresas, creadores de contenido y cualquiera que busque imágenes IA impresionantes.",
+    "whatsIncluded": "Todo lo que obtienes",
     "features": {
       "training": "Entrenamiento de modelo IA personalizado",
       "unlimited": "Generación ilimitada de imágenes",
       "custom": "Personalización avanzada de prompts",
       "privacy": "Opciones de galería privada y pública",
-      "social": "Compartir social fácil",
+      "social": "Compartir fácil en redes sociales",
       "download": "Descargas en alta resolución",
       "support": "Soporte experto 24/7",
       "updates": "Mejoras continuas de IA"
     },
     "price": "$0.03",
     "perPhoto": "por imagen",
-    "getStarted": "Comenzar a Generar Ahora",
+    "getStarted": "Comenzar a generar",
     "oneTimeFee": "Tarifa única de entrenamiento IA",
     "oneTimeFeeAmount": "Desde $4.99"
   },
   "download": {
-    "title": "Comienza a Generar Hoy",
+    "title": "Comienza a crear hoy",
     "description": "Descarga nuestro estudio de fotos IA o lanza la aplicación web—crea imágenes IA profesionales en menos de un minuto.",
-    "choosePlatform": "Elige tu Plataforma",
+    "choosePlatform": "Elige tu plataforma",
     "webApp": {
-      "title": "Aplicación Web",
-      "description": "No necesita instalación. Accede a tu estudio IA instantáneamente en cualquier navegador.",
-      "button": "Lanzar Ahora"
+      "title": "Aplicación web",
+      "description": "Sin instalación necesaria. Acceso instantáneo a tu estudio IA en cualquier navegador.",
+      "button": "Lanzar ahora"
     },
     "mobileApps": {
-      "title": "Aplicaciones Móviles",
-      "description": "Aplicaciones nativas completas para iOS y Android—crea imágenes IA sobre la marcha.",
+      "title": "Aplicaciones móviles",
+      "description": "Apps nativas completas para iOS y Android—crea imágenes IA sobre la marcha.",
       "googlePlay": "Obtener en Google Play",
       "appStore": "Descargar en App Store"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Crea, personaliza y comparte fotos impresionantes generadas por IA—impulsado por aprendizaje profundo de vanguardia.",
-    "links": "Enlaces Rápidos",
+    "description": "Crea, personaliza y comparte fotografías impresionantes generadas por IA—impulsado por tecnología de aprendizaje profundo de vanguardia.",
+    "links": "Enlaces rápidos",
     "legal": "Legal",
-    "openSource": "Código Abierto",
+    "openSource": "Código abierto",
     "twitter": "Twitter (X)",
     "support": "Soporte",
     "copyright": "© 2025 My AI Photo Shoot. Todos los derechos reservados."
   },
   "supportPage": {
-    "title": "Atención al Cliente",
-    "description": "¿Tienes un problema o una pregunta? Nuestro equipo de soporte está listo para ayudar dentro de 24-48 horas.",
+    "title": "Atención al cliente",
+    "description": "¿Tienes algún problema o pregunta? Nuestro equipo de soporte está listo para ayudar en 24-48 horas.",
     "form": {
-      "email": "Dirección de Correo Electrónico",
-      "message": "Tu Mensaje",
+      "email": "Dirección de correo electrónico",
+      "message": "Tu mensaje",
       "submit": "Enviar",
       "emailPlaceholder": "tu@ejemplo.com",
       "messagePlaceholder": "Describe tu problema o pregunta...",
@@ -108,7 +108,7 @@
       "messageRequired": "El mensaje es requerido",
       "invalidEmail": "Por favor, ingresa un correo electrónico válido",
       "privacyNotice": "Solo usaremos tu correo electrónico para responder y nunca lo compartiremos con terceros.",
-      "responseTime": "Espera una respuesta dentro de 24 horas."
+      "responseTime": "Espera una respuesta en 24 horas."
     }
   }
 } 

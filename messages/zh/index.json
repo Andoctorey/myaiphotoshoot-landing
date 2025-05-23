@@ -1,113 +1,113 @@
 {
   "navigation": {
     "home": "首页",
-    "features": "功能",
-    "gallery": "图库",
-    "pricing": "价格",
-    "download": "开始使用"
+    "features": "功能特色",
+    "gallery": "作品库",
+    "pricing": "价格方案",
+    "download": "立即开始"
   },
   "hero": {
-    "title": "将您的自拍照变成",
-    "titleHighlight": "令人惊叹的AI生成肖像",
-    "description": "使用我们的下一代AI照片工作室，即时创建数千张超逼真的AI生成照片，适用于社交媒体、头像、营销或个人项目。"
+    "title": "将您的自拍变成",
+    "titleHighlight": "令人惊艳的AI生成肖像",
+    "description": "使用我们新一代AI拍摄工作室，瞬间创造数千张超逼真的AI生成照片，完美适用于社交媒体、头像、营销或个人项目。"
   },
   "features": {
     "title": "核心功能",
-    "description": "为什么我们的AI照片生成器引领市场",
+    "description": "为什么我们的AI照片生成器领先市场",
     "advancedAI": {
-      "title": "下一代AI引擎",
-      "description": "由Flux.1™深度学习模型驱动，在每张AI生成的图像中提供无与伦比的真实感、细节和创意控制。"
+      "title": "新一代AI引擎",
+      "description": "基于Flux.1™深度学习模型，为每张AI生成图片提供无与伦比的真实感、细节表现和创意控制。"
     },
     "privacyFirst": {
-      "title": "内置隐私控制",
-      "description": "选择公开或私人图库，随时永久删除您的照片——您的数据，您做主。"
+      "title": "内置隐私保护",
+      "description": "自主选择公开或私密图库，随时永久删除您的照片——您的数据，完全由您掌控。"
     },
     "affordablePricing": {
-      "title": "透明、低成本定价",
-      "description": "无订阅费，无意外费用。一次性AI训练从4.99美元起，每张图片仅需0.03美元——无需扩展成本即可扩大规模。"
+      "title": "透明实惠的定价",
+      "description": "无订阅费用，无隐藏收费。一次性AI训练费仅需4.99美元起，每张图片仅0.03美元——无额外成本轻松扩展。"
     },
     "thousandsOfStyles": {
-      "title": "无限创意风格",
-      "description": "探索内置预设或点击\"给我惊喜！\"即时生成数千种独特的AI风格渲染。"
+      "title": "无穷创意风格",
+      "description": "探索内置预设风格，或点击\"给我惊喜！\"瞬间生成数千种独特的AI艺术风格。"
     },
     "easyCustomization": {
-      "title": "直观的提示构建器",
-      "description": "微调您的提示或重新混合公共图库照片，在几秒钟内获得定制的专业级AI图像。"
+      "title": "智能提示词生成器",
+      "description": "精准调整您的提示词，或重新创作公开图库中的照片，数秒内获得专业定制的AI图像。"
     },
     "multiplatform": {
-      "title": "跨平台访问",
-      "description": "使用我们的网页应用或原生iOS和Android应用——在所有设备上自动同步您的AI照片库。"
+      "title": "全平台同步",
+      "description": "使用我们的网页版或iOS、Android原生应用——您的AI照片库在所有设备间自动同步。"
     }
   },
   "gallery": {
-    "title": "社区展示",
-    "description": "来自我们用户的最新作品：最新的AI生成照片。",
-    "loadMore": "显示更多",
+    "title": "公开作品库",
+    "description": "用户最新创作：最新的AI生成图片作品。",
+    "loadMore": "加载更多",
     "loading": "加载中..."
   },
   "pricing": {
-    "title": "简单的按需付费定价",
-    "description": "只为您使用的付费。无月费——只需以极低的成本获得强大的AI照片生成。",
+    "title": "简单灵活的按需付费",
+    "description": "只为实际使用付费。无月费负担——强大的AI照片生成，价格仅为传统方式的零头。",
     "payAsYouGo": "按需付费",
-    "perfectFor": "非常适合影响者、企业、创作者以及任何渴望令人惊叹的AI图像的人。",
-    "whatsIncluded": "您将获得的一切",
+    "perfectFor": "完美适合网红博主、企业用户、内容创作者以及所有追求精美AI图片的用户。",
+    "whatsIncluded": "您将享受的服务",
     "features": {
-      "training": "定制AI模型训练",
-      "unlimited": "无限图像生成",
-      "custom": "高级提示定制",
-      "privacy": "私人和公共图库选项",
-      "social": "轻松社交分享",
-      "download": "高分辨率下载",
-      "support": "24/7专家支持",
-      "updates": "持续的AI增强"
+      "training": "个性化AI模型训练",
+      "unlimited": "无限制图片生成",
+      "custom": "高级提示词定制",
+      "privacy": "私密与公开图库选项",
+      "social": "便捷社交媒体分享",
+      "download": "高清图片下载",
+      "support": "24/7专业技术支持",
+      "updates": "持续AI技术升级"
     },
     "price": "0.03美元",
     "perPhoto": "每张图片",
-    "getStarted": "立即开始生成",
+    "getStarted": "立即开始创作",
     "oneTimeFee": "一次性AI训练费用",
-    "oneTimeFeeAmount": "从4.99美元起"
+    "oneTimeFeeAmount": "4.99美元起"
   },
   "download": {
-    "title": "今天开始生成",
-    "description": "下载我们的AI照片工作室或启动网页应用——在一分钟内创建专业AI图像。",
+    "title": "今日开启创作之旅",
+    "description": "下载我们的AI拍摄工作室或启动网页版——不到一分钟即可创作专业级AI图片。",
     "choosePlatform": "选择您的平台",
     "webApp": {
-      "title": "网页应用",
-      "description": "无需安装。在任何浏览器中即时访问您的AI工作室。",
+      "title": "网页版",
+      "description": "无需安装。在任意浏览器中即刻使用您的AI工作室。",
       "button": "立即启动"
     },
     "mobileApps": {
-      "title": "移动应用",
-      "description": "功能齐全的iOS和Android原生应用——随时随地创建AI图像。",
-      "googlePlay": "在Google Play获取",
-      "appStore": "在App Store下载"
+      "title": "移动端应用",
+      "description": "功能完整的iOS和Android原生应用——随时随地创作AI图片。",
+      "googlePlay": "Google Play下载",
+      "appStore": "App Store下载"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "创建、定制和分享令人惊叹的AI生成照片——由最先进的深度学习技术驱动。",
-    "links": "快速链接",
+    "description": "创作、定制并分享令人惊艳的AI生成照片——由前沿深度学习技术强力驱动。",
+    "links": "快捷链接",
     "legal": "法律条款",
-    "openSource": "开源",
+    "openSource": "开源项目",
     "twitter": "Twitter (X)",
-    "support": "支持",
-    "copyright": "© 2025 My AI Photo Shoot. 保留所有权利。"
+    "support": "技术支持",
+    "copyright": "© 2025 My AI Photo Shoot. 版权所有。"
   },
   "supportPage": {
     "title": "客户支持",
-    "description": "遇到问题或有疑问？我们的支持团队将在24-48小时内为您提供帮助。",
+    "description": "遇到问题或有疑问？我们的专业支持团队将在24-48小时内为您解答。",
     "form": {
-      "email": "电子邮件地址",
+      "email": "电子邮箱地址",
       "message": "您的留言",
       "submit": "发送",
       "emailPlaceholder": "you@example.com",
-      "messagePlaceholder": "描述您的问题或疑问...",
-      "success": "谢谢！我们已收到您的留言，将尽快回复。",
-      "error": "哎呀！出了点问题。请稍后再试。",
-      "emailRequired": "电子邮件是必需的",
-      "messageRequired": "留言是必需的",
-      "invalidEmail": "请输入有效的电子邮件",
-      "privacyNotice": "我们只会使用您的电子邮件进行回复，绝不会与第三方分享。",
+      "messagePlaceholder": "请描述您遇到的问题或疑问...",
+      "success": "感谢您的留言！我们已收到并将尽快回复。",
+      "error": "抱歉，系统出现问题。请稍后重试。",
+      "emailRequired": "邮箱地址为必填项",
+      "messageRequired": "留言内容为必填项",
+      "invalidEmail": "请输入有效的电子邮箱地址",
+      "privacyNotice": "我们仅使用您的邮箱进行回复，绝不与第三方分享。",
       "responseTime": "预计24小时内回复。"
     }
   }
