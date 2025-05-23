@@ -7,9 +7,6 @@ import DirectionHandler from "@/components/layout/DirectionHandler";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// RTL language codes
-const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur'];
-
 export const viewport: Viewport = {
   colorScheme: 'light dark',
 };
