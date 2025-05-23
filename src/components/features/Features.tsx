@@ -55,6 +55,21 @@ export default function Features() {
   return (
     <section id="features" className="py-12 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+              {t('title')}
+            </h2>
+            <p className="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              {t('description')}
+            </p>
+          </motion.div>
+        </div>
 
         <div
           ref={ref}

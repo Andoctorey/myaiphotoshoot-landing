@@ -8,107 +8,107 @@
   },
   "hero": {
     "title": "Transform Your Selfies Into",
-    "titleHighlight": "Stunning AI-Generated Photos",
-    "description": "Create thousands of professional, AI-generated photos perfect for social media, profile pictures, or creative projects with our advanced AI photo generator!"
+    "titleHighlight": "Stunning AI-Generated Portraits",
+    "description": "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio."
   },
   "features": {
-    "title": "Features",
-    "description": "Discover what makes our AI photo generation special",
+    "title": "Core Features",
+    "description": "Why our AI photo generator leads the market",
     "advancedAI": {
-      "title": "Advanced AI Technology",
-      "description": "Our AI photo generator is powered by Flux.1, ensuring exceptional realism and creative detail in every AI-generated photo."
+      "title": "Next-Gen AI Engine",
+      "description": "Powered by Flux.1™ deep-learning models for unmatched realism, detail, and creative control in every AI-generated image."
     },
     "privacyFirst": {
-      "title": "Privacy First",
-      "description": "Control your AI photo data with public/private gallery options and permanent deletion whenever you choose."
+      "title": "Built-in Privacy Control",
+      "description": "Choose public or private galleries, and permanently delete your photos anytime—your data, your way."
     },
     "affordablePricing": {
-      "title": "Affordable Pricing",
-      "description": "Enjoy clear, one-time AI training costs and just $0.03 per AI-generated photo. No hidden fees or subscriptions with our AI photo app."
+      "title": "Transparent, Low-Cost Pricing",
+      "description": "No subscriptions, no surprises. One-time AI training from $4.99 + just $0.03 per image—scale up without scale-up costs."
     },
     "thousandsOfStyles": {
-      "title": "Thousands of Styles",
-      "description": "Generate thousands of unique AI photos with our \"Surprise Me!\" feature and custom photo prompts in our AI photo generator."
+      "title": "Endless Creative Styles",
+      "description": "Explore built-in presets or hit “Surprise Me!” to generate thousands of unique AI-style renditions instantly."
     },
     "easyCustomization": {
-      "title": "Easy Customization",
-      "description": "Enhance your prompts for personalized AI-generated photos and create similar masterpieces from public photos in our gallery."
+      "title": "Intuitive Prompt Builder",
+      "description": "Fine-tune your prompts or remix public gallery photos for bespoke, professional-grade AI images in seconds."
     },
     "multiplatform": {
-      "title": "Available Everywhere",
-      "description": "Access your AI photo studio from anywhere with our mobile apps for iOS and Android, or use our web app on any device. Your photos sync seamlessly across all platforms."
+      "title": "Cross-Platform Access",
+      "description": "Use our web app or native iOS & Android apps—automatically sync your AI photo library across all devices."
     }
   },
   "gallery": {
-    "title": "Public Gallery",
+    "title": "Community Showcase",
     "description": "Fresh from our users: the latest AI-generated photos.",
-    "loadMore": "Load More",
+     "loadMore": "Show More",
     "loading": "Loading..."
   },
   "pricing": {
-    "title": "Simple, Transparent Pricing",
-    "description": "No hidden fees, no subscriptions. Pay only for the AI photos you create.",
+    "title": "Simple, Pay-As-You-Go Pricing",
+    "description": "Only pay for what you use. No monthly fees—just powerful AI photo generation at a fraction of the cost.",
     "payAsYouGo": "Pay As You Go",
-    "perfectFor": "Perfect for anyone who wants to create stunning AI-generated photos without commitments.",
-    "whatsIncluded": "What's included",
+    "perfectFor": "Ideal for influencers, businesses, creators, and anyone craving stunning AI imagery.",
+    "whatsIncluded": "Everything You Get",
     "features": {
-      "training": "AI photo model training",
-      "unlimited": "Unlimited AI photo generation",
-      "custom": "Custom photo prompts",
-      "privacy": "Public/private gallery options",
-      "social": "Social sharing features",
-      "download": "Download in high resolution",
-      "support": "24/7 customer support",
-      "updates": "Regular AI model updates"
+      "training": "Custom AI model training",
+      "unlimited": "Unlimited image generation",
+      "custom": "Advanced prompt customization",
+      "privacy": "Private & public gallery options",
+      "social": "Easy social sharing",
+      "download": "High-resolution downloads",
+      "support": "24/7 expert support",
+      "updates": "Ongoing AI enhancements"
     },
     "price": "$0.03",
-    "perPhoto": "per photo",
-    "getStarted": "Get started with AI Photos",
-    "oneTimeFee": "One-time AI training fee:",
-    "oneTimeFeeAmount": "Starting from $4.99"
+    "perPhoto": "per image",
+    "getStarted": "Start Generating Now",
+    "oneTimeFee": "One-time AI training fee",
+    "oneTimeFeeAmount": "From $4.99"
   },
   "download": {
-    "title": "Get Started Now",
-    "description": "Download our AI photo app and start creating stunning AI-generated photos in minutes",
+    "title": "Start Generating Today",
+    "description": "Download our AI photo studio or launch the web app—create professional AI images in under a minute.",
     "choosePlatform": "Choose Your Platform",
     "webApp": {
       "title": "Web App",
-      "description": "Use directly in your browser, no installation required",
-      "button": "Launch Web App"
+      "description": "No install needed. Access your AI studio instantly in any browser.",
+      "button": "Launch Now"
     },
     "mobileApps": {
       "title": "Mobile Apps",
-      "description": "Download our native AI photo apps for the best AI photo generation experience",
+      "description": "Full-featured native apps for iOS & Android—create AI images on the go.",
       "googlePlay": "Get it on Google Play",
       "appStore": "Download on the App Store"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Transform your selfies into stunning AI-generated photos with our cutting-edge technology.",
-    "links": "Links",
-    "legal": "Legal Information",
+    "description": "Create, customize, and share stunning AI-generated photos—powered by state-of-the-art deep learning.",
+    "links": "Quick Links",
+    "legal": "Legal",
     "openSource": "Open Source",
     "twitter": "Twitter (X)",
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. All rights reserved."
   },
   "supportPage": {
-    "title": "Support",
-    "description": "Need help with our My AI Photo Shoot? Contact us and we'll get back to you as soon as possible.",
+    "title": "Customer Support",
+    "description": "Encounter an issue or have a question? Our support team is ready to help within 24-48 hours.",
     "form": {
-      "email": "Email address",
-      "message": "Your message",
-      "submit": "Send message",
-      "emailPlaceholder": "your@email.com",
-      "messagePlaceholder": "Please describe your issue or question...",
-      "success": "Thank you! Your message has been sent successfully.",
-      "error": "An error occurred. Please try again later.",
+      "email": "Email Address",
+      "message": "Your Message",
+      "submit": "Send",
+      "emailPlaceholder": "you@example.com",
+      "messagePlaceholder": "Describe your issue or question...",
+      "success": "Thank you! We’ve received your message and will reply soon.",
+      "error": "Oops! Something went wrong. Please try again later.",
       "emailRequired": "Email is required",
       "messageRequired": "Message is required",
-      "invalidEmail": "Please enter a valid email address",
-      "privacyNotice": "By submitting this form, you agree that we will use your email address only to respond to your inquiry and won't share it with third parties.",
-      "responseTime": "We typically respond to all inquiries within 24-48 hours."
+      "invalidEmail": "Please enter a valid email",
+      "privacyNotice": "We’ll only use your email to respond and never share it with third parties.",
+      "responseTime": "Expect a reply within 24 hours."
     }
   }
 }
