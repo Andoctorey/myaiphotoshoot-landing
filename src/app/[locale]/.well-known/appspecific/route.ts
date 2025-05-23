@@ -21,7 +21,14 @@ export const revalidate = 3600; // 1 hour revalidation
 export function generateStaticParams() {
   return [
     { locale: 'en' },
-    { locale: 'ru' }
+    { locale: 'zh' },
+    { locale: 'hi' },
+    { locale: 'es' },
+    { locale: 'de' },
+    { locale: 'ja' },
+    { locale: 'ru' },
+    { locale: 'fr' },
+    { locale: 'ar' }
   ];
 }
 

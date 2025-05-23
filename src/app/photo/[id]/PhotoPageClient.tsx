@@ -7,7 +7,6 @@ import Script from 'next/script'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
 
 interface PhotoPageClientProps {
   photo: GalleryItem;
@@ -19,7 +18,6 @@ interface PhotoPageClientProps {
 
 export default function PhotoPageClient({ photo, prev, next, locale, showNavigation = true }: PhotoPageClientProps) {
   const photoRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   const scrollToPhoto = () => {
     if (photoRef.current) {

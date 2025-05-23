@@ -4,9 +4,9 @@ import type { GalleryItem } from '@/types/gallery';
 import { notFound } from 'next/navigation';
 
 interface PhotoPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // For static export, we'll need to generate paths for all photos
@@ -83,7 +83,7 @@ async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null
 }
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
-  const { id } = params;
+  const { id } = await params;
   const photo = await fetchPhotoById(id);
   const { prev, next, showNavigation } = await getAdjacentPhotos(id);
   if (!photo) return notFound();

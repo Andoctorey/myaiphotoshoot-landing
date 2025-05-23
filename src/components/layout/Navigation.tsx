@@ -22,6 +22,22 @@ export default function Navigation() {
   // Check if we're on the home page
   const isHomePage = pathname === '/' || pathname === `/${locale}`;
   
+  // Language display names
+  const getLanguageDisplayName = (langCode: string) => {
+    const languageNames: Record<string, string> = {
+      'en': 'English',
+      'zh': '中文',
+      'hi': 'हिन्दी',
+      'es': 'Español',
+      'de': 'Deutsch',
+      'ja': '日本語',
+      'ru': 'Русский',
+      'fr': 'Français',
+      'ar': 'العربية'
+    };
+    return languageNames[langCode] || langCode;
+  };
+
   const navItems = [
     { name: t('features'), href: isHomePage ? '#features' : `/${locale}#features` },
     { name: t('gallery'), href: isHomePage ? '#gallery' : `/${locale}#gallery` },
@@ -159,7 +175,7 @@ export default function Navigation() {
                   <div 
                     ref={languageMenuRef}
                     id="language-menu"
-                    className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5"
+                    className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
                     role="listbox"
                     aria-labelledby="language-dropdown"
                   >
@@ -168,7 +184,7 @@ export default function Navigation() {
                         <button
                           key={l}
                           onClick={() => handleLanguageChange(l)}
-                          className={`block w-full text-left px-4 py-2 text-sm ${
+                          className={`flex items-center justify-between w-full px-4 py-2 text-sm transition-colors duration-150 ${
                             l === locale 
                               ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
                               : 'text-gray-700 dark:text-gray-300'
@@ -177,7 +193,8 @@ export default function Navigation() {
                           aria-selected={l === locale}
                           tabIndex={0}
                         >
-                          {l === 'en' ? 'English' : 'Русский'}
+                          <span className="flex-1 text-left">{getLanguageDisplayName(l)}</span>
+                          <span className="ml-2 text-xs text-gray-500 dark:text-gray-400 uppercase">{l}</span>
                         </button>
                       ))}
                     </div>
@@ -262,14 +279,15 @@ export default function Navigation() {
                     <button
                       key={l}
                       onClick={() => handleLanguageChange(l)}
-                      className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                      className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 ${
                         l === locale 
                           ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
                           : 'text-gray-700 dark:text-gray-300'
                       } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`}
                       aria-pressed={l === locale}
                     >
-                      {l === 'en' ? 'English' : 'Русский'}
+                      <span className="flex-1 text-left">{getLanguageDisplayName(l)}</span>
+                      <span className="ml-2 text-sm text-gray-500 dark:text-gray-400 uppercase">{l}</span>
                     </button>
                   ))}
                 </div>

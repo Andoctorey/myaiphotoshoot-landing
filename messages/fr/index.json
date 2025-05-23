@@ -1,0 +1,114 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "gallery": "Galerie",
+    "pricing": "Tarifs",
+    "download": "Commencer"
+  },
+  "hero": {
+    "title": "Transformez vos Selfies en",
+    "titleHighlight": "Portraits IA Époustouflants",
+    "description": "Créez instantanément des milliers de photos hyperréalistes générées par IA pour les réseaux sociaux, photos de profil, marketing ou projets personnels avec notre studio photo IA de nouvelle génération."
+  },
+  "features": {
+    "title": "Fonctionnalités Principales",
+    "description": "Pourquoi notre générateur de photos IA domine le marché",
+    "advancedAI": {
+      "title": "Moteur IA de Nouvelle Génération",
+      "description": "Alimenté par les modèles d'apprentissage profond Flux.1™ pour un réalisme, des détails et un contrôle créatif inégalés dans chaque image générée par IA."
+    },
+    "privacyFirst": {
+      "title": "Contrôle de Confidentialité Intégré",
+      "description": "Choisissez des galeries publiques ou privées, et supprimez définitivement vos photos à tout moment—vos données, votre façon."
+    },
+    "affordablePricing": {
+      "title": "Tarifs Transparents et Abordables",
+      "description": "Pas d'abonnements, pas de surprises. Formation IA unique à partir de 4,99$ + seulement 0,03$ par image—évoluez sans coûts d'évolution."
+    },
+    "thousandsOfStyles": {
+      "title": "Styles Créatifs Infinis",
+      "description": "Explorez les préréglages intégrés ou appuyez sur \"Surprenez-moi !\" pour générer instantanément des milliers de rendus de style IA uniques."
+    },
+    "easyCustomization": {
+      "title": "Constructeur de Prompts Intuitif",
+      "description": "Affinez vos prompts ou remixez les photos de la galerie publique pour des images IA sur mesure de qualité professionnelle en quelques secondes."
+    },
+    "multiplatform": {
+      "title": "Accès Multi-plateforme",
+      "description": "Utilisez notre application web ou applications natives iOS et Android—synchronisez automatiquement votre bibliothèque de photos IA sur tous les appareils."
+    }
+  },
+  "gallery": {
+    "title": "Vitrine Communautaire",
+    "description": "Frais de nos utilisateurs : les dernières photos générées par IA.",
+    "loadMore": "Afficher Plus",
+    "loading": "Chargement..."
+  },
+  "pricing": {
+    "title": "Tarification Simple au Paiement à l'Usage",
+    "description": "Ne payez que ce que vous utilisez. Pas de frais mensuels—juste une génération de photos IA puissante à une fraction du coût.",
+    "payAsYouGo": "Paiement à l'Usage",
+    "perfectFor": "Idéal pour les influenceurs, entreprises, créateurs et quiconque désire des images IA époustouflantes.",
+    "whatsIncluded": "Tout ce que Vous Obtenez",
+    "features": {
+      "training": "Formation de modèle IA personnalisé",
+      "unlimited": "Génération d'images illimitée",
+      "custom": "Personnalisation avancée des prompts",
+      "privacy": "Options de galerie privée et publique",
+      "social": "Partage social facile",
+      "download": "Téléchargements haute résolution",
+      "support": "Support expert 24/7",
+      "updates": "Améliorations IA continues"
+    },
+    "price": "0,03$",
+    "perPhoto": "par image",
+    "getStarted": "Commencer à Générer Maintenant",
+    "oneTimeFee": "Frais uniques de formation IA",
+    "oneTimeFeeAmount": "À partir de 4,99$"
+  },
+  "download": {
+    "title": "Commencez à Générer Aujourd'hui",
+    "description": "Téléchargez notre studio photo IA ou lancez l'application web—créez des images IA professionnelles en moins d'une minute.",
+    "choosePlatform": "Choisissez Votre Plateforme",
+    "webApp": {
+      "title": "Application Web",
+      "description": "Aucune installation nécessaire. Accédez instantanément à votre studio IA dans n'importe quel navigateur.",
+      "button": "Lancer Maintenant"
+    },
+    "mobileApps": {
+      "title": "Applications Mobiles",
+      "description": "Applications natives complètes pour iOS et Android—créez des images IA en déplacement.",
+      "googlePlay": "Obtenir sur Google Play",
+      "appStore": "Télécharger sur l'App Store"
+    }
+  },
+  "footer": {
+    "title": "My AI Photo Shoot",
+    "description": "Créez, personnalisez et partagez de superbes photos générées par IA—alimentées par l'apprentissage profond de pointe.",
+    "links": "Liens Rapides",
+    "legal": "Légal",
+    "openSource": "Source Ouverte",
+    "twitter": "Twitter (X)",
+    "support": "Support",
+    "copyright": "© 2025 My AI Photo Shoot. Tous droits réservés."
+  },
+  "supportPage": {
+    "title": "Support Client",
+    "description": "Vous rencontrez un problème ou avez une question ? Notre équipe de support est prête à aider sous 24-48 heures.",
+    "form": {
+      "email": "Adresse E-mail",
+      "message": "Votre Message",
+      "submit": "Envoyer",
+      "emailPlaceholder": "vous@exemple.com",
+      "messagePlaceholder": "Décrivez votre problème ou question...",
+      "success": "Merci ! Nous avons reçu votre message et répondrons bientôt.",
+      "error": "Oups ! Quelque chose s'est mal passé. Veuillez réessayer plus tard.",
+      "emailRequired": "L'e-mail est requis",
+      "messageRequired": "Le message est requis",
+      "invalidEmail": "Veuillez entrer un e-mail valide",
+      "privacyNotice": "Nous n'utiliserons votre e-mail que pour répondre et ne le partagerons jamais avec des tiers.",
+      "responseTime": "Attendez-vous à une réponse sous 24 heures."
+    }
+  }
+} 

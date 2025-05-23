@@ -1,13 +1,14 @@
 import { MetadataRoute } from 'next'
 import { GalleryItem } from '@/types/gallery'
 import { fetchGalleryPhotos } from '@/lib/fetcher'
+import { locales } from '@/i18n/request'
 
 /**
  * Sitemap generator
  * 
  * STATIC EXPORT NOTE:
  * This sitemap is generated at build time for Cloudflare Pages static hosting.
- * It fetches all photos from the database using pagination.
+ * It fetches all photos from the database using pagination and includes all supported locales.
  */
 
 // Add static export configuration
@@ -60,38 +61,29 @@ async function getAllPhotos(): Promise<GalleryItem[]> {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://myaiphotoshoot.com';
   
-  // Add static pages (English and Russian for main and support)
+  // Generate static pages for all supported locales
   const staticPages = [
+    // Root page
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 1,
     },
-    {
-      url: `${baseUrl}/en`,
+    // Locale-specific home pages
+    ...locales.map(locale => ({
+      url: `${baseUrl}/${locale}`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/ru`,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/en/support`,
+    })),
+    // Support pages for all locales
+    ...locales.map(locale => ({
+      url: `${baseUrl}/${locale}/support`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/ru/support`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
+    })),
   ];
 
   try {
