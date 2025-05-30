@@ -10,9 +10,20 @@ This landing page showcases AI-generated photos with social media sharing capabi
 
 **Main Project: [GitHub Repository](https://github.com/Andoctorey/myaiphotoshoot-kmp)** - This project is open source!
 
+## Download the App
+
+Get My AI Photo Shoot on your mobile device:
+
+[![Download on the App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/app/id6744860178)
+
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.myaiphotoshoot)
+
+**App Store:** https://apps.apple.com/app/id6744860178  
+**Google Play:** https://play.google.com/store/apps/details?id=com.myaiphotoshoot
+
 ## Features
 
-- 🎨 Modern, responsive design
+- �� Modern, responsive design
 - ⚡ Built with Next.js 14 and TypeScript
 - 🎭 Beautiful animations with Framer Motion
 - 📱 Mobile-first approach
