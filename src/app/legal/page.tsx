@@ -45,7 +45,7 @@ export default function LegalPage() {
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                   <li>
                     <a href="/license" className="text-purple-600 dark:text-purple-400 hover:underline">
-                      Image License & Usage Rights
+                      Image License &amp; Usage Rights
                     </a>
                   </li>
                   <li>

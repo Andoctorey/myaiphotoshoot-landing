@@ -24,7 +24,7 @@ export const trackEvent = (action: string, category: string, label?: string, val
 // Types for gtag
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
+    gtag: (...args: unknown[]) => void;
+    dataLayer: unknown[];
   }
 } 

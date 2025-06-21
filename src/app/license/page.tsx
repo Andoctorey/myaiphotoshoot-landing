@@ -12,13 +12,13 @@ export default function LicensePage() {
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-            Image License & Usage Rights
+            Image License &amp; Usage Rights
           </h1>
           
           <div className="prose prose-lg dark:prose-invert max-w-none">
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Image Ownership & Rights
+                Image Ownership &amp; Rights
               </h2>
               <p className="text-gray-700 dark:text-gray-300 mb-4">
                 All AI-generated images created through MyAIPhotoShoot are owned by the users who generate them. 
