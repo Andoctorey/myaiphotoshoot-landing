@@ -6,6 +6,7 @@
     <style>
         html {
             -webkit-print-color-adjust: exact;
+            scroll-behavior: smooth;
         }
         * {
             box-sizing: border-box;
@@ -54,6 +55,14 @@
         @page {
             margin: 1in;
         }
+        /* Anchor target styling */
+        h2:target, h3:target {
+            background-color: #fef3c7;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            margin-top: -1rem;
+            padding-top: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -75,7 +84,8 @@
         <p>“The Site” refers to the websites operated by My Ai Photo Shoot, including but not
             limited to myaiphotoshoot.com, as well as any associated applications, services,
             features, content, and functionalities offered by My Ai Photo Shoot.</p>
-        <h2>Acceptance of Terms of Service</h2>
+        <h2 id="terms">Terms of Service</h2>
+        <h3>Acceptance of Terms of Service</h3>
         <p>The Service is offered subject to acceptance without modification of all of these Terms
             of Service and all other operating rules, policies and procedures that may be published
             from time to time in connection with the Services by My Ai Photo Shoot. In addition,
@@ -598,7 +608,7 @@
             effective no earlier than fourteen (14) calendar days after they are posted, except for
             changes addressing changes made for legal reasons, which will be effective immediately.
             Your continued use of the Site after any change means you agree to the new Terms.</p>
-        <p>Privacy</p>
+        <h2 id="privacy">Privacy Policy</h2>
         <p>Our commitment to privacy and data protection is reflected in this Privacy Statement
             which describes how we collect and process “personal information” that identifies you,
             like your name or email address. Any other information besides this is "non-personal
