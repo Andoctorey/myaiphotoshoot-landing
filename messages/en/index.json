@@ -24,7 +24,7 @@
     },
     "affordablePricing": {
       "title": "Transparent, Low-Cost Pricing",
-      "description": "No subscriptions, no surprises. One-time AI training from $4.99 + just $0.03 per image—scale up without scale-up costs."
+      "description": "No subscriptions, no surprises. One-time AI training only $2.99 + just $0.03 per image—scale up without scale-up costs."
     },
     "thousandsOfStyles": {
       "title": "Endless Creative Styles",
@@ -65,7 +65,7 @@
     "perPhoto": "per image",
     "getStarted": "Start Generating Now",
     "oneTimeFee": "One-time AI training fee",
-    "oneTimeFeeAmount": "From $4.99"
+    "oneTimeFeeAmount": "Only $2.99"
   },
   "download": {
     "title": "Start Generating Today",

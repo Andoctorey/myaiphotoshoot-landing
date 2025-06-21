@@ -24,7 +24,7 @@
     },
     "affordablePricing": {
       "title": "Tarifs transparents et économiques",
-      "description": "Aucun abonnement, aucune surprise. Formation IA unique à partir de 4,99$ + seulement 0,03$ par image—évoluez sans coûts supplémentaires."
+      "description": "Aucun abonnement, aucune surprise. Formation IA unique seulement 2,99$ + seulement 0,03$ par image—évoluez sans coûts supplémentaires."
     },
     "thousandsOfStyles": {
       "title": "Styles créatifs infinis",
@@ -65,7 +65,7 @@
     "perPhoto": "par image",
     "getStarted": "Commencer à générer",
     "oneTimeFee": "Frais unique de formation IA",
-    "oneTimeFeeAmount": "À partir de 4,99$"
+    "oneTimeFeeAmount": "Seulement 2,99$"
   },
   "download": {
     "title": "Commencez à créer dès aujourd'hui",

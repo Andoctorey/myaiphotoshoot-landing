@@ -24,7 +24,7 @@
     },
     "affordablePricing": {
       "title": "透明实惠的定价",
-      "description": "无订阅费用，无隐藏收费。一次性AI训练费仅需4.99美元起，每张图片仅0.03美元——无额外成本轻松扩展。"
+      "description": "无订阅费用，无隐藏收费。一次性AI训练费仅需2.99美元，每张图片仅0.03美元——无额外成本轻松扩展。"
     },
     "thousandsOfStyles": {
       "title": "无穷创意风格",
@@ -65,7 +65,7 @@
     "perPhoto": "每张图片",
     "getStarted": "立即开始创作",
     "oneTimeFee": "一次性AI训练费用",
-    "oneTimeFeeAmount": "4.99美元起"
+    "oneTimeFeeAmount": "仅需2.99美元"
   },
   "download": {
     "title": "今日开启创作之旅",

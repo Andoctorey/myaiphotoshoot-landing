@@ -24,7 +24,7 @@
     },
     "affordablePricing": {
       "title": "Precios transparentes y económicos",
-      "description": "Sin suscripciones, sin sorpresas. Entrenamiento único de IA desde $4.99 + solo $0.03 por imagen—escala sin costos adicionales."
+      "description": "Sin suscripciones, sin sorpresas. Entrenamiento único de IA solo $2.99 + solo $0.03 por imagen—escala sin costos adicionales."
     },
     "thousandsOfStyles": {
       "title": "Estilos creativos infinitos",
@@ -65,7 +65,7 @@
     "perPhoto": "por imagen",
     "getStarted": "Comenzar a generar",
     "oneTimeFee": "Tarifa única de entrenamiento IA",
-    "oneTimeFeeAmount": "Desde $4.99"
+    "oneTimeFeeAmount": "Solo $2.99"
   },
   "download": {
     "title": "Comienza a crear hoy",

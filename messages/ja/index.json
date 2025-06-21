@@ -24,7 +24,7 @@
     },
     "affordablePricing": {
       "title": "透明で手頃な料金",
-      "description": "サブスクリプションなし、隠し料金なし。一回限りのAIトレーニング4.99ドルから + 画像あたりわずか0.03ドル。追加コストなしでスケールアップ。"
+      "description": "サブスクリプションなし、隠し料金なし。一回限りのAIトレーニングたったの2.99ドル + 画像あたりわずか0.03ドル。追加コストなしでスケールアップ。"
     },
     "thousandsOfStyles": {
       "title": "無限のクリエイティブスタイル",
@@ -65,7 +65,7 @@
     "perPhoto": "画像あたり",
     "getStarted": "今すぐ生成開始",
     "oneTimeFee": "一回限りのAIトレーニング料金",
-    "oneTimeFeeAmount": "$4.99から"
+    "oneTimeFeeAmount": "たったの$2.99"
   },
   "download": {
     "title": "今日から作成を始めましょう",
