@@ -88,7 +88,10 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
     },
     copyrightNotice: '© 2025 My AI Photo Shoot. Generated with AI.',
     // Keywords extracted from prompt
-    keywords: photo.prompt.split(/[\s,]+/).filter(word => word.length > 3).slice(0, 15).join(', '),
+    keywords: photo.prompt.split(/[\s,]+/)
+      .filter(word => word.length > 3 && !['with', 'from', 'into', 'like', 'that', 'this'].includes(word.toLowerCase()))
+      .slice(0, 15)
+      .join(', '),
     // Context about AI generation
     additionalType: 'https://schema.org/DigitalDocument',
     genre: 'AI Photography',
@@ -313,6 +316,13 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
               transition={{ delay: 0.4 }}
               className="p-6"
             >
+              {/* Add specific h1 for this photo */}
+              <header className="mb-4">
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white sr-only">
+                  {photo.prompt.substring(0, 60)}{photo.prompt.length > 60 ? '...' : ''}
+                </h1>
+              </header>
+
               {/* Improved prompt display with better SEO structure */}
               <article className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
                 <header>

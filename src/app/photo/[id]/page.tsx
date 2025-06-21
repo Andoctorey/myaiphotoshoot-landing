@@ -53,12 +53,26 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
     // Always include AI-related keywords
     const aiKeywords = ['AI photo', 'AI generated', 'AI portrait', 'artificial intelligence'];
     
-    return [...aiKeywords, ...foundKeywords].join(', ');
+    // Ensure we have at least some keywords even for short prompts
+    const allKeywords = [...aiKeywords, ...foundKeywords];
+    
+    // Add generic keywords if we don't have enough specific ones
+    if (allKeywords.length < 6) {
+      const genericKeywords = ['professional photo', 'digital art', 'custom portrait', 'AI photography'];
+      allKeywords.push(...genericKeywords.slice(0, 6 - allKeywords.length));
+    }
+    
+    return allKeywords.join(', ');
   };
 
   // Create title from cleaned prompt
   const createTitle = (prompt: string): string => {
     const cleaned = cleanPromptForTitle(prompt);
+    
+    // Handle very short prompts
+    if (cleaned.length <= 10) {
+      return `AI Generated ${cleaned} | My AI Photo Shoot`;
+    }
     
     // If prompt is short enough, use it directly
     if (cleaned.length <= 45) {
