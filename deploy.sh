@@ -35,3 +35,7 @@ echo "🌩️ Deploying to Cloudflare Pages..."
 npx wrangler pages deploy out \
   --project-name=myaiphotoshoot-landing \
   --commit-dirty=true \
+
+# Auto-submit sitemap to Google Search Console
+echo "🗺️ Submitting sitemap to Google Search Console..."
+node scripts/submit-sitemap.js

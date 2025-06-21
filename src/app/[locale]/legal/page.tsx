@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 // This would be better handled with proper i18n, but for now using the static HTML content
 export const metadata: Metadata = {
@@ -44,9 +45,9 @@ export default function LegalPage() {
                 </h2>
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                   <li>
-                    <a href="/en/license" className="text-purple-600 dark:text-purple-400 hover:underline">
+                    <Link href="/en/license" className="text-purple-600 dark:text-purple-400 hover:underline">
                       Image License & Usage Rights
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a href="/legal.html#privacy" className="text-purple-600 dark:text-purple-400 hover:underline">
