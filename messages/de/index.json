@@ -21,11 +21,11 @@
     },
     "privacyFirst": {
       "title": "Integrierte Datenschutzkontrolle",
-      "description": "Wählen Sie zwischen öffentlichen oder privaten Galerien und löschen Sie Ihre Fotos jederzeit dauerhaft—Ihre Daten unter Ihrer Kontrolle."
+      "description": "Wählen Sie zwischen öffentlichen oder privaten Galerien und löschen Sie Ihre Fotos jederzeit dauerhaft - Ihre Daten unter Ihrer Kontrolle."
     },
     "affordablePricing": {
       "title": "Transparente und günstige Preise",
-      "description": "Keine Abonnements, keine Überraschungen. Einmaliges KI-Training nur 2,99€ + nur 0,03€ pro Bild—skalieren Sie ohne zusätzliche Kosten."
+      "description": "Keine Abonnements, keine Überraschungen. Einmaliges KI-Training nur 2,99€ + nur 0,03€ pro Bild - skalieren Sie ohne zusätzliche Kosten."
     },
     "thousandsOfStyles": {
       "title": "Endlose kreative Stile",
@@ -37,7 +37,7 @@
     },
     "multiplatform": {
       "title": "Plattformübergreifender Zugang",
-      "description": "Nutzen Sie unsere Web-App oder native iOS- und Android-Apps—synchronisieren Sie Ihre KI-Fotobibliothek automatisch auf allen Geräten."
+      "description": "Nutzen Sie unsere Web-App oder native iOS- und Android-Apps - synchronisieren Sie Ihre KI-Fotobibliothek automatisch auf allen Geräten."
     }
   },
   "gallery": {
@@ -48,7 +48,7 @@
   },
   "pricing": {
     "title": "Einfaches nutzungsbasiertes Preissystem",
-    "description": "Zahlen Sie nur für das, was Sie nutzen. Keine monatlichen Gebühren—leistungsstarke KI-Fotogenerierung zu einem Bruchteil der Kosten.",
+    "description": "Zahlen Sie nur für das, was Sie nutzen. Keine monatlichen Gebühren - leistungsstarke KI-Fotogenerierung zu einem Bruchteil der Kosten.",
     "payAsYouGo": "Nutzungsbasierte Zahlung",
     "perfectFor": "Ideal für Influencer, Unternehmen, Content-Ersteller und alle, die atemberaubende KI-Bilder suchen.",
     "whatsIncluded": "Was Sie erhalten",
@@ -70,7 +70,7 @@
   },
   "download": {
     "title": "Beginnen Sie heute mit dem Erstellen",
-    "description": "Laden Sie unser KI-Fotostudio herunter oder starten Sie die Web-App—erstellen Sie professionelle KI-Bilder in unter einer Minute.",
+    "description": "Laden Sie unser KI-Fotostudio herunter oder starten Sie die Web-App - erstellen Sie professionelle KI-Bilder in unter einer Minute.",
     "choosePlatform": "Wählen Sie Ihre Plattform",
     "webApp": {
       "title": "Web-App",
@@ -79,14 +79,14 @@
     },
     "mobileApps": {
       "title": "Mobile Apps",
-      "description": "Vollausgestattete native Apps für iOS und Android—erstellen Sie KI-Bilder unterwegs.",
+      "description": "Vollausgestattete native Apps für iOS und Android - erstellen Sie KI-Bilder unterwegs.",
       "googlePlay": "Bei Google Play herunterladen",
       "appStore": "Im App Store herunterladen"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Erstellen, anpassen und teilen Sie atemberaubende KI-generierte Fotografien—angetrieben von modernster Deep-Learning-Technologie.",
+    "description": "Erstellen, anpassen und teilen Sie atemberaubende KI-generierte Fotografien - angetrieben von modernster Deep-Learning-Technologie.",
     "links": "Schnelllinks",
     "legal": "Rechtliches",
     "openSource": "Open Source",
@@ -125,11 +125,11 @@
     },
     "pricing": {
       "question": "Was kostet es?",
-      "answer": "Wir verwenden ein einfaches Pay-as-you-go-Modell: eine einmalige Gebühr von 2,99 $ für das Training Ihres benutzerdefinierten KI-Modells plus nur 0,03 $ pro generiertem Bild. Keine monatlichen Abonnements oder versteckten Gebühren—zahlen Sie nur für das, was Sie nutzen."
+      "answer": "Wir verwenden ein einfaches Pay-as-you-go-Modell: eine einmalige Gebühr von 2,99 $ für das Training Ihres benutzerdefinierten KI-Modells plus nur 0,03 $ pro generiertem Bild. Keine monatlichen Abonnements oder versteckten Gebühren - zahlen Sie nur für das, was Sie nutzen."
     },
     "privacy": {
       "question": "Sind meine Daten sicher und privat?",
-      "answer": "Absolut. Sie haben vollständige Kontrolle über Ihre Datenschutzeinstellungen—wählen Sie zwischen öffentlichen oder privaten Galerien. Sie können Ihre Fotos jederzeit dauerhaft löschen, und wir teilen Ihre persönlichen Daten niemals mit Dritten. Ihre Privatsphäre ist unsere Priorität."
+      "answer": "Absolut. Sie haben vollständige Kontrolle über Ihre Datenschutzeinstellungen - wählen Sie zwischen öffentlichen oder privaten Galerien. Sie können Ihre Fotos jederzeit dauerhaft löschen, und wir teilen Ihre persönlichen Daten niemals mit Dritten. Ihre Privatsphäre ist unsere Priorität."
     },
     "imageQuality": {
       "question": "Welche Qualität haben die generierten Bilder?",
@@ -137,7 +137,7 @@
     },
     "howManyPhotos": {
       "question": "Wie viele Fotos kann ich generieren?",
-      "answer": "Sobald Ihr KI-Modell trainiert ist, können Sie unbegrenzt Fotos für nur 0,03 $ pro Stück generieren. Es gibt keine Begrenzung für die Anzahl der Bilder, die Sie erstellen können—generieren Sie so viele Stile und Variationen, wie Sie möchten."
+      "answer": "Sobald Ihr KI-Modell trainiert ist, können Sie unbegrenzt Fotos für nur 0,03 $ pro Stück generieren. Es gibt keine Begrenzung für die Anzahl der Bilder, die Sie erstellen können - generieren Sie so viele Stile und Variationen, wie Sie möchten."
     },
     "platforms": {
       "question": "Welche Plattformen werden unterstützt?",
@@ -145,7 +145,7 @@
     },
     "dataRetention": {
       "question": "Wie lange bewahren Sie meine Fotos auf?",
-      "answer": "Sie haben vollständige Kontrolle über Ihre Daten. Fotos werden sicher in Ihrem Konto gespeichert, bis Sie sich entscheiden, sie zu löschen. Sie können jederzeit über Ihre Kontoeinstellungen dauerhaft alle oder einzelne Fotos entfernen—ohne Fragen."
+      "answer": "Sie haben vollständige Kontrolle über Ihre Daten. Fotos werden sicher in Ihrem Konto gespeichert, bis Sie sich entscheiden, sie zu löschen. Sie können jederzeit über Ihre Kontoeinstellungen dauerhaft alle oder einzelne Fotos entfernen - ohne Fragen."
     }
   }
 } 

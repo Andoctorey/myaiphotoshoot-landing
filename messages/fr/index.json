@@ -21,11 +21,11 @@
     },
     "privacyFirst": {
       "title": "Contrôle de confidentialité intégré",
-      "description": "Choisissez entre galeries publiques ou privées, et supprimez définitivement vos photos à tout moment—vos données sous votre contrôle."
+      "description": "Choisissez entre galeries publiques ou privées, et supprimez définitivement vos photos à tout moment - vos données sous votre contrôle."
     },
     "affordablePricing": {
       "title": "Tarifs transparents et économiques",
-      "description": "Aucun abonnement, aucune surprise. Formation IA unique seulement 2,99$ + seulement 0,03$ par image—évoluez sans coûts supplémentaires."
+      "description": "Aucun abonnement, aucune surprise. Formation IA unique seulement 2,99$ + seulement 0,03$ par image - évoluez sans coûts supplémentaires."
     },
     "thousandsOfStyles": {
       "title": "Styles créatifs infinis",
@@ -37,7 +37,7 @@
     },
     "multiplatform": {
       "title": "Accès multiplateforme",
-      "description": "Utilisez notre application web ou applications natives iOS et Android—synchronisez automatiquement votre bibliothèque de photos IA sur tous vos appareils."
+      "description": "Utilisez notre application web ou applications natives iOS et Android - synchronisez automatiquement votre bibliothèque de photos IA sur tous vos appareils."
     }
   },
   "gallery": {
@@ -48,7 +48,7 @@
   },
   "pricing": {
     "title": "Système simple de paiement à l'usage",
-    "description": "Payez uniquement ce que vous utilisez. Aucun frais mensuel—génération puissante de photos IA à une fraction du coût.",
+    "description": "Payez uniquement ce que vous utilisez. Aucun frais mensuel - génération puissante de photos IA à une fraction du coût.",
     "payAsYouGo": "Paiement à l'usage",
     "perfectFor": "Idéal pour les influenceurs, entreprises, créateurs de contenu et tous ceux qui recherchent des images IA époustouflantes.",
     "whatsIncluded": "Tout ce que vous obtenez",
@@ -70,7 +70,7 @@
   },
   "download": {
     "title": "Commencez à créer dès aujourd'hui",
-    "description": "Téléchargez notre studio photo IA ou lancez l'application web—créez des images IA professionnelles en moins d'une minute.",
+    "description": "Téléchargez notre studio photo IA ou lancez l'application web - créez des images IA professionnelles en moins d'une minute.",
     "choosePlatform": "Choisissez votre plateforme",
     "webApp": {
       "title": "Application web",
@@ -79,14 +79,14 @@
     },
     "mobileApps": {
       "title": "Applications mobiles",
-      "description": "Applications natives complètes pour iOS et Android—créez des images IA en déplacement.",
+      "description": "Applications natives complètes pour iOS et Android - créez des images IA en déplacement.",
       "googlePlay": "Obtenir sur Google Play",
       "appStore": "Télécharger sur l'App Store"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Créez, personnalisez et partagez de superbes photographies générées par IA—alimentées par une technologie d'apprentissage profond de pointe.",
+    "description": "Créez, personnalisez et partagez de superbes photographies générées par IA - alimentées par une technologie d'apprentissage profond de pointe.",
     "links": "Liens rapides",
     "legal": "Légal",
     "openSource": "Code source ouvert",
@@ -125,11 +125,11 @@
     },
     "pricing": {
       "question": "Combien cela coûte-t-il ?",
-      "answer": "Nous utilisons un modèle simple de paiement à l'usage : des frais uniques de 2,99 $ pour entraîner votre modèle IA personnalisé, plus seulement 0,03 $ par image générée. Pas d'abonnements mensuels ni de frais cachés—payez uniquement ce que vous utilisez."
+      "answer": "Nous utilisons un modèle simple de paiement à l'usage : des frais uniques de 2,99 $ pour entraîner votre modèle IA personnalisé, plus seulement 0,03 $ par image générée. Pas d'abonnements mensuels ni de frais cachés - payez uniquement ce que vous utilisez."
     },
     "privacy": {
       "question": "Mes données sont-elles sécurisées et privées ?",
-      "answer": "Absolument. Vous avez un contrôle total sur vos paramètres de confidentialité—choisissez entre des galeries publiques ou privées. Vous pouvez supprimer définitivement vos photos à tout moment, et nous ne partageons jamais vos données personnelles avec des tiers. Votre vie privée est notre priorité."
+      "answer": "Absolument. Vous avez un contrôle total sur vos paramètres de confidentialité - choisissez entre des galeries publiques ou privées. Vous pouvez supprimer définitivement vos photos à tout moment, et nous ne partageons jamais vos données personnelles avec des tiers. Votre vie privée est notre priorité."
     },
     "imageQuality": {
       "question": "Quelle est la qualité des images générées ?",
@@ -137,7 +137,7 @@
     },
     "howManyPhotos": {
       "question": "Combien de photos puis-je générer ?",
-      "answer": "Une fois votre modèle IA entraîné, vous pouvez générer des photos illimitées pour seulement 0,03 $ chacune. Il n'y a pas de limites sur le nombre d'images que vous pouvez créer—générez autant de styles et variations que vous le souhaitez."
+      "answer": "Une fois votre modèle IA entraîné, vous pouvez générer des photos illimitées pour seulement 0,03 $ chacune. Il n'y a pas de limites sur le nombre d'images que vous pouvez créer - générez autant de styles et variations que vous le souhaitez."
     },
     "platforms": {
       "question": "Quelles plateformes sont prises en charge ?",
@@ -145,7 +145,7 @@
     },
     "dataRetention": {
       "question": "Combien de temps gardez-vous mes photos ?",
-      "answer": "Vous avez un contrôle complet sur vos données. Les photos sont stockées en sécurité dans votre compte jusqu'à ce que vous décidiez de les supprimer. Vous pouvez supprimer définitivement n'importe quelle photo ou toutes les photos à tout moment via les paramètres de votre compte—sans questions."
+      "answer": "Vous avez un contrôle complet sur vos données. Les photos sont stockées en sécurité dans votre compte jusqu'à ce que vous décidiez de les supprimer. Vous pouvez supprimer définitivement n'importe quelle photo ou toutes les photos à tout moment via les paramètres de votre compte - sans questions."
     }
   }
 } 

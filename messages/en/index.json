@@ -21,11 +21,11 @@
     },
     "privacyFirst": {
       "title": "Built-in Privacy Control",
-      "description": "Choose public or private galleries, and permanently delete your photos anytime—your data, your way."
+      "description": "Choose public or private galleries, and permanently delete your photos anytime - your data, your way."
     },
     "affordablePricing": {
       "title": "Transparent, Low-Cost Pricing",
-      "description": "No subscriptions, no surprises. One-time AI training only $2.99 + just $0.03 per image—scale up without scale-up costs."
+      "description": "No subscriptions, no surprises. One-time AI training only $2.99 + just $0.03 per image - scale up without scale-up costs."
     },
     "thousandsOfStyles": {
       "title": "Endless Creative Styles",
@@ -37,7 +37,7 @@
     },
     "multiplatform": {
       "title": "Cross-Platform Access",
-      "description": "Use our web app or native iOS & Android apps—automatically sync your AI photo library across all devices."
+      "description": "Use our web app or native iOS & Android apps - automatically sync your AI photo library across all devices."
     }
   },
   "gallery": {
@@ -48,7 +48,7 @@
   },
   "pricing": {
     "title": "Simple, Pay-As-You-Go Pricing",
-    "description": "Only pay for what you use. No monthly fees—just powerful AI photo generation at a fraction of the cost.",
+    "description": "Only pay for what you use. No monthly fees - just powerful AI photo generation at a fraction of the cost.",
     "payAsYouGo": "Pay As You Go",
     "perfectFor": "Ideal for influencers, businesses, creators, and anyone craving stunning AI imagery.",
     "whatsIncluded": "Everything You Get",
@@ -70,7 +70,7 @@
   },
   "download": {
     "title": "Start Generating Today",
-    "description": "Download our AI photo studio or launch the web app—create professional AI images in under a minute.",
+    "description": "Download our AI photo studio or launch the web app - create professional AI images in under a minute.",
     "choosePlatform": "Choose Your Platform",
     "webApp": {
       "title": "Web App",
@@ -79,14 +79,14 @@
     },
     "mobileApps": {
       "title": "Mobile Apps",
-      "description": "Full-featured native apps for iOS & Android—create AI images on the go.",
+      "description": "Full-featured native apps for iOS & Android - create AI images on the go.",
       "googlePlay": "Get it on Google Play",
       "appStore": "Download on the App Store"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Create, customize, and share stunning AI-generated photos—powered by state-of-the-art deep learning.",
+    "description": "Create, customize, and share stunning AI-generated photos - powered by state-of-the-art deep learning.",
     "links": "Quick Links",
     "legal": "Legal",
     "openSource": "Open Source",
@@ -125,11 +125,11 @@
     },
     "pricing": {
       "question": "How much does it cost?",
-      "answer": "We use a simple pay-as-you-go model: a one-time $2.99 fee to train your custom AI model, plus just $0.03 per generated image. No monthly subscriptions or hidden fees—only pay for what you use."
+      "answer": "We use a simple pay-as-you-go model: a one-time $2.99 fee to train your custom AI model, plus just $0.03 per generated image. No monthly subscriptions or hidden fees - only pay for what you use."
     },
     "privacy": {
       "question": "Is my data safe and private?",
-      "answer": "Absolutely. You have full control over your privacy settings—choose between public or private galleries. You can permanently delete your photos anytime, and we never share your personal data with third parties. Your privacy is our priority."
+      "answer": "Absolutely. You have full control over your privacy settings - choose between public or private galleries. You can permanently delete your photos anytime, and we never share your personal data with third parties. Your privacy is our priority."
     },
     "imageQuality": {
       "question": "What quality are the generated images?",
@@ -137,7 +137,7 @@
     },
     "howManyPhotos": {
       "question": "How many photos can I generate?",
-      "answer": "Once your AI model is trained, you can generate unlimited photos for just $0.03 each. There are no limits on the number of images you can create—generate as many styles and variations as you want."
+      "answer": "Once your AI model is trained, you can generate unlimited photos for just $0.03 each. There are no limits on the number of images you can create - generate as many styles and variations as you want."
     },
     "platforms": {
       "question": "What platforms are supported?",
@@ -145,7 +145,7 @@
     },
     "dataRetention": {
       "question": "How long do you keep my photos?",
-      "answer": "You have complete control over your data. Photos are stored securely in your account until you decide to delete them. You can permanently remove any or all photos at any time through your account settings—no questions asked."
+      "answer": "You have complete control over your data. Photos are stored securely in your account until you decide to delete them. You can permanently remove any or all photos at any time through your account settings - no questions asked."
     }
   }
 }

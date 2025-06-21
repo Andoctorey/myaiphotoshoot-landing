@@ -21,11 +21,11 @@
     },
     "privacyFirst": {
       "title": "Control de privacidad integrado",
-      "description": "Elige entre galerías públicas o privadas, y elimina permanentemente tus fotos en cualquier momento—tus datos bajo tu control."
+      "description": "Elige entre galerías públicas o privadas, y elimina permanentemente tus fotos en cualquier momento - tus datos bajo tu control."
     },
     "affordablePricing": {
       "title": "Precios transparentes y económicos",
-      "description": "Sin suscripciones, sin sorpresas. Entrenamiento único de IA solo $2.99 + solo $0.03 por imagen—escala sin costos adicionales."
+      "description": "Sin suscripciones, sin sorpresas. Entrenamiento único de IA solo $2.99 + solo $0.03 por imagen - escala sin costos adicionales."
     },
     "thousandsOfStyles": {
       "title": "Estilos creativos infinitos",
@@ -37,7 +37,7 @@
     },
     "multiplatform": {
       "title": "Acceso multiplataforma",
-      "description": "Usa nuestra aplicación web o apps nativas para iOS y Android—sincroniza automáticamente tu biblioteca de fotos IA en todos los dispositivos."
+      "description": "Usa nuestra aplicación web o apps nativas para iOS y Android - sincroniza automáticamente tu biblioteca de fotos IA en todos los dispositivos."
     }
   },
   "gallery": {
@@ -48,7 +48,7 @@
   },
   "pricing": {
     "title": "Sistema simple de pago por uso",
-    "description": "Paga solo por lo que uses. Sin tarifas mensuales—generación potente de fotos IA a una fracción del costo.",
+    "description": "Paga solo por lo que uses. Sin tarifas mensuales - generación potente de fotos IA a una fracción del costo.",
     "payAsYouGo": "Pago por uso",
     "perfectFor": "Ideal para influencers, empresas, creadores de contenido y cualquiera que busque imágenes IA impresionantes.",
     "whatsIncluded": "Todo lo que obtienes",
@@ -70,7 +70,7 @@
   },
   "download": {
     "title": "Comienza a crear hoy",
-    "description": "Descarga nuestro estudio de fotos IA o lanza la aplicación web—crea imágenes IA profesionales en menos de un minuto.",
+    "description": "Descarga nuestro estudio de fotos IA o lanza la aplicación web - crea imágenes IA profesionales en menos de un minuto.",
     "choosePlatform": "Elige tu plataforma",
     "webApp": {
       "title": "Aplicación web",
@@ -79,14 +79,14 @@
     },
     "mobileApps": {
       "title": "Aplicaciones móviles",
-      "description": "Apps nativas completas para iOS y Android—crea imágenes IA sobre la marcha.",
+      "description": "Apps nativas completas para iOS y Android - crea imágenes IA sobre la marcha.",
       "googlePlay": "Obtener en Google Play",
       "appStore": "Descargar en App Store"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Crea, personaliza y comparte fotografías impresionantes generadas por IA—impulsado por tecnología de aprendizaje profundo de vanguardia.",
+    "description": "Crea, personaliza y comparte fotografías impresionantes generadas por IA - impulsado por tecnología de aprendizaje profundo de vanguardia.",
     "links": "Enlaces rápidos",
     "legal": "Legal",
     "openSource": "Código abierto",
@@ -125,11 +125,11 @@
     },
     "pricing": {
       "question": "¿Cuánto cuesta?",
-      "answer": "Usamos un modelo simple de pago por uso: una tarifa única de $2.99 para entrenar tu modelo IA personalizado, más solo $0.03 por imagen generada. Sin suscripciones mensuales ni tarifas ocultas—solo paga por lo que uses."
+      "answer": "Usamos un modelo simple de pago por uso: una tarifa única de $2.99 para entrenar tu modelo IA personalizado, más solo $0.03 por imagen generada. Sin suscripciones mensuales ni tarifas ocultas - solo paga por lo que uses."
     },
     "privacy": {
       "question": "¿Están seguros y son privados mis datos?",
-      "answer": "Absolutamente. Tienes control total sobre tus configuraciones de privacidad—elige entre galerías públicas o privadas. Puedes eliminar permanentemente tus fotos en cualquier momento, y nunca compartimos tus datos personales con terceros. Tu privacidad es nuestra prioridad."
+      "answer": "Absolutamente. Tienes control total sobre tus configuraciones de privacidad - elige entre galerías públicas o privadas. Puedes eliminar permanentemente tus fotos en cualquier momento, y nunca compartimos tus datos personales con terceros. Tu privacidad es nuestra prioridad."
     },
     "imageQuality": {
       "question": "¿Qué calidad tienen las imágenes generadas?",
@@ -137,7 +137,7 @@
     },
     "howManyPhotos": {
       "question": "¿Cuántas fotos puedo generar?",
-      "answer": "Una vez que tu modelo IA esté entrenado, puedes generar fotos ilimitadas por solo $0.03 cada una. No hay límites en la cantidad de imágenes que puedes crear—genera tantos estilos y variaciones como quieras."
+      "answer": "Una vez que tu modelo IA esté entrenado, puedes generar fotos ilimitadas por solo $0.03 cada una. No hay límites en la cantidad de imágenes que puedes crear - genera tantos estilos y variaciones como quieras."
     },
     "platforms": {
       "question": "¿Qué plataformas están soportadas?",
@@ -145,7 +145,7 @@
     },
     "dataRetention": {
       "question": "¿Por cuánto tiempo guardas mis fotos?",
-      "answer": "Tienes control completo sobre tus datos. Las fotos se almacenan de forma segura en tu cuenta hasta que decidas eliminarlas. Puedes quitar permanentemente cualquier foto o todas las fotos en cualquier momento a través de la configuración de tu cuenta—sin preguntas."
+      "answer": "Tienes control completo sobre tus datos. Las fotos se almacenan de forma segura en tu cuenta hasta que decidas eliminarlas. Puedes quitar permanentemente cualquier foto o todas las fotos en cualquier momento a través de la configuración de tu cuenta - sin preguntas."
     }
   }
 } 
