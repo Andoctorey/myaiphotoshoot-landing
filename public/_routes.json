@@ -6,6 +6,7 @@
     "/images/*", 
     "/*.svg",
     "/fonts/*",
-    "/api/*"
+    "/api/*",
+    "/favicon.ico"
   ]
 } 
