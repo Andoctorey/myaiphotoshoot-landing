@@ -4,6 +4,7 @@
     "features": "Funktionen",
     "gallery": "Galerie",
     "pricing": "Preise",
+    "faq": "FAQ",
     "download": "Loslegen"
   },
   "hero": {
@@ -109,6 +110,42 @@
       "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
       "privacyNotice": "Wir verwenden Ihre E-Mail nur zur Antwort und teilen sie niemals mit Dritten.",
       "responseTime": "Erwarten Sie eine Antwort innerhalb von 24 Stunden."
+    }
+  },
+  "faq": {
+    "title": "Häufig Gestellte Fragen",
+    "description": "Erhalten Sie Antworten auf häufige Fragen zu unserem KI-Fotogenerierungsservice",
+    "whyNotChatGPT": {
+      "question": "Warum nicht ChatGPT?",
+      "answer": "ChatGPT kann nur bestehende Fotos bearbeiten, aber My AI Photo Shoot erstellt völlig neue, originale Fotos von Grund auf mit fortschrittlichen KI-Modellen. Wir generieren Tausende einzigartiger, hyperrealistischer Porträts, die auf Ihre Stilvorlieben zugeschnitten sind, während ChatGPT auf grundlegende Fotobearbeitung und -modifikationen beschränkt ist."
+    },
+    "howItWorks": {
+      "question": "Wie funktioniert die KI-Fotogenerierung?",
+      "answer": "Unsere KI verwendet Ihre hochgeladenen Fotos, um ein benutzerdefiniertes Modell zu trainieren, das Ihre einzigartigen Merkmale und Stilvorlieben erlernt. Einmal trainiert, kann es unbegrenzt neue Fotos von Ihnen in verschiedenen Posen, Einstellungen und Stilen mit fortschrittlichen Deep-Learning-Algorithmen generieren."
+    },
+    "pricing": {
+      "question": "Was kostet es?",
+      "answer": "Wir verwenden ein einfaches Pay-as-you-go-Modell: eine einmalige Gebühr von 2,99 $ für das Training Ihres benutzerdefinierten KI-Modells plus nur 0,03 $ pro generiertem Bild. Keine monatlichen Abonnements oder versteckten Gebühren—zahlen Sie nur für das, was Sie nutzen."
+    },
+    "privacy": {
+      "question": "Sind meine Daten sicher und privat?",
+      "answer": "Absolut. Sie haben vollständige Kontrolle über Ihre Datenschutzeinstellungen—wählen Sie zwischen öffentlichen oder privaten Galerien. Sie können Ihre Fotos jederzeit dauerhaft löschen, und wir teilen Ihre persönlichen Daten niemals mit Dritten. Ihre Privatsphäre ist unsere Priorität."
+    },
+    "imageQuality": {
+      "question": "Welche Qualität haben die generierten Bilder?",
+      "answer": "Alle Bilder werden in hoher Auflösung generiert, die für soziale Medien, Profilbilder, Marketingmaterialien und Druck geeignet ist. Unsere Flux.1™ KI-Modelle produzieren unglaublich realistische, detaillierte Bilder, die praktisch nicht von professioneller Fotografie zu unterscheiden sind."
+    },
+    "howManyPhotos": {
+      "question": "Wie viele Fotos kann ich generieren?",
+      "answer": "Sobald Ihr KI-Modell trainiert ist, können Sie unbegrenzt Fotos für nur 0,03 $ pro Stück generieren. Es gibt keine Begrenzung für die Anzahl der Bilder, die Sie erstellen können—generieren Sie so viele Stile und Variationen, wie Sie möchten."
+    },
+    "platforms": {
+      "question": "Welche Plattformen werden unterstützt?",
+      "answer": "Sie können auf unseren Service über unsere Web-App (funktioniert in jedem Browser), native iOS-App oder Android-App zugreifen. Ihre Fotos synchronisieren sich automatisch auf allen Geräten, sodass Sie überall Ihre Bilder generieren und darauf zugreifen können."
+    },
+    "dataRetention": {
+      "question": "Wie lange bewahren Sie meine Fotos auf?",
+      "answer": "Sie haben vollständige Kontrolle über Ihre Daten. Fotos werden sicher in Ihrem Konto gespeichert, bis Sie sich entscheiden, sie zu löschen. Sie können jederzeit über Ihre Kontoeinstellungen dauerhaft alle oder einzelne Fotos entfernen—ohne Fragen."
     }
   }
 } 

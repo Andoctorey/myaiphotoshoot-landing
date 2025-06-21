@@ -42,6 +42,7 @@ export default function Navigation() {
     { name: t('features'), href: isHomePage ? '#features' : `/${locale}#features` },
     { name: t('gallery'), href: isHomePage ? '#gallery' : `/${locale}#gallery` },
     { name: t('pricing'), href: isHomePage ? '#pricing' : `/${locale}#pricing` },
+    { name: t('faq'), href: isHomePage ? '#faq' : `/${locale}#faq` },
   ];
 
   useEffect(() => {

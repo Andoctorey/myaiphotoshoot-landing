@@ -4,6 +4,7 @@
     "features": "Features",
     "gallery": "Gallery",
     "pricing": "Pricing",
+    "faq": "FAQ",
     "download": "Get Started"
   },
   "hero": {
@@ -109,6 +110,42 @@
       "invalidEmail": "Please enter a valid email",
       "privacyNotice": "We’ll only use your email to respond and never share it with third parties.",
       "responseTime": "Expect a reply within 24 hours."
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Get answers to common questions about our AI photo generation service",
+    "whyNotChatGPT": {
+      "question": "Why not ChatGPT?",
+      "answer": "ChatGPT can only edit existing photos, but My AI Photo Shoot creates entirely new, original photos from scratch using advanced AI models. We generate thousands of unique, hyper-realistic portraits and images tailored to your style preferences, while ChatGPT is limited to basic photo editing and modifications."
+    },
+    "howItWorks": {
+      "question": "How does AI photo generation work?",
+      "answer": "Our AI uses your uploaded photos to train a custom model that learns your unique features and style preferences. Once trained, it can generate unlimited new photos of you in different poses, settings, and styles using advanced deep learning algorithms."
+    },
+    "pricing": {
+      "question": "How much does it cost?",
+      "answer": "We use a simple pay-as-you-go model: a one-time $2.99 fee to train your custom AI model, plus just $0.03 per generated image. No monthly subscriptions or hidden fees—only pay for what you use."
+    },
+    "privacy": {
+      "question": "Is my data safe and private?",
+      "answer": "Absolutely. You have full control over your privacy settings—choose between public or private galleries. You can permanently delete your photos anytime, and we never share your personal data with third parties. Your privacy is our priority."
+    },
+    "imageQuality": {
+      "question": "What quality are the generated images?",
+      "answer": "All images are generated in high resolution suitable for social media, profile pictures, marketing materials, and printing. Our Flux.1™ AI models produce incredibly realistic, detailed images that are virtually indistinguishable from professional photography."
+    },
+    "howManyPhotos": {
+      "question": "How many photos can I generate?",
+      "answer": "Once your AI model is trained, you can generate unlimited photos for just $0.03 each. There are no limits on the number of images you can create—generate as many styles and variations as you want."
+    },
+    "platforms": {
+      "question": "What platforms are supported?",
+      "answer": "You can access our service through our web app (works on any browser), native iOS app, or Android app. Your photos automatically sync across all devices, so you can generate and access your images anywhere."
+    },
+    "dataRetention": {
+      "question": "How long do you keep my photos?",
+      "answer": "You have complete control over your data. Photos are stored securely in your account until you decide to delete them. You can permanently remove any or all photos at any time through your account settings—no questions asked."
     }
   }
 }

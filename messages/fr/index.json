@@ -4,6 +4,7 @@
     "features": "Fonctionnalités",
     "gallery": "Galerie",
     "pricing": "Tarifs",
+    "faq": "FAQ",
     "download": "Commencer"
   },
   "hero": {
@@ -109,6 +110,42 @@
       "invalidEmail": "Veuillez entrer une adresse e-mail valide",
       "privacyNotice": "Nous n'utiliserons votre e-mail que pour vous répondre et ne le partagerons jamais avec des tiers.",
       "responseTime": "Attendez-vous à une réponse sous 24 heures."
+    }
+  },
+  "faq": {
+    "title": "Questions Fréquemment Posées",
+    "description": "Obtenez des réponses aux questions courantes sur notre service de génération de photos IA",
+    "whyNotChatGPT": {
+      "question": "Pourquoi pas ChatGPT ?",
+      "answer": "ChatGPT ne peut que modifier des photos existantes, mais My AI Photo Shoot crée des photos entièrement nouvelles et originales à partir de zéro en utilisant des modèles IA avancés. Nous générons des milliers de portraits uniques et hyperréalistes adaptés à vos préférences de style, tandis que ChatGPT est limité à l'édition de base et aux modifications de photos."
+    },
+    "howItWorks": {
+      "question": "Comment fonctionne la génération de photos IA ?",
+      "answer": "Notre IA utilise vos photos téléchargées pour entraîner un modèle personnalisé qui apprend vos caractéristiques uniques et préférences de style. Une fois entraîné, il peut générer des photos illimitées de vous dans différentes poses, décors et styles en utilisant des algorithmes d'apprentissage profond avancés."
+    },
+    "pricing": {
+      "question": "Combien cela coûte-t-il ?",
+      "answer": "Nous utilisons un modèle simple de paiement à l'usage : des frais uniques de 2,99 $ pour entraîner votre modèle IA personnalisé, plus seulement 0,03 $ par image générée. Pas d'abonnements mensuels ni de frais cachés—payez uniquement ce que vous utilisez."
+    },
+    "privacy": {
+      "question": "Mes données sont-elles sécurisées et privées ?",
+      "answer": "Absolument. Vous avez un contrôle total sur vos paramètres de confidentialité—choisissez entre des galeries publiques ou privées. Vous pouvez supprimer définitivement vos photos à tout moment, et nous ne partageons jamais vos données personnelles avec des tiers. Votre vie privée est notre priorité."
+    },
+    "imageQuality": {
+      "question": "Quelle est la qualité des images générées ?",
+      "answer": "Toutes les images sont générées en haute résolution adaptée aux réseaux sociaux, photos de profil, matériaux marketing et impression. Nos modèles IA Flux.1™ produisent des images incroyablement réalistes et détaillées qui sont pratiquement indiscernables de la photographie professionnelle."
+    },
+    "howManyPhotos": {
+      "question": "Combien de photos puis-je générer ?",
+      "answer": "Une fois votre modèle IA entraîné, vous pouvez générer des photos illimitées pour seulement 0,03 $ chacune. Il n'y a pas de limites sur le nombre d'images que vous pouvez créer—générez autant de styles et variations que vous le souhaitez."
+    },
+    "platforms": {
+      "question": "Quelles plateformes sont prises en charge ?",
+      "answer": "Vous pouvez accéder à notre service via notre application web (fonctionne sur n'importe quel navigateur), l'application native iOS ou l'application Android. Vos photos se synchronisent automatiquement sur tous les appareils, vous pouvez donc générer et accéder à vos images n'importe où."
+    },
+    "dataRetention": {
+      "question": "Combien de temps gardez-vous mes photos ?",
+      "answer": "Vous avez un contrôle complet sur vos données. Les photos sont stockées en sécurité dans votre compte jusqu'à ce que vous décidiez de les supprimer. Vous pouvez supprimer définitivement n'importe quelle photo ou toutes les photos à tout moment via les paramètres de votre compte—sans questions."
     }
   }
 } 
