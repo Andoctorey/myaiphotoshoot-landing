@@ -7,7 +7,10 @@ import DirectionHandler from "@/components/layout/DirectionHandler";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+});
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',

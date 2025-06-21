@@ -27,7 +27,6 @@
   body {
     background: var(--background);
     color: var(--foreground);
-    font-family: Arial, Helvetica, sans-serif;
   }
 
   /* Dark mode placeholder text */
@@ -46,7 +45,7 @@
     text-align: right;
   }
 
-  /* Better Arabic font rendering */
+  /* Better Arabic font rendering - keeping system fonts for RTL to ensure proper rendering */
   [dir="rtl"] {
     font-family: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
   }
