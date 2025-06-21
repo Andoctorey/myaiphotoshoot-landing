@@ -103,7 +103,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="application-name" content="My AI Photo Shoot" />
         <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="canonical" href="https://myaiphotoshoot.com" />
         <link rel="icon" href="/images/favicon.png" type="image/png" />
