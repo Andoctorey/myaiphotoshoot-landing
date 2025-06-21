@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import DirectionHandler from "@/components/layout/DirectionHandler";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -114,6 +116,7 @@ export default function RootLayout({
         <link rel="icon" type="image/webp" sizes="16x16" href="/images/icon_16.webp" />
       </head>
       <body className={inter.className}>
+        <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
         <DirectionHandler />
         <ErrorBoundary>
           <ThemeProvider>{children}</ThemeProvider>
