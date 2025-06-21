@@ -22,19 +22,113 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
     };
   }
 
-  // Truncate prompt if too long for social sharing
-  const truncatedPrompt = photo.prompt.length > 200 
-    ? photo.prompt.substring(0, 197) + '...' 
-    : photo.prompt;
+  // Clean and truncate prompt for title (Google recommends ~60 chars)
+  const cleanPromptForTitle = (prompt: string): string => {
+    return prompt
+      // Remove technical terms that don't help with search
+      .replace(/\b(ultra-detailed|high-resolution|4k|8k|raw|dslr|professional lighting|cinematic lighting)\b/gi, '')
+      // Clean up extra spaces
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
 
-  const title = `My AI Photo Shoot`;
-  const description = `${truncatedPrompt}`;
+  // Extract keywords from prompt for better SEO
+  const extractKeywords = (prompt: string): string => {
+    const cleaned = cleanPromptForTitle(prompt);
+    const words = cleaned.toLowerCase().split(/[\s,]+/);
+    
+    // Common searchable terms
+    const keywordCategories = [
+      'portrait', 'photo', 'picture', 'headshot', 'selfie',
+      'woman', 'man', 'person', 'model', 'character',
+      'professional', 'artistic', 'creative', 'vintage', 'modern',
+      'studio', 'outdoor', 'nature', 'urban', 'fantasy',
+      'dramatic', 'elegant', 'vibrant', 'beautiful', 'stunning'
+    ];
+    
+    const foundKeywords = words.filter(word => 
+      keywordCategories.includes(word) || word.length > 4
+    ).slice(0, 10);
+    
+    // Always include AI-related keywords
+    const aiKeywords = ['AI photo', 'AI generated', 'AI portrait', 'artificial intelligence'];
+    
+    return [...aiKeywords, ...foundKeywords].join(', ');
+  };
+
+  // Create title from cleaned prompt
+  const createTitle = (prompt: string): string => {
+    const cleaned = cleanPromptForTitle(prompt);
+    
+    // If prompt is short enough, use it directly
+    if (cleaned.length <= 45) {
+      return `${cleaned} | My AI Photo Shoot`;
+    }
+    
+    // Otherwise, truncate at a natural break
+    const truncated = cleaned.substring(0, 45);
+    const lastSpace = truncated.lastIndexOf(' ');
+    const cutPoint = lastSpace > 30 ? lastSpace : 45;
+    
+    return `${cleaned.substring(0, cutPoint)}... | My AI Photo Shoot`;
+  };
+
+  // Use prompt as description with minimal cleanup
+  const createDescription = (prompt: string): string => {
+    const cleaned = prompt
+      // Only remove the most technical terms that confuse general users
+      .replace(/\b(ultra-detailed|high-resolution|4k|8k|raw|dslr)\b/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    
+    // Add AI context prefix and keep it under 155 characters
+    const prefix = 'AI-generated photo: ';
+    const available = 155 - prefix.length;
+    
+    if (cleaned.length <= available) {
+      return prefix + cleaned;
+    }
+    
+    // Truncate at natural break
+    const truncated = cleaned.substring(0, available - 3);
+    const lastPeriod = truncated.lastIndexOf('.');
+    const lastComma = truncated.lastIndexOf(',');
+    const cutPoint = Math.max(lastPeriod, lastComma);
+    
+    if (cutPoint > available * 0.7) {
+      return prefix + cleaned.substring(0, cutPoint + 1);
+    }
+    
+    return prefix + truncated + '...';
+  };
+
+  const title = createTitle(photo.prompt);
+  const description = createDescription(photo.prompt);
+  const keywords = extractKeywords(photo.prompt);
   const imageUrl = photo.public_url;
   const photoUrl = `https://myaiphotoshoot.com/photo/${photo.id}`;
 
   return {
     title,
     description,
+    keywords,
+    authors: [{ name: 'My AI Photo Shoot', url: 'https://myaiphotoshoot.com' }],
+    creator: 'My AI Photo Shoot',
+    publisher: 'My AI Photo Shoot',
+    category: 'AI Photography',
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    alternates: {
+      canonical: photoUrl,
+    },
     openGraph: {
       title,
       description,
@@ -60,12 +154,6 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
       images: [imageUrl],
       creator: '@myaiphotoshoot',
       site: '@myaiphotoshoot',
-    },
-    // Additional meta tags for better social sharing
-    other: {
-      'og:image:width': '1024',
-      'og:image:height': '1024',
-      'twitter:image:alt': photo.prompt,
     },
   };
 }
