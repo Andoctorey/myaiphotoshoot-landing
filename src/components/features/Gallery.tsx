@@ -291,7 +291,7 @@ export default function Gallery() {
               >
                 <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
                 <Image
-                  src={`${item.public_url}?width=420`}
+                  src={item.public_url.includes('supabase.co') ? item.public_url : `${item.public_url}?width=420`}
                   alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
