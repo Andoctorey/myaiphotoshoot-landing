@@ -145,65 +145,117 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
     <>
       {/* Add admin-style CSS with !important to override conflicts */}
       <style jsx global>{`
+        /* CSS Variables for theme colors */
+        :root {
+          --article-text: #242424;
+          --article-heading: #1a1a1a;
+          --article-link: #0066cc;
+          --article-accent: #0066cc;
+          --article-bg-special: #f8f9fa;
+          --article-text-muted: #4a5568;
+        }
+
+        html.dark {
+          --article-text: #e4e4e7;
+          --article-heading: #f4f4f5;
+          --article-link: #60a5fa;
+          --article-accent: #3b82f6;
+          --article-bg-special: #1e293b;
+          --article-text-muted: #cbd5e1;
+        }
+
+        /* Base article styling */
         .medium-style-article {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
-          line-height: 1.6 !important;
-          color: #292929 !important;
+          font-family: Georgia, Charter, "Times New Roman", serif !important;
+          line-height: 1.75 !important;
+          color: var(--article-text) !important;
+          font-size: 20px !important;
+          letter-spacing: -0.003em !important;
           max-width: none !important;
         }
 
+        /* Comprehensive dark mode override */
+        html.dark .medium-style-article,
+        html.dark .medium-style-article * {
+          color: var(--article-text) !important;
+        }
+
+        /* Typography */
+        .medium-style-article h1,
+        .medium-style-article h2,
+        .medium-style-article h3,
+        .medium-style-article h4,
+        .medium-style-article h5,
+        .medium-style-article h6 {
+          color: var(--article-heading) !important;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        }
+
         .medium-style-article h1 {
-          font-size: 2.5rem !important;
+          font-size: 2.75rem !important;
           font-weight: 700 !important;
-          line-height: 1.2 !important;
-          margin-bottom: 1rem !important;
-          color: #292929 !important;
+          line-height: 1.15 !important;
+          margin-bottom: 1.5rem !important;
+          letter-spacing: -0.02em !important;
         }
 
         .medium-style-article h2 {
-          font-size: 1.875rem !important;
+          font-size: 2rem !important;
           font-weight: 600 !important;
-          line-height: 1.3 !important;
-          margin-top: 2rem !important;
-          margin-bottom: 1rem !important;
-          color: #292929 !important;
+          line-height: 1.25 !important;
+          margin: 2.5rem 0 1.25rem !important;
+          letter-spacing: -0.015em !important;
         }
 
         .medium-style-article h3 {
           font-size: 1.5rem !important;
           font-weight: 600 !important;
+          line-height: 1.35 !important;
+          margin: 2rem 0 1rem !important;
+          letter-spacing: -0.01em !important;
+        }
+
+        .medium-style-article h4 {
+          font-size: 1.25rem !important;
+          font-weight: 600 !important;
           line-height: 1.4 !important;
-          margin-top: 1.5rem !important;
-          margin-bottom: 0.75rem !important;
-          color: #292929 !important;
+          margin: 1.75rem 0 0.75rem !important;
         }
 
         .medium-style-article p {
-          font-size: 1.125rem !important;
-          line-height: 1.6 !important;
-          margin-bottom: 1.5rem !important;
-          color: #292929 !important;
+          font-size: 20px !important;
+          line-height: 1.75 !important;
+          margin-bottom: 1.75rem !important;
+          color: var(--article-text) !important;
+          word-spacing: 0.05em !important;
         }
 
+        .medium-style-article p:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        /* Special sections */
         .medium-style-article .section-importance {
-          background: #f8f9fa !important;
-          border-left: 4px solid #1a8917 !important;
-          padding: 1rem 1.5rem !important;
-          margin: 1.5rem 0 !important;
-          border-radius: 0 8px 8px 0 !important;
-          font-size: 1rem !important;
+          background: var(--article-bg-special) !important;
+          border-left: 4px solid var(--article-accent) !important;
+          padding: 1.25rem 1.75rem !important;
+          margin: 2rem 0 !important;
+          border-radius: 0 6px 6px 0 !important;
+          font-size: 18px !important;
           font-style: italic !important;
-          color: #4a5568 !important;
+          color: var(--article-text-muted) !important;
+          line-height: 1.6 !important;
         }
 
-        /* Photo Gallery Styles - CRITICAL for horizontal layout */
+        /* Photo Gallery Styles - Enhanced for better UX */
         .medium-style-article .photo-gallery {
-          margin: 2rem 0 !important;
+          margin: 2.5rem 0 !important;
           overflow-x: auto !important;
           overflow-y: hidden !important;
-          padding: 1rem 0 !important;
+          padding: 1.5rem 0 !important;
           width: 100% !important;
           -webkit-overflow-scrolling: touch !important;
+          border-radius: 8px !important;
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar {
@@ -211,23 +263,25 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-track {
-          background: #f1f1f1 !important;
-          border-radius: 10px !important;
+          background: #f1f5f9 !important;
+          border-radius: 4px !important;
+          border: 1px solid #e2e8f0 !important;
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-thumb {
-          background: #c1c1c1 !important;
-          border-radius: 10px !important;
+          background: #94a3b8 !important;
+          border-radius: 4px !important;
+          border: 1px solid #64748b !important;
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-thumb:hover {
-          background: #a8a8a8 !important;
+          background: #64748b !important;
         }
 
         .medium-style-article .photo-row {
           display: flex !important;
-          gap: 1rem !important;
-          padding-bottom: 0.5rem !important;
+          gap: 1.5rem !important;
+          padding-bottom: 1rem !important;
           width: max-content !important;
           min-width: 100% !important;
           flex-wrap: nowrap !important;
@@ -236,159 +290,249 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
         .medium-style-article .photo-item {
           flex: 0 0 auto !important;
           text-align: center !important;
-          width: 300px !important;
+          width: 320px !important;
           margin: 0 !important;
         }
 
         .medium-style-article .photo-item img {
-          width: 300px !important;
-          height: 300px !important;
+          width: 320px !important;
+          height: 320px !important;
           object-fit: cover !important;
-          border-radius: 8px !important;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-          transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+          border-radius: 12px !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+          transition: all 0.3s ease !important;
           cursor: pointer !important;
           display: block !important;
           margin: 0 auto !important;
         }
 
         .medium-style-article .photo-item img:hover {
-          transform: translateY(-2px) !important;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+          transform: translateY(-4px) !important;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
         }
 
         .medium-style-article .photo-item figcaption {
-          margin-top: 0.5rem !important;
-          font-size: 0.75rem !important;
-          color: #6b6b6b !important;
+          margin-top: 0.75rem !important;
+          font-size: 14px !important;
+          color: #6b7280 !important;
           font-style: italic !important;
-          line-height: 1.3 !important;
-          max-width: 300px !important;
+          line-height: 1.4 !important;
+          max-width: 320px !important;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
         }
 
         .medium-style-article .gallery-cta {
-          margin-top: 0.5rem !important;
+          margin-top: 0.75rem !important;
           text-align: center !important;
         }
 
         .medium-style-article .gallery-cta p {
           margin: 0 !important;
-          font-size: 0.9rem !important;
-          color: #666 !important;
+          font-size: 14px !important;
+          color: #6b7280 !important;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        /* Dark mode for captions */
+        html.dark .medium-style-article .photo-item figcaption,
+        html.dark .medium-style-article .gallery-cta p {
+          color: #94a3b8 !important;
         }
 
         .medium-style-article blockquote {
-          border-left: 4px solid #1a8917 !important;
-          padding: 1rem 1.5rem !important;
-          margin: 2rem 0 !important;
+          border-left: 4px solid var(--article-accent) !important;
+          padding: 1.5rem 2rem !important;
+          margin: 2.5rem 0 !important;
           font-style: italic !important;
-          font-size: 1.125rem !important;
-          color: #292929 !important;
-          background: #f8f9fa !important;
-          border-radius: 0 4px 4px 0 !important;
+          font-size: 22px !important;
+          line-height: 1.6 !important;
+          color: var(--article-text-muted) !important;
+          background: var(--article-bg-special) !important;
+          border-radius: 0 8px 8px 0 !important;
+          position: relative !important;
         }
 
+        .medium-style-article blockquote::before {
+          content: """ !important;
+          font-size: 3rem !important;
+          color: var(--article-accent) !important;
+          position: absolute !important;
+          left: 0.5rem !important;
+          top: -0.5rem !important;
+          line-height: 1 !important;
+        }
+
+        /* Text styling */
         .medium-style-article strong {
           font-weight: 600 !important;
-          color: #292929 !important;
+          color: var(--article-heading) !important;
         }
 
         .medium-style-article em {
           font-style: italic !important;
-          color: #292929 !important;
+          color: var(--article-text) !important;
         }
 
         .medium-style-article a {
-          color: #1a8917 !important;
+          color: var(--article-link) !important;
           text-decoration: none !important;
           border-bottom: 1px solid transparent !important;
-          transition: border-bottom-color 0.2s ease !important;
+          transition: all 0.2s ease !important;
+          font-weight: 500 !important;
         }
 
         .medium-style-article a:hover {
-          border-bottom-color: #1a8917 !important;
+          border-bottom-color: var(--article-link) !important;
+          opacity: 0.8 !important;
         }
 
-        .medium-style-article ul {
-          margin: 1.5rem 0 !important;
-          padding-left: 1.5rem !important;
-          list-style-type: disc !important;
-        }
-
-        .medium-style-article ul li {
-          font-size: 1.125rem !important;
-          line-height: 1.6 !important;
-          margin-bottom: 0.5rem !important;
-          color: #292929 !important;
+        /* Lists */
+        .medium-style-article ul,
+        .medium-style-article ol {
+          margin: 2rem 0 !important;
+          padding-left: 1.75rem !important;
+          list-style: none !important;
         }
 
         .medium-style-article ol {
-          margin: 1.5rem 0 !important;
-          padding-left: 1.5rem !important;
-          list-style-type: decimal !important;
+          counter-reset: item !important;
+        }
+
+        .medium-style-article ul li,
+        .medium-style-article ol li {
+          font-size: 20px !important;
+          line-height: 1.75 !important;
+          margin-bottom: 0.75rem !important;
+          color: var(--article-text) !important;
+          position: relative !important;
         }
 
         .medium-style-article ol li {
-          font-size: 1.125rem !important;
-          line-height: 1.6 !important;
-          margin-bottom: 0.5rem !important;
-          color: #292929 !important;
+          counter-increment: item !important;
         }
 
-        /* Dark mode styles */
-        .dark .medium-style-article {
-          color: #e2e8f0 !important;
-        }
-        
-        .dark .medium-style-article h1,
-        .dark .medium-style-article h2,
-        .dark .medium-style-article h3 {
-          color: #f8fafc !important;
-        }
-        
-        .dark .medium-style-article p {
-          color: #e2e8f0 !important;
-        }
-        
-        .dark .medium-style-article .section-importance {
-          background: #1a202c !important;
-          color: #a0aec0 !important;
-        }
-        
-        .dark .medium-style-article blockquote {
-          background: #1a202c !important;
-          color: #e2e8f0 !important;
-        }
-        
-        .dark .medium-style-article .gallery-cta p {
-          color: #a0aec0 !important;
+        .medium-style-article ul li::before {
+          content: "•" !important;
+          color: var(--article-accent) !important;
+          font-weight: bold !important;
+          position: absolute !important;
+          left: -1.25rem !important;
         }
 
-        .dark .medium-style-article ul li,
-        .dark .medium-style-article ol li {
-          color: #e2e8f0 !important;
-        }
-
-        .dark .medium-style-article strong {
-          color: #f8fafc !important;
-        }
-
-        /* Ensure images maintain pointer cursor since they're clickable */
-        .medium-style-article .photo-item img[title] {
-          cursor: pointer !important;
-        }
-
-        /* Override any conflicting display styles */
-        .medium-style-article * {
-          box-sizing: border-box !important;
+        .medium-style-article ol li::before {
+          content: counter(item) "." !important;
+          color: var(--article-accent) !important;
+          font-weight: 600 !important;
+          position: absolute !important;
+          left: -1.75rem !important;
         }
 
 
 
+        /* Scrollbar styling */
+        .medium-style-article .photo-gallery::-webkit-scrollbar-track {
+          background: #f1f5f9 !important;
+          border: 1px solid #e2e8f0 !important;
+        }
+
+        .medium-style-article .photo-gallery::-webkit-scrollbar-thumb {
+          background: #94a3b8 !important;
+          border: 1px solid #64748b !important;
+        }
+
+        .medium-style-article .photo-gallery::-webkit-scrollbar-thumb:hover {
+          background: #64748b !important;
+        }
+
+        html.dark .medium-style-article .photo-gallery::-webkit-scrollbar-track {
+          background: #1e293b !important;
+          border: 1px solid #334155 !important;
+        }
+
+        html.dark .medium-style-article .photo-gallery::-webkit-scrollbar-thumb {
+          background: #64748b !important;
+          border: 1px solid #94a3b8 !important;
+        }
+
+        html.dark .medium-style-article .photo-gallery::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8 !important;
+          border: 1px solid #cbd5e1 !important;
+        }
+
+        /* Modern CSS scrollbar colors for better browser support */
+        .medium-style-article .photo-gallery {
+          scrollbar-width: thin !important;
+          scrollbar-color: #94a3b8 #f1f5f9 !important;
+        }
+
+        html.dark .medium-style-article .photo-gallery {
+          scrollbar-color: #64748b #1e293b !important;
+        }
 
 
-        /* Additional mobile responsive styles */
+
+        /* Responsive design */
         @media (max-width: 768px) {
+          .medium-style-article {
+            font-size: 18px !important;
+          }
+
+          .medium-style-article h1 {
+            font-size: 2.25rem !important;
+          }
+
+          .medium-style-article h2 {
+            font-size: 1.75rem !important;
+          }
+
+          .medium-style-article h3 {
+            font-size: 1.375rem !important;
+          }
+
+          .medium-style-article p,
+          .medium-style-article ul li,
+          .medium-style-article ol li {
+            font-size: 18px !important;
+          }
+
+          .medium-style-article blockquote {
+            font-size: 20px !important;
+            padding: 1.25rem 1.5rem !important;
+          }
+          
+          .medium-style-article .photo-item {
+            width: 280px !important;
+          }
+          
+          .medium-style-article .photo-item img {
+            width: 280px !important;
+            height: 280px !important;
+          }
+
+          .medium-style-article .photo-item figcaption {
+            max-width: 280px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .medium-style-article {
+            font-size: 17px !important;
+          }
+
+          .medium-style-article h1 {
+            font-size: 2rem !important;
+          }
+
+          .medium-style-article h2 {
+            font-size: 1.5rem !important;
+          }
+
+          .medium-style-article p,
+          .medium-style-article ul li,
+          .medium-style-article ol li {
+            font-size: 17px !important;
+          }
+          
           .medium-style-article .photo-item {
             width: 250px !important;
           }
@@ -397,6 +541,32 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
             width: 250px !important;
             height: 250px !important;
           }
+
+          .medium-style-article .photo-item figcaption {
+            max-width: 250px !important;
+          }
+        }
+
+        /* Reading flow improvements */
+        .medium-style-article > * + * {
+          margin-top: 0 !important;
+        }
+
+        .medium-style-article > p + p {
+          margin-top: 1.75rem !important;
+        }
+
+        .medium-style-article > h2 + p,
+        .medium-style-article > h3 + p,
+        .medium-style-article > h4 + p {
+          margin-top: 1rem !important;
+        }
+
+        /* Ensure proper box-sizing */
+        .medium-style-article *,
+        .medium-style-article *::before,
+        .medium-style-article *::after {
+          box-sizing: border-box !important;
         }
       `}</style>
       
@@ -429,20 +599,20 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
 
             <div className="p-8">
               {/* Article Meta */}
-              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6">
                 <time dateTime={post.created_at}>
                   {formatDate(post.created_at)}
                 </time>
               </div>
 
               {/* Article Title */}
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                 {post.title}
               </h1>
 
               {/* Article Description */}
               {post.meta_description && (
-                <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 font-medium">
+                <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 font-normal leading-relaxed">
                   {post.meta_description}
                 </p>
               )}
