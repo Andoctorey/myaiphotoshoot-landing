@@ -1,3 +1,9 @@
+export interface BlogPhoto {
+  url: string;
+  alt?: string;
+  caption?: string;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -9,8 +15,8 @@ export interface BlogPost {
   slug: string | null;
   meta_description: string | null;
   featured_image_url: string | null;
-  section_photos: any | null;
-  translations: Record<string, any>;
+  section_photos: Record<string, BlogPhoto | BlogPhoto[]> | null;
+  translations: Record<string, BlogTranslation>;
 }
 
 export interface BlogListItem {
