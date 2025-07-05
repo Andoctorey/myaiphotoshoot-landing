@@ -3,6 +3,7 @@
     "home": "首页",
     "features": "功能特色",
     "gallery": "作品库",
+    "blog": "博客",
     "pricing": "价格方案",
     "faq": "常见问题",
     "download": "立即开始"
@@ -45,6 +46,21 @@
     "description": "用户最新创作：最新的AI生成图片作品。",
     "loadMore": "加载更多",
     "loading": "加载中..."
+  },
+  "blog": {
+    "title": "AI照片博客",
+    "description": "发现关于AI摄影和数字艺术创作的最新技巧、教程和见解。",
+    "readingTime": "分钟阅读",
+    "publishedOn": "发布于",
+    "noPostsTitle": "暂无博客文章",
+    "noPostsDescription": "我们正在为您创建精彩内容。请稍后再来！",
+    "errorTitle": "加载博客文章失败",
+    "errorDescription": "请稍后再试。",
+    "loading": "加载中...",
+    "previous": "上一页",
+    "next": "下一页",
+    "notFound": "未找到博客文章",
+    "backToBlog": "← 返回博客"
   },
   "pricing": {
     "title": "简单灵活的按需付费",

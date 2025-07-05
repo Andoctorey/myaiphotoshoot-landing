@@ -3,6 +3,7 @@
     "home": "ホーム",
     "features": "機能",
     "gallery": "ギャラリー",
+    "blog": "ブログ",
     "pricing": "料金",
     "faq": "よくある質問",
     "download": "始める"
@@ -45,6 +46,21 @@
     "description": "ユーザーの最新作品：新しいAI生成画像をご覧ください。",
     "loadMore": "さらに表示",
     "loading": "読み込み中..."
+  },
+  "blog": {
+    "title": "AI写真ブログ",
+    "description": "AI写真撮影とデジタルアート作成に関する最新のヒント、チュートリアル、洞察を発見してください。",
+    "readingTime": "分間の読み物",
+    "publishedOn": "公開日",
+    "noPostsTitle": "まだブログ投稿がありません",
+    "noPostsDescription": "素晴らしいコンテンツを作成中です。もう一度チェックしてください！",
+    "errorTitle": "ブログ投稿の読み込みに失敗",
+    "errorDescription": "後でもう一度お試しください。",
+    "loading": "読み込み中...",
+    "previous": "前へ",
+    "next": "次へ",
+    "notFound": "ブログ投稿が見つかりません",
+    "backToBlog": "← ブログに戻る"
   },
   "pricing": {
     "title": "シンプルな従量課金システム",

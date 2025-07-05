@@ -3,6 +3,7 @@
     "home": "Inicio",
     "features": "Funciones",
     "gallery": "Galería",
+    "blog": "Blog",
     "pricing": "Precios",
     "faq": "Preguntas Frecuentes",
     "download": "Comenzar"
@@ -45,6 +46,21 @@
     "description": "Fotos frescas de nuestros usuarios: las últimas imágenes generadas por IA.",
     "loadMore": "Mostrar más",
     "loading": "Cargando..."
+  },
+  "blog": {
+    "title": "Blog de Fotos IA",
+    "description": "Descubre los últimos consejos, tutoriales y conocimientos sobre fotografía con IA y creación de arte digital.",
+    "readingTime": "min de lectura",
+    "publishedOn": "Publicado el",
+    "noPostsTitle": "Aún no hay publicaciones",
+    "noPostsDescription": "Estamos trabajando en crear contenido increíble para ti. ¡Vuelve pronto!",
+    "errorTitle": "Error al cargar las publicaciones",
+    "errorDescription": "Por favor, inténtalo de nuevo más tarde.",
+    "loading": "Cargando...",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "notFound": "Publicación no encontrada",
+    "backToBlog": "← Volver al Blog"
   },
   "pricing": {
     "title": "Sistema simple de pago por uso",

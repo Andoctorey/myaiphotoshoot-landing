@@ -3,6 +3,7 @@
     "home": "Startseite",
     "features": "Funktionen",
     "gallery": "Galerie",
+    "blog": "Blog",
     "pricing": "Preise",
     "faq": "FAQ",
     "download": "Loslegen"
@@ -45,6 +46,21 @@
     "description": "Frische Fotos von unseren Nutzern: die neuesten KI-generierten Bilder.",
     "loadMore": "Mehr anzeigen",
     "loading": "Wird geladen..."
+  },
+  "blog": {
+    "title": "KI-Foto Blog",
+    "description": "Entdecken Sie die neuesten Tipps, Tutorials und Einblicke in KI-Fotografie und digitale Kunstschöpfung.",
+    "readingTime": "Min. Lesezeit",
+    "publishedOn": "Veröffentlicht am",
+    "noPostsTitle": "Noch keine Blog-Beiträge",
+    "noPostsDescription": "Wir arbeiten daran, großartige Inhalte für Sie zu erstellen. Schauen Sie bald wieder vorbei!",
+    "errorTitle": "Fehler beim Laden der Blog-Beiträge",
+    "errorDescription": "Bitte versuchen Sie es später erneut.",
+    "loading": "Wird geladen...",
+    "previous": "Vorherige",
+    "next": "Nächste",
+    "notFound": "Blog-Beitrag nicht gefunden",
+    "backToBlog": "← Zurück zum Blog"
   },
   "pricing": {
     "title": "Einfaches nutzungsbasiertes Preissystem",

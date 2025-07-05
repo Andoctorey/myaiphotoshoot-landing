@@ -3,6 +3,7 @@
     "home": "Home",
     "features": "Features",
     "gallery": "Gallery",
+    "blog": "Blog",
     "pricing": "Pricing",
     "faq": "FAQ",
     "download": "Get Started"
@@ -45,6 +46,21 @@
     "description": "Fresh photos from our users: the latest AI-generated photos.",
      "loadMore": "Show More",
     "loading": "Loading..."
+  },
+  "blog": {
+    "title": "AI Photo Blog",
+    "description": "Discover the latest tips, tutorials, and insights about AI photography and digital art creation.",
+    "readingTime": "min read",
+    "publishedOn": "Published on",
+    "noPostsTitle": "No blog posts yet",
+    "noPostsDescription": "We're working on creating amazing content for you. Check back soon!",
+    "errorTitle": "Failed to load blog posts",
+    "errorDescription": "Please try again later.",
+    "loading": "Loading...",
+    "previous": "Previous",
+    "next": "Next",
+    "notFound": "Blog post not found",
+    "backToBlog": "← Back to Blog"
   },
   "pricing": {
     "title": "Simple, Pay-As-You-Go Pricing",
