@@ -39,6 +39,7 @@ const config: Config = {
     },
   },
   plugins: [
+    require('@tailwindcss/typography'),
     // Custom RTL variants that work with all Tailwind versions
     // @ts-ignore
     function ({ addVariant }) {

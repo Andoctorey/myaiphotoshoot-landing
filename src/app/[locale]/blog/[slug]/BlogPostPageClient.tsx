@@ -23,6 +23,9 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
   const router = useRouter();
   const { post, isLoading, isError } = useBlogPost({ slug, locale });
 
+  // Debug logging
+  console.log('BlogPostPageClient render:', { slug, locale, isLoading, isError, post: !!post });
+
   // Handle 404 if post is not found
   useEffect(() => {
     if (!isLoading && !post && !isError) {
@@ -226,7 +229,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
               )}
 
               {/* Article Content */}
-              <div className="prose prose-lg dark:prose-invert max-w-none">
+              <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-purple-600 dark:prose-a:text-purple-400 prose-strong:text-gray-900 dark:prose-strong:text-white prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-blockquote:border-purple-600 prose-hr:border-gray-300 dark:prose-hr:border-gray-600">
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
               </div>
 
