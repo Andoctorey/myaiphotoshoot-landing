@@ -60,7 +60,12 @@
     "previous": "上一页",
     "next": "下一页",
     "notFound": "未找到博客文章",
-    "backToBlog": "← 返回博客"
+    "backToBlog": "← 返回博客",
+    "cta": {
+      "title": "准备好创建您的AI照片了吗？",
+      "description": "使用我们的先进技术，将您的照片转化为令人惊艳的AI生成图片。",
+      "button": "立即开始创建"
+    }
   },
   "pricing": {
     "title": "简单灵活的按需付费",

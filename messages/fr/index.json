@@ -60,7 +60,12 @@
     "previous": "Précédent",
     "next": "Suivant",
     "notFound": "Article non trouvé",
-    "backToBlog": "← Retour au Blog"
+    "backToBlog": "← Retour au Blog",
+    "cta": {
+      "title": "Prêt à créer vos photos IA ?",
+      "description": "Transformez vos photos en images étonnantes générées par IA avec notre technologie avancée.",
+      "button": "Commencer à créer maintenant"
+    }
   },
   "pricing": {
     "title": "Système simple de paiement à l'usage",

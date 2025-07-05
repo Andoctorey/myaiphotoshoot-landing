@@ -60,7 +60,12 @@
     "previous": "Previous",
     "next": "Next",
     "notFound": "Blog post not found",
-    "backToBlog": "← Back to Blog"
+    "backToBlog": "← Back to Blog",
+    "cta": {
+      "title": "Ready to Create Your AI Photos?",
+      "description": "Transform your photos into stunning AI-generated images with our advanced technology.",
+      "button": "Start Creating Now"
+    }
   },
   "pricing": {
     "title": "Simple, Pay-As-You-Go Pricing",

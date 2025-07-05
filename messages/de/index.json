@@ -60,7 +60,12 @@
     "previous": "Vorherige",
     "next": "Nächste",
     "notFound": "Blog-Beitrag nicht gefunden",
-    "backToBlog": "← Zurück zum Blog"
+    "backToBlog": "← Zurück zum Blog",
+    "cta": {
+      "title": "Bereit, Ihre KI-Fotos zu erstellen?",
+      "description": "Verwandeln Sie Ihre Fotos mit unserer fortschrittlichen Technologie in atemberaubende KI-generierte Bilder.",
+      "button": "Jetzt erstellen"
+    }
   },
   "pricing": {
     "title": "Einfaches nutzungsbasiertes Preissystem",

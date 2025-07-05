@@ -676,13 +676,13 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-8 text-center"
+            className="mt-12 bg-purple-600 hover:bg-purple-700 transition-colors duration-200 rounded-lg p-8 text-center"
           >
             <h2 className="text-2xl font-bold text-white mb-4">
-              Ready to Create Your Own AI Photos?
+              {t('cta.title')}
             </h2>
             <p className="text-purple-100 mb-6">
-              Transform your photos into stunning AI-generated images with our advanced technology.
+              {t('cta.description')}
             </p>
             <a
               href="https://app.myaiphotoshoot.com"
@@ -690,7 +690,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Start Creating Now
+              {t('cta.button')}
             </a>
           </motion.div>
         </div>
