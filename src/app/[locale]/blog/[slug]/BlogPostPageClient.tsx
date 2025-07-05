@@ -51,7 +51,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.meta_description || post.title,
-    image: post.featured_image_url || 'https://myaiphotoshoot.com/images/default-blog-image.jpg',
+    image: post.featured_image_url || 'https://myaiphotoshoot.com/images/logo.png',
     author: {
       '@type': 'Organization',
       name: 'My AI Photo Shoot',
@@ -143,6 +143,263 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
 
   return (
     <>
+      {/* Add admin-style CSS with !important to override conflicts */}
+      <style jsx global>{`
+        .medium-style-article {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+          line-height: 1.6 !important;
+          color: #292929 !important;
+          max-width: none !important;
+        }
+
+        .medium-style-article h1 {
+          font-size: 2.5rem !important;
+          font-weight: 700 !important;
+          line-height: 1.2 !important;
+          margin-bottom: 1rem !important;
+          color: #292929 !important;
+        }
+
+        .medium-style-article h2 {
+          font-size: 1.875rem !important;
+          font-weight: 600 !important;
+          line-height: 1.3 !important;
+          margin-top: 2rem !important;
+          margin-bottom: 1rem !important;
+          color: #292929 !important;
+        }
+
+        .medium-style-article h3 {
+          font-size: 1.5rem !important;
+          font-weight: 600 !important;
+          line-height: 1.4 !important;
+          margin-top: 1.5rem !important;
+          margin-bottom: 0.75rem !important;
+          color: #292929 !important;
+        }
+
+        .medium-style-article p {
+          font-size: 1.125rem !important;
+          line-height: 1.6 !important;
+          margin-bottom: 1.5rem !important;
+          color: #292929 !important;
+        }
+
+        .medium-style-article .section-importance {
+          background: #f8f9fa !important;
+          border-left: 4px solid #1a8917 !important;
+          padding: 1rem 1.5rem !important;
+          margin: 1.5rem 0 !important;
+          border-radius: 0 8px 8px 0 !important;
+          font-size: 1rem !important;
+          font-style: italic !important;
+          color: #4a5568 !important;
+        }
+
+        /* Photo Gallery Styles - CRITICAL for horizontal layout */
+        .medium-style-article .photo-gallery {
+          margin: 2rem 0 !important;
+          overflow-x: auto !important;
+          overflow-y: hidden !important;
+          padding: 1rem 0 !important;
+          width: 100% !important;
+          -webkit-overflow-scrolling: touch !important;
+        }
+
+        .medium-style-article .photo-gallery::-webkit-scrollbar {
+          height: 8px !important;
+        }
+
+        .medium-style-article .photo-gallery::-webkit-scrollbar-track {
+          background: #f1f1f1 !important;
+          border-radius: 10px !important;
+        }
+
+        .medium-style-article .photo-gallery::-webkit-scrollbar-thumb {
+          background: #c1c1c1 !important;
+          border-radius: 10px !important;
+        }
+
+        .medium-style-article .photo-gallery::-webkit-scrollbar-thumb:hover {
+          background: #a8a8a8 !important;
+        }
+
+        .medium-style-article .photo-row {
+          display: flex !important;
+          gap: 1rem !important;
+          padding-bottom: 0.5rem !important;
+          width: max-content !important;
+          min-width: 100% !important;
+          flex-wrap: nowrap !important;
+        }
+
+        .medium-style-article .photo-item {
+          flex: 0 0 auto !important;
+          text-align: center !important;
+          width: 300px !important;
+          margin: 0 !important;
+        }
+
+        .medium-style-article .photo-item img {
+          width: 300px !important;
+          height: 300px !important;
+          object-fit: cover !important;
+          border-radius: 8px !important;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+          transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+          cursor: pointer !important;
+          display: block !important;
+          margin: 0 auto !important;
+        }
+
+        .medium-style-article .photo-item img:hover {
+          transform: translateY(-2px) !important;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .medium-style-article .photo-item figcaption {
+          margin-top: 0.5rem !important;
+          font-size: 0.75rem !important;
+          color: #6b6b6b !important;
+          font-style: italic !important;
+          line-height: 1.3 !important;
+          max-width: 300px !important;
+        }
+
+        .medium-style-article .gallery-cta {
+          margin-top: 0.5rem !important;
+          text-align: center !important;
+        }
+
+        .medium-style-article .gallery-cta p {
+          margin: 0 !important;
+          font-size: 0.9rem !important;
+          color: #666 !important;
+        }
+
+        .medium-style-article blockquote {
+          border-left: 4px solid #1a8917 !important;
+          padding: 1rem 1.5rem !important;
+          margin: 2rem 0 !important;
+          font-style: italic !important;
+          font-size: 1.125rem !important;
+          color: #292929 !important;
+          background: #f8f9fa !important;
+          border-radius: 0 4px 4px 0 !important;
+        }
+
+        .medium-style-article strong {
+          font-weight: 600 !important;
+          color: #292929 !important;
+        }
+
+        .medium-style-article em {
+          font-style: italic !important;
+          color: #292929 !important;
+        }
+
+        .medium-style-article a {
+          color: #1a8917 !important;
+          text-decoration: none !important;
+          border-bottom: 1px solid transparent !important;
+          transition: border-bottom-color 0.2s ease !important;
+        }
+
+        .medium-style-article a:hover {
+          border-bottom-color: #1a8917 !important;
+        }
+
+        .medium-style-article ul {
+          margin: 1.5rem 0 !important;
+          padding-left: 1.5rem !important;
+          list-style-type: disc !important;
+        }
+
+        .medium-style-article ul li {
+          font-size: 1.125rem !important;
+          line-height: 1.6 !important;
+          margin-bottom: 0.5rem !important;
+          color: #292929 !important;
+        }
+
+        .medium-style-article ol {
+          margin: 1.5rem 0 !important;
+          padding-left: 1.5rem !important;
+          list-style-type: decimal !important;
+        }
+
+        .medium-style-article ol li {
+          font-size: 1.125rem !important;
+          line-height: 1.6 !important;
+          margin-bottom: 0.5rem !important;
+          color: #292929 !important;
+        }
+
+        /* Dark mode styles */
+        .dark .medium-style-article {
+          color: #e2e8f0 !important;
+        }
+        
+        .dark .medium-style-article h1,
+        .dark .medium-style-article h2,
+        .dark .medium-style-article h3 {
+          color: #f8fafc !important;
+        }
+        
+        .dark .medium-style-article p {
+          color: #e2e8f0 !important;
+        }
+        
+        .dark .medium-style-article .section-importance {
+          background: #1a202c !important;
+          color: #a0aec0 !important;
+        }
+        
+        .dark .medium-style-article blockquote {
+          background: #1a202c !important;
+          color: #e2e8f0 !important;
+        }
+        
+        .dark .medium-style-article .gallery-cta p {
+          color: #a0aec0 !important;
+        }
+
+        .dark .medium-style-article ul li,
+        .dark .medium-style-article ol li {
+          color: #e2e8f0 !important;
+        }
+
+        .dark .medium-style-article strong {
+          color: #f8fafc !important;
+        }
+
+        /* Ensure images maintain pointer cursor since they're clickable */
+        .medium-style-article .photo-item img[title] {
+          cursor: pointer !important;
+        }
+
+        /* Override any conflicting display styles */
+        .medium-style-article * {
+          box-sizing: border-box !important;
+        }
+
+
+
+
+
+        /* Additional mobile responsive styles */
+        @media (max-width: 768px) {
+          .medium-style-article .photo-item {
+            width: 250px !important;
+          }
+          
+          .medium-style-article .photo-item img {
+            width: 250px !important;
+            height: 250px !important;
+          }
+        }
+      `}</style>
+      
       {jsonLd && (
         <script
           type="application/ld+json"
@@ -159,22 +416,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           {/* Breadcrumb */}
           <Breadcrumb items={breadcrumbItems} />
 
-          {/* Back to Blog */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6"
-          >
-            <Link
-              href={`/${locale}/blog`}
-              className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors duration-200 group"
-            >
-              <ChevronLeftIcon className="h-5 w-5 transition-transform duration-200 group-hover:ltr:-translate-x-1 group-hover:rtl:translate-x-1 ltr:block rtl:hidden" />
-              <ChevronLeftIcon className="h-5 w-5 transition-transform duration-200 group-hover:ltr:-translate-x-1 group-hover:rtl:translate-x-1 ltr:hidden rtl:block rotate-180" />
-              <span className="text-lg font-semibold">{t('backToBlog')}</span>
-            </Link>
-          </motion.div>
+
 
           {/* Article Header */}
           <motion.article
@@ -183,22 +425,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
           >
-            {/* Featured Image */}
-            {post.featured_image_url && (
-              <div className="aspect-w-16 aspect-h-9 bg-gray-200 dark:bg-gray-700">
-                <Image
-                  src={post.featured_image_url}
-                  alt={`Featured image for "${post.title}" - ${post.meta_description || 'AI Photography Blog Post'}`}
-                  width={800}
-                  height={450}
-                  className="w-full h-64 md:h-80 object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSd2rFl9kNMNVvVJFrXqPqJmC9vEhSFrNbPNBOaQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKv//Z"
-                />
-              </div>
-            )}
+
 
             <div className="p-8">
               {/* Article Meta */}
@@ -206,12 +433,6 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
                 <time dateTime={post.created_at}>
                   {formatDate(post.created_at)}
                 </time>
-                {post.photo_topics && (
-                  <>
-                    <span className="mx-2">•</span>
-                    <span>{post.photo_topics}</span>
-                  </>
-                )}
               </div>
 
               {/* Article Title */}
@@ -226,13 +447,13 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
                 </p>
               )}
 
-              {/* Article Content */}
-              <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-purple-600 dark:prose-a:text-purple-400 prose-strong:text-gray-900 dark:prose-strong:text-white prose-code:text-purple-600 dark:prose-code:text-purple-400 prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-blockquote:border-purple-600 prose-hr:border-gray-300 dark:prose-hr:border-gray-600">
+              {/* Article Content - Using admin's medium-style-article class */}
+              <div className="medium-style-article">
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
               </div>
 
-              {/* Section Photos */}
-              {post.section_photos && Object.keys(post.section_photos).length > 0 && (
+              {/* Section Photos - Commented out since photos are now in content HTML */}
+              {/* {post.section_photos && Object.keys(post.section_photos).length > 0 && (
                 <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                     Featured Photos
@@ -290,7 +511,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
                     ))}
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </motion.article>
 
