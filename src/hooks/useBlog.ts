@@ -100,9 +100,6 @@ export function useBlogPost({
   
   const url = (slug || id) ? `${env.SUPABASE_FUNCTIONS_URL}/blog-post?${searchParams.toString()}` : null;
   
-  // Debug logging
-  console.log('useBlogPost hook:', { slug, id, locale, url });
-  
   const { data, error, isLoading, isValidating, mutate } = useSWR<BlogPost>(
     url,
     fetcher,
@@ -114,6 +111,15 @@ export function useBlogPost({
       refreshWhenHidden: false,
       fallbackData,
       dedupingInterval: 3600000, // 1 hour in milliseconds
+      errorRetryCount: 2, // Retry failed requests 2 times
+      errorRetryInterval: 5000, // Wait 5 seconds between retries
+      onError: (error) => {
+        console.error('useBlogPost error:', error);
+        console.error('Failed URL:', url);
+      },
+      onSuccess: (data) => {
+        console.log('useBlogPost success:', data);
+      }
     }
   );
 

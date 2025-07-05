@@ -5,13 +5,10 @@ import { withRevalidate } from '@/lib/cache';
 /**
  * Gallery data API route
  * 
- * STATIC EXPORT NOTE:
- * This route is configured for static generation to work with Cloudflare Pages.
- * It returns a fixed dataset generated at build time and cannot process dynamic query parameters.
+ * CLOUDFLARE PAGES NOTE:
+ * This route provides gallery data on Cloudflare Pages.
  * Client-side pagination is handled directly via the Supabase API in the Gallery component.
  */
-
-export const dynamic = 'force-static';
 export const revalidate = 3600; // 1 hour revalidation
 
 // Required for static export with dynamic route parameters

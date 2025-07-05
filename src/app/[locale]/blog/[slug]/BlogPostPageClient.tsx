@@ -21,10 +21,7 @@ interface Props {
 export default function BlogPostPageClient({ slug, locale }: Props) {
   const t = useTranslations('blog');
   const router = useRouter();
-  const { post, isLoading, isError } = useBlogPost({ slug, locale });
-
-  // Debug logging
-  console.log('BlogPostPageClient render:', { slug, locale, isLoading, isError, post: !!post });
+  const { post, isLoading, isError, error } = useBlogPost({ slug, locale });
 
   // Handle 404 if post is not found
   useEffect(() => {
@@ -104,8 +101,9 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
         <Navigation />
         <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">Loading blog post...</p>
             </div>
           </div>
         </main>

@@ -5,19 +5,29 @@ const createNextIntlPlugin = require('next-intl/plugin');
 const withNextIntl = createNextIntlPlugin();
 
 /**
- * Next.js configuration
+ * Next.js configuration for Cloudflare Pages
  * 
- * IMPORTANT: This project is deployed on Cloudflare Pages which requires static export.
- * We use 'output: export' to generate static files without server-side rendering.
- * All routes must be compatible with static generation.
+ * DEPLOYMENT: This project is deployed on Cloudflare Pages with native Next.js support
+ * 
+ * Benefits of Cloudflare Pages + Next.js:
+ * - Edge Runtime: Runs on Cloudflare Workers for ultra-fast performance
+ * - Dynamic routing: Blog posts load dynamically without pre-generation
+ * - SSR support: Perfect SEO with server-side rendering
+ * - Global CDN: Automatic caching and optimization
+ * - No build-time limitations: Content updates instantly
+ * 
+ * Build Settings for Cloudflare Pages:
+ * - Build command: npm run build
+ * - Build output directory: .next
+ * - Node.js version: 18+
+ * 
+ * Environment variables required:
+ * - NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL
  */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Required for Cloudflare Pages static hosting
-  trailingSlash: true, // Helps with static export route matching
-
   /* config options here */
   images: {
-    unoptimized: true, // Required for static export - disables Image Optimization API
     remotePatterns: [
       {
         protocol: 'https',
@@ -31,14 +41,6 @@ const nextConfig = {
       },
     ],
   },
-  
-  // Increase memory and timeout limits to handle large static site generation
-  experimental: {
-    // Increase parallel workers based on memory
-    memoryBasedWorkersCount: true,
-  },
-  
-  // Removed rewrites section as it's not compatible with static export
 };
 
 module.exports = withNextIntl(nextConfig);

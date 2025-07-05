@@ -1,90 +1,136 @@
+/**
+ * Blog Post Page - Cloudflare Pages Deployment
+ * 
+ * This page uses Next.js dynamic routing with Cloudflare Pages native support.
+ * Features:
+ * - Server-side rendering for perfect SEO
+ * - Dynamic metadata generation
+ * - Automatic sitemap inclusion
+ * - Edge caching for fast performance
+ */
 import BlogPostPageClient from './BlogPostPageClient';
-import { locales } from '@/i18n/request';
+import type { Metadata } from 'next';
 import { env } from '@/lib/env';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
     locale: string;
-  };
+  }>;
 }
 
-// Generate static params for all blog posts across all locales
-export async function generateStaticParams() {
-  const params: { locale: string; slug: string }[] = [];
-  
+// Generate dynamic metadata for SEO
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   try {
-    // Fetch blog posts for each locale to generate static params
-    for (const locale of locales) {
-      try {
-        let currentPage = 1;
-        let hasMorePosts = true;
-        const PAGE_SIZE = 100; // Large page size to get all posts
-        
-        while (hasMorePosts) {
-          const response = await fetch(
-            `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=${currentPage}&limit=${PAGE_SIZE}&locale=${locale}`,
-            {
-              next: { revalidate: 0 }, // No caching during build
-            }
-          );
-          
-          if (!response.ok) {
-            console.warn(`Failed to fetch blog posts for locale ${locale}:`, response.status);
-            break;
-          }
-          
-          const data = await response.json();
-          const posts = data.posts || [];
-          
-          if (posts.length === 0) {
-            hasMorePosts = false;
-          } else {
-            // Add params for each blog post
-            posts.forEach((post: { slug: string }) => {
-              params.push({ locale, slug: post.slug });
-            });
-            
-            if (posts.length < PAGE_SIZE) {
-              hasMorePosts = false;
-            } else {
-              currentPage++;
-            }
-          }
-        }
-      } catch (error) {
-        console.error(`Error fetching blog posts for locale ${locale}:`, error);
-        // Add a placeholder for this locale if fetch fails
-        params.push({ locale, slug: 'placeholder' });
-      }
+    const { slug, locale } = await params;
+    
+    // Fetch blog post data for metadata
+    const response = await fetch(
+      `${env.SUPABASE_FUNCTIONS_URL}/blog-post?slug=${slug}&locale=${locale}`,
+      { next: { revalidate: 3600 } }
+    );
+    
+    if (!response.ok) {
+      return {
+        title: 'Blog Post Not Found - My AI Photo Shoot',
+        description: 'The requested blog post could not be found.',
+      };
     }
     
-    // If no posts were found, add placeholders to prevent build errors
-    if (params.length === 0) {
-      for (const locale of locales) {
-        params.push({ locale, slug: 'placeholder' });
-      }
+    const post = await response.json();
+    
+    if (!post) {
+      return {
+        title: 'Blog Post Not Found - My AI Photo Shoot',
+        description: 'The requested blog post could not be found.',
+      };
     }
     
-    console.log(`generateStaticParams: Generated ${params.length} blog post params`);
-    return params;
+    const title = `${post.title} | My AI Photo Shoot`;
+    const description = post.meta_description || post.title;
+    const url = `https://myaiphotoshoot.com/${locale}/blog/${slug}`;
+    const imageUrl = post.featured_image_url || 'https://myaiphotoshoot.com/og-image.png';
     
+    return {
+      title,
+      description,
+      keywords: post.photo_topics || 'AI photography, AI photos, AI art',
+      authors: [{ name: 'My AI Photo Shoot', url: 'https://myaiphotoshoot.com' }],
+      creator: 'My AI Photo Shoot',
+      publisher: 'My AI Photo Shoot',
+      category: 'AI Photography',
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+        },
+      },
+      alternates: {
+        canonical: url,
+        languages: {
+          'en': '/en/blog/' + slug,
+          'zh': '/zh/blog/' + slug,
+          'es': '/es/blog/' + slug,
+          'de': '/de/blog/' + slug,
+          'fr': '/fr/blog/' + slug,
+          'ja': '/ja/blog/' + slug,
+          'ru': '/ru/blog/' + slug,
+          'ar': '/ar/blog/' + slug,
+          'hi': '/hi/blog/' + slug,
+        },
+      },
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: 'My AI Photo Shoot',
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: post.title,
+            type: 'image/jpeg',
+          },
+        ],
+        locale,
+        type: 'article',
+        publishedTime: post.created_at,
+        modifiedTime: post.updated_at,
+        section: 'AI Photography',
+        tags: post.photo_topics?.split(',').map((tag: string) => tag.trim()) || [],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [imageUrl],
+        creator: '@myaiphotoshoot',
+        site: '@myaiphotoshoot',
+      },
+    };
   } catch (error) {
-    console.error('Error in generateStaticParams for blog posts:', error);
-    
-    // Fallback: generate placeholder params
-    for (const locale of locales) {
-      params.push({ locale, slug: 'placeholder' });
-    }
-    
-    return params;
+    console.error('Error generating blog post metadata:', error);
+    return {
+      title: 'Blog Post - My AI Photo Shoot',
+      description: 'Read our latest blog post about AI photography and photo generation.',
+    };
   }
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug, locale } = params;
+// No generateStaticParams needed - using dynamic routing with Cloudflare Pages
 
-  console.log('BlogPostPage render:', { slug, locale });
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  try {
+    const { slug, locale } = await params;
 
-  return <BlogPostPageClient slug={slug} locale={locale} />;
+    return <BlogPostPageClient slug={slug} locale={locale} />;
+  } catch (error) {
+    console.error('Error in BlogPostPage:', error);
+    return <div>Error loading blog post</div>;
+  }
 } 

@@ -8,13 +8,12 @@ import { env } from '@/lib/env'
 /**
  * Sitemap generator
  * 
- * STATIC EXPORT NOTE:
- * This sitemap is generated at build time for Cloudflare Pages static hosting.
- * It fetches all photos from the database using pagination and includes all supported locales.
+ * CLOUDFLARE PAGES NOTE:
+ * This sitemap is generated dynamically and cached on Cloudflare Pages.
+ * It fetches all photos and blog posts from the database and includes all supported locales.
  */
 
-// Add static export configuration
-export const dynamic = 'force-static';
+// Cache for 1 hour on Cloudflare Pages
 export const revalidate = 3600; // 1 hour revalidation
 
 // API page size limit

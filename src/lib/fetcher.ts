@@ -8,19 +8,34 @@ import type { GalleryItem } from '@/types/gallery';
  */
 export const fetcher = async <T>(url: string): Promise<T> => {
   console.log('Fetching:', url);
-  const response = await fetch(url, {
-    next: { revalidate: 3600 }, // Revalidate every hour
-  });
+  
+  // Add timeout to prevent hanging requests
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+  
+  try {
+    const response = await fetch(url, {
+      next: { revalidate: 3600 }, // Revalidate every hour
+      signal: controller.signal,
+    });
 
-  console.log('Fetch response:', response.status, response.statusText);
+    clearTimeout(timeout);
+    console.log('Fetch response:', response.status, response.statusText);
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('Fetch data:', data);
+    return data;
+  } catch (error) {
+    clearTimeout(timeout);
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error('Request timed out');
+    }
+    throw error;
   }
-
-  const data = await response.json();
-  console.log('Fetch data:', data);
-  return data;
 };
 
 /**
