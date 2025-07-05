@@ -598,24 +598,10 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
 
 
             <div className="p-8">
-              {/* Article Meta */}
-              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6">
-                <time dateTime={post.created_at}>
-                  {formatDate(post.created_at)}
-                </time>
-              </div>
-
               {/* Article Title */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-10 leading-tight">
                 {post.title}
               </h1>
-
-              {/* Article Description */}
-              {post.meta_description && (
-                <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-10 font-normal leading-relaxed">
-                  {post.meta_description}
-                </p>
-              )}
 
               {/* Article Content - Using admin's medium-style-article class */}
               <div className="medium-style-article">
