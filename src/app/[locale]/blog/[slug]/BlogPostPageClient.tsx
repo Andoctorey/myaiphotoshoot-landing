@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
-import Breadcrumb from '@/components/layout/Breadcrumb';
 import { useBlogPost } from '@/hooks/useBlog';
 import { BlogPhoto } from '@/types/blog';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
@@ -583,8 +582,6 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       <Navigation />
       <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Breadcrumb */}
-          <Breadcrumb items={breadcrumbItems} />
 
 
 
