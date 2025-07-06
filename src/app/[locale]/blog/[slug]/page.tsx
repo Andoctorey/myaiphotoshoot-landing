@@ -51,10 +51,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const url = `https://myaiphotoshoot.com/${locale}/blog/${slug}`;
     const imageUrl = post.featured_image_url || 'https://myaiphotoshoot.com/og-image.png';
     
+    // Enhanced keywords for better SEO
+    const baseKeywords = 'AI photography, AI photos, AI art, artificial intelligence, photo generation, professional headshots';
+    const topicKeywords = post.photo_topics || '';
+    const localeKeywords = locale === 'en' ? 'AI photography blog' : `AI photography ${locale}`;
+    const enhancedKeywords = `${topicKeywords}, ${baseKeywords}, ${localeKeywords}`;
+    
     return {
       title,
       description,
-      keywords: post.photo_topics || 'AI photography, AI photos, AI art',
+      keywords: enhancedKeywords,
       authors: [{ name: 'My AI Photo Shoot', url: 'https://myaiphotoshoot.com' }],
       creator: 'My AI Photo Shoot',
       publisher: 'My AI Photo Shoot',
@@ -67,6 +73,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
           follow: true,
           'max-image-preview': 'large',
           'max-snippet': -1,
+          'max-video-preview': -1,
         },
       },
       alternates: {
@@ -103,6 +110,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         modifiedTime: post.updated_at,
         section: 'AI Photography',
         tags: post.photo_topics?.split(',').map((tag: string) => tag.trim()) || [],
+        authors: ['My AI Photo Shoot'],
       },
       twitter: {
         card: 'summary_large_image',
@@ -111,6 +119,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         images: [imageUrl],
         creator: '@myaiphotoshoot',
         site: '@myaiphotoshoot',
+      },
+      // Enhanced for better indexing
+      other: {
+        'article:author': 'My AI Photo Shoot',
+        'article:section': 'AI Photography',
+        'article:tag': post.photo_topics || 'AI photography',
+        'og:image:alt': post.title,
+        'twitter:image:alt': post.title,
       },
     };
   } catch (error) {

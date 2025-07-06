@@ -58,7 +58,14 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       logo: {
         '@type': 'ImageObject',
         url: 'https://myaiphotoshoot.com/images/logo.png',
+        width: 400,
+        height: 400,
       },
+      sameAs: [
+        'https://twitter.com/myaiphotoshoot',
+        'https://www.instagram.com/myaiphotoshoot',
+        'https://www.linkedin.com/company/myaiphotoshoot'
+      ],
     },
     publisher: {
       '@type': 'Organization',
@@ -67,6 +74,8 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       logo: {
         '@type': 'ImageObject',
         url: 'https://myaiphotoshoot.com/images/logo.png',
+        width: 400,
+        height: 400,
       },
     },
     datePublished: post.created_at,
@@ -75,10 +84,29 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       '@type': 'WebPage',
       '@id': `https://myaiphotoshoot.com/${locale}/blog/${slug}`,
     },
-    keywords: post.photo_topics || '',
+    keywords: post.photo_topics || 'AI photography, AI photos, AI art',
     articleSection: 'AI Photography',
     inLanguage: locale,
     wordCount: post.content ? post.content.replace(/<[^>]*>/g, '').split(' ').length : 0,
+    about: {
+      '@type': 'Thing',
+      name: 'AI Photography',
+      description: 'Artificial intelligence powered photo generation and professional headshots',
+    },
+    mentions: [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'My AI Photo Shoot',
+        url: 'https://myaiphotoshoot.com',
+        applicationCategory: 'Photography',
+        operatingSystem: 'Web, iOS, Android',
+      },
+    ],
+    isPartOf: {
+      '@type': 'Blog',
+      name: 'My AI Photo Shoot Blog',
+      url: `https://myaiphotoshoot.com/${locale}/blog`,
+    },
   } : null;
 
   // Breadcrumb JSON-LD
