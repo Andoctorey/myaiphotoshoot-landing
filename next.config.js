@@ -39,6 +39,12 @@ const nextConfig = {
         hostname: 'myaiphotoshoot.b-cdn.net',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'trzgfajvyjpvbqedyxug.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/sign/**',
+      },
     ],
   },
 };
