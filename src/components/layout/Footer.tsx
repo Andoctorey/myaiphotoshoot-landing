@@ -24,24 +24,32 @@ export default function Footer() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start"
         >
-          <div className="col-span-1 md:col-span-2">
+          {/* Main Brand Section */}
+          <div>
             <h3 className="text-xl font-bold mb-4">{t('title')}</h3>
-            <p className="text-gray-400 mb-4">
-              {t('description')}
+            <p className="text-gray-400 mb-6 leading-relaxed">
+              Transform your photos into stunning AI-generated images with our advanced technology.
             </p>
+            <a
+              href="https://app.myaiphotoshoot.com"
+              className="inline-flex items-center px-4 py-2 bg-gray-700 text-white font-medium rounded-md hover:bg-gray-600 transition-colors duration-200 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Start Creating Now
+            </a>
           </div>
 
-          <div>
-            <h4 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4" id="footer-links-heading">
-              {t('links')}
-            </h4>
-            <ul className="space-y-2" aria-labelledby="footer-links-heading">
+          {/* Links Section */}
+          <div className="md:text-right">
+
+            <ul className="space-y-2">
               <li>
                 <Link 
                   href="/legal" 
-                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                 >
                   {t('legal')}
                 </Link>
@@ -51,7 +59,7 @@ export default function Footer() {
                   href="https://github.com/Andoctorey/myaiphotoshoot-kmp" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                   aria-label={`${t('openSource')} (opens in new tab)`}
                 >
                   {t('openSource')}
@@ -62,7 +70,7 @@ export default function Footer() {
                   href="https://x.com/andoctorey" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                   aria-label={`${t('twitter')} (opens in new tab)`}
                 >
                   {t('twitter')}
@@ -71,7 +79,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href={`/${locale}/support`} 
-                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1"
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                 >
                   {t('support')}
                 </Link>

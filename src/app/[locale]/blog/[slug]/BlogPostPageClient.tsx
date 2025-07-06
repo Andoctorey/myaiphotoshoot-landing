@@ -732,28 +732,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
             </div>
           </motion.article>
 
-          {/* Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-12 bg-purple-600 hover:bg-purple-700 transition-colors duration-200 rounded-lg p-8 text-center"
-          >
-            <h2 className="text-2xl font-bold text-white mb-4">
-              {t('cta.title')}
-            </h2>
-            <p className="text-purple-100 mb-6">
-              {t('cta.description')}
-            </p>
-            <a
-              href="https://app.myaiphotoshoot.com"
-              className="inline-flex items-center px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t('cta.button')}
-            </a>
-          </motion.div>
+
         </div>
       </main>
       <Footer />
