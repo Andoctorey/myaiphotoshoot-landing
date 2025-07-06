@@ -61,10 +61,23 @@
     "next": "Next",
     "notFound": "Blog post not found",
     "backToBlog": "← Back to Blog",
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "author": {
+      "bio": "Leading AI photo generation platform helping creators, businesses, and individuals transform their photos into stunning AI-generated portraits and images. Discover the latest in AI photography technology and digital art creation."
+    },
+    "relatedPosts": {
+      "title": "Related Articles",
+      "comingSoon": "More related articles coming soon! We're working on creating more helpful content about AI photography."
+    },
     "cta": {
       "title": "Ready to Create Your AI Photos?",
       "description": "Transform your photos into stunning AI-generated images with our advanced technology.",
       "button": "Start Creating Now"
+    },
+    "tableOfContents": {
+      "title": "Table of Contents"
     }
   },
   "pricing": {

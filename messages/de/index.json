@@ -61,10 +61,23 @@
     "next": "Nächste",
     "notFound": "Blog-Beitrag nicht gefunden",
     "backToBlog": "← Zurück zum Blog",
+    "breadcrumb": {
+      "home": "Startseite"
+    },
+    "author": {
+      "bio": "Führende KI-Fotogenerierungsplattform, die Kreativen, Unternehmen und Einzelpersonen hilft, ihre Fotos in atemberaubende KI-generierte Porträts und Bilder zu verwandeln. Entdecken Sie das Neueste in KI-Fotografietechnologie und digitaler Kunstschöpfung."
+    },
+    "relatedPosts": {
+      "title": "Verwandte Artikel",
+      "comingSoon": "Weitere verwandte Artikel kommen bald! Wir arbeiten daran, mehr hilfreiche Inhalte über KI-Fotografie zu erstellen."
+    },
     "cta": {
       "title": "Bereit, Ihre KI-Fotos zu erstellen?",
       "description": "Verwandeln Sie Ihre Fotos mit unserer fortschrittlichen Technologie in atemberaubende KI-generierte Bilder.",
       "button": "Jetzt erstellen"
+    },
+    "tableOfContents": {
+      "title": "Inhaltsverzeichnis"
     }
   },
   "pricing": {

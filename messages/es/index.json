@@ -61,10 +61,23 @@
     "next": "Siguiente",
     "notFound": "Publicación no encontrada",
     "backToBlog": "← Volver al Blog",
+    "breadcrumb": {
+      "home": "Inicio"
+    },
+    "author": {
+      "bio": "Plataforma líder de generación de fotos con IA que ayuda a creadores, empresas e individuos a transformar sus fotos en retratos e imágenes impresionantes generadas por IA. Descubre lo último en tecnología de fotografía con IA y creación de arte digital."
+    },
+    "relatedPosts": {
+      "title": "Artículos Relacionados",
+      "comingSoon": "¡Próximamente más artículos relacionados! Estamos trabajando en crear más contenido útil sobre fotografía con IA."
+    },
     "cta": {
       "title": "¿Listo para crear tus fotos con IA?",
       "description": "Transforma tus fotos en imágenes generadas por IA impresionantes con nuestra tecnología avanzada.",
       "button": "Comenzar a crear ahora"
+    },
+    "tableOfContents": {
+      "title": "Índice de contenidos"
     }
   },
   "pricing": {

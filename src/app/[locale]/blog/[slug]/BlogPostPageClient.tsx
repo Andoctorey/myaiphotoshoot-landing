@@ -8,19 +8,39 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
+import TableOfContents from '@/components/blog/TableOfContents';
+import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';
-import { BlogPhoto } from '@/types/blog';
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 
 interface Props {
   slug: string;
   locale: string;
 }
 
+// Utility function to calculate reading time
+const calculateReadingTime = (content: string): number => {
+  const wordsPerMinute = 200; // Average reading speed
+  const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).filter(word => word.length > 0).length;
+  return Math.ceil(wordCount / wordsPerMinute);
+};
+
+// Utility function to format date
+const formatDate = (dateString: string, locale: string) => {
+  return new Date(dateString).toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
 export default function BlogPostPageClient({ slug, locale }: Props) {
   const t = useTranslations('blog');
   const router = useRouter();
-  const { post, isLoading, isError, error } = useBlogPost({ slug, locale });
+  const { post, isLoading, isError } = useBlogPost({ slug, locale });
+
+  // Extract FAQs from content for schema markup
+  const faqs = post ? extractFAQsFromContent(post.content) : [];
 
   // Handle 404 if post is not found
   useEffect(() => {
@@ -28,21 +48,6 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       router.push(`/${locale}/blog`);
     }
   }, [isLoading, post, isError, router, locale]);
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(locale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
-  // Generate breadcrumb items
-  const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: t('title'), href: '/blog' },
-    { label: post?.title || slug, href: undefined },
-  ];
 
   // Generate JSON-LD structured data
   const jsonLd = post ? {
@@ -108,18 +113,6 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       url: `https://myaiphotoshoot.com/${locale}/blog`,
     },
   } : null;
-
-  // Breadcrumb JSON-LD
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbItems.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.label,
-      item: item.href ? `https://myaiphotoshoot.com/${locale}${item.href}` : undefined,
-    })),
-  };
 
   // Loading state
   if (isLoading) {
@@ -602,17 +595,11 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+              )}
+        <FAQSchema faqs={faqs} />
       <Navigation />
       <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-
-
           {/* Article Header */}
           <motion.article
             initial={{ opacity: 0, y: 20 }}
@@ -620,13 +607,62 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
           >
-
-
-            <div className="p-8">
+            <header className="p-8 border-b border-gray-200 dark:border-gray-700">
               {/* Article Title */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-10 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                 {post.title}
               </h1>
+
+              {/* Article Meta Information */}
+              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex items-center gap-2">
+                  <CalendarIcon className="w-4 h-4" />
+                  <time dateTime={post.created_at}>
+                    {formatDate(post.created_at, locale)}
+                  </time>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <ClockIcon className="w-4 h-4" />
+                  <span>{calculateReadingTime(post.content)} min read</span>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <UserIcon className="w-4 h-4" />
+                  <span>My AI Photo Shoot</span>
+                </div>
+              </div>
+
+            </header>
+
+            <div className="p-8">
+              {/* Table of Contents with Featured Image Background */}
+              <div className="relative mb-8">
+                {post.featured_image_url && (
+                  <div className="absolute inset-0 w-full h-full rounded-lg overflow-hidden">
+                    <Image
+                      src={post.featured_image_url}
+                      alt={post.title}
+                      width={800}
+                      height={600}
+                      className="w-full h-full object-cover opacity-40"
+                      priority
+                      sizes="(max-width: 768px) 100vw, 800px"
+                    />
+                  </div>
+                )}
+                <div className="relative z-10">
+                  <TableOfContents 
+                    content={post.content}
+                    title={t('tableOfContents.title')}
+                    className={post.featured_image_url 
+                      ? "bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 shadow-lg" 
+                      : "mb-8"
+                    } 
+                  />
+                </div>
+              </div>
+
 
               {/* Article Content - Using admin's medium-style-article class */}
               <div className="medium-style-article">
@@ -640,14 +676,14 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
                     Featured Photos
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {Object.entries(post.section_photos).map(([key, photos]: [string, BlogPhoto | BlogPhoto[]]) => (
+                    {Object.entries(post.section_photos).map(([key, photos]: [string, any]) => (
                       <div key={key} className="space-y-4">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white capitalize">
                           {key.replace(/([A-Z])/g, ' $1').trim()}
                         </h3>
                         {Array.isArray(photos) ? (
                           <div className="grid grid-cols-1 gap-4">
-                            {Array.isArray(photos) && photos.map((photo: BlogPhoto, index: number) => (
+                            {Array.isArray(photos) && photos.map((photo: any, index: number) => (
                               <div key={index} className="rounded-lg overflow-hidden">
                                 <Image
                                   src={photo.url}
@@ -658,7 +694,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
                                   loading="lazy"
                                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                                   placeholder="blur"
-                                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSd2rFl9kNMNVvVJFrXqPqJmC9vEhSFrNbPNBOaQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKv//Z"
+                                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSd2rFl9kNMNVvVJFrXqPqJmC9vEhSFrNbPNBOaQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKv//Z"
                                 />
                                 {photo.caption && (
                                   <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
@@ -679,7 +715,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
                               loading="lazy"
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                               placeholder="blur"
-                              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSd2rFl9kNMNVvVJFrXqPqJmC9vEhSFrNbPNBOaQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKv//Z"
+                              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSd2rFl9kNMNVvVJFrXqPqJmC9vEhSFrNbPNBOaQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKv//Z"
                             />
                             {typeof photos !== 'string' && photos.caption && (
                               <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
