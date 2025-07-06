@@ -26,14 +26,6 @@ export default function BlogPageClient({ locale }: Props) {
     locale,
   });
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(locale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -118,15 +110,10 @@ export default function BlogPageClient({ locale }: Props) {
                         {post.title}
                       </h2>
                       {post.meta_description && (
-                        <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                           {post.meta_description}
                         </p>
                       )}
-                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                        <time dateTime={post.created_at}>
-                          {formatDate(post.created_at)}
-                        </time>
-                      </div>
                     </div>
                   </Link>
                 </motion.article>
