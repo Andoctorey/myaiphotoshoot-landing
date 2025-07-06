@@ -310,13 +310,13 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
         .medium-style-article .photo-item {
           flex: 0 0 auto !important;
           text-align: center !important;
-          width: 320px !important;
+          width: 400px !important;
           margin: 0 !important;
         }
 
         .medium-style-article .photo-item img {
-          width: 320px !important;
-          height: 320px !important;
+          width: 400px !important;
+          height: 400px !important;
           object-fit: cover !important;
           border-radius: 12px !important;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
@@ -337,7 +337,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           color: #6b7280 !important;
           font-style: italic !important;
           line-height: 1.4 !important;
-          max-width: 320px !important;
+          max-width: 400px !important;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
         }
 
@@ -521,16 +521,16 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           }
           
           .medium-style-article .photo-item {
-            width: 280px !important;
+            width: 350px !important;
           }
           
           .medium-style-article .photo-item img {
-            width: 280px !important;
-            height: 280px !important;
+            width: 350px !important;
+            height: 350px !important;
           }
 
           .medium-style-article .photo-item figcaption {
-            max-width: 280px !important;
+            max-width: 350px !important;
           }
         }
 
@@ -554,16 +554,16 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           }
           
           .medium-style-article .photo-item {
-            width: 250px !important;
+            width: 300px !important;
           }
           
           .medium-style-article .photo-item img {
-            width: 250px !important;
-            height: 250px !important;
+            width: 300px !important;
+            height: 300px !important;
           }
 
           .medium-style-article .photo-item figcaption {
-            max-width: 250px !important;
+            max-width: 300px !important;
           }
         }
 
