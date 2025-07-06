@@ -172,16 +172,8 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
   };
 }
 
-// For static export, we need to generate static params
-export async function generateStaticParams() {
-  console.log('Generating static params for photo pages...');
-  
-  // For static export with Cloudflare Pages, we need to return at least one param
-  // to satisfy the static export requirement
-  return [
-    { id: 'placeholder' }
-  ];
-}
+// Note: generateStaticParams() is not needed since we're using Cloudflare Pages 
+// with Next.js dynamic routing (not static export)
 
 async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null; next: GalleryItem | null; showNavigation: boolean }> {
   try {
