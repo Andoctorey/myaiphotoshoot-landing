@@ -117,8 +117,8 @@ export function useBlogPost({
         console.error('useBlogPost error:', error);
         console.error('Failed URL:', url);
       },
-      onSuccess: (data) => {
-        console.log('useBlogPost success:', data);
+      onSuccess: () => {
+        // Success callback - data loaded
       }
     }
   );

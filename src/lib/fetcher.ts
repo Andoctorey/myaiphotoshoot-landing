@@ -7,8 +7,6 @@ import type { GalleryItem } from '@/types/gallery';
  * @returns The JSON response
  */
 export const fetcher = async <T>(url: string): Promise<T> => {
-  console.log('Fetching:', url);
-  
   // Add timeout to prevent hanging requests
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000); // 10 second timeout
@@ -20,14 +18,12 @@ export const fetcher = async <T>(url: string): Promise<T> => {
     });
 
     clearTimeout(timeout);
-    console.log('Fetch response:', response.status, response.statusText);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
-    console.log('Fetch data:', data);
     return data;
   } catch (error) {
     clearTimeout(timeout);

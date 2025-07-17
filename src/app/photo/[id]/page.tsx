@@ -3,6 +3,7 @@ import { fetchGalleryPhotos, fetchPhotoById } from '@/lib/fetcher';
 import type { GalleryItem } from '@/types/gallery';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { env } from '@/lib/env';
 
 interface PhotoPageProps {
   params: Promise<{
@@ -172,8 +173,54 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
   };
 }
 
-// Note: generateStaticParams() is not needed since we're using Cloudflare Pages 
-// with Next.js dynamic routing (not static export)
+// Generate static params for all public photos
+export async function generateStaticParams() {
+  try {
+    const allParams: { id: string }[] = [];
+    let currentPage = 1;
+    let hasMorePhotos = true;
+    
+    // Fetch all public photos for static generation
+    while (hasMorePhotos) {
+      const response = await fetch(
+        `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${currentPage}&limit=100`,
+        { next: { revalidate: 3600 } }
+      );
+      
+      if (!response.ok) {
+        console.warn(`Failed to fetch photos for page ${currentPage}:`, response.status);
+        break;
+      }
+      
+      const photos = await response.json();
+      
+      if (photos.length === 0) {
+        hasMorePhotos = false;
+      } else {
+        // Add params for each photo
+        photos.forEach((photo: { id: string }) => {
+          if (photo.id) {
+            allParams.push({
+              id: photo.id,
+            });
+          }
+        });
+        
+        if (photos.length < 100) {
+          hasMorePhotos = false;
+        } else {
+          currentPage++;
+        }
+      }
+    }
+    
+    return allParams;
+    
+  } catch (error) {
+    console.error('Error generating static params for photos:', error);
+    return [];
+  }
+}
 
 async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null; next: GalleryItem | null; showNavigation: boolean }> {
   try {

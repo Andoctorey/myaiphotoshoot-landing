@@ -138,7 +138,64 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 }
 
-// No generateStaticParams needed - using dynamic routing with Cloudflare Pages
+// Generate static params for all blog posts
+export async function generateStaticParams() {
+  try {
+    const allParams: { slug: string; locale: string }[] = [];
+    const locales = ['en', 'zh', 'es', 'de', 'fr', 'ja', 'ru', 'ar', 'hi'];
+    
+    // Fetch all blog posts for each locale
+    for (const locale of locales) {
+      try {
+        let currentPage = 1;
+        let hasMorePosts = true;
+        
+        while (hasMorePosts) {
+          const response = await fetch(
+            `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=${currentPage}&limit=100&locale=${locale}`,
+            { next: { revalidate: 3600 } }
+          );
+          
+          if (!response.ok) {
+            console.warn(`Failed to fetch blog posts for locale ${locale}:`, response.status);
+            break;
+          }
+          
+          const data = await response.json();
+          const posts = data.posts || [];
+          
+          if (posts.length === 0) {
+            hasMorePosts = false;
+          } else {
+            // Add params for each blog post
+            posts.forEach((post: { slug?: string }) => {
+              if (post.slug) {
+                allParams.push({
+                  slug: post.slug,
+                  locale,
+                });
+              }
+            });
+            
+            if (posts.length < 100) {
+              hasMorePosts = false;
+            } else {
+              currentPage++;
+            }
+          }
+        }
+      } catch (error) {
+        console.error(`Error fetching blog posts for locale ${locale}:`, error);
+      }
+    }
+    
+    return allParams;
+    
+  } catch (error) {
+    console.error('Error generating static params for blog posts:', error);
+    return [];
+  }
+}
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   try {
