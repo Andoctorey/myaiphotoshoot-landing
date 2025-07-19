@@ -13,7 +13,6 @@ export const fetcher = async <T>(url: string): Promise<T> => {
   
   try {
     const response = await fetch(url, {
-      next: { revalidate: 3600 }, // Revalidate every hour
       signal: controller.signal,
     });
 
