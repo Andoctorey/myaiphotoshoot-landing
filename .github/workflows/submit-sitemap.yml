@@ -1,0 +1,59 @@
+name: Submit Sitemap to Google Search Console
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  submit-sitemap:
+    name: Submit Sitemap
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Wait for deployment
+        run: |
+          echo "⏳ Waiting for deployment to complete..."
+          echo "This allows time for Cloudflare Pages to build and deploy the site"
+          sleep 130
+          
+      - name: Submit sitemap
+        run: |
+          echo "🚀 Starting sitemap submission..."
+          node scripts/submit-sitemap.js
+        env:
+          # Add any environment variables if needed for the script
+          NODE_ENV: production
+          
+      - name: Check submission status
+        run: |
+          echo "🔍 Checking sitemap submission status..."
+          curl -s "https://myaiphotoshoot.com/submit-sitemap" | jq '.'
+        continue-on-error: true
+        
+      - name: Success notification
+        if: success()
+        run: |
+          echo "✅ Sitemap submission completed successfully!"
+          echo "📈 Your new content should be indexed faster by Google"
+          echo "🔄 Future deployments will automatically notify Google of updates"
+          
+      - name: Failure notification
+        if: failure()
+        run: |
+          echo "⚠️ Sitemap submission encountered issues"
+          echo "ℹ️ This doesn't affect your deployment - your site is still live!"
+          echo "ℹ️ Google will still discover your sitemap through robots.txt"
+          echo "🔗 Manual sitemap URL: https://myaiphotoshoot.com/sitemap.xml" 

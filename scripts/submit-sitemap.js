@@ -84,9 +84,12 @@ async function main() {
   console.log('🚀 Auto-sitemap submission started...');
   console.log('ℹ️ Using Cloudflare Pages Function for submission');
   
-  // Wait for deployment to settle
-  console.log('⏳ Waiting 10 seconds for deployment to settle...');
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  // In GitHub Actions, we already wait 130 seconds, so reduce this wait
+  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+  const waitTime = isGitHubActions ? 5000 : 10000;
+  
+  console.log(`⏳ Waiting ${waitTime/1000} seconds for deployment to settle...`);
+  await new Promise(resolve => setTimeout(resolve, waitTime));
   
   // Check if sitemap is accessible before attempting submission
   console.log('🔍 Verifying sitemap accessibility...');
@@ -99,6 +102,12 @@ async function main() {
     console.log('   - Deployment still in progress');
     console.log('✅ Google will discover the sitemap through robots.txt automatically');
     console.log('💡 Your robots.txt already includes: Sitemap: https://myaiphotoshoot.com/sitemap.xml');
+    
+    // In GitHub Actions, exit with success to avoid failing the workflow
+    if (isGitHubActions) {
+      console.log('ℹ️ Exiting gracefully in GitHub Actions environment');
+      return;
+    }
     return;
   }
   
