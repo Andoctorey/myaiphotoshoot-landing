@@ -1,0 +1,6 @@
+name = "myaiphotoshoot-landing-deploy-proxy"
+compatibility_date = "2024-12-01"
+main = "deploy-proxy.js"
+
+# Environment variables will be set via wrangler secret put DEPLOY_WEBHOOK_URL
+# This should point to your Cloudflare Pages deploy hook URL 
