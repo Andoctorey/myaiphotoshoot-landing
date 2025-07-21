@@ -349,7 +349,7 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                 className="flex justify-center mt-4"
               >
                 <Link
-                  href={`https://app.myaiphotoshoot.com`}
+                  href={`https://app.myaiphotoshoot.com/#generate/${photo.id}`}
                   className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 transition-colors duration-200"
                   aria-label="Create a similar AI-generated photo"
                 >
