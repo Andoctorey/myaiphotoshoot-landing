@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
   description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
   keywords: ["AI photo shoot", "selfie transformation", "AI-generated photos", "professional photography", "portrait enhancement", "creative photo prompts", "affordable AI photos", "privacy-focused photo app", "Flux.1 AI", "photo editing app"],
+    manifest: "/site.webmanifest",
     icons: {
     icon: [
       { url: '/images/favicon.webp', type: 'image/webp' },
@@ -15,6 +16,9 @@ export const metadata: Metadata = {
       { url: '/images/icon_16.png', sizes: '16x16', type: 'image/png' },
       { url: '/images/icon_32.webp', sizes: '32x32', type: 'image/webp' },
       { url: '/images/icon_32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/icon_120.png', sizes: '120x120', type: 'image/png' },
+      { url: '/images/icon_192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/images/icon_512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [
       { url: '/images/icon_180.webp', sizes: '180x180', type: 'image/webp' },

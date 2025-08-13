@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",
+  manifest: "/site.webmanifest",
   formatDetection: {
     email: false,
     address: false,
@@ -37,6 +38,9 @@ export const metadata: Metadata = {
       { url: '/images/icon_16.png', sizes: '16x16', type: 'image/png' },
       { url: '/images/icon_32.webp', sizes: '32x32', type: 'image/webp' },
       { url: '/images/icon_32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/icon_120.png', sizes: '120x120', type: 'image/png' },
+      { url: '/images/icon_192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/images/icon_512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [
       { url: '/images/icon_180.webp', sizes: '180x180', type: 'image/webp' },
