@@ -10,7 +10,59 @@ export async function generateStaticParams() {
 }
 
 export default function LocalizedHome() {
-  return <LocalizedHomeClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'MobileApplication',
+            name: 'My AI Photo Shoot',
+            operatingSystem: 'iOS, Android',
+            applicationCategory: 'Photo & Video',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD'
+            },
+            downloadUrl: 'https://myaiphotoshoot.com',
+            installUrl: 'https://myaiphotoshoot.com',
+            url: 'https://myaiphotoshoot.com',
+            availableOnDevice: 'iPhone, Android'
+          })
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'My AI Photo Shoot',
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'iOS, Android, Web',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD'
+            },
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: '4.8',
+              ratingCount: '1000'
+            },
+            url: 'https://myaiphotoshoot.com',
+            sameAs: [
+              'https://apps.apple.com/app/id6744860178',
+              'https://play.google.com/store/apps/details?id=com.myaiphotoshoot'
+            ]
+          })
+        }}
+      />
+      <LocalizedHomeClient />
+    </>
+  );
 } 
 
 type Props = { params: Promise<{ locale: string }> };
