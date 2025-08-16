@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
@@ -38,6 +38,36 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
   const t = useTranslations('blog');
   const router = useRouter();
   const { post, isLoading, isError } = useBlogPost({ slug, locale });
+  // Ensure blog content images append ?width=420 similar to KMP logic
+  const addWidthParamToImages = (html: string): string => {
+    if (!html) return html;
+    return html.replace(/<img\s+([^>]*?)src=["']([^"']+)["']([^>]*)>/gi, (match, preAttrs, src, postAttrs) => {
+      try {
+        // Skip data URIs and non-http(s) relative paths
+        if (!/^https?:\/\//i.test(src)) {
+          return match;
+        }
+        // Skip supabase direct URLs
+        if (src.includes('supabase.co')) {
+          return match;
+        }
+        // Skip if width param already present
+        if (/([?&])width=\d+/i.test(src)) {
+          return match;
+        }
+        const separator = src.includes('?') ? '&' : '?';
+        const updatedSrc = `${src}${separator}width=420`;
+        return `<img ${preAttrs}src="${updatedSrc}"${postAttrs}>`;
+      } catch {
+        return match;
+      }
+    });
+  };
+
+  const processedContent = useMemo(() => {
+    return post?.content ? addWidthParamToImages(post.content) : '';
+  }, [post?.content]);
+
 
   // Extract FAQs from content for schema markup
   const faqs = post ? extractFAQsFromContent(post.content) : [];
@@ -211,6 +241,12 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
         }
 
+        /* Contain generic images inside content */
+        .medium-style-article img {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+
         .medium-style-article h1 {
           font-size: 2.75rem !important;
           font-weight: 700 !important;
@@ -267,14 +303,12 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           line-height: 1.6 !important;
         }
 
-        /* Photo Gallery Styles - Enhanced for better UX */
+        /* Photo Gallery Styles - switch to grid, no horizontal scroll */
         .medium-style-article .photo-gallery {
           margin: 2.5rem 0 !important;
-          overflow-x: auto !important;
-          overflow-y: hidden !important;
-          padding: 1.5rem 0 !important;
+          overflow: visible !important;
+          padding: 0 !important;
           width: 100% !important;
-          -webkit-overflow-scrolling: touch !important;
           border-radius: 8px !important;
         }
 
@@ -299,24 +333,23 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
         }
 
         .medium-style-article .photo-row {
-          display: flex !important;
-          gap: 1.5rem !important;
-          padding-bottom: 1rem !important;
-          width: max-content !important;
-          min-width: 100% !important;
-          flex-wrap: nowrap !important;
+          display: grid !important;
+          /* Ensure minimum 2 columns at all times */
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 1rem !important;
+          width: 100% !important;
         }
 
         .medium-style-article .photo-item {
-          flex: 0 0 auto !important;
           text-align: center !important;
-          width: 400px !important;
-          margin: 0 !important;
+          width: 100% !important;
+          max-width: 420px !important;
+          margin: 0 auto !important;
         }
 
         .medium-style-article .photo-item img {
-          width: 400px !important;
-          height: 400px !important;
+          width: 100% !important;
+          aspect-ratio: 1 / 1 !important;
           object-fit: cover !important;
           border-radius: 12px !important;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
@@ -521,16 +554,17 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           }
           
           .medium-style-article .photo-item {
-            width: 350px !important;
+            max-width: 350px !important;
           }
-          
-          .medium-style-article .photo-item img {
-            width: 350px !important;
-            height: 350px !important;
-          }
-
           .medium-style-article .photo-item figcaption {
             max-width: 350px !important;
+          }
+        }
+
+        /* Increase columns on wider screens while keeping 2 as minimum */
+        @media (min-width: 768px) {
+          .medium-style-article .photo-row {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
           }
         }
 
@@ -554,14 +588,8 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           }
           
           .medium-style-article .photo-item {
-            width: 300px !important;
+            max-width: 300px !important;
           }
-          
-          .medium-style-article .photo-item img {
-            width: 300px !important;
-            height: 300px !important;
-          }
-
           .medium-style-article .photo-item figcaption {
             max-width: 300px !important;
           }
@@ -664,9 +692,10 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
               </div>
 
 
-              {/* Article Content - Using admin's medium-style-article class */}
+              {/* Article Content - Using admin's medium-style-article class */
+              }
               <div className="medium-style-article">
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                <div dangerouslySetInnerHTML={{ __html: processedContent }} />
               </div>
 
               {/* Section Photos - Commented out since photos are now in content HTML */}
