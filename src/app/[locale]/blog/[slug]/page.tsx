@@ -11,6 +11,7 @@
 import BlogPostPageClient from './BlogPostPageClient';
 import type { Metadata } from 'next';
 import { env } from '@/lib/env';
+import { defaultLocale, locales } from '@/i18n/request';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -50,6 +51,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const description = post.meta_description || post.title;
     const url = `https://myaiphotoshoot.com/${locale}/blog/${slug}`;
     const imageUrl = post.featured_image_url || 'https://myaiphotoshoot.com/og-image.png';
+
+    // Infer MIME type from URL extension for better OG accuracy
+    const inferMimeFromUrl = (url: string | null | undefined): string | null => {
+      if (!url) return null;
+      const lower = url.toLowerCase();
+      if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'image/jpeg';
+      if (lower.endsWith('.png')) return 'image/png';
+      if (lower.endsWith('.webp')) return 'image/webp';
+      if (lower.endsWith('.gif')) return 'image/gif';
+      return null;
+    };
+    const ogImageType = inferMimeFromUrl(imageUrl);
     
     // Enhanced keywords for better SEO
     const baseKeywords = 'AI photography, AI photos, AI art, artificial intelligence, photo generation, professional headshots';
@@ -79,15 +92,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       alternates: {
         canonical: url,
         languages: {
-          'en': '/en/blog/' + slug,
-          'zh': '/zh/blog/' + slug,
-          'es': '/es/blog/' + slug,
-          'de': '/de/blog/' + slug,
-          'fr': '/fr/blog/' + slug,
-          'ja': '/ja/blog/' + slug,
-          'ru': '/ru/blog/' + slug,
-          'ar': '/ar/blog/' + slug,
-          'hi': '/hi/blog/' + slug,
+          ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/blog/${slug}`])),
+          'x-default': `/${defaultLocale}/blog/${slug}`,
         },
       },
       openGraph: {
@@ -101,7 +107,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
             width: 1200,
             height: 630,
             alt: post.title,
-            type: 'image/jpeg',
+            ...(ogImageType ? { type: ogImageType } : {}),
           },
         ],
         locale,

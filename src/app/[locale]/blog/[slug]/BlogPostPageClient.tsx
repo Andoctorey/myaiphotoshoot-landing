@@ -65,8 +65,16 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
   };
 
   const processedContent = useMemo(() => {
-    return post?.content ? addWidthParamToImages(post.content) : '';
-  }, [post?.content]);
+    if (!post?.content) return '';
+    const withWidth = addWidthParamToImages(post.content);
+    return withWidth.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
+      if (/\salt=(["']).*?\1/i.test(attrs)) {
+        return `<img ${attrs}>`;
+      }
+      const safeAlt = post.title?.slice(0, 120) || 'Blog image';
+      return `<img ${attrs} alt="${safeAlt}">`;
+    });
+  }, [post?.content, post?.title]);
 
 
   // Extract FAQs from content for schema markup
@@ -85,7 +93,11 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.meta_description || post.title,
-    image: post.featured_image_url || 'https://myaiphotoshoot.com/images/logo.png',
+    url: `https://myaiphotoshoot.com/${locale}/blog/${slug}`,
+    image: post.featured_image_url ? {
+      '@type': 'ImageObject',
+      url: post.featured_image_url,
+    } : 'https://myaiphotoshoot.com/images/logo.png',
     author: {
       '@type': 'Organization',
       name: 'My AI Photo Shoot',
@@ -123,6 +135,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
     articleSection: 'AI Photography',
     inLanguage: locale,
     wordCount: post.content ? post.content.replace(/<[^>]*>/g, '').split(' ').length : 0,
+    articleBody: post.content ? post.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 10000) : undefined,
     about: {
       '@type': 'Thing',
       name: 'AI Photography',
@@ -142,6 +155,31 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       name: 'My AI Photo Shoot Blog',
       url: `https://myaiphotoshoot.com/${locale}/blog`,
     },
+  } : null;
+
+  const breadcrumbLd = post ? {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `https://myaiphotoshoot.com/${locale}`
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `https://myaiphotoshoot.com/${locale}/blog`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://myaiphotoshoot.com/${locale}/blog/${slug}`
+      }
+    ]
   } : null;
 
   // Loading state
@@ -623,8 +661,14 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-              )}
-        <FAQSchema faqs={faqs} />
+      )}
+      {breadcrumbLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+        />
+      )}
+      <FAQSchema faqs={faqs} />
       <Navigation />
       <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
