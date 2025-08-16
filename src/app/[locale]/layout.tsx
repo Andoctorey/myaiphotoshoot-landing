@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { locales } from "@/i18n/request";
 import { NextIntlClientProvider } from 'next-intl';
+import { RTL_LANGUAGES } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
@@ -58,13 +59,16 @@ export default async function LocaleLayout({
   try {
     messages = (await import(`../../../messages/${locale}/index.json`)).default;
   } catch {
-    // Fallback to English if the locale doesn't exist
     messages = (await import(`../../../messages/en/index.json`)).default;
   }
 
+  const isRTL = RTL_LANGUAGES.includes(locale);
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <div lang={locale} dir={isRTL ? 'rtl' : 'ltr'}>
+        {children}
+      </div>
     </NextIntlClientProvider>
   );
-} 
+}
