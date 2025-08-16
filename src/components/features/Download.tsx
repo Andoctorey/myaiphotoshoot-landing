@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useTranslations } from '@/lib/utils';
+import { trackEventAndNavigate } from '@/lib/analytics';
 
 export default function Download() {
   const t = useTranslations('download');
@@ -105,6 +106,12 @@ export default function Download() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 ease-in-out"
+                  onClick={(e) => {
+                    // Allow middle-click/new tab to behave normally
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    e.preventDefault();
+                    trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+                  }}
                 >
                   <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -125,6 +132,11 @@ export default function Download() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transform hover:scale-105 transition duration-150"
+                    onClick={(e) => {
+                      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                      e.preventDefault();
+                      trackEventAndNavigate('google_play_cta_click', 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1');
+                    }}
                   >
                     <picture>
                       <source srcSet="/images/google-play-badge.webp" type="image/webp" />
@@ -144,6 +156,11 @@ export default function Download() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transform hover:scale-105 transition duration-150"
+                    onClick={(e) => {
+                      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                      e.preventDefault();
+                      trackEventAndNavigate('app_store_cta_click', 'https://apps.apple.com/app/id6744860178');
+                    }}
                   >
                     <Image 
                       alt={t('mobileApps.appStore')} 

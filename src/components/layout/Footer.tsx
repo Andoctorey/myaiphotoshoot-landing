@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import { useTranslations } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { trackEventAndNavigate } from '@/lib/analytics';
 
 export default function Footer() {
   const t = useTranslations('footer');
@@ -37,6 +38,11 @@ export default function Footer() {
               className="inline-flex items-center px-4 py-2 bg-gray-700 text-white font-medium rounded-md hover:bg-gray-600 transition-colors duration-200 text-sm"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+              }}
             >
               Start Creating Now
             </a>

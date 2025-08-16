@@ -21,6 +21,37 @@ export const trackEvent = (action: string, category: string, label?: string, val
   }
 };
 
+// Fire an event and navigate after GA acknowledges (or after a short timeout)
+export const trackEventAndNavigate = (
+  action: string,
+  url: string,
+  params?: Record<string, unknown>
+) => {
+  if (typeof window === 'undefined') return;
+  const navigate = () => {
+    window.location.href = url;
+  };
+  if (!window.gtag) {
+    navigate();
+    return;
+  }
+  let didNavigate = false;
+  const safeNavigate = () => {
+    if (!didNavigate) {
+      didNavigate = true;
+      navigate();
+    }
+  };
+  window.gtag('event', action, {
+    ...(params || {}),
+    transport_type: 'beacon',
+    event_callback: safeNavigate,
+    event_timeout: 200,
+  } as unknown as Record<string, unknown>);
+  // Fallback in case callback doesn't fire quickly
+  setTimeout(safeNavigate, 400);
+};
+
 // Types for gtag
 declare global {
   interface Window {

@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { trackEventAndNavigate } from '@/lib/analytics'
 import { GalleryItem } from '@/types/gallery'
 import Script from 'next/script'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
@@ -348,13 +349,21 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
                 whileTap={{ scale: 0.98 }}
                 className="flex justify-center mt-4"
               >
-                <Link
+                <a
                   href={`https://app.myaiphotoshoot.com/#generate/${photo.id}`}
                   className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 transition-colors duration-200"
                   aria-label="Create a similar AI-generated photo"
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    e.preventDefault();
+                    trackEventAndNavigate('webapp_cta_click', `https://app.myaiphotoshoot.com/#generate/${photo.id}`, {
+                      content_type: 'gallery_photo',
+                      item_id: `${photo.id}`,
+                    });
+                  }}
                 >
                   Create Similar Photo
-                </Link>
+                </a>
               </motion.div>
             </motion.div>
           </motion.div>
