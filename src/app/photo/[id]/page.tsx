@@ -91,6 +91,22 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
   const imageUrl = photo.public_url;
   const photoUrl = `https://myaiphotoshoot.com/photo/${photo.id}`;
 
+  // Infer MIME type for OG image from URL
+  const inferMimeFromUrl = (url: string): string | undefined => {
+    try {
+      const cleanUrl = url.split('?')[0];
+      const ext = cleanUrl.substring(cleanUrl.lastIndexOf('.') + 1).toLowerCase();
+      if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
+      if (ext === 'png') return 'image/png';
+      if (ext === 'webp') return 'image/webp';
+      if (ext === 'gif') return 'image/gif';
+      return undefined;
+    } catch {
+      return undefined;
+    }
+  };
+  const ogImageType = inferMimeFromUrl(imageUrl);
+
   return {
     title,
     description,
@@ -122,7 +138,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
           width: 1024,
           height: 1024,
           alt: photo.prompt,
-          type: 'image/jpeg',
+          ...(ogImageType ? { type: ogImageType } : {}),
         },
       ],
       locale: 'en_US',

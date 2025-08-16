@@ -63,6 +63,7 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
 
   // Create JSON-LD structured data
   const inferredMime = guessMimeTypeFromUrl(photo.public_url);
+  const thumbnailUrl = `${photo.public_url}${photo.public_url.includes('?') ? '&' : '?'}width=300`;
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'ImageObject',
@@ -75,6 +76,7 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
     dateModified: photo.created_at,
     uploadDate: photo.created_at,
     representativeOfPage: true,
+    thumbnailUrl,
     author: {
       '@type': 'Organization',
       name: 'My AI Photo Shoot',
@@ -119,12 +121,37 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
     ...(inferredMime ? { encodingFormat: inferredMime } : {})
   }
 
+  // WebPage JSON-LD referencing ImageObject as primary image
+  const webPageJsonLd: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `https://myaiphotoshoot.com/photo/${photo.id}#webpage`,
+    url: `https://myaiphotoshoot.com/photo/${photo.id}`,
+    name: `${photo.prompt.substring(0, 60)}${photo.prompt.length > 60 ? '...' : ''}`,
+    description: photo.prompt,
+    inLanguage: 'en-US',
+    primaryImageOfPage: { '@id': `https://myaiphotoshoot.com/photo/${photo.id}` },
+    datePublished: photo.created_at,
+    dateModified: photo.created_at,
+    about: 'AI-generated photo',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'My AI Photo Shoot',
+      url: 'https://myaiphotoshoot.com'
+    }
+  }
+
   return (
     <>
       <Script
         id="photo-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Script
+        id="webpage-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd) }}
       />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
