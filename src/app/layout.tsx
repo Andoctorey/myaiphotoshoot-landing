@@ -6,6 +6,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import DirectionHandler from "@/components/layout/DirectionHandler";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+import ConsentBanner from "@/components/ConsentBanner";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -128,6 +129,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <ThemeProvider>{children}</ThemeProvider>
         </ErrorBoundary>
+        <ConsentBanner />
       </body>
     </html>
   );
