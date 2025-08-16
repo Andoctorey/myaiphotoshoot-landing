@@ -33,38 +33,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
       .trim();
   };
 
-  // Extract keywords from prompt for better SEO
-  const extractKeywords = (prompt: string): string => {
-    const cleaned = cleanPromptForTitle(prompt);
-    const words = cleaned.toLowerCase().split(/[\s,]+/);
-    
-    // Common searchable terms
-    const keywordCategories = [
-      'portrait', 'photo', 'picture', 'headshot', 'selfie',
-      'woman', 'man', 'person', 'model', 'character',
-      'professional', 'artistic', 'creative', 'vintage', 'modern',
-      'studio', 'outdoor', 'nature', 'urban', 'fantasy',
-      'dramatic', 'elegant', 'vibrant', 'beautiful', 'stunning'
-    ];
-    
-    const foundKeywords = words.filter(word => 
-      keywordCategories.includes(word) || word.length > 4
-    ).slice(0, 10);
-    
-    // Always include AI-related keywords
-    const aiKeywords = ['AI photo', 'AI generated', 'AI portrait', 'artificial intelligence'];
-    
-    // Ensure we have at least some keywords even for short prompts
-    const allKeywords = [...aiKeywords, ...foundKeywords];
-    
-    // Add generic keywords if we don't have enough specific ones
-    if (allKeywords.length < 6) {
-      const genericKeywords = ['professional photo', 'digital art', 'custom portrait', 'AI photography'];
-      allKeywords.push(...genericKeywords.slice(0, 6 - allKeywords.length));
-    }
-    
-    return allKeywords.join(', ');
-  };
+  // Removed meta keywords generator (not used by modern search engines)
 
   // Create title from cleaned prompt
   const createTitle = (prompt: string): string => {
@@ -119,14 +88,12 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
 
   const title = createTitle(photo.prompt);
   const description = createDescription(photo.prompt);
-  const keywords = extractKeywords(photo.prompt);
   const imageUrl = photo.public_url;
   const photoUrl = `https://myaiphotoshoot.com/photo/${photo.id}`;
 
   return {
     title,
     description,
-    keywords,
     authors: [{ name: 'My AI Photo Shoot', url: 'https://myaiphotoshoot.com' }],
     creator: 'My AI Photo Shoot',
     publisher: 'My AI Photo Shoot',
@@ -159,8 +126,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
         },
       ],
       locale: 'en_US',
-      type: 'article',
-      publishedTime: photo.created_at,
+      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',

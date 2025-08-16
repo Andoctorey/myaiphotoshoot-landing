@@ -44,19 +44,37 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
     window.location.href = `/${locale}/#gallery`;
   };
 
+  // Helper to infer mime type from URL (best-effort)
+  const guessMimeTypeFromUrl = (url: string): string | undefined => {
+    try {
+      const cleanUrl = url.split('?')[0];
+      const parts = cleanUrl.split('.');
+      const ext = parts[parts.length - 1]?.toLowerCase();
+      if (!ext) return undefined;
+      if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
+      if (ext === 'png') return 'image/png';
+      if (ext === 'webp') return 'image/webp';
+      if (ext === 'gif') return 'image/gif';
+      return undefined;
+    } catch {
+      return undefined;
+    }
+  };
+
   // Create JSON-LD structured data
-  const jsonLd = {
+  const inferredMime = guessMimeTypeFromUrl(photo.public_url);
+  const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'ImageObject',
     '@id': `https://myaiphotoshoot.com/photo/${photo.id}`,
     url: `https://myaiphotoshoot.com/photo/${photo.id}`,  
     contentUrl: photo.public_url,
     name: photo.prompt,
-    headline: photo.prompt.substring(0, 110), // Google's recommended headline length
     description: photo.prompt,
     datePublished: photo.created_at,
     dateModified: photo.created_at,
     uploadDate: photo.created_at,
+    representativeOfPage: true,
     author: {
       '@type': 'Organization',
       name: 'My AI Photo Shoot',
@@ -76,10 +94,6 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
         url: 'https://myaiphotoshoot.com/images/favicon.png'
       }
     },
-    // Essential image properties
-    width: '1024',
-    height: '1024',
-    encodingFormat: 'image/jpeg',
     // Licensing and rights
     license: 'https://myaiphotoshoot.com/license',
     acquireLicensePage: 'https://myaiphotoshoot.com/license',
@@ -101,65 +115,8 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `https://myaiphotoshoot.com/photo/${photo.id}`
-    }
-  }
-
-  // Add breadcrumb structured data
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://myaiphotoshoot.com'
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'AI Photo Gallery',
-        item: 'https://myaiphotoshoot.com/#gallery'
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: 'AI Generated Photo',
-        item: `https://myaiphotoshoot.com/photo/${photo.id}`
-      }
-    ]
-  }
-
-  // Add FAQ structured data for common AI photo questions
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'How was this photo created?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'This professional photo was generated using advanced artificial intelligence technology based on the prompt: "' + photo.prompt + '". Our AI system creates realistic, high-quality images from text descriptions.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Can I use this AI-generated photo?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'This AI-generated photo is available for use under our licensing terms. Visit our license page for complete usage rights and restrictions.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'How can I create a similar photo?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'You can create your own professional AI photos by visiting our app at https://app.myaiphotoshoot.com. Simply upload your photos and describe what you want to create.'
-        }
-      }
-    ]
+    },
+    ...(inferredMime ? { encodingFormat: inferredMime } : {})
   }
 
   return (
@@ -168,16 +125,6 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
         id="photo-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Script
-        id="breadcrumb-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <Script
-        id="faq-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
@@ -197,9 +144,9 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
               <span className="text-lg font-semibold">Back to Gallery</span>
             </button>
             <div className="text-center mt-2">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 My AI Photo Shoot
-              </h1>
+              </p>
             </div>
           </motion.div>
           
@@ -319,7 +266,7 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
             >
               {/* Add specific h1 for this photo */}
               <header className="mb-4">
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white sr-only">
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">
                   {photo.prompt.substring(0, 60)}{photo.prompt.length > 60 ? '...' : ''}
                 </h1>
               </header>
