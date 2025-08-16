@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Script from 'next/script';
 
 export default function ConsentBanner() {
   const [show, setShow] = useState(false);
@@ -11,27 +10,62 @@ export default function ConsentBanner() {
     const stored = localStorage.getItem('consent_choice');
     if (stored) return;
 
-    // Try to detect region using Intl and a lightweight fetch to a country endpoint as fallback
-    const region = (Intl as any)?.DateTimeFormat?.().resolvedOptions?.().timeZone || '';
-    // Basic heuristic: we will fetch server country endpoint; if it fails, default to show
-    fetch('/api/geo/country').then(async (res) => {
-      if (!res.ok) throw new Error('geo failed');
-      const data = await res.json();
-      const eeaCountries = new Set(['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','EL','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB']);
-      const inEEA = eeaCountries.has(String(data.country || '').toUpperCase());
-      setIsEEA(inEEA);
-      setShow(inEEA);
-    }).catch(() => {
-      // If detection fails, do not block UX; do not show by default
-      setIsEEA(false);
-      setShow(false);
-    });
+    let cancelled = false;
+
+    // 1) Try Consent Mode defaults first
+    const tryShowFromConsent = () => {
+      try {
+        type ConsentDefault = { analytics_storage?: string };
+        type ConsentArgs = { default?: ConsentDefault };
+        type ConsentObj = { args?: ConsentArgs };
+        type GoogleTagData = { consent?: ConsentObj };
+        const gtd = (window as unknown as { google_tag_data?: GoogleTagData }).google_tag_data;
+        const denied = gtd?.consent?.args?.default?.analytics_storage === 'denied';
+        if (denied) {
+          setIsEEA(true);
+          setShow(true);
+          return true;
+        }
+      } catch {}
+      return false;
+    };
+
+    if (tryShowFromConsent()) return;
+
+    // 2) Short retry to allow GA script to init
+    const retry = setTimeout(() => {
+      if (cancelled) return;
+      if (tryShowFromConsent()) return;
+
+      // 3) Fallback: use Cloudflare Pages Function
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 1500);
+      fetch('/geo', { signal: controller.signal, cache: 'no-store' })
+        .then(async (res) => {
+          if (!res.ok) throw new Error('geo failed');
+          const data = await res.json();
+          const eeaCountries = new Set(['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','EL','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB']);
+          const inEEA = eeaCountries.has(String(data.country || '').toUpperCase());
+          setIsEEA(inEEA);
+          setShow(inEEA);
+        })
+        .catch(() => {
+          setIsEEA(false);
+          setShow(false);
+        })
+        .finally(() => clearTimeout(timeout));
+    }, 250);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(retry);
+    };
   }, []);
 
   const acceptAll = () => {
     try { localStorage.setItem('consent_choice', 'accepted'); } catch {}
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('consent', 'update', {
+    if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
+      (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.('consent', 'update', {
         analytics_storage: 'granted',
         ad_storage: 'granted',
         ad_user_data: 'granted',
@@ -43,8 +77,8 @@ export default function ConsentBanner() {
 
   const rejectAll = () => {
     try { localStorage.setItem('consent_choice', 'rejected'); } catch {}
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('consent', 'update', {
+    if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
+      (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.('consent', 'update', {
         analytics_storage: 'denied',
         ad_storage: 'denied',
         ad_user_data: 'denied',

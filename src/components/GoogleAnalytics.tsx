@@ -9,10 +9,15 @@ interface GoogleAnalyticsProps {
 export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
   return (
     <>
-      <Script id="consent-defaults" strategy="beforeInteractive">
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);} 
+          function gtag(){dataLayer.push(arguments);}
+          // Consent Mode v2 defaults (EEA only) before GA config
           gtag('consent', 'default', {
             analytics_storage: 'denied',
             ad_storage: 'denied',
@@ -22,16 +27,6 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
           }, {
             region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','EL','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB']
           });
-        `}
-      </Script>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${measurementId}', {
             page_title: document.title,
