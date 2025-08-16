@@ -83,8 +83,6 @@ export const metadata: Metadata = {
     title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
     description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
     images: ["/og-image.png"],
-    creator: "@myaiphotoshoot",
-    site: "@myaiphotoshoot",
   },
   robots: {
     index: true,
@@ -113,7 +111,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <link rel="canonical" href="https://myaiphotoshoot.com" />
         <link rel="icon" href="/images/favicon.png" type="image/png" />
         <link rel="icon" href="/images/favicon.webp" type="image/webp" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.png" type="image/png" />
@@ -122,6 +119,34 @@ export default function RootLayout({
         <link rel="icon" type="image/webp" sizes="32x32" href="/images/icon_32.webp" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/icon_16.png" />
         <link rel="icon" type="image/webp" sizes="16x16" href="/images/icon_16.webp" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'My AI Photo Shoot',
+              url: 'https://myaiphotoshoot.com',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://myaiphotoshoot.com/images/icon_192.png',
+                width: 192,
+                height: 192
+              },
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'My AI Photo Shoot',
+              url: 'https://myaiphotoshoot.com'
+            })
+          }}
+        />
       </head>
       <body className={inter.className}>
         <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />

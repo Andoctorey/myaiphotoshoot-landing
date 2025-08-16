@@ -1,11 +1,26 @@
 import { Metadata } from 'next';
+import { locales, defaultLocale } from '@/i18n/request';
 import Link from 'next/link';
 
-export const metadata: Metadata = {
-  title: 'Image License & Usage Rights - My AI Photo Shoot',
-  description: 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.',
-  robots: 'index, follow',
-};
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const baseUrl = 'https://myaiphotoshoot.com';
+  const url = `${baseUrl}/${locale}/license`;
+  return {
+    title: 'Image License & Usage Rights - My AI Photo Shoot',
+    description: 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.',
+    robots: 'index, follow',
+    alternates: {
+      canonical: url,
+      languages: {
+        ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/license`])),
+        'x-default': `/${defaultLocale}/license`,
+      },
+    },
+  };
+}
 
 export default function LicensePage() {
   return (

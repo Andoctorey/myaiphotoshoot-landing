@@ -149,8 +149,6 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
       title,
       description,
       images: [imageUrl],
-      creator: '@myaiphotoshoot',
-      site: '@myaiphotoshoot',
     },
   };
 }

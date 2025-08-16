@@ -123,8 +123,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         title,
         description,
         images: [imageUrl],
-        creator: '@myaiphotoshoot',
-        site: '@myaiphotoshoot',
       },
       // Enhanced for better indexing
       other: {

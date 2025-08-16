@@ -108,11 +108,7 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
         width: 400,
         height: 400,
       },
-      sameAs: [
-        'https://twitter.com/myaiphotoshoot',
-        'https://www.instagram.com/myaiphotoshoot',
-        'https://www.linkedin.com/company/myaiphotoshoot'
-      ],
+      
     },
     publisher: {
       '@type': 'Organization',

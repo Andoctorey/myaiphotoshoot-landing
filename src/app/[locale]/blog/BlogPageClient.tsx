@@ -33,6 +33,31 @@ export default function BlogPageClient({ locale }: Props) {
 
   return (
     <>
+      {/* CollectionPage JSON-LD for the blog listing */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: t('title'),
+            description: t('description'),
+            url: `https://myaiphotoshoot.com/${locale}/blog`,
+            isPartOf: {
+              '@type': 'WebSite',
+              name: 'My AI Photo Shoot',
+              url: 'https://myaiphotoshoot.com'
+            },
+            hasPart: posts.slice(0, 10).map((p) => ({
+              '@type': 'BlogPosting',
+              headline: p.title,
+              url: `https://myaiphotoshoot.com/${locale}/blog/${p.slug}`,
+              datePublished: p.created_at,
+              image: p.featured_image_url || undefined
+            }))
+          })
+        }}
+      />
       <Navigation />
       <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
