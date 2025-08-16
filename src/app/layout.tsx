@@ -119,6 +119,7 @@ export default function RootLayout({
         <link rel="icon" type="image/webp" sizes="32x32" href="/images/icon_32.webp" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/icon_16.png" />
         <link rel="icon" type="image/webp" sizes="16x16" href="/images/icon_16.webp" />
+        <link rel="alternate" type="application/rss+xml" title="My AI Photo Shoot Blog" href="/rss.xml" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
