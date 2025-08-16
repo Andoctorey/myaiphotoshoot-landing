@@ -166,7 +166,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const photoEntries = photos.map((photo) => ({
       url: `${baseUrl}/photo/${photo.id}`,
       lastModified: new Date(photo.created_at),
-      changeFrequency: 'weekly' as const,
+      // No changeFrequency for static photos (they don't update)
       priority: 0.8,
       images: [photo.public_url],
     }));
