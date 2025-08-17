@@ -70,6 +70,8 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
     '@id': `https://myaiphotoshoot.com/photo/${photo.id}`,
     url: `https://myaiphotoshoot.com/photo/${photo.id}`,  
     contentUrl: photo.public_url,
+    width: 1024,
+    height: 1024,
     name: photo.prompt,
     description: photo.prompt,
     datePublished: photo.created_at,
