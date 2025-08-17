@@ -41,7 +41,7 @@ export default function Navigation() {
   const navItems = [
     { name: t('features'), href: isHomePage ? '#features' : `/${locale}#features` },
     { name: t('gallery'), href: isHomePage ? '#gallery' : `/${locale}#gallery` },
-    { name: t('blog'), href: `/${locale}/blog` },
+    { name: t('blog'), href: isHomePage ? '#home-blog' : `/${locale}#home-blog` },
     { name: t('pricing'), href: isHomePage ? '#pricing' : `/${locale}#pricing` },
     { name: t('faq'), href: isHomePage ? '#faq' : `/${locale}#faq` },
   ];

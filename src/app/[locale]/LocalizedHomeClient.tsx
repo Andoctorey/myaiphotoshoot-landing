@@ -11,6 +11,7 @@ import Download from '@/components/features/Download';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
 import SupportForm from '@/components/app/SupportForm';
+import HomeBlog from '@/components/features/HomeBlog';
 
 export default function LocalizedHomeClient() {
   const pathname = usePathname();
@@ -58,6 +59,7 @@ export default function LocalizedHomeClient() {
             <Hero />
             <Features />
             <UserGallery />
+            <HomeBlog />
             <Pricing />
             <FAQ />
             <Download />
