@@ -120,6 +120,11 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/images/icon_16.png" />
         <link rel="icon" type="image/webp" sizes="16x16" href="/images/icon_16.webp" />
         <link rel="alternate" type="application/rss+xml" title="My AI Photo Shoot Blog" href="/rss.xml" />
+        {/* Performance: preconnect/dns-prefetch for Google Fonts (defensive even with next/font) */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
