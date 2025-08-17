@@ -7,6 +7,7 @@ import DirectionHandler from "@/components/layout/DirectionHandler";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 import ConsentBanner from "@/components/ConsentBanner";
+import { env } from "@/lib/env";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -97,6 +98,15 @@ export const metadata: Metadata = {
   },
 };
 
+// Resolve Supabase Functions origin for preconnect/dns-prefetch
+const supabaseFunctionsOrigin = (() => {
+  try {
+    return new URL(env.SUPABASE_FUNCTIONS_URL).origin;
+  } catch {
+    return undefined;
+  }
+})();
+
 export default function RootLayout({
   children,
 }: {
@@ -125,6 +135,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        {supabaseFunctionsOrigin && (
+          <>
+            <link rel="preconnect" href={supabaseFunctionsOrigin} crossOrigin="anonymous" />
+            <link rel="dns-prefetch" href={supabaseFunctionsOrigin} />
+          </>
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
