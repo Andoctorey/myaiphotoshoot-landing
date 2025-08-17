@@ -668,6 +668,22 @@ export default function BlogPostPageClient({ slug, locale }: Props) {
       <Navigation />
       <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
+            <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
+              <li className="flex items-center whitespace-nowrap">
+                <Link href={`/${locale}`} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
+              </li>
+              <li className="flex items-center whitespace-nowrap">
+                <span className="mx-2 text-gray-400 select-none">/</span>
+                <Link href={`/${locale}/blog`} className="hover:text-purple-600 dark:hover:text-purple-400">Blog</Link>
+              </li>
+              <li className="flex items-center min-w-0">
+                <span className="mx-2 text-gray-400 select-none">/</span>
+                <span aria-current="page" className="text-gray-800 dark:text-gray-200 truncate max-w-[60vw] sm:max-w-[70%] md:max-w-[80%] lg:whitespace-normal lg:overflow-visible lg:max-w-none">{post.title}</span>
+              </li>
+            </ol>
+          </nav>
           {/* Article Header */}
           <motion.article
             initial={{ opacity: 0, y: 20 }}
