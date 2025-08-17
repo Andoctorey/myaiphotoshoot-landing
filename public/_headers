@@ -25,3 +25,7 @@
 /legal.html
   X-Robots-Tag: noindex, follow
   Link: <https://myaiphotoshoot.com/en/legal>; rel="canonical"
+
+# Prevent indexing of localized gallery data API endpoints
+/*/gallery-data
+  X-Robots-Tag: noindex, follow
