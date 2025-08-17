@@ -32,7 +32,7 @@ export default function Gallery() {
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
   const [manuallyLoadedMore, setManuallyLoadedMore] = useState<boolean>(false); // Track if user manually loaded more
   const fetchAttemptedRef = useRef(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLUListElement>(null);
   
   // Use SWR hook for fetching gallery data directly from Supabase
   const { gallery, isLoading, isError, error, mutate } = useGallery({ 
@@ -212,13 +212,7 @@ export default function Gallery() {
     setDisplayCount((prev) => prev + columnsCount * 4);
   };
 
-  // Handle keyboard navigation for gallery items
-  const handleKeyDown = (e: React.KeyboardEvent, itemId: string) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      window.location.href = `/photo/${itemId}`;
-    }
-  };
+  // No custom keyboard handling needed; native link semantics suffice
 
   // Get only the items we need to display
   const displayedItems = galleryItems.slice(0, displayCount);
@@ -259,59 +253,58 @@ export default function Gallery() {
       </div>
 
       {/* Always show the grid to maintain layout consistency */}
-      <div 
+      <ul 
         ref={containerRef}
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2"
-        role="grid"
         aria-label="Gallery of AI-generated photos"
       >
         {/* When loading and no items available yet, show placeholders */}
         {galleryItems.length === 0 ? (
           Array.from({ length: displayCount }).map((_, index) => (
-            <ImagePlaceholder key={`placeholder-${index}`} />
+            <li key={`placeholder-${index}`}>
+              <ImagePlaceholder />
+            </li>
           ))
         ) : (
           /* Show actual gallery items once available */
           displayedItems.map((item, index) => (
-            <Link
-              key={item.id}
-              href={`/photo/${item.id}`}
-              className="block"
-            >
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.02 }}
-                className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
-                onKeyDown={(e) => handleKeyDown(e, item.id)}
-                tabIndex={0}
-                role="gridcell"
-                aria-label={`AI photo with prompt: ${item.prompt}`}
-                style={{ outline: 'none' }}
+            <li key={item.id}>
+              <Link
+                href={`/photo/${item.id}`}
+                className="group block"
               >
-                <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
-                <Image
-                  src={item.public_url.includes('supabase.co') ? item.public_url : `${item.public_url}?width=420`}
-                  alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                  className="object-cover"
-                  priority={index === 0}
-                />
-                
-                {/* Hover overlay with prompt */}
-                <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
-                  <div className="max-h-full">
-                    <p className="text-white text-xs">
-                      {item.prompt}
-                    </p>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.02 }}
+                  className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
+                  aria-label={`AI photo with prompt: ${item.prompt}`}
+                  style={{ outline: 'none' }}
+                >
+                  <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
+                  <Image
+                    src={item.public_url.includes('supabase.co') ? item.public_url : `${item.public_url}?width=420`}
+                    alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                    className="object-cover"
+                    priority={index === 0}
+                  />
+                  
+                  {/* Hover/focus overlay with prompt */}
+                  <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 group-focus:opacity-100 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
+                    <div className="max-h-full">
+                      <p className="text-white text-xs">
+                        {item.prompt}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            </Link>
+                </motion.div>
+              </Link>
+            </li>
           ))
         )}
-      </div>
+      </ul>
 
       {error && galleryItems.length > 0 && (
         <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-center" role="alert" aria-live="polite">
