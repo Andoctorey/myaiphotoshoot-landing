@@ -17,6 +17,50 @@ export default function LocalizedHome() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'AI Photo Generation Service',
+            serviceType: 'AI photo generation',
+            description:
+              'Create hyper-realistic AI-generated photos. One-time model training then pay-as-you-go per image.',
+            provider: {
+              '@type': 'Organization',
+              name: 'My AI Photo Shoot',
+              url: 'https://myaiphotoshoot.com',
+            },
+            areaServed: 'Worldwide',
+            offers: [
+              {
+                '@type': 'Offer',
+                name: 'Per-image generation',
+                price: '0.03',
+                priceCurrency: 'USD',
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: '0.03',
+                  priceCurrency: 'USD',
+                  unitText: 'per image',
+                },
+                availability: 'https://schema.org/InStock',
+                url: 'https://myaiphotoshoot.com',
+              },
+              {
+                '@type': 'Offer',
+                name: 'One-time AI training fee',
+                price: '2.99',
+                priceCurrency: 'USD',
+                category: 'Setup',
+                availability: 'https://schema.org/InStock',
+                url: 'https://myaiphotoshoot.com',
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
             '@type': 'MobileApplication',
             name: 'My AI Photo Shoot',
             operatingSystem: 'iOS, Android',
