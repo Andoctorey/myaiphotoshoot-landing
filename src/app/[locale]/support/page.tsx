@@ -3,7 +3,7 @@ import SupportForm from '@/components/app/SupportForm';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
 import { locales } from '@/i18n/request';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, canonicalUrl } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: 'Customer Support | My AI Photo Shoot',
       description: 'Contact our team for help. We respond within 24–48 hours.',
-      url,
+      url: canonicalUrl(locale, '/support/'),
       type: 'website',
     },
     twitter: {
