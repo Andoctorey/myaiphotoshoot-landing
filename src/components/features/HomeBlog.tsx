@@ -7,24 +7,28 @@ import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
 import { useLocale, useTranslations } from '@/lib/utils';
 
-function shuffleArray<T>(items: T[]): T[] {
-  const array = items.slice();
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
+// Use stable order to avoid hydration mismatches between SSR/CSR
+function takeFirst<T>(items: T[], n: number): T[] { return items.slice(0, n); }
 
-export default function HomeBlog() {
+export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { initialPosts?: BlogListItem[] }) {
   const t = useTranslations('blog');
   const locale = useLocale();
 
-  const { posts, isLoading, isError } = useBlogPosts({ page: 1, limit: 20, locale });
+  const initial = (initialPosts && initialPosts.length > 0) ? initialPosts : [];
+  const hasFallback = Array.isArray(initial) && initial.length > 0;
+  const fallbackData = hasFallback ? {
+    posts: takeFirst(initial, 6),
+    total: 6,
+    page: 1,
+    limit: 6,
+    totalPages: 1,
+  } : undefined;
+
+  const { posts, isLoading, isError } = useBlogPosts({ page: 1, limit: 6, locale, fallbackData });
 
   const selectedPosts: BlogListItem[] = useMemo(() => {
     if (!posts || posts.length === 0) return [];
-    return shuffleArray(posts).slice(0, 6);
+    return takeFirst(posts, 6);
   }, [posts]);
 
   if (isError) return null;

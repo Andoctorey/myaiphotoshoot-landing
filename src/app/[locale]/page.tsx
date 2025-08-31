@@ -1,6 +1,9 @@
 import { locales, defaultLocale } from '@/i18n/request';
 import LocalizedHomeClient from './LocalizedHomeClient';
 import type { Metadata } from 'next';
+import { env } from '@/lib/env';
+import type { GalleryItem } from '@/types/gallery';
+import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 
 // Generate static params for all locales
 export async function generateStaticParams() {
@@ -9,7 +12,30 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function LocalizedHome() {
+export default async function LocalizedHome({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+
+  // Fetch initial gallery items and blog posts at build time (static export)
+  let initialGallery: GalleryItem[] = [];
+  let initialBlog: BlogListItem[] = [];
+
+  try {
+    const [gRes, bRes] = await Promise.all([
+      fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=24`, { next: { revalidate: 3600 } }),
+      fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=6&locale=${locale}`, { next: { revalidate: 3600 } })
+    ]);
+
+    if (gRes.ok) {
+      initialGallery = await gRes.json();
+    }
+    if (bRes.ok) {
+      const blogJson = (await bRes.json()) as BlogPostsResponse;
+      initialBlog = blogJson.posts || [];
+    }
+  } catch {
+    // Non-fatal: fall back to empty; client will fetch
+  }
+
   return (
     <>
       <script
@@ -104,7 +130,7 @@ export default function LocalizedHome() {
           })
         }}
       />
-      <LocalizedHomeClient />
+      <LocalizedHomeClient initialGallery={initialGallery} initialBlog={initialBlog} />
     </>
   );
 } 

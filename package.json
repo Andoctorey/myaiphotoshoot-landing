@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "prebuild": "node --experimental-fetch scripts/generate-gallery-seed.js || node --experimental-fetch scripts/generate-gallery-seed.cjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

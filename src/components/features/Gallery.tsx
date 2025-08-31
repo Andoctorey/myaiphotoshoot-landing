@@ -18,16 +18,15 @@ import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
 import Link from 'next/link';
 import { useTranslations } from '@/lib/utils';
-import seed from '@/data/gallery-seed.json';
 
 // Placeholder component for images while they're loading
 const ImagePlaceholder = () => (
   <div className="relative aspect-square overflow-hidden rounded-sm bg-gray-200 dark:bg-gray-800 animate-pulse" />
 );
 
-export default function Gallery() {
+export default function Gallery({ initialItems = [] as GalleryItem[] }: { initialItems?: GalleryItem[] }) {
   const t = useTranslations('gallery');
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(Array.isArray(seed) ? (seed as unknown as GalleryItem[]) : []);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(initialItems || []);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
@@ -39,7 +38,7 @@ export default function Gallery() {
   const { gallery, isLoading, isError, error, mutate } = useGallery({ 
     page: 1, 
     limit: 24,
-    fallbackData: Array.isArray(seed) ? (seed as unknown as GalleryItem[]) : [],
+    fallbackData: (initialItems && initialItems.length > 0) ? initialItems : [],
   });
 
   // Initialize state from sessionStorage on mount to persist user's "show more" progress

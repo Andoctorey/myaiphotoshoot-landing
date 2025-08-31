@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import dynamic from 'next/dynamic';
 import { useTranslations, useLocale } from '@/lib/utils';
+import type { GalleryItem } from '@/types/gallery';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 // Create a proper loading component
@@ -21,7 +22,7 @@ const Gallery = dynamic(() => import('./Gallery'), {
   loading: GalleryLoading
 });
 
-export default function UserGallery() {
+export default function UserGallery({ initialItems = [] }: { initialItems?: GalleryItem[] }) {
   const t = useTranslations('gallery');
   const locale = useLocale();
   const { ref: galleryRef, inView: galleryInView } = useInView({
@@ -48,7 +49,7 @@ export default function UserGallery() {
             </p>
           </motion.div>
           
-          <Gallery key={locale} />
+          <Gallery key={locale} initialItems={initialItems} />
         </div>
       </div>
     </section>

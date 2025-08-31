@@ -12,8 +12,10 @@ import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
 import SupportForm from '@/components/app/SupportForm';
 import HomeBlog from '@/components/features/HomeBlog';
+import type { GalleryItem } from '@/types/gallery';
+import type { BlogListItem } from '@/types/blog';
 
-export default function LocalizedHomeClient() {
+export default function LocalizedHomeClient({ initialGallery = [], initialBlog = [] }: { initialGallery?: GalleryItem[]; initialBlog?: BlogListItem[] }) {
   const pathname = usePathname();
   const isSupport = pathname?.endsWith('/support/') || pathname?.endsWith('/support');
   
@@ -58,8 +60,8 @@ export default function LocalizedHomeClient() {
           <>
             <Hero />
             <Features />
-            <UserGallery />
-            <HomeBlog />
+            <UserGallery initialItems={initialGallery} />
+            <HomeBlog initialPosts={initialBlog} />
             <Pricing />
             <FAQ />
             <Download />
