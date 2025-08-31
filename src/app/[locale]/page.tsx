@@ -1,4 +1,4 @@
-import { locales, defaultLocale } from '@/i18n/request';
+import { locales } from '@/i18n/request';
 import LocalizedHomeClient from './LocalizedHomeClient';
 import type { Metadata } from 'next';
 import { env } from '@/lib/env';
