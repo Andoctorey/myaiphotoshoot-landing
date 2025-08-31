@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
 import { useLocale, useTranslations } from '@/lib/utils';
@@ -10,9 +10,43 @@ import { useLocale, useTranslations } from '@/lib/utils';
 // Use stable order to avoid hydration mismatches between SSR/CSR
 function takeFirst<T>(items: T[], n: number): T[] { return items.slice(0, n); }
 
+// Simple deterministic PRNG based on a 32-bit seed
+function hashStringToSeed(str: string): number {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function mulberry32(seed: number) {
+  return function() {
+    let t = (seed += 0x6D2B79F5) >>> 0;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function deterministicShuffle<T>(arr: T[], seedKey: string): T[] {
+  const rand = mulberry32(hashStringToSeed(seedKey));
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { initialPosts?: BlogListItem[] }) {
   const t = useTranslations('blog');
   const locale = useLocale();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const initial = (initialPosts && initialPosts.length > 0) ? initialPosts : [];
   const hasFallback = Array.isArray(initial) && initial.length > 0;
@@ -28,8 +62,11 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
 
   const selectedPosts: BlogListItem[] = useMemo(() => {
     if (!posts || posts.length === 0) return [];
-    return takeFirst(posts, 6);
-  }, [posts]);
+    // Daily deterministic shuffle keyed by country (from URL locale) + UTC date
+    const utcDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
+    const seed = `${locale}-${utcDate}`;
+    return takeFirst(deterministicShuffle(posts, seed), 6);
+  }, [posts, locale]);
 
   if (isError) return null;
 
@@ -51,7 +88,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
           </div>
         )}
 
-        {!isLoading && selectedPosts.length > 0 && (
+        {!isLoading && isClient && selectedPosts.length > 0 && (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 mb-10">
             {selectedPosts.map((post, index) => (
               <article
