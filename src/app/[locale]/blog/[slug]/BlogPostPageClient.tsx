@@ -12,10 +12,12 @@ import TableOfContents from '@/components/blog/TableOfContents';
 import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';
 import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
+import type { BlogPost } from '@/types/blog';
 
 interface Props {
   slug: string;
   locale: string;
+  initialPost?: BlogPost;
 }
 
 // Utility function to calculate reading time
@@ -34,10 +36,10 @@ const formatDate = (dateString: string, locale: string) => {
   });
 };
 
-export default function BlogPostPageClient({ slug, locale }: Props) {
+export default function BlogPostPageClient({ slug, locale, initialPost }: Props) {
   const t = useTranslations('blog');
   const router = useRouter();
-  const { post, isLoading, isError } = useBlogPost({ slug, locale });
+  const { post, isLoading, isError } = useBlogPost({ slug, locale, fallbackData: initialPost });
   // Ensure blog content images append ?width=420 similar to KMP logic
   const addWidthParamToImages = (html: string): string => {
     if (!html) return html;

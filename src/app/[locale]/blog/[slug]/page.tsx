@@ -12,6 +12,7 @@ import BlogPostPageClient from './BlogPostPageClient';
 import type { Metadata } from 'next';
 import { env } from '@/lib/env';
 import { defaultLocale, locales } from '@/i18n/request';
+import type { BlogPost } from '@/types/blog';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -204,8 +205,19 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   try {
     const { slug, locale } = await params;
+    // Fetch post at build time to pre-render content (no loading flash)
+    let initialPost: unknown | null = null;
+    try {
+      const res = await fetch(
+        `${env.SUPABASE_FUNCTIONS_URL}/blog-post?slug=${slug}&locale=${locale}`,
+        { next: { revalidate: 3600 } }
+      );
+      if (res.ok) {
+        initialPost = await res.json();
+      }
+    } catch {}
 
-    return <BlogPostPageClient slug={slug} locale={locale} />;
+    return <BlogPostPageClient slug={slug} locale={locale} initialPost={(initialPost as BlogPost) || undefined} />;
   } catch (error) {
     console.error('Error in BlogPostPage:', error);
     return <div>Error loading blog post</div>;

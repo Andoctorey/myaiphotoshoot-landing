@@ -36,7 +36,11 @@ export default function FAQSchema({ faqs }: FAQSchemaProps) {
 // Utility function to extract FAQs from blog content
 export const extractFAQsFromContent = (content: string): FAQ[] => {
   const faqs: FAQ[] = [];
-  
+  // If running on the server during SSG, avoid using document
+  if (typeof document === 'undefined') {
+    return faqs;
+  }
+
   // Create a temporary DOM element to parse the HTML
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = content;
