@@ -7,7 +7,7 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const baseUrl = 'https://myaiphotoshoot.com';
-  const url = `${baseUrl}/${locale}/license`;
+  const url = `${baseUrl}/${locale}/license/`;
   return {
     title: 'Image License & Usage Rights - My AI Photo Shoot',
     description: 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.',
@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: {
-        ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/license`])),
-        'x-default': `/${defaultLocale}/license`,
+        ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/license/`] )),
+        'x-default': `/${defaultLocale}/license/`,
       },
     },
   };

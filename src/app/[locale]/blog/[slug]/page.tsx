@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     
     const title = `${post.title} | My AI Photo Shoot`;
     const description = post.meta_description || post.title;
-    const url = `https://myaiphotoshoot.com/${locale}/blog/${slug}`;
+    const url = `https://myaiphotoshoot.com/${locale}/blog/${slug}/`;
     const imageUrl = post.featured_image_url || 'https://myaiphotoshoot.com/og-image.png';
 
     // Infer MIME type from URL extension for better OG accuracy
@@ -93,8 +93,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       alternates: {
         canonical: url,
         languages: {
-          ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/blog/${slug}`])),
-          'x-default': `/${defaultLocale}/blog/${slug}`,
+          ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/blog/${slug}/`])),
+          'x-default': `/${defaultLocale}/blog/${slug}/`,
         },
       },
       openGraph: {

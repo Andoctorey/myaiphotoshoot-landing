@@ -11,15 +11,15 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const baseUrl = 'https://myaiphotoshoot.com';
-  const url = `${baseUrl}/${locale}/support`;
+  const url = `${baseUrl}/${locale}/support/`;
   return {
     title: 'Customer Support | My AI Photo Shoot',
     description: 'Contact our team for help. We respond within 24–48 hours.',
     alternates: {
       canonical: url,
       languages: {
-        ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/support`])),
-        'x-default': `/${defaultLocale}/support`,
+        ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/support/`])),
+        'x-default': `/${defaultLocale}/support/`,
       },
     },
     robots: {

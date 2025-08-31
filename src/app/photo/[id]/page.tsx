@@ -89,7 +89,7 @@ export async function generateMetadata({ params }: PhotoPageProps): Promise<Meta
   const title = createTitle(photo.prompt);
   const description = createDescription(photo.prompt);
   const imageUrl = photo.public_url;
-  const photoUrl = `https://myaiphotoshoot.com/photo/${photo.id}`;
+  const photoUrl = `https://myaiphotoshoot.com/photo/${photo.id}/`;
 
   // Infer MIME type for OG image from URL
   const inferMimeFromUrl = (url: string): string | undefined => {
