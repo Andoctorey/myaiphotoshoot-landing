@@ -18,6 +18,7 @@ import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
 import Link from 'next/link';
 import { useTranslations } from '@/lib/utils';
+import seed from '@/data/gallery-seed.json';
 
 // Placeholder component for images while they're loading
 const ImagePlaceholder = () => (
@@ -26,7 +27,7 @@ const ImagePlaceholder = () => (
 
 export default function Gallery() {
   const t = useTranslations('gallery');
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(Array.isArray(seed) ? (seed as unknown as GalleryItem[]) : []);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
@@ -38,6 +39,7 @@ export default function Gallery() {
   const { gallery, isLoading, isError, error, mutate } = useGallery({ 
     page: 1, 
     limit: 24,
+    fallbackData: Array.isArray(seed) ? (seed as unknown as GalleryItem[]) : [],
   });
 
   // Initialize state from sessionStorage on mount to persist user's "show more" progress
@@ -299,6 +301,9 @@ export default function Gallery() {
                       </p>
                     </div>
                   </div>
+                  <figcaption className="sr-only">
+                    {`AI photo example. ${item.prompt}`}
+                  </figcaption>
                 </motion.div>
               </Link>
             </li>

@@ -18,8 +18,7 @@ const GalleryLoading = () => {
 
 // Dynamically import Gallery with loading fallback
 const Gallery = dynamic(() => import('./Gallery'), {
-  loading: GalleryLoading,
-  ssr: false // Disable server-side rendering as this is a client component with data fetching
+  loading: GalleryLoading
 });
 
 export default function UserGallery() {
