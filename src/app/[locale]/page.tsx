@@ -1,4 +1,5 @@
 import { locales } from '@/i18n/request';
+import { buildAlternates } from '@/lib/seo';
 import LocalizedHomeClient from './LocalizedHomeClient';
 import type { Metadata } from 'next';
 import { fetchHomeData } from '@/lib/homeData';
@@ -26,18 +27,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const baseUrl = 'https://myaiphotoshoot.com';
-  const path = locale === 'en' ? '/' : `/${locale}/`;
-  const url = `${baseUrl}${path}`;
   return {
-    alternates: {
-      canonical: url,
-      languages: {
-        ...Object.fromEntries(
-          (locales as readonly string[]).map(l => [l, l === 'en' ? '/' : `/${l}/`])
-        ),
-        'x-default': '/',
-      },
-    },
+    alternates: buildAlternates(locale, '/', locales),
   };
 }

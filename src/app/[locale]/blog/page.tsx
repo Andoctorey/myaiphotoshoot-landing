@@ -1,6 +1,7 @@
 import BlogPageClient from './BlogPageClient';
 import type { Metadata } from 'next';
-import { locales, defaultLocale } from '@/i18n/request';
+import { locales } from '@/i18n/request';
+import { buildAlternates } from '@/lib/seo';
 import { env } from '@/lib/env';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 
@@ -14,24 +15,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const { locale } = await params;
 
-    const baseUrl = 'https://myaiphotoshoot.com';
-    const url = `${baseUrl}/${locale}/blog/`;
+    const url = `https://myaiphotoshoot.com/${locale}/blog/`;
     const title = `AI Photo Blog | My AI Photo Shoot`;
     const description = 'Discover the latest tips, tutorials, and insights about AI photography and digital art creation.';
-
-    // Build hreflang alternates, include x-default
-    const languageAlternates: Record<string, string> = Object.fromEntries(
-      (locales as readonly string[]).map(l => [l, `/${l}/blog/`])
-    );
-    languageAlternates['x-default'] = `/${defaultLocale}/blog/`;
 
     return {
       title,
       description,
-      alternates: {
-        canonical: url,
-        languages: languageAlternates,
-      },
+      alternates: buildAlternates(locale, '/blog/', locales),
       robots: {
         index: true,
         follow: true,

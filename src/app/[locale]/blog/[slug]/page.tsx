@@ -11,7 +11,8 @@
 import BlogPostPageClient from './BlogPostPageClient';
 import type { Metadata } from 'next';
 import { env } from '@/lib/env';
-import { defaultLocale, locales } from '@/i18n/request';
+import { locales } from '@/i18n/request';
+import { buildAlternates } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
 
 interface BlogPostPageProps {
@@ -90,13 +91,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
           'max-video-preview': -1,
         },
       },
-      alternates: {
-        canonical: url,
-        languages: {
-          ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/blog/${slug}/`])),
-          'x-default': `/${defaultLocale}/blog/${slug}/`,
-        },
-      },
+      alternates: buildAlternates(locale, `/blog/${slug}/`, locales),
       openGraph: {
         title,
         description,

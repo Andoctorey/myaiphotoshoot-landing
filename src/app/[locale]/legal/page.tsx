@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { locales, defaultLocale } from '@/i18n/request';
+import { locales } from '@/i18n/request';
+import { buildAlternates } from '@/lib/seo';
 import Link from 'next/link';
 
 // This would be better handled with proper i18n, but for now using the static HTML content
@@ -7,19 +8,11 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const baseUrl = 'https://myaiphotoshoot.com';
-  const url = `${baseUrl}/${locale}/legal/`;
   return {
     title: 'Legal - Terms of Service and Privacy Policy - My AI Photo Shoot',
     description: 'Terms of Service and Privacy Policy for My AI Photo Shoot',
     robots: 'index, follow',
-    alternates: {
-      canonical: url,
-      languages: {
-        ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/legal/`])),
-        'x-default': `/${defaultLocale}/legal/`,
-      },
-    },
+    alternates: buildAlternates(locale, '/legal/', locales),
   };
 }
 
