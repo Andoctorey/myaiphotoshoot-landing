@@ -101,13 +101,16 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const baseUrl = 'https://myaiphotoshoot.com';
-  const url = `${baseUrl}/${locale}/`;
+  const path = locale === 'en' ? '/' : `/${locale}/`;
+  const url = `${baseUrl}${path}`;
   return {
     alternates: {
       canonical: url,
       languages: {
-        ...Object.fromEntries((locales as readonly string[]).map(l => [l, `/${l}/`])),
-        'x-default': `/${defaultLocale}/`,
+        ...Object.fromEntries(
+          (locales as readonly string[]).map(l => [l, l === 'en' ? '/' : `/${l}/`])
+        ),
+        'x-default': '/',
       },
     },
   };
