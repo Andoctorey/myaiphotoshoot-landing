@@ -1,6 +1,8 @@
 import BlogPageClient from './BlogPageClient';
 import type { Metadata } from 'next';
 import { locales, defaultLocale } from '@/i18n/request';
+import { env } from '@/lib/env';
+import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -67,5 +69,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPage({ params }: Props) {
   const { locale } = await params;
 
-  return <BlogPageClient locale={locale} />;
+  let initialPosts: BlogListItem[] = [];
+  let initialPagination: { total: number; page: number; limit: number; totalPages: number } | null = null;
+
+  try {
+    const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=10&locale=${locale}`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const json = (await res.json()) as BlogPostsResponse;
+      initialPosts = json.posts || [];
+      initialPagination = {
+        total: json.total,
+        page: json.page,
+        limit: json.limit,
+        totalPages: json.totalPages,
+      };
+    }
+  } catch {
+    // Non-fatal: fall back to client fetch
+  }
+
+  return <BlogPageClient locale={locale} initialPosts={initialPosts} initialPagination={initialPagination || undefined} />;
 } 

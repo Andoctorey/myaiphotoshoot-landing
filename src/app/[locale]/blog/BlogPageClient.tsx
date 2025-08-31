@@ -13,17 +13,28 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 type Props = {
   locale: string;
+  initialPosts?: BlogListItem[];
+  initialPagination?: { total: number; page: number; limit: number; totalPages: number };
 };
 
-export default function BlogPageClient({ locale }: Props) {
+export default function BlogPageClient({ locale, initialPosts = [], initialPagination }: Props) {
   const t = useTranslations('blog');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
+
+  const fallbackData = initialPosts.length > 0 && initialPagination ? {
+    posts: initialPosts,
+    total: initialPagination.total,
+    page: initialPagination.page,
+    limit: initialPagination.limit,
+    totalPages: initialPagination.totalPages,
+  } : undefined;
 
   const { posts, pagination, isLoading, isError } = useBlogPosts({
     page: currentPage,
     limit: postsPerPage,
     locale,
+    fallbackData,
   });
 
   const handlePageChange = (newPage: number) => {
