@@ -147,14 +147,30 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
+              '@id': 'https://myaiphotoshoot.com/#organization',
               name: 'My AI Photo Shoot',
               url: 'https://myaiphotoshoot.com',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://myaiphotoshoot.com/images/icon_192.png',
-                width: 192,
-                height: 192
+                url: 'https://myaiphotoshoot.com/images/icon_512.png',
+                width: 512,
+                height: 512
               },
+              sameAs: [
+                'https://x.com/andoctorey',
+                'https://github.com/Andoctorey/myaiphotoshoot-kmp',
+                'https://apps.apple.com/app/id6744860178',
+                'https://play.google.com/store/apps/details?id=com.myaiphotoshoot'
+              ],
+              contactPoint: [
+                {
+                  '@type': 'ContactPoint',
+                  contactType: 'customer support',
+                  email: 'support@myaiphotoshoot.com',
+                  availableLanguage: ['en']
+                }
+              ],
+              areaServed: 'Worldwide'
             })
           }}
         />
@@ -164,8 +180,15 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
+              '@id': 'https://myaiphotoshoot.com/#website',
               name: 'My AI Photo Shoot',
-              url: 'https://myaiphotoshoot.com'
+              url: 'https://myaiphotoshoot.com',
+              publisher: {
+                '@type': 'Organization',
+                name: 'My AI Photo Shoot',
+                url: 'https://myaiphotoshoot.com',
+                '@id': 'https://myaiphotoshoot.com/#organization'
+              }
             })
           }}
         />

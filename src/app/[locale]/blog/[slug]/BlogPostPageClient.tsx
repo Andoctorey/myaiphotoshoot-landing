@@ -99,30 +99,9 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
     image: post.featured_image_url ? {
       '@type': 'ImageObject',
       url: post.featured_image_url,
-    } : 'https://myaiphotoshoot.com/images/logo.png',
-    author: {
-      '@type': 'Organization',
-      name: 'My AI Photo Shoot',
-      url: 'https://myaiphotoshoot.com',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://myaiphotoshoot.com/images/logo.png',
-        width: 400,
-        height: 400,
-      },
-      
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'My AI Photo Shoot',
-      url: 'https://myaiphotoshoot.com',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://myaiphotoshoot.com/images/logo.png',
-        width: 400,
-        height: 400,
-      },
-    },
+    } : 'https://myaiphotoshoot.com/images/icon_512.png',
+    author: { '@id': 'https://myaiphotoshoot.com/#organization' },
+    publisher: { '@id': 'https://myaiphotoshoot.com/#organization' },
     datePublished: post.created_at,
     dateModified: post.updated_at,
     mainEntityOfPage: {

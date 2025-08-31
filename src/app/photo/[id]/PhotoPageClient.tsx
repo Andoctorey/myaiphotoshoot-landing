@@ -79,25 +79,9 @@ export default function PhotoPageClient({ photo, prev, next, locale, showNavigat
     uploadDate: photo.created_at,
     representativeOfPage: true,
     thumbnailUrl,
-    author: {
-      '@type': 'Organization',
-      name: 'My AI Photo Shoot',
-      url: 'https://myaiphotoshoot.com'
-    },
-    creator: {
-      '@type': 'Organization',
-      name: 'My AI Photo Shoot',
-      url: 'https://myaiphotoshoot.com'
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'My AI Photo Shoot',
-      url: 'https://myaiphotoshoot.com',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://myaiphotoshoot.com/images/favicon.png'
-      }
-    },
+    author: { '@id': 'https://myaiphotoshoot.com/#organization' },
+    creator: { '@id': 'https://myaiphotoshoot.com/#organization' },
+    publisher: { '@id': 'https://myaiphotoshoot.com/#organization' },
     // Licensing and rights
     license: 'https://myaiphotoshoot.com/license',
     acquireLicensePage: 'https://myaiphotoshoot.com/license',
