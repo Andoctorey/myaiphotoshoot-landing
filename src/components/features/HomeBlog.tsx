@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
 import { useLocale, useTranslations } from '@/lib/utils';
+import { withDefaultCdnWidth } from '@/lib/image';
 
 // Use stable order to avoid hydration mismatches between SSR/CSR
 function takeFirst<T>(items: T[], n: number): T[] { return items.slice(0, n); }
@@ -101,7 +102,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
                   <div className="aspect-square bg-gray-200 dark:bg-gray-700">
                     {post.featured_image_url ? (
                       <Image
-                        src={post.featured_image_url}
+                        src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
                         alt={`Featured image for blog post: ${post.title}`}
                         width={600}
                         height={600}

@@ -18,6 +18,7 @@ import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
 import Link from 'next/link';
 import { useTranslations } from '@/lib/utils';
+import { withDefaultCdnWidth } from '@/lib/image';
 
 // Placeholder component for images while they're loading
 const ImagePlaceholder = () => (
@@ -284,7 +285,7 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
                 >
                   <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
                   <Image
-                    src={item.public_url.includes('supabase.co') ? item.public_url : `${item.public_url}?width=420`}
+                    src={withDefaultCdnWidth(item.public_url) || item.public_url}
                     alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
                     fill
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
+import { withDefaultCdnWidth } from '@/lib/image';
 import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -135,7 +136,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                     <div className="aspect-square bg-gray-200 dark:bg-gray-700">
                       {post.featured_image_url ? (
                         <Image
-                          src={post.featured_image_url}
+                          src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
                           alt={`Featured image for blog post: ${post.title}`}
                           width={400}
                           height={400}

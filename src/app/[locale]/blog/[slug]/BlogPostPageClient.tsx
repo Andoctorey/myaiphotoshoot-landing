@@ -13,6 +13,7 @@ import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';
 import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 import type { BlogPost } from '@/types/blog';
+import { withDefaultCdnWidth } from '@/lib/image';
 
 interface Props {
   slug: string;
@@ -706,7 +707,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                 {post.featured_image_url && (
                   <div className="absolute inset-0 w-full h-full rounded-lg overflow-hidden">
                     <Image
-                      src={post.featured_image_url}
+                      src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
                       alt={post.title}
                       width={800}
                       height={600}
