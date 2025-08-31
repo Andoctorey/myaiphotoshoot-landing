@@ -50,6 +50,7 @@
   "blog": {
     "title": "Blog de Fotos IA",
     "description": "Descubre los últimos consejos, tutoriales y conocimientos sobre fotografía con IA y creación de arte digital.",
+    "viewAll": "Ver todos los artículos del Blog de Fotos IA",
     "readingTime": "min de lectura",
     "publishedOn": "Publicado el",
     "noPostsTitle": "Aún no hay publicaciones",

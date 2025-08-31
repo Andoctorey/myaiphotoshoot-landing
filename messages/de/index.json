@@ -50,6 +50,7 @@
   "blog": {
     "title": "KI-Foto Blog",
     "description": "Entdecken Sie die neuesten Tipps, Tutorials und Einblicke in KI-Fotografie und digitale Kunstschöpfung.",
+    "viewAll": "Alle Artikel im KI-Foto Blog anzeigen",
     "readingTime": "Min. Lesezeit",
     "publishedOn": "Veröffentlicht am",
     "noPostsTitle": "Noch keine Blog-Beiträge",

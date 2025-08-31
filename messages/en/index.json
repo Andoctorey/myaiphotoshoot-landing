@@ -50,6 +50,7 @@
   "blog": {
     "title": "AI Photo Blog",
     "description": "Discover the latest tips, tutorials, and insights about AI photography and digital art creation.",
+    "viewAll": "View all AI Photo Blog articles",
     "readingTime": "min read",
     "publishedOn": "Published on",
     "noPostsTitle": "No blog posts yet",

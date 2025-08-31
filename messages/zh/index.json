@@ -50,6 +50,7 @@
   "blog": {
     "title": "AI照片博客",
     "description": "发现关于AI摄影和数字艺术创作的最新技巧、教程和见解。",
+    "viewAll": "查看 AI 照片博客的所有文章",
     "readingTime": "分钟阅读",
     "publishedOn": "发布于",
     "noPostsTitle": "暂无博客文章",

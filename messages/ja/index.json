@@ -50,6 +50,7 @@
   "blog": {
     "title": "AI写真ブログ",
     "description": "AI写真撮影とデジタルアート作成に関する最新のヒント、チュートリアル、洞察を発見してください。",
+    "viewAll": "AI写真ブログのすべての記事を見る",
     "readingTime": "分間の読み物",
     "publishedOn": "公開日",
     "noPostsTitle": "まだブログ投稿がありません",

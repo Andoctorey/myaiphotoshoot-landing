@@ -138,7 +138,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
             href={`/${locale}/blog`}
             className="inline-block px-6 py-3 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors"
           >
-            Read more
+            {t('viewAll')}
           </Link>
         </div>
       </div>
