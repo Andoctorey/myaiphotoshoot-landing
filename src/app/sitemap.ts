@@ -85,28 +85,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
     // Root page
     {
-      url: baseUrl,
+      url: `${baseUrl}/`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 1,
     },
     // Locale-specific home pages
     ...locales.map(locale => ({
-      url: `${baseUrl}/${locale}`,
+      url: `${baseUrl}/${locale}/`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
     })),
     // Blog listing pages for all locales
     ...locales.map(locale => ({
-      url: `${baseUrl}/${locale}/blog`,
+      url: `${baseUrl}/${locale}/blog/`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
     })),
     // Support pages for all locales
     ...locales.map(locale => ({
-      url: `${baseUrl}/${locale}/support`,
+      url: `${baseUrl}/${locale}/support/`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
@@ -119,7 +119,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Create blog post entries for each locale
     const blogPostEntries = blogPosts.map((post: BlogListItem & { locale: string }) => ({
-      url: `${baseUrl}/${post.locale}/blog/${post.slug}`,
+      url: `${baseUrl}/${post.locale}/blog/${post.slug}/`,
       lastModified: new Date(post.created_at),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
