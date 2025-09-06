@@ -29,7 +29,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
   const t = useCase.translations?.[locale] || useCase.translations?.['en'];
   const title = t?.title || (useCase as any).title || useCase.slug || 'Use case';
-  const content = t?.content || (useCase as any).content || '';
+  const sections = useCase.sections || t?.sections || [];
   const gallery = useCase.gallery_photos || [];
   const benefits = useCase.benefits || t?.benefits || [];
   const faqs = useCase.faqs || t?.faqs || [];
@@ -73,14 +73,21 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </header>
 
-      {/* Content */}
-      <div className="prose prose-lg max-w-none prose-headings:scroll-mt-24 prose-a:text-purple-600 hover:prose-a:text-purple-700">
-        {content ? (
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-        ) : (
-          <p>Content coming soon.</p>
-        )}
-      </div>
+      {/* Sections (structured) */}
+      {sections.length > 0 && (
+        <section className="space-y-8">
+          {sections.map((s, idx) => (
+            <div key={idx}>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">{s.heading}</h2>
+              <div className="space-y-3 text-gray-800 leading-relaxed">
+                {s.body.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* Mid-page CTA */}
       <div className="mt-10">

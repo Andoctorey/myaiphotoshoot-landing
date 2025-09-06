@@ -5,6 +5,7 @@ export interface UseCaseTranslation {
   meta_description?: string;
   benefits?: string[];
   faqs?: Array<{ q: string; a: string }>;
+  sections?: Array<{ heading: string; body: string[] }>;
 }
 
 export interface GalleryPhotoItem {
@@ -23,6 +24,7 @@ export interface UseCase {
   translations?: Record<string, UseCaseTranslation>;
   benefits?: string[];
   faqs?: Array<{ q: string; a: string }>;
+  sections?: Array<{ heading: string; body: string[] }>;
   created_at?: string;
   updated_at?: string;
 }
