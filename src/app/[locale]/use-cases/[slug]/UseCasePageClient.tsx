@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import PromptOverlay from '@/components/features/PromptOverlay';
+import PhotoCard from '@/components/features/PhotoCard';
 import FAQSchema from '@/components/blog/FAQSchema';
 import { useUseCase } from '@/hooks/useUseCase';
 import { useTranslations } from '@/lib/utils';
@@ -155,58 +157,34 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               <div className="usecase-marquee-track">
                 {gallery.map((g, idx) => (
                   <div key={`marquee-a-${g.id || g.url || idx}`} className="shrink-0 mr-4 last:mr-0">
-                    <div className="relative rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
-                      {g.id ? (
-                        <a href={`https://app.myaiphotoshoot.com/#generate/${g.id}`} target="_blank" rel="noopener noreferrer">
-                          <Image
-                            src={g.url || ''}
-                            alt={g.prompt || ''}
-                            width={640}
-                            height={360}
-                            className="h-[220px] w-auto object-cover"
-                            loading="lazy"
-                          />
-                        </a>
-                      ) : (
-                        <Image
-                          src={g.url || ''}
-                          alt={g.prompt || ''}
-                          width={640}
-                          height={360}
-                          className="h-[220px] w-auto object-cover"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
+                    <PhotoCard
+                      src={g.url || ''}
+                      alt={g.prompt || ''}
+                      prompt={g.prompt}
+                      mode="fixed"
+                      width={640}
+                      height={360}
+                      imgClassName="h-[220px] w-auto object-cover"
+                      linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : undefined}
+                      linkExternal={Boolean(g.id)}
+                    />
                   </div>
                 ))}
               </div>
               <div className="usecase-marquee-track usecase-marquee-track--2" aria-hidden>
                 {gallery.map((g, idx) => (
                   <div key={`marquee-b-${g.id || g.url || idx}`} className="shrink-0 mr-4 last:mr-0">
-                    <div className="relative rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
-                      {g.id ? (
-                        <a href={`https://app.myaiphotoshoot.com/#generate/${g.id}`} target="_blank" rel="noopener noreferrer">
-                          <Image
-                            src={g.url || ''}
-                            alt={g.prompt || ''}
-                            width={640}
-                            height={360}
-                            className="h-[220px] w-auto object-cover"
-                            loading="lazy"
-                          />
-                        </a>
-                      ) : (
-                        <Image
-                          src={g.url || ''}
-                          alt={g.prompt || ''}
-                          width={640}
-                          height={360}
-                          className="h-[220px] w-auto object-cover"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
+                    <PhotoCard
+                      src={g.url || ''}
+                      alt={g.prompt || ''}
+                      prompt={g.prompt}
+                      mode="fixed"
+                      width={640}
+                      height={360}
+                      imgClassName="h-[220px] w-auto object-cover"
+                      linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : undefined}
+                      linkExternal={Boolean(g.id)}
+                    />
                   </div>
                 ))}
               </div>

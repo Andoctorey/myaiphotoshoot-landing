@@ -19,6 +19,7 @@ import { env } from '@/lib/env';
 import Link from 'next/link';
 import { useTranslations } from '@/lib/utils';
 import { withDefaultCdnWidth } from '@/lib/image';
+import PhotoCard from '@/components/features/PhotoCard';
 
 // Placeholder component for images while they're loading
 const ImagePlaceholder = () => (
@@ -271,41 +272,25 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
           /* Show actual gallery items once available */
           displayedItems.map((item, index) => (
             <li key={item.id}>
-              <Link
-                href={`/photo/${item.id}`}
-                className="group block"
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.02 }}
               >
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.02 }}
-                  className="relative aspect-square overflow-hidden rounded-sm cursor-pointer"
-                  aria-label={`AI photo with prompt: ${item.prompt}`}
-                  style={{ outline: 'none' }}
-                >
-                  <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" /> {/* Background placeholder while image is loading */}
-                  <Image
-                    src={withDefaultCdnWidth(item.public_url) || item.public_url}
-                    alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                    className="object-cover"
-                    priority={index === 0}
-                  />
-                  
-                  {/* Hover/focus overlay with prompt */}
-                  <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 hover:opacity-100 group-focus:opacity-100 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 overflow-y-auto">
-                    <div className="max-h-full">
-                      <p className="text-white text-xs">
-                        {item.prompt}
-                      </p>
-                    </div>
-                  </div>
-                  <figcaption className="sr-only">
-                    {`AI photo example. ${item.prompt}`}
-                  </figcaption>
-                </motion.div>
-              </Link>
+                <PhotoCard
+                  src={item.public_url}
+                  alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
+                  prompt={item.prompt}
+                  mode="fill"
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                  priority={index === 0}
+                  containerClassName="aspect-square rounded-sm cursor-pointer"
+                  imgClassName=""
+                  linkHref={`/photo/${item.id}`}
+                  ariaLabel={`AI photo with prompt: ${item.prompt}`}
+                  figCaptionSrOnly={`AI photo example. ${item.prompt}`}
+                />
+              </motion.div>
             </li>
           ))
         )}
