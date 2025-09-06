@@ -112,6 +112,53 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </header>
 
+      {gallery.length > 0 && (
+        <section className="mt-6">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+            <div className="usecase-marquee-container">
+              <div className="usecase-marquee-track">
+                {gallery.map((g, idx) => (
+                  <div key={`marquee-a-${g.url ?? idx}`} className="shrink-0 mr-4 last:mr-0">
+                    <div className="relative rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+                      <Image
+                        src={g.url || ''}
+                        alt={g.prompt || ''}
+                        width={640}
+                        height={360}
+                        className="h-[220px] w-auto object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="usecase-marquee-track usecase-marquee-track--2" aria-hidden>
+                {gallery.map((g, idx) => (
+                  <div key={`marquee-b-${g.url ?? idx}`} className="shrink-0 mr-4 last:mr-0">
+                    <div className="relative rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+                      <Image
+                        src={g.url || ''}
+                        alt={g.prompt || ''}
+                        width={640}
+                        height={360}
+                        className="h-[220px] w-auto object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <style jsx>{`
+            .usecase-marquee-container { display: flex; overflow: hidden; width: 100%; position: relative; }
+            .usecase-marquee-track { display: flex; align-items: center; white-space: nowrap; animation: usecase-marquee-scroll 20s linear infinite; }
+            .usecase-marquee-track--2 { animation-delay: -10s; }
+            @keyframes usecase-marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+          `}</style>
+        </section>
+      )}
+
       {/* Sections (structured) */}
       {sections.length > 0 && (
         <section className="grid grid-cols-1 md:grid-cols-[240px,1fr] gap-8">
@@ -173,30 +220,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </div>
 
-      {/* Gallery (simple horizontal scroll prototype) */}
-      {gallery.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold mb-4">Gallery</h2>
-          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
-            <div className="flex gap-4 overflow-x-auto pb-2">
-              {gallery.map((g, idx) => (
-                <div key={idx} className="shrink-0">
-                  <div className="group relative rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
-                    <Image
-                      src={g.url || ''}
-                      alt={g.prompt || ''}
-                      width={384}
-                      height={216}
-                      className="w-96 h-auto object-cover transition-transform duration-200 group-hover:scale-[1.02]"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      
 
       {/* Benefits grid */}
       {benefits.length > 0 && (
