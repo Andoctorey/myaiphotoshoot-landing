@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import FAQSchema from '@/components/blog/FAQSchema';
 import { useUseCase } from '@/hooks/useUseCase';
+import { useTranslations } from '@/lib/utils';
 import type { UseCase } from '@/types/usecase';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 
 export default function UseCasePageClient({ slug, locale, initialUseCase }: Props) {
   const { useCase, isLoading } = useUseCase({ slug, locale, fallbackData: initialUseCase });
+  const tPricing = useTranslations('pricing');
 
   if (isLoading && !useCase) {
     return (
@@ -60,6 +62,12 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             {description && (
               <p className="mt-3 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">{description}</p>
             )}
+            {/* Inline pricing under description */}
+            <div className="mt-3 text-base text-gray-900 dark:text-gray-100">
+              <span className="font-semibold">{tPricing('price')} {tPricing('perPhoto')}</span>
+              <span className="mx-2 text-gray-400">·</span>
+              <span>{tPricing('oneTimeFeeAmount')} <span className="text-gray-600 dark:text-gray-300">({tPricing('oneTimeFee')})</span></span>
+            </div>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <a
                 href="https://app.myaiphotoshoot.com"
@@ -111,6 +119,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           )}
         </div>
       </header>
+
 
       {gallery.length > 0 && (
         <section className="mt-6">
@@ -286,7 +295,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       {/* Sticky mobile CTA */}
       <div className="sm:hidden fixed bottom-4 inset-x-0 px-4 z-40">
         <div className="rounded-full shadow-lg border border-purple-200 dark:border-purple-900/40 bg-white dark:bg-gray-900 overflow-hidden flex">
-          <a href={`/${locale}#download`} className="flex-1 text-center py-3 font-semibold text-white bg-purple-600 hover:bg-purple-700">Try now</a>
+          <a href={`/${locale}#download`} className="flex-1 text-center py-3 font-semibold text-white bg-purple-600 hover:bg-purple-700">Try from {tPricing('price')}</a>
           <a href={`/${locale}#pricing`} className="w-32 text-center py-3 font-semibold text-gray-800 dark:text-gray-100">Pricing</a>
         </div>
       </div>
