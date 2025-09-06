@@ -34,3 +34,21 @@
 # Prevent indexing of localized gallery data API endpoints
 /*/gallery-data
   X-Robots-Tag: noindex, follow
+
+# Per-locale Content-Language headers to reinforce language signals
+/fr/*
+  Content-Language: fr
+/de/*
+  Content-Language: de
+/es/*
+  Content-Language: es
+/ja/*
+  Content-Language: ja
+/zh/*
+  Content-Language: zh
+/ru/*
+  Content-Language: ru
+/ar/*
+  Content-Language: ar
+/hi/*
+  Content-Language: hi

@@ -3,6 +3,7 @@ import "../globals.css";
 import { locales } from "@/i18n/request";
 import { NextIntlClientProvider } from 'next-intl';
 import { RTL_LANGUAGES } from '@/lib/utils';
+import HtmlLang from '@/components/layout/HtmlLang';
 
 export const metadata: Metadata = {
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
@@ -66,7 +67,8 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <div lang={locale} dir={isRTL ? 'rtl' : 'ltr'}>
+      <HtmlLang locale={locale} dir={isRTL ? 'rtl' : 'ltr'} />
+      <div>
         {children}
       </div>
     </NextIntlClientProvider>
