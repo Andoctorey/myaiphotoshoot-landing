@@ -35,7 +35,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const t = useCase.translations?.[locale] || useCase.translations?.['en'];
   const title = t?.title || (useCase as any).title || useCase.slug || 'Use case';
   const sections = useCase.sections || t?.sections || [];
-  const gallery = useCase.gallery_photos || [];
+  const galleryRaw = useCase.gallery_photos || [];
+  const gallery = Array.from(new Map((galleryRaw || []).filter(g => g && g.url).map(g => [g.url, g])).values());
   const benefits = useCase.benefits || t?.benefits || [];
   const faqs = useCase.faqs || t?.faqs || [];
   const description = t?.meta_description || (useCase as any).meta_description || '';
@@ -154,36 +155,18 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         <section className="mt-6">
           <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
             <div className="usecase-marquee-container">
-              <div className="usecase-marquee-track">
-                {gallery.map((g, idx) => (
-                  <div key={`marquee-a-${g.id || g.url || idx}`} className="shrink-0 mr-4 last:mr-0">
+              <div className="usecase-marquee-track-single">
+                {[...gallery, ...gallery].map((g, idx) => (
+                  <div key={`marquee-${g.id || g.url || idx}-${idx}`} className="shrink-0 mr-4 last:mr-0 w-[220px] h-[220px]">
                     <PhotoCard
                       src={g.url || ''}
                       alt={g.prompt || ''}
                       prompt={g.prompt}
                       mode="fixed"
-                      width={640}
-                      height={360}
-                      containerClassName="rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
-                      imgClassName="h-[220px] w-auto object-cover"
-                      linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : undefined}
-                      linkExternal={Boolean(g.id)}
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="usecase-marquee-track usecase-marquee-track--2" aria-hidden>
-                {gallery.map((g, idx) => (
-                  <div key={`marquee-b-${g.id || g.url || idx}`} className="shrink-0 mr-4 last:mr-0">
-                    <PhotoCard
-                      src={g.url || ''}
-                      alt={g.prompt || ''}
-                      prompt={g.prompt}
-                      mode="fixed"
-                      width={640}
-                      height={360}
-                      containerClassName="rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
-                      imgClassName="h-[220px] w-auto object-cover"
+                      width={220}
+                      height={220}
+                      containerClassName="w-full h-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm bg-gray-200 dark:bg-gray-800"
+                      imgClassName="w-full h-full object-contain"
                       linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : undefined}
                       linkExternal={Boolean(g.id)}
                     />
@@ -199,9 +182,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           )}
           <style jsx>{`
             .usecase-marquee-container { display: flex; overflow: hidden; width: 100%; position: relative; }
-            .usecase-marquee-track { display: flex; align-items: center; white-space: nowrap; animation: usecase-marquee-scroll 20s linear infinite; }
-            .usecase-marquee-track--2 { animation-delay: -10s; }
-            @keyframes usecase-marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+            .usecase-marquee-track-single { display: flex; align-items: center; animation: usecase-marquee-scroll 40s linear infinite; will-change: transform; }
+            @keyframes usecase-marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
           `}</style>
         </section>
       )}
