@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from '@/lib/utils';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/request';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import { env } from '@/lib/env';
 
 export default function Navigation() {
   const t = useTranslations('navigation');
@@ -18,6 +19,10 @@ export default function Navigation() {
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const languageMenuRef = useRef<HTMLDivElement>(null);
   const languageButtonRef = useRef<HTMLButtonElement>(null);
+  const [isUseCasesMenuOpen, setIsUseCasesMenuOpen] = useState(false);
+  const useCasesMenuRef = useRef<HTMLDivElement>(null);
+  const useCasesButtonRef = useRef<HTMLButtonElement>(null);
+  const [useCases, setUseCases] = useState<Array<{ slug: string; title: string }>>([]);
   
   // Check if we're on the home page
   const isHomePage = pathname === '/' || pathname === `/${locale}`;
@@ -80,6 +85,14 @@ export default function Navigation() {
       ) {
         setIsLanguageMenuOpen(false);
       }
+      if (
+        useCasesMenuRef.current &&
+        useCasesButtonRef.current &&
+        !useCasesMenuRef.current.contains(e.target as Node) &&
+        !useCasesButtonRef.current.contains(e.target as Node)
+      ) {
+        setIsUseCasesMenuOpen(false);
+      }
     };
 
     if (isLanguageMenuOpen) {
@@ -89,6 +102,23 @@ export default function Navigation() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isLanguageMenuOpen]);
+
+  // Fetch use cases list for selector
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        const items = (data.items || []) as Array<{ slug?: string; title?: string }>;
+        if (!cancelled) {
+          setUseCases(items.filter(it => it.slug && it.title).map(it => ({ slug: it.slug!, title: it.title! })));
+        }
+      } catch {}
+    })();
+    return () => { cancelled = true; };
+  }, [locale]);
 
   // Close mobile menu when clicking on a link
   const handleNavLinkClick = () => {
@@ -147,6 +177,47 @@ export default function Navigation() {
                   {item.name}
                 </a>
               ))}
+              {/* Use Cases selector */}
+              <div className="relative">
+                <button
+                  ref={useCasesButtonRef}
+                  onClick={() => setIsUseCasesMenuOpen(!isUseCasesMenuOpen)}
+                  aria-expanded={isUseCasesMenuOpen}
+                  aria-haspopup="listbox"
+                  aria-controls="usecases-menu"
+                  className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                >
+                  Use Cases
+                  <svg className="inline ltr:ml-1 rtl:mr-1 h-4 w-4 align-middle" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
+                </button>
+                {isUseCasesMenuOpen && (
+                  <div
+                    ref={useCasesMenuRef}
+                    id="usecases-menu"
+                    className="absolute ltr:left-0 rtl:right-0 mt-2 w-80 max-h-96 overflow-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
+                    role="listbox"
+                    aria-label="Use cases"
+                  >
+                    <div className="py-1" role="presentation">
+                      {useCases.length === 0 ? (
+                        <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300">No use cases yet</div>
+                      ) : (
+                        useCases.map((uc) => (
+                          <a
+                            key={uc.slug}
+                            href={`/${locale}/use-cases/${uc.slug}/`}
+                            className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            role="option"
+                            onClick={() => setIsUseCasesMenuOpen(false)}
+                          >
+                            {uc.title}
+                          </a>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
               <a
                 href={isHomePage ? "#download" : `/${locale}#download`}
                 className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
@@ -265,6 +336,27 @@ export default function Navigation() {
                   {item.name}
                 </a>
               ))}
+              {/* Use Cases selector in mobile menu */}
+              <div className="mt-2">
+                <div className="px-3 py-2 text-base font-medium text-gray-900 dark:text-gray-100">Use Cases</div>
+                {useCases.length === 0 ? (
+                  <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm">No use cases yet</div>
+                ) : (
+                  <div className="max-h-64 overflow-auto">
+                    {useCases.map((uc) => (
+                      <a
+                        key={uc.slug}
+                        href={`/${locale}/use-cases/${uc.slug}/`}
+                        className="block px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary text-sm"
+                        onClick={handleNavLinkClick}
+                        role="menuitem"
+                      >
+                        {uc.title}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
               <a
                 href={isHomePage ? "#download" : `/${locale}#download`}
                 className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
