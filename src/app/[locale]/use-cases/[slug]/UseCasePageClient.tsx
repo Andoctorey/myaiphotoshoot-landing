@@ -28,9 +28,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   }
 
   const t = useCase.translations?.[locale] || useCase.translations?.['en'];
-  const title = t?.title || useCase.slug || 'Use case';
-  const content = t?.content || '';
+  const title = t?.title || (useCase as any).title || useCase.slug || 'Use case';
+  const content = t?.content || (useCase as any).content || '';
   const gallery = useCase.gallery_photos || [];
+  const benefits = useCase.benefits || t?.benefits || [];
+  const faqs = useCase.faqs || t?.faqs || [];
 
   return (
     <article className="max-w-4xl mx-auto px-4 py-12">
@@ -73,6 +75,36 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   className="w-96 h-auto rounded-lg border border-gray-200"
                 />
               </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Benefits grid */}
+      {benefits.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-xl font-semibold mb-4">Benefits</h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {benefits.map((b, i) => (
+              <li key={i} className="bg-white rounded-lg border border-gray-200 p-4 text-gray-800">{b}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* FAQ accordion (simple) */}
+      {faqs.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-xl font-semibold mb-4">FAQ</h2>
+          <div className="divide-y divide-gray-200 border border-gray-200 rounded-lg bg-white">
+            {faqs.map((f, i) => (
+              <details key={i} className="p-4 group">
+                <summary className="cursor-pointer list-none font-medium text-gray-900 flex items-center justify-between">
+                  <span>{f.q}</span>
+                  <span className="transition-transform group-open:rotate-180">⌄</span>
+                </summary>
+                <div className="mt-2 text-gray-700">{f.a}</div>
+              </details>
             ))}
           </div>
         </section>

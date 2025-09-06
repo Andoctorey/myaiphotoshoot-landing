@@ -3,6 +3,8 @@ export interface UseCaseTranslation {
   content?: string;
   meta_title?: string;
   meta_description?: string;
+  benefits?: string[];
+  faqs?: Array<{ q: string; a: string }>;
 }
 
 export interface GalleryPhotoItem {
@@ -19,6 +21,8 @@ export interface UseCase {
   featured_image_url?: string;
   gallery_photos?: GalleryPhotoItem[];
   translations?: Record<string, UseCaseTranslation>;
+  benefits?: string[];
+  faqs?: Array<{ q: string; a: string }>;
   created_at?: string;
   updated_at?: string;
 }
