@@ -62,17 +62,40 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             )}
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <a
-                href={`/${locale}#download`}
-                className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-5 py-2.5 text-white font-semibold shadow-sm hover:bg-purple-700 transition-colors"
+                href="https://app.myaiphotoshoot.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-6 py-3 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10"
+                aria-label="Launch Now"
               >
-                Try it now
+                <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                Launch Now
               </a>
-              <a
-                href={`/${locale}#pricing`}
-                className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 px-5 py-2.5 text-gray-800 dark:text-gray-100 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800"
-              >
-                See pricing
-              </a>
+              <div className="flex items-center gap-2">
+                <a
+                  href={'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transform hover:scale-105 transition duration-150"
+                  aria-label="Get it on Google Play"
+                >
+                  <picture>
+                    <source srcSet="/images/google-play-badge.webp" type="image/webp" />
+                    <img alt="Google Play" src='/images/google-play-badge.png' width={180} height={100} className="h-[100px] w-[180px] object-contain" />
+                  </picture>
+                </a>
+                <a
+                  href="https://apps.apple.com/app/id6744860178"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transform hover:scale-105 transition duration-150"
+                  aria-label="Download on the App Store"
+                >
+                  <img alt="App Store" src='/images/app-store-badge.svg' width={180} height={50} className="h-[50px] w-[180px] object-contain" />
+                </a>
+              </div>
             </div>
           </div>
           {useCase.featured_image_url && (
@@ -128,9 +151,24 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Ready to create this use case?</h3>
             <p className="text-gray-700 dark:text-gray-300 mt-1">Generate your first photos in minutes. No studio, no hassle.</p>
           </div>
-          <div className="flex gap-3">
-            <a href={`/${locale}#download`} className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-4 py-2.5 text-white font-semibold shadow-sm hover:bg-purple-700 transition-colors">Get started</a>
-            <a href={`/${locale}#pricing`} className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2.5 text-gray-800 dark:text-gray-100 font-semibold hover:bg-white dark:hover:bg-gray-800">Pricing</a>
+          <div className="flex flex-wrap items-center gap-3">
+            <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">
+              <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+              Launch Now
+            </a>
+            <div className="flex items-center gap-2">
+              <a href={'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug)} target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play" className="transform hover:scale-105 transition duration-150">
+                <picture>
+                  <source srcSet="/images/google-play-badge.webp" type="image/webp" />
+                  <img alt="Google Play" src='/images/google-play-badge.png' width={180} height={100} className="h-[100px] w-[180px] object-contain" />
+                </picture>
+              </a>
+              <a href="https://apps.apple.com/app/id6744860178" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store" className="transform hover:scale-105 transition duration-150">
+                <img alt="App Store" src='/images/app-store-badge.svg' width={180} height={50} className="h-[50px] w-[180px] object-contain" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
