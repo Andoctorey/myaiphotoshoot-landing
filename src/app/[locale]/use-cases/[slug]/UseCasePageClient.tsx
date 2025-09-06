@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import FAQSchema from '@/components/blog/FAQSchema';
 import { useUseCase } from '@/hooks/useUseCase';
 import type { UseCase } from '@/types/usecase';
 
@@ -37,6 +38,21 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
   return (
     <article className="max-w-5xl mx-auto px-4 py-14">
+      {/* SEO Schema for FAQ */}
+      {faqs.length > 0 && (
+        <FAQSchema faqs={faqs.map(f => ({ question: f.q, answer: f.a }))} />
+      )}
+
+      {/* Breadcrumb */}
+      <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-500">
+        <ol className="flex items-center gap-1 flex-wrap">
+          <li><a href={`/${locale}/`} className="hover:text-gray-700">Home</a></li>
+          <li>/</li>
+          <li><a href={`/${locale}/use-cases/`} className="hover:text-gray-700">Use Cases</a></li>
+          <li>/</li>
+          <li aria-current="page" className="text-gray-700">{title}</li>
+        </ol>
+      </nav>
       <header className="mb-10">
         <div className="flex items-start gap-4 md:gap-6">
           <div className="flex-1 min-w-0">
@@ -75,17 +91,33 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
       {/* Sections (structured) */}
       {sections.length > 0 && (
-        <section className="space-y-8">
-          {sections.map((s, idx) => (
-            <div key={idx}>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-2">{s.heading}</h2>
-              <div className="space-y-3 text-gray-800 leading-relaxed">
-                {s.body.map((p, i) => (
-                  <p key={i}>{p}</p>
+        <section className="grid grid-cols-1 md:grid-cols-[240px,1fr] gap-8">
+          {/* Mini TOC */}
+          <aside className="hidden md:block">
+            <div className="sticky top-28">
+              <div className="text-sm font-semibold text-gray-900 mb-2">On this page</div>
+              <ul className="space-y-2 text-sm">
+                {sections.map((s, idx) => (
+                  <li key={idx}>
+                    <a href={`#sec-${idx}`} className="text-gray-600 hover:text-gray-900">{s.heading}</a>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-          ))}
+          </aside>
+          {/* Content */}
+          <div className="space-y-8">
+            {sections.map((s, idx) => (
+              <div key={idx} id={`sec-${idx}`}>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-2">{s.heading}</h2>
+                <div className="space-y-3 text-gray-800 leading-relaxed">
+                  {s.body.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
       )}
 
