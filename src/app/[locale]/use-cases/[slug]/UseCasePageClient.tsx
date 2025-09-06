@@ -153,9 +153,10 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
       {gallery.length > 0 && (
         <section className="mt-6">
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-            <div className="usecase-marquee-container">
-              <div className="usecase-marquee-track-single">
+          <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+            <div className="overflow-hidden bg-white dark:bg-gray-900">
+              <div className="usecase-marquee-container">
+                <div className="usecase-marquee-track-single">
                 {[...gallery, ...gallery].map((g, idx) => (
                   <div key={`marquee-${g.id || g.url || idx}-${idx}`} className="shrink-0 mr-4 last:mr-0 w-[220px] h-[220px]">
                     <PhotoCard
@@ -172,6 +173,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                     />
                   </div>
                 ))}
+                </div>
               </div>
             </div>
           </div>
