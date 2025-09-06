@@ -164,6 +164,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                       mode="fixed"
                       width={640}
                       height={360}
+                      containerClassName="rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
                       imgClassName="h-[220px] w-auto object-cover"
                       linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : undefined}
                       linkExternal={Boolean(g.id)}
@@ -181,6 +182,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                       mode="fixed"
                       width={640}
                       height={360}
+                      containerClassName="rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
                       imgClassName="h-[220px] w-auto object-cover"
                       linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : undefined}
                       linkExternal={Boolean(g.id)}
