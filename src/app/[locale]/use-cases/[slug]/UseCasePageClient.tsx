@@ -118,32 +118,58 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             <div className="usecase-marquee-container">
               <div className="usecase-marquee-track">
                 {gallery.map((g, idx) => (
-                  <div key={`marquee-a-${g.url ?? idx}`} className="shrink-0 mr-4 last:mr-0">
+                  <div key={`marquee-a-${g.id || g.url || idx}`} className="shrink-0 mr-4 last:mr-0">
                     <div className="relative rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
-                      <Image
-                        src={g.url || ''}
-                        alt={g.prompt || ''}
-                        width={640}
-                        height={360}
-                        className="h-[220px] w-auto object-cover"
-                        loading="lazy"
-                      />
+                      {g.id ? (
+                        <a href={`https://app.myaiphotoshoot.com/#generate/${g.id}`} target="_blank" rel="noopener noreferrer">
+                          <Image
+                            src={g.url || ''}
+                            alt={g.prompt || ''}
+                            width={640}
+                            height={360}
+                            className="h-[220px] w-auto object-cover"
+                            loading="lazy"
+                          />
+                        </a>
+                      ) : (
+                        <Image
+                          src={g.url || ''}
+                          alt={g.prompt || ''}
+                          width={640}
+                          height={360}
+                          className="h-[220px] w-auto object-cover"
+                          loading="lazy"
+                        />
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
               <div className="usecase-marquee-track usecase-marquee-track--2" aria-hidden>
                 {gallery.map((g, idx) => (
-                  <div key={`marquee-b-${g.url ?? idx}`} className="shrink-0 mr-4 last:mr-0">
+                  <div key={`marquee-b-${g.id || g.url || idx}`} className="shrink-0 mr-4 last:mr-0">
                     <div className="relative rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
-                      <Image
-                        src={g.url || ''}
-                        alt={g.prompt || ''}
-                        width={640}
-                        height={360}
-                        className="h-[220px] w-auto object-cover"
-                        loading="lazy"
-                      />
+                      {g.id ? (
+                        <a href={`https://app.myaiphotoshoot.com/#generate/${g.id}`} target="_blank" rel="noopener noreferrer">
+                          <Image
+                            src={g.url || ''}
+                            alt={g.prompt || ''}
+                            width={640}
+                            height={360}
+                            className="h-[220px] w-auto object-cover"
+                            loading="lazy"
+                          />
+                        </a>
+                      ) : (
+                        <Image
+                          src={g.url || ''}
+                          alt={g.prompt || ''}
+                          width={640}
+                          height={360}
+                          className="h-[220px] w-auto object-cover"
+                          loading="lazy"
+                        />
+                      )}
                     </div>
                   </div>
                 ))}

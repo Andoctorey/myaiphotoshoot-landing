@@ -9,6 +9,7 @@ export interface UseCaseTranslation {
 }
 
 export interface GalleryPhotoItem {
+  id?: string;
   url?: string;
   thumb_url?: string;
   prompt?: string;
