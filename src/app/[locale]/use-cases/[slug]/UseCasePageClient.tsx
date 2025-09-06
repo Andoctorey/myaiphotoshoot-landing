@@ -212,6 +212,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               </div>
             </div>
           </div>
+          {slug === 'ai-headshots' && (
+            <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+              These photos are 100% AI generated based on selfies.
+            </p>
+          )}
           <style jsx>{`
             .usecase-marquee-container { display: flex; overflow: hidden; width: 100%; position: relative; }
             .usecase-marquee-track { display: flex; align-items: center; white-space: nowrap; animation: usecase-marquee-scroll 20s linear infinite; }
