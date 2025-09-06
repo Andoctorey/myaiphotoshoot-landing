@@ -44,6 +44,20 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             {description && (
               <p className="mt-3 text-lg text-gray-600 leading-relaxed">{description}</p>
             )}
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <a
+                href={`/${locale}#download`}
+                className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-5 py-2.5 text-white font-semibold shadow-sm hover:bg-purple-700 transition-colors"
+              >
+                Try it now
+              </a>
+              <a
+                href={`/${locale}#pricing`}
+                className="inline-flex items-center justify-center rounded-lg border border-gray-300 px-5 py-2.5 text-gray-800 font-semibold hover:bg-gray-50"
+              >
+                See pricing
+              </a>
+            </div>
           </div>
           {useCase.featured_image_url && (
             <div className="hidden sm:block shrink-0">
@@ -66,6 +80,20 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         ) : (
           <p>Content coming soon.</p>
         )}
+      </div>
+
+      {/* Mid-page CTA */}
+      <div className="mt-10">
+        <div className="rounded-2xl border border-purple-100 bg-purple-50/60 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">Ready to create this use case?</h3>
+            <p className="text-gray-700 mt-1">Generate your first photos in minutes. No studio, no hassle.</p>
+          </div>
+          <div className="flex gap-3">
+            <a href={`/${locale}#download`} className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-4 py-2.5 text-white font-semibold shadow-sm hover:bg-purple-700 transition-colors">Get started</a>
+            <a href={`/${locale}#pricing`} className="inline-flex items-center justify-center rounded-lg border border-gray-300 px-4 py-2.5 text-gray-800 font-semibold hover:bg-white">Pricing</a>
+          </div>
+        </div>
       </div>
 
       {/* Gallery (simple horizontal scroll prototype) */}
@@ -127,6 +155,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           </div>
         </section>
       )}
+
+      {/* Sticky mobile CTA */}
+      <div className="sm:hidden fixed bottom-4 inset-x-0 px-4 z-40">
+        <div className="rounded-full shadow-lg border border-purple-200 bg-white overflow-hidden flex">
+          <a href={`/${locale}#download`} className="flex-1 text-center py-3 font-semibold text-white bg-purple-600 hover:bg-purple-700">Try now</a>
+          <a href={`/${locale}#pricing`} className="w-32 text-center py-3 font-semibold text-gray-800">Pricing</a>
+        </div>
+      </div>
     </article>
   );
 }
