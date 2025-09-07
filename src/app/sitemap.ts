@@ -18,6 +18,39 @@ export const revalidate = 3600; // 1 hour revalidation
 const PAGE_SIZE = 100;
 
 /**
+ * Build full URL for a localized path.
+ * English lives at root; all other locales are under their locale prefix.
+ */
+function buildLocalizedUrl(baseUrl: string, locale: string, path: string): string {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const withTrailingSlash = normalizedPath.endsWith('/') ? normalizedPath : `${normalizedPath}/`;
+  const localizedPath = locale === 'en' ? withTrailingSlash : `/${locale}${withTrailingSlash}`;
+  return `${baseUrl}${localizedPath}`;
+}
+
+/**
+ * Build hreflang languages map for a given path and a set of available locales.
+ * Includes x-default pointing to English if present; otherwise the first available.
+ */
+function buildHreflangLanguages(
+  baseUrl: string,
+  path: string,
+  availableLocales: readonly string[]
+): Record<string, string> {
+  const map: Record<string, string> = {};
+  for (const l of availableLocales) {
+    map[l] = buildLocalizedUrl(baseUrl, l, path);
+  }
+  // x-default should point to English variant when available, else first available
+  if (availableLocales.includes('en')) {
+    map['x-default'] = buildLocalizedUrl(baseUrl, 'en', path);
+  } else if (availableLocales.length > 0) {
+    map['x-default'] = map[availableLocales[0]];
+  }
+  return map;
+}
+
+/**
  * Fetch all blog posts for all locales
  * Gets published blog posts from the database
  */
@@ -150,6 +183,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 1,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/', locales),
+      },
     },
     // Locale-specific home pages
     ...locales.map(locale => ({
@@ -157,6 +193,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/', locales),
+      },
     })),
     // Blog listing pages for all locales
     ...locales.map(locale => ({
@@ -164,6 +203,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/blog/', locales),
+      },
     })),
     // Use-cases listing pages for all locales
     ...locales.map(locale => ({
@@ -171,6 +213,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/use-cases/', locales),
+      },
     })),
     // Support pages for all locales
     ...locales.map(locale => ({
@@ -178,6 +223,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/support/', locales),
+      },
     })),
   ];
 
@@ -187,23 +235,58 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch all use-cases
     const useCases = await getAllUseCases();
 
-    // Create blog post entries for each locale
-    const blogPostEntries = blogPosts.map((post: BlogListItem & { locale: string }) => ({
-      url: `${baseUrl}/${post.locale}/blog/${post.slug}/`,
-      lastModified: new Date(post.created_at),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-      images: post.featured_image_url ? [post.featured_image_url] : [],
-    }));
+    // Group blog posts by slug to build hreflang alternates per article
+    const postsBySlug = new Map<string, Array<BlogListItem & { locale: string }>>();
+    for (const post of blogPosts) {
+      const key = post.slug;
+      if (!key) continue;
+      const arr = postsBySlug.get(key) ?? [];
+      arr.push(post);
+      postsBySlug.set(key, arr);
+    }
+
+    const blogPostEntries: MetadataRoute.Sitemap = [];
+    for (const [slug, group] of postsBySlug.entries()) {
+      const availableLocales = group.map(g => g.locale);
+      const languages = buildHreflangLanguages(baseUrl, `/blog/${slug}/`, availableLocales);
+      for (const post of group) {
+        blogPostEntries.push({
+          url: `${baseUrl}/${post.locale}/blog/${post.slug}/`,
+          lastModified: new Date(post.created_at),
+          changeFrequency: 'weekly',
+          priority: 0.7,
+          alternates: { languages },
+          images: post.featured_image_url ? [post.featured_image_url] : [],
+        });
+      }
+    }
     
-    // Create use-case entries for each locale
-    const useCaseEntries = useCases.map((item: { slug: string; featured_image_urls?: string[]; created_at?: string; locale: string }) => ({
-      url: `${baseUrl}/${item.locale}/use-cases/${item.slug}/`,
-      lastModified: item.created_at ? new Date(item.created_at) : new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-      images: Array.isArray(item.featured_image_urls) && item.featured_image_urls.length > 0 ? [item.featured_image_urls[0]] : [],
-    }));
+    // Group use-cases by slug to build hreflang alternates per item
+    type UseCaseItem = { slug: string; featured_image_urls?: string[]; created_at?: string; locale: string };
+    const useCasesBySlug = new Map<string, Array<UseCaseItem>>();
+    for (const item of useCases) {
+      const key = item.slug;
+      if (!key) continue;
+      const arr = useCasesBySlug.get(key) ?? [];
+      arr.push(item);
+      useCasesBySlug.set(key, arr);
+    }
+
+    const useCaseEntries: MetadataRoute.Sitemap = [];
+    for (const [slug, group] of useCasesBySlug.entries()) {
+      const availableLocales = group.map(g => g.locale);
+      const languages = buildHreflangLanguages(baseUrl, `/use-cases/${slug}/`, availableLocales);
+      for (const item of group) {
+        useCaseEntries.push({
+          url: `${baseUrl}/${item.locale}/use-cases/${item.slug}/`,
+          lastModified: item.created_at ? new Date(item.created_at) : new Date(),
+          changeFrequency: 'weekly',
+          priority: 0.7,
+          alternates: { languages },
+          images: Array.isArray(item.featured_image_urls) && item.featured_image_urls.length > 0 ? [item.featured_image_urls[0]] : [],
+        });
+      }
+    }
 
     return [...staticPages, ...blogPostEntries, ...useCaseEntries];
   } catch (error) {
