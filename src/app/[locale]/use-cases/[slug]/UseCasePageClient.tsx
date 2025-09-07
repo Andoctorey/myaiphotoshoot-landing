@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 import PromptOverlay from '@/components/features/PromptOverlay';
 import PhotoCard from '@/components/features/PhotoCard';
 import FAQSchema from '@/components/blog/FAQSchema';
@@ -50,6 +51,36 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const secObjections = findSection('Objections Handled');
   const secCTA = findSection('CTA');
   const sectionSpacing = "mt-12 md:mt-16";
+
+  const featured = Array.isArray((useCase as any).featured_image_urls) ? ((useCase as any).featured_image_urls as string[]).filter(Boolean) : [];
+  const galleryUrls = (gallery || []).map(g => g.url || '').filter(Boolean);
+  const headerImageUrl = featured[0] || galleryUrls[0];
+  const perSectionPool = Array.from(new Set([
+    ...(featured.length > 1 ? featured.slice(1) : []),
+    ...galleryUrls.filter(u => u && u !== headerImageUrl)
+  ]));
+
+  // Track per-section text heights to size images to match each section height
+  const textRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [rowHeights, setRowHeights] = useState<number[]>([]);
+  useEffect(() => {
+    const observers: ResizeObserver[] = [];
+    textRefs.current.forEach((el, idx) => {
+      if (!el) return;
+      const ro = new ResizeObserver(entries => {
+        const rect = entries[0]?.contentRect;
+        if (!rect) return;
+        setRowHeights(prev => {
+          const next = [...prev];
+          next[idx] = Math.ceil(rect.height);
+          return next;
+        });
+      });
+      ro.observe(el);
+      observers.push(ro);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, [sections.length]);
 
   return (
     <article className="max-w-5xl mx-auto px-4 py-14">
@@ -119,14 +150,16 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               </div>
             </div>
           </div>
-          {Array.isArray((useCase as any).featured_image_urls) && (useCase as any).featured_image_urls[0] && (
-            <div className="hidden sm:block shrink-0">
+          {headerImageUrl && (
+            <div className="hidden sm:block shrink-0 w-48 md:w-60">
               <Image
-                src={(useCase as any).featured_image_urls[0]}
+                src={headerImageUrl}
                 alt=""
-                width={240}
-                height={135}
-                className="w-48 md:w-60 h-auto rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
+                width={0}
+                height={0}
+                sizes="(min-width:768px) 240px, 192px"
+                style={{ width: '100%', height: 'auto' }}
+                className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
               />
             </div>
           )}
@@ -200,66 +233,103 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </section>
 
-
-      
+      {/* Inject a featured image before each section, cycling through featured array beyond the first */}
 
       {/* Sections (structured with tailored styles) */}
       {sections.length > 0 && (
         <section className={`${sectionSpacing} grid grid-cols-1 gap-8`}>
-          <div className="space-y-8">
-            {sections.map((s, idx) => (
-              <div key={idx} id={`sec-${idx}`}>
-                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{s.heading}</h2>
-                {s.heading === 'Intro' ? (
-                  <div className="space-y-3 text-gray-800 dark:text-gray-200 leading-relaxed text-lg">
-                    {s.body.map((p, i) => (<p key={i}>{p}</p>))}
+          <div className="space-y-20 md:space-y-24">
+            {sections.map((s, idx) => {
+              const perSectionImage = perSectionPool.length ? perSectionPool[idx % perSectionPool.length] : undefined;
+              const targetH = rowHeights[idx];
+              const imageEl = perSectionImage ? (
+                <div
+                  className="order-1 md:order-none flex md:block justify-start md:self-start w-auto max-w-full"
+                  style={typeof targetH === 'number' ? { height: `${targetH}px` } : undefined}
+                >
+                  <Image
+                    src={perSectionImage}
+                    alt=""
+                    width={0}
+                    height={0}
+                    sizes="(min-width:1024px) 45vw, (min-width:768px) 50vw, 100vw"
+                    style={{ width: 'auto', height: '100%' }}
+                    className="max-w-full rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-contain"
+                  />
+                </div>
+              ) : null;
+              const textEl = (
+                <div ref={(el) => { textRefs.current[idx] = el; }} className="md:flex-1 min-w-0">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-3">{s.heading}</h2>
+                  {s.heading === 'Intro' ? (
+                    <div className="space-y-3 text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {s.body.map((p, i) => (<p key={i}>{p}</p>))}
+                    </div>
+                  ) : s.heading === 'Who This Is For' ? (
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {s.body.map((p, i) => (
+                        <li key={i} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-gray-800 dark:text-gray-200 flex items-start gap-3">
+                          <span className="mt-0.5 text-blue-600 dark:text-blue-400" aria-hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/></svg>
+                          </span>
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : s.heading === 'How It Works' ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {s.body.map((p, i) => (
+                        <div key={i} className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
+                          <div className="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">{i + 1}</div>
+                          <p className="text-gray-800 dark:text-gray-200">{p.replace(/^\d+\)\s*/, '')}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : s.heading === 'Outcomes' ? (
+                    <ul className="space-y-2">
+                      {s.body.map((p, i) => (
+                        <li key={i} className="flex items-start gap-2 text-gray-800 dark:text-gray-200"><span className="text-green-600 dark:text-green-400" aria-hidden>✓</span><span>{p}</span></li>
+                      ))}
+                    </ul>
+                  ) : s.heading === 'Examples' ? (
+                    <ul className="list-disc pl-5 text-gray-800 dark:text-gray-200 space-y-1">
+                      {s.body.map((p, i) => (<li key={i}>{p}</li>))}
+                    </ul>
+                  ) : s.heading === 'Objections Handled' ? (
+                    <div className="space-y-2 text-gray-800 dark:text-gray-200">
+                      {s.body.map((p, i) => (<p key={i}>• {p}</p>))}
+                    </div>
+                  ) : s.heading === 'CTA' ? (
+                    <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
+                      <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
+                      <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">Launch Now</a>
+                    </div>
+                  ) : (
+                    <div className="space-y-3 text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {s.body.map((p, i) => (<p key={i}>{p}</p>))}
+                    </div>
+                  )}
+                </div>
+              );
+
+              const gridClass = idx % 2 === 0
+                ? 'grid grid-cols-1 md:grid-cols-[auto_1fr] items-stretch gap-6 md:gap-8'
+                : 'grid grid-cols-1 md:grid-cols-[1fr_auto] items-stretch gap-6 md:gap-8';
+
+              return (
+                <div key={idx} id={`sec-${idx}`}>
+                  <div className={gridClass}>
+                    {idx % 2 === 0 ? (<>
+                      {imageEl}
+                      {textEl}
+                    </>) : (<>
+                      {textEl}
+                      {imageEl}
+                    </>)}
                   </div>
-                ) : s.heading === 'Who This Is For' ? (
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {s.body.map((p, i) => (
-                      <li key={i} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-gray-800 dark:text-gray-200 flex items-start gap-3">
-                        <span className="mt-0.5 text-blue-600 dark:text-blue-400" aria-hidden>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/></svg>
-                        </span>
-                        <span>{p}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : s.heading === 'How It Works' ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {s.body.map((p, i) => (
-                      <div key={i} className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-                        <div className="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">{i + 1}</div>
-                        <p className="text-gray-800 dark:text-gray-200">{p.replace(/^\d+\)\s*/, '')}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : s.heading === 'Outcomes' ? (
-                  <ul className="space-y-2">
-                    {s.body.map((p, i) => (
-                      <li key={i} className="flex items-start gap-2 text-gray-800 dark:text-gray-200"><span className="text-green-600 dark:text-green-400" aria-hidden>✓</span><span>{p}</span></li>
-                    ))}
-                  </ul>
-                ) : s.heading === 'Examples' ? (
-                  <ul className="list-disc pl-5 text-gray-800 dark:text-gray-200 space-y-1">
-                    {s.body.map((p, i) => (<li key={i}>{p}</li>))}
-                  </ul>
-                ) : s.heading === 'Objections Handled' ? (
-                  <div className="space-y-2 text-gray-800 dark:text-gray-200">
-                    {s.body.map((p, i) => (<p key={i}>• {p}</p>))}
-                  </div>
-                ) : s.heading === 'CTA' ? (
-                  <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
-                    <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
-                    <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">Launch Now</a>
-                  </div>
-                ) : (
-                  <div className="space-y-3 text-gray-800 dark:text-gray-200 leading-relaxed">
-                    {s.body.map((p, i) => (<p key={i}>{p}</p>))}
-                  </div>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
