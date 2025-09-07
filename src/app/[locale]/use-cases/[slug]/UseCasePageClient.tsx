@@ -131,21 +131,32 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </header>
 
-      {/* How it works - render from generated section if available */}
-      {secHow && secHow.body && secHow.body.length > 0 && (
-        <section className="mt-6" aria-label="How it works">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {secHow.body.map((step, idx) => (
-              <div key={idx} className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
-                <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">{idx + 1}</div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">{step.replace(/^\d+\)\s*/, '')}</h3>
-                </div>
-              </div>
-            ))}
+      {/* How it works - steps under CTA (top block) */}
+      <section className="mt-6" aria-label="How it works">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
+            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">1</div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white">Upload 10–20 selfies <span className="text-gray-500">(5 minutes)</span></h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">Use your favorite existing photos or snap a few fresh selfies.</p>
+            </div>
           </div>
-        </section>
-      )}
+          <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
+            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">2</div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white">Train your AI model <span className="text-gray-500">(about 2 minutes)</span></h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">We fine-tune once so every future photo looks like you.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
+            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">3</div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white">Generate and download favorites <span className="text-gray-500">(5 minutes)</span></h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">Create as many looks as you want — save the keepers.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       {gallery.length > 0 && (
