@@ -52,13 +52,12 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const secCTA = findSection('CTA');
   const sectionSpacing = "mt-12 md:mt-16";
 
-  const featured = Array.isArray((useCase as any).featured_image_urls) ? ((useCase as any).featured_image_urls as string[]).filter(Boolean) : [];
+  const featured = Array.isArray((useCase as any).featured_image_urls)
+    ? ((useCase as any).featured_image_urls as string[]).filter(Boolean)
+    : [];
   const galleryUrls = (gallery || []).map(g => g.url || '').filter(Boolean);
-  const headerImageUrl = featured[0] || galleryUrls[0];
-  const perSectionPool = Array.from(new Set([
-    ...(featured.length > 1 ? featured.slice(1) : []),
-    ...galleryUrls.filter(u => u && u !== headerImageUrl)
-  ]));
+  const headerImageUrl = featured[0] || undefined;
+  const perSectionPool = featured.length > 1 ? featured.slice(1) : [];
   // Exclude featured photos from the marquee gallery
   const normalizeUrl = (u?: string) => {
     const s = (u || '').trim();
@@ -78,6 +77,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
     const url = normalizeUrl(g.url as string);
     return g && g.url && !featuredUrlSet.has(url) && !usedOnPageUrlSet.has(url);
   });
+
+  
 
   // Track per-section text heights to size images to match each section height
   const textRefs = useRef<Array<HTMLDivElement | null>>([]);

@@ -19,13 +19,15 @@ export function useUseCase({ slug, locale, fallbackData }: UseUseCaseOptions) {
     url,
     fetcher,
     {
-      revalidateOnFocus: false,
-      revalidateIfStale: false,
-      revalidateOnReconnect: false,
+      // Revalidate so recent DB edits (e.g., featured_image_urls) show up immediately
+      revalidateOnFocus: true,
+      revalidateIfStale: true,
+      revalidateOnReconnect: true,
+      revalidateOnMount: true,
       refreshWhenOffline: false,
       refreshWhenHidden: false,
       fallbackData,
-      dedupingInterval: 3600000,
+      dedupingInterval: 5000,
     }
   );
 
