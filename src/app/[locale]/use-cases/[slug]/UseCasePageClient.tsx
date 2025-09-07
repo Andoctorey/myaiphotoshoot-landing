@@ -189,21 +189,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
       {/* Sections (structured with tailored styles) */}
       {sections.length > 0 && (
-        <section className="grid grid-cols-1 md:grid-cols-[240px,1fr] gap-8">
-          {/* Mini TOC */}
-          <aside className="hidden md:block">
-            <div className="sticky top-28">
-              <div className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">On this page</div>
-              <ul className="space-y-2 text-sm">
-                {sections.map((s, idx) => (
-                  <li key={idx}>
-                    <a href={`#sec-${idx}`} className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">{s.heading}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </aside>
-          {/* Content */}
+        <section className="grid grid-cols-1 gap-8">
           <div className="space-y-8">
             {sections.map((s, idx) => (
               <div key={idx} id={`sec-${idx}`}>
