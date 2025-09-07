@@ -34,7 +34,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
   const t = useCase.translations?.[locale] || useCase.translations?.['en'];
   const title = t?.title || (useCase as any).title || useCase.slug || 'Use case';
-  const sections = useCase.sections || t?.sections || [];
+  const sectionsRaw = useCase.sections || t?.sections || [];
+  const sections = (sectionsRaw || []).filter(s => s.heading !== 'How It Works');
   const galleryRaw = useCase.gallery_photos || [];
   const gallery = Array.from(new Map((galleryRaw || []).filter(g => g && g.url).map(g => [g.url, g])).values());
   const benefits = useCase.benefits || t?.benefits || [];
@@ -171,7 +172,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </section>
       )}
 
-      {/* How it works - steps under CTA (top block) */}
+      {/* How it works - static steps under header */}
       <section className={sectionSpacing} aria-label="How it works">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
