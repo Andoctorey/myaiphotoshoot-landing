@@ -149,8 +149,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                       height={220}
                       containerClassName="w-full h-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm bg-gray-200 dark:bg-gray-800"
                       imgClassName="w-full h-full object-contain"
-                      linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : undefined}
-                      linkExternal={Boolean(g.id)}
+                      linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : (g.url || undefined)}
+                      linkExternal={Boolean(g.id || g.url)}
                     />
                   </div>
                 ))}
