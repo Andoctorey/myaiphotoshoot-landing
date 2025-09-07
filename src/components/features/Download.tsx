@@ -138,16 +138,13 @@ export default function Download() {
                       trackEventAndNavigate('google_play_cta_click', 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1');
                     }}
                   >
-                    <picture>
-                      <source srcSet="/images/google-play-badge.webp" type="image/webp" />
-                      <img 
-                        alt={t('mobileApps.googlePlay')} 
-                        src='/images/google-play-badge.png'
-                        width={180}
-                        height={100}
-                        className="h-[100px] w-[180px] object-contain"
-                      />
-                    </picture>
+                    <img 
+                      alt={t('mobileApps.googlePlay')} 
+                      src='/images/google-play-badge.svg'
+                      width={202}
+                      height={56}
+                      className="h-[56px] w-auto object-contain"
+                    />
                   </a>
                   
                   {/* App Store Button */}
@@ -165,9 +162,9 @@ export default function Download() {
                     <Image 
                       alt={t('mobileApps.appStore')} 
                       src='/images/app-store-badge.svg'
-                      width={180}
-                      height={50}
-                      className="h-[50px] w-[180px] object-contain"
+                      width={202}
+                      height={56}
+                      className="h-[56px] w-auto object-contain"
                     />
                   </a>
                 </div>
