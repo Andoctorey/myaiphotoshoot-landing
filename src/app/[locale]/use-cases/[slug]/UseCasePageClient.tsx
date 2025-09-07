@@ -377,52 +377,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </section>
       )}
 
-      {/* Mid-page CTA (fallback if no CTA section) */}
-      {!secCTA && (
-        <div className="mt-10">
-          <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Ready to create this use case?</h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">Generate your first photos in minutes. No studio, no hassle.</p>
-            </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center h-[56px] px-6 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">
-                <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-                Launch Now
-              </a>
-              <div className="flex items-center gap-2">
-                <a href={'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug)} target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play" className="transform hover:scale-105 transition duration-150">
-                  <img alt="Google Play" src='/images/google-play-badge.svg' width={202} height={56} className="h-[56px] w-auto object-contain" />
-                </a>
-                <a href="https://apps.apple.com/app/id6744860178" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store" className="transform hover:scale-105 transition duration-150">
-                  <img alt="App Store" src='/images/app-store-badge.svg' width={180} height={50} className="h-[50px] w-[180px] object-contain" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      
 
       
 
-      {/* Benefits grid */}
-      {benefits.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold mb-4">Benefits</h2>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {benefits.map((b, i) => (
-              <li key={i} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 text-gray-800 dark:text-gray-200 flex items-start gap-3">
-                <span className="mt-0.5 text-green-600 dark:text-green-400" aria-hidden>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/></svg>
-                </span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      
 
       {/* FAQ accordion (simple) */}
       {faqs.length > 0 && (
