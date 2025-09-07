@@ -8,6 +8,7 @@ import FAQSchema from '@/components/blog/FAQSchema';
 import { useUseCase } from '@/hooks/useUseCase';
 import { useTranslations } from '@/lib/utils';
 import type { UseCase } from '@/types/usecase';
+import { withDefaultCdnWidth } from '@/lib/image';
 
 interface Props {
   slug: string;
@@ -282,17 +283,17 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               const targetH = rowHeights[idx];
               const imageEl = perSectionImage ? (
                 <div
-                  className="order-1 md:order-none flex md:block justify-start md:self-start w-auto max-w-full"
-                  style={typeof targetH === 'number' ? { height: `${targetH}px` } : undefined}
+                  className="order-1 md:order-none flex md:block justify-start md:self-start w-auto max-w-full md:w-full"
+                  style={typeof targetH === 'number' ? { height: `${targetH}px`, width: '100%', maxWidth: `${targetH}px` } : undefined}
                 >
                   <Image
-                    src={perSectionImage}
+                    src={withDefaultCdnWidth(perSectionImage) || perSectionImage}
                     alt=""
                     width={0}
                     height={0}
-                    sizes="(min-width:1024px) 45vw, (min-width:768px) 50vw, 100vw"
-                    style={{ width: 'auto', height: '100%' }}
-                    className="max-w-full rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-contain"
+                    sizes="(min-width:1024px) 40vw, (min-width:768px) 50vw, 100vw"
+                    style={{ width: '100%', height: '100%' }}
+                    className="max-w-full rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
                   />
                 </div>
               ) : null;
@@ -351,8 +352,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               );
 
               const gridClass = idx % 2 === 0
-                ? 'grid grid-cols-1 md:grid-cols-[auto_1fr] items-stretch gap-6 md:gap-8'
-                : 'grid grid-cols-1 md:grid-cols-[1fr_auto] items-stretch gap-6 md:gap-8';
+                ? 'grid grid-cols-1 md:grid-cols-[minmax(0,40%)_minmax(60%,1fr)] items-stretch gap-6 md:gap-8'
+                : 'grid grid-cols-1 md:grid-cols-[minmax(60%,1fr)_minmax(0,40%)] items-stretch gap-6 md:gap-8';
 
               return (
                 <div key={idx} id={`sec-${idx}`}>
