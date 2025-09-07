@@ -38,6 +38,15 @@ export default function ConsentBanner() {
       if (tryShowFromConsent()) return;
 
       // 3) Fallback: use Cloudflare Pages Function
+      // Skip geo fetch in local/dev to avoid noisy 500s when function isn't available
+      if (
+        process.env.NODE_ENV !== 'production' ||
+        (typeof window !== 'undefined' && ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname))
+      ) {
+        setIsEEA(false);
+        setShow(false);
+        return;
+      }
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 1500);
       fetch('/geo', { signal: controller.signal, cache: 'no-store' })
