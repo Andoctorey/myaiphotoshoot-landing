@@ -283,17 +283,15 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               const targetH = rowHeights[idx];
               const imageEl = perSectionImage ? (
                 <div
-                  className="order-1 md:order-none flex md:block justify-start md:self-start w-auto max-w-full md:w-full"
-                  style={typeof targetH === 'number' ? { height: `${targetH}px`, width: '100%', maxWidth: `${targetH}px` } : undefined}
+                  className="order-1 md:order-none md:self-start w-full max-w-full relative aspect-square"
+                  style={typeof targetH === 'number' ? { width: `${targetH}px`, maxWidth: '100%' } : undefined}
                 >
                   <Image
                     src={withDefaultCdnWidth(perSectionImage) || perSectionImage}
                     alt=""
-                    width={0}
-                    height={0}
+                    fill
                     sizes="(min-width:1024px) 40vw, (min-width:768px) 50vw, 100vw"
-                    style={{ width: '100%', height: '100%' }}
-                    className="max-w-full rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
+                    className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
                   />
                 </div>
               ) : null;
@@ -352,19 +350,25 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               );
 
               const gridClass = idx % 2 === 0
-                ? 'grid grid-cols-1 md:grid-cols-[minmax(0,40%)_minmax(60%,1fr)] items-stretch gap-6 md:gap-8'
-                : 'grid grid-cols-1 md:grid-cols-[minmax(60%,1fr)_minmax(0,40%)] items-stretch gap-6 md:gap-8';
+                ? 'grid grid-cols-1 items-start gap-6 md:gap-6 md:grid-cols-[auto_minmax(0,1fr)_80px] lg:grid-cols-[auto_minmax(0,1fr)_96px]'
+                : 'grid grid-cols-1 items-start gap-6 md:gap-6 md:grid-cols-[80px_minmax(0,1fr)_auto] lg:grid-cols-[96px_minmax(0,1fr)_auto]';
 
               return (
                 <div key={idx} id={`sec-${idx}`}>
                   <div className={gridClass}>
-                    {idx % 2 === 0 ? (<>
-                      {imageEl}
-                      {textEl}
-                    </>) : (<>
-                      {textEl}
-                      {imageEl}
-                    </>)}
+                    {idx % 2 === 0 ? (
+                      <>
+                        {imageEl}
+                        {textEl}
+                        <div className="hidden md:block" aria-hidden />
+                      </>
+                    ) : (
+                      <>
+                        <div className="hidden md:block" aria-hidden />
+                        {textEl}
+                        {imageEl}
+                      </>
+                    )}
                   </div>
                 </div>
               );
