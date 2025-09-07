@@ -159,13 +159,15 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 href="https://app.myaiphotoshoot.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-[56px] px-6 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10"
+                className="transform hover:scale-105 transition duration-150"
                 aria-label="Launch Now"
               >
-                <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-                Launch Now
+                <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">
+                  <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
+                  <span>Launch Now</span>
+                </span>
               </a>
               <div className="flex items-center gap-3">
                 <a
@@ -339,7 +341,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   ) : s.heading === 'CTA' ? (
                     <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
                       <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
-                      <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center h-[56px] px-6 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">Launch Now</a>
+                      <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label="Launch Now">
+                        <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">Launch Now</span>
+                      </a>
                     </div>
                   ) : (
                     <div className="space-y-3 text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
