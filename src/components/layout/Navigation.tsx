@@ -23,6 +23,7 @@ export default function Navigation() {
   const useCasesMenuRef = useRef<HTMLDivElement>(null);
   const useCasesButtonRef = useRef<HTMLButtonElement>(null);
   const [isMobileUseCasesOpen, setIsMobileUseCasesOpen] = useState(false);
+  const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
   const [useCases, setUseCases] = useState<Array<{ slug: string; title: string }>>([]);
   
   // Check if we're on the home page
@@ -380,25 +381,37 @@ export default function Navigation() {
                 {t('download')}
               </a>
               
-              {/* Language selector in mobile menu */}
+              {/* Language selector in mobile menu (collapsible) */}
               <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" role="group" aria-label="Language selection">
-                <div className="px-2 space-y-1">
-                  {locales.map((l) => (
-                    <button
-                      key={l}
-                      onClick={() => handleLanguageChange(l)}
-                      className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 ${
-                        l === locale 
-                          ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
-                          : 'text-gray-700 dark:text-gray-300'
-                      } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`}
-                      aria-pressed={l === locale}
-                    >
-                      <span className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
-                      <span className="ltr:ml-2 rtl:mr-2 text-sm text-gray-500 dark:text-gray-400 uppercase">{l}</span>
-                    </button>
-                  ))}
-                </div>
+                <button
+                  type="button"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  onClick={() => setIsMobileLanguageOpen(!isMobileLanguageOpen)}
+                  aria-expanded={isMobileLanguageOpen}
+                  aria-controls="mobile-language-list"
+                >
+                  <span>Language</span>
+                  <svg className={`h-5 w-5 transition-transform ${isMobileLanguageOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
+                </button>
+                {isMobileLanguageOpen && (
+                  <div id="mobile-language-list" className="mt-1 px-2 space-y-1">
+                    {locales.map((l) => (
+                      <button
+                        key={l}
+                        onClick={() => handleLanguageChange(l)}
+                        className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 ${
+                          l === locale 
+                            ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
+                            : 'text-gray-700 dark:text-gray-300'
+                        } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`}
+                        aria-pressed={l === locale}
+                      >
+                        <span className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
+                        <span className="ltr:ml-2 rtl:mr-2 text-sm text-gray-500 dark:text-gray-400 uppercase">{l}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
