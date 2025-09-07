@@ -115,6 +115,27 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               <span className="mx-2 text-gray-400">·</span>
               <span>{tPricing('oneTimeFeeAmount')} <span className="text-gray-600 dark:text-gray-300">({tPricing('oneTimeFee')})</span></span>
             </div>
+            {/* Conversion highlights */}
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-amber-200 dark:border-amber-900/40 bg-amber-50/70 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
+                  <path d="M7.5 2.25l.77 2.36c.17.53.63.9 1.18.95l2.49.19-1.92 1.43c-.45.33-.64.9-.48 1.44l.74 2.41-1.98-1.36a1.25 1.25 0 00-1.43 0L5.4 11.03l.74-2.41c.16-.54-.03-1.11-.48-1.44L3.74 5.75l2.49-.19c.55-.04 1.01-.42 1.18-.95L7.5 2.25z"/>
+                </svg>
+                Cheapest on the market
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-green-200 dark:border-green-900/40 bg-green-50/70 dark:bg-green-900/20 text-green-800 dark:text-green-200">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
+                  <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/>
+                </svg>
+                No subscription required
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-purple-200 dark:border-purple-900/40 bg-purple-50/70 dark:bg-purple-900/20 text-purple-800 dark:text-purple-200">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
+                  <path d="M11.48 3.5a.75.75 0 011.04-.02l6 5.5a.75.75 0 11-1.02 1.1L12.75 5.1v14.15a.75.75 0 11-1.5 0V5.1L6.5 10.08a.75.75 0 01-1.02-1.1l6-5.5z"/>
+                </svg>
+                Powered by Flux (top AI model)
+              </span>
+            </div>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <a
                 href="https://app.myaiphotoshoot.com"
