@@ -41,16 +41,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export async function generateStaticParams() {
   try {
-    const allParams: { slug: string; locale: string }[] = [];
     const locs = ['en', 'zh', 'es', 'de', 'fr', 'ja', 'ru', 'ar', 'hi'];
-    for (const locale of locs) {
-      try {
-        const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=100&locale=${locale}`, { next: { revalidate: 3600 } });
-        if (!res.ok) continue;
-        const data = await res.json();
-        const items = data.items || [];
-        items.forEach((it: { slug?: string }) => { if (it.slug) allParams.push({ slug: it.slug, locale }); });
-      } catch {}
+    const baseLocale = 'en';
+    const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=100&locale=${baseLocale}`, { next: { revalidate: 3600 } });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const items = (data.items || []).filter((it: { slug?: string }) => Boolean(it.slug));
+    const slugs: string[] = Array.from(new Set(items.map((it: { slug: string }) => it.slug)));
+    const allParams: { slug: string; locale: string }[] = [];
+    for (const slug of slugs) {
+      for (const locale of locs) {
+        allParams.push({ slug, locale });
+      }
     }
     return allParams;
   } catch {

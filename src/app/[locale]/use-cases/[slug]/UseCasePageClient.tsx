@@ -40,6 +40,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const benefits = useCase.benefits || t?.benefits || [];
   const faqs = useCase.faqs || t?.faqs || [];
   const description = t?.meta_description || (useCase as any).meta_description || '';
+  const findSection = (name: string) => (sections || []).find(s => s.heading === name);
+  const secIntro = findSection('Intro');
+  const secWho = findSection('Who This Is For');
+  const secHow = findSection('How It Works');
+  const secOutcomes = findSection('Outcomes');
+  const secExamples = findSection('Examples');
+  const secObjections = findSection('Objections Handled');
+  const secCTA = findSection('CTA');
 
   return (
     <article className="max-w-5xl mx-auto px-4 py-14">
@@ -123,32 +131,21 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </header>
 
-      {/* How it works - steps under CTA */}
-      <section className="mt-6" aria-label="How it works">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
-            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">1</div>
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Upload 10–20 selfies <span className="text-gray-500">(5 minutes)</span></h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">Use your favorite existing photos or snap a few fresh selfies.</p>
-            </div>
+      {/* How it works - render from generated section if available */}
+      {secHow && secHow.body && secHow.body.length > 0 && (
+        <section className="mt-6" aria-label="How it works">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {secHow.body.map((step, idx) => (
+              <div key={idx} className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
+                <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">{idx + 1}</div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{step.replace(/^\d+\)\s*/, '')}</h3>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
-            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">2</div>
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Train your AI model <span className="text-gray-500">(about 2 minutes)</span></h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">We fine-tune once so every future photo looks like you.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
-            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">3</div>
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Generate and download favorites <span className="text-gray-500">(5 minutes)</span></h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">Create as many looks as you want — save the keepers.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
 
       {gallery.length > 0 && (
@@ -190,7 +187,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </section>
       )}
 
-      {/* Sections (structured) */}
+      {/* Sections (structured with tailored styles) */}
       {sections.length > 0 && (
         <section className="grid grid-cols-1 md:grid-cols-[240px,1fr] gap-8">
           {/* Mini TOC */}
@@ -211,45 +208,90 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             {sections.map((s, idx) => (
               <div key={idx} id={`sec-${idx}`}>
                 <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{s.heading}</h2>
-                <div className="space-y-3 text-gray-800 dark:text-gray-200 leading-relaxed">
-                  {s.body.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
+                {s.heading === 'Intro' ? (
+                  <div className="space-y-3 text-gray-800 dark:text-gray-200 leading-relaxed text-lg">
+                    {s.body.map((p, i) => (<p key={i}>{p}</p>))}
+                  </div>
+                ) : s.heading === 'Who This Is For' ? (
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {s.body.map((p, i) => (
+                      <li key={i} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-gray-800 dark:text-gray-200 flex items-start gap-3">
+                        <span className="mt-0.5 text-blue-600 dark:text-blue-400" aria-hidden>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/></svg>
+                        </span>
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : s.heading === 'How It Works' ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {s.body.map((p, i) => (
+                      <div key={i} className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
+                        <div className="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">{i + 1}</div>
+                        <p className="text-gray-800 dark:text-gray-200">{p.replace(/^\d+\)\s*/, '')}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : s.heading === 'Outcomes' ? (
+                  <ul className="space-y-2">
+                    {s.body.map((p, i) => (
+                      <li key={i} className="flex items-start gap-2 text-gray-800 dark:text-gray-200"><span className="text-green-600 dark:text-green-400" aria-hidden>✓</span><span>{p}</span></li>
+                    ))}
+                  </ul>
+                ) : s.heading === 'Examples' ? (
+                  <ul className="list-disc pl-5 text-gray-800 dark:text-gray-200 space-y-1">
+                    {s.body.map((p, i) => (<li key={i}>{p}</li>))}
+                  </ul>
+                ) : s.heading === 'Objections Handled' ? (
+                  <div className="space-y-2 text-gray-800 dark:text-gray-200">
+                    {s.body.map((p, i) => (<p key={i}>• {p}</p>))}
+                  </div>
+                ) : s.heading === 'CTA' ? (
+                  <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
+                    <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
+                    <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">Launch Now</a>
+                  </div>
+                ) : (
+                  <div className="space-y-3 text-gray-800 dark:text-gray-200 leading-relaxed">
+                    {s.body.map((p, i) => (<p key={i}>{p}</p>))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </section>
       )}
 
-      {/* Mid-page CTA */}
-      <div className="mt-10">
-        <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Ready to create this use case?</h3>
-            <p className="text-gray-700 dark:text-gray-300 mt-1">Generate your first photos in minutes. No studio, no hassle.</p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">
-              <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
-              Launch Now
-            </a>
-            <div className="flex items-center gap-2">
-              <a href={'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug)} target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play" className="transform hover:scale-105 transition duration-150">
-                <picture>
-                  <source srcSet="/images/google-play-badge.webp" type="image/webp" />
-                  <img alt="Google Play" src='/images/google-play-badge.png' width={180} height={100} className="h-[100px] w-[180px] object-contain" />
-                </picture>
+      {/* Mid-page CTA (fallback if no CTA section) */}
+      {!secCTA && (
+        <div className="mt-10">
+          <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Ready to create this use case?</h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">Generate your first photos in minutes. No studio, no hassle.</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-6 py-3 border text-base font-medium rounded-lg text-white bg-black hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900 transition duration-150 shadow-md dark:shadow-purple-900/20 border-transparent dark:border-white/10">
+                <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                Launch Now
               </a>
-              <a href="https://apps.apple.com/app/id6744860178" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store" className="transform hover:scale-105 transition duration-150">
-                <img alt="App Store" src='/images/app-store-badge.svg' width={180} height={50} className="h-[50px] w-[180px] object-contain" />
-              </a>
+              <div className="flex items-center gap-2">
+                <a href={'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug)} target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play" className="transform hover:scale-105 transition duration-150">
+                  <picture>
+                    <source srcSet="/images/google-play-badge.webp" type="image/webp" />
+                    <img alt="Google Play" src='/images/google-play-badge.png' width={180} height={100} className="h-[100px] w-[180px] object-contain" />
+                  </picture>
+                </a>
+                <a href="https://apps.apple.com/app/id6744860178" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store" className="transform hover:scale-105 transition duration-150">
+                  <img alt="App Store" src='/images/app-store-badge.svg' width={180} height={50} className="h-[50px] w-[180px] object-contain" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       
 
