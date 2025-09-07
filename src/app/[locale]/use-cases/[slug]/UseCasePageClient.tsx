@@ -59,6 +59,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
     ...(featured.length > 1 ? featured.slice(1) : []),
     ...galleryUrls.filter(u => u && u !== headerImageUrl)
   ]));
+  // Exclude featured photos from the marquee gallery
+  const featuredUrlSet = new Set(featured);
+  const marqueeGallery = (gallery || []).filter(g => g && g.url && !featuredUrlSet.has(g.url as string));
 
   // Track per-section text heights to size images to match each section height
   const textRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -166,7 +169,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </header>
 
-      {gallery.length > 0 && (
+      {marqueeGallery.length > 0 && (
         <section className="mt-6">
           {(slug === 'ai-headshots' || slug === 'ai-headshot-generator-for-linkedin-resumes-and-team-pages') && (
             <p className="mb-3 text-sm text-center text-gray-500 dark:text-gray-400">
@@ -177,7 +180,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             <div className="overflow-hidden bg-white dark:bg-gray-900">
               <div className="usecase-marquee-container">
                 <div className="usecase-marquee-track-single">
-                {[...gallery, ...gallery].map((g, idx) => (
+                {[...marqueeGallery, ...marqueeGallery].map((g, idx) => (
                   <div key={`marquee-${g.id || g.url || idx}-${idx}`} className="shrink-0 mr-4 last:mr-0 w-[220px] h-[220px]">
                     <PhotoCard
                       src={g.url || ''}
