@@ -60,8 +60,24 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
     ...galleryUrls.filter(u => u && u !== headerImageUrl)
   ]));
   // Exclude featured photos from the marquee gallery
-  const featuredUrlSet = new Set(featured);
-  const marqueeGallery = (gallery || []).filter(g => g && g.url && !featuredUrlSet.has(g.url as string));
+  const normalizeUrl = (u?: string) => {
+    const s = (u || '').trim();
+    if (!s) return '';
+    // strip CDN image resize wrapper like /cdn-cgi/image/.../https://
+    const unwrapped = s.replace(/\/cdn-cgi\/image\/[^/]+\/(https?:\/\/)/, '$1');
+    // drop query/hash
+    return unwrapped.split('?')[0].split('#')[0];
+  };
+  const featuredUrlSet = new Set(featured.map(normalizeUrl));
+  // Also exclude any image used on the page (header + per-section images)
+  const usedOnPageUrlSet = new Set([
+    normalizeUrl(headerImageUrl),
+    ...perSectionPool.map(normalizeUrl)
+  ].filter(Boolean) as string[]);
+  const marqueeGallery = (gallery || []).filter(g => {
+    const url = normalizeUrl(g.url as string);
+    return g && g.url && !featuredUrlSet.has(url) && !usedOnPageUrlSet.has(url);
+  });
 
   // Track per-section text heights to size images to match each section height
   const textRefs = useRef<Array<HTMLDivElement | null>>([]);
