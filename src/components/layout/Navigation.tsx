@@ -22,6 +22,7 @@ export default function Navigation() {
   const [isUseCasesMenuOpen, setIsUseCasesMenuOpen] = useState(false);
   const useCasesMenuRef = useRef<HTMLDivElement>(null);
   const useCasesButtonRef = useRef<HTMLButtonElement>(null);
+  const [isMobileUseCasesOpen, setIsMobileUseCasesOpen] = useState(false);
   const [useCases, setUseCases] = useState<Array<{ slug: string; title: string }>>([]);
   
   // Check if we're on the home page
@@ -336,24 +337,37 @@ export default function Navigation() {
                   {item.name}
                 </a>
               ))}
-              {/* Use Cases selector in mobile menu */}
+              {/* Use Cases selector in mobile menu (collapsible) */}
               <div className="mt-2">
-                <div className="px-3 py-2 text-base font-medium text-gray-900 dark:text-gray-100">Use Cases</div>
-                {useCases.length === 0 ? (
-                  <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm">No use cases yet</div>
-                ) : (
-                  <div className="max-h-64 overflow-auto">
-                    {useCases.map((uc) => (
-                      <a
-                        key={uc.slug}
-                        href={`/${locale}/use-cases/${uc.slug}/`}
-                        className="block px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary text-sm"
-                        onClick={handleNavLinkClick}
-                        role="menuitem"
-                      >
-                        {uc.title}
-                      </a>
-                    ))}
+                <button
+                  type="button"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  onClick={() => setIsMobileUseCasesOpen(!isMobileUseCasesOpen)}
+                  aria-expanded={isMobileUseCasesOpen}
+                  aria-controls="mobile-usecases-list"
+                >
+                  <span>Use Cases</span>
+                  <svg className={`h-5 w-5 transition-transform ${isMobileUseCasesOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
+                </button>
+                {isMobileUseCasesOpen && (
+                  <div id="mobile-usecases-list" className="mt-1">
+                    {useCases.length === 0 ? (
+                      <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm">No use cases yet</div>
+                    ) : (
+                      <div className="max-h-64 overflow-auto">
+                        {useCases.map((uc) => (
+                          <a
+                            key={uc.slug}
+                            href={`/${locale}/use-cases/${uc.slug}/`}
+                            className="block px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary text-sm"
+                            onClick={handleNavLinkClick}
+                            role="menuitem"
+                          >
+                            {uc.title}
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

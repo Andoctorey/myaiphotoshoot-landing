@@ -285,7 +285,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               const targetH = rowHeights[idx];
               const imageEl = perSectionImage ? (
                 <div
-                  className="order-1 md:order-none md:self-start w-full max-w-full relative aspect-square"
+                  className="order-1 md:order-none md:self-start w-full max-w-full relative aspect-square mx-auto"
                   style={typeof targetH === 'number' ? { width: `${targetH}px`, maxWidth: '100%' } : undefined}
                 >
                   <Image
@@ -354,8 +354,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               );
 
               const gridClass = idx % 2 === 0
-                ? 'grid grid-cols-1 items-start gap-6 md:gap-6 md:grid-cols-[auto_minmax(0,1fr)_80px] lg:grid-cols-[auto_minmax(0,1fr)_96px]'
-                : 'grid grid-cols-1 items-start gap-6 md:gap-6 md:grid-cols-[80px_minmax(0,1fr)_auto] lg:grid-cols-[96px_minmax(0,1fr)_auto]';
+                ? 'grid grid-cols-1 items-start justify-items-center md:justify-items-stretch gap-6 md:gap-6 md:grid-cols-[auto_minmax(0,1fr)_80px] lg:grid-cols-[auto_minmax(0,1fr)_96px]'
+                : 'grid grid-cols-1 items-start justify-items-center md:justify-items-stretch gap-6 md:gap-6 md:grid-cols-[80px_minmax(0,1fr)_auto] lg:grid-cols-[96px_minmax(0,1fr)_auto]';
 
               return (
                 <div key={idx} id={`sec-${idx}`}>
