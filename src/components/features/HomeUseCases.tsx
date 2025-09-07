@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 interface Props {
-  initialUseCases?: Array<{ slug: string; title: string; featured_image_url?: string }>;
+  initialUseCases?: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
   locale?: string;
 }
 
@@ -26,8 +26,8 @@ export default function HomeUseCases({ initialUseCases = [], locale = 'en' }: Pr
             {initialUseCases.map((it) => (
               <Link key={it.slug} href={`/${locale}/use-cases/${it.slug}/`} className="block group">
                 <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                  {it.featured_image_url && (
-                    <Image src={it.featured_image_url} alt="" width={640} height={360} className="w-full h-auto" />
+                  {Array.isArray(it.featured_image_urls) && it.featured_image_urls[0] && (
+                    <Image src={it.featured_image_urls[0]} alt="" width={640} height={360} className="w-full h-auto" />
                   )}
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900 group-hover:underline">{it.title}</h3>

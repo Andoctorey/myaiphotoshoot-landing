@@ -20,7 +20,7 @@ export interface UseCase {
   id?: string;
   slug?: string;
   status: 'draft' | 'published' | 'archived';
-  featured_image_url?: string;
+  featured_image_urls?: string[];
   gallery_photos?: GalleryPhotoItem[];
   translations?: Record<string, UseCaseTranslation>;
   benefits?: string[];

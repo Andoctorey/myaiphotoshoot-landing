@@ -6,12 +6,12 @@ interface PageProps { params: Promise<{ locale: string }> }
 
 export default async function UseCasesIndex({ params }: PageProps) {
   const { locale } = await params;
-  let items: Array<{ slug: string; title: string; featured_image_url?: string }> = [];
+  let items: Array<{ slug: string; title: string; featured_image_urls?: string[] }> = [];
   try {
     const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=100&locale=${locale}`, { next: { revalidate: 3600 } });
     if (res.ok) {
       const data = await res.json();
-      items = (data.items || []).map((it: any) => ({ slug: it.slug, title: it.title, featured_image_url: it.featured_image_url }));
+      items = (data.items || []).map((it: any) => ({ slug: it.slug, title: it.title, featured_image_urls: it.featured_image_urls }));
     }
   } catch {}
 
@@ -25,8 +25,8 @@ export default async function UseCasesIndex({ params }: PageProps) {
           {items.map((it) => (
             <Link key={it.slug} href={`/${locale}/use-cases/${it.slug}/`} className="block group">
               <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                {it.featured_image_url && (
-                  <Image src={it.featured_image_url} alt="" width={640} height={360} className="w-full h-auto" />
+                {Array.isArray(it.featured_image_urls) && it.featured_image_urls[0] && (
+                  <Image src={it.featured_image_urls[0]} alt="" width={640} height={360} className="w-full h-auto" />
                 )}
                 <div className="p-4">
                   <h2 className="text-lg font-semibold text-gray-900 group-hover:underline">{it.title}</h2>

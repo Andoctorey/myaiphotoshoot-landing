@@ -119,10 +119,10 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               </div>
             </div>
           </div>
-          {useCase.featured_image_url && (
+          {Array.isArray((useCase as any).featured_image_urls) && (useCase as any).featured_image_urls[0] && (
             <div className="hidden sm:block shrink-0">
               <Image
-                src={useCase.featured_image_url}
+                src={(useCase as any).featured_image_urls[0]}
                 alt=""
                 width={240}
                 height={135}

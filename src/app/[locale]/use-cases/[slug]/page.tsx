@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const title = `${uc.meta_title || uc.title} | My AI Photo Shoot`;
     const description = uc.meta_description || uc.title;
     const url = `https://myaiphotoshoot.com/${locale}/use-cases/${slug}/`;
-    const imageUrl = uc.featured_image_url || 'https://myaiphotoshoot.com/og-image.png';
+    const imageUrl = (Array.isArray(uc.featured_image_urls) && uc.featured_image_urls[0]) || 'https://myaiphotoshoot.com/og-image.png';
     return {
       title,
       description,

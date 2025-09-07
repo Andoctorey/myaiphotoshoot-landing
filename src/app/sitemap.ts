@@ -82,9 +82,9 @@ async function getAllBlogPosts(): Promise<(BlogListItem & { locale: string })[]>
  * Fetch all use-cases for all locales
  * Gets published use-cases from the database
  */
-async function getAllUseCases(): Promise<Array<{ slug: string; featured_image_url?: string; created_at?: string; locale: string }>> {
+async function getAllUseCases(): Promise<Array<{ slug: string; featured_image_urls?: string[]; created_at?: string; locale: string }>> {
   try {
-    const allItems: Array<{ slug: string; featured_image_url?: string; created_at?: string; locale: string }> = [];
+    const allItems: Array<{ slug: string; featured_image_urls?: string[]; created_at?: string; locale: string }> = [];
 
     for (const locale of locales) {
       try {
@@ -103,7 +103,7 @@ async function getAllUseCases(): Promise<Array<{ slug: string; featured_image_ur
           }
 
           const data = await response.json();
-          const items = (data.items || []) as Array<{ slug?: string; featured_image_url?: string; created_at?: string }>;
+          const items = (data.items || []) as Array<{ slug?: string; featured_image_urls?: string[]; created_at?: string }>;
 
           if (items.length === 0) {
             hasMore = false;
@@ -112,7 +112,7 @@ async function getAllUseCases(): Promise<Array<{ slug: string; featured_image_ur
               if (it.slug) {
                 allItems.push({
                   slug: it.slug,
-                  featured_image_url: it.featured_image_url,
+                  featured_image_urls: it.featured_image_urls,
                   created_at: it.created_at,
                   locale,
                 });
@@ -197,12 +197,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
     
     // Create use-case entries for each locale
-    const useCaseEntries = useCases.map((item: { slug: string; featured_image_url?: string; created_at?: string; locale: string }) => ({
+    const useCaseEntries = useCases.map((item: { slug: string; featured_image_urls?: string[]; created_at?: string; locale: string }) => ({
       url: `${baseUrl}/${item.locale}/use-cases/${item.slug}/`,
       lastModified: item.created_at ? new Date(item.created_at) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
-      images: item.featured_image_url ? [item.featured_image_url] : [],
+      images: Array.isArray(item.featured_image_urls) && item.featured_image_urls.length > 0 ? [item.featured_image_urls[0]] : [],
     }));
 
     return [...staticPages, ...blogPostEntries, ...useCaseEntries];

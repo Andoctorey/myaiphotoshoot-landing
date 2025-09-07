@@ -5,13 +5,13 @@ import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 export type HomeData = {
   initialGallery: GalleryItem[];
   initialBlog: BlogListItem[];
-  initialUseCases: Array<{ slug: string; title: string; featured_image_url?: string }>;
+  initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
 };
 
 export async function fetchHomeData(locale: string): Promise<HomeData> {
   let initialGallery: GalleryItem[] = [];
   let initialBlog: BlogListItem[] = [];
-  let initialUseCases: Array<{ slug: string; title: string; featured_image_url?: string }> = [];
+  let initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }> = [];
 
   try {
     const [gRes, bRes, uRes] = await Promise.all([
@@ -29,7 +29,7 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
     }
     if (uRes.ok) {
       const useJson = await uRes.json();
-      initialUseCases = (useJson.items || []).map((it: any) => ({ slug: it.slug, title: it.title, featured_image_url: it.featured_image_url }));
+      initialUseCases = (useJson.items || []).map((it: any) => ({ slug: it.slug, title: it.title, featured_image_urls: it.featured_image_urls }));
     }
   } catch {
     // Ignore and return empty data; clients can fetch on mount
