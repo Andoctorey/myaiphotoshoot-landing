@@ -6,12 +6,10 @@ import UserGallery from '@/components/features/Testimonials';
 import Pricing from '@/components/features/Pricing';
 import Download from '@/components/features/Download';
 import Navigation from '@/components/layout/Navigation';
-import Footer from '@/components/layout/Footer';
 
 export default function Home() {
   return (
     <>
-      <Navigation />
       <main className="min-h-screen">
         <Hero />
         <Features />
@@ -19,7 +17,6 @@ export default function Home() {
         <Pricing />
         <Download />
       </main>
-      <Footer />
     </>
   );
 } 

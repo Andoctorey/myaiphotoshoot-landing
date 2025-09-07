@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import SupportForm from '@/components/app/SupportForm';
 import Navigation from '@/components/layout/Navigation';
-import Footer from '@/components/layout/Footer';
 import { locales } from '@/i18n/request';
 import { buildAlternates, canonicalUrl } from '@/lib/seo';
 
@@ -37,11 +36,9 @@ export default async function SupportPage({ params }: Props) {
   await params; // ensure route params resolved for static export
   return (
     <>
-      <Navigation />
       <main className="min-h-screen pt-24">
         <SupportForm />
       </main>
-      <Footer />
     </>
   );
 }

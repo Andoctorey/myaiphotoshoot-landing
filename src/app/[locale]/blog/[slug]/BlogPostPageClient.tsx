@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/layout/Navigation';
-import Footer from '@/components/layout/Footer';
 import TableOfContents from '@/components/blog/TableOfContents';
 import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';
@@ -164,7 +163,6 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   if (isLoading) {
     return (
       <>
-        <Navigation />
         <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="flex flex-col items-center justify-center py-12">
@@ -173,7 +171,6 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             </div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
@@ -182,7 +179,6 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   if (isError || !post) {
     return (
       <>
-        <Navigation />
         <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center py-12">
@@ -202,7 +198,6 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             </div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
@@ -647,7 +642,6 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         />
       )}
       <FAQSchema faqs={faqs} />
-      <Navigation />
       <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Breadcrumbs */}
@@ -802,7 +796,6 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
         </div>
       </main>
-      <Footer />
     </>
   );
 } 

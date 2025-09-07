@@ -9,7 +9,6 @@ import Pricing from '@/components/features/Pricing';
 import FAQ from '@/components/features/FAQ';
 import Download from '@/components/features/Download';
 import Navigation from '@/components/layout/Navigation';
-import Footer from '@/components/layout/Footer';
 import SupportForm from '@/components/app/SupportForm';
 import HomeBlog from '@/components/features/HomeBlog';
 import type { GalleryItem } from '@/types/gallery';
@@ -52,7 +51,6 @@ export default function LocalizedHomeClient({ initialGallery = [], initialBlog =
   
   return (
     <>
-      <Navigation />
       <main className="min-h-screen">
         {isSupport ? (
           <SupportForm />
@@ -68,7 +66,6 @@ export default function LocalizedHomeClient({ initialGallery = [], initialBlog =
           </>
         )}
       </main>
-      <Footer />
     </>
   );
 } 
