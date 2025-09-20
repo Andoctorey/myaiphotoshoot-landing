@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { locales } from "@/i18n/request";
 import { NextIntlClientProvider } from 'next-intl';
-import { RTL_LANGUAGES } from '@/lib/utils';
-import HtmlLang from '@/components/layout/HtmlLang';
-import Navigation from '@/components/layout/Navigation';
-import Footer from '@/components/layout/Footer';
+import SiteShell from '@/components/layout/SiteShell';
 
 export const metadata: Metadata = {
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
@@ -65,14 +62,9 @@ export default async function LocaleLayout({
     messages = (await import(`../../../messages/en/index.json`)).default;
   }
 
-  const isRTL = RTL_LANGUAGES.includes(locale);
-
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <HtmlLang locale={locale} dir={isRTL ? 'rtl' : 'ltr'} />
-      <Navigation />
-      <main className="pt-20 md:pt-24">{children}</main>
-      <Footer />
+      <SiteShell locale={locale}>{children}</SiteShell>
     </NextIntlClientProvider>
   );
 }

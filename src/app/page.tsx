@@ -6,6 +6,7 @@ import { buildAlternates } from '@/lib/seo';
 import { fetchHomeData } from '@/lib/homeData';
 import HomeJsonLd from '@/components/seo/HomeJsonLd';
 import { loadMessages } from '@/lib/i18n-messages';
+import SiteShell from '@/components/layout/SiteShell';
 
 export default async function Home() {
   const locale = 'en';
@@ -16,7 +17,9 @@ export default async function Home() {
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <HomeJsonLd />
-      <LocalizedHomeClient initialGallery={initialGallery} initialBlog={initialBlog} />
+      <SiteShell locale={locale}>
+        <LocalizedHomeClient initialGallery={initialGallery} initialBlog={initialBlog} />
+      </SiteShell>
     </NextIntlClientProvider>
   );
 }
