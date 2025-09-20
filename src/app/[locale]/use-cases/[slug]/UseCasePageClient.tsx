@@ -10,6 +10,7 @@ import type { UseCase } from '@/types/usecase';
 import { withDefaultCdnWidth } from '@/lib/image';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
+import HowToJsonLd from '@/components/seo/HowToJsonLd';
 import { canonicalUrl } from '@/lib/seo';
 
 interface Props {
@@ -72,6 +73,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const faqs = useCase.faqs || t?.faqs || [];
   const description = useCase.meta_description || t?.meta_description || '';
   const sectionSpacing = "mt-12 md:mt-16";
+
+  // HowTo JSON-LD steps derived from on-page "How It Works" block (short and consistent)
+  const howToSteps = [
+    { name: tUseCase('howItWorks.step1.title'), text: tUseCase('howItWorks.step1.desc') },
+    { name: tUseCase('howItWorks.step2.title'), text: tUseCase('howItWorks.step2.desc') },
+    { name: tUseCase('howItWorks.step3.title'), text: tUseCase('howItWorks.step3.desc') },
+  ];
+  const howToName = `${tUseCase('howItWorks.title')}: ${title}`;
 
   const featured = Array.isArray(useCase.featured_image_urls)
     ? (useCase.featured_image_urls as string[]).filter(Boolean)
@@ -139,6 +148,13 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         idUrl={canonicalUrl(locale, `/use-cases/${slug}/`)}
         name={title}
         description={description}
+      />
+      {/* HowTo JSON-LD mapping to the visible "How It Works" section */}
+      <HowToJsonLd
+        idUrl={canonicalUrl(locale, `/use-cases/${slug}/`)}
+        name={howToName}
+        description={description}
+        steps={howToSteps}
       />
       {/* Breadcrumb JSON-LD */}
       <script

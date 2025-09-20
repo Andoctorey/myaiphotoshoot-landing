@@ -41,8 +41,8 @@ export default function UseCaseProductJsonLd({
       lowPrice: perImagePrice,
       offerCount: '2',
       offers: [
-        { '@type': 'Offer', name: 'Per Image', price: perImagePrice, url: 'https://app.myaiphotoshoot.com' },
-        { '@type': 'Offer', name: 'One-time Training', price: oneTimeTrainingPrice, url: 'https://app.myaiphotoshoot.com' },
+        { '@type': 'Offer', name: 'Per Image', price: perImagePrice, priceCurrency, url: 'https://app.myaiphotoshoot.com' },
+        { '@type': 'Offer', name: 'One-time Training', price: oneTimeTrainingPrice, priceCurrency, url: 'https://app.myaiphotoshoot.com' },
       ],
     },
   };
