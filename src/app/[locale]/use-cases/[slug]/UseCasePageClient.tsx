@@ -336,9 +336,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 <div ref={(el) => { textRefs.current[idx] = el; }} className="md:flex-1 min-w-0">
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-3">{s.heading}</h2>
                   {s.heading === 'Intro' ? (
-                    <div className="space-y-3 text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                      {s.body.map((p, i) => (<p key={i}>{p}</p>))}
-                    </div>
+                    <ul className="space-y-2 text-base md:text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
+                      {s.body.map((p, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-green-600 dark:text-green-400 mt-1" aria-hidden>✓</span>
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
                   ) : s.heading === 'Who This Is For' ? (
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {s.body.map((p, i) => (
@@ -381,9 +386,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                       </a>
                     </div>
                   ) : (
-                    <div className="space-y-3 text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                      {s.body.map((p, i) => (<p key={i}>{p}</p>))}
-                    </div>
+                    <ul className="space-y-2 text-base md:text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
+                      {s.body.map((p, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="text-green-600 dark:text-green-400 mt-1" aria-hidden>✓</span>
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
               );
