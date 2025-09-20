@@ -11,8 +11,6 @@ type Props = {
   priceCurrency?: string;
   perImagePrice?: string; // e.g. "0.03"
   oneTimeTrainingPrice?: string; // e.g. "2.99"
-  ratingValue?: string; // optional aggregate rating
-  reviewCount?: string; // optional count
 };
 
 export default function UseCaseProductJsonLd({
@@ -24,8 +22,6 @@ export default function UseCaseProductJsonLd({
   priceCurrency = 'USD',
   perImagePrice = '0.03',
   oneTimeTrainingPrice = '2.99',
-  ratingValue,
-  reviewCount,
 }: Props) {
   const images = Array.isArray(imageUrls)
     ? imageUrls.filter(Boolean)
@@ -49,11 +45,6 @@ export default function UseCaseProductJsonLd({
         { '@type': 'Offer', name: 'One-time Training', price: oneTimeTrainingPrice, url: 'https://app.myaiphotoshoot.com' },
       ],
     },
-    aggregateRating: ratingValue && reviewCount ? {
-      '@type': 'AggregateRating',
-      ratingValue,
-      reviewCount,
-    } : undefined,
   };
 
   return (

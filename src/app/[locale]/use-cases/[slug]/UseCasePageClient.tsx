@@ -11,7 +11,6 @@ import { withDefaultCdnWidth } from '@/lib/image';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 import { canonicalUrl } from '@/lib/seo';
-import { computeFakeRating } from '@/lib/rating';
 
 interface Props {
   slug: string;
@@ -73,7 +72,6 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const faqs = useCase.faqs || t?.faqs || [];
   const description = useCase.meta_description || t?.meta_description || '';
   const sectionSpacing = "mt-12 md:mt-16";
-  const { ratingValue, reviewCount } = computeFakeRating(slug);
 
   const featured = Array.isArray(useCase.featured_image_urls)
     ? (useCase.featured_image_urls as string[]).filter(Boolean)
@@ -135,8 +133,6 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         name={title}
         description={description}
         imageUrls={featured}
-        ratingValue={ratingValue}
-        reviewCount={reviewCount}
       />
       {/* Optional SoftwareApplication JSON-LD to capture Web/iOS/Android app availability */}
       <SoftwareApplicationJsonLd
