@@ -140,8 +140,8 @@ export default function Download() {
                       trackEventAndNavigate('google_play_cta_click', 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1');
                     }}
                   >
-                    <img 
-                      alt={t('mobileApps.googlePlay')} 
+                    <Image 
+                      alt={t('mobileApps.googlePlay')}
                       src='/images/google-play-badge.svg'
                       width={202}
                       height={56}
