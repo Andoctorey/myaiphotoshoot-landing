@@ -52,8 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           alt: title,
         },
       ],
-      locale,
-      type: 'website',
+        locale,
     },
     twitter: {
       card: 'summary_large_image',
@@ -61,5 +60,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: ['/og-image.png'],
     },
+      other: {
+        'og:type': 'product',
+      },
   };
 }

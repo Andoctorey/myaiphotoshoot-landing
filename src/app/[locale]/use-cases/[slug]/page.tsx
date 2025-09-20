@@ -29,10 +29,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url,
         siteName: 'My AI Photo Shoot',
         images: [{ url: imageUrl, width: 1200, height: 630, alt: uc.title }],
-        locale,
-        type: 'article'
+          locale,
       },
-      twitter: { card: 'summary_large_image', title, description, images: [imageUrl] }
+        twitter: { card: 'summary_large_image', title, description, images: [imageUrl] },
+        other: {
+          'og:type': 'product',
+        }
     };
   } catch {
     return { title: 'Use Case | My AI Photo Shoot', description: 'AI photography use cases' };

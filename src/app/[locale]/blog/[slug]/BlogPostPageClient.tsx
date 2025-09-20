@@ -13,6 +13,7 @@ import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 import type { BlogPost } from '@/types/blog';
 import { withDefaultCdnWidth } from '@/lib/image';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
+import HomeJsonLd from '@/components/seo/HomeJsonLd';
 
 interface Props {
   slug: string;
@@ -162,6 +163,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
   return (
     <>
+      <HomeJsonLd />
       {/* Add admin-style CSS with !important to override conflicts */}
       <style jsx global>{`
         /* CSS Variables for theme colors */
