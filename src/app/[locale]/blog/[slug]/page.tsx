@@ -75,7 +75,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     return {
       title,
       description,
-      keywords: enhancedKeywords,
       authors: [{ name: 'My AI Photo Shoot', url: 'https://myaiphotoshoot.com' }],
       creator: 'My AI Photo Shoot',
       publisher: 'My AI Photo Shoot',

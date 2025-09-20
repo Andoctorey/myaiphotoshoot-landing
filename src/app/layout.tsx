@@ -23,7 +23,6 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://myaiphotoshoot.com"),
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
   description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
-  keywords: ["AI photo shoot", "selfie transformation", "AI-generated photos", "professional photography", "portrait enhancement", "creative photo prompts", "affordable AI photos", "privacy-focused photo app", "Flux.1 AI", "photo editing app"],
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",

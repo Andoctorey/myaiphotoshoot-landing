@@ -7,7 +7,6 @@ import SiteShell from '@/components/layout/SiteShell';
 export const metadata: Metadata = {
   title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
   description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
-  keywords: ["AI photo shoot", "selfie transformation", "AI-generated photos", "professional photography", "portrait enhancement", "creative photo prompts", "affordable AI photos", "privacy-focused photo app", "Flux.1 AI", "photo editing app"],
   manifest: "/site.webmanifest",
   // The OpenGraph and Twitter metadata will be dynamically set based on the locale
 };
