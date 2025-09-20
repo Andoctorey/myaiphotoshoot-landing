@@ -8,6 +8,9 @@ import { useUseCase } from '@/hooks/useUseCase';
 import { useTranslations } from '@/lib/utils';
 import type { UseCase } from '@/types/usecase';
 import { withDefaultCdnWidth } from '@/lib/image';
+import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
+import { canonicalUrl } from '@/lib/seo';
+import { computeFakeRating } from '@/lib/rating';
 
 interface Props {
   slug: string;
@@ -69,6 +72,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const faqs = useCase.faqs || t?.faqs || [];
   const description = useCase.meta_description || t?.meta_description || '';
   const sectionSpacing = "mt-12 md:mt-16";
+  const { ratingValue, reviewCount } = computeFakeRating(slug);
 
   const featured = Array.isArray(useCase.featured_image_urls)
     ? (useCase.featured_image_urls as string[]).filter(Boolean)
@@ -98,6 +102,15 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
   return (
     <article className="max-w-5xl mx-auto px-4 pt-6 sm:pt-10 pb-36 sm:pb-14">
+      {/* Product JSON-LD for this use-case */}
+      <UseCaseProductJsonLd
+        idUrl={canonicalUrl(locale, `/use-cases/${slug}/`)}
+        name={title}
+        description={description}
+        imageUrls={featured}
+        ratingValue={ratingValue}
+        reviewCount={reviewCount}
+      />
       {/* SEO Schema for FAQ */}
       {faqs.length > 0 && (
         <FAQSchema faqs={faqs.map(f => ({ question: f.q, answer: f.a }))} />
