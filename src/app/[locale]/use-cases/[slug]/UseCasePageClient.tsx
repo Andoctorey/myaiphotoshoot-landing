@@ -9,6 +9,7 @@ import { useTranslations } from '@/lib/utils';
 import type { UseCase } from '@/types/usecase';
 import { withDefaultCdnWidth } from '@/lib/image';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
+import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 import { canonicalUrl } from '@/lib/seo';
 import { computeFakeRating } from '@/lib/rating';
 
@@ -137,6 +138,12 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         ratingValue={ratingValue}
         reviewCount={reviewCount}
       />
+      {/* Optional SoftwareApplication JSON-LD to capture Web/iOS/Android app availability */}
+      <SoftwareApplicationJsonLd
+        idUrl={canonicalUrl(locale, `/use-cases/${slug}/`)}
+        name={title}
+        description={description}
+      />
       {/* Breadcrumb JSON-LD */}
       <script
         type="application/ld+json"
@@ -243,6 +250,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           )}
         </div>
       </header>
+
+      
 
       {marqueeGallery.length > 0 && (
         <section className="mt-6">
@@ -449,6 +458,23 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           </div>
         </section>
       )}
+
+      {/* Pricing (moved to end, highlighted card) */}
+      <section className={sectionSpacing} aria-label="Pricing">
+        <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 sm:p-7 flex items-start justify-between gap-6 flex-wrap">
+          <div className="min-w-0">
+            <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-200">Simple pricing</h3>
+            <ul className="mt-2 space-y-1 text-gray-900 dark:text-gray-100">
+              <li>One-time model training: <strong>{tPricing('oneTimeFeeAmount')}</strong></li>
+              <li>Generate images: ~<strong>{tPricing('price')}</strong> {tPricing('perPhoto')}</li>
+              <li>No subscription—pay only for what you create</li>
+            </ul>
+          </div>
+          <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}>
+            <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">{tDownload('webApp.button')}</span>
+          </a>
+        </div>
+      </section>
 
       {/* Sticky mobile CTA */}
       <div className="sm:hidden fixed inset-x-0 px-4 z-40" style={{ bottom: 'max(env(safe-area-inset-bottom), 1rem)' }}>

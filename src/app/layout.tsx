@@ -45,23 +45,9 @@ export const metadata: Metadata = {
       { url: '/images/icon_192.png', sizes: '192x192', type: 'image/png' },
       { url: '/images/icon_512.png', sizes: '512x512', type: 'image/png' },
     ],
+    // Use PNG as canonical Apple touch icon to avoid duplicates and ensure compatibility
     apple: [
-      { url: '/images/icon_180.webp', sizes: '180x180', type: 'image/webp' },
       { url: '/images/icon_180.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'apple-touch-icon',
-        sizes: '180x180',
-        url: '/images/icon_180.webp',
-        type: 'image/webp'
-      },
-      {
-        rel: 'apple-touch-icon',
-        sizes: '180x180',
-        url: '/images/icon_180.png',
-        type: 'image/png'
-      },
     ],
   },
   openGraph: {
