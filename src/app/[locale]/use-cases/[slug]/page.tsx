@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import UseCasePageClient from './UseCasePageClient';
 import { env } from '@/lib/env';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, canonicalUrl } from '@/lib/seo';
 import { locales } from '@/i18n/request';
 import type { UseCase } from '@/types/usecase';
 
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const uc = await res.json();
     const title = `${uc.meta_title || uc.title} | My AI Photo Shoot`;
     const description = uc.meta_description || uc.title;
-    const url = `https://myaiphotoshoot.com/${locale}/use-cases/${slug}/`;
+    const url = canonicalUrl(locale, `/use-cases/${slug}/`);
     const imageUrl = (Array.isArray(uc.featured_image_urls) && uc.featured_image_urls[0]) || 'https://myaiphotoshoot.com/og-image.png';
     return {
       title,

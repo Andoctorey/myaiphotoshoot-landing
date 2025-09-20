@@ -12,7 +12,7 @@ import BlogPostPageClient from './BlogPostPageClient';
 import type { Metadata } from 'next';
 import { env } from '@/lib/env';
 import { locales } from '@/i18n/request';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, canonicalUrl } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
 
 interface BlogPostPageProps {
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     
     const title = `${post.title} | My AI Photo Shoot`;
     const description = post.meta_description || post.title;
-    const url = `https://myaiphotoshoot.com/${locale}/blog/${slug}/`;
+    const url = canonicalUrl(locale, `/blog/${slug}/`);
     const imageUrl = post.featured_image_url || 'https://myaiphotoshoot.com/og-image.png';
 
     // Infer MIME type from URL extension for better OG accuracy

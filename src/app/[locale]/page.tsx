@@ -1,5 +1,5 @@
 import { locales } from '@/i18n/request';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, canonicalUrl } from '@/lib/seo';
 import LocalizedHomeClient from './LocalizedHomeClient';
 import type { Metadata } from 'next';
 import { fetchHomeData } from '@/lib/homeData';
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: `https://myaiphotoshoot.com/${locale}/`,
+      url: canonicalUrl(locale, '/'),
       siteName: 'My AI Photo Shoot',
       images: [
         {
