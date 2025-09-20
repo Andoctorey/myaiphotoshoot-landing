@@ -6,7 +6,9 @@
     "blog": "博客",
     "pricing": "价格方案",
     "faq": "常见问题",
-    "download": "立即开始"
+    "download": "立即开始",
+    "useCases": "使用案例",
+    "noUseCases": "暂无使用案例"
   },
   "hero": {
     "title": "将您的自拍变成",
@@ -182,6 +184,40 @@
     "dataRetention": {
       "question": "您会保存我的照片多长时间？",
       "answer": "您完全控制自己的数据。照片安全存储在您的账户中，直到您决定删除。您可以随时通过账户设置永久删除任何或所有照片 - 无需任何解释。"
+    }
+  },
+  "useCase": {
+    "breadcrumb": {
+      "useCases": "使用案例"
+    },
+    "loading": "加载中...",
+    "notFound": "未找到使用案例。",
+    "badges": {
+      "cheapest": "市场上最优惠",
+      "noSubscription": "无需订阅",
+      "poweredByFlux": "由 Flux 提供支持（顶级AI模型）"
+    },
+    "galleryDisclaimer": "展示的所有照片均由我们的AI根据用户自拍生成。",
+    "howItWorks": {
+      "title": "使用步骤",
+      "step1": {
+        "title": "上传10–20张自拍",
+        "time": "(约5分钟)",
+        "desc": "使用你喜欢的照片，或拍几张新的自拍。"
+      },
+      "step2": {
+        "title": "训练你的AI模型",
+        "time": "(约2分钟)",
+        "desc": "我们一次性微调，让之后的每张照片都更像你。"
+      },
+      "step3": {
+        "title": "生成并下载喜欢的作品",
+        "time": "(约5分钟)",
+        "desc": "想要多少风格都可以 — 保存最满意的。"
+      }
+    },
+    "stickyCta": {
+      "label": "起价 {oneTimeFee} • {price}/{perPhoto}"
     }
   }
 } 

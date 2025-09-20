@@ -6,7 +6,9 @@
     "blog": "Blog",
     "pricing": "Precios",
     "faq": "Preguntas Frecuentes",
-    "download": "Comenzar"
+    "download": "Comenzar",
+    "useCases": "Casos de uso",
+    "noUseCases": "Aún no hay casos"
   },
   "hero": {
     "title": "Transforma tus selfies en",
@@ -182,6 +184,40 @@
     "dataRetention": {
       "question": "¿Por cuánto tiempo guardas mis fotos?",
       "answer": "Tienes control completo sobre tus datos. Las fotos se almacenan de forma segura en tu cuenta hasta que decidas eliminarlas. Puedes quitar permanentemente cualquier foto o todas las fotos en cualquier momento a través de la configuración de tu cuenta - sin preguntas."
+    }
+  },
+  "useCase": {
+    "breadcrumb": {
+      "useCases": "Casos de uso"
+    },
+    "loading": "Cargando...",
+    "notFound": "Caso de uso no encontrado.",
+    "badges": {
+      "cheapest": "El más económico del mercado",
+      "noSubscription": "Sin suscripción",
+      "poweredByFlux": "Impulsado por Flux (modelo IA líder)"
+    },
+    "galleryDisclaimer": "Todas las fotos mostradas fueron generadas por nuestra IA a partir de selfies de usuarios.",
+    "howItWorks": {
+      "title": "Cómo funciona",
+      "step1": {
+        "title": "Sube 10–20 selfies",
+        "time": "(5 minutos)",
+        "desc": "Usa tus fotos favoritas o toma algunas nuevas."
+      },
+      "step2": {
+        "title": "Entrena tu modelo de IA",
+        "time": "(unos 2 minutos)",
+        "desc": "Ajustamos una vez para que todas las fotos futuras se parezcan a ti."
+      },
+      "step3": {
+        "title": "Genera y descarga tus favoritas",
+        "time": "(5 minutos)",
+        "desc": "Crea todos los estilos que quieras — guarda las mejores."
+      }
+    },
+    "stickyCta": {
+      "label": "Empieza por {oneTimeFee} • {price}/{perPhoto}"
     }
   }
 } 

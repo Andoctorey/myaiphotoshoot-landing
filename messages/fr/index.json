@@ -6,7 +6,9 @@
     "blog": "Blog",
     "pricing": "Tarifs",
     "faq": "FAQ",
-    "download": "Commencer"
+    "download": "Commencer",
+    "useCases": "Cas d'utilisation",
+    "noUseCases": "Aucun cas pour le moment"
   },
   "hero": {
     "title": "Transformez vos selfies en",
@@ -182,6 +184,40 @@
     "dataRetention": {
       "question": "Combien de temps gardez-vous mes photos ?",
       "answer": "Vous avez un contrôle complet sur vos données. Les photos sont stockées en sécurité dans votre compte jusqu'à ce que vous décidiez de les supprimer. Vous pouvez supprimer définitivement n'importe quelle photo ou toutes les photos à tout moment via les paramètres de votre compte - sans questions."
+    }
+  },
+  "useCase": {
+    "breadcrumb": {
+      "useCases": "Cas d'utilisation"
+    },
+    "loading": "Chargement...",
+    "notFound": "Cas d'utilisation introuvable.",
+    "badges": {
+      "cheapest": "Le moins cher du marché",
+      "noSubscription": "Sans abonnement",
+      "poweredByFlux": "Propulsé par Flux (modèle IA de pointe)"
+    },
+    "galleryDisclaimer": "Toutes les photos affichées ont été générées par notre IA à partir de selfies d'utilisateurs.",
+    "howItWorks": {
+      "title": "Comment ça marche",
+      "step1": {
+        "title": "Téléversez 10–20 selfies",
+        "time": "(5 minutes)",
+        "desc": "Utilisez vos photos préférées ou prenez-en quelques nouvelles."
+      },
+      "step2": {
+        "title": "Entraînez votre modèle IA",
+        "time": "(environ 2 minutes)",
+        "desc": "Nous ajustons une fois pour que toutes les futures photos vous ressemblent."
+      },
+      "step3": {
+        "title": "Générez et téléchargez vos préférées",
+        "time": "(5 minutes)",
+        "desc": "Créez autant de looks que vous voulez — enregistrez les meilleurs."
+      }
+    },
+    "stickyCta": {
+      "label": "Commencez pour {oneTimeFee} • {price}/{perPhoto}"
     }
   }
 } 

@@ -6,7 +6,9 @@
     "blog": "Blog",
     "pricing": "Preise",
     "faq": "FAQ",
-    "download": "Loslegen"
+    "download": "Loslegen",
+    "useCases": "Anwendungsfälle",
+    "noUseCases": "Noch keine Anwendungsfälle"
   },
   "hero": {
     "title": "Verwandeln Sie Ihre Selfies in",
@@ -182,6 +184,40 @@
     "dataRetention": {
       "question": "Wie lange bewahren Sie meine Fotos auf?",
       "answer": "Sie haben vollständige Kontrolle über Ihre Daten. Fotos werden sicher in Ihrem Konto gespeichert, bis Sie sich entscheiden, sie zu löschen. Sie können jederzeit über Ihre Kontoeinstellungen dauerhaft alle oder einzelne Fotos entfernen - ohne Fragen."
+    }
+  },
+  "useCase": {
+    "breadcrumb": {
+      "useCases": "Anwendungsfälle"
+    },
+    "loading": "Wird geladen...",
+    "notFound": "Anwendungsfall nicht gefunden.",
+    "badges": {
+      "cheapest": "Günstigstes Angebot am Markt",
+      "noSubscription": "Keine Abonnements erforderlich",
+      "poweredByFlux": "Angetrieben von Flux (Top-KI-Modell)"
+    },
+    "galleryDisclaimer": "Alle gezeigten Fotos wurden von unserer KI aus Nutzer‑Selfies generiert.",
+    "howItWorks": {
+      "title": "So funktioniert's",
+      "step1": {
+        "title": "Laden Sie 10–20 Selfies hoch",
+        "time": "(5 Minuten)",
+        "desc": "Nutzen Sie Ihre Lieblingsfotos oder machen Sie ein paar neue."
+      },
+      "step2": {
+        "title": "Trainieren Sie Ihr KI‑Modell",
+        "time": "(ca. 2 Minuten)",
+        "desc": "Wir feintunen einmal, damit alle zukünftigen Fotos nach Ihnen aussehen."
+      },
+      "step3": {
+        "title": "Generieren und Favoriten herunterladen",
+        "time": "(5 Minuten)",
+        "desc": "Erzeugen Sie so viele Looks, wie Sie möchten — speichern Sie die besten."
+      }
+    },
+    "stickyCta": {
+      "label": "Start ab {oneTimeFee} • {price}/{perPhoto}"
     }
   }
 } 
