@@ -27,7 +27,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const tFAQ = useTranslations('faq');
   // Hooks must be declared unconditionally at the top of the component
   const textRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [rowHeights, setRowHeights] = useState<number[]>([]);
+  const [, setRowHeights] = useState<number[]>([]);
   const sectionsLength = ((useCase?.sections || useCase?.translations?.[locale]?.sections || []) as Array<{ heading: string; body: string[] }>).
     filter(s => s.heading !== 'How It Works').length;
   useEffect(() => {
