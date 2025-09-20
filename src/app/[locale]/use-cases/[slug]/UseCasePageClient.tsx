@@ -99,6 +99,32 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
     return g && g.url && !featuredUrlSet.has(url) && !usedOnPageUrlSet.has(url);
   });
 
+  // Breadcrumb JSON-LD (page-level)
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: tNav('home'),
+        item: canonicalUrl(locale, '/'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: tUseCase('breadcrumb.useCases'),
+        item: canonicalUrl(locale, '/use-cases/'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: title,
+        item: canonicalUrl(locale, `/use-cases/${slug}/`),
+      },
+    ],
+  } as const;
+
 
   return (
     <article className="max-w-5xl mx-auto px-4 pt-6 sm:pt-10 pb-36 sm:pb-14">
@@ -110,6 +136,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         imageUrls={featured}
         ratingValue={ratingValue}
         reviewCount={reviewCount}
+      />
+      {/* Breadcrumb JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       {/* SEO Schema for FAQ */}
       {faqs.length > 0 && (
