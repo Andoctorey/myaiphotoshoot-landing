@@ -116,20 +116,11 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <head>
-        <meta name="color-scheme" content="light dark" />
         <meta name="theme-color" content="#000000" />
         <meta name="application-name" content="My AI Photo Shoot" />
         <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <link rel="icon" href="/images/favicon.png" type="image/png" />
-        <link rel="icon" href="/images/favicon.webp" type="image/webp" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.png" type="image/png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/images/icon_180.webp" type="image/webp" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/images/icon_32.png" />
-        <link rel="icon" type="image/webp" sizes="32x32" href="/images/icon_32.webp" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/images/icon_16.png" />
-        <link rel="icon" type="image/webp" sizes="16x16" href="/images/icon_16.webp" />
         <link rel="alternate" type="application/rss+xml" title="My AI Photo Shoot Blog" href="/rss.xml" />
         {/* Performance: preconnect/dns-prefetch for Google Fonts (defensive even with next/font) */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
