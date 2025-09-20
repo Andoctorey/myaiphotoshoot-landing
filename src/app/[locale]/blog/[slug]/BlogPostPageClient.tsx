@@ -12,6 +12,7 @@ import { useBlogPost } from '@/hooks/useBlog';
 import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 import type { BlogPost } from '@/types/blog';
 import { withDefaultCdnWidth } from '@/lib/image';
+import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
 
 interface Props {
   slug: string;
@@ -88,50 +89,8 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
     }
   }, [isLoading, post, isError, router, locale]);
 
-  // Generate JSON-LD structured data
-  const jsonLd = post ? {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.meta_description || post.title,
-    url: `https://myaiphotoshoot.com/${locale}/blog/${slug}`,
-    image: post.featured_image_url ? {
-      '@type': 'ImageObject',
-      url: post.featured_image_url,
-    } : 'https://myaiphotoshoot.com/images/icon_512.png',
-    author: { '@id': 'https://myaiphotoshoot.com/#organization' },
-    publisher: { '@id': 'https://myaiphotoshoot.com/#organization' },
-    datePublished: post.created_at,
-    dateModified: post.updated_at,
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://myaiphotoshoot.com/${locale}/blog/${slug}`,
-    },
-    keywords: post.photo_topics || 'AI photography, AI photos, AI art',
-    articleSection: 'AI Photography',
-    inLanguage: locale,
-    wordCount: post.content ? post.content.replace(/<[^>]*>/g, '').split(' ').length : 0,
-    articleBody: post.content ? post.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 10000) : undefined,
-    about: {
-      '@type': 'Thing',
-      name: 'AI Photography',
-      description: 'Artificial intelligence powered photo generation and professional headshots',
-    },
-    mentions: [
-      {
-        '@type': 'SoftwareApplication',
-        name: 'My AI Photo Shoot',
-        url: 'https://myaiphotoshoot.com',
-        applicationCategory: 'Photography',
-        operatingSystem: 'Web, iOS, Android',
-      },
-    ],
-    isPartOf: {
-      '@type': 'Blog',
-      name: 'My AI Photo Shoot Blog',
-      url: `https://myaiphotoshoot.com/${locale}/blog`,
-    },
-  } : null;
+  // Canonical URL for JSON-LD
+  const articleUrl = `https://myaiphotoshoot.com/${locale}/blog/${slug}`;
 
   const breadcrumbLd = post ? {
     '@context': 'https://schema.org',
@@ -628,10 +587,15 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         }
       `}</style>
       
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      {post && (
+        <ArticleJsonLd
+          locale={locale}
+          title={post.title}
+          description={post.meta_description || post.title}
+          url={articleUrl}
+          imageUrl={post.featured_image_url || undefined}
+          datePublished={post.created_at}
+          dateModified={post.updated_at}
         />
       )}
       {breadcrumbLd && (

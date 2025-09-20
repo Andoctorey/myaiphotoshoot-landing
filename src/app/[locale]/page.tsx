@@ -39,5 +39,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: buildAlternates(locale, '/', locales),
+    openGraph: {
+      title,
+      description,
+      url: `https://myaiphotoshoot.com/${locale}/`,
+      siteName: 'My AI Photo Shoot',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      locale,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/og-image.png'],
+    },
   };
 }

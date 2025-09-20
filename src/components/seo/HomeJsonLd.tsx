@@ -1,15 +1,28 @@
 'use client';
 
+import { useLocale, useTranslations } from 'next-intl';
+
 export default function HomeJsonLd() {
+  const locale = useLocale();
+  const tHero = useTranslations('hero');
+  const description = (() => {
+    try {
+      const d = tHero('description');
+      return typeof d === 'string' && d.length > 0 ? d : 'Train a custom model once for $2.99, then generate images for ~$0.03 each.';
+    } catch {
+      return 'Train a custom model once for $2.99, then generate images for ~$0.03 each.';
+    }
+  })();
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'AI Photoshoot',
     brand: { '@type': 'Brand', name: 'My AI Photo Shoot' },
-    description: 'Train a custom model once for $2.99, then generate images for ~$0.03 each.',
+    description,
     url: 'https://myaiphotoshoot.com',
     image: 'https://myaiphotoshoot.com/og-image.png',
     category: 'Photography Software',
+    inLanguage: locale,
     isRelatedTo: [
       {
         '@type': 'MobileApplication',
