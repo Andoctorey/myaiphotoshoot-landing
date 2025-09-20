@@ -12,6 +12,7 @@ import { env } from "@/lib/env";
 const inter = Inter({ 
   subsets: ["latin"],
   display: 'swap',
+  preload: true,
 });
 
 export const viewport: Viewport = {

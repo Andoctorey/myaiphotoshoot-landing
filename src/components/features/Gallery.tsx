@@ -10,15 +10,12 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
-import Link from 'next/link';
 import { useTranslations } from '@/lib/utils';
-import { withDefaultCdnWidth } from '@/lib/image';
 import PhotoCard from '@/components/features/PhotoCard';
 
 // Placeholder component for images while they're loading

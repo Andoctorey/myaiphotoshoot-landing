@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import PromptOverlay from '@/components/features/PromptOverlay';
 import PhotoCard from '@/components/features/PhotoCard';
 import FAQSchema from '@/components/blog/FAQSchema';
 import { useUseCase } from '@/hooks/useUseCase';
@@ -19,6 +18,29 @@ interface Props {
 export default function UseCasePageClient({ slug, locale, initialUseCase }: Props) {
   const { useCase, isLoading } = useUseCase({ slug, locale, fallbackData: initialUseCase });
   const tPricing = useTranslations('pricing');
+  // Hooks must be declared unconditionally at the top of the component
+  const textRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [rowHeights, setRowHeights] = useState<number[]>([]);
+  const sectionsLength = ((useCase?.sections || useCase?.translations?.[locale]?.sections || []) as Array<{ heading: string; body: string[] }>).
+    filter(s => s.heading !== 'How It Works').length;
+  useEffect(() => {
+    const observers: ResizeObserver[] = [];
+    textRefs.current.forEach((el, idx) => {
+      if (!el) return;
+      const ro = new ResizeObserver(entries => {
+        const rect = entries[0]?.contentRect;
+        if (!rect) return;
+        setRowHeights(prev => {
+          const next = [...prev];
+          next[idx] = Math.ceil(rect.height);
+          return next;
+        });
+      });
+      ro.observe(el);
+      observers.push(ro);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, [sectionsLength]);
 
   if (isLoading && !useCase) {
     return (
@@ -35,28 +57,18 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   }
 
   const t = useCase.translations?.[locale] || useCase.translations?.['en'];
-  const title = t?.title || (useCase as any).title || useCase.slug || 'Use case';
+  const title = t?.title || useCase.slug || 'Use case';
   const sectionsRaw = useCase.sections || t?.sections || [];
   const sections = (sectionsRaw || []).filter(s => s.heading !== 'How It Works');
   const galleryRaw = useCase.gallery_photos || [];
   const gallery = Array.from(new Map((galleryRaw || []).filter(g => g && g.url).map(g => [g.url, g])).values());
-  const benefits = useCase.benefits || t?.benefits || [];
   const faqs = useCase.faqs || t?.faqs || [];
-  const description = t?.meta_description || (useCase as any).meta_description || '';
-  const findSection = (name: string) => (sections || []).find(s => s.heading === name);
-  const secIntro = findSection('Intro');
-  const secWho = findSection('Who This Is For');
-  const secHow = findSection('How It Works');
-  const secOutcomes = findSection('Outcomes');
-  const secExamples = findSection('Examples');
-  const secObjections = findSection('Objections Handled');
-  const secCTA = findSection('CTA');
+  const description = t?.meta_description || '';
   const sectionSpacing = "mt-12 md:mt-16";
 
-  const featured = Array.isArray((useCase as any).featured_image_urls)
-    ? ((useCase as any).featured_image_urls as string[]).filter(Boolean)
+  const featured = Array.isArray(useCase.featured_image_urls)
+    ? (useCase.featured_image_urls as string[]).filter(Boolean)
     : [];
-  const galleryUrls = (gallery || []).map(g => g.url || '').filter(Boolean);
   const headerImageUrl = featured[0] || undefined;
   const perSectionPool = featured.length > 1 ? featured.slice(1) : [];
   // Exclude featured photos from the marquee gallery
@@ -75,33 +87,10 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
     ...perSectionPool.map(normalizeUrl)
   ].filter(Boolean) as string[]);
   const marqueeGallery = (gallery || []).filter(g => {
-    const url = normalizeUrl(g.url as string);
+    const url = normalizeUrl(g.url || '');
     return g && g.url && !featuredUrlSet.has(url) && !usedOnPageUrlSet.has(url);
   });
 
-  
-
-  // Track per-section text heights to size images to match each section height
-  const textRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [rowHeights, setRowHeights] = useState<number[]>([]);
-  useEffect(() => {
-    const observers: ResizeObserver[] = [];
-    textRefs.current.forEach((el, idx) => {
-      if (!el) return;
-      const ro = new ResizeObserver(entries => {
-        const rect = entries[0]?.contentRect;
-        if (!rect) return;
-        setRowHeights(prev => {
-          const next = [...prev];
-          next[idx] = Math.ceil(rect.height);
-          return next;
-        });
-      });
-      ro.observe(el);
-      observers.push(ro);
-    });
-    return () => observers.forEach(o => o.disconnect());
-  }, [sections.length]);
 
   return (
     <article className="max-w-5xl mx-auto px-4 pt-6 sm:pt-10 pb-36 sm:pb-14">
@@ -177,7 +166,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   className="transform hover:scale-105 transition duration-150"
                   aria-label="Get it on Google Play"
                 >
-                  <img alt="Google Play" src='/images/google-play-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
+                  <Image alt="Google Play" src='/images/google-play-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
                 </a>
                 <a
                   href="https://apps.apple.com/app/id6744860178"
@@ -186,7 +175,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   className="transform hover:scale-105 transition duration-150"
                   aria-label="Download on the App Store"
                 >
-                  <img alt="App Store" src='/images/app-store-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
+                  <Image alt="App Store" src='/images/app-store-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
                 </a>
               </div>
             </div>

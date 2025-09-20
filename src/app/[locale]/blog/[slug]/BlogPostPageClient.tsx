@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import Navigation from '@/components/layout/Navigation';
 import TableOfContents from '@/components/blog/TableOfContents';
 import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';

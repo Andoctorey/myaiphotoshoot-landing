@@ -11,7 +11,15 @@ export default async function UseCasesIndex({ params }: PageProps) {
     const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=100&locale=${locale}`, { next: { revalidate: 3600 } });
     if (res.ok) {
       const data = await res.json();
-      items = (data.items || []).map((it: any) => ({ slug: it.slug, title: it.title, featured_image_urls: it.featured_image_urls }));
+      type UseCaseApiItem = { slug?: string; title?: string; featured_image_urls?: unknown };
+      const rawItems: UseCaseApiItem[] = Array.isArray(data.items) ? data.items as UseCaseApiItem[] : [];
+      items = rawItems
+        .filter((it) => typeof it?.slug === 'string' && typeof it?.title === 'string')
+        .map((it) => ({
+          slug: it.slug as string,
+          title: it.title as string,
+          featured_image_urls: Array.isArray(it.featured_image_urls) ? (it.featured_image_urls as string[]) : undefined,
+        }));
     }
   } catch {}
 

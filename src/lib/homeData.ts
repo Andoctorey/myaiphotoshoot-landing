@@ -29,7 +29,14 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
     }
     if (uRes.ok) {
       const useJson = await uRes.json();
-      initialUseCases = (useJson.items || []).map((it: any) => ({ slug: it.slug, title: it.title, featured_image_urls: it.featured_image_urls }));
+      type UseCaseApiItem = { slug?: string; title?: string; featured_image_urls?: unknown };
+      initialUseCases = (Array.isArray(useJson.items) ? (useJson.items as UseCaseApiItem[]) : [])
+        .filter((it) => typeof it?.slug === 'string' && typeof it?.title === 'string')
+        .map((it) => ({
+          slug: it.slug as string,
+          title: it.title as string,
+          featured_image_urls: Array.isArray(it.featured_image_urls) ? (it.featured_image_urls as string[]) : undefined,
+        }));
     }
   } catch {
     // Ignore and return empty data; clients can fetch on mount

@@ -5,7 +5,6 @@ import Features from '@/components/features/Features';
 import UserGallery from '@/components/features/Testimonials';
 import Pricing from '@/components/features/Pricing';
 import Download from '@/components/features/Download';
-import Navigation from '@/components/layout/Navigation';
 
 export default function Home() {
   return (

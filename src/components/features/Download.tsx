@@ -75,9 +75,11 @@ export default function Download() {
               <div className="relative z-10 w-full h-full">
                 <picture>
                   <source srcSet="/images/screenshot_ios.webp" type="image/webp" />
-                  <img
+                  <Image
                     src="/images/screenshot_ios.png"
                     alt="MyAIPhotoShoot App"
+                    width={600}
+                    height={1200}
                     className="object-contain w-full h-full"
                   />
                 </picture>
