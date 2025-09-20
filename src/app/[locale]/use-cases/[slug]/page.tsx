@@ -15,8 +15,33 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-case?slug=${slug}&locale=${locale}`, { next: { revalidate: 3600 } });
     if (!res.ok) throw new Error('not ok');
     const uc = await res.json();
-    const title = `${uc.meta_title || uc.title} | My AI Photo Shoot`;
-    const description = uc.meta_description || uc.title;
+    // Base SEO values from CMS
+    const baseTitle = String(uc.meta_title || uc.title || '').trim();
+    const siteSuffix = ' | My AI Photo Shoot';
+    const pricedSuffix = ' | $2.99 – My AI Photo Shoot';
+    // Prefer priced suffix if it fits within 65 chars, else fallback to site suffix if it fits
+    let title = baseTitle;
+    if (baseTitle) {
+      const pricedCandidate = `${baseTitle}${pricedSuffix}`;
+      const siteCandidate = `${baseTitle}${siteSuffix}`;
+      if (pricedCandidate.length <= 65) {
+        title = pricedCandidate;
+      } else if (siteCandidate.length <= 65) {
+        title = siteCandidate;
+      } else {
+        title = baseTitle;
+      }
+    }
+
+    // Description: append pricing line if it fits within 160 chars
+    const baseDescription = String(uc.meta_description || uc.title || '').trim();
+    const pricingSentence = ' One-time $2.99 model training, ~$0.03 per image. No subscription.';
+    let description = baseDescription;
+    if (baseDescription) {
+      const alreadyHasPricing = /\b\$2\.99\b|No subscription/i.test(baseDescription);
+      const withPricing = alreadyHasPricing ? baseDescription : `${baseDescription}${pricingSentence}`;
+      description = withPricing.length <= 160 ? withPricing : baseDescription;
+    }
     const url = canonicalUrl(locale, `/use-cases/${slug}/`);
     const imageUrl = (Array.isArray(uc.featured_image_urls) && uc.featured_image_urls[0]) || 'https://myaiphotoshoot.com/og-image.png';
     return {
