@@ -142,12 +142,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         name={title}
         description={description}
         imageUrls={featured}
+        inLanguage={locale}
       />
       {/* Optional SoftwareApplication JSON-LD to capture Web/iOS/Android app availability */}
       <SoftwareApplicationJsonLd
         idUrl={canonicalUrl(locale, `/use-cases/${slug}/`)}
         name={title}
         description={description}
+        inLanguage={locale}
       />
       {/* HowTo JSON-LD mapping to the visible "How It Works" section */}
       <HowToJsonLd
@@ -155,6 +157,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         name={howToName}
         description={description}
         steps={howToSteps}
+        inLanguage={locale}
       />
       {/* Breadcrumb JSON-LD */}
       <script
@@ -163,7 +166,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       />
       {/* SEO Schema for FAQ */}
       {faqs.length > 0 && (
-        <FAQSchema faqs={faqs.map(f => ({ question: f.q, answer: f.a }))} />
+        <FAQSchema faqs={faqs.map(f => ({ question: f.q, answer: f.a }))} inLanguage={locale} />
       )}
 
       {/* Breadcrumb */}

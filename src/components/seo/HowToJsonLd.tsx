@@ -14,9 +14,10 @@ type Props = {
   name: string; // e.g. "How It Works - AI Headshots"
   description?: string | null;
   steps: HowToStepInput[];
+  inLanguage?: string;
 };
 
-export default function HowToJsonLd({ idUrl, name, description, steps }: Props) {
+export default function HowToJsonLd({ idUrl, name, description, steps, inLanguage }: Props) {
   const normalizedSteps = (Array.isArray(steps) ? steps : [])
     .filter(s => s && s.name)
     .map(step => ({
@@ -34,7 +35,7 @@ export default function HowToJsonLd({ idUrl, name, description, steps }: Props) 
     name,
     description: description || undefined,
     step: normalizedSteps,
-    mainEntityOfPage: idUrl,
+    inLanguage: inLanguage || undefined,
   };
 
   return (

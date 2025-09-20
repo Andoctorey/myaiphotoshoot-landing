@@ -12,7 +12,7 @@ import BlogPostPageClient from './BlogPostPageClient';
 import type { Metadata } from 'next';
 import { env } from '@/lib/env';
 import { locales } from '@/i18n/request';
-import { buildAlternates, canonicalUrl } from '@/lib/seo';
+import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
 
 interface BlogPostPageProps {
@@ -96,7 +96,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
             ...(ogImageType ? { type: ogImageType } : {}),
           },
         ],
-        locale,
+        locale: ogLocaleFromAppLocale(locale),
+        alternateLocale: ogAlternateLocales(locales, locale),
         type: 'article',
         publishedTime: post.created_at,
         modifiedTime: post.updated_at,

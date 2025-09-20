@@ -39,5 +39,40 @@ export function buildAlternates(
   } as const;
 }
 
+/** Map app locales to Open Graph locale codes (BCP47-ish with region). */
+export function ogLocaleFromAppLocale(locale: string): string {
+  switch (locale) {
+    case 'en':
+      return 'en_US';
+    case 'de':
+      return 'de_DE';
+    case 'fr':
+      return 'fr_FR';
+    case 'es':
+      return 'es_ES';
+    case 'ru':
+      return 'ru_RU';
+    case 'ja':
+      return 'ja_JP';
+    case 'ar':
+      return 'ar_AE';
+    case 'hi':
+      return 'hi_IN';
+    case 'zh':
+      // Default to Simplified Chinese for Mainland China unless specified otherwise
+      return 'zh_CN';
+    default:
+      // Fallback to English (US) to ensure valid OG locale
+      return 'en_US';
+  }
+}
 
-
+/** Build list of alternate OG locales excluding the current one. */
+export function ogAlternateLocales(
+  supportedLocales: readonly string[],
+  currentLocale: string
+): string[] {
+  return supportedLocales
+    .filter((l) => l !== currentLocale)
+    .map((l) => ogLocaleFromAppLocale(l));
+}

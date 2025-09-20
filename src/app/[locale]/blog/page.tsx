@@ -1,7 +1,7 @@
 import BlogPageClient from './BlogPageClient';
 import type { Metadata } from 'next';
 import { locales } from '@/i18n/request';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { env } from '@/lib/env';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
@@ -48,6 +48,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         url,
         siteName: 'My AI Photo Shoot',
         type: 'website',
+        locale: ogLocaleFromAppLocale(locale),
+        alternateLocale: ogAlternateLocales(locales, locale),
       },
       twitter: {
         card: 'summary_large_image',

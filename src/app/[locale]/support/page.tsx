@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import SupportForm from '@/components/app/SupportForm';
 import { locales } from '@/i18n/request';
-import { buildAlternates, canonicalUrl } from '@/lib/seo';
+import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { loadMessages } from '@/lib/i18n-messages';
 
 type Props = {
@@ -30,6 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: canonicalUrl(locale, '/support/'),
       type: 'website',
+      locale: ogLocaleFromAppLocale(locale),
+      alternateLocale: ogAlternateLocales(locales, locale),
     },
     twitter: {
       card: 'summary_large_image',

@@ -11,6 +11,7 @@ type Props = {
   priceCurrency?: string;
   perImagePrice?: string; // e.g. "0.03"
   oneTimeTrainingPrice?: string; // e.g. "2.99"
+  inLanguage?: string;
 };
 
 export default function UseCaseProductJsonLd({
@@ -22,6 +23,7 @@ export default function UseCaseProductJsonLd({
   priceCurrency = 'USD',
   perImagePrice = '0.03',
   oneTimeTrainingPrice = '2.99',
+  inLanguage,
 }: Props) {
   const images = Array.isArray(imageUrls)
     ? imageUrls.filter(Boolean)
@@ -34,6 +36,8 @@ export default function UseCaseProductJsonLd({
     name,
     description: description || undefined,
     image: images.length ? images.slice(0, 10) : undefined,
+    inLanguage: inLanguage || undefined,
+    mainEntityOfPage: idUrl,
     brand: { '@type': 'Organization', name: brandName },
     offers: {
       '@type': 'AggregateOffer',

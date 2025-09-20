@@ -1,5 +1,5 @@
 import { locales } from '@/i18n/request';
-import { buildAlternates, canonicalUrl } from '@/lib/seo';
+import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import LocalizedHomeClient from './LocalizedHomeClient';
 import type { Metadata } from 'next';
 import { fetchHomeData } from '@/lib/homeData';
@@ -54,7 +54,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           alt: title,
         },
       ],
-        locale,
+      locale: ogLocaleFromAppLocale(locale),
+      alternateLocale: ogAlternateLocales(locales, locale),
     },
     twitter: {
       card: 'summary_large_image',

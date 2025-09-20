@@ -7,6 +7,7 @@ type Props = {
   name: string;
   description?: string | null;
   applicationCategory?: string; // e.g. "Photo & Video"
+  inLanguage?: string;
 };
 
 export default function SoftwareApplicationJsonLd({
@@ -14,6 +15,7 @@ export default function SoftwareApplicationJsonLd({
   name,
   description,
   applicationCategory = 'Photo & Video',
+  inLanguage,
 }: Props) {
   const webApp = {
     '@type': 'WebApplication',
@@ -51,6 +53,7 @@ export default function SoftwareApplicationJsonLd({
     name,
     description: description || undefined,
     applicationCategory,
+    inLanguage: inLanguage || undefined,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     isRelatedTo: [webApp, iosApp, androidApp],
   };

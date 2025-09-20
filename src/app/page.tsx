@@ -2,7 +2,7 @@ import LocalizedHomeClient from './[locale]/LocalizedHomeClient';
 import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
 import { locales } from '@/i18n/request';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { fetchHomeData } from '@/lib/homeData';
 import HomeJsonLd from '@/components/seo/HomeJsonLd';
 import { loadMessages } from '@/lib/i18n-messages';
@@ -51,7 +51,8 @@ export async function generateMetadata(): Promise<Metadata> {
           alt: title,
         },
       ],
-      locale: 'en_US',
+      locale: ogLocaleFromAppLocale('en'),
+      alternateLocale: ogAlternateLocales(locales, 'en'),
       type: 'website',
     },
     twitter: {

@@ -3,6 +3,7 @@ import { fetchGalleryPhotos, fetchPhotoById } from '@/lib/fetcher';
 import type { GalleryItem } from '@/types/gallery';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { ogLocaleFromAppLocale } from '@/lib/seo';
 import { env } from '@/lib/env';
 
 // Use inline prop typing to align with Next.js PageProps expectations
@@ -137,7 +138,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
           ...(ogImageType ? { type: ogImageType } : {}),
         },
       ],
-      locale: 'en_US',
+      locale: ogLocaleFromAppLocale('en'),
       type: 'website',
     },
     twitter: {

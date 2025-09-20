@@ -5,9 +5,10 @@ interface FAQ {
 
 interface FAQSchemaProps {
   faqs: FAQ[];
+  inLanguage?: string;
 }
 
-export default function FAQSchema({ faqs }: FAQSchemaProps) {
+export default function FAQSchema({ faqs, inLanguage }: FAQSchemaProps) {
   if (!faqs || faqs.length === 0) {
     return null;
   }
@@ -15,6 +16,7 @@ export default function FAQSchema({ faqs }: FAQSchemaProps) {
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    inLanguage: inLanguage || undefined,
     mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
