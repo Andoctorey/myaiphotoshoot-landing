@@ -163,18 +163,18 @@ export default function Navigation() {
                   />
                 </picture>
               </div>
-              <span className="ltr:ml-2 rtl:mr-2 text-lg font-medium text-gray-900 dark:text-white md:block">
+              <span className="ltr:ml-2 rtl:mr-2 text-lg font-medium text-gray-900 dark:text-white hidden lg:block whitespace-nowrap">
                 My AI Photo Shoot
               </span>
             </a>
           </div>
           <div className="hidden md:block">
-            <div className="ltr:ml-10 rtl:mr-10 flex items-center ltr:space-x-4 rtl:space-x-reverse" role="navigation">
+            <div className="ltr:ml-10 rtl:mr-10 flex items-center space-x-1 rtl:space-x-reverse lg:space-x-4" role="navigation">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                 >
                   {item.name}
                 </a>
@@ -187,9 +187,9 @@ export default function Navigation() {
                   aria-expanded={isUseCasesMenuOpen}
                   aria-haspopup="listbox"
                   aria-controls="usecases-menu"
-                  className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                 >
-                  Use Cases
+                  {t('useCases')}
                   <svg className="inline ltr:ml-1 rtl:mr-1 h-4 w-4 align-middle" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
                 </button>
                 {isUseCasesMenuOpen && (
@@ -198,11 +198,11 @@ export default function Navigation() {
                     id="usecases-menu"
                     className="absolute ltr:left-0 rtl:right-0 mt-2 w-80 max-h-96 overflow-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
                     role="listbox"
-                    aria-label="Use cases"
+                    aria-label={t('useCases')}
                   >
                     <div className="py-1" role="presentation">
                       {useCases.length === 0 ? (
-                        <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300">No use cases yet</div>
+                        <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300">{t('noUseCases')}</div>
                       ) : (
                         useCases.map((uc) => (
                           <a
@@ -223,7 +223,7 @@ export default function Navigation() {
               </div>
               <a
                 href={isHomePage ? "#download" : `/${locale}#download`}
-                className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
                 {t('download')}
               </a>
@@ -235,7 +235,7 @@ export default function Navigation() {
               <div className="relative">
                 <button
                   ref={languageButtonRef}
-                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="flex items-center px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                   onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
                   aria-expanded={isLanguageMenuOpen}
                   aria-haspopup="listbox"
@@ -348,13 +348,13 @@ export default function Navigation() {
                   aria-expanded={isMobileUseCasesOpen}
                   aria-controls="mobile-usecases-list"
                 >
-                  <span>Use Cases</span>
+                  <span>{t('useCases')}</span>
                   <svg className={`h-5 w-5 transition-transform ${isMobileUseCasesOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
                 </button>
                 {isMobileUseCasesOpen && (
                   <div id="mobile-usecases-list" className="mt-1">
                     {useCases.length === 0 ? (
-                      <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm">No use cases yet</div>
+                      <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm">{t('noUseCases')}</div>
                     ) : (
                       <div className="max-h-64 overflow-auto">
                         {useCases.map((uc) => (

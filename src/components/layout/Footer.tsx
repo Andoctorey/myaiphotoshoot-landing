@@ -9,6 +9,7 @@ import { trackEventAndNavigate } from '@/lib/analytics';
 
 export default function Footer() {
   const t = useTranslations('footer');
+  const tBlog = useTranslations('blog');
   const pathname = usePathname();
   const locale = pathname?.split('/')[1] || 'en';
   
@@ -31,21 +32,21 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4">{t('title')}</h3>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Transform your photos into stunning AI-generated images with our advanced technology.
+              {t('description')}
             </p>
             <a
               href="https://app.myaiphotoshoot.com"
               className="group inline-flex w-full sm:w-auto items-center justify-center px-5 py-2.5 text-sm font-medium text-white/90 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-sm transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Start creating now in the web app (opens in new tab)"
+              aria-label={tBlog('cta.button')}
               onClick={(e) => {
                 if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                 e.preventDefault();
                 trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
               }}
             >
-              <span>Start Creating Now</span>
+              <span>{tBlog('cta.button')}</span>
               <svg
                 className="ml-2 h-4 w-4 text-white/80 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none"
                 viewBox="0 0 20 20"
@@ -63,7 +64,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link 
-                  href="/legal" 
+                  href={`/${locale}/legal`} 
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                 >
                   {t('legal')}
@@ -105,7 +106,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-center text-gray-400 text-sm">
-            {t('copyright').replace('2023', new Date().getFullYear().toString())}
+            {t('copyright').replace(/20\d{2}/, `${new Date().getFullYear()}`)}
           </p>
         </div>
       </div>

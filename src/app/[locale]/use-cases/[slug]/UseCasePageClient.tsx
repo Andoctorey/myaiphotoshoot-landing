@@ -18,6 +18,10 @@ interface Props {
 export default function UseCasePageClient({ slug, locale, initialUseCase }: Props) {
   const { useCase, isLoading } = useUseCase({ slug, locale, fallbackData: initialUseCase });
   const tPricing = useTranslations('pricing');
+  const tUseCase = useTranslations('useCase');
+  const tNav = useTranslations('navigation');
+  const tDownload = useTranslations('download');
+  const tFAQ = useTranslations('faq');
   // Hooks must be declared unconditionally at the top of the component
   const textRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [rowHeights, setRowHeights] = useState<number[]>([]);
@@ -45,14 +49,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   if (isLoading && !useCase) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="animate-pulse">Loading…</div>
+        <div className="animate-pulse">{tUseCase('loading')}</div>
       </div>
     );
   }
 
   if (!useCase) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-12">Use case not found.</div>
+      <div className="max-w-4xl mx-auto px-4 py-12">{tUseCase('notFound')}</div>
     );
   }
 
@@ -102,9 +106,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-500 dark:text-gray-400">
         <ol className="flex items-center gap-1 flex-wrap">
-          <li><a href={`/${locale}/`} className="hover:text-gray-700 dark:hover:text-gray-200">Home</a></li>
+          <li><a href={`/${locale}/`} className="hover:text-gray-700 dark:hover:text-gray-200">{tNav('home')}</a></li>
           <li>/</li>
-          <li><a href={`/${locale}/use-cases/`} className="hover:text-gray-700 dark:hover:text-gray-200">Use Cases</a></li>
+          <li><a href={`/${locale}/use-cases/`} className="hover:text-gray-700 dark:hover:text-gray-200">{tUseCase('breadcrumb.useCases')}</a></li>
           <li>/</li>
           <li aria-current="page" className="text-gray-700 dark:text-gray-200">{title}</li>
         </ol>
@@ -128,19 +132,19 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
                   <path d="M7.5 2.25l.77 2.36c.17.53.63.9 1.18.95l2.49.19-1.92 1.43c-.45.33-.64.9-.48 1.44l.74 2.41-1.98-1.36a1.25 1.25 0 00-1.43 0L5.4 11.03l.74-2.41c.16-.54-.03-1.11-.48-1.44L3.74 5.75l2.49-.19c.55-.04 1.01-.42 1.18-.95L7.5 2.25z"/>
                 </svg>
-                Cheapest on the market
+                {tUseCase('badges.cheapest')}
               </span>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-green-200 dark:border-green-900/40 bg-green-50/70 dark:bg-green-900/20 text-green-800 dark:text-green-200">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
                   <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/>
                 </svg>
-                No subscription required
+                {tUseCase('badges.noSubscription')}
               </span>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-purple-200 dark:border-purple-900/40 bg-purple-50/70 dark:bg-purple-900/20 text-purple-800 dark:text-purple-200">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
                   <path d="M11.48 3.5a.75.75 0 011.04-.02l6 5.5a.75.75 0 11-1.02 1.1L12.75 5.1v14.15a.75.75 0 11-1.5 0V5.1L6.5 10.08a.75.75 0 01-1.02-1.1l6-5.5z"/>
                 </svg>
-                Powered by Flux (top AI model)
+                {tUseCase('badges.poweredByFlux')}
               </span>
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
@@ -149,13 +153,13 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transform hover:scale-105 transition duration-150 block w-full sm:w-auto"
-                aria-label="Launch Now"
+                aria-label={tDownload('webApp.button')}
               >
                 <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70 w-full sm:w-auto">
                   <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
-                  <span>Launch Now</span>
+                  <span>{tDownload('webApp.button')}</span>
                 </span>
               </a>
               <div className="flex items-center flex-wrap gap-2 sm:gap-3">
@@ -164,18 +168,18 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transform hover:scale-105 transition duration-150"
-                  aria-label="Get it on Google Play"
+                  aria-label={tDownload('mobileApps.googlePlay')}
                 >
-                  <Image alt="Google Play" src='/images/google-play-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
+                  <Image alt={tDownload('mobileApps.googlePlay')} src='/images/google-play-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
                 </a>
                 <a
                   href="https://apps.apple.com/app/id6744860178"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transform hover:scale-105 transition duration-150"
-                  aria-label="Download on the App Store"
+                  aria-label={tDownload('mobileApps.appStore')}
                 >
-                  <Image alt="App Store" src='/images/app-store-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
+                  <Image alt={tDownload('mobileApps.appStore')} src='/images/app-store-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
                 </a>
               </div>
             </div>
@@ -200,7 +204,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         <section className="mt-6">
           {(slug === 'ai-headshots' || slug === 'ai-headshot-generator-for-linkedin-resumes-and-team-pages') && (
             <p className="mb-3 text-sm text-center text-gray-500 dark:text-gray-400">
-              All photos shown were generated by our AI from user selfies.
+              {tUseCase('galleryDisclaimer')}
             </p>
           )}
           <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-x-hidden">
@@ -236,28 +240,28 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       )}
 
       {/* How it works - static steps under header */}
-      <section className={sectionSpacing} aria-label="How it works">
-        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">How It Works</h2>
+      <section className={sectionSpacing} aria-label={tUseCase('howItWorks.title')}>
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">{tUseCase('howItWorks.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
             <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">1</div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Upload 10–20 selfies <span className="text-gray-500">(5 minutes)</span></h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">Use your favorite existing photos or snap a few fresh selfies.</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step1.title')} <span className="text-gray-500">{tUseCase('howItWorks.step1.time')}</span></h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step1.desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
             <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">2</div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Train your AI model <span className="text-gray-500">(about 2 minutes)</span></h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">We fine-tune once so every future photo looks like you.</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step2.title')} <span className="text-gray-500">{tUseCase('howItWorks.step2.time')}</span></h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step2.desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
             <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">3</div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Generate and download favorites <span className="text-gray-500">(5 minutes)</span></h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-1">Create as many looks as you want — save the keepers.</p>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step3.title')} <span className="text-gray-500">{tUseCase('howItWorks.step3.time')}</span></h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step3.desc')}</p>
             </div>
           </div>
         </div>
@@ -330,8 +334,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   ) : s.heading === 'CTA' ? (
                     <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
                       <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
-                      <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label="Launch Now">
-                        <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">Launch Now</span>
+                  <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}>
+                    <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">{tDownload('webApp.button')}</span>
                       </a>
                     </div>
                   ) : (
@@ -379,7 +383,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       {/* FAQ accordion (simple) */}
       {faqs.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-xl font-semibold mb-4">FAQ</h2>
+          <h2 className="text-xl font-semibold mb-4">{tFAQ('title')}</h2>
           <div className="divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900">
             {faqs.map((f, i) => (
               <details key={i} className="p-5 group">
@@ -404,11 +408,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           className="block"
         >
           <div className="rounded-full shadow-xl bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center py-3.5 px-7 font-semibold text-base tracking-tight ring-1 ring-purple-500/40">
-            <span className="inline-flex items-center gap-2">
+              <span className="inline-flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden>
                 <path fillRule="evenodd" d="M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0zm8.03-3.28a.75.75 0 10-1.06 1.06L12.94 12l-1.47 1.47a.75.75 0 101.06 1.06L14.06 13.06a1.5 1.5 0 000-2.12L12.53 8.72z" clipRule="evenodd" />
               </svg>
-              <span>Start for $2.99 one‑time • $0.03/photo</span>
+                <span>{tUseCase('stickyCta.label', { oneTimeFee: tPricing('oneTimeFeeAmount'), price: tPricing('price'), perPhoto: tPricing('perPhoto') })}</span>
             </span>
           </div>
         </a>
