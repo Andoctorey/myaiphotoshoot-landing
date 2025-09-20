@@ -235,7 +235,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             <div className="hidden sm:block shrink-0 w-48 md:w-60">
               <Image
                 src={headerImageUrl}
-                alt=""
+                alt={title}
                 width={0}
                 height={0}
                 sizes="(min-width:768px) 240px, 192px"
@@ -330,7 +330,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 >
                   <Image
                     src={withDefaultCdnWidth(perSectionImage) || perSectionImage}
-                    alt=""
+                    alt={`${s.heading} - ${title}`}
                     fill
                     sizes="(min-width:1024px) 320px, (min-width:768px) 256px, 224px"
                     className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
