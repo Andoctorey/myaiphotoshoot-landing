@@ -26,11 +26,13 @@ export default async function Home() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const messages = await loadMessages('en');
-  const description = typeof (messages as any)?.hero?.description === 'string'
-    ? (messages as any).hero.description as string
+  type HomeI18n = { hero?: { description?: string; title?: string; titleHighlight?: string } };
+  const m = messages as HomeI18n;
+  const description = typeof m.hero?.description === 'string'
+    ? m.hero.description as string
     : "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.";
-  const baseTitlePart = typeof (messages as any)?.hero?.title === 'string' ? (messages as any).hero.title as string : 'Transform Your Selfies Into';
-  const highlightPart = typeof (messages as any)?.hero?.titleHighlight === 'string' ? (messages as any).hero.titleHighlight as string : 'Stunning AI-Generated Portraits';
+  const baseTitlePart = typeof m.hero?.title === 'string' ? m.hero.title as string : 'Transform Your Selfies Into';
+  const highlightPart = typeof m.hero?.titleHighlight === 'string' ? m.hero.titleHighlight as string : 'Stunning AI-Generated Portraits';
   const title = `My AI Photo Shoot - ${baseTitlePart} ${highlightPart}`;
   return {
     title,

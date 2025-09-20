@@ -7,20 +7,24 @@ import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
 
 type Props = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 // SEO metadata for the blog listing page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
-    const { locale } = params;
+    const { locale } = await params;
 
     const url = `https://myaiphotoshoot.com/${locale}/blog/`;
     const messages = await loadMessages(locale);
-    const blogTitle = typeof (messages as any)?.blog?.title === 'string' ? (messages as any).blog.title as string : 'AI Photo Blog';
+    type BlogI18n = { blog?: { title?: string; description?: string } };
+    const m = messages as BlogI18n;
+    const blogTitle = typeof m.blog?.title === 'string'
+      ? m.blog.title as string
+      : 'AI Photo Blog';
     const title = `${blogTitle} | My AI Photo Shoot`;
-    const description = typeof (messages as any)?.blog?.description === 'string'
-      ? (messages as any).blog.description as string
+    const description = typeof m.blog?.description === 'string'
+      ? m.blog.description as string
       : 'Discover the latest tips, tutorials, and insights about AI photography and digital art creation.';
 
     return {
@@ -62,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPage({ params }: Props) {
-  const { locale } = params;
+  const { locale } = await params;
 
   let initialPosts: BlogListItem[] = [];
   let initialPagination: { total: number; page: number; limit: number; totalPages: number } | null = null;

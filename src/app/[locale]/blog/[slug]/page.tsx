@@ -63,12 +63,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
     const ogImageType = inferMimeFromUrl(imageUrl);
     
-    // Enhanced keywords for better SEO
-    const baseKeywords = 'AI photography, AI photos, AI art, artificial intelligence, photo generation, professional headshots';
-    const topicKeywords = post.photo_topics || '';
-    const localeKeywords = locale === 'en' ? 'AI photography blog' : `AI photography ${locale}`;
-    const enhancedKeywords = `${topicKeywords}, ${baseKeywords}, ${localeKeywords}`;
-    
     return {
       title,
       description,

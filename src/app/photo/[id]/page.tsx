@@ -5,15 +5,11 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { env } from '@/lib/env';
 
-interface PhotoPageProps {
-  params: {
-    id: string;
-  };
-}
+// Use inline prop typing to align with Next.js PageProps expectations
 
 // Generate dynamic metadata for social sharing
-export async function generateMetadata({ params }: PhotoPageProps): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
   const photo = await fetchPhotoById(id);
 
   if (!photo) {
@@ -231,8 +227,8 @@ async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null
   }
 }
 
-export default async function PhotoPage({ params }: PhotoPageProps) {
-  const { id } = params;
+export default async function PhotoPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const photo = await fetchPhotoById(id);
   const { prev, next, showNavigation } = await getAdjacentPhotos(id);
   if (!photo) return notFound();

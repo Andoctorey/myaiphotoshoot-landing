@@ -4,10 +4,10 @@ import { buildAlternates } from '@/lib/seo';
 import Link from 'next/link';
 
 // This would be better handled with proper i18n, but for now using the static HTML content
-type Props = { params: { locale: string } };
+type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
   return {
     title: 'Legal - Terms of Service and Privacy Policy - My AI Photo Shoot',
     description: 'Terms of Service and Privacy Policy for My AI Photo Shoot',
@@ -16,7 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function LegalPage() {
+export default async function LegalPage({ params }: { params: Promise<{ locale: string }> }) {
+  await params;
   // For now, redirect to the static HTML file or serve the legal content
   // You can either:
   // 1. Convert the legal.html content to a React component

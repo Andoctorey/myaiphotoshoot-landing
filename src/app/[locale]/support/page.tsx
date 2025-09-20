@@ -5,16 +5,18 @@ import { buildAlternates, canonicalUrl } from '@/lib/seo';
 import { loadMessages } from '@/lib/i18n-messages';
 
 type Props = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
   const messages = await loadMessages(locale);
-  const description = typeof (messages as any)?.supportPage?.description === 'string'
-    ? (messages as any).supportPage.description as string
+  type SupportI18n = { supportPage?: { description?: string; title?: string } };
+  const m = messages as SupportI18n;
+  const description = typeof m.supportPage?.description === 'string'
+    ? m.supportPage.description as string
     : 'Contact our team for help. We respond within 24–48 hours.';
-  const supportTitle = typeof (messages as any)?.supportPage?.title === 'string' ? (messages as any).supportPage.title as string : 'Customer Support';
+  const supportTitle = typeof m.supportPage?.title === 'string' ? m.supportPage.title as string : 'Customer Support';
   return {
     title: `${supportTitle} | My AI Photo Shoot`,
     description,
@@ -37,7 +39,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function SupportPage({ params }: Props) {
+export default async function SupportPage({ params }: { params: Promise<{ locale: string }> }) {
+  await params;
   return (
     <>
       <main className="min-h-screen pt-24">
