@@ -4,6 +4,7 @@ import { locales } from '@/i18n/request';
 import { buildAlternates } from '@/lib/seo';
 import { env } from '@/lib/env';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
+import { loadMessages } from '@/lib/i18n-messages';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -16,8 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
 
     const url = `https://myaiphotoshoot.com/${locale}/blog/`;
-    const title = `AI Photo Blog | My AI Photo Shoot`;
-    const description = 'Discover the latest tips, tutorials, and insights about AI photography and digital art creation.';
+    const messages = await loadMessages(locale);
+    const blogTitle = typeof (messages as any)?.blog?.title === 'string' ? (messages as any).blog.title as string : 'AI Photo Blog';
+    const title = `${blogTitle} | My AI Photo Shoot`;
+    const description = typeof (messages as any)?.blog?.description === 'string'
+      ? (messages as any).blog.description as string
+      : 'Discover the latest tips, tutorials, and insights about AI photography and digital art creation.';
 
     return {
       title,

@@ -4,6 +4,7 @@ import LocalizedHomeClient from './LocalizedHomeClient';
 import type { Metadata } from 'next';
 import { fetchHomeData } from '@/lib/homeData';
 import HomeJsonLd from '@/components/seo/HomeJsonLd';
+import { loadMessages } from '@/lib/i18n-messages';
 
 // Generate static params for all locales
 export async function generateStaticParams() {
@@ -27,7 +28,16 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const messages = await loadMessages(locale);
+  const description = typeof (messages as any)?.hero?.description === 'string'
+    ? (messages as any).hero.description as string
+    : 'Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.';
+  const baseTitlePart = typeof (messages as any)?.hero?.title === 'string' ? (messages as any).hero.title as string : 'Transform Your Selfies Into';
+  const highlightPart = typeof (messages as any)?.hero?.titleHighlight === 'string' ? (messages as any).hero.titleHighlight as string : 'Stunning AI-Generated Portraits';
+  const title = `My AI Photo Shoot - ${baseTitlePart} ${highlightPart}`;
   return {
+    title,
+    description,
     alternates: buildAlternates(locale, '/', locales),
   };
 }
