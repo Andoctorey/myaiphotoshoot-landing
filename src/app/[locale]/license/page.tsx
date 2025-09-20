@@ -3,10 +3,10 @@ import { locales } from '@/i18n/request';
 import { buildAlternates } from '@/lib/seo';
 import Link from 'next/link';
 
-type Props = { params: Promise<{ locale: string }> };
+type Props = { params: { locale: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = params;
   return {
     title: 'Image License & Usage Rights - My AI Photo Shoot',
     description: 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.',

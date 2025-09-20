@@ -6,14 +6,14 @@ import type { Metadata } from 'next';
 import { env } from '@/lib/env';
 
 interface PhotoPageProps {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 }
 
 // Generate dynamic metadata for social sharing
 export async function generateMetadata({ params }: PhotoPageProps): Promise<Metadata> {
-  const { id } = await params;
+  const { id } = params;
   const photo = await fetchPhotoById(id);
 
   if (!photo) {
@@ -232,7 +232,7 @@ async function getAdjacentPhotos(id: string): Promise<{ prev: GalleryItem | null
 }
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
-  const { id } = await params;
+  const { id } = params;
   const photo = await fetchPhotoById(id);
   const { prev, next, showNavigation } = await getAdjacentPhotos(id);
   if (!photo) return notFound();

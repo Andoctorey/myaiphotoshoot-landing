@@ -7,14 +7,13 @@ import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
 
 type Props = {
-  params: Promise<{ locale: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: { locale: string };
 };
 
 // SEO metadata for the blog listing page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
-    const { locale } = await params;
+    const { locale } = params;
 
     const url = `https://myaiphotoshoot.com/${locale}/blog/`;
     const messages = await loadMessages(locale);
@@ -63,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPage({ params }: Props) {
-  const { locale } = await params;
+  const { locale } = params;
 
   let initialPosts: BlogListItem[] = [];
   let initialPagination: { total: number; page: number; limit: number; totalPages: number } | null = null;

@@ -16,10 +16,7 @@ import { buildAlternates, canonicalUrl } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
 
 interface BlogPostPageProps {
-  params: Promise<{
-    slug: string;
-    locale: string;
-  }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 // Generate dynamic metadata for SEO

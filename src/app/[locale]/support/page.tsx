@@ -5,11 +5,11 @@ import { buildAlternates, canonicalUrl } from '@/lib/seo';
 import { loadMessages } from '@/lib/i18n-messages';
 
 type Props = {
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = params;
   const messages = await loadMessages(locale);
   const description = typeof (messages as any)?.supportPage?.description === 'string'
     ? (messages as any).supportPage.description as string
@@ -38,7 +38,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SupportPage({ params }: Props) {
-  await params; // ensure route params resolved for static export
   return (
     <>
       <main className="min-h-screen pt-24">
