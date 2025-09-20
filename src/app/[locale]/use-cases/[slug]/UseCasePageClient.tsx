@@ -319,17 +319,15 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           <div className="space-y-20 md:space-y-24">
             {sections.map((s, idx) => {
               const perSectionImage = perSectionPool.length ? perSectionPool[idx % perSectionPool.length] : undefined;
-              const targetH = rowHeights[idx];
               const imageEl = perSectionImage ? (
                 <div
-                  className="order-1 md:order-none md:self-start w-full max-w-full relative aspect-square mx-auto"
-                  style={typeof targetH === 'number' ? { width: `${targetH}px`, maxWidth: '100%' } : undefined}
+                  className="order-1 md:order-none md:self-start relative aspect-square mx-auto w-56 md:w-64 lg:w-80"
                 >
                   <Image
                     src={withDefaultCdnWidth(perSectionImage) || perSectionImage}
                     alt=""
                     fill
-                    sizes="(min-width:1024px) 40vw, (min-width:768px) 50vw, 100vw"
+                    sizes="(min-width:1024px) 320px, (min-width:768px) 256px, 224px"
                     className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
                   />
                 </div>
