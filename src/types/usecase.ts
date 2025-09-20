@@ -19,7 +19,12 @@ export interface GalleryPhotoItem {
 export interface UseCase {
   id?: string;
   slug?: string;
-  status: 'draft' | 'published' | 'archived';
+  status?: 'draft' | 'published' | 'archived';
+  // Localized, top-level fields returned by the API after localization
+  title?: string;
+  content?: string | null;
+  meta_title?: string;
+  meta_description?: string;
   featured_image_urls?: string[];
   gallery_photos?: GalleryPhotoItem[];
   translations?: Record<string, UseCaseTranslation>;

@@ -57,13 +57,13 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   }
 
   const t = useCase.translations?.[locale] || useCase.translations?.['en'];
-  const title = t?.title || useCase.slug || 'Use case';
+  const title = useCase.title || t?.title || useCase.slug || 'Use case';
   const sectionsRaw = useCase.sections || t?.sections || [];
   const sections = (sectionsRaw || []).filter(s => s.heading !== 'How It Works');
   const galleryRaw = useCase.gallery_photos || [];
   const gallery = Array.from(new Map((galleryRaw || []).filter(g => g && g.url).map(g => [g.url, g])).values());
   const faqs = useCase.faqs || t?.faqs || [];
-  const description = t?.meta_description || '';
+  const description = useCase.meta_description || t?.meta_description || '';
   const sectionSpacing = "mt-12 md:mt-16";
 
   const featured = Array.isArray(useCase.featured_image_urls)
