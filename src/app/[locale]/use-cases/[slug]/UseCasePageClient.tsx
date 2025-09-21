@@ -270,11 +270,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
       {marqueeGallery.length > 0 && (
         <section className="mt-6">
-          {(slug === 'ai-headshots' || slug === 'ai-headshot-generator-for-linkedin-resumes-and-team-pages') && (
-            <p className="mb-3 text-sm text-center text-gray-500 dark:text-gray-400">
-              {tUseCase('galleryDisclaimer')}
-            </p>
-          )}
+          <p className="mb-3 text-sm text-center text-gray-500 dark:text-gray-400">
+            {tUseCase('galleryDisclaimer')}
+          </p>
           <div className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-x-hidden">
             <div className="overflow-hidden bg-white dark:bg-gray-900">
               <div className="usecase-marquee-container">
