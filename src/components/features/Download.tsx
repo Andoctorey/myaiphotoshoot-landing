@@ -69,6 +69,17 @@ export default function Download() {
               target="_blank"
               rel="noopener noreferrer"
               className="relative h-[600px] w-[300px] rounded-[36px] overflow-hidden shadow-xl dark:shadow-purple-900/20 transform hover:scale-105 transition-transform duration-300"
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                const url = getAppUrl();
+                const action = deviceType === 'ios'
+                  ? 'app_store_cta_click'
+                  : deviceType === 'android'
+                    ? 'google_play_cta_click'
+                    : 'webapp_cta_click';
+                trackEventAndNavigate(action, url);
+              }}
             >
               {/* Background matching page gradient */}
               <div className="absolute inset-0 bg-gray-50 dark:bg-gray-800"></div>

@@ -12,6 +12,7 @@ import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 import HowToJsonLd from '@/components/seo/HowToJsonLd';
 import { canonicalUrl } from '@/lib/seo';
+import { trackEventAndNavigate } from '@/lib/analytics';
 
 interface Props {
   slug: string;
@@ -220,6 +221,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 rel="noopener noreferrer"
                 className="transform hover:scale-105 transition duration-150 block w-full sm:w-auto"
                 aria-label={tDownload('webApp.button')}
+                onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                  e.preventDefault();
+                  trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+                }}
               >
                 <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70 w-full sm:w-auto">
                   <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -235,6 +241,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   rel="noopener noreferrer"
                   className="transform hover:scale-105 transition duration-150"
                   aria-label={tDownload('mobileApps.googlePlay')}
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    e.preventDefault();
+                    trackEventAndNavigate('google_play_cta_click', 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug));
+                  }}
                 >
                   <Image alt={tDownload('mobileApps.googlePlay')} src='/images/google-play-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
                 </a>
@@ -244,6 +255,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   rel="noopener noreferrer"
                   className="transform hover:scale-105 transition duration-150"
                   aria-label={tDownload('mobileApps.appStore')}
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    e.preventDefault();
+                    trackEventAndNavigate('app_store_cta_click', 'https://apps.apple.com/app/id6744860178');
+                  }}
                 >
                   <Image alt={tDownload('mobileApps.appStore')} src='/images/app-store-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
                 </a>
@@ -403,7 +419,13 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   ) : s.heading === 'CTA' ? (
                     <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
                       <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
-                  <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}>
+                  <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
+                    onClick={(e) => {
+                      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                      e.preventDefault();
+                      trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+                    }}
+                  >
                     <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">{tDownload('webApp.button')}</span>
                       </a>
                     </div>
@@ -483,7 +505,13 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               <li>No subscription—pay only for what you create</li>
             </ul>
           </div>
-          <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}>
+          <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+              e.preventDefault();
+              trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+            }}
+          >
             <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">{tDownload('webApp.button')}</span>
           </a>
         </div>
@@ -497,6 +525,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           rel="noopener noreferrer"
           aria-label="Open My AI Photo Shoot app"
           className="block"
+          onClick={(e) => {
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+            e.preventDefault();
+            trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+          }}
         >
           <div className="rounded-full shadow-xl bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center py-3.5 px-7 font-semibold text-base tracking-tight ring-1 ring-purple-500/40">
               <span className="inline-flex items-center gap-2">
