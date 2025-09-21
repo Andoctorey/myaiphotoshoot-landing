@@ -118,7 +118,12 @@ export default function Navigation() {
         const data = await res.json();
         const items = (data.items || []) as Array<{ slug?: string; title?: string }>;
         if (!cancelled) {
-          setUseCases(items.filter(it => it.slug && it.title).map(it => ({ slug: it.slug!, title: it.title! })));
+          setUseCases(
+            items
+              .filter(it => it.slug && it.title)
+              .map(it => ({ slug: it.slug!, title: it.title! }))
+              .sort((a, b) => a.title.localeCompare(b.title, locale, { sensitivity: 'base' }))
+          );
         }
       } catch {}
       finally {
