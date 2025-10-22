@@ -86,12 +86,12 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   // Handle 404 if post is not found
   useEffect(() => {
     if (!isLoading && !post && !isError) {
-      router.push(`/${locale}/blog`);
+      router.push(`/${locale}/blog/`);
     }
   }, [isLoading, post, isError, router, locale]);
 
   // Canonical URL for JSON-LD
-  const articleUrl = `https://myaiphotoshoot.com/${locale}/blog/${slug}`;
+  const articleUrl = `https://myaiphotoshoot.com/${locale}/blog/${slug}/`;
 
   const breadcrumbLd = post ? {
     '@context': 'https://schema.org',
@@ -101,19 +101,19 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: `https://myaiphotoshoot.com/${locale}`
+        item: `https://myaiphotoshoot.com/${locale}/`
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: `https://myaiphotoshoot.com/${locale}/blog`
+        item: `https://myaiphotoshoot.com/${locale}/blog/`
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: post.title,
-        item: `https://myaiphotoshoot.com/${locale}/blog/${slug}`
+        item: `https://myaiphotoshoot.com/${locale}/blog/${slug}/`
       }
     ]
   } : null;
@@ -149,7 +149,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                 {t('errorDescription')}
               </p>
               <Link
-                href={`/${locale}/blog`}
+                href={`/${locale}/blog/`}
                 className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200"
               >
                 {t('backToBlog')}
@@ -613,11 +613,11 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={`/${locale}`} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
+                <Link href={`/${locale}/`} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
-                <Link href={`/${locale}/blog`} className="hover:text-purple-600 dark:hover:text-purple-400">Blog</Link>
+                <Link href={`/${locale}/blog/`} className="hover:text-purple-600 dark:hover:text-purple-400">Blog</Link>
               </li>
               <li className="flex items-center min-w-0">
                 <span className="mx-2 text-gray-400 select-none">/</span>

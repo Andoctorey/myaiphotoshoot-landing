@@ -98,7 +98,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
                   index >= 3 ? 'hidden md:block' : ''
                 }`}
               >
-                <Link href={`/${locale}/blog/${post.slug}`}>
+            <Link href={`/${locale}/blog/${post.slug}/`}>
                   <div className="aspect-square bg-gray-200 dark:bg-gray-700">
                     {post.featured_image_url ? (
                       <Image
@@ -136,7 +136,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
 
         <div className="text-center">
           <Link
-            href={`/${locale}/blog`}
+            href={`/${locale}/blog/`}
             className="inline-block px-6 py-3 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors"
           >
             {t('viewAll')}
