@@ -107,6 +107,23 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        {/* iOS Smart App Banner */}
+        <meta
+          name="apple-itunes-app"
+          content="app-id=6744860178, app-argument=https://myaiphotoshoot.com/"
+        />
+        {/* Android App Indexing (legacy hint; primary is Digital Asset Links) */}
+        <link
+          rel="alternate"
+          href="android-app://com.myaiphotoshoot/https/myaiphotoshoot.com/"
+        />
+        {/* App Links metadata for deep-link discovery in social/other apps */}
+        <meta property="al:web:url" content="https://myaiphotoshoot.com/" />
+        <meta property="al:web:should_fallback" content="true" />
+        <meta property="al:android:package" content="com.myaiphotoshoot" />
+        <meta property="al:android:app_name" content="My AI Photo Shoot" />
+        <meta property="al:ios:app_store_id" content="6744860178" />
+        <meta property="al:ios:app_name" content="My AI Photo Shoot" />
         <link rel="alternate" type="application/rss+xml" title="My AI Photo Shoot Blog" href="/rss.xml" />
         {/* Performance: preconnect/dns-prefetch for Google Fonts (defensive even with next/font) */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
