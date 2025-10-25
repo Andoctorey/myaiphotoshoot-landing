@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.myaiphotoshoot",
+      "sha256_cert_fingerprints": [
+        "73:3E:EE:AB:E2:EE:88:07:76:72:20:33:BA:7F:AD:73:E8:1B:D9:60:F5:25:EC:68:00:CB:41:5A:31:BC:07:58"
+      ]
+    }
+  }
+]
+
+

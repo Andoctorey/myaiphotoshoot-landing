@@ -52,3 +52,11 @@
   Content-Language: ar
 /hi/*
   Content-Language: hi
+
+# Serve well-known association files with correct content types
+/.well-known/assetlinks.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=300
+/.well-known/apple-app-site-association
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=300
