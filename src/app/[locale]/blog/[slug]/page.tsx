@@ -133,7 +133,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 export async function generateStaticParams() {
   try {
     const allParams: { slug: string; locale: string }[] = [];
-    const locales = ['en', 'zh', 'es', 'de', 'fr', 'ja', 'ru', 'ar', 'hi'];
+    
     
     // Fetch all blog posts for each locale
     for (const locale of locales) {

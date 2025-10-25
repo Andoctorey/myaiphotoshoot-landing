@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { env } from '@/lib/env';
+import { locales } from '@/i18n/request';
 
 export const revalidate = 3600;
 
@@ -7,7 +8,7 @@ export async function GET() {
   const site = 'https://myaiphotoshoot.com';
   // Default to English feed aggregating all locales' latest posts
   try {
-    const locales = ['en','zh','hi','es','de','ja','ru','fr','ar'];
+    
     const limit = 20;
     const fetches = locales.map(async (locale: string) => {
       const resp = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=${limit}&locale=${locale}`, {
