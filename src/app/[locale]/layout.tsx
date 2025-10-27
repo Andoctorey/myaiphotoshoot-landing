@@ -5,7 +5,10 @@ import { NextIntlClientProvider } from 'next-intl';
 import SiteShell from '@/components/layout/SiteShell';
 
 export const metadata: Metadata = {
-  title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI Photos",
+  title: {
+    default: "My AI Photo Shoot – AI Photo Generator",
+    template: "%s | My AI Photo Shoot",
+  },
   description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
   manifest: "/site.webmanifest",
   // The OpenGraph and Twitter metadata will be dynamically set based on the locale

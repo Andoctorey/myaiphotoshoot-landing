@@ -22,7 +22,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://myaiphotoshoot.com"),
-  title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
+  title: {
+    default: "My AI Photo Shoot – AI Photo Generator",
+    template: "%s | My AI Photo Shoot",
+  },
   description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",

@@ -8,7 +8,11 @@ export function localePath(locale: string, path: string): string {
   if (!path.startsWith('/')) throw new Error('path must start with "/"');
   // Normalize trailing slash for consistency
   const normalizedPath = path.endsWith('/') ? path : `${path}/`;
-  return locale === 'en' ? normalizedPath : `/${locale}${normalizedPath}`;
+  // Always include the locale segment (including 'en') and avoid double slashes
+  const withoutLeadingSlash = normalizedPath.startsWith('/')
+    ? normalizedPath.slice(1)
+    : normalizedPath;
+  return `/${locale}/${withoutLeadingSlash}`;
 }
 
 export function canonicalUrl(locale: string, path: string): string {
