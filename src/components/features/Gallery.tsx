@@ -277,13 +277,13 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
                 <PhotoCard
                   src={item.public_url}
                   alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
-                  prompt={item.prompt}
                   mode="fill"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                   priority={index === 0}
                   containerClassName="aspect-square rounded-sm cursor-pointer"
                   imgClassName=""
-                  linkHref={`/photo/${item.id}`}
+                  linkHref={`https://app.myaiphotoshoot.com/#generate/${item.id}`}
+                  linkExternal={true}
                   ariaLabel={`AI photo with prompt: ${item.prompt}`}
                   figCaptionSrOnly={`AI photo example. ${item.prompt}`}
                 />

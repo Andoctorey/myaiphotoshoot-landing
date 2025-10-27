@@ -11,3 +11,7 @@
 /use-cases/* /en/use-cases/:splat 308
 
 
+# Gone: photo detail pages removed
+/photo/* 410
+
+

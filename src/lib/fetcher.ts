@@ -1,5 +1,4 @@
 import { env } from '@/lib/env';
-import type { GalleryItem } from '@/types/gallery';
 
 /**
  * Fetcher function for SWR
@@ -49,12 +48,4 @@ export async function fetchGalleryPhotos<T>(page = 1, limit = 100): Promise<T> {
  * @param id Photo ID
  * @returns Gallery item or null if not found
  */
-export async function fetchPhotoById(id: string): Promise<GalleryItem | null> {
-  try {
-    const url = `${env.SUPABASE_FUNCTIONS_URL}/get-generation?id=${id}`;
-    return await fetcher<GalleryItem>(url);
-  } catch (error) {
-    console.error('Failed to fetch photo data:', error);
-    return null;
-  }
-} 
+// Note: fetchPhotoById removed along with /photo/[id] route
