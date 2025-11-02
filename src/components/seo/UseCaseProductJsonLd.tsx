@@ -43,6 +43,7 @@ export default function UseCaseProductJsonLd({
       '@type': 'AggregateOffer',
       priceCurrency,
       lowPrice: perImagePrice,
+      highPrice: oneTimeTrainingPrice,
       offerCount: '2',
       offers: [
         { '@type': 'Offer', name: 'Per Image', price: perImagePrice, priceCurrency, url: 'https://app.myaiphotoshoot.com' },
