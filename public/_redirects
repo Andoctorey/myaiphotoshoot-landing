@@ -12,6 +12,7 @@
 
 
 # Gone: photo detail pages removed
-/photo/* 410
+#
+# Handled by Cloudflare Pages Function: functions/photo/[[path]].js
 
 
