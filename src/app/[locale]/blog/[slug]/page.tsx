@@ -16,6 +16,18 @@ import { locales } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
 
+const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
+  const base = new URL(env.SUPABASE_FUNCTIONS_URL);
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const basePath = base.pathname.replace(/\/$/, '');
+  base.pathname = `${basePath}${normalizedPath}`;
+  base.search = '';
+  if (params) {
+    base.search = new URLSearchParams(params).toString();
+  }
+  return base.toString();
+};
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string; locale: string }>;
 }
@@ -27,7 +39,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     
     // Fetch blog post data for metadata
     const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/blog-post?slug=${slug}&locale=${locale}`,
+      buildFunctionsUrl('/blog-post', { slug, locale }),
       { next: { revalidate: 3600 } }
     );
     
@@ -142,51 +154,25 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 export async function generateStaticParams() {
   try {
     const allParams: { slug: string; locale: string }[] = [];
-    
-    
-    // Fetch all blog posts for each locale
+    const response = await fetch(
+      buildFunctionsUrl('/blog-posts', { sitemap: '1' }),
+      { next: { revalidate: 3600 } }
+    );
+
+    if (!response.ok) {
+      console.warn('Failed to fetch blog posts for sitemap:', response.status);
+      return allParams;
+    }
+
+    const data = await response.json();
+    const posts = data.posts || [];
+
     for (const locale of locales) {
-      try {
-        let currentPage = 1;
-        let hasMorePosts = true;
-        
-        while (hasMorePosts) {
-          const response = await fetch(
-            `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=${currentPage}&limit=100&locale=${locale}`,
-            { next: { revalidate: 3600 } }
-          );
-          
-          if (!response.ok) {
-            console.warn(`Failed to fetch blog posts for locale ${locale}:`, response.status);
-            break;
-          }
-          
-          const data = await response.json();
-          const posts = data.posts || [];
-          
-          if (posts.length === 0) {
-            hasMorePosts = false;
-          } else {
-            // Add params for each blog post
-            posts.forEach((post: { slug?: string }) => {
-              if (post.slug) {
-                allParams.push({
-                  slug: post.slug,
-                  locale,
-                });
-              }
-            });
-            
-            if (posts.length < 100) {
-              hasMorePosts = false;
-            } else {
-              currentPage++;
-            }
-          }
+      posts.forEach((post: { slug?: string | null }) => {
+        if (post.slug) {
+          allParams.push({ slug: post.slug, locale });
         }
-      } catch (error) {
-        console.error(`Error fetching blog posts for locale ${locale}:`, error);
-      }
+      });
     }
     
     return allParams;
@@ -202,7 +188,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // Fetch post at build time to pre-render content (no loading flash)
   let initialPost: unknown | null = null;
   const res = await fetch(
-    `${env.SUPABASE_FUNCTIONS_URL}/blog-post?slug=${slug}&locale=${locale}`,
+    buildFunctionsUrl('/blog-post', { slug, locale }),
     { next: { revalidate: 3600 } }
   );
   if (!res.ok) {
