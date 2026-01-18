@@ -6,6 +6,7 @@
 import BlogPostPageClient from '../../[locale]/blog/[slug]/BlogPostPageClient';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { NextIntlClientProvider } from 'next-intl';
 import { env } from '@/lib/env';
 import { locales, defaultLocale } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
@@ -195,11 +196,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  const messages = (await import('../../../../messages/en/index.json')).default;
+
   return (
-    <BlogPostPageClient
-      slug={slug}
-      locale={defaultLocale}
-      initialPost={(initialPost as BlogPost) || undefined}
-    />
+    <NextIntlClientProvider locale={defaultLocale} messages={messages}>
+      <BlogPostPageClient
+        slug={slug}
+        locale={defaultLocale}
+        initialPost={(initialPost as BlogPost) || undefined}
+      />
+    </NextIntlClientProvider>
   );
 }
