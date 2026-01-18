@@ -129,8 +129,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     },
     // Locale-specific home pages
-    ...locales.map(locale => ({
-      url: `${baseUrl}/${locale}/`,
+    ...locales.filter(locale => locale !== 'en').map(locale => ({
+      url: buildLocalizedUrl(baseUrl, locale, '/'),
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
@@ -139,8 +139,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     })),
     // Blog listing pages for all locales
-    ...locales.map(locale => ({
-      url: `${baseUrl}/${locale}/blog/`,
+    {
+      url: buildLocalizedUrl(baseUrl, 'en', '/blog/'),
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/blog/', locales),
+      },
+    },
+    ...locales.filter(locale => locale !== 'en').map(locale => ({
+      url: buildLocalizedUrl(baseUrl, locale, '/blog/'),
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
@@ -182,7 +191,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const languages = buildHreflangLanguages(baseUrl, `/blog/${post.slug}/`, locales);
       for (const locale of locales) {
         blogPostEntries.push({
-          url: `${baseUrl}/${locale}/blog/${post.slug}/`,
+          url: buildLocalizedUrl(baseUrl, locale, `/blog/${post.slug}/`),
           lastModified: new Date(post.created_at),
           changeFrequency: 'weekly',
           priority: 0.7,

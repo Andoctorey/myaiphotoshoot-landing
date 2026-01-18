@@ -1,9 +1,9 @@
 / /en/ 200
 /en / 308
 /en/ / 308
-/blog /en/blog/ 308
-/blog/ /en/blog/ 308
-/blog/* /en/blog/:splat 308
+/en/blog /blog/ 308
+/en/blog/ /blog/ 308
+/en/blog/* /blog/:splat 308
 /support /en/support/ 308
 /support/ /en/support/ 308
 /use-cases /en/use-cases/ 308
