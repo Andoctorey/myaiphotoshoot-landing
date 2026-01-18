@@ -3,6 +3,7 @@ import type { NextConfig } from 'next';
 import type { RemotePattern } from 'next/dist/shared/lib/image-config';
 
 const withNextIntl = createNextIntlPlugin();
+const isDev = process.env.NODE_ENV === 'development';
 
 /**
  * Next.js configuration
@@ -12,7 +13,7 @@ const withNextIntl = createNextIntlPlugin();
  * All routes must be compatible with static generation.
  */
 const nextConfig: NextConfig = {
-  output: 'export', // Required for Cloudflare Pages static hosting
+  ...(isDev ? {} : { output: 'export' }), // Keep export for Cloudflare Pages builds
   trailingSlash: true, // Helps with static export route matching
 
   /* config options here */
