@@ -16,9 +16,12 @@ const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   const basePath = base.pathname.replace(/\/$/, '');
   base.pathname = `${basePath}${normalizedPath}`;
-  base.search = '';
   if (params) {
-    base.search = new URLSearchParams(params).toString();
+    const searchParams = new URLSearchParams(base.search);
+    Object.entries(params).forEach(([key, value]) => {
+      searchParams.set(key, value);
+    });
+    base.search = searchParams.toString();
   }
   return base.toString();
 };
