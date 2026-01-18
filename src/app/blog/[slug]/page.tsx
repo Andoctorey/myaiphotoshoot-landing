@@ -185,7 +185,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
   initialPost = await res.json();
 
-  if (!initialPost || !(initialPost as BlogPost).content) {
+  const content = (initialPost as BlogPost | null)?.content;
+  if (!initialPost || typeof content !== 'string' || !content) {
     notFound();
   }
 

@@ -66,21 +66,25 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
     });
   };
 
+  const safeContent = typeof post?.content === 'string' ? post.content : '';
+
+  const safeTitle = post?.title || 'Blog image';
+
   const processedContent = useMemo(() => {
-    if (!post?.content) return '';
-    const withWidth = addWidthParamToImages(post.content);
+    if (!safeContent) return '';
+    const withWidth = addWidthParamToImages(safeContent);
     return withWidth.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
       if (/\salt=(["']).*?\1/i.test(attrs)) {
         return `<img ${attrs}>`;
       }
-      const safeAlt = post.title?.slice(0, 120) || 'Blog image';
+      const safeAlt = safeTitle.slice(0, 120);
       return `<img ${attrs} alt="${safeAlt}">`;
     });
-  }, [post?.content, post?.title]);
+  }, [safeContent, safeTitle]);
 
 
   // Extract FAQs from content for schema markup
-  const faqs = post ? extractFAQsFromContent(post.content) : [];
+  const faqs = safeContent ? extractFAQsFromContent(safeContent) : [];
 
   // Canonical URL for JSON-LD
   const articleUrl = canonicalUrl(locale, `/blog/${slug}/`);
@@ -641,7 +645,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                 
                 <div className="flex items-center gap-2">
                   <ClockIcon className="w-4 h-4" />
-                  <span>{calculateReadingTime(post.content)} min read</span>
+                  <span>{calculateReadingTime(safeContent)} min read</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
