@@ -4,8 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 import TableOfContents from '@/components/blog/TableOfContents';
 import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';
@@ -14,6 +13,7 @@ import type { BlogPost } from '@/types/blog';
 import { withDefaultCdnWidth } from '@/lib/image';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
 import HomeJsonLd from '@/components/seo/HomeJsonLd';
+import { canonicalUrl, localePath } from '@/lib/seo';
 
 interface Props {
   slug: string;
@@ -39,7 +39,6 @@ const formatDate = (dateString: string, locale: string) => {
 
 export default function BlogPostPageClient({ slug, locale, initialPost }: Props) {
   const t = useTranslations('blog');
-  const router = useRouter();
   const { post, isLoading, isError } = useBlogPost({ slug, locale, fallbackData: initialPost });
   // Ensure blog content images append ?width=420 similar to KMP logic
   const addWidthParamToImages = (html: string): string => {
@@ -83,15 +82,8 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   // Extract FAQs from content for schema markup
   const faqs = post ? extractFAQsFromContent(post.content) : [];
 
-  // Handle 404 if post is not found
-  useEffect(() => {
-    if (!isLoading && !post && !isError) {
-      router.push(`/${locale}/blog/`);
-    }
-  }, [isLoading, post, isError, router, locale]);
-
   // Canonical URL for JSON-LD
-  const articleUrl = `https://myaiphotoshoot.com/${locale}/blog/${slug}/`;
+  const articleUrl = canonicalUrl(locale, `/blog/${slug}/`);
 
   const breadcrumbLd = post ? {
     '@context': 'https://schema.org',
@@ -101,19 +93,19 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: `https://myaiphotoshoot.com/${locale}/`
+        item: canonicalUrl(locale, '/')
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: `https://myaiphotoshoot.com/${locale}/blog/`
+        item: canonicalUrl(locale, '/blog/')
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: post.title,
-        item: `https://myaiphotoshoot.com/${locale}/blog/${slug}/`
+        item: canonicalUrl(locale, `/blog/${slug}/`)
       }
     ]
   } : null;
@@ -149,7 +141,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                 {t('errorDescription')}
               </p>
               <Link
-                href={`/${locale}/blog/`}
+                href={localePath(locale, '/blog/')}
                 className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200"
               >
                 {t('backToBlog')}
@@ -613,11 +605,11 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={`/${locale}/`} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
+                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
-                <Link href={`/${locale}/blog/`} className="hover:text-purple-600 dark:hover:text-purple-400">Blog</Link>
+                <Link href={localePath(locale, '/blog/')} className="hover:text-purple-600 dark:hover:text-purple-400">Blog</Link>
               </li>
               <li className="flex items-center min-w-0">
                 <span className="mx-2 text-gray-400 select-none">/</span>
