@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { withDefaultCdnWidth } from '@/lib/image';
+import { canonicalUrl, localePath } from '@/lib/seo';
 import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -55,7 +56,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
             '@type': 'CollectionPage',
             name: t('title'),
             description: t('description'),
-            url: `https://myaiphotoshoot.com/${locale}/blog`,
+            url: canonicalUrl(locale, '/blog/'),
             isPartOf: {
               '@type': 'WebSite',
               name: 'My AI Photo Shoot',
@@ -64,7 +65,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
             hasPart: posts.slice(0, 10).map((p) => ({
               '@type': 'BlogPosting',
               headline: p.title,
-              url: `https://myaiphotoshoot.com/${locale}/blog/${p.slug}`,
+              url: canonicalUrl(locale, `/blog/${p.slug}/`),
               datePublished: p.created_at,
               image: p.featured_image_url || undefined
             }))
@@ -77,7 +78,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={`/${locale}`} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
+                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
@@ -132,7 +133,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
-                  <Link href={`/${locale}/blog/${post.slug}`}>
+                  <Link href={localePath(locale, `/blog/${post.slug}/`)}>
                     <div className="aspect-square bg-gray-200 dark:bg-gray-700">
                       {post.featured_image_url ? (
                         <Image
