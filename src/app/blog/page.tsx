@@ -1,6 +1,5 @@
 import BlogPageClient from '../[locale]/blog/BlogPageClient';
 import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
 import { env } from '@/lib/env';
 import { locales, defaultLocale } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
@@ -84,15 +83,11 @@ export default async function BlogPage() {
     // Non-fatal: fall back to client fetch
   }
 
-  const messages = await loadMessages(defaultLocale);
-
   return (
-    <NextIntlClientProvider locale={defaultLocale} messages={messages}>
-      <BlogPageClient
-        locale={defaultLocale}
-        initialPosts={initialPosts}
-        initialPagination={initialPagination || undefined}
-      />
-    </NextIntlClientProvider>
+    <BlogPageClient
+      locale={defaultLocale}
+      initialPosts={initialPosts}
+      initialPagination={initialPagination || undefined}
+    />
   );
 }
