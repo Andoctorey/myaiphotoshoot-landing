@@ -3,11 +3,11 @@
 /en/ / 308
 /en/blog /blog/ 308
 /en/blog/ /blog/ 308
-/en/blog/* /blog/:splat 308
 /support /en/support/ 308
 /support/ /en/support/ 308
 /use-cases /en/use-cases/ 308
 /use-cases/ /en/use-cases/ 308
+/en/blog/* /blog/:splat 308
 /use-cases/* /en/use-cases/:splat 308
 
 
