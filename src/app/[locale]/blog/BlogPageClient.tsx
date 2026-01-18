@@ -28,12 +28,15 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
     limit: initialPagination.limit,
     totalPages: initialPagination.totalPages,
   } : undefined;
+  const effectiveFallbackData = currentPage === (initialPagination?.page ?? 1)
+    ? fallbackData
+    : undefined;
 
   const { posts, pagination, isLoading, isError } = useBlogPosts({
     page: currentPage,
     limit: postsPerPage,
     locale,
-    fallbackData,
+    fallbackData: effectiveFallbackData,
   });
 
   const handlePageChange = (newPage: number) => {

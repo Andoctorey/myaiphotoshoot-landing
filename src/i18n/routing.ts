@@ -6,7 +6,7 @@ import { defineRouting } from 'next-intl/routing';
 export const routing = defineRouting({
   locales,
   defaultLocale,
-  localePrefix: 'always' // Required for static export
+  localePrefix: 'as-needed' // English lives at root for static export
 });
 
 // Export navigation APIs that work with static export

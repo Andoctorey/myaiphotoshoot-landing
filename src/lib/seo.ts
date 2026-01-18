@@ -1,18 +1,18 @@
 export const BASE_URL = 'https://myaiphotoshoot.com';
 
 /** Returns a locale-aware path for a given route path.
- * - path must start and end with '/'
+ * - path must start with '/'
  * - English lives at root
  */
 export function localePath(locale: string, path: string): string {
   if (!path.startsWith('/')) throw new Error('path must start with "/"');
   // Normalize trailing slash for consistency
   const normalizedPath = path.endsWith('/') ? path : `${path}/`;
-  // Always include the locale segment (including 'en') and avoid double slashes
-  const withoutLeadingSlash = normalizedPath.startsWith('/')
-    ? normalizedPath.slice(1)
-    : normalizedPath;
-  return `/${locale}/${withoutLeadingSlash}`;
+  if (locale === 'en') {
+    return normalizedPath;
+  }
+  // Avoid double slashes when prefixing locale
+  return normalizedPath === '/' ? `/${locale}/` : `/${locale}${normalizedPath}`;
 }
 
 export function canonicalUrl(locale: string, path: string): string {
