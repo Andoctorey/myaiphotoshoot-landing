@@ -29,8 +29,11 @@ const calculateReadingTime = (content: string): number => {
 };
 
 // Utility function to format date
-const formatDate = (dateString: string, locale: string) => {
-  return new Date(dateString).toLocaleDateString(locale, {
+const formatDate = (dateString: string | null | undefined, locale: string) => {
+  if (!dateString) return '';
+  const parsed = new Date(dateString);
+  if (Number.isNaN(parsed.getTime())) return '';
+  return parsed.toLocaleDateString(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -67,8 +70,8 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   };
 
   const safeContent = typeof post?.content === 'string' ? post.content : '';
-
   const safeTitle = post?.title || 'Blog image';
+  const safeCreatedAt = typeof post?.created_at === 'string' ? post.created_at : '';
 
   const processedContent = useMemo(() => {
     if (!safeContent) return '';
@@ -108,7 +111,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
       {
         '@type': 'ListItem',
         position: 3,
-        name: post.title,
+        name: safeTitle,
         item: canonicalUrl(locale, `/blog/${slug}/`)
       }
     ]
@@ -588,8 +591,8 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
       {post && (
         <ArticleJsonLd
           locale={locale}
-          title={post.title}
-          description={post.meta_description || post.title}
+          title={safeTitle}
+          description={post.meta_description || safeTitle}
           url={articleUrl}
           imageUrl={post.featured_image_url || undefined}
           datePublished={post.created_at}
@@ -617,7 +620,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
               </li>
               <li className="flex items-center min-w-0">
                 <span className="mx-2 text-gray-400 select-none">/</span>
-                <span aria-current="page" className="text-gray-800 dark:text-gray-200 truncate max-w-[60vw] sm:max-w-[70%] md:max-w-[80%] lg:whitespace-normal lg:overflow-visible lg:max-w-none">{post.title}</span>
+                <span aria-current="page" className="text-gray-800 dark:text-gray-200 truncate max-w-[60vw] sm:max-w-[70%] md:max-w-[80%] lg:whitespace-normal lg:overflow-visible lg:max-w-none">{safeTitle}</span>
               </li>
             </ol>
           </nav>
@@ -631,16 +634,20 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             <header className="p-8 border-b border-gray-200 dark:border-gray-700">
               {/* Article Title */}
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-                {post.title}
+                {safeTitle}
               </h1>
 
               {/* Article Meta Information */}
               <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-2">
                   <CalendarIcon className="w-4 h-4" />
-                  <time dateTime={post.created_at}>
-                    {formatDate(post.created_at, locale)}
-                  </time>
+                  {safeCreatedAt ? (
+                    <time dateTime={safeCreatedAt}>
+                      {formatDate(safeCreatedAt, locale)}
+                    </time>
+                  ) : (
+                    <span>—</span>
+                  )}
                 </div>
                 
                 <div className="flex items-center gap-2">
@@ -663,7 +670,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                   <div className="absolute inset-0 w-full h-full rounded-lg overflow-hidden">
                     <Image
                       src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
-                      alt={post.title}
+                      alt={safeTitle}
                       width={800}
                       height={600}
                       className="w-full h-full object-cover opacity-40"
