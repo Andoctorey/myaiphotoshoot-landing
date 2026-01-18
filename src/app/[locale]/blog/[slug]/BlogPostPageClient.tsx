@@ -72,6 +72,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   const safeContent = typeof post?.content === 'string' ? post.content : '';
   const safeTitle = post?.title || 'Blog image';
   const safeCreatedAt = typeof post?.created_at === 'string' ? post.created_at : '';
+  const safeFeaturedImageUrl = typeof post?.featured_image_url === 'string' ? post.featured_image_url : undefined;
 
   const processedContent = useMemo(() => {
     if (!safeContent) return '';
@@ -595,7 +596,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
           title={safeTitle}
           description={post.meta_description || safeTitle}
           url={articleUrl}
-          imageUrl={post.featured_image_url || undefined}
+          imageUrl={safeFeaturedImageUrl}
           datePublished={post.created_at}
           dateModified={post.updated_at}
         />
@@ -667,10 +668,10 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             <div className="p-8">
               {/* Table of Contents with Featured Image Background */}
               <div className="relative mb-8">
-                {post.featured_image_url && (
+                {safeFeaturedImageUrl && (
                   <div className="absolute inset-0 w-full h-full rounded-lg overflow-hidden">
                     <Image
-                      src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
+                      src={withDefaultCdnWidth(safeFeaturedImageUrl) || safeFeaturedImageUrl}
                       alt={safeTitle}
                       width={800}
                       height={600}
@@ -684,7 +685,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                   <TableOfContents 
                     content={safeContent}
                     title={t('tableOfContents.title')}
-                    className={post.featured_image_url 
+                    className={safeFeaturedImageUrl 
                       ? "bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 shadow-lg" 
                       : "mb-8"
                     } 

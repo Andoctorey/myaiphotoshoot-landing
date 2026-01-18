@@ -1,5 +1,5 @@
 export function withCdnWidth(url: string | null | undefined, width: number = 420): string | undefined {
-  if (!url) return undefined;
+  if (!url || typeof url !== 'string') return undefined;
   try {
     // Only apply to http(s) URLs
     if (!/^https?:\/\//i.test(url)) return url;

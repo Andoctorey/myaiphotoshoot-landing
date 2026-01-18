@@ -67,11 +67,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const title = `${post.title} | My AI Photo Shoot`;
     const description = post.meta_description || post.title;
     const url = canonicalUrl(defaultLocale, `/blog/${slug}/`);
-    const imageUrl = post.featured_image_url || 'https://myaiphotoshoot.com/og-image.png';
+    const imageUrl = typeof post.featured_image_url === 'string'
+      ? post.featured_image_url
+      : 'https://myaiphotoshoot.com/og-image.png';
 
     // Infer MIME type from URL extension for better OG accuracy
     const inferMimeFromUrl = (url: string | null | undefined): string | null => {
-      if (!url) return null;
+      if (!url || typeof url !== 'string') return null;
       const lower = url.toLowerCase();
       if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'image/jpeg';
       if (lower.endsWith('.png')) return 'image/png';
