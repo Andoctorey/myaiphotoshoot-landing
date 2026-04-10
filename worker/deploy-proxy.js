@@ -1,6 +1,11 @@
 // Cloudflare Worker Proxy for Landing Page Deployment
 // This worker acts as a CORS-enabled proxy between the admin interface and Cloudflare Pages webhook
 
+const DEFAULT_GITHUB_OWNER = 'Andoctorey';
+const DEFAULT_GITHUB_REPO = 'myaiphotoshoot-landing';
+const DEFAULT_WORKFLOW_ID = 'submit-sitemap.yml';
+const DEFAULT_WORKFLOW_REF = 'main';
+
 export default {
   async fetch(request, env, ctx) {
     // Handle CORS preflight requests
@@ -79,11 +84,17 @@ export default {
         });
       }
 
+      const searchUpdates = await triggerSearchUpdatesWorkflow(env);
+      if (searchUpdates.enabled && !searchUpdates.triggered) {
+        console.warn('Search update workflow dispatch failed:', searchUpdates.message);
+      }
+
       // Success response
       return new Response(JSON.stringify({
         success: true,
         message: 'Deployment triggered successfully',
         reason: deploymentReason,
+        searchUpdates,
         timestamp: new Date().toISOString(),
       }), {
         status: 200,
@@ -109,4 +120,59 @@ export default {
       });
     }
   },
-}; 
+};
+
+async function triggerSearchUpdatesWorkflow(env) {
+  const token = env.GITHUB_ACTIONS_TRIGGER_TOKEN;
+  if (!token) {
+    return {
+      enabled: false,
+      triggered: false,
+      message: 'GitHub workflow trigger is not configured (missing GITHUB_ACTIONS_TRIGGER_TOKEN)'
+    };
+  }
+
+  const owner = env.GITHUB_OWNER || DEFAULT_GITHUB_OWNER;
+  const repo = env.GITHUB_REPO || DEFAULT_GITHUB_REPO;
+  const workflowId = env.SEARCH_UPDATES_WORKFLOW_ID || DEFAULT_WORKFLOW_ID;
+  const ref = env.SEARCH_UPDATES_REF || DEFAULT_WORKFLOW_REF;
+
+  const endpoint =
+    `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/actions/workflows/${encodeURIComponent(workflowId)}/dispatches`;
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'myaiphotoshoot-deploy-proxy',
+      },
+      body: JSON.stringify({ ref }),
+    });
+
+    if (response.status === 204) {
+      return {
+        enabled: true,
+        triggered: true,
+        message: `Triggered ${owner}/${repo}:${workflowId} on ${ref}`
+      };
+    }
+
+    const errorText = await response.text();
+    return {
+      enabled: true,
+      triggered: false,
+      status: response.status,
+      message: `GitHub workflow dispatch failed with HTTP ${response.status}`,
+      error: errorText.slice(0, 500)
+    };
+  } catch (error) {
+    return {
+      enabled: true,
+      triggered: false,
+      message: `GitHub workflow dispatch request failed: ${error.message}`
+    };
+  }
+}

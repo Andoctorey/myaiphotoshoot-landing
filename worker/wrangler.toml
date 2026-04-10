@@ -2,5 +2,12 @@ name = "myaiphotoshoot-landing-deploy-proxy"
 compatibility_date = "2024-12-01"
 main = "deploy-proxy.js"
 
-# Environment variables will be set via wrangler secret put DEPLOY_WEBHOOK_URL
-# This should point to your Cloudflare Pages deploy hook URL 
+# Required secret:
+# - DEPLOY_WEBHOOK_URL (Cloudflare Pages deploy hook URL)
+#
+# Optional secrets for triggering GitHub workflow after deploy trigger:
+# - GITHUB_ACTIONS_TRIGGER_TOKEN
+# - GITHUB_OWNER (default: Andoctorey)
+# - GITHUB_REPO (default: myaiphotoshoot-landing)
+# - SEARCH_UPDATES_WORKFLOW_ID (default: submit-sitemap.yml)
+# - SEARCH_UPDATES_REF (default: main)
