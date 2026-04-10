@@ -62,14 +62,26 @@ async function submitSitemapViaFunction() {
       })
     });
     
-    const result = await response.json();
+    const responseText = await response.text();
+    let result;
     
-    if (response.ok && result.success) {
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      result = null;
+    }
+    
+    if (response.ok && result?.success) {
       console.log('🎉 Sitemap submitted successfully via Cloudflare Pages Function!');
-      console.log(`📍 Sitemap URL: ${result.sitemapUrl}`);
+      const sitemapUrl = result?.data?.sitemapUrl || result?.sitemapUrl || 'https://myaiphotoshoot.com/sitemap.xml';
+      console.log(`📍 Sitemap URL: ${sitemapUrl}`);
       return true;
     } else {
-      console.log('⚠️ Function call failed:', result.message);
+      const message = result?.message || `HTTP ${response.status}`;
+      console.log('⚠️ Function call failed:', message);
+      if (!result && responseText) {
+        console.log(`⚠️ Non-JSON response body: ${responseText.slice(0, 300)}`);
+      }
       return false;
     }
     
@@ -102,13 +114,7 @@ async function main() {
     console.log('   - Deployment still in progress');
     console.log('✅ Google will discover the sitemap through robots.txt automatically');
     console.log('💡 Your robots.txt already includes: Sitemap: https://myaiphotoshoot.com/sitemap.xml');
-    
-    // In GitHub Actions, exit with success to avoid failing the workflow
-    if (isGitHubActions) {
-      console.log('ℹ️ Exiting gracefully in GitHub Actions environment');
-      return;
-    }
-    return;
+    console.log('ℹ️ Continuing with submission attempt despite precheck failure...');
   }
   
   // Try function method
@@ -118,6 +124,8 @@ async function main() {
     console.log('🎯 Sitemap submission completed successfully!');
     console.log('📈 Your new content should be indexed faster by Google');
     console.log('🔄 Future deployments will automatically notify Google of updates');
+    console.log('✨ Process completed!');
+    return true;
   } else {
     console.log('ℹ️ Function submission not available, but your sitemap is still discoverable!');
     console.log('🔗 Sitemap URL: https://myaiphotoshoot.com/sitemap.xml');
@@ -130,20 +138,24 @@ async function main() {
     console.log('   1. Environment variables properly configured');
     console.log('   2. Google Search Console API access');
     console.log('   See SITEMAP_SETUP.md for step-by-step instructions');
+    console.log('❌ Process completed without successful sitemap submission.');
+    return false;
   }
-  
-  console.log('✨ Process completed!');
 }
 
 // Execute if run directly
 if (require.main === module) {
-  main().catch(error => {
-    console.error('❌ Sitemap submission process failed:', error);
-    console.log('ℹ️ This does not affect your deployment - your site is still live!');
-    console.log('ℹ️ Google will still discover your sitemap through robots.txt');
-    // Don't exit with error code to avoid failing deployment
-    process.exit(0);
-  });
+  main()
+    .then(success => {
+      if (!success) {
+        process.exitCode = 1;
+      }
+    })
+    .catch(error => {
+      console.error('❌ Sitemap submission process failed:', error);
+      console.log('ℹ️ Google will still discover your sitemap through robots.txt');
+      process.exitCode = 1;
+    });
 }
 
 module.exports = { submitSitemapViaFunction }; 

@@ -40,7 +40,18 @@ jobs:
       - name: Check submission status
         run: |
           echo "🔍 Checking sitemap submission status..."
-          curl -s "https://myaiphotoshoot.com/submit-sitemap" | jq '.'
+          STATUS_BODY_FILE="/tmp/submit-sitemap-status.json"
+          HTTP_STATUS=$(curl -sS -o "$STATUS_BODY_FILE" -w "%{http_code}" "https://myaiphotoshoot.com/submit-sitemap" || true)
+          echo "HTTP status: ${HTTP_STATUS:-unknown}"
+          RESPONSE_BODY=$(cat "$STATUS_BODY_FILE" 2>/dev/null || true)
+          
+          if [ -n "$RESPONSE_BODY" ] && echo "$RESPONSE_BODY" | jq -e . >/dev/null 2>&1; then
+            echo "$RESPONSE_BODY" | jq '.'
+          else
+            echo "⚠️ Non-JSON or empty response from /submit-sitemap"
+            echo "$RESPONSE_BODY" | head -c 500
+            echo
+          fi
         continue-on-error: true
         
       - name: Success notification
