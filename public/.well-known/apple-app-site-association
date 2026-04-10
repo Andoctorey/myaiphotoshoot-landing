@@ -5,11 +5,14 @@
       {
         "appID": "V2PLAZ9ZF5.com.myaiphotoshoot",
         "paths": [
+          "NOT /support",
+          "NOT /support/*",
+          "NOT /*/support",
+          "NOT /*/support/*",
           "*"
         ]
       }
     ]
   }
 }
-
 
