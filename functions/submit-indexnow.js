@@ -11,6 +11,9 @@ const SITEMAP_URL = `${BASE_URL}/sitemap.xml`;
 const KEY_LOCATION = `${BASE_URL}/indexnow-key.txt`;
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
 const MAX_URLS_PER_BATCH = 10000;
+const INDEXNOW_MAX_RETRIES = 3;
+const INDEXNOW_BASE_RETRY_DELAY_MS = 1500;
+const RETRYABLE_INDEXNOW_STATUSES = new Set([405, 408, 425, 429, 500, 502, 503, 504]);
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -67,28 +70,21 @@ export async function onRequest(context) {
         urlList: batches[i]
       };
 
-      const response = await fetch(INDEXNOW_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8'
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const body = await response.text();
+      const batchResult = await submitBatchToIndexNow(payload);
       submissions.push({
         batch: i + 1,
         submittedUrls: batches[i].length,
-        status: response.status,
-        ok: response.ok,
-        response: body.slice(0, 500)
+        attempt: batchResult.attempt,
+        status: batchResult.status,
+        ok: batchResult.ok,
+        response: batchResult.response
       });
 
-      if (!response.ok) {
+      if (!batchResult.ok) {
         return json({
           success: false,
           message: 'IndexNow API rejected submission',
-          error: `HTTP ${response.status}`,
+          error: `HTTP ${batchResult.status}`,
           summary: {
             totalUrls: urls.length,
             batchCount: batches.length
@@ -203,6 +199,51 @@ function decodeXml(value) {
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'");
+}
+
+async function submitBatchToIndexNow(payload) {
+  let last = {
+    attempt: 1,
+    status: 500,
+    ok: false,
+    response: 'Unknown error'
+  };
+
+  for (let attempt = 1; attempt <= INDEXNOW_MAX_RETRIES; attempt++) {
+    const response = await fetch(INDEXNOW_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const body = await response.text();
+    last = {
+      attempt,
+      status: response.status,
+      ok: response.ok,
+      response: body.slice(0, 500)
+    };
+
+    if (response.ok) {
+      return last;
+    }
+
+    const canRetry = RETRYABLE_INDEXNOW_STATUSES.has(response.status) && attempt < INDEXNOW_MAX_RETRIES;
+    if (!canRetry) {
+      return last;
+    }
+
+    const delayMs = INDEXNOW_BASE_RETRY_DELAY_MS * attempt;
+    await sleep(delayMs);
+  }
+
+  return last;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function json(payload, status = 200) {

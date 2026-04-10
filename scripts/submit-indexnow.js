@@ -56,7 +56,7 @@ async function submitIndexNow() {
   });
 
   const text = await response.text();
-  let parsed = null;
+  let parsed;
 
   try {
     parsed = JSON.parse(text);
