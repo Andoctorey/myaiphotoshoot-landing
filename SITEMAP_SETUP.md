@@ -1,183 +1,169 @@
-# Automated Sitemap Submission Setup
+# Automated Search Engine Submission Setup
 
-This guide explains how the automated sitemap submission system works and how to configure it properly.
+This guide explains how automated search-engine submission works and how to configure it properly.
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
-The system consists of three main components:
+The system consists of five components:
 
-1. **Cloudflare Pages Function** (`functions/submit-sitemap.js`)
-   - Handles Google Search Console API authentication and submission
-   - Uses service account credentials for secure API access
-   - Provides both GET (status) and POST (submission) endpoints
+1. **Google submission function** (`functions/submit-sitemap.js`)
+   - Handles Google Search Console API authentication and sitemap submission.
+   - Uses a Google service account key from Cloudflare Pages environment variables.
 
-2. **Submission Script** (`scripts/submit-sitemap.js`)
-   - Calls the Cloudflare Pages Function with retry logic
-   - Checks sitemap availability before submission
-   - Provides detailed logging and error handling
+2. **IndexNow submission function** (`functions/submit-indexnow.js`)
+   - Fetches URLs from `sitemap.xml` and submits them to `https://api.indexnow.org/indexnow`.
+   - Supports batching when URL count is larger than the IndexNow per-request limit.
 
-3. **GitHub Actions Workflow** (`.github/workflows/submit-sitemap.yml`)
-   - Automatically triggers after deployment
-   - Includes proper delays for deployment completion
-   - Provides comprehensive logging and notifications
+3. **IndexNow key file function** (`functions/indexnow-key.txt.js`)
+   - Exposes the key verification file at `https://myaiphotoshoot.com/indexnow-key.txt`.
+   - Returns `INDEXNOW_KEY` as plain text.
 
-## 🔧 Configuration Steps
+4. **Submission scripts** (`scripts/submit-sitemap.js`, `scripts/submit-indexnow.js`)
+   - Call the Cloudflare Pages Functions with retries and deployment-delay handling.
+   - Provide deployment-friendly logs and non-interactive execution.
 
-### 1. Google Service Account Setup
+5. **GitHub Actions workflow** (`.github/workflows/submit-sitemap.yml`)
+   - Automatically triggers after pushes to `main`/`master`.
+   - Runs both Google and IndexNow submissions after deployment wait time.
 
-1. **Create a Google Cloud Project** (if you don't have one)
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a new project or select existing one
+## Configuration Steps
 
-2. **Enable Search Console API**
-   - Go to "APIs & Services" > "Library"
-   - Search for "Search Console API"
-   - Click "Enable"
+### 1. Google Search Console Setup
 
-3. **Create Service Account**
-   - Go to "APIs & Services" > "Credentials"
-   - Click "Create Credentials" > "Service Account"
-   - Fill in details and create
+1. Create or choose a Google Cloud project.
+2. Enable **Search Console API**.
+3. Create a service account and generate a JSON key.
+4. Add the service account email as an **Owner** in Google Search Console for `myaiphotoshoot.com`.
+5. In Cloudflare Pages, set `GOOGLE_SERVICE_ACCOUNT_KEY` to the full JSON key content.
 
-4. **Generate JSON Key**
-   - Click on your service account
-   - Go to "Keys" tab
-   - Click "Add Key" > "Create new key"
-   - Choose JSON format
-   - Download the key file
+### 2. IndexNow Setup
 
-5. **Add to Search Console**
-   - Go to [Google Search Console](https://search.google.com/search-console)
-   - Select your property
-   - Go to "Settings" > "Users and permissions"
-   - Add your service account email as an "Owner"
+1. Generate an IndexNow key (8-128 chars, letters/numbers/hyphen).
+2. In Cloudflare Pages, set environment variable `INDEXNOW_KEY` to that value.
+3. Deploy the site; the key file endpoint will be available at:
+   - `https://myaiphotoshoot.com/indexnow-key.txt`
+4. Confirm endpoint output exactly matches your key.
 
-### 2. Cloudflare Pages Configuration
+### 3. Cloudflare Pages Functions
 
-1. **Set Environment Variable**
-   - Go to your Cloudflare Pages project
-   - Navigate to "Settings" > "Environment variables"
-   - Add variable: `GOOGLE_SERVICE_ACCOUNT_KEY`
-   - Value: Copy the entire JSON content from your service account key file
+After deploy, verify these endpoints:
 
-2. **Deploy the Function**
-   - The function is automatically deployed with your site
-   - Available at: `https://myaiphotoshoot.com/submit-sitemap`
+- `https://myaiphotoshoot.com/submit-sitemap` (Google status/submission)
+- `https://myaiphotoshoot.com/submit-indexnow` (IndexNow status/submission)
+- `https://myaiphotoshoot.com/indexnow-key.txt` (IndexNow key verification file)
 
-### 3. GitHub Actions Setup
+### 4. GitHub Actions Workflow
 
-The workflow is already configured and will:
-- Trigger on pushes to `main` or `master` branch
-- Wait 130 seconds for deployment completion
-- Run the sitemap submission script
-- Provide detailed logging
+The existing workflow now:
 
-## 🚀 How It Works
+- waits 130 seconds for deployment completion,
+- submits sitemap updates to Google Search Console,
+- submits sitemap URLs through IndexNow,
+- checks status endpoints for both integrations.
+
+## How It Works
 
 ### Deployment Flow
 
-1. **Code Push** → GitHub repository
-2. **Cloudflare Pages** → Builds and deploys site
-3. **GitHub Actions** → Waits 130 seconds
-4. **Sitemap Check** → Verifies sitemap is accessible
-5. **API Submission** → Calls Google Search Console API
-6. **Status Report** → Logs results
+1. Push code to GitHub (`main`/`master`).
+2. Cloudflare Pages builds and deploys the site.
+3. GitHub Actions waits for deployment to settle.
+4. `scripts/submit-sitemap.js` calls `/submit-sitemap`.
+5. `scripts/submit-indexnow.js` calls `/submit-indexnow`.
+6. Workflow logs status responses from both endpoints.
 
-### Manual Testing
-
-You can test the system manually:
+## Manual Testing
 
 ```bash
-# Test the Cloudflare Pages Function
+# Google endpoint status
 curl -X GET "https://myaiphotoshoot.com/submit-sitemap"
 
-# Test sitemap submission
+# Google submission
 curl -X POST "https://myaiphotoshoot.com/submit-sitemap" \
   -H "Content-Type: application/json" \
   -d '{"action": "submit-sitemap"}'
 
-# Run the script locally
+# IndexNow endpoint status
+curl -X GET "https://myaiphotoshoot.com/submit-indexnow"
+
+# IndexNow submission
+curl -X POST "https://myaiphotoshoot.com/submit-indexnow" \
+  -H "Content-Type: application/json" \
+  -d '{"action": "submit-indexnow"}'
+
+# IndexNow key file
+curl -X GET "https://myaiphotoshoot.com/indexnow-key.txt"
+
+# Run scripts locally
 node scripts/submit-sitemap.js
+node scripts/submit-indexnow.js
 ```
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
-1. **"Service Account key not found"**
-   - Check that `GOOGLE_SERVICE_ACCOUNT_KEY` is set in Cloudflare Pages
-   - Verify the JSON is valid and complete
+1. **Google key missing / invalid**
+   - Verify `GOOGLE_SERVICE_ACCOUNT_KEY` is present and valid JSON.
 
-2. **"Authentication failed"**
-   - Ensure service account has Search Console API access
-   - Check that service account is added to Search Console property
-   - Verify the private key is correct
+2. **IndexNow key missing**
+   - Verify `INDEXNOW_KEY` exists in Cloudflare Pages environment variables.
 
-3. **"Sitemap not accessible"**
-   - Wait longer for deployment to complete
-   - Check if sitemap.xml exists in your build output
-   - Verify DNS propagation
+3. **IndexNow key verification mismatch**
+   - `https://myaiphotoshoot.com/indexnow-key.txt` must return exactly the same value as `INDEXNOW_KEY`.
 
-4. **"API quota exceeded"**
-   - Google Search Console has rate limits
-   - The system includes retry logic
-   - Consider reducing submission frequency
+4. **Sitemap unavailable**
+   - Wait longer for deployment propagation.
+   - Confirm `https://myaiphotoshoot.com/sitemap.xml` returns `200`.
+
+5. **IndexNow API rejection**
+   - Ensure submitted URLs are valid for `myaiphotoshoot.com`.
+   - Verify endpoint connectivity and retry on transient errors.
 
 ### Debugging Steps
 
-1. **Check GitHub Actions logs**
-   - Go to your repository > Actions tab
-   - Click on the latest workflow run
-   - Review step-by-step logs
+1. Check GitHub Actions logs in the Actions tab.
+2. Test all three Cloudflare endpoints directly.
+3. Confirm sitemap availability via:
 
-2. **Test function directly**
-   ```bash
-   curl -X GET "https://myaiphotoshoot.com/submit-sitemap"
-   ```
+```bash
+curl -I "https://myaiphotoshoot.com/sitemap.xml"
+```
 
-3. **Check sitemap availability**
-   ```bash
-   curl -I "https://myaiphotoshoot.com/sitemap.xml"
-   ```
-
-## 📊 Monitoring
+## Monitoring
 
 ### Success Indicators
 
-- ✅ GitHub Actions workflow completes successfully
-- ✅ Function returns `success: true`
-- ✅ Sitemap appears in Google Search Console
-- ✅ New content gets indexed faster
+- GitHub Actions workflow completes successfully.
+- `/submit-sitemap` and `/submit-indexnow` return `success: true`.
+- `indexnow-key.txt` serves the configured key.
+- New pages appear in Google Search Console and IndexNow-enabled engines faster.
 
 ### Log Locations
 
-- **GitHub Actions**: Repository > Actions tab
-- **Cloudflare Pages**: Functions tab in dashboard
+- **GitHub Actions**: Repository Actions tab
+- **Cloudflare Pages**: Functions logs
 - **Google Search Console**: Sitemaps section
 
-## 🔒 Security
+## Security Notes
 
-- Service account credentials are stored as environment variables
-- Function only accepts POST requests for submission
-- No sensitive data is logged
-- CORS headers are properly configured
+- Keep `GOOGLE_SERVICE_ACCOUNT_KEY` and `INDEXNOW_KEY` in Cloudflare environment variables.
+- Do not store service account JSON in source control.
+- IndexNow keys are expected to be publicly verifiable via the key file endpoint.
 
-## 📈 Benefits
+## Benefits
 
-- **Faster Indexing**: Google discovers new content immediately
-- **Automatic**: No manual intervention required
-- **Reliable**: Includes retry logic and error handling
-- **Monitored**: Full logging and status reporting
-- **Secure**: Uses official Google APIs with proper authentication
+- Faster indexing coverage across Google and IndexNow-enabled engines.
+- Fully automated post-deploy notification flow.
+- Graceful fallback: site stays fully operational even if submission calls fail.
 
-## 🆘 Support
+## Support
 
-If you encounter issues:
+If submissions fail:
 
-1. Check the troubleshooting section above
-2. Review GitHub Actions logs
-3. Test the function manually
-4. Verify Google Search Console setup
-5. Check Cloudflare Pages environment variables
+1. check workflow logs,
+2. verify endpoint responses manually,
+3. verify Cloudflare environment variables,
+4. confirm Search Console ownership and IndexNow key output.
 
-The system is designed to be robust and fail gracefully - even if sitemap submission fails, your site remains fully functional and Google will still discover your content through normal crawling. 
+Even if submission steps fail, search engines can still discover content through regular crawling and `robots.txt` sitemap discovery.
