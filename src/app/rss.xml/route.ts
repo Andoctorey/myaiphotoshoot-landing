@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { env } from '@/lib/env';
 import { locales } from '@/i18n/request';
 import { localePath } from '@/lib/seo';
+import { fetchAllPublishedBlogPosts } from '@/lib/blog-static-params';
 
 export const revalidate = 3600;
 
@@ -25,14 +26,6 @@ export async function GET() {
   // Default to English feed aggregating all locales' latest posts
   try {
     const limit = 20;
-    const resp = await fetch(buildFunctionsUrl('/blog-posts', { sitemap: '1' }), {
-      next: { revalidate: 3600 },
-    });
-    if (!resp.ok) {
-      return new NextResponse('Not Found', { status: 404 });
-    }
-    const data = await resp.json();
-    const rawPosts = Array.isArray(data.posts) ? data.posts : [];
     type FeedPost = {
       title: string;
       slug: string;
@@ -42,12 +35,13 @@ export async function GET() {
       locale: string;
     };
     const posts: FeedPost[] = [];
-    rawPosts.forEach((post: Record<string, unknown>) => {
+    const rawPosts = await fetchAllPublishedBlogPosts(buildFunctionsUrl, 'Failed to fetch blog posts for RSS');
+    rawPosts.forEach((post) => {
       const baseSlug = typeof post.slug === 'string' ? post.slug : null;
       const createdAt = typeof post.created_at === 'string' ? post.created_at : null;
       if (baseSlug && createdAt) {
         posts.push({
-          title: typeof post.title === 'string' ? post.title : baseSlug,
+          title: typeof post.title === 'string' && post.title.length > 0 ? post.title : baseSlug,
           slug: baseSlug,
           created_at: createdAt,
           featured_image_url: typeof post.featured_image_url === 'string' ? post.featured_image_url : null,
@@ -55,7 +49,7 @@ export async function GET() {
         });
       }
       const translations = (post.translations && typeof post.translations === 'object')
-        ? (post.translations as Record<string, Record<string, unknown>>)
+        ? post.translations
         : {};
       locales.forEach((locale) => {
         if (locale === 'en') return;
@@ -80,7 +74,7 @@ export async function GET() {
 
     const items = sorted.map((p) => `
       <item>
-        <title><![CDATA[${p.title}]]></title>
+            <title><![CDATA[${p.title}]]></title>
         <link>${site}${localePath(p.locale, `/blog/${p.slug}/`)}</link>
         <guid isPermaLink="true">${site}${localePath(p.locale, `/blog/${p.slug}/`)}</guid>
         <pubDate>${new Date(p.created_at).toUTCString()}</pubDate>
@@ -110,5 +104,4 @@ export async function GET() {
     return new NextResponse('Not Found', { status: 404 });
   }
 }
-
 

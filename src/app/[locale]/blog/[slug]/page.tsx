@@ -15,6 +15,7 @@ import { env } from '@/lib/env';
 import { locales } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
+import { fetchAllPublishedBlogSlugs } from '@/lib/blog-static-params';
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const base = new URL(env.SUPABASE_FUNCTIONS_URL);
@@ -47,14 +48,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     );
     
     if (!response.ok) {
-      return {
-        title: 'Blog Post Not Found - My AI Photo Shoot',
-        description: 'The requested blog post could not be found.',
-        robots: {
-          index: false,
-          follow: false,
-        },
-      };
+      if (response.status === 404) {
+        return {
+          title: 'Blog Post Not Found - My AI Photo Shoot',
+          description: 'The requested blog post could not be found.',
+          robots: {
+            index: false,
+            follow: false,
+          },
+        };
+      }
+
+      throw new Error(`Failed to fetch /blog-post metadata for "${locale}/blog/${slug}" (status ${response.status}).`);
     }
     
     const post = await response.json();
@@ -148,58 +153,38 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   } catch (error) {
     console.error('Error generating blog post metadata:', error);
-    return {
-      title: 'Blog Post - My AI Photo Shoot',
-      description: 'Read our latest blog post about AI photography and photo generation.',
-    };
+    throw error;
   }
 }
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  try {
-    const allParams: { slug: string; locale: string }[] = [];
-    const response = await fetch(
-      buildFunctionsUrl('/blog-posts', { sitemap: '1' }),
-      { next: { revalidate: 3600 } }
-    );
-
-    if (!response.ok) {
-      console.warn('Failed to fetch blog posts for sitemap:', response.status);
-      return allParams;
-    }
-
-    const data = await response.json();
-    const posts = data.posts || [];
-
-    for (const locale of locales) {
-      posts.forEach((post: { slug?: string | null }) => {
-        if (post.slug) {
-          allParams.push({ slug: post.slug, locale });
-        }
-      });
-    }
-    
-    return allParams;
-    
-  } catch (error) {
-    console.error('Error generating static params for blog posts:', error);
-    return [];
+  const slugs = await fetchAllPublishedBlogSlugs(
+    buildFunctionsUrl,
+    'Failed to fetch blog posts for localized pages',
+  );
+  const allParams: { slug: string; locale: string }[] = [];
+  for (const locale of locales) {
+    slugs.forEach((slug) => {
+      allParams.push({ slug, locale });
+    });
   }
+  return allParams;
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug, locale } = await params;
-  // Fetch post at build time to pre-render content (no loading flash)
-  let initialPost: unknown | null = null;
   const res = await fetch(
     buildFunctionsUrl('/blog-post', { slug, locale }),
     { next: { revalidate: 3600 } }
   );
   if (!res.ok) {
-    notFound();
+    if (res.status === 404) {
+      notFound();
+    }
+    throw new Error(`Failed to fetch /blog-post for "${locale}/blog/${slug}" (status ${res.status}).`);
   }
-  initialPost = await res.json();
+  const initialPost: unknown | null = await res.json();
 
   const content = (initialPost as BlogPost | null)?.content;
   if (!initialPost || typeof content !== 'string' || !content) {

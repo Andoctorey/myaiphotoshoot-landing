@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { locales } from '@/i18n/request'
 import { env } from '@/lib/env'
+import { fetchAllPublishedBlogPosts } from '@/lib/blog-static-params'
 
 /**
  * Sitemap generator
@@ -27,6 +28,21 @@ interface SitemapUseCase {
   created_at?: string
   featured_image_urls?: string[] | null
 }
+
+const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
+  const base = new URL(env.SUPABASE_FUNCTIONS_URL);
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const basePath = base.pathname.replace(/\/$/, '');
+  base.pathname = `${basePath}${normalizedPath}`;
+  if (params) {
+    const searchParams = new URLSearchParams(base.search);
+    Object.entries(params).forEach(([key, value]) => {
+      searchParams.set(key, value);
+    });
+    base.search = searchParams.toString();
+  }
+  return base.toString();
+};
 
 /**
  * Build full URL for a localized path.
@@ -66,22 +82,16 @@ function buildHreflangLanguages(
  */
 async function getAllBlogPosts(): Promise<SitemapBlogPost[]> {
   try {
-    const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?sitemap=1`,
-      {
-        next: { revalidate: 3600 }, // Cache for 1 hour
-      }
+    const posts = await fetchAllPublishedBlogPosts(
+      buildFunctionsUrl,
+      'Failed to fetch blog posts for sitemap',
     );
-
-    if (!response.ok) {
-      console.warn(`Failed to fetch blog posts for sitemap:`, response.status);
-      return [];
-    }
-
-    const data = await response.json();
-    const posts = (data.posts || []) as SitemapBlogPost[];
     console.log(`Sitemap: Fetched ${posts.length} total blog posts`);
-    return posts;
+    return posts.map((post) => ({
+      slug: post.slug,
+      created_at: post.created_at,
+      featured_image_url: post.featured_image_url ?? null,
+    }));
   } catch (error) {
     console.error('Error fetching blog posts for sitemap:', error);
     return [];
