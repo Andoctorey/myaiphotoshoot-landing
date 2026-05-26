@@ -16,9 +16,9 @@ export default function Error({
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] p-6">
       <div className="p-6 max-w-md w-full bg-white dark:bg-gray-800 rounded-xl shadow-md flex flex-col items-center space-y-4">
-        <h2 className="text-2xl font-bold text-red-600 dark:text-red-400">Something went wrong</h2>
+        <h2 className="text-2xl font-bold text-red-600 dark:text-red-400">We hit a temporary problem</h2>
         <p className="text-gray-700 dark:text-gray-300 text-center">
-          The application encountered an unexpected error.
+          Try again to reload this page and continue.
         </p>
         <button
           onClick={() => reset()}
@@ -29,4 +29,4 @@ export default function Error({
       </div>
     </div>
   );
-} 
+}

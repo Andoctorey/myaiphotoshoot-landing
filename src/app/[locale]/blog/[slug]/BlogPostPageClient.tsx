@@ -524,7 +524,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             font-size: 20px !important;
             padding: 1.25rem 1.5rem !important;
           }
-          
+
           .medium-style-article .photo-item {
             max-width: 350px !important;
           }
@@ -558,7 +558,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
           .medium-style-article ol li {
             font-size: 17px !important;
           }
-          
+
           .medium-style-article .photo-item {
             max-width: 300px !important;
           }
@@ -589,7 +589,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
           box-sizing: border-box !important;
         }
       `}</style>
-      
+
       {post && (
         <ArticleJsonLd
           locale={locale}
@@ -614,11 +614,11 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
+                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">{t('breadcrumb.home')}</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
-                <Link href={localePath(locale, '/blog/')} className="hover:text-purple-600 dark:hover:text-purple-400">Blog</Link>
+                <Link href={localePath(locale, '/blog/')} className="hover:text-purple-600 dark:hover:text-purple-400">{t('title')}</Link>
               </li>
               <li className="flex items-center min-w-0">
                 <span className="mx-2 text-gray-400 select-none">/</span>
@@ -648,15 +648,15 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                       {formatDate(safeCreatedAt, locale)}
                     </time>
                   ) : (
-                    <span>—</span>
+                    <span>-</span>
                   )}
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <ClockIcon className="w-4 h-4" />
                   <span>{calculateReadingTime(safeContent)} min read</span>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <UserIcon className="w-4 h-4" />
                   <span>My AI Photo Shoot</span>
@@ -682,13 +682,13 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                   </div>
                 )}
                 <div className="relative z-10">
-                  <TableOfContents 
+                  <TableOfContents
                     content={safeContent}
                     title={t('tableOfContents.title')}
-                    className={safeFeaturedImageUrl 
-                      ? "bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 shadow-lg" 
+                    className={safeFeaturedImageUrl
+                      ? "bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 shadow-lg"
                       : "mb-8"
-                    } 
+                    }
                   />
                 </div>
               </div>
@@ -792,4 +792,4 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
       </main>
     );
   }
-} 
+}

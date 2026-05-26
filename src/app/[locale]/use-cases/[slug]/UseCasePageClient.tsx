@@ -495,14 +495,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       )}
 
       {/* Pricing (moved to end, highlighted card) */}
-      <section className={sectionSpacing} aria-label="Pricing">
+      <section className={sectionSpacing} aria-label={tPricing('title')}>
         <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 sm:p-7 flex items-start justify-between gap-6 flex-wrap">
           <div className="min-w-0">
-            <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-200">Simple pricing</h3>
+            <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-200">{tPricing('title')}</h3>
             <ul className="mt-2 space-y-1 text-gray-900 dark:text-gray-100">
-              <li>One-time model training: <strong>{tPricing('oneTimeFeeAmount')}</strong></li>
-              <li>Generate images: ~<strong>{tPricing('price')}</strong> {tPricing('perPhoto')}</li>
-              <li>No subscription—pay only for what you create</li>
+              <li>{tPricing('oneTimeFee')}: <strong>{tPricing('oneTimeFeeAmount')}</strong></li>
+              <li>{tPricing('getStarted')}: <strong>{tPricing('price')}</strong> {tPricing('perPhoto')}</li>
+              <li>{tPricing('noSubscriptionShort')}</li>
             </ul>
           </div>
           <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
@@ -523,7 +523,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           href="https://app.myaiphotoshoot.com"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Open My AI Photo Shoot app"
+          aria-label={tDownload('webApp.button')}
           className="block"
           onClick={(e) => {
             if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
@@ -544,4 +544,3 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
     </article>
   );
 }
-

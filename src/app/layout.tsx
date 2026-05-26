@@ -23,10 +23,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://myaiphotoshoot.com"),
   title: {
-    default: "My AI Photo Shoot – AI Photo Generator",
+    default: "My AI Photo Shoot - AI Portrait Generator",
     template: "%s | My AI Photo Shoot",
   },
-  description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
+  description: "Turn selfies into realistic AI portraits for profiles, social media, marketing, and personal projects with simple pay-as-you-go pricing.",
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",
@@ -54,8 +54,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
-    description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
+    title: "My AI Photo Shoot - Studio-Quality AI Portraits From Selfies",
+    description: "Create realistic AI portraits from your own selfies for profiles, social media, marketing, and creative projects.",
     url: "https://myaiphotoshoot.com",
     siteName: "My AI Photo Shoot",
     images: [
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "My AI Photo Shoot - Transform your selfies with AI",
+        alt: "My AI Photo Shoot AI portrait examples",
       },
     ],
     locale: "en_US",
@@ -71,8 +71,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits",
-    description: "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
+    title: "My AI Photo Shoot - Studio-Quality AI Portraits From Selfies",
+    description: "Create realistic AI portraits from your own selfies for profiles, social media, marketing, and creative projects.",
     images: ["/og-image.png"],
   },
 };

@@ -5,185 +5,196 @@
     "gallery": "Galería",
     "blog": "Blog",
     "pricing": "Precios",
-    "faq": "Preguntas Frecuentes",
-    "download": "Comenzar",
+    "faq": "FAQ",
+    "download": "Empezar",
     "useCases": "Casos de uso",
-    "noUseCases": "Aún no hay casos"
+    "noUseCases": "Aún no hay casos de uso",
+    "language": "Idioma"
   },
   "hero": {
-    "title": "Transforma tus selfies en",
-    "titleHighlight": "impresionantes retratos generados por IA",
-    "description": "Crea instantáneamente miles de fotografías hiperrealistas generadas por IA para redes sociales, fotos de perfil, marketing o proyectos personales con nuestro estudio fotográfico de nueva generación.",
-    "microcopy": "Sube 10–20 selfies → un entrenamiento $2.99 → imágenes $0.03"
+    "title": "Convierte tus selfies en",
+    "titleHighlight": "retratos con IA de calidad profesional",
+    "description": "Sube algunas selfies y crea fotos realistas con IA para perfiles, redes sociales, marketing y proyectos personales con un estudio fotográfico rápido y pensado para resultados consistentes.",
+    "microcopy": "Sube 10-20 selfies -> entrena una vez por $2.99 -> genera imágenes por $0.03 cada una"
   },
   "features": {
     "title": "Funciones principales",
-    "description": "Por qué nuestro generador de fotos IA lidera el mercado",
+    "description": "Todo lo que necesitas para crear retratos con IA consistentes, sin suscripción",
     "advancedAI": {
       "title": "Motor de IA de nueva generación",
-      "description": "Impulsado por modelos de aprendizaje profundo Flux.1™ para un realismo, detalle y control creativo incomparables en cada imagen generada por IA."
+      "description": "Impulsado por modelos de aprendizaje profundo Flux.1 para lograr detalles realistas, buen parecido y control creativo flexible en cada imagen generada."
     },
     "privacyFirst": {
-      "title": "Control de privacidad integrado",
-      "description": "Elige entre galerías públicas o privadas, y elimina permanentemente tus fotos en cualquier momento - tus datos bajo tu control."
+      "title": "Controles de privacidad integrados",
+      "description": "Elige galerías públicas o privadas, gestiona tu biblioteca de fotos y elimina tus imágenes de forma permanente cuando quieras."
     },
     "affordablePricing": {
-      "title": "Precios transparentes y económicos",
-      "description": "Sin suscripciones, sin sorpresas. Entrenamiento único de IA solo $2.99 + solo $0.03 por imagen - escala sin costos adicionales."
+      "title": "Precios transparentes de pago por uso",
+      "description": "Sin suscripción ni cargos sorpresa. Entrena tu modelo una vez por $2.99 y luego genera imágenes por $0.03 cada una."
     },
     "thousandsOfStyles": {
-      "title": "Estilos creativos infinitos",
-      "description": "Explora presets incluidos o presiona \"¡Sorpréndeme!\" para generar miles de estilos únicos de IA al instante."
+      "title": "Estilos creativos sin límite",
+      "description": "Usa presets listos o prueba “Sorpréndeme” para explorar nuevos looks, escenas, atuendos y estilos visuales en segundos."
     },
     "easyCustomization": {
-      "title": "Constructor de prompts intuitivo",
-      "description": "Ajusta con precisión tus prompts o remezcla fotos de la galería pública para crear imágenes IA profesionales y personalizadas en segundos."
+      "title": "Constructor de prompts sencillo",
+      "description": "Ajusta prompts o remezcla fotos de la galería pública para crear rápidamente imágenes con IA personalizadas y de aspecto profesional."
     },
     "multiplatform": {
-      "title": "Acceso multiplataforma",
-      "description": "Usa nuestra aplicación web o apps nativas para iOS y Android - sincroniza automáticamente tu biblioteca de fotos IA en todos los dispositivos."
+      "title": "Web, iOS y Android",
+      "description": "Crea desde la web o desde las apps móviles nativas, con tu biblioteca de fotos con IA sincronizada entre dispositivos."
     }
   },
   "gallery": {
     "title": "Galería pública",
-    "description": "Fotos frescas de nuestros usuarios: las últimas imágenes generadas por IA.",
+    "description": "Fotos recientes con IA compartidas por usuarios, con ejemplos nuevos añadidos regularmente.",
     "loadMore": "Mostrar más",
-    "loading": "Cargando..."
+    "loading": "Cargando...",
+    "error": "No se pudieron cargar las imágenes de la galería. Inténtalo de nuevo más tarde.",
+    "tryAgain": "Intentar de nuevo",
+    "seoHeading": "Ejemplos de galería de fotos con IA",
+    "seoItemTitle": "Ejemplo de foto con IA",
+    "ariaLabel": "Galería de fotos generadas con IA",
+    "altPrefix": "Foto generada con IA",
+    "promptAriaPrefix": "Foto con IA con el prompt",
+    "captionPrefix": "Ejemplo de foto con IA"
   },
   "blog": {
-    "title": "Blog de Fotos IA",
-    "description": "Descubre los últimos consejos, tutoriales y conocimientos sobre fotografía con IA y creación de arte digital.",
-    "viewAll": "Ver todos los artículos del Blog de Fotos IA",
+    "title": "Blog de fotos con IA",
+    "description": "Consejos prácticos, tutoriales e ideas para mejorar retratos con IA, prompts y flujos de trabajo de imagen digital.",
+    "viewAll": "Ver todos los artículos del blog de fotos con IA",
     "readingTime": "min de lectura",
     "publishedOn": "Publicado el",
-    "noPostsTitle": "Aún no hay publicaciones",
-    "noPostsDescription": "Estamos trabajando en crear contenido increíble para ti. ¡Vuelve pronto!",
-    "errorTitle": "Error al cargar las publicaciones",
-    "errorDescription": "Por favor, inténtalo de nuevo más tarde.",
+    "noPostsTitle": "Aún no hay artículos",
+    "noPostsDescription": "Estamos preparando guías útiles sobre fotos con IA. Vuelve pronto.",
+    "errorTitle": "No se pudieron cargar los artículos",
+    "errorDescription": "Inténtalo de nuevo más tarde.",
     "loading": "Cargando...",
     "previous": "Anterior",
     "next": "Siguiente",
-    "notFound": "Publicación no encontrada",
-    "backToBlog": "← Volver al Blog",
+    "notFound": "Artículo no encontrado",
+    "backToBlog": "← Volver al blog",
     "breadcrumb": {
       "home": "Inicio"
     },
     "author": {
-      "bio": "Plataforma líder de generación de fotos con IA que ayuda a creadores, empresas e individuos a transformar sus fotos en retratos e imágenes impresionantes generadas por IA. Descubre lo último en tecnología de fotografía con IA y creación de arte digital."
+      "bio": "My AI Photo Shoot ayuda a creadores, empresas y personas a convertir selfies en retratos e imágenes realistas con IA para usos creativos y profesionales cotidianos."
     },
     "relatedPosts": {
-      "title": "Artículos Relacionados",
-      "comingSoon": "¡Próximamente más artículos relacionados! Estamos trabajando en crear más contenido útil sobre fotografía con IA."
+      "title": "Artículos relacionados",
+      "comingSoon": "Pronto habrá más artículos relacionados. Estamos trabajando en guías útiles sobre fotografía con IA."
     },
     "cta": {
       "title": "¿Listo para crear tus fotos con IA?",
-      "description": "Transforma tus fotos en imágenes generadas por IA impresionantes con nuestra tecnología avanzada.",
-      "button": "Comenzar a crear ahora"
+      "description": "Entrena tu modelo personal de IA y empieza a generar retratos realistas en minutos.",
+      "button": "Empezar a crear"
     },
     "tableOfContents": {
-      "title": "Índice de contenidos"
+      "title": "Índice"
     }
   },
   "pricing": {
-    "title": "Sistema simple de pago por uso",
-    "description": "Paga solo por lo que uses. Sin tarifas mensuales - generación potente de fotos IA a una fracción del costo.",
+    "title": "Precios simples de pago por uso",
+    "description": "Paga solo cuando creas. Sin plan mensual, sin paquetes de créditos y sin cargos ocultos.",
     "payAsYouGo": "Pago por uso",
-    "perfectFor": "Ideal para influencers, empresas, creadores de contenido y cualquiera que busque imágenes IA impresionantes.",
-    "whatsIncluded": "Todo lo que obtienes",
+    "perfectFor": "Ideal para creadores, fundadores, marketers, equipos y cualquiera que necesite imágenes pulidas con IA bajo demanda.",
+    "whatsIncluded": "Qué incluye",
     "features": {
-      "training": "Entrenamiento de modelo IA personalizado",
+      "training": "Entrenamiento de modelo personal de IA",
       "unlimited": "Generación ilimitada de imágenes",
       "custom": "Personalización avanzada de prompts",
       "privacy": "Opciones de galería privada y pública",
-      "social": "Compartir fácil en redes sociales",
+      "social": "Compartir fácilmente en redes sociales",
       "download": "Descargas en alta resolución",
-      "support": "Soporte experto 24/7",
-      "updates": "Mejoras continuas de IA"
+      "support": "Soporte al cliente ágil",
+      "updates": "Mejoras continuas de calidad de IA"
     },
     "price": "$0.03",
     "perPhoto": "por imagen",
-    "getStarted": "Comenzar a generar",
-    "oneTimeFee": "Tarifa única de entrenamiento IA",
-    "oneTimeFeeAmount": "Solo $2.99"
+    "getStarted": "Empezar a generar",
+    "oneTimeFee": "Tarifa única de entrenamiento de IA",
+    "oneTimeFeeAmount": "$2.99",
+    "noSubscriptionShort": "Sin suscripción. Paga solo por lo que creas."
   },
   "download": {
-    "title": "Comienza a crear hoy",
-    "description": "Descarga nuestro estudio de fotos IA o lanza la aplicación web - crea imágenes IA profesionales en menos de un minuto.",
+    "title": "Empieza a crear hoy",
+    "description": "Abre la app web o instala la app móvil y crea fotos con IA pulidas en minutos.",
     "choosePlatform": "Elige tu plataforma",
     "webApp": {
-      "title": "Aplicación web",
-      "description": "Sin instalación necesaria. Acceso instantáneo a tu estudio IA en cualquier navegador.",
-      "button": "Lanzar ahora"
+      "title": "App web",
+      "description": "No requiere instalación. Abre tu estudio fotográfico con IA en cualquier navegador moderno.",
+      "button": "Abrir app web"
     },
     "mobileApps": {
-      "title": "Aplicaciones móviles",
-      "description": "Apps nativas completas para iOS y Android - crea imágenes IA sobre la marcha.",
+      "title": "Apps móviles",
+      "description": "Crea, revisa y descarga imágenes con IA desde apps nativas para iOS y Android.",
       "googlePlay": "Obtener en Google Play",
       "appStore": "Descargar en App Store"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Crea, personaliza y comparte fotografías impresionantes generadas por IA - impulsado por tecnología de aprendizaje profundo de vanguardia.",
+    "description": "Crea, personaliza y comparte fotos realistas generadas con IA a partir de tus propias selfies.",
     "links": "Enlaces rápidos",
     "legal": "Legal",
     "openSource": "Código abierto",
     "twitter": "Twitter (X)",
     "support": "Soporte",
-    "copyright": "© 2025 My AI Photo Shoot. Todos los derechos reservados."
+    "copyright": "© 2025 My AI Photo Shoot. Todos los derechos reservados.",
+    "opensInNewTab": "se abre en una pestaña nueva"
   },
   "supportPage": {
     "title": "Atención al cliente",
-    "description": "¿Tienes algún problema o pregunta? Nuestro equipo de soporte está listo para ayudar en 24-48 horas.",
+    "description": "¿Tienes una pregunta o necesitas ayuda con tus fotos, pagos o cuenta? Escríbenos y responderemos en 24-48 horas.",
     "form": {
-      "email": "Dirección de correo electrónico",
+      "email": "Correo electrónico",
       "message": "Tu mensaje",
-      "submit": "Enviar",
+      "submit": "Enviar mensaje",
       "emailPlaceholder": "tu@ejemplo.com",
-      "messagePlaceholder": "Describe tu problema o pregunta...",
-      "success": "¡Gracias! Hemos recibido tu mensaje y responderemos pronto.",
-      "error": "¡Ups! Algo salió mal. Por favor, inténtalo de nuevo más tarde.",
-      "emailRequired": "El correo electrónico es requerido",
-      "messageRequired": "El mensaje es requerido",
-      "invalidEmail": "Por favor, ingresa un correo electrónico válido",
-      "privacyNotice": "Solo usaremos tu correo electrónico para responder y nunca lo compartiremos con terceros.",
-      "responseTime": "Espera una respuesta en 24 horas."
+      "messagePlaceholder": "Cuéntanos qué pasó o con qué necesitas ayuda...",
+      "success": "Gracias. Recibimos tu mensaje y responderemos pronto.",
+      "error": "Algo salió mal. Inténtalo de nuevo más tarde.",
+      "emailRequired": "El correo electrónico es obligatorio",
+      "messageRequired": "El mensaje es obligatorio",
+      "invalidEmail": "Ingresa un correo electrónico válido",
+      "privacyNotice": "Usaremos tu correo solo para responder a tu solicitud de soporte.",
+      "responseTime": "Tiempo de respuesta habitual: dentro de 24 horas."
     }
   },
   "faq": {
-    "title": "Preguntas Frecuentes",
-    "description": "Obtén respuestas a preguntas comunes sobre nuestro servicio de generación de fotos IA",
+    "title": "Preguntas frecuentes",
+    "description": "Respuestas sobre entrenamiento de modelos de IA, precios, privacidad y generación de imágenes.",
     "whyNotChatGPT": {
-      "question": "¿Por qué no ChatGPT?",
-      "answer": "ChatGPT solo puede editar fotos existentes, pero My AI Photo Shoot crea fotos completamente nuevas y originales desde cero usando modelos avanzados de IA. Generamos miles de retratos únicos e hiperrealistas adaptados a tus preferencias de estilo, mientras que ChatGPT está limitado a edición básica y modificaciones de fotos."
+      "question": "¿Por qué usar My AI Photo Shoot en lugar de una app general de chat con IA?",
+      "answer": "Las apps generales de chat con IA sirven para muchas tareas. My AI Photo Shoot está enfocado en generar fotos repetibles a partir de tus selfies: entrenas un modelo personal una vez, mantienes un parecido consistente, usas presets pensados para fotos y generas tantos retratos como necesites con un precio predecible por imagen."
     },
     "howItWorks": {
-      "question": "¿Cómo funciona la generación de fotos IA?",
-      "answer": "Nuestra IA usa las fotos que subes para entrenar un modelo personalizado que aprende tus características únicas y preferencias de estilo. Una vez entrenado, puede generar fotos ilimitadas tuyas en diferentes poses, escenarios y estilos usando algoritmos avanzados de aprendizaje profundo."
+      "question": "¿Cómo funciona la generación de fotos con IA?",
+      "answer": "Subes un pequeño conjunto de selfies y entrenamos un modelo personal de IA que aprende tu apariencia. Después puedes generar nuevas imágenes tuyas con distintos atuendos, poses, escenarios y estilos visuales."
     },
     "pricing": {
       "question": "¿Cuánto cuesta?",
-      "answer": "Usamos un modelo simple de pago por uso: una tarifa única de $2.99 para entrenar tu modelo IA personalizado, más solo $0.03 por imagen generada. Sin suscripciones mensuales ni tarifas ocultas - solo paga por lo que uses."
+      "answer": "El precio es de pago por uso: $2.99 para entrenar tu modelo personal de IA una vez y luego $0.03 por cada imagen generada. No hay suscripciones mensuales ni cargos ocultos."
     },
     "privacy": {
-      "question": "¿Están seguros y son privados mis datos?",
-      "answer": "Absolutamente. Tienes control total sobre tus configuraciones de privacidad - elige entre galerías públicas o privadas. Puedes eliminar permanentemente tus fotos en cualquier momento, y nunca compartimos tus datos personales con terceros. Tu privacidad es nuestra prioridad."
+      "question": "¿Mis datos están seguros y privados?",
+      "answer": "Tú controlas la privacidad. Elige galerías públicas o privadas, elimina fotos cuando quieras y gestiona tu biblioteca desde tu cuenta. No vendemos tus datos personales."
     },
     "imageQuality": {
       "question": "¿Qué calidad tienen las imágenes generadas?",
-      "answer": "Todas las imágenes se generan en alta resolución adecuada para redes sociales, fotos de perfil, materiales de marketing e impresión. Nuestros modelos IA Flux.1™ producen imágenes increíblemente realistas y detalladas que son prácticamente indistinguibles de la fotografía profesional."
+      "answer": "Las imágenes se generan en alta resolución para redes sociales, perfiles, materiales de marketing, proyectos creativos y muchos usos impresos. La calidad depende de las selfies que subas y del prompt que elijas."
     },
     "howManyPhotos": {
       "question": "¿Cuántas fotos puedo generar?",
-      "answer": "Una vez que tu modelo IA esté entrenado, puedes generar fotos ilimitadas por solo $0.03 cada una. No hay límites en la cantidad de imágenes que puedes crear - genera tantos estilos y variaciones como quieras."
+      "answer": "Cuando tu modelo de IA esté entrenado, puedes generar tantas imágenes como quieras por $0.03 cada una. No hay paquete fijo ni límite mensual."
     },
     "platforms": {
-      "question": "¿Qué plataformas están soportadas?",
-      "answer": "Puedes acceder a nuestro servicio a través de nuestra aplicación web (funciona en cualquier navegador), app nativa para iOS o app para Android. Tus fotos se sincronizan automáticamente en todos los dispositivos, para que puedas generar y acceder a tus imágenes en cualquier lugar."
+      "question": "¿Qué plataformas están disponibles?",
+      "answer": "Puedes usar My AI Photo Shoot en la web, iOS y Android. Tus imágenes generadas se sincronizan entre dispositivos cuando usas la misma cuenta."
     },
     "dataRetention": {
-      "question": "¿Por cuánto tiempo guardas mis fotos?",
-      "answer": "Tienes control completo sobre tus datos. Las fotos se almacenan de forma segura en tu cuenta hasta que decidas eliminarlas. Puedes quitar permanentemente cualquier foto o todas las fotos en cualquier momento a través de la configuración de tu cuenta - sin preguntas."
+      "question": "¿Cuánto tiempo conservan mis fotos?",
+      "answer": "Las fotos permanecen en tu cuenta hasta que las eliminas. Puedes borrar permanentemente imágenes individuales o toda tu biblioteca desde la configuración de la cuenta."
     }
   },
   "useCase": {
@@ -193,31 +204,31 @@
     "loading": "Cargando...",
     "notFound": "Caso de uso no encontrado.",
     "badges": {
-      "cheapest": "El más económico del mercado",
+      "cheapest": "Fotos con IA de bajo costo",
       "noSubscription": "Sin suscripción",
-      "poweredByFlux": "Impulsado por Flux (modelo IA líder)"
+      "poweredByFlux": "Impulsado por Flux"
     },
-    "galleryDisclaimer": "Todas las fotos mostradas fueron generadas por nuestra IA a partir de selfies de usuarios.",
+    "galleryDisclaimer": "Todos los ejemplos mostrados fueron generados por nuestra IA a partir de selfies de usuarios.",
     "howItWorks": {
       "title": "Cómo funciona",
       "step1": {
-        "title": "Sube 10–20 selfies",
-        "time": "(5 minutos)",
-        "desc": "Usa tus fotos favoritas o toma algunas nuevas."
+        "title": "Sube 10-20 selfies",
+        "time": "(unos 5 minutos)",
+        "desc": "Usa fotos claras que ya tengas o toma algunas selfies nuevas."
       },
       "step2": {
         "title": "Entrena tu modelo de IA",
         "time": "(unos 2 minutos)",
-        "desc": "Ajustamos una vez para que todas las fotos futuras se parezcan a ti."
+        "desc": "Ajustamos un modelo personal para que las futuras imágenes mantengan tu parecido."
       },
       "step3": {
         "title": "Genera y descarga tus favoritas",
-        "time": "(5 minutos)",
-        "desc": "Crea todos los estilos que quieras — guarda las mejores."
+        "time": "(unos 5 minutos)",
+        "desc": "Crea diferentes looks y guarda las imágenes que más te gusten."
       }
     },
     "stickyCta": {
       "label": "Empieza por {oneTimeFee} • {price}/{perPhoto}"
     }
   }
-} 
+}

@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const m = messages as HomeI18n;
   const description = typeof m.hero?.description === 'string'
     ? m.hero.description as string
-    : 'Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.';
-  const title = 'My AI Photo Shoot – AI Photo Generator';
+    : 'Turn selfies into realistic AI portraits for profiles, social media, marketing, and personal projects with simple pay-as-you-go pricing.';
+  const title = 'My AI Photo Shoot - AI Portrait Generator';
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     openGraph: {
       // Keep richer OG title for social sharing
-      title: 'My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits',
+      title: 'My AI Photo Shoot - Studio-Quality AI Portraits From Selfies',
       description,
       url: canonicalUrl(locale, '/'),
       siteName: 'My AI Photo Shoot',
@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: '/og-image.png',
           width: 1200,
           height: 630,
-          alt: 'My AI Photo Shoot - Transform your selfies with AI',
+          alt: 'My AI Photo Shoot AI portrait examples',
         },
       ],
       locale: ogLocaleFromAppLocale(locale),
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits',
+      title: 'My AI Photo Shoot - Studio-Quality AI Portraits From Selfies',
       description,
       images: ['/og-image.png'],
     },

@@ -223,13 +223,13 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
   if (isError && galleryItems.length === 0) {
     return (
       <div className="mt-12 text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg" role="alert" aria-live="polite">
-        <p className="text-red-600 dark:text-red-400">Unable to load gallery images. Please try again later.</p>
+        <p className="text-red-600 dark:text-red-400">{t('error')}</p>
         <button 
           onClick={() => mutate()}
           className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-          aria-label="Try loading gallery again"
+          aria-label={t('tryAgain')}
         >
-          Try Again
+          {t('tryAgain')}
         </button>
       </div>
     );
@@ -237,15 +237,15 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
 
   return (
     <div className="mt-12" aria-labelledby="gallery-heading">
-      <h2 id="gallery-heading" className="sr-only">AI-Generated Photo Gallery Examples</h2>
+      <h2 id="gallery-heading" className="sr-only">{t('seoHeading')}</h2>
       
       {/* Hidden content for SEO - will be indexed but not visible */}
       <div className="sr-only">
-        <h4>AI-Generated Photo Gallery Examples</h4>
+        <h4>{t('seoHeading')}</h4>
         <ul>
           {galleryItems.map((item) => (
             <li key={`seo-${item.id}`}>
-              <h5>AI Photo Example</h5>
+              <h5>{t('seoItemTitle')}</h5>
               <p>{item.prompt}</p>
             </li>
           ))}
@@ -256,7 +256,7 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
       <ul 
         ref={containerRef}
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2"
-        aria-label="Gallery of AI-generated photos"
+        aria-label={t('ariaLabel')}
       >
         {/* When loading and no items available yet, show placeholders */}
         {galleryItems.length === 0 ? (
@@ -276,7 +276,7 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
               >
                 <PhotoCard
                   src={item.public_url}
-                  alt={`AI generated photo: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
+                  alt={`${t('altPrefix')}: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
                   mode="fill"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                   priority={index === 0}
@@ -284,8 +284,8 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
                   imgClassName=""
                   linkHref={`https://app.myaiphotoshoot.com/#generate/${item.id}`}
                   linkExternal={true}
-                  ariaLabel={`AI photo with prompt: ${item.prompt}`}
-                  figCaptionSrOnly={`AI photo example. ${item.prompt}`}
+                  ariaLabel={`${t('promptAriaPrefix')}: ${item.prompt}`}
+                  figCaptionSrOnly={`${t('captionPrefix')}. ${item.prompt}`}
                 />
               </motion.div>
             </li>

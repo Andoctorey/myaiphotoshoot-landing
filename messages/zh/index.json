@@ -1,65 +1,74 @@
 {
   "navigation": {
     "home": "首页",
-    "features": "功能特色",
-    "gallery": "作品库",
+    "features": "功能",
+    "gallery": "图库",
     "blog": "博客",
-    "pricing": "价格方案",
-    "faq": "常见问题",
-    "download": "立即开始",
-    "useCases": "使用案例",
-    "noUseCases": "暂无使用案例"
+    "pricing": "价格",
+    "faq": "FAQ",
+    "download": "开始使用",
+    "useCases": "使用场景",
+    "noUseCases": "暂无使用场景",
+    "language": "语言"
   },
   "hero": {
-    "title": "将您的自拍变成",
-    "titleHighlight": "令人惊艳的AI生成肖像",
-    "description": "使用我们新一代AI拍摄工作室，瞬间创造数千张超逼真的AI生成照片，完美适用于社交媒体、头像、营销或个人项目。",
-    "microcopy": "上传10–20张自拍 → 一次训练 $2.99 → 图片 $0.03"
+    "title": "把你的自拍变成",
+    "titleHighlight": "影棚级 AI 肖像",
+    "description": "上传几张自拍，即可用快速 AI 写真工作室生成适合头像、社交媒体、营销和个人项目的真实感 AI 照片，并保持稳定效果。",
+    "microcopy": "上传 10-20 张自拍 -> 一次训练 $2.99 -> 每张图片 $0.03"
   },
   "features": {
     "title": "核心功能",
-    "description": "为什么我们的AI照片生成器领先市场",
+    "description": "无需订阅，也能稳定生成一致的 AI 肖像",
     "advancedAI": {
-      "title": "新一代AI引擎",
-      "description": "基于Flux.1™深度学习模型，为每张AI生成图片提供无与伦比的真实感、细节表现和创意控制。"
+      "title": "新一代 AI 引擎",
+      "description": "基于 Flux.1 深度学习模型，在每张生成图中提供真实细节、稳定相似度和灵活创意控制。"
     },
     "privacyFirst": {
-      "title": "内置隐私保护",
-      "description": "自主选择公开或私密图库，随时永久删除您的照片 -  - 您的数据，完全由您掌控。"
+      "title": "内置隐私控制",
+      "description": "可选择公开或私密图库，管理你的照片库，并在需要时永久删除图片。"
     },
     "affordablePricing": {
-      "title": "透明实惠的定价",
-      "description": "无订阅费用，无隐藏收费。一次性AI训练费仅需2.99美元，每张图片仅0.03美元 -  - 无额外成本轻松扩展。"
+      "title": "透明按量付费",
+      "description": "无需订阅，没有隐藏费用。一次训练模型 $2.99，之后每张图片 $0.03。"
     },
     "thousandsOfStyles": {
-      "title": "无穷创意风格",
-      "description": "探索内置预设风格，或点击\"给我惊喜！\"瞬间生成数千种独特的AI艺术风格。"
+      "title": "丰富创意风格",
+      "description": "使用现成预设，或尝试“给我惊喜”，几秒内探索不同造型、场景、服装和视觉风格。"
     },
     "easyCustomization": {
-      "title": "智能提示词生成器",
-      "description": "精准调整您的提示词，或重新创作公开图库中的照片，数秒内获得专业定制的AI图像。"
+      "title": "简单提示词工具",
+      "description": "微调提示词，或基于公开图库照片重新创作，快速得到个性化、专业感的 AI 图像。"
     },
     "multiplatform": {
-      "title": "全平台同步",
-      "description": "使用我们的网页版或iOS、Android原生应用 -  - 您的AI照片库在所有设备间自动同步。"
+      "title": "Web、iOS 和 Android",
+      "description": "可在网页或原生移动应用中创作，你的 AI 照片库会在设备间同步。"
     }
   },
   "gallery": {
-    "title": "公开作品库",
-    "description": "用户最新创作：最新的AI生成图片作品。",
-    "loadMore": "加载更多",
-    "loading": "加载中..."
+    "title": "公开图库",
+    "description": "用户分享的近期 AI 照片，并会定期新增示例。",
+    "loadMore": "查看更多",
+    "loading": "加载中...",
+    "error": "无法加载图库图片。请稍后重试。",
+    "tryAgain": "重试",
+    "seoHeading": "AI 照片图库示例",
+    "seoItemTitle": "AI 照片示例",
+    "ariaLabel": "AI 生成照片图库",
+    "altPrefix": "AI 生成照片",
+    "promptAriaPrefix": "带提示词的 AI 照片",
+    "captionPrefix": "AI 照片示例"
   },
   "blog": {
-    "title": "AI照片博客",
-    "description": "发现关于AI摄影和数字艺术创作的最新技巧、教程和见解。",
-    "viewAll": "查看 AI 照片博客的所有文章",
+    "title": "AI 照片博客",
+    "description": "关于 AI 肖像、提示词和数字图像工作流的实用技巧、教程与灵感。",
+    "viewAll": "查看所有 AI 照片博客文章",
     "readingTime": "分钟阅读",
     "publishedOn": "发布于",
     "noPostsTitle": "暂无博客文章",
-    "noPostsDescription": "我们正在为您创建精彩内容。请稍后再来！",
-    "errorTitle": "加载博客文章失败",
-    "errorDescription": "请稍后再试。",
+    "noPostsDescription": "我们正在准备实用的 AI 照片指南，请稍后回来查看。",
+    "errorTitle": "无法加载博客文章",
+    "errorDescription": "请稍后重试。",
     "loading": "加载中...",
     "previous": "上一页",
     "next": "下一页",
@@ -69,155 +78,157 @@
       "home": "首页"
     },
     "author": {
-      "bio": "领先的AI照片生成平台，帮助创作者、企业和个人将照片转化为惊艳的AI生成肖像和图片。探索AI摄影技术和数字艺术创作的最新动态。"
+      "bio": "My AI Photo Shoot 帮助创作者、企业和个人把自拍转化为适合日常创作与专业用途的真实感 AI 肖像和图像。"
     },
     "relatedPosts": {
       "title": "相关文章",
-      "comingSoon": "更多相关文章即将推出！我们正在创作更多关于AI摄影的有用内容。"
+      "comingSoon": "更多相关文章即将上线。我们正在制作实用的 AI 摄影指南。"
     },
     "cta": {
-      "title": "准备好创建您的AI照片了吗？",
-      "description": "使用我们的先进技术，将您的照片转化为令人惊艳的AI生成图片。",
-      "button": "立即开始创建"
+      "title": "准备好创建你的 AI 照片了吗？",
+      "description": "训练你的个人 AI 模型，几分钟内开始生成真实感肖像。",
+      "button": "立即开始创作"
     },
     "tableOfContents": {
       "title": "目录"
     }
   },
   "pricing": {
-    "title": "简单灵活的按需付费",
-    "description": "只为实际使用付费。无月费负担 -  - 强大的AI照片生成，价格仅为传统方式的零头。",
-    "payAsYouGo": "按需付费",
-    "perfectFor": "完美适合网红博主、企业用户、内容创作者以及所有追求精美AI图片的用户。",
-    "whatsIncluded": "您将享受的服务",
+    "title": "简单按量付费",
+    "description": "只在创作时付费。没有月费套餐、积分包或隐藏费用。",
+    "payAsYouGo": "按量付费",
+    "perfectFor": "适合创作者、创业者、营销人员、团队，以及任何需要按需生成精致 AI 图片的人。",
+    "whatsIncluded": "包含内容",
     "features": {
-      "training": "个性化AI模型训练",
-      "unlimited": "无限制图片生成",
-      "custom": "高级提示词定制",
-      "privacy": "私密与公开图库选项",
-      "social": "便捷社交媒体分享",
-      "download": "高清图片下载",
-      "support": "24/7专业技术支持",
-      "updates": "持续AI技术升级"
+      "training": "个人 AI 模型训练",
+      "unlimited": "无限图片生成",
+      "custom": "高级提示词自定义",
+      "privacy": "私密和公开图库选项",
+      "social": "便捷社交分享",
+      "download": "高清下载",
+      "support": "及时客户支持",
+      "updates": "持续 AI 质量改进"
     },
-    "price": "0.03美元",
+    "price": "$0.03",
     "perPhoto": "每张图片",
-    "getStarted": "立即开始创作",
-    "oneTimeFee": "一次性AI训练费用",
-    "oneTimeFeeAmount": "仅需2.99美元"
+    "getStarted": "开始生成",
+    "oneTimeFee": "一次性 AI 训练费",
+    "oneTimeFeeAmount": "$2.99",
+    "noSubscriptionShort": "无需订阅，只为你创建的内容付费。"
   },
   "download": {
-    "title": "今日开启创作之旅",
-    "description": "下载我们的AI拍摄工作室或启动网页版 -  - 不到一分钟即可创作专业级AI图片。",
-    "choosePlatform": "选择您的平台",
+    "title": "今天开始创作",
+    "description": "打开网页应用或安装移动应用，几分钟内创建精致 AI 照片。",
+    "choosePlatform": "选择平台",
     "webApp": {
-      "title": "网页版",
-      "description": "无需安装。在任意浏览器中即刻使用您的AI工作室。",
-      "button": "立即启动"
+      "title": "网页应用",
+      "description": "无需安装。在任何现代浏览器中打开你的 AI 写真工作室。",
+      "button": "打开网页应用"
     },
     "mobileApps": {
-      "title": "移动端应用",
-      "description": "功能完整的iOS和Android原生应用 -  - 随时随地创作AI图片。",
-      "googlePlay": "Google Play下载",
-      "appStore": "App Store下载"
+      "title": "移动应用",
+      "description": "在 iOS 和 Android 原生应用中创建、查看并下载 AI 图片。",
+      "googlePlay": "在 Google Play 获取",
+      "appStore": "在 App Store 下载"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "创作、定制并分享令人惊艳的AI生成照片 -  - 由前沿深度学习技术强力驱动。",
+    "description": "用你自己的自拍创建、定制并分享真实感 AI 照片。",
     "links": "快捷链接",
     "legal": "法律条款",
-    "openSource": "开源项目",
+    "openSource": "开源",
     "twitter": "Twitter (X)",
-    "support": "技术支持",
-    "copyright": "© 2025 My AI Photo Shoot. 版权所有。"
+    "support": "支持",
+    "copyright": "© 2025 My AI Photo Shoot. 版权所有。",
+    "opensInNewTab": "在新标签页中打开"
   },
   "supportPage": {
     "title": "客户支持",
-    "description": "遇到问题或有疑问？我们的专业支持团队将在24-48小时内为您解答。",
+    "description": "如果你对照片、付款或账户有疑问或需要帮助，请给我们留言，我们会在 24-48 小时内回复。",
     "form": {
-      "email": "电子邮箱地址",
-      "message": "您的留言",
-      "submit": "发送",
+      "email": "电子邮箱",
+      "message": "你的留言",
+      "submit": "发送留言",
       "emailPlaceholder": "you@example.com",
-      "messagePlaceholder": "请描述您遇到的问题或疑问...",
-      "success": "感谢您的留言！我们已收到并将尽快回复。",
-      "error": "抱歉，系统出现问题。请稍后重试。",
-      "emailRequired": "邮箱地址为必填项",
-      "messageRequired": "留言内容为必填项",
-      "invalidEmail": "请输入有效的电子邮箱地址",
-      "privacyNotice": "我们仅使用您的邮箱进行回复，绝不与第三方分享。",
-      "responseTime": "预计24小时内回复。"
+      "messagePlaceholder": "请说明发生了什么，或你需要什么帮助...",
+      "success": "谢谢。我们已收到你的留言，会尽快回复。",
+      "error": "出现问题。请稍后重试。",
+      "emailRequired": "请输入电子邮箱",
+      "messageRequired": "请输入留言内容",
+      "invalidEmail": "请输入有效的电子邮箱",
+      "privacyNotice": "我们只会使用你的邮箱回复这次支持请求。",
+      "responseTime": "通常回复时间：24 小时内。"
     }
   },
   "faq": {
     "title": "常见问题",
-    "description": "获取有关我们AI照片生成服务的常见问题解答",
+    "description": "关于 AI 模型训练、价格、隐私和图片生成的常见问题解答。",
     "whyNotChatGPT": {
-      "question": "为什么不用ChatGPT？",
-      "answer": "ChatGPT只能编辑现有照片，而My AI Photo Shoot使用先进的AI模型从零开始创建全新的原创照片。我们生成数千张独特、超逼真的肖像，完全符合您的风格偏好，而ChatGPT仅限于基本的照片编辑和修改功能。"
+      "question": "为什么选择 My AI Photo Shoot，而不是通用 AI 聊天应用？",
+      "answer": "通用 AI 聊天应用适合处理很多任务。My AI Photo Shoot 专注于基于自拍的可重复照片生成：你只需训练一次个人模型，就能保持稳定相似度，使用面向照片的预设，并按清晰的单张价格生成所需数量的肖像。"
     },
     "howItWorks": {
-      "question": "AI照片生成是如何工作的？",
-      "answer": "我们的AI使用您上传的照片训练定制模型，学习您的独特特征和风格偏好。训练完成后，它可以使用先进的深度学习算法，以不同姿势、场景和风格生成无限张您的新照片。"
+      "question": "AI 照片生成如何工作？",
+      "answer": "你上传一小组自拍，我们训练一个学习你外貌特征的个人 AI 模型。训练完成后，你可以生成不同服装、姿势、场景和视觉风格的新照片。"
     },
     "pricing": {
       "question": "费用是多少？",
-      "answer": "我们采用简单的按需付费模式：训练您的定制AI模型一次性收费2.99美元，每生成一张图片仅需0.03美元。无月费订阅或隐藏费用 - 只为使用的服务付费。"
+      "answer": "价格为按量付费：一次训练个人 AI 模型 $2.99，之后每张生成图片 $0.03。没有月度订阅或隐藏费用。"
     },
     "privacy": {
-      "question": "我的数据安全且私密吗？",
-      "answer": "绝对安全。您完全控制隐私设置 - 选择公开或私密图库。您可以随时永久删除照片，我们绝不与第三方分享您的个人数据。您的隐私是我们的首要任务。"
+      "question": "我的数据安全吗？",
+      "answer": "你可以控制隐私设置。选择公开或私密图库，随时删除照片，并在账户中管理图片库。我们不会出售你的个人数据。"
     },
     "imageQuality": {
-      "question": "生成图片的质量如何？",
-      "answer": "所有图片均以高分辨率生成，适用于社交媒体、头像、营销材料和打印。我们的Flux.1™ AI模型生成极其逼真、细致的图片，几乎与专业摄影无法区分。"
+      "question": "生成图片质量如何？",
+      "answer": "图片以高分辨率生成，适用于社交媒体、头像、营销素材、创意项目和许多打印用途。质量取决于你上传的自拍和选择的提示词。"
     },
     "howManyPhotos": {
       "question": "我可以生成多少张照片？",
-      "answer": "AI模型训练完成后，您可以以每张仅0.03美元的价格生成无限张照片。对创建图片数量没有限制 - 生成任意数量的风格和变化。"
+      "answer": "AI 模型训练完成后，你可以按每张 $0.03 生成任意数量的图片。没有固定套餐或月度上限。"
     },
     "platforms": {
       "question": "支持哪些平台？",
-      "answer": "您可以通过我们的网页版应用（适用于任何浏览器）、iOS原生应用或Android应用访问我们的服务。您的照片在所有设备间自动同步，随时随地生成和访问图片。"
+      "answer": "你可以在网页、iOS 和 Android 上使用 My AI Photo Shoot。使用同一账户时，生成的图片会在设备间同步。"
     },
     "dataRetention": {
-      "question": "您会保存我的照片多长时间？",
-      "answer": "您完全控制自己的数据。照片安全存储在您的账户中，直到您决定删除。您可以随时通过账户设置永久删除任何或所有照片 - 无需任何解释。"
+      "question": "你们会保存我的照片多久？",
+      "answer": "照片会保留在你的账户中，直到你删除。你可以在账户设置中永久删除单张图片或整个照片库。"
     }
   },
   "useCase": {
     "breadcrumb": {
-      "useCases": "使用案例"
+      "useCases": "使用场景"
     },
     "loading": "加载中...",
-    "notFound": "未找到使用案例。",
+    "notFound": "未找到使用场景。",
     "badges": {
-      "cheapest": "市场上最优惠",
+      "cheapest": "低成本 AI 照片",
       "noSubscription": "无需订阅",
-      "poweredByFlux": "由 Flux 提供支持（顶级AI模型）"
+      "poweredByFlux": "由 Flux 驱动"
     },
-    "galleryDisclaimer": "展示的所有照片均由我们的AI根据用户自拍生成。",
+    "galleryDisclaimer": "所有展示示例均由我们的 AI 根据用户自拍生成。",
     "howItWorks": {
       "title": "使用步骤",
       "step1": {
-        "title": "上传10–20张自拍",
-        "time": "(约5分钟)",
-        "desc": "使用你喜欢的照片，或拍几张新的自拍。"
+        "title": "上传 10-20 张自拍",
+        "time": "(约 5 分钟)",
+        "desc": "使用清晰的现有照片，或拍几张新的自拍。"
       },
       "step2": {
-        "title": "训练你的AI模型",
-        "time": "(约2分钟)",
-        "desc": "我们一次性微调，让之后的每张照片都更像你。"
+        "title": "训练你的 AI 模型",
+        "time": "(约 2 分钟)",
+        "desc": "我们会微调个人模型，让后续图片保持你的相似度。"
       },
       "step3": {
         "title": "生成并下载喜欢的作品",
-        "time": "(约5分钟)",
-        "desc": "想要多少风格都可以 — 保存最满意的。"
+        "time": "(约 5 分钟)",
+        "desc": "创建不同造型，然后保存最满意的图片。"
       }
     },
     "stickyCta": {
-      "label": "起价 {oneTimeFee} • {price}/{perPhoto}"
+      "label": "{oneTimeFee} 起 • {price}/{perPhoto}"
     }
   }
-} 
+}

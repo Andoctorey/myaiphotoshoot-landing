@@ -413,7 +413,7 @@ export default function Navigation() {
               </a>
 
               {/* Language selector in mobile menu (collapsible) */}
-              <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" role="group" aria-label="Language selection">
+              <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" role="group" aria-label={t('language')}>
                 <button
                   type="button"
                   className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
@@ -421,7 +421,7 @@ export default function Navigation() {
                   aria-expanded={isMobileLanguageOpen}
                   aria-controls="mobile-language-list"
                 >
-                  <span>Language</span>
+                  <span>{t('language')}</span>
                   <svg className={`h-5 w-5 transition-transform ${isMobileLanguageOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
                 </button>
                 {isMobileLanguageOpen && (

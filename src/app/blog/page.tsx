@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const socialTitle = `${blogTitle} | My AI Photo Shoot`;
     const description = typeof m.blog?.description === 'string'
       ? m.blog.description as string
-      : 'Discover the latest tips, tutorials, and insights about AI photography and digital art creation.';
+      : 'Practical tips, tutorials, and ideas for better AI portraits, prompts, and digital image workflows.';
 
     return {
       title,
@@ -55,7 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch {
     return {
       title: 'AI Photo Blog',
-      description: 'Discover tips and tutorials about AI photography and digital art.',
+      description: 'Practical tips and tutorials for better AI portraits and prompts.',
       robots: { index: true, follow: true },
     };
   }

@@ -78,17 +78,17 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">Home</Link>
+                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">{t('breadcrumb.home')}</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
-                <span aria-current="page" className="text-gray-800 dark:text-gray-200">Blog</span>
+                <span aria-current="page" className="text-gray-800 dark:text-gray-200">{t('title')}</span>
               </li>
             </ol>
           </nav>
           {/* Header */}
           <div className="text-center mb-12">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -96,7 +96,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
             >
               {t('title')}
             </motion.h1>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -186,7 +186,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
 
           {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -201,7 +201,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                 <ChevronRightIcon className="h-5 w-5 ltr:mr-2 rtl:ml-2 ltr:hidden rtl:block" />
                 {t('previous')}
               </button>
-              
+
               <div className="flex space-x-1">
                 {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map((page) => (
                   <button
@@ -233,4 +233,4 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
       </main>
     </>
   );
-} 
+}

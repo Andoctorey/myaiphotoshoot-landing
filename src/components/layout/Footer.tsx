@@ -79,7 +79,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
-                  aria-label={`${t('openSource')} (opens in new tab)`}
+                  aria-label={`${t('openSource')} (${t('opensInNewTab')})`}
                 >
                   {t('openSource')}
                 </a>
@@ -90,7 +90,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
-                  aria-label={`${t('twitter')} (opens in new tab)`}
+                  aria-label={`${t('twitter')} (${t('opensInNewTab')})`}
                 >
                   {t('twitter')}
                 </a>

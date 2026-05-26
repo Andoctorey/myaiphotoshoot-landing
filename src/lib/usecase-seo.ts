@@ -43,7 +43,7 @@ export async function fetchUseCaseSlugs(): Promise<string[]> {
 export async function generateUseCaseMetadata(slug: string, locale: string): Promise<Metadata> {
   const uc = await fetchUseCase(slug, locale);
   if (!uc) {
-    return { title: 'Use Case', description: 'AI photography use cases' };
+    return { title: 'AI Photo Use Case', description: 'AI portrait examples and use cases from My AI Photo Shoot.' };
   }
 
   const baseTitle = String(uc.meta_title || uc.title || '').trim();
@@ -61,7 +61,7 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
   }
 
   const baseDescription = String(uc.meta_description || uc.title || '').trim();
-  const pricingSentence = ' One-time $2.99 model training, ~$0.03 per image. No subscription.';
+  const pricingSentence = ' One-time $2.99 model training, $0.03 per image. No subscription.';
   let description = baseDescription;
   if (baseDescription) {
     const alreadyHasPricing = /\b\$2\.99\b|No subscription/i.test(baseDescription);

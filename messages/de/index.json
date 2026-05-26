@@ -8,76 +8,85 @@
     "faq": "FAQ",
     "download": "Loslegen",
     "useCases": "Anwendungsfälle",
-    "noUseCases": "Noch keine Anwendungsfälle"
+    "noUseCases": "Noch keine Anwendungsfälle",
+    "language": "Sprache"
   },
   "hero": {
     "title": "Verwandeln Sie Ihre Selfies in",
-    "titleHighlight": "atemberaubende KI-generierte Porträts",
-    "description": "Erstellen Sie sofort Tausende hyperrealistische, KI-generierte Fotografien für soziale Medien, Profilbilder, Marketing oder persönliche Projekte mit unserem KI-Fotostudio der nächsten Generation.",
-    "microcopy": "10–20 Selfies hochladen → einmal trainieren 2,99 € → Bilder 0,03 €"
+    "titleHighlight": "KI-Porträts in Studioqualität",
+    "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Fotos für Profile, Social Media, Marketing und persönliche Projekte mit einem schnellen KI-Fotostudio für verlässliche Ergebnisse.",
+    "microcopy": "10-20 Selfies hochladen -> einmal für $2.99 trainieren -> Bilder für je $0.03 generieren"
   },
   "features": {
-    "title": "Hauptfunktionen",
-    "description": "Warum unser KI-Fotogenerator den Markt anführt",
+    "title": "Kernfunktionen",
+    "description": "Alles, was Sie für konsistente KI-Porträts ohne Abo brauchen",
     "advancedAI": {
       "title": "KI-Engine der nächsten Generation",
-      "description": "Angetrieben von Flux.1™ Deep-Learning-Modellen für unvergleichlichen Realismus, Details und kreative Kontrolle in jedem KI-generierten Bild."
+      "description": "Basierend auf Flux.1 Deep-Learning-Modellen für realistische Details, gute Ähnlichkeit und flexible kreative Kontrolle in jedem generierten Bild."
     },
     "privacyFirst": {
-      "title": "Integrierte Datenschutzkontrolle",
-      "description": "Wählen Sie zwischen öffentlichen oder privaten Galerien und löschen Sie Ihre Fotos jederzeit dauerhaft - Ihre Daten unter Ihrer Kontrolle."
+      "title": "Integrierte Datenschutzkontrollen",
+      "description": "Wählen Sie öffentliche oder private Galerien, verwalten Sie Ihre Fotobibliothek und löschen Sie Ihre Bilder jederzeit dauerhaft."
     },
     "affordablePricing": {
-      "title": "Transparente und günstige Preise",
-      "description": "Keine Abonnements, keine Überraschungen. Einmaliges KI-Training nur 2,99€ + nur 0,03€ pro Bild - skalieren Sie ohne zusätzliche Kosten."
+      "title": "Transparente Pay-as-you-go-Preise",
+      "description": "Kein Abo und keine überraschenden Gebühren. Trainieren Sie Ihr Modell einmal für $2.99 und generieren Sie danach Bilder für je $0.03."
     },
     "thousandsOfStyles": {
       "title": "Endlose kreative Stile",
-      "description": "Erkunden Sie integrierte Vorlagen oder klicken Sie auf \"Überrasch mich!\", um sofort Tausende einzigartiger KI-Stile zu generieren."
+      "description": "Nutzen Sie fertige Presets oder probieren Sie „Überrasch mich“, um in Sekunden neue Looks, Szenen, Outfits und Bildstile zu erkunden."
     },
     "easyCustomization": {
-      "title": "Intuitiver Prompt-Generator",
-      "description": "Verfeinern Sie Ihre Prompts präzise oder remixen Sie Fotos aus der öffentlichen Galerie, um in Sekunden individuelle, professionelle KI-Bilder zu erstellen."
+      "title": "Einfacher Prompt-Builder",
+      "description": "Passen Sie Prompts an oder remixen Sie Fotos aus der öffentlichen Galerie, um schnell personalisierte, professionell wirkende KI-Bilder zu erstellen."
     },
     "multiplatform": {
-      "title": "Plattformübergreifender Zugang",
-      "description": "Nutzen Sie unsere Web-App oder native iOS- und Android-Apps - synchronisieren Sie Ihre KI-Fotobibliothek automatisch auf allen Geräten."
+      "title": "Web, iOS und Android",
+      "description": "Erstellen Sie Bilder im Web oder in den nativen mobilen Apps. Ihre KI-Fotobibliothek wird geräteübergreifend synchronisiert."
     }
   },
   "gallery": {
     "title": "Öffentliche Galerie",
-    "description": "Frische Fotos von unseren Nutzern: die neuesten KI-generierten Bilder.",
+    "description": "Aktuelle KI-Fotos, die Nutzer geteilt haben, mit regelmäßig neuen Beispielen.",
     "loadMore": "Mehr anzeigen",
-    "loading": "Wird geladen..."
+    "loading": "Wird geladen...",
+    "error": "Galeriebilder konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",
+    "tryAgain": "Erneut versuchen",
+    "seoHeading": "Beispiele aus der KI-Fotogalerie",
+    "seoItemTitle": "KI-Fotobeispiel",
+    "ariaLabel": "Galerie KI-generierter Fotos",
+    "altPrefix": "KI-generiertes Foto",
+    "promptAriaPrefix": "KI-Foto mit Prompt",
+    "captionPrefix": "KI-Fotobeispiel"
   },
   "blog": {
-    "title": "KI-Foto Blog",
-    "description": "Entdecken Sie die neuesten Tipps, Tutorials und Einblicke in KI-Fotografie und digitale Kunstschöpfung.",
-    "viewAll": "Alle Artikel im KI-Foto Blog anzeigen",
+    "title": "KI-Foto-Blog",
+    "description": "Praktische Tipps, Tutorials und Ideen für bessere KI-Porträts, Prompts und digitale Bild-Workflows.",
+    "viewAll": "Alle Artikel im KI-Foto-Blog ansehen",
     "readingTime": "Min. Lesezeit",
     "publishedOn": "Veröffentlicht am",
-    "noPostsTitle": "Noch keine Blog-Beiträge",
-    "noPostsDescription": "Wir arbeiten daran, großartige Inhalte für Sie zu erstellen. Schauen Sie bald wieder vorbei!",
-    "errorTitle": "Fehler beim Laden der Blog-Beiträge",
+    "noPostsTitle": "Noch keine Blogbeiträge",
+    "noPostsDescription": "Wir bereiten hilfreiche KI-Fotoguides vor. Schauen Sie bald wieder vorbei.",
+    "errorTitle": "Blogbeiträge konnten nicht geladen werden",
     "errorDescription": "Bitte versuchen Sie es später erneut.",
     "loading": "Wird geladen...",
-    "previous": "Vorherige",
-    "next": "Nächste",
-    "notFound": "Blog-Beitrag nicht gefunden",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "notFound": "Blogbeitrag nicht gefunden",
     "backToBlog": "← Zurück zum Blog",
     "breadcrumb": {
       "home": "Startseite"
     },
     "author": {
-      "bio": "Führende KI-Fotogenerierungsplattform, die Kreativen, Unternehmen und Einzelpersonen hilft, ihre Fotos in atemberaubende KI-generierte Porträts und Bilder zu verwandeln. Entdecken Sie das Neueste in KI-Fotografietechnologie und digitaler Kunstschöpfung."
+      "bio": "My AI Photo Shoot hilft Kreativen, Unternehmen und Privatpersonen, Selfies in realistische KI-Porträts und Bilder für kreative und professionelle Alltagszwecke zu verwandeln."
     },
     "relatedPosts": {
-      "title": "Verwandte Artikel",
-      "comingSoon": "Weitere verwandte Artikel kommen bald! Wir arbeiten daran, mehr hilfreiche Inhalte über KI-Fotografie zu erstellen."
+      "title": "Ähnliche Artikel",
+      "comingSoon": "Weitere ähnliche Artikel folgen bald. Wir arbeiten an hilfreichen Guides zur KI-Fotografie."
     },
     "cta": {
-      "title": "Bereit, Ihre KI-Fotos zu erstellen?",
-      "description": "Verwandeln Sie Ihre Fotos mit unserer fortschrittlichen Technologie in atemberaubende KI-generierte Bilder.",
+      "title": "Bereit für Ihre KI-Fotos?",
+      "description": "Trainieren Sie Ihr persönliches KI-Modell und generieren Sie in wenigen Minuten realistische Porträts.",
       "button": "Jetzt erstellen"
     },
     "tableOfContents": {
@@ -85,105 +94,107 @@
     }
   },
   "pricing": {
-    "title": "Einfaches nutzungsbasiertes Preissystem",
-    "description": "Zahlen Sie nur für das, was Sie nutzen. Keine monatlichen Gebühren - leistungsstarke KI-Fotogenerierung zu einem Bruchteil der Kosten.",
-    "payAsYouGo": "Nutzungsbasierte Zahlung",
-    "perfectFor": "Ideal für Influencer, Unternehmen, Content-Ersteller und alle, die atemberaubende KI-Bilder suchen.",
-    "whatsIncluded": "Was Sie erhalten",
+    "title": "Einfache Pay-as-you-go-Preise",
+    "description": "Zahlen Sie nur, wenn Sie Bilder erstellen. Kein Monatsplan, keine Credit-Pakete und keine versteckten Gebühren.",
+    "payAsYouGo": "Pay as you go",
+    "perfectFor": "Ideal für Creator, Gründer, Marketer, Teams und alle, die bei Bedarf hochwertige KI-Bilder brauchen.",
+    "whatsIncluded": "Was enthalten ist",
     "features": {
-      "training": "Individuelles KI-Modelltraining",
+      "training": "Training eines persönlichen KI-Modells",
       "unlimited": "Unbegrenzte Bildgenerierung",
       "custom": "Erweiterte Prompt-Anpassung",
-      "privacy": "Private und öffentliche Galerie-Optionen",
+      "privacy": "Private und öffentliche Galerieoptionen",
       "social": "Einfaches Teilen in sozialen Medien",
-      "download": "Hochauflösende Downloads",
-      "support": "24/7 Expertenunterstützung",
-      "updates": "Laufende KI-Verbesserungen"
+      "download": "Downloads in hoher Auflösung",
+      "support": "Schneller Kundensupport",
+      "updates": "Laufende Verbesserungen der KI-Qualität"
     },
-    "price": "0,03€",
+    "price": "$0.03",
     "perPhoto": "pro Bild",
-    "getStarted": "Jetzt generieren",
+    "getStarted": "Generieren starten",
     "oneTimeFee": "Einmalige KI-Trainingsgebühr",
-    "oneTimeFeeAmount": "Nur 2,99€"
+    "oneTimeFeeAmount": "$2.99",
+    "noSubscriptionShort": "Kein Abo. Zahlen Sie nur für das, was Sie erstellen."
   },
   "download": {
-    "title": "Beginnen Sie heute mit dem Erstellen",
-    "description": "Laden Sie unser KI-Fotostudio herunter oder starten Sie die Web-App - erstellen Sie professionelle KI-Bilder in unter einer Minute.",
-    "choosePlatform": "Wählen Sie Ihre Plattform",
+    "title": "Starten Sie heute",
+    "description": "Öffnen Sie die Web-App oder installieren Sie die mobile App und erstellen Sie in Minuten hochwertige KI-Fotos.",
+    "choosePlatform": "Plattform wählen",
     "webApp": {
       "title": "Web-App",
-      "description": "Keine Installation erforderlich. Sofortiger Zugang zu Ihrem KI-Studio in jedem Browser.",
-      "button": "Jetzt starten"
+      "description": "Keine Installation nötig. Öffnen Sie Ihr KI-Fotostudio in jedem modernen Browser.",
+      "button": "Web-App öffnen"
     },
     "mobileApps": {
       "title": "Mobile Apps",
-      "description": "Vollausgestattete native Apps für iOS und Android - erstellen Sie KI-Bilder unterwegs.",
+      "description": "Erstellen, prüfen und laden Sie KI-Bilder in nativen Apps für iOS und Android herunter.",
       "googlePlay": "Bei Google Play herunterladen",
-      "appStore": "Im App Store herunterladen"
+      "appStore": "Im App Store laden"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Erstellen, anpassen und teilen Sie atemberaubende KI-generierte Fotografien - angetrieben von modernster Deep-Learning-Technologie.",
+    "description": "Erstellen, personalisieren und teilen Sie realistische KI-Fotos aus Ihren eigenen Selfies.",
     "links": "Schnelllinks",
     "legal": "Rechtliches",
     "openSource": "Open Source",
     "twitter": "Twitter (X)",
     "support": "Support",
-    "copyright": "© 2025 My AI Photo Shoot. Alle Rechte vorbehalten."
+    "copyright": "© 2025 My AI Photo Shoot. Alle Rechte vorbehalten.",
+    "opensInNewTab": "wird in einem neuen Tab geöffnet"
   },
   "supportPage": {
     "title": "Kundensupport",
-    "description": "Haben Sie ein Problem oder eine Frage? Unser Support-Team ist bereit, innerhalb von 24-48 Stunden zu helfen.",
+    "description": "Haben Sie eine Frage oder brauchen Sie Hilfe mit Fotos, Zahlungen oder Ihrem Konto? Schreiben Sie uns. Wir antworten innerhalb von 24-48 Stunden.",
     "form": {
       "email": "E-Mail-Adresse",
       "message": "Ihre Nachricht",
-      "submit": "Senden",
+      "submit": "Nachricht senden",
       "emailPlaceholder": "sie@beispiel.com",
-      "messagePlaceholder": "Beschreiben Sie Ihr Problem oder Ihre Frage...",
-      "success": "Vielen Dank! Wir haben Ihre Nachricht erhalten und werden bald antworten.",
-      "error": "Ups! Etwas ist schief gelaufen. Bitte versuchen Sie es später erneut.",
+      "messagePlaceholder": "Beschreiben Sie, was passiert ist oder wobei Sie Hilfe brauchen...",
+      "success": "Danke. Wir haben Ihre Nachricht erhalten und antworten bald.",
+      "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.",
       "emailRequired": "E-Mail ist erforderlich",
       "messageRequired": "Nachricht ist erforderlich",
-      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
-      "privacyNotice": "Wir verwenden Ihre E-Mail nur zur Antwort und teilen sie niemals mit Dritten.",
-      "responseTime": "Erwarten Sie eine Antwort innerhalb von 24 Stunden."
+      "invalidEmail": "Geben Sie eine gültige E-Mail-Adresse ein",
+      "privacyNotice": "Wir verwenden Ihre E-Mail nur, um auf Ihre Supportanfrage zu antworten.",
+      "responseTime": "Typische Antwortzeit: innerhalb von 24 Stunden."
     }
   },
   "faq": {
-    "title": "Häufig Gestellte Fragen",
-    "description": "Erhalten Sie Antworten auf häufige Fragen zu unserem KI-Fotogenerierungsservice",
+    "title": "Häufige Fragen",
+    "description": "Antworten auf häufige Fragen zu KI-Modelltraining, Preisen, Datenschutz und Bildgenerierung.",
     "whyNotChatGPT": {
-      "question": "Warum nicht ChatGPT?",
-      "answer": "ChatGPT kann nur bestehende Fotos bearbeiten, aber My AI Photo Shoot erstellt völlig neue, originale Fotos von Grund auf mit fortschrittlichen KI-Modellen. Wir generieren Tausende einzigartiger, hyperrealistischer Porträts, die auf Ihre Stilvorlieben zugeschnitten sind, während ChatGPT auf grundlegende Fotobearbeitung und -modifikationen beschränkt ist."
+      "question": "Warum My AI Photo Shoot statt einer allgemeinen KI-Chat-App nutzen?",
+      "answer": "Allgemeine KI-Chat-Apps sind für viele Aufgaben gedacht. My AI Photo Shoot konzentriert sich auf wiederholbare Fotogenerierung aus Ihren Selfies: Sie trainieren einmal ein persönliches Modell, behalten eine konsistente Ähnlichkeit, nutzen fotoorientierte Presets und generieren so viele Porträts wie nötig zu einem klaren Preis pro Bild."
     },
     "howItWorks": {
-      "question": "Wie funktioniert die KI-Fotogenerierung?",
-      "answer": "Unsere KI verwendet Ihre hochgeladenen Fotos, um ein benutzerdefiniertes Modell zu trainieren, das Ihre einzigartigen Merkmale und Stilvorlieben erlernt. Einmal trainiert, kann es unbegrenzt neue Fotos von Ihnen in verschiedenen Posen, Einstellungen und Stilen mit fortschrittlichen Deep-Learning-Algorithmen generieren."
+      "question": "Wie funktioniert KI-Fotogenerierung?",
+      "answer": "Sie laden eine kleine Auswahl an Selfies hoch, und wir trainieren ein persönliches KI-Modell, das Ihr Aussehen lernt. Danach können Sie neue Bilder von sich in verschiedenen Outfits, Posen, Umgebungen und visuellen Stilen generieren."
     },
     "pricing": {
-      "question": "Was kostet es?",
-      "answer": "Wir verwenden ein einfaches Pay-as-you-go-Modell: eine einmalige Gebühr von 2,99 $ für das Training Ihres benutzerdefinierten KI-Modells plus nur 0,03 $ pro generiertem Bild. Keine monatlichen Abonnements oder versteckten Gebühren - zahlen Sie nur für das, was Sie nutzen."
+      "question": "Wie viel kostet es?",
+      "answer": "Die Preise sind nutzungsbasiert: $2.99 für das einmalige Training Ihres persönlichen KI-Modells und danach $0.03 pro generiertem Bild. Es gibt keine Monatsabos und keine versteckten Gebühren."
     },
     "privacy": {
       "question": "Sind meine Daten sicher und privat?",
-      "answer": "Absolut. Sie haben vollständige Kontrolle über Ihre Datenschutzeinstellungen - wählen Sie zwischen öffentlichen oder privaten Galerien. Sie können Ihre Fotos jederzeit dauerhaft löschen, und wir teilen Ihre persönlichen Daten niemals mit Dritten. Ihre Privatsphäre ist unsere Priorität."
+      "answer": "Sie kontrollieren Ihre Privatsphäre. Wählen Sie öffentliche oder private Galerien, löschen Sie Fotos jederzeit und verwalten Sie Ihre Bildbibliothek in Ihrem Konto. Wir verkaufen keine personenbezogenen Daten."
     },
     "imageQuality": {
       "question": "Welche Qualität haben die generierten Bilder?",
-      "answer": "Alle Bilder werden in hoher Auflösung generiert, die für soziale Medien, Profilbilder, Marketingmaterialien und Druck geeignet ist. Unsere Flux.1™ KI-Modelle produzieren unglaublich realistische, detaillierte Bilder, die praktisch nicht von professioneller Fotografie zu unterscheiden sind."
+      "answer": "Die Bilder werden in hoher Auflösung für Social Media, Profilfotos, Marketingmaterialien, kreative Projekte und viele Druckanwendungen generiert. Die Qualität hängt von den hochgeladenen Selfies und dem gewählten Prompt ab."
     },
     "howManyPhotos": {
       "question": "Wie viele Fotos kann ich generieren?",
-      "answer": "Sobald Ihr KI-Modell trainiert ist, können Sie unbegrenzt Fotos für nur 0,03 $ pro Stück generieren. Es gibt keine Begrenzung für die Anzahl der Bilder, die Sie erstellen können - generieren Sie so viele Stile und Variationen, wie Sie möchten."
+      "answer": "Nach dem Training Ihres KI-Modells können Sie so viele Bilder generieren, wie Sie möchten, für je $0.03. Es gibt kein festes Paket und kein Monatslimit."
     },
     "platforms": {
       "question": "Welche Plattformen werden unterstützt?",
-      "answer": "Sie können auf unseren Service über unsere Web-App (funktioniert in jedem Browser), native iOS-App oder Android-App zugreifen. Ihre Fotos synchronisieren sich automatisch auf allen Geräten, sodass Sie überall Ihre Bilder generieren und darauf zugreifen können."
+      "answer": "Sie können My AI Photo Shoot im Web, auf iOS und auf Android verwenden. Ihre generierten Bilder werden geräteübergreifend synchronisiert, wenn Sie dasselbe Konto nutzen."
     },
     "dataRetention": {
-      "question": "Wie lange bewahren Sie meine Fotos auf?",
-      "answer": "Sie haben vollständige Kontrolle über Ihre Daten. Fotos werden sicher in Ihrem Konto gespeichert, bis Sie sich entscheiden, sie zu löschen. Sie können jederzeit über Ihre Kontoeinstellungen dauerhaft alle oder einzelne Fotos entfernen - ohne Fragen."
+      "question": "Wie lange werden meine Fotos gespeichert?",
+      "answer": "Fotos bleiben in Ihrem Konto, bis Sie sie löschen. Sie können einzelne Bilder oder Ihre gesamte Fotobibliothek in den Kontoeinstellungen dauerhaft entfernen."
     }
   },
   "useCase": {
@@ -193,31 +204,31 @@
     "loading": "Wird geladen...",
     "notFound": "Anwendungsfall nicht gefunden.",
     "badges": {
-      "cheapest": "Günstigstes Angebot am Markt",
-      "noSubscription": "Keine Abonnements erforderlich",
-      "poweredByFlux": "Angetrieben von Flux (Top-KI-Modell)"
+      "cheapest": "Günstige KI-Fotos",
+      "noSubscription": "Kein Abo erforderlich",
+      "poweredByFlux": "Powered by Flux"
     },
-    "galleryDisclaimer": "Alle gezeigten Fotos wurden von unserer KI aus Nutzer‑Selfies generiert.",
+    "galleryDisclaimer": "Alle gezeigten Beispiele wurden von unserer KI aus Nutzer-Selfies generiert.",
     "howItWorks": {
-      "title": "So funktioniert's",
+      "title": "So funktioniert es",
       "step1": {
-        "title": "Laden Sie 10–20 Selfies hoch",
-        "time": "(5 Minuten)",
-        "desc": "Nutzen Sie Ihre Lieblingsfotos oder machen Sie ein paar neue."
+        "title": "10-20 Selfies hochladen",
+        "time": "(ca. 5 Minuten)",
+        "desc": "Nutzen Sie klare vorhandene Fotos oder machen Sie ein paar neue Selfies."
       },
       "step2": {
-        "title": "Trainieren Sie Ihr KI‑Modell",
+        "title": "KI-Modell trainieren",
         "time": "(ca. 2 Minuten)",
-        "desc": "Wir feintunen einmal, damit alle zukünftigen Fotos nach Ihnen aussehen."
+        "desc": "Wir passen ein persönliches Modell an, damit zukünftige Bilder Ihre Ähnlichkeit behalten."
       },
       "step3": {
         "title": "Generieren und Favoriten herunterladen",
-        "time": "(5 Minuten)",
-        "desc": "Erzeugen Sie so viele Looks, wie Sie möchten — speichern Sie die besten."
+        "time": "(ca. 5 Minuten)",
+        "desc": "Erstellen Sie verschiedene Looks und speichern Sie die Bilder, die Ihnen am besten gefallen."
       }
     },
     "stickyCta": {
-      "label": "Start ab {oneTimeFee} • {price}/{perPhoto}"
+      "label": "Start für {oneTimeFee} • {price}/{perPhoto}"
     }
   }
-} 
+}

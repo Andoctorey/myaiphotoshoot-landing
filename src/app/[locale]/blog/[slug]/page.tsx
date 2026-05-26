@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       if (response.status === 404) {
         return {
           title: 'Blog Post Not Found',
-          description: 'The requested blog post could not be found.',
+          description: 'This AI photo guide is unavailable or has been moved.',
           robots: {
             index: false,
             follow: false,
@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     if (!post) {
       return {
         title: 'Blog Post Not Found',
-        description: 'The requested blog post could not be found.',
+        description: 'This AI photo guide is unavailable or has been moved.',
         robots: {
           index: false,
           follow: false,

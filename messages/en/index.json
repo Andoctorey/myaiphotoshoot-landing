@@ -8,57 +8,66 @@
     "faq": "FAQ",
     "download": "Get Started",
     "useCases": "Use Cases",
-    "noUseCases": "No use cases yet"
+    "noUseCases": "No use cases yet",
+    "language": "Language"
   },
   "hero": {
-    "title": "Transform Your Selfies Into",
-    "titleHighlight": "Stunning AI-Generated Portraits",
-    "description": "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.",
-    "microcopy": "Upload 10–20 selfies → train once $2.99 → images $0.03"
+    "title": "Turn Your Selfies Into",
+    "titleHighlight": "Studio-Quality AI Portraits",
+    "description": "Upload a few selfies and create realistic AI photos for profiles, social media, marketing, and personal projects with a fast AI photo studio built for repeatable results.",
+    "microcopy": "Upload 10-20 selfies -> train once for $2.99 -> generate images for $0.03 each"
   },
   "features": {
     "title": "Core Features",
-    "description": "Why our AI photo generator leads the market",
+    "description": "Everything you need to create consistent AI portraits without a subscription",
     "advancedAI": {
       "title": "Next-Gen AI Engine",
-      "description": "Powered by Flux.1™ deep-learning models for unmatched realism, detail, and creative control in every AI-generated image."
+      "description": "Powered by Flux.1 deep-learning models for realistic detail, strong likeness, and flexible creative control in every generated image."
     },
     "privacyFirst": {
-      "title": "Built-in Privacy Control",
-      "description": "Choose public or private galleries, and permanently delete your photos anytime - your data, your way."
+      "title": "Privacy Controls Built In",
+      "description": "Choose public or private galleries, manage your photo library, and delete your images permanently whenever you want."
     },
     "affordablePricing": {
-      "title": "Transparent, Low-Cost Pricing",
-      "description": "No subscriptions, no surprises. One-time AI training only $2.99 + just $0.03 per image - scale up without scale-up costs."
+      "title": "Transparent Pay-As-You-Go Pricing",
+      "description": "No subscription and no surprise fees. Train your model once for $2.99, then generate images for $0.03 each."
     },
     "thousandsOfStyles": {
       "title": "Endless Creative Styles",
-      "description": "Explore built-in presets or hit “Surprise Me!” to generate thousands of unique AI-style renditions instantly."
+      "description": "Use ready-made presets or try “Surprise Me” to explore new looks, scenes, outfits, and visual styles in seconds."
     },
     "easyCustomization": {
-      "title": "Intuitive Prompt Builder",
-      "description": "Fine-tune your prompts or remix public gallery photos for bespoke, professional-grade AI images in seconds."
+      "title": "Simple Prompt Builder",
+      "description": "Fine-tune prompts or remix public gallery photos to create personalized, professional-looking AI images quickly."
     },
     "multiplatform": {
-      "title": "Cross-Platform Access",
-      "description": "Use our web app or native iOS & Android apps - automatically sync your AI photo library across all devices."
+      "title": "Web, iOS, and Android",
+      "description": "Create on the web or in the native mobile apps, with your AI photo library synced across your devices."
     }
   },
   "gallery": {
     "title": "Public Gallery",
-    "description": "Fresh photos from our users: the latest AI-generated photos.",
-     "loadMore": "Show More",
-    "loading": "Loading..."
+    "description": "Recent AI photos shared by users, with fresh examples added regularly.",
+    "loadMore": "Show More",
+    "loading": "Loading...",
+    "error": "Could not load gallery images. Please try again later.",
+    "tryAgain": "Try again",
+    "seoHeading": "AI photo gallery examples",
+    "seoItemTitle": "AI photo example",
+    "ariaLabel": "Gallery of AI-generated photos",
+    "altPrefix": "AI-generated photo",
+    "promptAriaPrefix": "AI photo with prompt",
+    "captionPrefix": "AI photo example"
   },
   "blog": {
     "title": "AI Photo Blog",
-    "description": "Discover the latest tips, tutorials, and insights about AI photography and digital art creation.",
+    "description": "Practical tips, tutorials, and ideas for better AI portraits, prompts, and digital image workflows.",
     "viewAll": "View all AI Photo Blog articles",
     "readingTime": "min read",
     "publishedOn": "Published on",
     "noPostsTitle": "No blog posts yet",
-    "noPostsDescription": "We're working on creating amazing content for you. Check back soon!",
-    "errorTitle": "Failed to load blog posts",
+    "noPostsDescription": "We are preparing helpful AI photo guides. Check back soon.",
+    "errorTitle": "Could not load blog posts",
     "errorDescription": "Please try again later.",
     "loading": "Loading...",
     "previous": "Previous",
@@ -69,15 +78,15 @@
       "home": "Home"
     },
     "author": {
-      "bio": "Leading AI photo generation platform helping creators, businesses, and individuals transform their photos into stunning AI-generated portraits and images. Discover the latest in AI photography technology and digital art creation."
+      "bio": "My AI Photo Shoot helps creators, businesses, and individuals turn selfies into realistic AI portraits and images for everyday creative and professional use."
     },
     "relatedPosts": {
       "title": "Related Articles",
-      "comingSoon": "More related articles coming soon! We're working on creating more helpful content about AI photography."
+      "comingSoon": "More related articles are coming soon. We are working on useful guides for AI photography."
     },
     "cta": {
       "title": "Ready to Create Your AI Photos?",
-      "description": "Transform your photos into stunning AI-generated images with our advanced technology.",
+      "description": "Train your personal AI model and start generating realistic portraits in minutes.",
       "button": "Start Creating Now"
     },
     "tableOfContents": {
@@ -85,105 +94,107 @@
     }
   },
   "pricing": {
-    "title": "Simple, Pay-As-You-Go Pricing",
-    "description": "Only pay for what you use. No monthly fees - just powerful AI photo generation at a fraction of the cost.",
+    "title": "Simple Pay-As-You-Go Pricing",
+    "description": "Pay only when you create. No monthly plan, no bundled credits, and no hidden fees.",
     "payAsYouGo": "Pay As You Go",
-    "perfectFor": "Ideal for influencers, businesses, creators, and anyone craving stunning AI imagery.",
-    "whatsIncluded": "Everything You Get",
+    "perfectFor": "Ideal for creators, founders, marketers, teams, and anyone who needs polished AI imagery on demand.",
+    "whatsIncluded": "What You Get",
     "features": {
-      "training": "Custom AI model training",
+      "training": "Personal AI model training",
       "unlimited": "Unlimited image generation",
       "custom": "Advanced prompt customization",
-      "privacy": "Private & public gallery options",
+      "privacy": "Private and public gallery options",
       "social": "Easy social sharing",
       "download": "High-resolution downloads",
-      "support": "24/7 expert support",
-      "updates": "Ongoing AI enhancements"
+      "support": "Responsive customer support",
+      "updates": "Ongoing AI quality improvements"
     },
     "price": "$0.03",
     "perPhoto": "per image",
-    "getStarted": "Start Generating Now",
+    "getStarted": "Start Generating",
     "oneTimeFee": "One-time AI training fee",
-    "oneTimeFeeAmount": "Only $2.99"
+    "oneTimeFeeAmount": "$2.99",
+    "noSubscriptionShort": "No subscription. Pay only for what you create."
   },
   "download": {
-    "title": "Start Generating Today",
-    "description": "Download our AI photo studio or launch the web app - create professional AI images in under a minute.",
+    "title": "Start Creating Today",
+    "description": "Open the web app or install the mobile app and create polished AI photos in minutes.",
     "choosePlatform": "Choose Your Platform",
     "webApp": {
       "title": "Web App",
-      "description": "No install needed. Access your AI studio instantly in any browser.",
-      "button": "Launch Now"
+      "description": "No installation required. Open your AI photo studio in any modern browser.",
+      "button": "Launch Web App"
     },
     "mobileApps": {
       "title": "Mobile Apps",
-      "description": "Full-featured native apps for iOS & Android - create AI images on the go.",
+      "description": "Create, review, and download AI images from native iOS and Android apps.",
       "googlePlay": "Get it on Google Play",
       "appStore": "Download on the App Store"
     }
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Create, customize, and share stunning AI-generated photos - powered by state-of-the-art deep learning.",
+    "description": "Create, customize, and share realistic AI-generated photos from your own selfies.",
     "links": "Quick Links",
     "legal": "Legal",
     "openSource": "Open Source",
     "twitter": "Twitter (X)",
     "support": "Support",
-    "copyright": "© 2025 My AI Photo Shoot. All rights reserved."
+    "copyright": "© 2025 My AI Photo Shoot. All rights reserved.",
+    "opensInNewTab": "opens in a new tab"
   },
   "supportPage": {
     "title": "Customer Support",
-    "description": "Encounter an issue or have a question? Our support team is ready to help within 24-48 hours.",
+    "description": "Have a question or need help with your photos, payments, or account? Send us a message and we will respond within 24-48 hours.",
     "form": {
       "email": "Email Address",
       "message": "Your Message",
-      "submit": "Send",
+      "submit": "Send Message",
       "emailPlaceholder": "you@example.com",
-      "messagePlaceholder": "Describe your issue or question...",
-      "success": "Thank you! We’ve received your message and will reply soon.",
-      "error": "Oops! Something went wrong. Please try again later.",
+      "messagePlaceholder": "Tell us what happened or what you need help with...",
+      "success": "Thank you. We received your message and will reply soon.",
+      "error": "Something went wrong. Please try again later.",
       "emailRequired": "Email is required",
       "messageRequired": "Message is required",
-      "invalidEmail": "Please enter a valid email",
-      "privacyNotice": "We’ll only use your email to respond and never share it with third parties.",
-      "responseTime": "Expect a reply within 24 hours."
+      "invalidEmail": "Enter a valid email address",
+      "privacyNotice": "We only use your email to reply to your support request.",
+      "responseTime": "Typical response time: within 24 hours."
     }
   },
   "faq": {
     "title": "Frequently Asked Questions",
-    "description": "Get answers to common questions about our AI photo generation service",
+    "description": "Answers to common questions about AI model training, pricing, privacy, and image generation.",
     "whyNotChatGPT": {
-      "question": "Why not ChatGPT?",
-      "answer": "ChatGPT can only edit existing photos, but My AI Photo Shoot creates entirely new, original photos from scratch using advanced AI models. We generate thousands of unique, hyper-realistic portraits and images tailored to your style preferences, while ChatGPT is limited to basic photo editing and modifications."
+      "question": "Why use My AI Photo Shoot instead of a general AI chat app?",
+      "answer": "General AI chat apps are built for many tasks. My AI Photo Shoot is focused on repeatable photo generation from your selfies: train a personal model once, keep a consistent likeness, use photo-focused presets, and generate as many portraits as you need at a predictable per-image price."
     },
     "howItWorks": {
       "question": "How does AI photo generation work?",
-      "answer": "Our AI uses your uploaded photos to train a custom model that learns your unique features and style preferences. Once trained, it can generate unlimited new photos of you in different poses, settings, and styles using advanced deep learning algorithms."
+      "answer": "You upload a small set of selfies, and we train a personal AI model that learns your appearance. After training, you can generate new images of yourself in different outfits, poses, settings, and visual styles."
     },
     "pricing": {
       "question": "How much does it cost?",
-      "answer": "We use a simple pay-as-you-go model: a one-time $2.99 fee to train your custom AI model, plus just $0.03 per generated image. No monthly subscriptions or hidden fees - only pay for what you use."
+      "answer": "Pricing is pay as you go: $2.99 to train your personal AI model once, then $0.03 for each generated image. There are no monthly subscriptions or hidden fees."
     },
     "privacy": {
       "question": "Is my data safe and private?",
-      "answer": "Absolutely. You have full control over your privacy settings - choose between public or private galleries. You can permanently delete your photos anytime, and we never share your personal data with third parties. Your privacy is our priority."
+      "answer": "You control your privacy settings. Choose public or private galleries, delete photos when you want, and manage your image library from your account. We do not sell your personal data."
     },
     "imageQuality": {
       "question": "What quality are the generated images?",
-      "answer": "All images are generated in high resolution suitable for social media, profile pictures, marketing materials, and printing. Our Flux.1™ AI models produce incredibly realistic, detailed images that are virtually indistinguishable from professional photography."
+      "answer": "Images are generated in high resolution for social media, profile photos, marketing assets, creative projects, and many print use cases. Quality depends on the selfies you upload and the prompt you choose."
     },
     "howManyPhotos": {
       "question": "How many photos can I generate?",
-      "answer": "Once your AI model is trained, you can generate unlimited photos for just $0.03 each. There are no limits on the number of images you can create - generate as many styles and variations as you want."
+      "answer": "After your AI model is trained, you can generate as many images as you want for $0.03 each. There is no fixed bundle or monthly cap."
     },
     "platforms": {
       "question": "What platforms are supported?",
-      "answer": "You can access our service through our web app (works on any browser), native iOS app, or Android app. Your photos automatically sync across all devices, so you can generate and access your images anywhere."
+      "answer": "You can use My AI Photo Shoot on the web, iOS, and Android. Your generated images sync across devices when you use the same account."
     },
     "dataRetention": {
       "question": "How long do you keep my photos?",
-      "answer": "You have complete control over your data. Photos are stored securely in your account until you decide to delete them. You can permanently remove any or all photos at any time through your account settings - no questions asked."
+      "answer": "Photos remain in your account until you delete them. You can permanently remove individual images or your full photo library from your account settings."
     }
   },
   "useCase": {
@@ -193,27 +204,27 @@
     "loading": "Loading...",
     "notFound": "Use case not found.",
     "badges": {
-      "cheapest": "Cheapest on the market",
+      "cheapest": "Low-cost AI photos",
       "noSubscription": "No subscription required",
-      "poweredByFlux": "Powered by Flux (top AI model)"
+      "poweredByFlux": "Powered by Flux"
     },
-    "galleryDisclaimer": "All photos shown were generated by our AI from user selfies.",
+    "galleryDisclaimer": "All examples shown were generated by our AI from user selfies.",
     "howItWorks": {
       "title": "How It Works",
       "step1": {
-        "title": "Upload 10–20 selfies",
-        "time": "(5 minutes)",
-        "desc": "Use your favorite existing photos or snap a few fresh selfies."
+        "title": "Upload 10-20 selfies",
+        "time": "(about 5 minutes)",
+        "desc": "Use clear existing photos or take a few new selfies."
       },
       "step2": {
         "title": "Train your AI model",
         "time": "(about 2 minutes)",
-        "desc": "We fine-tune once so every future photo looks like you."
+        "desc": "We fine-tune a personal model so future images keep your likeness."
       },
       "step3": {
         "title": "Generate and download favorites",
-        "time": "(5 minutes)",
-        "desc": "Create as many looks as you want — save the keepers."
+        "time": "(about 5 minutes)",
+        "desc": "Create different looks, then save the images you like best."
       }
     },
     "stickyCta": {
