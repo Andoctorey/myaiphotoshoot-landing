@@ -6,13 +6,16 @@ import { useTranslations } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { trackEventAndNavigate } from '@/lib/analytics';
+import { locales } from '@/i18n/request';
+import { localePath } from '@/lib/seo';
 
 export default function Footer() {
   const t = useTranslations('footer');
   const tBlog = useTranslations('blog');
   const pathname = usePathname();
-  const locale = pathname?.split('/')[1] || 'en';
-  
+  const firstPathSegment = pathname?.split('/')[1] || '';
+  const locale = locales.includes(firstPathSegment as (typeof locales)[number]) ? firstPathSegment : 'en';
+
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -63,18 +66,18 @@ export default function Footer() {
 
             <ul className="space-y-2">
               <li>
-                <Link 
-                  href={`/${locale}/legal`} 
+                <Link
+                  href={localePath(locale, '/legal/')}
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                 >
                   {t('legal')}
                 </Link>
               </li>
               <li>
-                <a 
-                  href="https://github.com/Andoctorey/myaiphotoshoot-kmp" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://github.com/Andoctorey/myaiphotoshoot-kmp"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                   aria-label={`${t('openSource')} (opens in new tab)`}
                 >
@@ -82,10 +85,10 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://x.com/andoctorey" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://x.com/andoctorey"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                   aria-label={`${t('twitter')} (opens in new tab)`}
                 >
@@ -93,8 +96,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link 
-                  href={`/${locale}/support`} 
+                <Link
+                  href={localePath(locale, '/support/')}
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                 >
                   {t('support')}
@@ -112,4 +115,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-} 
+}

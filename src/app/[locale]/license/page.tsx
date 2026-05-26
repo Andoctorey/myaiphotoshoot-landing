@@ -1,7 +1,10 @@
 import { Metadata } from 'next';
 import { locales } from '@/i18n/request';
-import { buildAlternates } from '@/lib/seo';
+import { buildAlternates, canonicalUrl, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import Link from 'next/link';
+
+const title = 'Image License & Usage Rights - My AI Photo Shoot';
+const description = 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -11,14 +14,30 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: 'Image License & Usage Rights - My AI Photo Shoot',
-    description: 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.',
+    title: { absolute: title },
+    description,
     robots: 'index, follow',
     alternates: buildAlternates(locale, '/license/', locales),
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl(locale, '/license/'),
+      siteName: 'My AI Photo Shoot',
+      type: 'website',
+      locale: ogLocaleFromAppLocale(locale),
+      alternateLocale: ogAlternateLocales(locales, locale),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
   };
 }
 
-export default function LicensePage() {
+export default async function LicensePage({ params }: Props) {
+  const { locale } = await params;
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -26,18 +45,18 @@ export default function LicensePage() {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
             Image License &amp; Usage Rights
           </h1>
-          
+
           <div className="prose prose-lg dark:prose-invert max-w-none">
             <section className="mb-8">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 Image Ownership &amp; Rights
               </h2>
               <p className="text-gray-700 dark:text-gray-300 mb-4">
-                All AI-generated images created through MyAIPhotoShoot are owned by the users who generate them. 
+                All AI-generated images created through MyAIPhotoShoot are owned by the users who generate them.
                 When you create an image using our service, you retain full ownership and commercial rights to that image.
               </p>
               <p className="text-gray-700 dark:text-gray-300">
-                However, by using our service, you grant MyAIPhotoShoot a license to display your publicly shared 
+                However, by using our service, you grant MyAIPhotoShoot a license to display your publicly shared
                 images in our gallery for promotional and service improvement purposes.
               </p>
             </section>
@@ -92,10 +111,10 @@ export default function LicensePage() {
                 Questions or Concerns?
               </h2>
               <p className="text-gray-700 dark:text-gray-300">
-                If you have questions about image licensing, usage rights, or would like to report 
+                If you have questions about image licensing, usage rights, or would like to report
                 any licensing concerns, please contact us at{' '}
-                <a 
-                  href="mailto:support@myaiphotoshoot.com" 
+                <a
+                  href="mailto:support@myaiphotoshoot.com"
                   className="text-purple-600 dark:text-purple-400 hover:underline"
                 >
                   support@myaiphotoshoot.com
@@ -109,8 +128,8 @@ export default function LicensePage() {
               </h2>
               <p className="text-gray-700 dark:text-gray-300">
                 For complete terms of service and privacy policy, please visit our{' '}
-                <Link 
-                  href="/en/legal" 
+                <Link
+                  href={localePath(locale, '/legal/')}
                   className="text-purple-600 dark:text-purple-400 hover:underline"
                 >
                   legal page
@@ -122,4 +141,4 @@ export default function LicensePage() {
       </div>
     </div>
   );
-} 
+}

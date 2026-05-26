@@ -1,7 +1,7 @@
 import BlogPageClient from './BlogPageClient';
 import type { Metadata } from 'next';
 import { locales } from '@/i18n/request';
-import { buildAlternates, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { env } from '@/lib/env';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
@@ -15,14 +15,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const { locale } = await params;
 
-    const url = `https://myaiphotoshoot.com/${locale}/blog/`;
+    const url = canonicalUrl(locale, '/blog/');
     const messages = await loadMessages(locale);
     type BlogI18n = { blog?: { title?: string; description?: string } };
     const m = messages as BlogI18n;
     const blogTitle = typeof m.blog?.title === 'string'
       ? m.blog.title as string
       : 'AI Photo Blog';
-    const title = `${blogTitle} | My AI Photo Shoot`;
+    const title = blogTitle;
+    const socialTitle = `${blogTitle} | My AI Photo Shoot`;
     const description = typeof m.blog?.description === 'string'
       ? m.blog.description as string
       : 'Discover the latest tips, tutorials, and insights about AI photography and digital art creation.';
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       },
       openGraph: {
-        title,
+        title: socialTitle,
         description,
         url,
         siteName: 'My AI Photo Shoot',
@@ -53,14 +54,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
       twitter: {
         card: 'summary_large_image',
-        title,
+        title: socialTitle,
         description,
       },
     };
   } catch {
     // Never throw in metadata; return safe defaults
     return {
-      title: 'AI Photo Blog | My AI Photo Shoot',
+      title: 'AI Photo Blog',
       description: 'Discover tips and tutorials about AI photography and digital art.',
       robots: { index: true, follow: true },
     };
@@ -90,4 +91,4 @@ export default async function BlogPage({ params }: Props) {
   }
 
   return <BlogPageClient locale={locale} initialPosts={initialPosts} initialPagination={initialPagination || undefined} />;
-} 
+}

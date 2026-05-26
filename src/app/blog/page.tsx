@@ -16,7 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
     const blogTitle = typeof m.blog?.title === 'string'
       ? m.blog.title as string
       : 'AI Photo Blog';
-    const title = `${blogTitle} | My AI Photo Shoot`;
+    const title = blogTitle;
+    const socialTitle = `${blogTitle} | My AI Photo Shoot`;
     const description = typeof m.blog?.description === 'string'
       ? m.blog.description as string
       : 'Discover the latest tips, tutorials, and insights about AI photography and digital art creation.';
@@ -37,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       },
       openGraph: {
-        title,
+        title: socialTitle,
         description,
         url,
         siteName: 'My AI Photo Shoot',
@@ -47,13 +48,13 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       twitter: {
         card: 'summary_large_image',
-        title,
+        title: socialTitle,
         description,
       },
     };
   } catch {
     return {
-      title: 'AI Photo Blog | My AI Photo Shoot',
+      title: 'AI Photo Blog',
       description: 'Discover tips and tutorials about AI photography and digital art.',
       robots: { index: true, follow: true },
     };

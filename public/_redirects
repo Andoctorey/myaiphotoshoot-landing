@@ -1,18 +1,24 @@
-/ /en/ 200
 /en / 308
 /en/ / 308
+/blog /blog/ 308
 /en/blog /blog/ 308
 /en/blog/ /blog/ 308
-/support /en/support/ 308
-/support/ /en/support/ 308
-/use-cases /en/use-cases/ 308
-/use-cases/ /en/use-cases/ 308
 /en/blog/* /blog/:splat 308
-/use-cases/* /en/use-cases/:splat 308
+/support /support/ 308
+/en/support /support/ 308
+/en/support/ /support/ 308
+/use-cases /use-cases/ 308
+/en/use-cases /use-cases/ 308
+/en/use-cases/ /use-cases/ 308
+/en/use-cases/* /use-cases/:splat 308
+/legal /legal/ 308
+/en/legal /legal/ 308
+/en/legal/ /legal/ 308
+/license /license/ 308
+/en/license /license/ 308
+/en/license/ /license/ 308
 
 
 # Gone: photo detail pages removed
 #
 # Handled by Cloudflare Pages Function: functions/photo/[[path]].js
-
-

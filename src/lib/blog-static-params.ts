@@ -3,7 +3,7 @@ import { defaultLocale } from '@/i18n/request';
 type BuildFunctionsUrl = (path: string, params?: Record<string, string>) => string;
 
 const REVALIDATE_SECONDS = 3600;
-const PAGE_LIMIT = 20;
+const FALLBACK_PAGE_LIMIT = 5;
 const MAX_PAGES = 200;
 
 type BlogTranslation = {
@@ -64,18 +64,18 @@ const getTotalPages = (payload: unknown, context: string): number => {
   return Math.min(Math.floor(totalPages), MAX_PAGES);
 };
 
-export async function fetchAllPublishedBlogPosts(
+async function fetchPaginatedPublishedBlogPosts(
   buildFunctionsUrl: BuildFunctionsUrl,
   context: string,
 ): Promise<BlogListEntry[]> {
   const allPosts: BlogListEntry[] = [];
-
   let page = 1;
   let totalPages = 1;
+
   while (page <= totalPages) {
     const url = buildFunctionsUrl('/blog-posts', {
       page: String(page),
-      limit: String(PAGE_LIMIT),
+      limit: String(FALLBACK_PAGE_LIMIT),
       locale: defaultLocale,
     });
 
@@ -85,9 +85,7 @@ export async function fetchAllPublishedBlogPosts(
     }
 
     const data = await response.json();
-    const posts = normalizeBlogPosts(data, context);
-    allPosts.push(...posts);
-
+    allPosts.push(...normalizeBlogPosts(data, context));
     if (page === 1) {
       totalPages = getTotalPages(data, context);
     }
@@ -95,6 +93,29 @@ export async function fetchAllPublishedBlogPosts(
   }
 
   return allPosts;
+}
+
+export async function fetchAllPublishedBlogPosts(
+  buildFunctionsUrl: BuildFunctionsUrl,
+  context: string,
+): Promise<BlogListEntry[]> {
+  const url = buildFunctionsUrl('/blog-posts', {
+    sitemap: '1',
+  });
+
+  try {
+    const response = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
+    if (response.ok) {
+      const data = await response.json();
+      return normalizeBlogPosts(data, context);
+    }
+
+    console.warn(`${context} failed to fetch slim ${url} (status ${response.status}); falling back to paginated blog list.`);
+  } catch (error) {
+    console.warn(`${context} failed to fetch slim ${url}; falling back to paginated blog list.`, error);
+  }
+
+  return fetchPaginatedPublishedBlogPosts(buildFunctionsUrl, context);
 }
 
 export async function fetchAllPublishedBlogSlugs(
@@ -109,4 +130,58 @@ export async function fetchAllPublishedBlogSlugs(
   }
 
   return slugs;
+}
+
+export function getBlogSlugForLocale(
+  post: { slug?: string | null; translations?: Record<string, BlogTranslation> | null },
+  locale: string,
+): string | null {
+  const defaultSlug = typeof post.slug === 'string' ? post.slug.trim() : '';
+  if (locale === defaultLocale) {
+    return defaultSlug || null;
+  }
+
+  const localizedSlug = post.translations?.[locale]?.slug?.trim();
+  return localizedSlug || defaultSlug || null;
+}
+
+export function getBlogSlugMap(
+  post: { slug?: string | null; translations?: Record<string, BlogTranslation> | null },
+  supportedLocales: readonly string[],
+): Record<string, string> {
+  const slugMap: Record<string, string> = {};
+  for (const locale of supportedLocales) {
+    const slug = getBlogSlugForLocale(post, locale);
+    if (slug) {
+      slugMap[locale] = slug;
+    }
+  }
+  return slugMap;
+}
+
+export async function fetchAllPublishedBlogLocalizedParams(
+  buildFunctionsUrl: BuildFunctionsUrl,
+  context: string,
+  supportedLocales: readonly string[],
+): Promise<Array<{ locale: string; slug: string }>> {
+  const posts = await fetchAllPublishedBlogPosts(buildFunctionsUrl, context);
+  const params: Array<{ locale: string; slug: string }> = [];
+  const seen = new Set<string>();
+
+  for (const post of posts) {
+    const slugMap = getBlogSlugMap(post, supportedLocales);
+    for (const [locale, slug] of Object.entries(slugMap)) {
+      const key = `${locale}:${slug}`;
+      if (!seen.has(key)) {
+        params.push({ locale, slug });
+        seen.add(key);
+      }
+    }
+  }
+
+  if (params.length === 0) {
+    throw new Error(`${context} returned zero published blog localized params.`);
+  }
+
+  return params;
 }

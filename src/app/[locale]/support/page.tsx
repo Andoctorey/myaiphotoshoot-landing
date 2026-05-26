@@ -17,8 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? m.supportPage.description as string
     : 'Contact our team for help. We respond within 24–48 hours.';
   const supportTitle = typeof m.supportPage?.title === 'string' ? m.supportPage.title as string : 'Customer Support';
+  const socialTitle = `${supportTitle} | My AI Photo Shoot`;
   return {
-    title: `${supportTitle} | My AI Photo Shoot`,
+    title: supportTitle,
     description,
     alternates: buildAlternates(locale, '/support/', locales),
     robots: {
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     openGraph: {
-      title: `${supportTitle} | My AI Photo Shoot`,
+      title: socialTitle,
       description,
       url: canonicalUrl(locale, '/support/'),
       type: 'website',
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${supportTitle} | My AI Photo Shoot`,
+      title: socialTitle,
       description,
     },
   };

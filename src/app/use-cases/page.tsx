@@ -1,12 +1,8 @@
 import type { Metadata } from 'next';
 import UseCasesIndex from '@/components/use-cases/UseCasesIndex';
-import { locales } from '@/i18n/request';
+import { defaultLocale, locales } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { loadMessages } from '@/lib/i18n-messages';
-
-interface PageProps {
-  params: Promise<{ locale: string }>;
-}
 
 type UseCasesI18n = { navigation?: { noUseCases?: string; useCases?: string } };
 
@@ -18,9 +14,8 @@ function getUseCasesLabels(messages: unknown) {
   };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params;
-  const messages = await loadMessages(locale);
+export async function generateMetadata(): Promise<Metadata> {
+  const messages = await loadMessages(defaultLocale);
   const { title: titleBase } = getUseCasesLabels(messages);
   const socialTitle = `${titleBase} | My AI Photo Shoot`;
   const description = 'Explore AI photo generation use cases for headshots, dating profiles, social media, marketing, and personal projects.';
@@ -28,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: titleBase,
     description,
-    alternates: buildAlternates(locale, '/use-cases/', locales),
+    alternates: buildAlternates(defaultLocale, '/use-cases/', locales),
     robots: {
       index: true,
       follow: true,
@@ -43,11 +38,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: socialTitle,
       description,
-      url: canonicalUrl(locale, '/use-cases/'),
+      url: canonicalUrl(defaultLocale, '/use-cases/'),
       siteName: 'My AI Photo Shoot',
       type: 'website',
-      locale: ogLocaleFromAppLocale(locale),
-      alternateLocale: ogAlternateLocales(locales, locale),
+      locale: ogLocaleFromAppLocale(defaultLocale),
+      alternateLocale: ogAlternateLocales(locales, defaultLocale),
     },
     twitter: {
       card: 'summary_large_image',
@@ -57,8 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function UseCasesPage({ params }: PageProps) {
-  const { locale } = await params;
-  const labels = getUseCasesLabels(await loadMessages(locale));
-  return <UseCasesIndex locale={locale} title={labels.title} emptyLabel={labels.emptyLabel} />;
+export default async function UseCasesPage() {
+  const labels = getUseCasesLabels(await loadMessages(defaultLocale));
+  return <UseCasesIndex locale={defaultLocale} title={labels.title} emptyLabel={labels.emptyLabel} />;
 }

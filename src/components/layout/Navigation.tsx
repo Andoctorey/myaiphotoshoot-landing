@@ -7,13 +7,14 @@ import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/request';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { env } from '@/lib/env';
+import { localePath } from '@/lib/seo';
 
 export default function Navigation() {
   const t = useTranslations('navigation');
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
@@ -27,10 +28,12 @@ export default function Navigation() {
   const [isUseCasesLoading, setIsUseCasesLoading] = useState(true);
   const [useCases, setUseCases] = useState<Array<{ slug: string; title: string }>>([]);
   const tCommonLoading = useTranslations('blog');
-  
+  const homePath = localePath(locale, '/');
+  const homeHash = (hash: string) => `${homePath}${hash}`;
+
   // Check if we're on the home page
   const isHomePage = pathname === '/' || pathname === `/${locale}`;
-  
+
   // Language display names
   const getLanguageDisplayName = (langCode: string) => {
     const languageNames: Record<string, string> = {
@@ -48,11 +51,11 @@ export default function Navigation() {
   };
 
   const navItems = [
-    { name: t('features'), href: isHomePage ? '#features' : `/${locale}#features` },
-    { name: t('gallery'), href: isHomePage ? '#gallery' : `/${locale}#gallery` },
-    { name: t('blog'), href: isHomePage ? '#home-blog' : `/${locale}#home-blog` },
-    { name: t('pricing'), href: isHomePage ? '#pricing' : `/${locale}#pricing` },
-    { name: t('faq'), href: isHomePage ? '#faq' : `/${locale}#faq` },
+    { name: t('features'), href: isHomePage ? '#features' : homeHash('#features') },
+    { name: t('gallery'), href: isHomePage ? '#gallery' : homeHash('#gallery') },
+    { name: t('blog'), href: isHomePage ? '#home-blog' : homeHash('#home-blog') },
+    { name: t('pricing'), href: isHomePage ? '#pricing' : homeHash('#pricing') },
+    { name: t('faq'), href: isHomePage ? '#faq' : homeHash('#faq') },
   ];
 
   useEffect(() => {
@@ -137,12 +140,12 @@ export default function Navigation() {
   const handleNavLinkClick = () => {
     setMobileMenuOpen(false);
   };
-  
+
   // Handle language change
   const handleLanguageChange = (newLocale: string) => {
     // Navigate to the same page with the new locale using static-compatible router
     router.push(pathname, { locale: newLocale, scroll: false });
-    
+
     // Close the language menu
     setIsLanguageMenuOpen(false);
   };
@@ -159,17 +162,17 @@ export default function Navigation() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <a 
-              href={isHomePage ? "#" : `/${locale}`} 
+            <a
+              href={isHomePage ? "#" : homePath}
               className="flex items-center"
               aria-label="My AI Photo Shoot - Home"
             >
               <div className="h-11 w-11 relative">
                 <picture>
                   <source srcSet="/images/icon_192.webp" type="image/webp" />
-                  <img 
-                    src="/images/icon_192.png" 
-                    alt="My AI Photo Shoot logo" 
+                  <img
+                    src="/images/icon_192.png"
+                    alt="My AI Photo Shoot logo"
                     className="h-full w-auto"
                   />
                 </picture>
@@ -226,7 +229,7 @@ export default function Navigation() {
                         useCases.map((uc) => (
                           <a
                             key={uc.slug}
-                            href={`/${locale}/use-cases/${uc.slug}/`}
+                            href={localePath(locale, `/use-cases/${uc.slug}/`)}
                             className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                             role="option"
                             aria-selected="false"
@@ -241,15 +244,15 @@ export default function Navigation() {
                 )}
               </div>
               <a
-                href={isHomePage ? "#download" : `/${locale}#download`}
+                href={isHomePage ? "#download" : homeHash('#download')}
                 className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               >
                 {t('download')}
               </a>
-              
+
               {/* Theme Toggle */}
               <ThemeToggle />
-              
+
               {/* Language selector dropdown */}
               <div className="relative">
                 <button
@@ -265,9 +268,9 @@ export default function Navigation() {
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
-                
+
                 {isLanguageMenuOpen && (
-                  <div 
+                  <div
                     ref={languageMenuRef}
                     id="language-menu"
                     className="absolute ltr:right-0 rtl:left-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
@@ -280,8 +283,8 @@ export default function Navigation() {
                           key={l}
                           onClick={() => handleLanguageChange(l)}
                           className={`flex items-center justify-between w-full px-4 py-2 text-sm transition-colors duration-150 ${
-                            l === locale 
-                              ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
+                            l === locale
+                              ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
                               : 'text-gray-700 dark:text-gray-300'
                           } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:bg-purple-50 dark:focus:bg-purple-900/50 focus:text-purple-700 dark:focus:text-purple-300`}
                           role="option"
@@ -298,7 +301,7 @@ export default function Navigation() {
               </div>
             </div>
           </div>
-          
+
           {/* Mobile menu button and theme toggle */}
           <div className="md:hidden flex items-center gap-2">
             <ThemeToggle />
@@ -342,7 +345,7 @@ export default function Navigation() {
             </button>
           </div>
         </div>
-        
+
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div id="mobile-menu" className="md:hidden">
@@ -387,7 +390,7 @@ export default function Navigation() {
                         {useCases.map((uc) => (
                           <a
                             key={uc.slug}
-                            href={`/${locale}/use-cases/${uc.slug}/`}
+                            href={localePath(locale, `/use-cases/${uc.slug}/`)}
                             className="block px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary text-sm"
                             onClick={handleNavLinkClick}
                             role="menuitem"
@@ -401,14 +404,14 @@ export default function Navigation() {
                 )}
               </div>
               <a
-                href={isHomePage ? "#download" : `/${locale}#download`}
+                href={isHomePage ? "#download" : homeHash('#download')}
                 className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                 onClick={handleNavLinkClick}
                 role="menuitem"
               >
                 {t('download')}
               </a>
-              
+
               {/* Language selector in mobile menu (collapsible) */}
               <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" role="group" aria-label="Language selection">
                 <button
@@ -428,8 +431,8 @@ export default function Navigation() {
                         key={l}
                         onClick={() => handleLanguageChange(l)}
                         className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 ${
-                          l === locale 
-                            ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300' 
+                          l === locale
+                            ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
                             : 'text-gray-700 dark:text-gray-300'
                         } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`}
                         aria-pressed={l === locale}
@@ -447,4 +450,4 @@ export default function Navigation() {
       </nav>
     </motion.header>
   );
-} 
+}

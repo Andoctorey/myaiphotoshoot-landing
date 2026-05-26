@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { localePath } from '@/lib/seo';
 
 interface Props {
   initialUseCases?: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
@@ -24,7 +25,7 @@ export default function HomeUseCases({ initialUseCases = [], locale = 'en' }: Pr
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {initialUseCases.map((it) => (
-              <Link key={it.slug} href={`/${locale}/use-cases/${it.slug}/`} className="block group">
+              <Link key={it.slug} href={localePath(locale, `/use-cases/${it.slug}/`)} className="block group">
                 <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                   {Array.isArray(it.featured_image_urls) && it.featured_image_urls[0] && (
                     <Image src={it.featured_image_urls[0]} alt="" width={640} height={360} className="w-full h-auto" />
@@ -41,5 +42,4 @@ export default function HomeUseCases({ initialUseCases = [], locale = 'en' }: Pr
     </section>
   );
 }
-
 

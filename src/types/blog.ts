@@ -38,6 +38,7 @@ export interface BlogPostsResponse {
 
 // Blog translation interface
 export interface BlogTranslation {
+  slug?: string;
   title?: string;
   content?: string;
   meta_description?: string;
@@ -58,4 +59,4 @@ export interface BlogNavItem {
   title: string;
   slug: string;
   publishedAt: string;
-} 
+}

@@ -1,18 +1,16 @@
 import { MetadataRoute } from 'next'
 import { locales } from '@/i18n/request'
 import { env } from '@/lib/env'
-import { fetchAllPublishedBlogPosts } from '@/lib/blog-static-params'
+import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, getBlogSlugMap } from '@/lib/blog-static-params'
 
 /**
  * Sitemap generator
  * 
  * CLOUDFLARE PAGES NOTE:
- * This sitemap is generated dynamically and cached on Cloudflare Pages.
+ * This sitemap is generated during static export for Cloudflare Pages.
  * It includes static pages and blog posts across supported locales.
  */
-
-// Cache for 1 hour on Cloudflare Pages
-export const revalidate = 3600; // 1 hour revalidation
+export const dynamic = 'force-static';
 
 /**
  * Sitemap API response types
@@ -21,6 +19,7 @@ interface SitemapBlogPost {
   slug: string | null
   created_at: string
   featured_image_url: string | null
+  translations?: Record<string, { slug?: string | null }> | null
 }
 
 interface SitemapUseCase {
@@ -77,6 +76,23 @@ function buildHreflangLanguages(
   return map;
 }
 
+function buildBlogPostHreflangLanguages(
+  baseUrl: string,
+  slugMap: Record<string, string>,
+): Record<string, string> {
+  const map: Record<string, string> = {};
+  for (const locale of locales) {
+    const slug = slugMap[locale];
+    if (slug) {
+      map[locale] = buildLocalizedUrl(baseUrl, locale, `/blog/${slug}/`);
+    }
+  }
+  if (slugMap.en) {
+    map['x-default'] = buildLocalizedUrl(baseUrl, 'en', `/blog/${slugMap.en}/`);
+  }
+  return map;
+}
+
 /**
  * Fetch all blog posts once for sitemap generation
  */
@@ -91,6 +107,7 @@ async function getAllBlogPosts(): Promise<SitemapBlogPost[]> {
       slug: post.slug,
       created_at: post.created_at,
       featured_image_url: post.featured_image_url ?? null,
+      translations: post.translations ?? null,
     }));
   } catch (error) {
     console.error('Error fetching blog posts for sitemap:', error);
@@ -169,7 +186,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     // Use-cases listing pages for all locales
     ...locales.map(locale => ({
-      url: `${baseUrl}/${locale}/use-cases/`,
+      url: buildLocalizedUrl(baseUrl, locale, '/use-cases/'),
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
@@ -179,7 +196,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     // Support pages for all locales
     ...locales.map(locale => ({
-      url: `${baseUrl}/${locale}/support/`,
+      url: buildLocalizedUrl(baseUrl, locale, '/support/'),
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
@@ -187,6 +204,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: buildHreflangLanguages(baseUrl, '/support/', locales),
       },
     })),
+    // Legal and license pages for all locales
+    ...locales.flatMap(locale => [
+      {
+        url: buildLocalizedUrl(baseUrl, locale, '/legal/'),
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.4,
+        alternates: {
+          languages: buildHreflangLanguages(baseUrl, '/legal/', locales),
+        },
+      },
+      {
+        url: buildLocalizedUrl(baseUrl, locale, '/license/'),
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.4,
+        alternates: {
+          languages: buildHreflangLanguages(baseUrl, '/license/', locales),
+        },
+      },
+    ]),
   ];
 
   try {
@@ -198,10 +236,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const blogPostEntries: MetadataRoute.Sitemap = [];
     for (const post of blogPosts) {
       if (!post.slug) continue;
-      const languages = buildHreflangLanguages(baseUrl, `/blog/${post.slug}/`, locales);
+      const slugMap = getBlogSlugMap(post, locales);
+      const languages = buildBlogPostHreflangLanguages(baseUrl, slugMap);
       for (const locale of locales) {
+        const localizedSlug = getBlogSlugForLocale(post, locale);
+        if (!localizedSlug) continue;
         blogPostEntries.push({
-          url: buildLocalizedUrl(baseUrl, locale, `/blog/${post.slug}/`),
+          url: buildLocalizedUrl(baseUrl, locale, `/blog/${localizedSlug}/`),
           lastModified: new Date(post.created_at),
           changeFrequency: 'weekly',
           priority: 0.7,
@@ -217,7 +258,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const languages = buildHreflangLanguages(baseUrl, `/use-cases/${item.slug}/`, locales);
       for (const locale of locales) {
         useCaseEntries.push({
-          url: `${baseUrl}/${locale}/use-cases/${item.slug}/`,
+          url: buildLocalizedUrl(baseUrl, locale, `/use-cases/${item.slug}/`),
           lastModified: item.created_at ? new Date(item.created_at) : new Date(),
           changeFrequency: 'weekly',
           priority: 0.7,

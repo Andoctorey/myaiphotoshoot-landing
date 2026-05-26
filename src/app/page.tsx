@@ -33,9 +33,20 @@ export async function generateMetadata(): Promise<Metadata> {
     : "Instantly create thousands of hyper-realistic, AI-generated photos for social media, profile pictures, marketing, or personal projects with our next-gen AI photo studio.";
   const title = 'My AI Photo Shoot – AI Photo Generator';
   return {
-    title, // concise HTML title
+    title: { absolute: title }, // concise HTML title
     description,
     alternates: buildAlternates('en', '/', locales),
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     openGraph: {
       // Keep richer OG title for social sharing
       title: 'My AI Photo Shoot - Transform Your Selfies Into Stunning AI-Generated Portraits',

@@ -1,12 +1,15 @@
 {
   "version": 1,
-  "include": ["/*"],
-  "exclude": [
-    "/_next/*",
-    "/images/*", 
-    "/*.svg",
-    "/fonts/*",
-    "/api/*",
-    "/favicon.ico"
-  ]
-} 
+  "include": [
+    "/geo",
+    "/geo/",
+    "/indexnow-key.txt",
+    "/photo",
+    "/photo/*",
+    "/submit-indexnow",
+    "/submit-indexnow/",
+    "/submit-sitemap",
+    "/submit-sitemap/"
+  ],
+  "exclude": []
+}

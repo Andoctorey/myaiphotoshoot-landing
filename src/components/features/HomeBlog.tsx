@@ -7,6 +7,7 @@ import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
 import { useLocale, useTranslations } from '@/lib/utils';
 import { withDefaultCdnWidth } from '@/lib/image';
+import { localePath } from '@/lib/seo';
 
 // Use stable order to avoid hydration mismatches between SSR/CSR
 function takeFirst<T>(items: T[], n: number): T[] { return items.slice(0, n); }
@@ -98,7 +99,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
                   index >= 3 ? 'hidden md:block' : ''
                 }`}
               >
-            <Link href={`/${locale}/blog/${post.slug}/`}>
+            <Link href={localePath(locale, `/blog/${post.slug}/`)}>
                   <div className="aspect-square bg-gray-200 dark:bg-gray-700">
                     {post.featured_image_url ? (
                       <Image
@@ -136,7 +137,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
 
         <div className="text-center">
           <Link
-            href={`/${locale}/blog/`}
+            href={localePath(locale, '/blog/')}
             className="inline-block px-6 py-3 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors"
           >
             {t('viewAll')}
@@ -146,5 +147,4 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
     </section>
   );
 }
-
 

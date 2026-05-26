@@ -11,7 +11,7 @@ import { withDefaultCdnWidth } from '@/lib/image';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 import HowToJsonLd from '@/components/seo/HowToJsonLd';
-import { canonicalUrl } from '@/lib/seo';
+import { canonicalUrl, localePath } from '@/lib/seo';
 import { trackEventAndNavigate } from '@/lib/analytics';
 
 interface Props {
@@ -173,9 +173,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-500 dark:text-gray-400">
         <ol className="flex items-center gap-1 flex-wrap">
-          <li><a href={`/${locale}/`} className="hover:text-gray-700 dark:hover:text-gray-200">{tNav('home')}</a></li>
+          <li><a href={localePath(locale, '/')} className="hover:text-gray-700 dark:hover:text-gray-200">{tNav('home')}</a></li>
           <li>/</li>
-          <li><a href={`/${locale}/use-cases/`} className="hover:text-gray-700 dark:hover:text-gray-200">{tUseCase('breadcrumb.useCases')}</a></li>
+          <li><a href={localePath(locale, '/use-cases/')} className="hover:text-gray-700 dark:hover:text-gray-200">{tUseCase('breadcrumb.useCases')}</a></li>
           <li>/</li>
           <li aria-current="page" className="text-gray-700 dark:text-gray-200">{title}</li>
         </ol>
@@ -544,5 +544,4 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
     </article>
   );
 }
-
 

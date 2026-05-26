@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { env } from '@/lib/env';
 import { locales } from '@/i18n/request';
 import { localePath } from '@/lib/seo';
-import { fetchAllPublishedBlogPosts } from '@/lib/blog-static-params';
+import { fetchAllPublishedBlogPosts, getBlogSlugForLocale } from '@/lib/blog-static-params';
 
-export const revalidate = 3600;
+export const dynamic = 'force-static';
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const base = new URL(env.SUPABASE_FUNCTIONS_URL);
@@ -44,6 +44,7 @@ export async function GET() {
           title: typeof post.title === 'string' && post.title.length > 0 ? post.title : baseSlug,
           slug: baseSlug,
           created_at: createdAt,
+          meta_description: typeof post.meta_description === 'string' ? post.meta_description : null,
           featured_image_url: typeof post.featured_image_url === 'string' ? post.featured_image_url : null,
           locale: 'en',
         });
@@ -55,7 +56,7 @@ export async function GET() {
         if (locale === 'en') return;
         const translation = translations[locale];
         if (!translation || typeof translation !== 'object') return;
-        const translatedSlug = typeof translation.slug === 'string' ? translation.slug : null;
+        const translatedSlug = getBlogSlugForLocale(post, locale);
         if (!translatedSlug || !createdAt) return;
         posts.push({
           title: typeof translation.title === 'string' ? translation.title : translatedSlug,
@@ -104,4 +105,3 @@ export async function GET() {
     return new NextResponse('Not Found', { status: 404 });
   }
 }
-

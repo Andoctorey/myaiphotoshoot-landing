@@ -13,9 +13,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { env } from '@/lib/env';
 import { locales } from '@/i18n/request';
-import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import { BASE_URL, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
-import { fetchAllPublishedBlogSlugs } from '@/lib/blog-static-params';
+import { fetchAllPublishedBlogLocalizedParams, getBlogSlugMap } from '@/lib/blog-static-params';
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const base = new URL(env.SUPABASE_FUNCTIONS_URL);
@@ -31,6 +31,25 @@ const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   }
   return base.toString();
 };
+
+function articleTagsFromPhotoTopics(photoTopics: unknown): string[] {
+  if (typeof photoTopics !== 'string') {
+    return ['AI photography'];
+  }
+
+  const tags = photoTopics
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter((tag) => (
+      tag.length >= 2
+      && tag.length <= 40
+      && !/[*.:\n\r]/.test(tag)
+      && !/\s{2,}/.test(tag)
+    ))
+    .slice(0, 8);
+
+  return tags.length > 0 ? tags : ['AI photography'];
+}
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -50,7 +69,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     if (!response.ok) {
       if (response.status === 404) {
         return {
-          title: 'Blog Post Not Found - My AI Photo Shoot',
+          title: 'Blog Post Not Found',
           description: 'The requested blog post could not be found.',
           robots: {
             index: false,
@@ -66,7 +85,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     
     if (!post) {
       return {
-        title: 'Blog Post Not Found - My AI Photo Shoot',
+        title: 'Blog Post Not Found',
         description: 'The requested blog post could not be found.',
         robots: {
           index: false,
@@ -75,9 +94,21 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       };
     }
     
-    const title = `${post.title} | My AI Photo Shoot`;
+    const title = post.title;
+    const socialTitle = `${post.title} | My AI Photo Shoot`;
     const description = post.meta_description || post.title;
-    const url = canonicalUrl(locale, `/blog/${slug}/`);
+    const articleTags = articleTagsFromPhotoTopics(post.photo_topics);
+    const slugMap = getBlogSlugMap(post, locales);
+    slugMap[locale] = slug;
+    const currentPath = `/blog/${slug}/`;
+    const languages = Object.fromEntries(
+      Object.entries(slugMap).map(([language, localizedSlug]) => [
+        language,
+        localePath(language, `/blog/${localizedSlug}/`),
+      ]),
+    );
+    languages['x-default'] = localePath('en', `/blog/${slugMap.en || slug}/`);
+    const url = `${BASE_URL}${localePath(locale, currentPath)}`;
     const imageUrl = typeof post.featured_image_url === 'string'
       ? post.featured_image_url
       : 'https://myaiphotoshoot.com/og-image.png';
@@ -112,9 +143,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
           'max-video-preview': -1,
         },
       },
-      alternates: buildAlternates(locale, `/blog/${slug}/`, locales),
+      alternates: {
+        canonical: url,
+        languages,
+      },
       openGraph: {
-        title,
+        title: socialTitle,
         description,
         url,
         siteName: 'My AI Photo Shoot',
@@ -133,12 +167,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         publishedTime: post.created_at,
         modifiedTime: post.updated_at,
         section: 'AI Photography',
-        tags: post.photo_topics?.split(',').map((tag: string) => tag.trim()) || [],
+        tags: articleTags,
         authors: ['My AI Photo Shoot'],
       },
       twitter: {
         card: 'summary_large_image',
-        title,
+        title: socialTitle,
         description,
         images: [imageUrl],
       },
@@ -146,7 +180,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       other: {
         'article:author': 'My AI Photo Shoot',
         'article:section': 'AI Photography',
-        'article:tag': post.photo_topics || 'AI photography',
         'og:image:alt': post.title,
         'twitter:image:alt': post.title,
       },
@@ -159,17 +192,11 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  const slugs = await fetchAllPublishedBlogSlugs(
+  return fetchAllPublishedBlogLocalizedParams(
     buildFunctionsUrl,
     'Failed to fetch blog posts for localized pages',
+    locales,
   );
-  const allParams: { slug: string; locale: string }[] = [];
-  for (const locale of locales) {
-    slugs.forEach((slug) => {
-      allParams.push({ slug, locale });
-    });
-  }
-  return allParams;
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {

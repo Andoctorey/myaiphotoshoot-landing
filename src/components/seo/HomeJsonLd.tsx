@@ -1,6 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
+import { canonicalUrl } from '@/lib/seo';
 
 export default function HomeJsonLd() {
   const locale = useLocale();
@@ -19,7 +20,7 @@ export default function HomeJsonLd() {
     name: 'AI Photoshoot',
     brand: { '@type': 'Brand', name: 'My AI Photo Shoot' },
     description,
-    url: 'https://myaiphotoshoot.com',
+    url: canonicalUrl(locale, '/'),
     image: 'https://myaiphotoshoot.com/og-image.png',
     category: 'Photography Software',
     inLanguage: locale,
@@ -42,7 +43,7 @@ export default function HomeJsonLd() {
         name: 'One-time AI training fee',
         price: '2.99',
         priceCurrency: 'USD',
-        url: 'https://myaiphotoshoot.com/#pricing',
+        url: `${canonicalUrl(locale, '/')}#pricing`,
         availability: 'https://schema.org/InStock'
       },
       {
@@ -56,7 +57,7 @@ export default function HomeJsonLd() {
           priceCurrency: 'USD',
           unitText: 'per image'
         },
-        url: 'https://myaiphotoshoot.com/#pricing',
+        url: `${canonicalUrl(locale, '/')}#pricing`,
         availability: 'https://schema.org/InStock'
       }
     ],
@@ -70,6 +71,4 @@ export default function HomeJsonLd() {
     />
   );
 }
-
-
 
