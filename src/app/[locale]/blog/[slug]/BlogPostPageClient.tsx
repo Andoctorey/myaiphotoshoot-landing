@@ -90,8 +90,14 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   // Extract FAQs from content for schema markup
   const faqs = safeContent ? extractFAQsFromContent(safeContent) : [];
 
+  const canonicalSlug = useMemo(() => {
+    const defaultSlug = typeof post?.slug === 'string' ? post.slug.trim() : '';
+    const localizedSlug = locale !== 'en' ? post?.translations?.[locale]?.slug?.trim() : '';
+    return localizedSlug || defaultSlug || slug;
+  }, [post?.slug, post?.translations, locale, slug]);
+
   // Canonical URL for JSON-LD
-  const articleUrl = canonicalUrl(locale, `/blog/${slug}/`);
+  const articleUrl = canonicalUrl(locale, `/blog/${canonicalSlug}/`);
 
   const breadcrumbLd = post ? {
     '@context': 'https://schema.org',
@@ -113,7 +119,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         '@type': 'ListItem',
         position: 3,
         name: safeTitle,
-        item: canonicalUrl(locale, `/blog/${slug}/`)
+        item: canonicalUrl(locale, `/blog/${canonicalSlug}/`)
       }
     ]
   } : null;

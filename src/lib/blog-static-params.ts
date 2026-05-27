@@ -169,12 +169,23 @@ export async function fetchAllPublishedBlogLocalizedParams(
   const seen = new Set<string>();
 
   for (const post of posts) {
-    const slugMap = getBlogSlugMap(post, supportedLocales);
-    for (const [locale, slug] of Object.entries(slugMap)) {
-      const key = `${locale}:${slug}`;
-      if (!seen.has(key)) {
-        params.push({ locale, slug });
-        seen.add(key);
+    const defaultSlug = typeof post.slug === 'string' ? post.slug.trim() : '';
+    for (const locale of supportedLocales) {
+      const localizedSlug = getBlogSlugForLocale(post, locale);
+      const slugsForLocale = new Set<string>();
+      if (localizedSlug) {
+        slugsForLocale.add(localizedSlug);
+      }
+      if (locale !== defaultLocale && defaultSlug) {
+        slugsForLocale.add(defaultSlug);
+      }
+
+      for (const slug of slugsForLocale) {
+        const key = `${locale}:${slug}`;
+        if (!seen.has(key)) {
+          params.push({ locale, slug });
+          seen.add(key);
+        }
       }
     }
   }

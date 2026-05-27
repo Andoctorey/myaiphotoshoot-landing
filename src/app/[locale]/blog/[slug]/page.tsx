@@ -99,8 +99,11 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const description = post.meta_description || post.title;
     const articleTags = articleTagsFromPhotoTopics(post.photo_topics);
     const slugMap = getBlogSlugMap(post, locales);
-    slugMap[locale] = slug;
-    const currentPath = `/blog/${slug}/`;
+    if (!slugMap[locale]) {
+      slugMap[locale] = slug;
+    }
+    const canonicalSlugForLocale = slugMap[locale] || slug;
+    const currentPath = `/blog/${canonicalSlugForLocale}/`;
     const languages = Object.fromEntries(
       Object.entries(slugMap).map(([language, localizedSlug]) => [
         language,
