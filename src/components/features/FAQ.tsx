@@ -37,6 +37,22 @@ export default function FAQ() {
       answer: t('howItWorks.answer'),
     },
     {
+      question: t('freeHeadshot.question'),
+      answer: t('freeHeadshot.answer'),
+    },
+    {
+      question: t('chatgptHeadshot.question'),
+      answer: t('chatgptHeadshot.answer'),
+    },
+    {
+      question: t('linkedinPolicy.question'),
+      answer: t('linkedinPolicy.answer'),
+    },
+    {
+      question: t('photoToHeadshot.question'),
+      answer: t('photoToHeadshot.answer'),
+    },
+    {
       question: t('pricing.question'),
       answer: t('pricing.answer'),
     },

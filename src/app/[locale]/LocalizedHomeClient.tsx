@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import { useLocale } from '@/lib/utils';
 import Hero from '@/components/features/Hero';
 import Features from '@/components/features/Features';
 import UserGallery from '@/components/features/Testimonials';
@@ -10,11 +11,24 @@ import FAQ from '@/components/features/FAQ';
 import Download from '@/components/features/Download';
 import SupportForm from '@/components/app/SupportForm';
 import HomeBlog from '@/components/features/HomeBlog';
+import HomeUseCases from '@/components/features/HomeUseCases';
+import HeadshotComparison from '@/components/features/HeadshotComparison';
 import type { GalleryItem } from '@/types/gallery';
 import type { BlogListItem } from '@/types/blog';
 
-export default function LocalizedHomeClient({ initialGallery = [], initialBlog = [] }: { initialGallery?: GalleryItem[]; initialBlog?: BlogListItem[] }) {
+type HomeUseCaseItem = { slug: string; title: string; featured_image_urls?: string[] };
+
+export default function LocalizedHomeClient({
+  initialGallery = [],
+  initialBlog = [],
+  initialUseCases = [],
+}: {
+  initialGallery?: GalleryItem[];
+  initialBlog?: BlogListItem[];
+  initialUseCases?: HomeUseCaseItem[];
+}) {
   const pathname = usePathname();
+  const locale = useLocale();
   const isSupport = pathname?.endsWith('/support/') || pathname?.endsWith('/support');
   
   useEffect(() => {
@@ -57,6 +71,8 @@ export default function LocalizedHomeClient({ initialGallery = [], initialBlog =
           <>
             <Hero />
             <Features />
+            <HomeUseCases initialUseCases={initialUseCases} locale={locale} />
+            <HeadshotComparison />
             <UserGallery initialItems={initialGallery} />
             <HomeBlog initialPosts={initialBlog} />
             <Pricing />

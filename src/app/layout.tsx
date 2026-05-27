@@ -23,10 +23,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://myaiphotoshoot.com"),
   title: {
-    default: "My AI Photo Shoot - AI Portrait Generator",
+    default: "AI Headshot Generator - My AI Photo Shoot",
     template: "%s | My AI Photo Shoot",
   },
-  description: "Turn selfies into realistic AI portraits for profiles, social media, marketing, and personal projects with simple pay-as-you-go pricing.",
+  description: "Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.",
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",
@@ -54,8 +54,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "My AI Photo Shoot - Studio-Quality AI Portraits From Selfies",
-    description: "Create realistic AI portraits from your own selfies for profiles, social media, marketing, and creative projects.",
+    title: "AI Headshot Generator - Realistic Profile Photos From Selfies",
+    description: "Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.",
     url: "https://myaiphotoshoot.com",
     siteName: "My AI Photo Shoot",
     images: [
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "My AI Photo Shoot AI portrait examples",
+        alt: "My AI Photo Shoot AI headshot examples",
       },
     ],
     locale: "en_US",
@@ -71,8 +71,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "My AI Photo Shoot - Studio-Quality AI Portraits From Selfies",
-    description: "Create realistic AI portraits from your own selfies for profiles, social media, marketing, and creative projects.",
+    title: "AI Headshot Generator - Realistic Profile Photos From Selfies",
+    description: "Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.",
     images: ["/og-image.png"],
   },
 };

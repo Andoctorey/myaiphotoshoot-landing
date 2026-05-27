@@ -11,27 +11,26 @@ import SiteShell from '@/components/layout/SiteShell';
 export default async function Home() {
   const locale = 'en';
 
-  const { initialGallery, initialBlog } = await fetchHomeData(locale);
+  const { initialGallery, initialBlog, initialUseCases } = await fetchHomeData(locale);
   const messages = await loadMessages(locale);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <HomeJsonLd />
       <SiteShell locale={locale}>
-        <LocalizedHomeClient initialGallery={initialGallery} initialBlog={initialBlog} />
+        <LocalizedHomeClient
+          initialGallery={initialGallery}
+          initialBlog={initialBlog}
+          initialUseCases={initialUseCases}
+        />
       </SiteShell>
     </NextIntlClientProvider>
   );
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const messages = await loadMessages('en');
-  type HomeI18n = { hero?: { description?: string; title?: string; titleHighlight?: string } };
-  const m = messages as HomeI18n;
-  const description = typeof m.hero?.description === 'string'
-    ? m.hero.description as string
-    : 'Turn selfies into realistic AI portraits for profiles, social media, marketing, and personal projects with simple pay-as-you-go pricing.';
-  const title = 'My AI Photo Shoot - AI Portrait Generator';
+  const description = 'Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.';
+  const title = 'AI Headshot Generator - My AI Photo Shoot';
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -49,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       // Keep richer OG title for social sharing
-      title: 'My AI Photo Shoot - Studio-Quality AI Portraits From Selfies',
+      title: 'AI Headshot Generator - Realistic Profile Photos From Selfies',
       description,
       url: 'https://myaiphotoshoot.com/',
       siteName: 'My AI Photo Shoot',
@@ -58,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: '/og-image.png',
           width: 1200,
           height: 630,
-          alt: 'My AI Photo Shoot AI portrait examples',
+          alt: 'My AI Photo Shoot AI headshot examples',
         },
       ],
       locale: ogLocaleFromAppLocale('en'),
@@ -67,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'My AI Photo Shoot - Studio-Quality AI Portraits From Selfies',
+      title: 'AI Headshot Generator - Realistic Profile Photos From Selfies',
       description,
       images: ['/og-image.png'],
     },

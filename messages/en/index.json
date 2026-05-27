@@ -12,17 +12,43 @@
     "language": "Language"
   },
   "hero": {
-    "title": "Turn Your Selfies Into",
-    "titleHighlight": "Studio-Quality AI Portraits",
-    "description": "Upload a few selfies and create realistic AI photos for profiles, social media, marketing, and personal projects with a fast AI photo studio built for repeatable results.",
-    "microcopy": "Upload 10-20 selfies -> train once for $2.99 -> generate images for $0.03 each"
+    "title": "AI Headshot Generator for",
+    "titleHighlight": "Realistic Profile Photos",
+    "description": "Upload a few selfies and create realistic AI headshots, profile pictures, and portraits for LinkedIn, resumes, teams, creators, and personal brands.",
+    "microcopy": "Train once for $2.99 -> generate headshots and portraits for $0.03 each -> no subscription"
+  },
+  "homeUseCases": {
+    "eyebrow": "AI photo use cases",
+    "title": "Start with professional headshots, then reuse your model",
+    "description": "Create professional headshots first, then reuse the same trained model for profile pictures, portraits, photobooth looks, and realistic images of yourself."
+  },
+  "headshotComparison": {
+    "eyebrow": "Free vs paid AI headshots",
+    "title": "Free generators are useful for tests. My AI Photo Shoot is built for repeatable headshots.",
+    "description": "Search results are full of free trials and generic image tools. The difference here is clear pricing, a trained personal model, consistent likeness, and privacy controls for professional photos you can reuse.",
+    "primaryLink": "Create AI headshots",
+    "secondaryLink": "Make profile pictures",
+    "cards": {
+      "pricing": {
+        "title": "Transparent pricing",
+        "description": "$2.99 one-time training, then $0.03 per image. No monthly subscription."
+      },
+      "likeness": {
+        "title": "Consistent likeness",
+        "description": "Train once from your selfies and generate many headshot, portrait, and profile styles."
+      },
+      "control": {
+        "title": "Privacy controls",
+        "description": "Choose private or public galleries, manage your library, and delete photos from your account."
+      }
+    }
   },
   "features": {
-    "title": "Core Features",
-    "description": "Everything you need to create consistent AI portraits without a subscription",
+    "title": "Built for realistic AI headshots",
+    "description": "Everything you need to create consistent professional photos without a subscription",
     "advancedAI": {
-      "title": "Next-Gen AI Engine",
-      "description": "Powered by Flux.1 deep-learning models for realistic detail, strong likeness, and flexible creative control in every generated image."
+      "title": "Realistic likeness",
+      "description": "Powered by Flux.1 deep-learning models for natural detail, recognizable faces, and flexible creative control in every generated image."
     },
     "privacyFirst": {
       "title": "Privacy Controls Built In",
@@ -33,8 +59,8 @@
       "description": "No subscription and no surprise fees. Train your model once for $2.99, then generate images for $0.03 each."
     },
     "thousandsOfStyles": {
-      "title": "Endless Creative Styles",
-      "description": "Use ready-made presets or try “Surprise Me” to explore new looks, scenes, outfits, and visual styles in seconds."
+      "title": "Headshots, portraits, and profile styles",
+      "description": "Create professional headshots, profile pictures, creator portraits, and polished personal-brand images from the same trained model."
     },
     "easyCustomization": {
       "title": "Simple Prompt Builder",
@@ -172,6 +198,22 @@
       "question": "How does AI photo generation work?",
       "answer": "You upload a small set of selfies, and we train a personal AI model that learns your appearance. After training, you can generate new images of yourself in different outfits, poses, settings, and visual styles."
     },
+    "freeHeadshot": {
+      "question": "Is there a free AI headshot generator?",
+      "answer": "Some tools offer free previews or limited trials. My AI Photo Shoot is not positioned as a free generator: you pay $2.99 once to train your personal model, then $0.03 per generated image, with no subscription."
+    },
+    "chatgptHeadshot": {
+      "question": "Can ChatGPT make a professional headshot?",
+      "answer": "General AI chat apps can help with image prompts, but they are not built around a reusable personal photo model. My AI Photo Shoot trains on your selfies so you can keep a more consistent likeness across many headshot and profile photo styles."
+    },
+    "linkedinPolicy": {
+      "question": "Is it OK to use AI-generated images for LinkedIn profiles?",
+      "answer": "Many people use AI-generated headshots for LinkedIn when the image is realistic, current, and clearly represents them. Avoid misleading edits, and choose a clean professional style that matches how you want to appear in work contexts."
+    },
+    "photoToHeadshot": {
+      "question": "How do I turn a photo into a headshot?",
+      "answer": "Upload clear selfies, train your personal AI model, then generate headshot prompts with professional lighting, clean backgrounds, and work-ready clothing. After training, you can create multiple headshot options from the same model."
+    },
     "pricing": {
       "question": "How much does it cost?",
       "answer": "Pricing is pay as you go: $2.99 to train your personal AI model once, then $0.03 for each generated image. There are no monthly subscriptions or hidden fees."
@@ -229,6 +271,9 @@
     },
     "stickyCta": {
       "label": "Start for {oneTimeFee} • {price}/{perPhoto}"
+    },
+    "benefits": {
+      "title": "Benefits"
     }
   }
 }

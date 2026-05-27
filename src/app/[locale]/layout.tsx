@@ -6,10 +6,10 @@ import SiteShell from '@/components/layout/SiteShell';
 
 export const metadata: Metadata = {
   title: {
-    default: "My AI Photo Shoot - AI Portrait Generator",
+    default: "AI Headshot Generator - My AI Photo Shoot",
     template: "%s | My AI Photo Shoot",
   },
-  description: "Turn selfies into realistic AI portraits for profiles, social media, marketing, and personal projects with simple pay-as-you-go pricing.",
+  description: "Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.",
   manifest: "/site.webmanifest",
   // The OpenGraph and Twitter metadata will be dynamically set based on the locale
 };

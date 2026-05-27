@@ -12,17 +12,43 @@
     "language": "Langue"
   },
   "hero": {
-    "title": "Transformez vos selfies en",
-    "titleHighlight": "portraits IA de qualité studio",
-    "description": "Importez quelques selfies et créez des photos IA réalistes pour vos profils, réseaux sociaux, campagnes marketing et projets personnels avec un studio photo IA rapide et conçu pour des résultats cohérents.",
-    "microcopy": "Importez 10-20 selfies -> entraînez une fois pour 2,99 $ -> générez des images pour 0,03 $ chacune"
+    "title": "Générateur de headshots IA pour",
+    "titleHighlight": "photos de profil réalistes",
+    "description": "Importez quelques selfies et créez des headshots IA, photos de profil et portraits réalistes pour LinkedIn, CV, équipes, créateurs et marques personnelles.",
+    "microcopy": "Entraînez une fois pour 2,99 $ -> générez des headshots et portraits pour 0,03 $ chacun -> sans abonnement"
+  },
+  "homeUseCases": {
+    "eyebrow": "Cas d’usage photo IA",
+    "title": "Commencez par des headshots professionnels, puis réutilisez votre modèle",
+    "description": "Créez d’abord des headshots professionnels, puis réutilisez le même modèle entraîné pour des photos de profil, portraits, looks photobooth et images réalistes de vous."
+  },
+  "headshotComparison": {
+    "eyebrow": "Headshots IA gratuits ou payants",
+    "title": "Les générateurs gratuits sont utiles pour tester. My AI Photo Shoot est conçu pour des headshots répétables.",
+    "description": "Les résultats de recherche regorgent d’essais gratuits et d’outils d’image génériques. Ici, la différence tient aux prix clairs, à un modèle personnel entraîné, à une ressemblance cohérente et aux contrôles de confidentialité pour des photos professionnelles réutilisables.",
+    "primaryLink": "Créer des headshots IA",
+    "secondaryLink": "Créer des photos de profil",
+    "cards": {
+      "pricing": {
+        "title": "Prix transparents",
+        "description": "2,99 $ pour l’entraînement unique, puis 0,03 $ par image. Aucun abonnement mensuel."
+      },
+      "likeness": {
+        "title": "Ressemblance cohérente",
+        "description": "Entraînez une fois avec vos selfies et générez de nombreux styles de headshots, portraits et photos de profil."
+      },
+      "control": {
+        "title": "Contrôles de confidentialité",
+        "description": "Choisissez des galeries privées ou publiques, gérez votre bibliothèque et supprimez vos photos depuis votre compte."
+      }
+    }
   },
   "features": {
-    "title": "Fonctionnalités clés",
-    "description": "Tout ce qu’il faut pour créer des portraits IA cohérents sans abonnement",
+    "title": "Conçu pour des headshots IA réalistes",
+    "description": "Tout ce qu’il faut pour créer des photos professionnelles cohérentes sans abonnement",
     "advancedAI": {
-      "title": "Moteur IA nouvelle génération",
-      "description": "Basé sur les modèles d’apprentissage profond Flux.1 pour des détails réalistes, une forte ressemblance et un contrôle créatif flexible dans chaque image générée."
+      "title": "Ressemblance réaliste",
+      "description": "Basé sur les modèles d’apprentissage profond Flux.1 pour des détails naturels, des visages reconnaissables et un contrôle créatif flexible dans chaque image générée."
     },
     "privacyFirst": {
       "title": "Contrôles de confidentialité intégrés",
@@ -33,8 +59,8 @@
       "description": "Aucun abonnement et aucuns frais surprise. Entraînez votre modèle une fois pour 2,99 $, puis générez des images pour 0,03 $ chacune."
     },
     "thousandsOfStyles": {
-      "title": "Styles créatifs illimités",
-      "description": "Utilisez des préréglages prêts à l’emploi ou essayez « Surprenez-moi » pour explorer en quelques secondes de nouveaux looks, décors, tenues et styles visuels."
+      "title": "Headshots, portraits et styles de profil",
+      "description": "Créez des headshots professionnels, photos de profil, portraits de créateur et images de marque personnelle soignées avec le même modèle entraîné."
     },
     "easyCustomization": {
       "title": "Générateur de prompts simple",
@@ -172,6 +198,22 @@
       "question": "Comment fonctionne la génération de photos IA ?",
       "answer": "Vous importez un petit ensemble de selfies, puis nous entraînons un modèle IA personnel qui apprend votre apparence. Ensuite, vous pouvez générer de nouvelles images de vous avec différentes tenues, poses, scènes et styles visuels."
     },
+    "freeHeadshot": {
+      "question": "Existe-t-il un générateur de headshots IA gratuit ?",
+      "answer": "Certains outils proposent des aperçus gratuits ou des essais limités. My AI Photo Shoot n’est pas positionné comme un générateur gratuit : vous payez 2,99 $ une fois pour entraîner votre modèle personnel, puis 0,03 $ par image générée, sans abonnement."
+    },
+    "chatgptHeadshot": {
+      "question": "ChatGPT peut-il créer un headshot professionnel ?",
+      "answer": "Les apps de chat IA généralistes peuvent aider avec des prompts d’image, mais elles ne sont pas conçues autour d’un modèle photo personnel réutilisable. My AI Photo Shoot s’entraîne sur vos selfies afin de garder une ressemblance plus cohérente dans de nombreux styles de headshots et photos de profil."
+    },
+    "linkedinPolicy": {
+      "question": "Peut-on utiliser des images générées par IA pour un profil LinkedIn ?",
+      "answer": "Beaucoup de personnes utilisent des headshots générés par IA sur LinkedIn quand l’image est réaliste, actuelle et les représente clairement. Évitez les retouches trompeuses et choisissez un style professionnel sobre adapté à votre présence au travail."
+    },
+    "photoToHeadshot": {
+      "question": "Comment transformer une photo en headshot ?",
+      "answer": "Importez des selfies nets, entraînez votre modèle IA personnel, puis générez des prompts de headshot avec un éclairage professionnel, des arrière-plans propres et des vêtements adaptés au travail. Après l’entraînement, vous pouvez créer plusieurs options de headshot avec le même modèle."
+    },
     "pricing": {
       "question": "Combien cela coûte-t-il ?",
       "answer": "La tarification est à l’usage : 2,99 $ pour entraîner une fois votre modèle IA personnel, puis 0,03 $ par image générée. Il n’y a ni abonnement mensuel ni frais cachés."
@@ -229,6 +271,9 @@
     },
     "stickyCta": {
       "label": "Commencez pour {oneTimeFee} • {price}/{perPhoto}"
+    },
+    "benefits": {
+      "title": "Avantages"
     }
   }
 }

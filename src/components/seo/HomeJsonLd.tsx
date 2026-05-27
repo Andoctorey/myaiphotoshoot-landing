@@ -17,12 +17,12 @@ export default function HomeJsonLd() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: 'AI Photoshoot',
+    name: 'AI Headshot Generator',
     brand: { '@type': 'Brand', name: 'My AI Photo Shoot' },
     description,
     url: canonicalUrl(locale, '/'),
     image: 'https://myaiphotoshoot.com/og-image.png',
-    category: 'Photography Software',
+    category: 'AI headshot and portrait software',
     inLanguage: locale,
     isRelatedTo: [
       {
@@ -71,4 +71,3 @@ export default function HomeJsonLd() {
     />
   );
 }
-

@@ -12,17 +12,43 @@
     "language": "语言"
   },
   "hero": {
-    "title": "把你的自拍变成",
-    "titleHighlight": "影棚级 AI 肖像",
-    "description": "上传几张自拍，即可用快速 AI 写真工作室生成适合头像、社交媒体、营销和个人项目的真实感 AI 照片，并保持稳定效果。",
-    "microcopy": "上传 10-20 张自拍 -> 一次训练 $2.99 -> 每张图片 $0.03"
+    "title": "AI 头像照生成器，适合",
+    "titleHighlight": "真实感个人资料照片",
+    "description": "上传几张自拍，即可生成适合 LinkedIn、简历、团队、创作者和个人品牌的真实感 AI 头像照、个人资料照片和肖像。",
+    "microcopy": "一次训练 $2.99 -> 每张头像照和肖像 $0.03 -> 无需订阅"
+  },
+  "homeUseCases": {
+    "eyebrow": "AI 照片使用场景",
+    "title": "先生成专业头像照，再复用你的模型",
+    "description": "先创建专业头像照，然后用同一个训练模型生成个人资料照片、肖像、拍照亭风格照片和真实感个人照片。"
+  },
+  "headshotComparison": {
+    "eyebrow": "免费与付费 AI 头像照",
+    "title": "免费生成器适合测试。My AI Photo Shoot 面向可重复生成的头像照。",
+    "description": "搜索结果里有很多免费试用和通用图片工具。这里的区别是清晰价格、训练好的个人模型、稳定相似度，以及可复用专业照片所需的隐私控制。",
+    "primaryLink": "创建 AI 头像照",
+    "secondaryLink": "制作个人资料照片",
+    "cards": {
+      "pricing": {
+        "title": "透明价格",
+        "description": "一次训练 $2.99，之后每张图片 $0.03。没有月度订阅。"
+      },
+      "likeness": {
+        "title": "稳定相似度",
+        "description": "用自拍训练一次，即可生成多种头像照、肖像和个人资料照片风格。"
+      },
+      "control": {
+        "title": "隐私控制",
+        "description": "选择私密或公开图库，管理你的照片库，并从账户中删除照片。"
+      }
+    }
   },
   "features": {
-    "title": "核心功能",
-    "description": "无需订阅，也能稳定生成一致的 AI 肖像",
+    "title": "为真实感 AI 头像照打造",
+    "description": "无需订阅，也能稳定生成专业照片所需的一切",
     "advancedAI": {
-      "title": "新一代 AI 引擎",
-      "description": "基于 Flux.1 深度学习模型，在每张生成图中提供真实细节、稳定相似度和灵活创意控制。"
+      "title": "真实相似度",
+      "description": "基于 Flux.1 深度学习模型，在每张生成图中提供自然细节、可识别的人脸和灵活创意控制。"
     },
     "privacyFirst": {
       "title": "内置隐私控制",
@@ -33,8 +59,8 @@
       "description": "无需订阅，没有隐藏费用。一次训练模型 $2.99，之后每张图片 $0.03。"
     },
     "thousandsOfStyles": {
-      "title": "丰富创意风格",
-      "description": "使用现成预设，或尝试“给我惊喜”，几秒内探索不同造型、场景、服装和视觉风格。"
+      "title": "头像照、肖像和个人资料风格",
+      "description": "用同一个训练模型创建专业头像照、个人资料照片、创作者肖像和精致的个人品牌图片。"
     },
     "easyCustomization": {
       "title": "简单提示词工具",
@@ -172,6 +198,22 @@
       "question": "AI 照片生成如何工作？",
       "answer": "你上传一小组自拍，我们训练一个学习你外貌特征的个人 AI 模型。训练完成后，你可以生成不同服装、姿势、场景和视觉风格的新照片。"
     },
+    "freeHeadshot": {
+      "question": "有免费的 AI 头像照生成器吗？",
+      "answer": "有些工具提供免费预览或有限试用。My AI Photo Shoot 不定位为免费生成器：你一次支付 $2.99 训练个人模型，之后每张生成图片 $0.03，无需订阅。"
+    },
+    "chatgptHeadshot": {
+      "question": "ChatGPT 可以制作专业头像照吗？",
+      "answer": "通用 AI 聊天应用可以帮助编写图片提示词，但它们不是围绕可复用的个人照片模型设计的。My AI Photo Shoot 会基于你的自拍训练模型，让多种头像照和个人资料照片风格保持更稳定的相似度。"
+    },
+    "linkedinPolicy": {
+      "question": "LinkedIn 个人资料可以使用 AI 生成图片吗？",
+      "answer": "当图片真实、当前且能清楚代表本人时，很多人会在 LinkedIn 使用 AI 生成头像照。请避免误导性修图，并选择适合工作场景的干净专业风格。"
+    },
+    "photoToHeadshot": {
+      "question": "如何把照片变成头像照？",
+      "answer": "上传清晰自拍，训练你的个人 AI 模型，然后生成带有专业灯光、干净背景和工作场景服装的头像照提示词。训练完成后，你可以用同一个模型创建多个头像照选项。"
+    },
     "pricing": {
       "question": "费用是多少？",
       "answer": "价格为按量付费：一次训练个人 AI 模型 $2.99，之后每张生成图片 $0.03。没有月度订阅或隐藏费用。"
@@ -229,6 +271,9 @@
     },
     "stickyCta": {
       "label": "{oneTimeFee} 起 • {price}/{perPhoto}"
+    },
+    "benefits": {
+      "title": "优势"
     }
   }
 }

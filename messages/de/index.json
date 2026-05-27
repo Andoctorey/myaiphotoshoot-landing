@@ -12,17 +12,43 @@
     "language": "Sprache"
   },
   "hero": {
-    "title": "Verwandeln Sie Ihre Selfies in",
-    "titleHighlight": "KI-Porträts in Studioqualität",
-    "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Fotos für Profile, Social Media, Marketing und persönliche Projekte mit einem schnellen KI-Fotostudio für verlässliche Ergebnisse.",
-    "microcopy": "10-20 Selfies hochladen -> einmal für $2.99 trainieren -> Bilder für je $0.03 generieren"
+    "title": "KI-Headshot-Generator für",
+    "titleHighlight": "realistische Profilfotos",
+    "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Headshots, Profilbilder und Porträts für LinkedIn, Lebensläufe, Teams, Creator und Personal Brands.",
+    "microcopy": "Einmal für $2.99 trainieren -> Headshots und Porträts für je $0.03 generieren -> kein Abo"
+  },
+  "homeUseCases": {
+    "eyebrow": "KI-Foto-Anwendungsfälle",
+    "title": "Beginnen Sie mit professionellen Headshots und nutzen Sie Ihr Modell weiter",
+    "description": "Erstellen Sie zuerst professionelle Headshots und verwenden Sie dasselbe trainierte Modell danach für Profilbilder, Porträts, Fotobooth-Looks und realistische Bilder von sich selbst."
+  },
+  "headshotComparison": {
+    "eyebrow": "Kostenlose vs. bezahlte KI-Headshots",
+    "title": "Kostenlose Generatoren eignen sich zum Testen. My AI Photo Shoot ist für wiederholbare Headshots gebaut.",
+    "description": "Suchergebnisse sind voller Gratisproben und generischer Bildtools. Der Unterschied hier sind klare Preise, ein trainiertes persönliches Modell, konsistente Ähnlichkeit und Datenschutzkontrollen für professionelle Fotos, die Sie wiederverwenden können.",
+    "primaryLink": "KI-Headshots erstellen",
+    "secondaryLink": "Profilbilder erstellen",
+    "cards": {
+      "pricing": {
+        "title": "Transparente Preise",
+        "description": "$2.99 einmaliges Training, danach $0.03 pro Bild. Kein monatliches Abo."
+      },
+      "likeness": {
+        "title": "Konsistente Ähnlichkeit",
+        "description": "Trainieren Sie einmal mit Ihren Selfies und generieren Sie viele Headshot-, Porträt- und Profilstile."
+      },
+      "control": {
+        "title": "Datenschutzkontrollen",
+        "description": "Wählen Sie private oder öffentliche Galerien, verwalten Sie Ihre Bibliothek und löschen Sie Fotos in Ihrem Konto."
+      }
+    }
   },
   "features": {
-    "title": "Kernfunktionen",
-    "description": "Alles, was Sie für konsistente KI-Porträts ohne Abo brauchen",
+    "title": "Entwickelt für realistische KI-Headshots",
+    "description": "Alles, was Sie für konsistente professionelle Fotos ohne Abo brauchen",
     "advancedAI": {
-      "title": "KI-Engine der nächsten Generation",
-      "description": "Basierend auf Flux.1 Deep-Learning-Modellen für realistische Details, gute Ähnlichkeit und flexible kreative Kontrolle in jedem generierten Bild."
+      "title": "Realistische Ähnlichkeit",
+      "description": "Basierend auf Flux.1 Deep-Learning-Modellen für natürliche Details, wiedererkennbare Gesichter und flexible kreative Kontrolle in jedem generierten Bild."
     },
     "privacyFirst": {
       "title": "Integrierte Datenschutzkontrollen",
@@ -33,8 +59,8 @@
       "description": "Kein Abo und keine überraschenden Gebühren. Trainieren Sie Ihr Modell einmal für $2.99 und generieren Sie danach Bilder für je $0.03."
     },
     "thousandsOfStyles": {
-      "title": "Endlose kreative Stile",
-      "description": "Nutzen Sie fertige Presets oder probieren Sie „Überrasch mich“, um in Sekunden neue Looks, Szenen, Outfits und Bildstile zu erkunden."
+      "title": "Headshots, Porträts und Profilstile",
+      "description": "Erstellen Sie professionelle Headshots, Profilbilder, Creator-Porträts und hochwertige Personal-Brand-Bilder mit demselben trainierten Modell."
     },
     "easyCustomization": {
       "title": "Einfacher Prompt-Builder",
@@ -172,6 +198,22 @@
       "question": "Wie funktioniert KI-Fotogenerierung?",
       "answer": "Sie laden eine kleine Auswahl an Selfies hoch, und wir trainieren ein persönliches KI-Modell, das Ihr Aussehen lernt. Danach können Sie neue Bilder von sich in verschiedenen Outfits, Posen, Umgebungen und visuellen Stilen generieren."
     },
+    "freeHeadshot": {
+      "question": "Gibt es einen kostenlosen KI-Headshot-Generator?",
+      "answer": "Einige Tools bieten kostenlose Vorschauen oder begrenzte Testversionen. My AI Photo Shoot ist nicht als kostenloser Generator positioniert: Sie zahlen einmal $2.99 für das Training Ihres persönlichen Modells und danach $0.03 pro generiertem Bild, ohne Abo."
+    },
+    "chatgptHeadshot": {
+      "question": "Kann ChatGPT einen professionellen Headshot erstellen?",
+      "answer": "Allgemeine KI-Chat-Apps können bei Bildprompts helfen, sind aber nicht auf ein wiederverwendbares persönliches Fotomodell ausgelegt. My AI Photo Shoot trainiert mit Ihren Selfies, damit Ihre Ähnlichkeit über viele Headshot- und Profilbildstile konsistenter bleibt."
+    },
+    "linkedinPolicy": {
+      "question": "Ist es in Ordnung, KI-generierte Bilder für LinkedIn-Profile zu verwenden?",
+      "answer": "Viele Menschen nutzen KI-generierte Headshots auf LinkedIn, wenn das Bild realistisch, aktuell und klar repräsentativ ist. Vermeiden Sie irreführende Bearbeitungen und wählen Sie einen sauberen professionellen Stil, der zu Ihrem beruflichen Auftreten passt."
+    },
+    "photoToHeadshot": {
+      "question": "Wie verwandle ich ein Foto in einen Headshot?",
+      "answer": "Laden Sie klare Selfies hoch, trainieren Sie Ihr persönliches KI-Modell und generieren Sie Headshot-Prompts mit professionellem Licht, ruhigen Hintergründen und arbeitsgeeigneter Kleidung. Nach dem Training können Sie mehrere Headshot-Optionen mit demselben Modell erstellen."
+    },
     "pricing": {
       "question": "Wie viel kostet es?",
       "answer": "Die Preise sind nutzungsbasiert: $2.99 für das einmalige Training Ihres persönlichen KI-Modells und danach $0.03 pro generiertem Bild. Es gibt keine Monatsabos und keine versteckten Gebühren."
@@ -229,6 +271,9 @@
     },
     "stickyCta": {
       "label": "Start für {oneTimeFee} • {price}/{perPhoto}"
+    },
+    "benefits": {
+      "title": "Vorteile"
     }
   }
 }

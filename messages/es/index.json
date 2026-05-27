@@ -12,17 +12,43 @@
     "language": "Idioma"
   },
   "hero": {
-    "title": "Convierte tus selfies en",
-    "titleHighlight": "retratos con IA de calidad profesional",
-    "description": "Sube algunas selfies y crea fotos realistas con IA para perfiles, redes sociales, marketing y proyectos personales con un estudio fotográfico rápido y pensado para resultados consistentes.",
-    "microcopy": "Sube 10-20 selfies -> entrena una vez por $2.99 -> genera imágenes por $0.03 cada una"
+    "title": "Generador de headshots con IA para",
+    "titleHighlight": "fotos de perfil realistas",
+    "description": "Sube algunas selfies y crea headshots, fotos de perfil y retratos realistas con IA para LinkedIn, currículums, equipos, creadores y marcas personales.",
+    "microcopy": "Entrena una vez por $2.99 -> genera headshots y retratos por $0.03 cada uno -> sin suscripción"
+  },
+  "homeUseCases": {
+    "eyebrow": "Casos de uso de fotos con IA",
+    "title": "Empieza con headshots profesionales y reutiliza tu modelo",
+    "description": "Crea primero headshots profesionales y luego reutiliza el mismo modelo entrenado para fotos de perfil, retratos, looks de fotomatón e imágenes realistas de ti."
+  },
+  "headshotComparison": {
+    "eyebrow": "Headshots gratis vs de pago",
+    "title": "Los generadores gratis sirven para probar. My AI Photo Shoot está pensado para headshots repetibles.",
+    "description": "Los resultados de búsqueda están llenos de pruebas gratis y herramientas genéricas. Aquí la diferencia es el precio claro, un modelo personal entrenado, parecido consistente y controles de privacidad para fotos profesionales reutilizables.",
+    "primaryLink": "Crear headshots con IA",
+    "secondaryLink": "Crear fotos de perfil",
+    "cards": {
+      "pricing": {
+        "title": "Precio transparente",
+        "description": "$2.99 de entrenamiento una sola vez y luego $0.03 por imagen. Sin suscripción mensual."
+      },
+      "likeness": {
+        "title": "Parecido consistente",
+        "description": "Entrena una vez con tus selfies y genera muchos estilos de headshot, retrato y foto de perfil."
+      },
+      "control": {
+        "title": "Controles de privacidad",
+        "description": "Elige galerías privadas o públicas, gestiona tu biblioteca y elimina fotos desde tu cuenta."
+      }
+    }
   },
   "features": {
-    "title": "Funciones principales",
-    "description": "Todo lo que necesitas para crear retratos con IA consistentes, sin suscripción",
+    "title": "Diseñado para headshots realistas con IA",
+    "description": "Todo lo que necesitas para crear fotos profesionales consistentes sin suscripción",
     "advancedAI": {
-      "title": "Motor de IA de nueva generación",
-      "description": "Impulsado por modelos de aprendizaje profundo Flux.1 para lograr detalles realistas, buen parecido y control creativo flexible en cada imagen generada."
+      "title": "Parecido realista",
+      "description": "Impulsado por modelos de aprendizaje profundo Flux.1 para lograr detalles naturales, rostros reconocibles y control creativo flexible en cada imagen generada."
     },
     "privacyFirst": {
       "title": "Controles de privacidad integrados",
@@ -33,8 +59,8 @@
       "description": "Sin suscripción ni cargos sorpresa. Entrena tu modelo una vez por $2.99 y luego genera imágenes por $0.03 cada una."
     },
     "thousandsOfStyles": {
-      "title": "Estilos creativos sin límite",
-      "description": "Usa presets listos o prueba “Sorpréndeme” para explorar nuevos looks, escenas, atuendos y estilos visuales en segundos."
+      "title": "Headshots, retratos y estilos de perfil",
+      "description": "Crea headshots profesionales, fotos de perfil, retratos de creador e imágenes pulidas de marca personal desde el mismo modelo entrenado."
     },
     "easyCustomization": {
       "title": "Constructor de prompts sencillo",
@@ -172,6 +198,22 @@
       "question": "¿Cómo funciona la generación de fotos con IA?",
       "answer": "Subes un pequeño conjunto de selfies y entrenamos un modelo personal de IA que aprende tu apariencia. Después puedes generar nuevas imágenes tuyas con distintos atuendos, poses, escenarios y estilos visuales."
     },
+    "freeHeadshot": {
+      "question": "¿Hay un generador de headshots con IA gratis?",
+      "answer": "Algunas herramientas ofrecen vistas previas gratis o pruebas limitadas. My AI Photo Shoot no se presenta como un generador gratis: pagas $2.99 una vez para entrenar tu modelo personal y luego $0.03 por imagen generada, sin suscripción."
+    },
+    "chatgptHeadshot": {
+      "question": "¿Puede ChatGPT crear un headshot profesional?",
+      "answer": "Las apps generales de chat con IA pueden ayudar con prompts de imagen, pero no están pensadas para un modelo fotográfico personal reutilizable. My AI Photo Shoot se entrena con tus selfies para mantener un parecido más consistente en muchos estilos de headshot y foto de perfil."
+    },
+    "linkedinPolicy": {
+      "question": "¿Está bien usar imágenes generadas con IA en perfiles de LinkedIn?",
+      "answer": "Muchas personas usan headshots generados con IA en LinkedIn cuando la imagen es realista, actual y las representa claramente. Evita ediciones engañosas y elige un estilo profesional limpio que encaje con cómo quieres presentarte en contextos laborales."
+    },
+    "photoToHeadshot": {
+      "question": "¿Cómo convierto una foto en un headshot?",
+      "answer": "Sube selfies claras, entrena tu modelo personal de IA y genera prompts de headshot con iluminación profesional, fondos limpios y ropa adecuada para trabajo. Después del entrenamiento puedes crear varias opciones de headshot desde el mismo modelo."
+    },
     "pricing": {
       "question": "¿Cuánto cuesta?",
       "answer": "El precio es de pago por uso: $2.99 para entrenar tu modelo personal de IA una vez y luego $0.03 por cada imagen generada. No hay suscripciones mensuales ni cargos ocultos."
@@ -229,6 +271,9 @@
     },
     "stickyCta": {
       "label": "Empieza por {oneTimeFee} • {price}/{perPhoto}"
+    },
+    "benefits": {
+      "title": "Beneficios"
     }
   }
 }

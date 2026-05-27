@@ -72,6 +72,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const galleryRaw = useCase.gallery_photos || [];
   const gallery = Array.from(new Map((galleryRaw || []).filter(g => g && g.url).map(g => [g.url, g])).values());
   const faqs = useCase.faqs || t?.faqs || [];
+  const benefits = (useCase.benefits || t?.benefits || []).filter(Boolean);
   const description = useCase.meta_description || t?.meta_description || '';
   const sectionSpacing = "mt-12 md:mt-16";
 
@@ -282,7 +283,26 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </div>
       </header>
 
-      
+      {benefits.length > 0 && (
+        <section className="mt-6" aria-labelledby="usecase-benefits-title">
+          <h2 id="usecase-benefits-title" className="sr-only">{tUseCase('benefits.title')}</h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {benefits.slice(0, 6).map((benefit, index) => (
+              <li
+                key={index}
+                className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-gray-800 dark:text-gray-200 shadow-sm"
+              >
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300" aria-hidden>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+                    <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                  </svg>
+                </span>
+                <span>{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {marqueeGallery.length > 0 && (
         <section className="mt-6">
