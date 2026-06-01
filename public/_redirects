@@ -4,6 +4,32 @@
 /en/blog /blog/ 308
 /en/blog/ /blog/ 308
 /en/blog/* /blog/:splat 308
+
+# Canonicalize old localized blog aliases that used English slugs
+/zh/blog/gaming-profile-avatars/ /zh/blog/youxi-geren-touxiang/ 308
+/hi/blog/gaming-profile-avatars/ /hi/blog/%E0%A4%97%E0%A5%87%E0%A4%AE%E0%A4%BF%E0%A4%82%E0%A4%97-%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A5%8B%E0%A4%AB%E0%A4%BE%E0%A4%87%E0%A4%B2-%E0%A4%85%E0%A4%B5%E0%A4%A4%E0%A4%BE%E0%A4%B0/ 308
+/es/blog/gaming-profile-avatars/ /es/blog/avatares-perfil-juegos/ 308
+/de/blog/gaming-profile-avatars/ /de/blog/gaming-profil-avatare/ 308
+/ja/blog/gaming-profile-avatars/ /ja/blog/ge-mingupurofi-ru-abata-/ 308
+/ru/blog/gaming-profile-avatars/ /ru/blog/igrovye-profile-avatary/ 308
+/fr/blog/gaming-profile-avatars/ /fr/blog/avatars-de-profils-de-jeux-video/ 308
+/ar/blog/gaming-profile-avatars/ /ar/blog/%D8%B5%D9%88%D8%B1-%D9%85%D9%84%D9%81%D8%A7%D8%AA-%D8%A7%D9%84%D9%84%D8%A7%D8%B9%D8%A8%D9%8A%D9%86/ 308
+/zh/blog/gel-lighting-portraits/ /zh/blog/%E8%89%B2%E7%89%87%E7%81%AF%E5%85%89%E4%BA%BA%E5%83%8F/ 308
+/hi/blog/gel-lighting-portraits/ /hi/blog/%E0%A4%9C%E0%A5%87%E0%A4%B2-%E0%A4%B2%E0%A4%BE%E0%A4%87%E0%A4%9F%E0%A4%BF%E0%A4%82%E0%A4%97-%E0%A4%AA%E0%A5%8B%E0%A4%B0%E0%A5%8D%E0%A4%9F%E0%A5%8D%E0%A4%B0%E0%A5%87%E0%A4%9F%E0%A5%8D%E0%A4%B8/ 308
+/es/blog/gel-lighting-portraits/ /es/blog/iluminacion-con-geles-para-retratos/ 308
+/de/blog/gel-lighting-portraits/ /de/blog/gel-licht-portraits/ 308
+/ja/blog/gel-lighting-portraits/ /ja/blog/geto-raitingu-portraits/ 308
+/ru/blog/gel-lighting-portraits/ /ru/blog/zhelevyj-svet-portrety/ 308
+/fr/blog/gel-lighting-portraits/ /fr/blog/eclairage-gels-portraits/ 308
+/ar/blog/gel-lighting-portraits/ /ar/blog/%D8%A7%D8%B6%D8%A7%D8%A1%D8%A9-%D8%A7%D9%84%D8%AC%D9%8A%D9%84-%D9%84%D9%84%D8%A8%D9%88%D8%B1%D8%AA%D8%B1%D9%8A%D9%87/ 308
+/zh/blog/realistic-prison-photos/ /zh/blog/%E9%80%BC%E7%9C%9F%E7%9B%91%E7%8B%B1%E7%85%A7%E7%89%87/ 308
+/hi/blog/realistic-prison-photos/ /hi/blog/vastavik-jail-tasveeren/ 308
+/es/blog/realistic-prison-photos/ /es/blog/fotos-carcel-realistas/ 308
+/de/blog/realistic-prison-photos/ /de/blog/realistische-gefaengnis-fotos/ 308
+/ja/blog/realistic-prison-photos/ /ja/blog/%E3%83%AA%E3%82%A2%E3%83%AB%E3%81%AA%E5%88%91%E5%8B%99%E6%89%80%E3%81%AE%E5%86%99%E7%9C%9F/ 308
+/ru/blog/realistic-prison-photos/ /ru/blog/realistichnye-tyuremnye-foto/ 308
+/fr/blog/realistic-prison-photos/ /fr/blog/photos-prison-realistes/ 308
+/ar/blog/realistic-prison-photos/ /ar/blog/%D8%B5%D9%88%D8%B1-%D8%B3%D8%AC%D9%86-%D9%88%D8%A7%D9%82%D8%B9%D9%8A%D8%A9/ 308
 /support /support/ 308
 /en/support /support/ 308
 /en/support/ /support/ 308
