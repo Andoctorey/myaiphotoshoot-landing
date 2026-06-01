@@ -35,6 +35,12 @@
 /*/gallery-data
   X-Robots-Tag: noindex, follow
 
+# Prevent indexing of Next.js static export route payloads
+/index.txt
+  X-Robots-Tag: noindex, nofollow
+/*/index.txt
+  X-Robots-Tag: noindex, nofollow
+
 # Per-locale Content-Language headers to reinforce language signals
 /fr/*
   Content-Language: fr
