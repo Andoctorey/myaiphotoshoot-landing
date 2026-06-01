@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { defaultLocale, locales } from '@/i18n/request';
+import { defaultLocale } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 
 const title = 'Image License & Usage Rights - My AI Photo Shoot';
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: { absolute: title },
   description,
   robots: 'index, follow',
-  alternates: buildAlternates(defaultLocale, '/license/', locales),
+  alternates: buildAlternates(defaultLocale, '/license/', [defaultLocale]),
   openGraph: {
     title,
     description,
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'My AI Photo Shoot',
     type: 'website',
     locale: ogLocaleFromAppLocale(defaultLocale),
-    alternateLocale: ogAlternateLocales(locales, defaultLocale),
+    alternateLocale: ogAlternateLocales([defaultLocale], defaultLocale),
   },
   twitter: {
     card: 'summary_large_image',

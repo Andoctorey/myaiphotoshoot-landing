@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { defaultLocale, locales } from '@/i18n/request';
+import { defaultLocale } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import LegalDocument from '@/components/legal/LegalDocument';
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: { absolute: title },
   description,
   robots: 'index, follow',
-  alternates: buildAlternates(defaultLocale, '/legal/', locales),
+  alternates: buildAlternates(defaultLocale, '/legal/', [defaultLocale]),
   openGraph: {
     title,
     description,
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'My AI Photo Shoot',
     type: 'website',
     locale: ogLocaleFromAppLocale(defaultLocale),
-    alternateLocale: ogAlternateLocales(locales, defaultLocale),
+    alternateLocale: ogAlternateLocales([defaultLocale], defaultLocale),
   },
   twitter: {
     card: 'summary_large_image',

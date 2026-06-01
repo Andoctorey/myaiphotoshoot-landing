@@ -204,27 +204,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: buildHreflangLanguages(baseUrl, '/support/', locales),
       },
     })),
-    // Legal and license pages for all locales
-    ...locales.flatMap(locale => [
-      {
-        url: buildLocalizedUrl(baseUrl, locale, '/legal/'),
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.4,
-        alternates: {
-          languages: buildHreflangLanguages(baseUrl, '/legal/', locales),
-        },
-      },
-      {
-        url: buildLocalizedUrl(baseUrl, locale, '/license/'),
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.4,
-        alternates: {
-          languages: buildHreflangLanguages(baseUrl, '/license/', locales),
-        },
-      },
-    ]),
+    // Legal and license pages are English-only documents.
+    {
+      url: buildLocalizedUrl(baseUrl, 'en', '/legal/'),
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.4,
+    },
+    {
+      url: buildLocalizedUrl(baseUrl, 'en', '/license/'),
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.4,
+    },
   ];
 
   try {
