@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { locales } from '@/i18n/request';
-import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import { defaultLocale } from '@/i18n/request';
+import { canonicalUrl, ogLocaleFromAppLocale } from '@/lib/seo';
 import LegalDocument from '@/components/legal/LegalDocument';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -13,16 +13,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: { absolute: title },
     description,
-    robots: 'index, follow',
-    alternates: buildAlternates(locale, '/legal/', locales),
+    robots: 'noindex, follow',
+    alternates: {
+      canonical: canonicalUrl(defaultLocale, '/legal/'),
+    },
     openGraph: {
       title,
       description,
-      url: canonicalUrl(locale, '/legal/'),
+      url: canonicalUrl(defaultLocale, '/legal/'),
       siteName: 'My AI Photo Shoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(locale),
-      alternateLocale: ogAlternateLocales(locales, locale),
     },
     twitter: {
       card: 'summary_large_image',

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { locales } from '@/i18n/request';
-import { buildAlternates, canonicalUrl, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import { defaultLocale } from '@/i18n/request';
+import { canonicalUrl, localePath, ogLocaleFromAppLocale } from '@/lib/seo';
 import Link from 'next/link';
 
 const title = 'Image License & Usage Rights - My AI Photo Shoot';
@@ -16,16 +16,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: { absolute: title },
     description,
-    robots: 'index, follow',
-    alternates: buildAlternates(locale, '/license/', locales),
+    robots: 'noindex, follow',
+    alternates: {
+      canonical: canonicalUrl(defaultLocale, '/license/'),
+    },
     openGraph: {
       title,
       description,
-      url: canonicalUrl(locale, '/license/'),
+      url: canonicalUrl(defaultLocale, '/license/'),
       siteName: 'My AI Photo Shoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(locale),
-      alternateLocale: ogAlternateLocales(locales, locale),
     },
     twitter: {
       card: 'summary_large_image',

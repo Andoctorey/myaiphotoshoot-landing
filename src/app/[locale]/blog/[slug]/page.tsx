@@ -103,6 +103,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       slugMap[locale] = slug;
     }
     const canonicalSlugForLocale = slugMap[locale] || slug;
+    const isCanonicalSlug = slug === canonicalSlugForLocale;
     const currentPath = `/blog/${canonicalSlugForLocale}/`;
     const languages = Object.fromEntries(
       Object.entries(slugMap).map(([language, localizedSlug]) => [
@@ -136,10 +137,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       publisher: 'My AI Photo Shoot',
       category: 'AI Photography',
       robots: {
-        index: true,
+        index: isCanonicalSlug,
         follow: true,
         googleBot: {
-          index: true,
+          index: isCanonicalSlug,
           follow: true,
           'max-image-preview': 'large',
           'max-snippet': -1,
