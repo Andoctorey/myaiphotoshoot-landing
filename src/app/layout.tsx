@@ -6,7 +6,9 @@ import { ThemeProvider } from "@/lib/ThemeContext";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import DirectionHandler from "@/components/layout/DirectionHandler";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+import TikTokPixel from "@/components/TikTokPixel";
+import TikTokPageTracker from "@/components/TikTokPageTracker";
+import { GA_MEASUREMENT_ID, TIKTOK_PIXEL_ID } from "@/lib/analytics";
 import ConsentBanner from "@/components/ConsentBanner";
 import { env } from "@/lib/env";
 
@@ -94,6 +96,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <TikTokPixel pixelId={TIKTOK_PIXEL_ID} />
         <meta name="theme-color" content="#000000" />
         <meta name="application-name" content="My AI Photo Shoot" />
         <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
@@ -182,6 +185,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
+        <TikTokPageTracker />
         <DirectionHandler />
         <ErrorBoundary>
           <ThemeProvider>{children}</ThemeProvider>

@@ -1,5 +1,6 @@
 // Google Analytics configuration
 export const GA_MEASUREMENT_ID = 'G-KRJDJFVKG4';
+export const TIKTOK_PIXEL_ID = 'D8FEKE3C77U4A83CCF00';
 
 // Utility function to track page views
 export const trackPageView = (url: string) => {
@@ -57,5 +58,11 @@ declare global {
   interface Window {
     gtag: (...args: unknown[]) => void;
     dataLayer: unknown[];
+    ttq?: {
+      page: () => void;
+      track: (event: string, params?: Record<string, unknown>) => void;
+      grantConsent: () => void;
+      revokeConsent: () => void;
+    };
   }
 } 

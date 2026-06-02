@@ -81,6 +81,7 @@ export default function ConsentBanner() {
         ad_personalization: 'granted',
       });
     }
+    window.ttq?.grantConsent();
     setShow(false);
   };
 
@@ -94,6 +95,7 @@ export default function ConsentBanner() {
         ad_personalization: 'denied',
       });
     }
+    window.ttq?.revokeConsent();
     setShow(false);
   };
 
@@ -127,5 +129,4 @@ export default function ConsentBanner() {
     </div>
   );
 }
-
 
