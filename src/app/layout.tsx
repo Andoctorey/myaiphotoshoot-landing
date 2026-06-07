@@ -11,6 +11,7 @@ import TikTokPageTracker from "@/components/TikTokPageTracker";
 import { GA_MEASUREMENT_ID, TIKTOK_PIXEL_ID } from "@/lib/analytics";
 import ConsentBanner from "@/components/ConsentBanner";
 import { env } from "@/lib/env";
+import MotionProvider from "@/components/MotionProvider";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -188,7 +189,9 @@ export default function RootLayout({
         <TikTokPageTracker />
         <DirectionHandler />
         <ErrorBoundary>
-          <ThemeProvider>{children}</ThemeProvider>
+          <MotionProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </MotionProvider>
         </ErrorBoundary>
         <ConsentBanner />
       </body>
