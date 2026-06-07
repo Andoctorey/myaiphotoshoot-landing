@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useTranslations } from '@/lib/utils';
+import PlatformButtons from './PlatformButtons';
 
 export default function Hero() {
   const t = useTranslations('hero');
@@ -25,6 +26,9 @@ export default function Hero() {
             <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 max-w-4xl mx-auto">
               {t('microcopy')}
             </p>
+            <div className="mx-auto mt-6 max-w-3xl">
+              <PlatformButtons />
+            </div>
           </motion.div>
         </div>
       </div>

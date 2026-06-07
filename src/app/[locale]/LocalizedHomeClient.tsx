@@ -9,7 +9,6 @@ import Features from '@/components/features/Features';
 import UserGallery from '@/components/features/Testimonials';
 import Pricing from '@/components/features/Pricing';
 import FAQ from '@/components/features/FAQ';
-import Download from '@/components/features/Download';
 import SupportForm from '@/components/app/SupportForm';
 import HomeBlog from '@/components/features/HomeBlog';
 import HomeUseCases from '@/components/features/HomeUseCases';
@@ -79,7 +78,6 @@ export default function LocalizedHomeClient({
             <UserGallery initialItems={initialGallery} />
             <HomeBlog initialPosts={initialBlog} />
             <FAQ />
-            <Download />
           </>
         )}
       </div>
