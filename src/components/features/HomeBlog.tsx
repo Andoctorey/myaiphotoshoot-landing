@@ -12,33 +12,12 @@ import { localePath } from '@/lib/seo';
 // Use stable order to avoid hydration mismatches between SSR/CSR
 function takeFirst<T>(items: T[], n: number): T[] { return items.slice(0, n); }
 
-// Simple deterministic PRNG based on a 32-bit seed
-function hashStringToSeed(str: string): number {
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < str.length; i++) {
-    h ^= str.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
-}
-
-function mulberry32(seed: number) {
-  return function() {
-    let t = (seed += 0x6D2B79F5) >>> 0;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function deterministicShuffle<T>(arr: T[], seedKey: string): T[] {
-  const rand = mulberry32(hashStringToSeed(seedKey));
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
+function sortByMostRecent(posts: BlogListItem[]): BlogListItem[] {
+  return [...posts].sort((a, b) => {
+    const aTime = Date.parse(a.created_at);
+    const bTime = Date.parse(b.created_at);
+    return (Number.isNaN(bTime) ? 0 : bTime) - (Number.isNaN(aTime) ? 0 : aTime);
+  });
 }
 
 export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { initialPosts?: BlogListItem[] }) {
@@ -64,11 +43,8 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
 
   const selectedPosts: BlogListItem[] = useMemo(() => {
     if (!posts || posts.length === 0) return [];
-    // Daily deterministic shuffle keyed by country (from URL locale) + UTC date
-    const utcDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
-    const seed = `${locale}-${utcDate}`;
-    return takeFirst(deterministicShuffle(posts, seed), 6);
-  }, [posts, locale]);
+    return takeFirst(sortByMostRecent(posts), 6);
+  }, [posts]);
 
   if (isError) return null;
 
@@ -147,4 +123,3 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
     </section>
   );
 }
-
