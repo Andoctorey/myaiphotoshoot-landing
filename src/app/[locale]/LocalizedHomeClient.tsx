@@ -73,11 +73,11 @@ export default function LocalizedHomeClient({
             <Hero />
             <AppShowcase />
             <Features />
+            <Pricing />
             <HomeUseCases initialUseCases={initialUseCases} locale={locale} />
             <HeadshotComparison />
             <UserGallery initialItems={initialGallery} />
             <HomeBlog initialPosts={initialBlog} />
-            <Pricing />
             <FAQ />
             <Download />
           </>

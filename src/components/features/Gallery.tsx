@@ -239,19 +239,6 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
     <div className="mt-12" aria-labelledby="gallery-heading">
       <h2 id="gallery-heading" className="sr-only">{t('seoHeading')}</h2>
       
-      {/* Hidden content for SEO - will be indexed but not visible */}
-      <div className="sr-only">
-        <h4>{t('seoHeading')}</h4>
-        <ul>
-          {galleryItems.map((item) => (
-            <li key={`seo-${item.id}`}>
-              <h5>{t('seoItemTitle')}</h5>
-              <p>{item.prompt}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-
       {/* Always show the grid to maintain layout consistency */}
       <ul 
         ref={containerRef}

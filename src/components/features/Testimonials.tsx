@@ -41,9 +41,9 @@ export default function UserGallery({ initialItems = [] }: { initialItems?: Gall
             transition={{ duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
               {t('title')}
-            </h3>
+            </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
               {t('description')}
             </p>
@@ -54,4 +54,4 @@ export default function UserGallery({ initialItems = [] }: { initialItems?: Gall
       </div>
     </section>
   );
-} 
+}
