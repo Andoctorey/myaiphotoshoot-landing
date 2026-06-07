@@ -44,31 +44,31 @@
     }
   },
   "features": {
-    "title": "为真实感 AI 头像照打造",
-    "description": "无需订阅，也能稳定生成专业照片所需的一切",
+    "title": "为更出色的 AI 头像照打造",
+    "description": "只需训练一次，即可创作多种风格的真实照片，并始终掌控自己的内容。",
     "advancedAI": {
-      "title": "真实相似度",
-      "description": "基于 Flux.1 深度学习模型，在每张生成图中提供自然细节、可识别的人脸和灵活创意控制。"
+      "title": "稳定保持相似度",
+      "description": "用自拍训练一次，即可在每张生成图片中保持清晰可辨的个人特征。"
     },
     "privacyFirst": {
-      "title": "内置隐私控制",
-      "description": "可选择公开或私密图库，管理你的照片库，并在需要时永久删除图片。"
+      "title": "你的照片，由你掌控",
+      "description": "可选择公开或私密图库，并随时永久删除图片。"
     },
     "affordablePricing": {
       "title": "透明按量付费",
       "description": "无需订阅，没有隐藏费用。一次训练模型 $2.99，之后每张图片 $0.03。"
     },
     "thousandsOfStyles": {
-      "title": "头像照、肖像和个人资料风格",
-      "description": "用同一个训练模型创建专业头像照、个人资料照片、创作者肖像和精致的个人品牌图片。"
+      "title": "不止是头像照",
+      "description": "创建专业头像照、个人资料照片、肖像和个人品牌图片。"
     },
     "easyCustomization": {
       "title": "简单提示词工具",
       "description": "微调提示词，或基于公开图库照片重新创作，快速得到个性化、专业感的 AI 图像。"
     },
     "multiplatform": {
-      "title": "Web、iOS 和 Android",
-      "description": "可在网页或原生移动应用中创作，你的 AI 照片库会在设备间同步。"
+      "title": "随时随地创作",
+      "description": "在网页、iOS 或 Android 上使用，照片库可跨设备同步。"
     }
   },
   "gallery": {

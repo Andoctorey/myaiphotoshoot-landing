@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 
 type Props = {
   idUrl: string; // canonical page URL without hash
@@ -28,6 +29,10 @@ export default function UseCaseProductJsonLd({
   const images = Array.isArray(imageUrls)
     ? imageUrls.filter(Boolean)
     : [];
+  const offerPolicies = buildDigitalOfferPolicies({
+    priceCurrency,
+    policyUrl: 'https://myaiphotoshoot.com/legal/',
+  });
 
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -46,8 +51,22 @@ export default function UseCaseProductJsonLd({
       highPrice: oneTimeTrainingPrice,
       offerCount: '2',
       offers: [
-        { '@type': 'Offer', name: 'Per Image', price: perImagePrice, priceCurrency, url: 'https://app.myaiphotoshoot.com' },
-        { '@type': 'Offer', name: 'One-time Training', price: oneTimeTrainingPrice, priceCurrency, url: 'https://app.myaiphotoshoot.com' },
+        {
+          '@type': 'Offer',
+          name: 'Per Image',
+          price: perImagePrice,
+          priceCurrency,
+          url: 'https://app.myaiphotoshoot.com',
+          ...offerPolicies,
+        },
+        {
+          '@type': 'Offer',
+          name: 'One-time Training',
+          price: oneTimeTrainingPrice,
+          priceCurrency,
+          url: 'https://app.myaiphotoshoot.com',
+          ...offerPolicies,
+        },
       ],
     },
   };
@@ -56,5 +75,4 @@ export default function UseCaseProductJsonLd({
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
   );
 }
-
 

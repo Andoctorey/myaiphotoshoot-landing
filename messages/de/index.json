@@ -44,31 +44,31 @@
     }
   },
   "features": {
-    "title": "Entwickelt für realistische KI-Headshots",
-    "description": "Alles, was Sie für konsistente professionelle Fotos ohne Abo brauchen",
+    "title": "Entwickelt für bessere KI-Headshots",
+    "description": "Einmal trainieren, realistische Fotos in vielen Stilen erstellen und die Kontrolle behalten.",
     "advancedAI": {
-      "title": "Realistische Ähnlichkeit",
-      "description": "Basierend auf Flux.1 Deep-Learning-Modellen für natürliche Details, wiedererkennbare Gesichter und flexible kreative Kontrolle in jedem generierten Bild."
+      "title": "Konsistente Ähnlichkeit",
+      "description": "Einmal mit Ihren Selfies trainieren und in jedem Bild wiedererkennbar bleiben."
     },
     "privacyFirst": {
-      "title": "Integrierte Datenschutzkontrollen",
-      "description": "Wählen Sie öffentliche oder private Galerien, verwalten Sie Ihre Fotobibliothek und löschen Sie Ihre Bilder jederzeit dauerhaft."
+      "title": "Ihre Fotos, Ihre Kontrolle",
+      "description": "Wählen Sie öffentliche oder private Galerien und löschen Sie Bilder jederzeit dauerhaft."
     },
     "affordablePricing": {
       "title": "Transparente Pay-as-you-go-Preise",
       "description": "Kein Abo und keine überraschenden Gebühren. Trainieren Sie Ihr Modell einmal für $2.99 und generieren Sie danach Bilder für je $0.03."
     },
     "thousandsOfStyles": {
-      "title": "Headshots, Porträts und Profilstile",
-      "description": "Erstellen Sie professionelle Headshots, Profilbilder, Creator-Porträts und hochwertige Personal-Brand-Bilder mit demselben trainierten Modell."
+      "title": "Headshots und mehr",
+      "description": "Erstellen Sie professionelle Headshots, Profilbilder, Porträts und Personal-Brand-Fotos."
     },
     "easyCustomization": {
       "title": "Einfacher Prompt-Builder",
       "description": "Passen Sie Prompts an oder remixen Sie Fotos aus der öffentlichen Galerie, um schnell personalisierte, professionell wirkende KI-Bilder zu erstellen."
     },
     "multiplatform": {
-      "title": "Web, iOS und Android",
-      "description": "Erstellen Sie Bilder im Web oder in den nativen mobilen Apps. Ihre KI-Fotobibliothek wird geräteübergreifend synchronisiert."
+      "title": "Überall erstellen",
+      "description": "Nutzen Sie Web, iOS oder Android mit einer geräteübergreifend synchronisierten Fotobibliothek."
     }
   },
   "gallery": {

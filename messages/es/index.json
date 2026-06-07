@@ -44,31 +44,31 @@
     }
   },
   "features": {
-    "title": "Diseñado para headshots realistas con IA",
-    "description": "Todo lo que necesitas para crear fotos profesionales consistentes sin suscripción",
+    "title": "Diseñado para mejores headshots con IA",
+    "description": "Entrena una vez, crea fotos realistas en muchos estilos y mantén el control.",
     "advancedAI": {
-      "title": "Parecido realista",
-      "description": "Impulsado por modelos de aprendizaje profundo Flux.1 para lograr detalles naturales, rostros reconocibles y control creativo flexible en cada imagen generada."
+      "title": "Parecido consistente",
+      "description": "Entrena una vez con tus selfies y conserva un aspecto reconocible en cada imagen."
     },
     "privacyFirst": {
-      "title": "Controles de privacidad integrados",
-      "description": "Elige galerías públicas o privadas, gestiona tu biblioteca de fotos y elimina tus imágenes de forma permanente cuando quieras."
+      "title": "Tus fotos, tu control",
+      "description": "Elige galerías públicas o privadas y elimina imágenes para siempre cuando quieras."
     },
     "affordablePricing": {
       "title": "Precios transparentes de pago por uso",
       "description": "Sin suscripción ni cargos sorpresa. Entrena tu modelo una vez por $2.99 y luego genera imágenes por $0.03 cada una."
     },
     "thousandsOfStyles": {
-      "title": "Headshots, retratos y estilos de perfil",
-      "description": "Crea headshots profesionales, fotos de perfil, retratos de creador e imágenes pulidas de marca personal desde el mismo modelo entrenado."
+      "title": "Headshots y mucho más",
+      "description": "Crea headshots profesionales, fotos de perfil, retratos e imágenes de marca personal."
     },
     "easyCustomization": {
       "title": "Constructor de prompts sencillo",
       "description": "Ajusta prompts o remezcla fotos de la galería pública para crear rápidamente imágenes con IA personalizadas y de aspecto profesional."
     },
     "multiplatform": {
-      "title": "Web, iOS y Android",
-      "description": "Crea desde la web o desde las apps móviles nativas, con tu biblioteca de fotos con IA sincronizada entre dispositivos."
+      "title": "Crea desde cualquier lugar",
+      "description": "Usa la web, iOS o Android con tu biblioteca sincronizada entre dispositivos."
     }
   },
   "gallery": {

@@ -44,31 +44,31 @@
     }
   },
   "features": {
-    "title": "Built for realistic AI headshots",
-    "description": "Everything you need to create consistent professional photos without a subscription",
+    "title": "Built for better AI headshots",
+    "description": "Train once, create realistic photos in many styles, and stay in control.",
     "advancedAI": {
-      "title": "Realistic likeness",
-      "description": "Powered by Flux.1 deep-learning models for natural detail, recognizable faces, and flexible creative control in every generated image."
+      "title": "Consistent likeness",
+      "description": "Train from your selfies once and keep a recognizable look across every image."
     },
     "privacyFirst": {
-      "title": "Privacy Controls Built In",
-      "description": "Choose public or private galleries, manage your photo library, and delete your images permanently whenever you want."
+      "title": "Your photos, your control",
+      "description": "Choose public or private galleries and permanently delete images whenever you want."
     },
     "affordablePricing": {
       "title": "Transparent Pay-As-You-Go Pricing",
       "description": "No subscription and no surprise fees. Train your model once for $2.99, then generate images for $0.03 each."
     },
     "thousandsOfStyles": {
-      "title": "Headshots, portraits, and profile styles",
-      "description": "Create professional headshots, profile pictures, creator portraits, and polished personal-brand images from the same trained model."
+      "title": "Headshots and more",
+      "description": "Create professional headshots, profile photos, portraits, and personal-brand images."
     },
     "easyCustomization": {
       "title": "Simple Prompt Builder",
       "description": "Fine-tune prompts or remix public gallery photos to create personalized, professional-looking AI images quickly."
     },
     "multiplatform": {
-      "title": "Web, iOS, and Android",
-      "description": "Create on the web or in the native mobile apps, with your AI photo library synced across your devices."
+      "title": "Create anywhere",
+      "description": "Use the web, iOS, or Android with your photo library synced across devices."
     }
   },
   "gallery": {

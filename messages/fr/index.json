@@ -44,31 +44,31 @@
     }
   },
   "features": {
-    "title": "Conçu pour des headshots IA réalistes",
-    "description": "Tout ce qu’il faut pour créer des photos professionnelles cohérentes sans abonnement",
+    "title": "Conçu pour de meilleurs headshots IA",
+    "description": "Entraînez une fois, créez des photos réalistes dans de nombreux styles et gardez le contrôle.",
     "advancedAI": {
-      "title": "Ressemblance réaliste",
-      "description": "Basé sur les modèles d’apprentissage profond Flux.1 pour des détails naturels, des visages reconnaissables et un contrôle créatif flexible dans chaque image générée."
+      "title": "Ressemblance cohérente",
+      "description": "Entraînez une fois avec vos selfies et conservez un visage reconnaissable sur chaque image."
     },
     "privacyFirst": {
-      "title": "Contrôles de confidentialité intégrés",
-      "description": "Choisissez des galeries publiques ou privées, gérez votre bibliothèque photo et supprimez définitivement vos images quand vous le souhaitez."
+      "title": "Vos photos, votre contrôle",
+      "description": "Choisissez des galeries publiques ou privées et supprimez définitivement vos images à tout moment."
     },
     "affordablePricing": {
       "title": "Tarifs transparents à l’usage",
       "description": "Aucun abonnement et aucuns frais surprise. Entraînez votre modèle une fois pour 2,99 $, puis générez des images pour 0,03 $ chacune."
     },
     "thousandsOfStyles": {
-      "title": "Headshots, portraits et styles de profil",
-      "description": "Créez des headshots professionnels, photos de profil, portraits de créateur et images de marque personnelle soignées avec le même modèle entraîné."
+      "title": "Headshots et bien plus",
+      "description": "Créez des headshots professionnels, photos de profil, portraits et images de marque personnelle."
     },
     "easyCustomization": {
       "title": "Générateur de prompts simple",
       "description": "Ajustez vos prompts ou remixez des photos de la galerie publique pour créer rapidement des images IA personnalisées et professionnelles."
     },
     "multiplatform": {
-      "title": "Web, iOS et Android",
-      "description": "Créez depuis le web ou les applications mobiles natives, avec votre bibliothèque de photos IA synchronisée sur tous vos appareils."
+      "title": "Créez où que vous soyez",
+      "description": "Utilisez le web, iOS ou Android avec votre bibliothèque synchronisée entre vos appareils."
     }
   },
   "gallery": {

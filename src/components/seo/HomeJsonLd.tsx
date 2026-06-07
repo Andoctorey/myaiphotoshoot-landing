@@ -1,6 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
+import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 import { canonicalUrl } from '@/lib/seo';
 
 export default function HomeJsonLd() {
@@ -14,6 +15,10 @@ export default function HomeJsonLd() {
       return 'Train a custom model once for $2.99, then generate images for ~$0.03 each.';
     }
   })();
+  const offerPolicies = buildDigitalOfferPolicies({
+    priceCurrency: 'USD',
+    policyUrl: canonicalUrl(locale, '/legal/'),
+  });
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -44,7 +49,7 @@ export default function HomeJsonLd() {
         price: '2.99',
         priceCurrency: 'USD',
         url: `${canonicalUrl(locale, '/')}#pricing`,
-        availability: 'https://schema.org/InStock'
+        ...offerPolicies,
       },
       {
         '@type': 'Offer',
@@ -58,7 +63,7 @@ export default function HomeJsonLd() {
           unitText: 'per image'
         },
         url: `${canonicalUrl(locale, '/')}#pricing`,
-        availability: 'https://schema.org/InStock'
+        ...offerPolicies,
       }
     ],
     aggregateRating: undefined
