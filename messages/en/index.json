@@ -188,55 +188,35 @@
     }
   },
   "faq": {
-    "title": "Frequently Asked Questions",
-    "description": "Answers to common questions about AI model training, pricing, privacy, and image generation.",
-    "whyNotChatGPT": {
-      "question": "Why use My AI Photo Shoot instead of a general AI chat app?",
-      "answer": "General AI chat apps are built for many tasks. My AI Photo Shoot is focused on repeatable photo generation from your selfies: train a personal model once, keep a consistent likeness, use photo-focused presets, and generate as many portraits as you need at a predictable per-image price."
-    },
+    "title": "Questions Before You Start",
+    "description": "Clear answers about setup, cost, image quality, privacy, and supported devices.",
     "howItWorks": {
-      "question": "How does AI photo generation work?",
-      "answer": "You upload a small set of selfies, and we train a personal AI model that learns your appearance. After training, you can generate new images of yourself in different outfits, poses, settings, and visual styles."
+      "question": "How does it work?",
+      "answer": "Upload 10–20 varied selfies and train your personal AI model once. You can then create new photos of yourself in different outfits, poses, settings, and styles."
     },
-    "freeHeadshot": {
-      "question": "Is there a free AI headshot generator?",
-      "answer": "Some tools offer free previews or limited trials. My AI Photo Shoot is not positioned as a free generator: you pay $2.99 once to train your personal model, then $0.03 per generated image, with no subscription."
-    },
-    "chatgptHeadshot": {
-      "question": "Can ChatGPT make a professional headshot?",
-      "answer": "General AI chat apps can help with image prompts, but they are not built around a reusable personal photo model. My AI Photo Shoot trains on your selfies so you can keep a more consistent likeness across many headshot and profile photo styles."
-    },
-    "linkedinPolicy": {
-      "question": "Is it OK to use AI-generated images for LinkedIn profiles?",
-      "answer": "Many people use AI-generated headshots for LinkedIn when the image is realistic, current, and clearly represents them. Avoid misleading edits, and choose a clean professional style that matches how you want to appear in work contexts."
-    },
-    "photoToHeadshot": {
-      "question": "How do I turn a photo into a headshot?",
-      "answer": "Upload clear selfies, train your personal AI model, then generate headshot prompts with professional lighting, clean backgrounds, and work-ready clothing. After training, you can create multiple headshot options from the same model."
+    "sourcePhotos": {
+      "question": "What photos should I upload?",
+      "answer": "Use clear solo selfies with varied angles, expressions, and lighting. Keep your face visible and avoid group photos, heavy filters, sunglasses, and very dark or blurry images."
     },
     "pricing": {
-      "question": "How much does it cost?",
-      "answer": "Pricing is pay as you go: $2.99 to train your personal AI model once, then $0.03 for each generated image. There are no monthly subscriptions or hidden fees."
-    },
-    "privacy": {
-      "question": "Is my data safe and private?",
-      "answer": "You control your privacy settings. Choose public or private galleries, delete photos when you want, and manage your image library from your account. We do not sell your personal data."
+      "question": "How much does it cost, and are there limits?",
+      "answer": "Training your personal model costs $2.99 once. Each generated image costs $0.03, with no subscription, fixed bundle, or monthly generation limit."
     },
     "imageQuality": {
-      "question": "What quality are the generated images?",
-      "answer": "Images are generated in high resolution for social media, profile photos, marketing assets, creative projects, and many print use cases. Quality depends on the selfies you upload and the prompt you choose."
+      "question": "What affects image quality?",
+      "answer": "Clear, varied selfies produce the best likeness. Your prompt and chosen style also affect the result, so you can generate multiple options and keep the strongest images."
     },
-    "howManyPhotos": {
-      "question": "How many photos can I generate?",
-      "answer": "After your AI model is trained, you can generate as many images as you want for $0.03 each. There is no fixed bundle or monthly cap."
+    "privacy": {
+      "question": "How are my photos and data handled?",
+      "answer": "You choose whether generated photos are public or private. Photos stay in your account until you delete them, and you can permanently remove individual images or your full library. We do not sell your personal data."
     },
     "platforms": {
-      "question": "What platforms are supported?",
-      "answer": "You can use My AI Photo Shoot on the web, iOS, and Android. Your generated images sync across devices when you use the same account."
+      "question": "Where can I use My AI Photo Shoot?",
+      "answer": "Use it in a web browser or through the native iOS and Android apps. Sign in with the same account to access your generated images across devices."
     },
-    "dataRetention": {
-      "question": "How long do you keep my photos?",
-      "answer": "Photos remain in your account until you delete them. You can permanently remove individual images or your full photo library from your account settings."
+    "whyNotChatGPT": {
+      "question": "How is this different from a general AI image tool?",
+      "answer": "My AI Photo Shoot is built around a reusable model trained on your selfies. That makes it easier to maintain a recognizable likeness across many headshots, portraits, and profile-photo styles with predictable pay-as-you-go pricing."
     }
   },
   "useCase": {

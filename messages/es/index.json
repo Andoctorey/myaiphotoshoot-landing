@@ -188,55 +188,35 @@
     }
   },
   "faq": {
-    "title": "Preguntas frecuentes",
-    "description": "Respuestas sobre entrenamiento de modelos de IA, precios, privacidad y generación de imágenes.",
-    "whyNotChatGPT": {
-      "question": "¿Por qué usar My AI Photo Shoot en lugar de una app general de chat con IA?",
-      "answer": "Las apps generales de chat con IA sirven para muchas tareas. My AI Photo Shoot está enfocado en generar fotos repetibles a partir de tus selfies: entrenas un modelo personal una vez, mantienes un parecido consistente, usas presets pensados para fotos y generas tantos retratos como necesites con un precio predecible por imagen."
-    },
+    "title": "Preguntas antes de empezar",
+    "description": "Respuestas claras sobre configuración, precio, calidad de imagen, privacidad y dispositivos compatibles.",
     "howItWorks": {
-      "question": "¿Cómo funciona la generación de fotos con IA?",
-      "answer": "Subes un pequeño conjunto de selfies y entrenamos un modelo personal de IA que aprende tu apariencia. Después puedes generar nuevas imágenes tuyas con distintos atuendos, poses, escenarios y estilos visuales."
+      "question": "¿Cómo funciona?",
+      "answer": "Sube entre 10 y 20 selfies variadas y entrena una vez tu modelo personal de IA. Después podrás crear nuevas fotos tuyas con distintos atuendos, poses, escenarios y estilos."
     },
-    "freeHeadshot": {
-      "question": "¿Hay un generador de headshots con IA gratis?",
-      "answer": "Algunas herramientas ofrecen vistas previas gratis o pruebas limitadas. My AI Photo Shoot no se presenta como un generador gratis: pagas $2.99 una vez para entrenar tu modelo personal y luego $0.03 por imagen generada, sin suscripción."
-    },
-    "chatgptHeadshot": {
-      "question": "¿Puede ChatGPT crear un headshot profesional?",
-      "answer": "Las apps generales de chat con IA pueden ayudar con prompts de imagen, pero no están pensadas para un modelo fotográfico personal reutilizable. My AI Photo Shoot se entrena con tus selfies para mantener un parecido más consistente en muchos estilos de headshot y foto de perfil."
-    },
-    "linkedinPolicy": {
-      "question": "¿Está bien usar imágenes generadas con IA en perfiles de LinkedIn?",
-      "answer": "Muchas personas usan headshots generados con IA en LinkedIn cuando la imagen es realista, actual y las representa claramente. Evita ediciones engañosas y elige un estilo profesional limpio que encaje con cómo quieres presentarte en contextos laborales."
-    },
-    "photoToHeadshot": {
-      "question": "¿Cómo convierto una foto en un headshot?",
-      "answer": "Sube selfies claras, entrena tu modelo personal de IA y genera prompts de headshot con iluminación profesional, fondos limpios y ropa adecuada para trabajo. Después del entrenamiento puedes crear varias opciones de headshot desde el mismo modelo."
+    "sourcePhotos": {
+      "question": "¿Qué fotos debería subir?",
+      "answer": "Usa selfies claras en las que aparezcas solo, con distintos ángulos, expresiones e iluminación. Mantén el rostro visible y evita fotos de grupo, filtros intensos, gafas de sol e imágenes muy oscuras o borrosas."
     },
     "pricing": {
-      "question": "¿Cuánto cuesta?",
-      "answer": "El precio es de pago por uso: $2.99 para entrenar tu modelo personal de IA una vez y luego $0.03 por cada imagen generada. No hay suscripciones mensuales ni cargos ocultos."
-    },
-    "privacy": {
-      "question": "¿Mis datos están seguros y privados?",
-      "answer": "Tú controlas la privacidad. Elige galerías públicas o privadas, elimina fotos cuando quieras y gestiona tu biblioteca desde tu cuenta. No vendemos tus datos personales."
+      "question": "¿Cuánto cuesta y hay límites?",
+      "answer": "Entrenar tu modelo personal cuesta $2.99 una sola vez. Cada imagen generada cuesta $0.03, sin suscripción, paquete fijo ni límite mensual de generación."
     },
     "imageQuality": {
-      "question": "¿Qué calidad tienen las imágenes generadas?",
-      "answer": "Las imágenes se generan en alta resolución para redes sociales, perfiles, materiales de marketing, proyectos creativos y muchos usos impresos. La calidad depende de las selfies que subas y del prompt que elijas."
+      "question": "¿Qué influye en la calidad de las imágenes?",
+      "answer": "Las selfies claras y variadas producen el mejor parecido. El prompt y el estilo elegido también influyen, así que puedes generar varias opciones y conservar las mejores."
     },
-    "howManyPhotos": {
-      "question": "¿Cuántas fotos puedo generar?",
-      "answer": "Cuando tu modelo de IA esté entrenado, puedes generar tantas imágenes como quieras por $0.03 cada una. No hay paquete fijo ni límite mensual."
+    "privacy": {
+      "question": "¿Cómo se gestionan mis fotos y datos?",
+      "answer": "Tú decides si las fotos generadas son públicas o privadas. Permanecen en tu cuenta hasta que las elimines, y puedes borrar de forma permanente imágenes individuales o toda tu biblioteca. No vendemos tus datos personales."
     },
     "platforms": {
-      "question": "¿Qué plataformas están disponibles?",
-      "answer": "Puedes usar My AI Photo Shoot en la web, iOS y Android. Tus imágenes generadas se sincronizan entre dispositivos cuando usas la misma cuenta."
+      "question": "¿Dónde puedo usar My AI Photo Shoot?",
+      "answer": "Úsalo desde un navegador web o en las apps nativas para iOS y Android. Inicia sesión con la misma cuenta para acceder a tus imágenes generadas en todos tus dispositivos."
     },
-    "dataRetention": {
-      "question": "¿Cuánto tiempo conservan mis fotos?",
-      "answer": "Las fotos permanecen en tu cuenta hasta que las eliminas. Puedes borrar permanentemente imágenes individuales o toda tu biblioteca desde la configuración de la cuenta."
+    "whyNotChatGPT": {
+      "question": "¿En qué se diferencia de una herramienta general de imágenes con IA?",
+      "answer": "My AI Photo Shoot utiliza un modelo reutilizable entrenado con tus selfies. Esto facilita mantener un parecido reconocible en muchos estilos de headshot, retrato y foto de perfil, con precios predecibles de pago por uso."
     }
   },
   "useCase": {

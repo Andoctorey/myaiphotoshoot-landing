@@ -29,52 +29,32 @@ export default function FAQ() {
 
   const faqItems: FAQItem[] = [
     {
-      question: t('whyNotChatGPT.question'),
-      answer: t('whyNotChatGPT.answer'),
-    },
-    {
       question: t('howItWorks.question'),
       answer: t('howItWorks.answer'),
     },
     {
-      question: t('freeHeadshot.question'),
-      answer: t('freeHeadshot.answer'),
-    },
-    {
-      question: t('chatgptHeadshot.question'),
-      answer: t('chatgptHeadshot.answer'),
-    },
-    {
-      question: t('linkedinPolicy.question'),
-      answer: t('linkedinPolicy.answer'),
-    },
-    {
-      question: t('photoToHeadshot.question'),
-      answer: t('photoToHeadshot.answer'),
+      question: t('sourcePhotos.question'),
+      answer: t('sourcePhotos.answer'),
     },
     {
       question: t('pricing.question'),
       answer: t('pricing.answer'),
     },
     {
-      question: t('privacy.question'),
-      answer: t('privacy.answer'),
-    },
-    {
       question: t('imageQuality.question'),
       answer: t('imageQuality.answer'),
     },
     {
-      question: t('howManyPhotos.question'),
-      answer: t('howManyPhotos.answer'),
+      question: t('privacy.question'),
+      answer: t('privacy.answer'),
     },
     {
       question: t('platforms.question'),
       answer: t('platforms.answer'),
     },
     {
-      question: t('dataRetention.question'),
-      answer: t('dataRetention.answer'),
+      question: t('whyNotChatGPT.question'),
+      answer: t('whyNotChatGPT.answer'),
     },
   ];
 

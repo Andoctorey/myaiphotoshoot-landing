@@ -188,55 +188,35 @@
     }
   },
   "faq": {
-    "title": "Häufige Fragen",
-    "description": "Antworten auf häufige Fragen zu KI-Modelltraining, Preisen, Datenschutz und Bildgenerierung.",
-    "whyNotChatGPT": {
-      "question": "Warum My AI Photo Shoot statt einer allgemeinen KI-Chat-App nutzen?",
-      "answer": "Allgemeine KI-Chat-Apps sind für viele Aufgaben gedacht. My AI Photo Shoot konzentriert sich auf wiederholbare Fotogenerierung aus Ihren Selfies: Sie trainieren einmal ein persönliches Modell, behalten eine konsistente Ähnlichkeit, nutzen fotoorientierte Presets und generieren so viele Porträts wie nötig zu einem klaren Preis pro Bild."
-    },
+    "title": "Fragen vor dem Start",
+    "description": "Klare Antworten zu Einrichtung, Kosten, Bildqualität, Datenschutz und unterstützten Geräten.",
     "howItWorks": {
-      "question": "Wie funktioniert KI-Fotogenerierung?",
-      "answer": "Sie laden eine kleine Auswahl an Selfies hoch, und wir trainieren ein persönliches KI-Modell, das Ihr Aussehen lernt. Danach können Sie neue Bilder von sich in verschiedenen Outfits, Posen, Umgebungen und visuellen Stilen generieren."
+      "question": "Wie funktioniert es?",
+      "answer": "Laden Sie 10–20 unterschiedliche Selfies hoch und trainieren Sie Ihr persönliches KI-Modell einmal. Danach können Sie neue Fotos von sich mit verschiedenen Outfits, Posen, Umgebungen und Stilen erstellen."
     },
-    "freeHeadshot": {
-      "question": "Gibt es einen kostenlosen KI-Headshot-Generator?",
-      "answer": "Einige Tools bieten kostenlose Vorschauen oder begrenzte Testversionen. My AI Photo Shoot ist nicht als kostenloser Generator positioniert: Sie zahlen einmal $2.99 für das Training Ihres persönlichen Modells und danach $0.03 pro generiertem Bild, ohne Abo."
-    },
-    "chatgptHeadshot": {
-      "question": "Kann ChatGPT einen professionellen Headshot erstellen?",
-      "answer": "Allgemeine KI-Chat-Apps können bei Bildprompts helfen, sind aber nicht auf ein wiederverwendbares persönliches Fotomodell ausgelegt. My AI Photo Shoot trainiert mit Ihren Selfies, damit Ihre Ähnlichkeit über viele Headshot- und Profilbildstile konsistenter bleibt."
-    },
-    "linkedinPolicy": {
-      "question": "Ist es in Ordnung, KI-generierte Bilder für LinkedIn-Profile zu verwenden?",
-      "answer": "Viele Menschen nutzen KI-generierte Headshots auf LinkedIn, wenn das Bild realistisch, aktuell und klar repräsentativ ist. Vermeiden Sie irreführende Bearbeitungen und wählen Sie einen sauberen professionellen Stil, der zu Ihrem beruflichen Auftreten passt."
-    },
-    "photoToHeadshot": {
-      "question": "Wie verwandle ich ein Foto in einen Headshot?",
-      "answer": "Laden Sie klare Selfies hoch, trainieren Sie Ihr persönliches KI-Modell und generieren Sie Headshot-Prompts mit professionellem Licht, ruhigen Hintergründen und arbeitsgeeigneter Kleidung. Nach dem Training können Sie mehrere Headshot-Optionen mit demselben Modell erstellen."
+    "sourcePhotos": {
+      "question": "Welche Fotos sollte ich hochladen?",
+      "answer": "Verwenden Sie klare Einzel-Selfies mit unterschiedlichen Winkeln, Gesichtsausdrücken und Lichtverhältnissen. Das Gesicht sollte sichtbar sein; vermeiden Sie Gruppenfotos, starke Filter, Sonnenbrillen sowie sehr dunkle oder unscharfe Bilder."
     },
     "pricing": {
-      "question": "Wie viel kostet es?",
-      "answer": "Die Preise sind nutzungsbasiert: $2.99 für das einmalige Training Ihres persönlichen KI-Modells und danach $0.03 pro generiertem Bild. Es gibt keine Monatsabos und keine versteckten Gebühren."
-    },
-    "privacy": {
-      "question": "Sind meine Daten sicher und privat?",
-      "answer": "Sie kontrollieren Ihre Privatsphäre. Wählen Sie öffentliche oder private Galerien, löschen Sie Fotos jederzeit und verwalten Sie Ihre Bildbibliothek in Ihrem Konto. Wir verkaufen keine personenbezogenen Daten."
+      "question": "Was kostet es und gibt es Limits?",
+      "answer": "Das einmalige Training Ihres persönlichen Modells kostet $2.99. Jedes generierte Bild kostet $0.03. Es gibt kein Abo, kein festes Paket und kein monatliches Generierungslimit."
     },
     "imageQuality": {
-      "question": "Welche Qualität haben die generierten Bilder?",
-      "answer": "Die Bilder werden in hoher Auflösung für Social Media, Profilfotos, Marketingmaterialien, kreative Projekte und viele Druckanwendungen generiert. Die Qualität hängt von den hochgeladenen Selfies und dem gewählten Prompt ab."
+      "question": "Was beeinflusst die Bildqualität?",
+      "answer": "Klare, abwechslungsreiche Selfies liefern die beste Ähnlichkeit. Auch Prompt und Stil beeinflussen das Ergebnis, daher können Sie mehrere Varianten erstellen und die besten Bilder auswählen."
     },
-    "howManyPhotos": {
-      "question": "Wie viele Fotos kann ich generieren?",
-      "answer": "Nach dem Training Ihres KI-Modells können Sie so viele Bilder generieren, wie Sie möchten, für je $0.03. Es gibt kein festes Paket und kein Monatslimit."
+    "privacy": {
+      "question": "Wie werden meine Fotos und Daten behandelt?",
+      "answer": "Sie entscheiden, ob generierte Fotos öffentlich oder privat sind. Fotos bleiben in Ihrem Konto, bis Sie sie löschen; einzelne Bilder oder die gesamte Bibliothek können dauerhaft entfernt werden. Wir verkaufen Ihre personenbezogenen Daten nicht."
     },
     "platforms": {
-      "question": "Welche Plattformen werden unterstützt?",
-      "answer": "Sie können My AI Photo Shoot im Web, auf iOS und auf Android verwenden. Ihre generierten Bilder werden geräteübergreifend synchronisiert, wenn Sie dasselbe Konto nutzen."
+      "question": "Wo kann ich My AI Photo Shoot verwenden?",
+      "answer": "Nutzen Sie My AI Photo Shoot im Browser oder in den nativen Apps für iOS und Android. Mit demselben Konto können Sie auf allen Geräten auf Ihre generierten Bilder zugreifen."
     },
-    "dataRetention": {
-      "question": "Wie lange werden meine Fotos gespeichert?",
-      "answer": "Fotos bleiben in Ihrem Konto, bis Sie sie löschen. Sie können einzelne Bilder oder Ihre gesamte Fotobibliothek in den Kontoeinstellungen dauerhaft entfernen."
+    "whyNotChatGPT": {
+      "question": "Was unterscheidet My AI Photo Shoot von allgemeinen KI-Bildtools?",
+      "answer": "My AI Photo Shoot basiert auf einem wiederverwendbaren Modell, das mit Ihren Selfies trainiert wird. So bleibt Ihre Ähnlichkeit über viele Headshot-, Porträt- und Profilbildstile hinweg leichter erkennbar, bei klarer nutzungsbasierter Preisgestaltung."
     }
   },
   "useCase": {
