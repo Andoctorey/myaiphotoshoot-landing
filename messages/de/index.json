@@ -22,27 +22,6 @@
     "title": "Beginnen Sie mit professionellen Headshots und nutzen Sie Ihr Modell weiter",
     "description": "Erstellen Sie zuerst professionelle Headshots und verwenden Sie dasselbe trainierte Modell danach für Profilbilder, Porträts, Fotobooth-Looks und realistische Bilder von sich selbst."
   },
-  "headshotComparison": {
-    "eyebrow": "Kostenlose vs. bezahlte KI-Headshots",
-    "title": "Kostenlose Generatoren eignen sich zum Testen. My AI Photo Shoot ist für wiederholbare Headshots gebaut.",
-    "description": "Suchergebnisse sind voller Gratisproben und generischer Bildtools. Der Unterschied hier sind klare Preise, ein trainiertes persönliches Modell, konsistente Ähnlichkeit und Datenschutzkontrollen für professionelle Fotos, die Sie wiederverwenden können.",
-    "primaryLink": "KI-Headshots erstellen",
-    "secondaryLink": "Profilbilder erstellen",
-    "cards": {
-      "pricing": {
-        "title": "Transparente Preise",
-        "description": "$2.99 einmaliges Training, danach $0.03 pro Bild. Kein monatliches Abo."
-      },
-      "likeness": {
-        "title": "Konsistente Ähnlichkeit",
-        "description": "Trainieren Sie einmal mit Ihren Selfies und generieren Sie viele Headshot-, Porträt- und Profilstile."
-      },
-      "control": {
-        "title": "Datenschutzkontrollen",
-        "description": "Wählen Sie private oder öffentliche Galerien, verwalten Sie Ihre Bibliothek und löschen Sie Fotos in Ihrem Konto."
-      }
-    }
-  },
   "features": {
     "title": "Entwickelt für bessere KI-Headshots",
     "description": "Einmal trainieren, realistische Fotos in vielen Stilen erstellen und die Kontrolle behalten.",

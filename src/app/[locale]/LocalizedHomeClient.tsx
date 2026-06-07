@@ -12,7 +12,6 @@ import FAQ from '@/components/features/FAQ';
 import SupportForm from '@/components/app/SupportForm';
 import HomeBlog from '@/components/features/HomeBlog';
 import HomeUseCases from '@/components/features/HomeUseCases';
-import HeadshotComparison from '@/components/features/HeadshotComparison';
 import type { GalleryItem } from '@/types/gallery';
 import type { BlogListItem } from '@/types/blog';
 
@@ -74,7 +73,6 @@ export default function LocalizedHomeClient({
             <Features />
             <Pricing />
             <HomeUseCases initialUseCases={initialUseCases} locale={locale} />
-            <HeadshotComparison />
             <UserGallery initialItems={initialGallery} />
             <HomeBlog initialPosts={initialBlog} />
             <FAQ />

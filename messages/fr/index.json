@@ -22,27 +22,6 @@
     "title": "Commencez par des headshots professionnels, puis réutilisez votre modèle",
     "description": "Créez d’abord des headshots professionnels, puis réutilisez le même modèle entraîné pour des photos de profil, portraits, looks photobooth et images réalistes de vous."
   },
-  "headshotComparison": {
-    "eyebrow": "Headshots IA gratuits ou payants",
-    "title": "Les générateurs gratuits sont utiles pour tester. My AI Photo Shoot est conçu pour des headshots répétables.",
-    "description": "Les résultats de recherche regorgent d’essais gratuits et d’outils d’image génériques. Ici, la différence tient aux prix clairs, à un modèle personnel entraîné, à une ressemblance cohérente et aux contrôles de confidentialité pour des photos professionnelles réutilisables.",
-    "primaryLink": "Créer des headshots IA",
-    "secondaryLink": "Créer des photos de profil",
-    "cards": {
-      "pricing": {
-        "title": "Prix transparents",
-        "description": "2,99 $ pour l’entraînement unique, puis 0,03 $ par image. Aucun abonnement mensuel."
-      },
-      "likeness": {
-        "title": "Ressemblance cohérente",
-        "description": "Entraînez une fois avec vos selfies et générez de nombreux styles de headshots, portraits et photos de profil."
-      },
-      "control": {
-        "title": "Contrôles de confidentialité",
-        "description": "Choisissez des galeries privées ou publiques, gérez votre bibliothèque et supprimez vos photos depuis votre compte."
-      }
-    }
-  },
   "features": {
     "title": "Conçu pour de meilleurs headshots IA",
     "description": "Entraînez une fois, créez des photos réalistes dans de nombreux styles et gardez le contrôle.",

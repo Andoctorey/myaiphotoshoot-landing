@@ -22,27 +22,6 @@
     "title": "Start with professional headshots, then reuse your model",
     "description": "Create professional headshots first, then reuse the same trained model for profile pictures, portraits, photobooth looks, and realistic images of yourself."
   },
-  "headshotComparison": {
-    "eyebrow": "Free vs paid AI headshots",
-    "title": "Free generators are useful for tests. My AI Photo Shoot is built for repeatable headshots.",
-    "description": "Search results are full of free trials and generic image tools. The difference here is clear pricing, a trained personal model, consistent likeness, and privacy controls for professional photos you can reuse.",
-    "primaryLink": "Create AI headshots",
-    "secondaryLink": "Make profile pictures",
-    "cards": {
-      "pricing": {
-        "title": "Transparent pricing",
-        "description": "$2.99 one-time training, then $0.03 per image. No monthly subscription."
-      },
-      "likeness": {
-        "title": "Consistent likeness",
-        "description": "Train once from your selfies and generate many headshot, portrait, and profile styles."
-      },
-      "control": {
-        "title": "Privacy controls",
-        "description": "Choose private or public galleries, manage your library, and delete photos from your account."
-      }
-    }
-  },
   "features": {
     "title": "Built for better AI headshots",
     "description": "Train once, create realistic photos in many styles, and stay in control.",
