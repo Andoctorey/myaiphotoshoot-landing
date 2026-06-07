@@ -1,20 +1,10 @@
-'use client';
-
-import { useLocale, useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 import { canonicalUrl } from '@/lib/seo';
 
-export default function HomeJsonLd() {
-  const locale = useLocale();
-  const tHero = useTranslations('hero');
-  const description = (() => {
-    try {
-      const d = tHero('description');
-      return typeof d === 'string' && d.length > 0 ? d : 'Train a custom model once for $2.99, then generate images for ~$0.03 each.';
-    } catch {
-      return 'Train a custom model once for $2.99, then generate images for ~$0.03 each.';
-    }
-  })();
+export default async function HomeJsonLd({ locale }: { locale: string }) {
+  const tHero = await getTranslations({ locale, namespace: 'hero' });
+  const description = tHero('description');
   const offerPolicies = buildDigitalOfferPolicies({
     priceCurrency: 'USD',
     policyUrl: canonicalUrl(locale, '/legal/'),

@@ -1,10 +1,8 @@
-'use client';
-
-import { useTranslations } from '@/lib/utils';
+import { getTranslations } from 'next-intl/server';
 import PlatformButtons from './PlatformButtons';
 
-export default function Download() {
-  const t = useTranslations('download');
+export default async function Download({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: 'download' });
 
   return (
     <section id="download" className="relative overflow-hidden bg-gradient-to-b from-white via-purple-50/40 to-gray-50 py-14 dark:from-gray-900 dark:via-purple-950/20 dark:to-gray-800 md:py-16">
@@ -23,7 +21,11 @@ export default function Download() {
           id="download-options"
           className="mx-auto flex max-w-4xl flex-col items-center"
         >
-          <PlatformButtons />
+          <PlatformButtons
+            webAppLabel={t('webApp.button')}
+            googlePlayLabel={t('mobileApps.googlePlay')}
+            appStoreLabel={t('mobileApps.appStore')}
+          />
         </div>
       </div>
     </section>

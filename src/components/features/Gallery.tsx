@@ -93,7 +93,8 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
       const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${pageNumber}&limit=24`);
       
       if (!response.ok) {
-        throw new Error('Failed to fetch gallery items');
+        console.error(`Failed to fetch gallery items: ${response.status} ${response.statusText}`);
+        return;
       }
       
       const data = await response.json();

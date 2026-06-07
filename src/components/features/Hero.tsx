@@ -1,10 +1,9 @@
-'use client';
-
-import { useTranslations } from '@/lib/utils';
+import { getTranslations } from 'next-intl/server';
 import PlatformButtons from './PlatformButtons';
 
-export default function Hero() {
-  const t = useTranslations('hero');
+export default async function Hero({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: 'hero' });
+  const tDownload = await getTranslations({ locale, namespace: 'download' });
 
   return (
     <section className="pt-10 pb-4 sm:pt-14 md:pt-16 bg-gradient-to-b from-purple-50 to-white dark:from-purple-950 dark:to-gray-900">
@@ -22,7 +21,11 @@ export default function Hero() {
               {t('microcopy')}
             </p>
             <div className="mx-auto mt-6 max-w-3xl">
-              <PlatformButtons />
+              <PlatformButtons
+                webAppLabel={tDownload('webApp.button')}
+                googlePlayLabel={tDownload('mobileApps.googlePlay')}
+                appStoreLabel={tDownload('mobileApps.appStore')}
+              />
             </div>
           </div>
         </div>

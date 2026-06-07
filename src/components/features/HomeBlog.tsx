@@ -1,11 +1,7 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { useMemo } from 'react';
-import { useBlogPosts } from '@/hooks/useBlog';
-import { BlogListItem } from '@/types/blog';
-import { useLocale, useTranslations } from '@/lib/utils';
+import { getTranslations } from 'next-intl/server';
+import type { BlogListItem } from '@/types/blog';
 import { withDefaultCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 
@@ -20,28 +16,15 @@ function sortByMostRecent(posts: BlogListItem[]): BlogListItem[] {
   });
 }
 
-export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { initialPosts?: BlogListItem[] }) {
-  const t = useTranslations('blog');
-  const locale = useLocale();
-
-  const initial = (initialPosts && initialPosts.length > 0) ? initialPosts : [];
-  const hasFallback = Array.isArray(initial) && initial.length > 0;
-  const fallbackData = hasFallback ? {
-    posts: takeFirst(initial, 6),
-    total: 6,
-    page: 1,
-    limit: 6,
-    totalPages: 1,
-  } : undefined;
-
-  const { posts, isLoading, isError } = useBlogPosts({ page: 1, limit: 6, locale, fallbackData });
-
-  const selectedPosts: BlogListItem[] = useMemo(() => {
-    if (!posts || posts.length === 0) return [];
-    return takeFirst(sortByMostRecent(posts), 6);
-  }, [posts]);
-
-  if (isError) return null;
+export default async function HomeBlog({
+  initialPosts = [],
+  locale,
+}: {
+  initialPosts?: BlogListItem[];
+  locale: string;
+}) {
+  const t = await getTranslations({ locale, namespace: 'blog' });
+  const selectedPosts = takeFirst(sortByMostRecent(initialPosts), 6);
 
   return (
     <section className="pt-16 pb-10 md:pt-24 md:pb-16 bg-white dark:bg-gray-900" id="home-blog">
@@ -55,13 +38,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
           </p>
         </div>
 
-        {isLoading && (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-          </div>
-        )}
-
-        {!isLoading && selectedPosts.length > 0 && (
+        {selectedPosts.length > 0 && (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 mb-10">
             {selectedPosts.map((post, index) => (
               <article
@@ -75,7 +52,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
                     {post.featured_image_url ? (
                       <Image
                         src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
-                        alt={`Featured image for blog post: ${post.title}`}
+                        alt={t('imageAlt', { title: post.title })}
                         width={600}
                         height={600}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"

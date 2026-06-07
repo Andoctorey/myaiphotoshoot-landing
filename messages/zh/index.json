@@ -78,6 +78,8 @@
     "title": "AI 照片博客",
     "description": "关于 AI 肖像、提示词和数字图像工作流的实用技巧、教程与灵感。",
     "viewAll": "查看所有 AI 照片博客文章",
+    "imageAlt": "《{title}》的特色图片",
+    "imageFallback": "博客图片",
     "readingTime": "分钟阅读",
     "publishedOn": "发布于",
     "noPostsTitle": "暂无博客文章",

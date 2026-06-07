@@ -1,18 +1,16 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
 import { localePath } from '@/lib/seo';
-import { useTranslations } from '@/lib/utils';
 
 interface Props {
   initialUseCases?: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
   locale?: string;
 }
 
-export default function HomeUseCases({ initialUseCases = [], locale = 'en' }: Props) {
-  const t = useTranslations('navigation');
-  const tSection = useTranslations('homeUseCases');
+export default async function HomeUseCases({ initialUseCases = [], locale = 'en' }: Props) {
+  const t = await getTranslations({ locale, namespace: 'navigation' });
+  const tSection = await getTranslations({ locale, namespace: 'homeUseCases' });
   const prioritySlugs = [
     'ai-headshot-generator-for-linkedin-resumes-and-team-pages',
     'ai-profile-picture-generator-realistic-headshots-avatars',

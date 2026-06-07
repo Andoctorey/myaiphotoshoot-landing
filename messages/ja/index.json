@@ -78,6 +78,8 @@
     "title": "AI写真ブログ",
     "description": "AIポートレート、プロンプト、デジタル画像ワークフローを改善するための実用的なヒント、チュートリアル、アイデア。",
     "viewAll": "AI写真ブログの記事をすべて見る",
+    "imageAlt": "「{title}」のアイキャッチ画像",
+    "imageFallback": "ブログ画像",
     "readingTime": "分で読めます",
     "publishedOn": "公開日",
     "noPostsTitle": "まだ記事はありません",

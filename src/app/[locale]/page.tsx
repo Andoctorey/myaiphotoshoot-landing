@@ -1,6 +1,6 @@
 import { locales } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
-import LocalizedHomeClient from './LocalizedHomeClient';
+import HomeContent from '@/components/features/HomeContent';
 import type { Metadata } from 'next';
 import { fetchHomeData } from '@/lib/homeData';
 import HomeJsonLd from '@/components/seo/HomeJsonLd';
@@ -18,8 +18,9 @@ export default async function LocalizedHome({ params }: { params: Promise<{ loca
   const { initialGallery, initialBlog, initialUseCases } = await fetchHomeData(locale);
   return (
     <>
-      <HomeJsonLd />
-      <LocalizedHomeClient
+      <HomeJsonLd locale={locale} />
+      <HomeContent
+        locale={locale}
         initialGallery={initialGallery}
         initialBlog={initialBlog}
         initialUseCases={initialUseCases}

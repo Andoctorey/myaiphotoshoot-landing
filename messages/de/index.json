@@ -78,6 +78,8 @@
     "title": "KI-Foto-Blog",
     "description": "Praktische Tipps, Tutorials und Ideen für bessere KI-Porträts, Prompts und digitale Bild-Workflows.",
     "viewAll": "Alle Artikel im KI-Foto-Blog ansehen",
+    "imageAlt": "Beitragsbild für „{title}“",
+    "imageFallback": "Blogbild",
     "readingTime": "Min. Lesezeit",
     "publishedOn": "Veröffentlicht am",
     "noPostsTitle": "Noch keine Blogbeiträge",

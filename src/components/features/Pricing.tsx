@@ -1,13 +1,9 @@
-'use client';
-
 import { CheckIcon } from '@heroicons/react/24/outline';
-import { useTranslations } from '@/lib/utils';
-import { trackEventAndNavigate } from '@/lib/analytics';
-import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
+import { getTranslations } from 'next-intl/server';
+import PlatformAppLink from './PlatformAppLink';
 
-export default function Pricing() {
-  const t = useTranslations('pricing');
-  const appLink = usePlatformAppLink();
+export default async function Pricing({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: 'pricing' });
 
   const features = [
     t('features.training'),
@@ -60,19 +56,11 @@ export default function Pricing() {
             </div>
             <div className="mt-6">
               <div className="rounded-xl shadow-md">
-                <a
-                  href={appLink.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <PlatformAppLink
                   className="flex items-center justify-center rounded-xl border border-transparent bg-gradient-to-r from-purple-600 to-indigo-600 px-7 py-4 text-base font-semibold text-white transition-all duration-200 hover:from-purple-700 hover:to-indigo-700 hover:scale-[1.02]"
-                  onClick={(e) => {
-                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-                    e.preventDefault();
-                    trackEventAndNavigate(appLink.event, appLink.url);
-                  }}
                 >
                   {t('getStarted')}
-                </a>
+                </PlatformAppLink>
               </div>
             </div>
             <div className="mt-5 rounded-2xl bg-white/60 p-4 backdrop-blur-sm dark:bg-gray-800/60">

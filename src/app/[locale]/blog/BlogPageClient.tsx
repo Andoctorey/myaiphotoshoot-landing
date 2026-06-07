@@ -124,7 +124,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                       {post.featured_image_url ? (
                         <Image
                           src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
-                          alt={`Featured image for blog post: ${post.title}`}
+                          alt={t('imageAlt', { title: post.title })}
                           width={400}
                           height={400}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"

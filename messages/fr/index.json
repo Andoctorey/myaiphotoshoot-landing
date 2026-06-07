@@ -78,6 +78,8 @@
     "title": "Blog photo IA",
     "description": "Conseils pratiques, tutoriels et idées pour améliorer vos portraits IA, vos prompts et vos workflows d’image numérique.",
     "viewAll": "Voir tous les articles du blog photo IA",
+    "imageAlt": "Image à la une de « {title} »",
+    "imageFallback": "Image du blog",
     "readingTime": "min de lecture",
     "publishedOn": "Publié le",
     "noPostsTitle": "Aucun article pour le moment",

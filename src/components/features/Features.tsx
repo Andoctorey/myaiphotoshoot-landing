@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslations } from '@/lib/utils';
+import { getTranslations } from 'next-intl/server';
 import {
   ShieldCheckIcon,
   SparklesIcon,
@@ -8,8 +6,8 @@ import {
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
 
-export default function Features() {
-  const t = useTranslations('features');
+export default async function Features({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: 'features' });
 
   const features = [
     {

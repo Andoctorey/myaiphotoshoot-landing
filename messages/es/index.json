@@ -78,6 +78,8 @@
     "title": "Blog de fotos con IA",
     "description": "Consejos prácticos, tutoriales e ideas para mejorar retratos con IA, prompts y flujos de trabajo de imagen digital.",
     "viewAll": "Ver todos los artículos del blog de fotos con IA",
+    "imageAlt": "Imagen destacada de «{title}»",
+    "imageFallback": "Imagen del blog",
     "readingTime": "min de lectura",
     "publishedOn": "Publicado el",
     "noPostsTitle": "Aún no hay artículos",

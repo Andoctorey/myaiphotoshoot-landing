@@ -42,8 +42,7 @@ export default function TableOfContents({ content, className = '', title = 'Tabl
       if (articleContainer) {
         const actualHeadings = articleContainer.querySelectorAll('h1, h2, h3, h4, h5, h6');
         actualHeadings.forEach((heading, index) => {
-          const id = `heading-${index}`;
-          heading.id = id;
+          heading.id = `heading-${index}`;
         });
 
         // Set up intersection observer for active heading

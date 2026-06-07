@@ -1,3 +1,4 @@
+// noinspection CssUnusedSymbol
 'use client';
 
 import Link from 'next/link';
@@ -11,7 +12,6 @@ import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 import type { BlogPost } from '@/types/blog';
 import { withDefaultCdnWidth } from '@/lib/image';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
-import HomeJsonLd from '@/components/seo/HomeJsonLd';
 import { canonicalUrl, localePath } from '@/lib/seo';
 
 interface Props {
@@ -61,7 +61,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         }
         const separator = src.includes('?') ? '&' : '?';
         const updatedSrc = `${src}${separator}width=420`;
-        return `<img ${preAttrs}src="${updatedSrc}"${postAttrs}>`;
+        return ['<img ', preAttrs, 'src="', updatedSrc, '"', postAttrs, '>'].join('');
       } catch {
         return match;
       }
@@ -69,7 +69,8 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   };
 
   const safeContent = typeof post?.content === 'string' ? post.content : '';
-  const safeTitle = post?.title || 'Blog image';
+  const safeTitle = post?.title || t('imageFallback');
+  const featuredImageAlt = t('imageAlt', { title: safeTitle });
   const safeCreatedAt = typeof post?.created_at === 'string' ? post.created_at : '';
   const safeFeaturedImageUrl = typeof post?.featured_image_url === 'string' ? post.featured_image_url : undefined;
 
@@ -78,12 +79,17 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
     const withWidth = addWidthParamToImages(safeContent);
     return withWidth.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
       if (/\salt=(["']).*?\1/i.test(attrs)) {
-        return `<img ${attrs}>`;
+        return ['<img ', attrs, '>'].join('');
       }
-      const safeAlt = safeTitle.slice(0, 120);
-      return `<img ${attrs} alt="${safeAlt}">`;
+      const safeAlt = featuredImageAlt
+        .slice(0, 120)
+        .replaceAll('&', '&amp;')
+        .replaceAll('"', '&quot;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+      return ['<img ', attrs, ' alt="', safeAlt, '">'].join('');
     });
-  }, [safeContent, safeTitle]);
+  }, [featuredImageAlt, safeContent]);
 
 
   // Extract FAQs from content for schema markup
@@ -169,7 +175,6 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   try {
     return (
     <>
-      <HomeJsonLd />
       {/* Add admin-style CSS with !important to override conflicts */}
       <style jsx global>{`
         /* CSS Variables for theme colors */
@@ -383,7 +388,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         }
 
         .medium-style-article blockquote::before {
-          content: """ !important;
+          content: "\\201C" !important;
           font-size: 3rem !important;
           color: var(--article-accent) !important;
           position: absolute !important;
@@ -672,7 +677,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                   <div className="absolute inset-0 w-full h-full rounded-lg overflow-hidden">
                     <Image
                       src={withDefaultCdnWidth(safeFeaturedImageUrl) || safeFeaturedImageUrl}
-                      alt={safeTitle}
+                      alt={featuredImageAlt}
                       width={800}
                       height={600}
                       className="w-full h-full object-cover opacity-40"
@@ -718,7 +723,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                               <div key={index} className="rounded-lg overflow-hidden">
                                 <Image
                                   src={photo.url}
-                                  alt={photo.alt || `${key.replace(/([A-Z])/g, ' $1').trim()} example photo ${index + 1} from "${post.title}" blog post`}
+                                  alt={photo.alt || featuredImageAlt}
                                   width={400}
                                   height={300}
                                   className="w-full h-48 object-cover"
@@ -739,7 +744,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                           <div className="rounded-lg overflow-hidden">
                             <Image
                               src={typeof photos === 'string' ? photos : photos.url}
-                              alt={typeof photos === 'string' ? `${key.replace(/([A-Z])/g, ' $1').trim()} example photo from "${post.title}" blog post` : (photos.alt || `${key.replace(/([A-Z])/g, ' $1').trim()} example photo from "${post.title}" blog post`)}
+                              alt={typeof photos === 'string' ? featuredImageAlt : (photos.alt || featuredImageAlt)}
                               width={400}
                               height={300}
                               className="w-full h-48 object-cover"

@@ -1,4 +1,4 @@
-import LocalizedHomeClient from './[locale]/LocalizedHomeClient';
+import HomeContent from '@/components/features/HomeContent';
 import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
 import { locales } from '@/i18n/request';
@@ -16,9 +16,10 @@ export default async function Home() {
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <HomeJsonLd />
+      <HomeJsonLd locale={locale} />
       <SiteShell locale={locale}>
-        <LocalizedHomeClient
+        <HomeContent
+          locale={locale}
           initialGallery={initialGallery}
           initialBlog={initialBlog}
           initialUseCases={initialUseCases}

@@ -78,6 +78,8 @@
     "title": "AI Photo Blog",
     "description": "Practical tips, tutorials, and ideas for better AI portraits, prompts, and digital image workflows.",
     "viewAll": "View all AI Photo Blog articles",
+    "imageAlt": "Featured image for “{title}”",
+    "imageFallback": "Blog image",
     "readingTime": "min read",
     "publishedOn": "Published on",
     "noPostsTitle": "No blog posts yet",

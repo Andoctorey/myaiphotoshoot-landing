@@ -2,13 +2,16 @@
 
 import Image from 'next/image';
 import { trackEventAndNavigate } from '@/lib/analytics';
-import { useTranslations } from '@/lib/utils';
 
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1';
 
-export default function PlatformButtons() {
-  const t = useTranslations('download');
+type Props = {
+  webAppLabel: string;
+  googlePlayLabel: string;
+  appStoreLabel: string;
+};
 
+export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStoreLabel }: Props) {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
       <a
@@ -25,7 +28,7 @@ export default function PlatformButtons() {
         <svg className="h-5 w-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
-        {t('webApp.button')}
+        {webAppLabel}
       </a>
 
       <a
@@ -40,7 +43,7 @@ export default function PlatformButtons() {
         }}
       >
         <Image
-          alt={t('mobileApps.googlePlay')}
+          alt={googlePlayLabel}
           src="/images/google-play-badge.svg"
           width={202}
           height={56}
@@ -60,7 +63,7 @@ export default function PlatformButtons() {
         }}
       >
         <Image
-          alt={t('mobileApps.appStore')}
+          alt={appStoreLabel}
           src="/images/app-store-badge.svg"
           width={202}
           height={56}
