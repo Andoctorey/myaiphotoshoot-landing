@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { trackEventAndNavigate } from '@/lib/analytics';
+import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
 
 const showcaseScreenshots = [
   {
@@ -33,27 +33,7 @@ const showcaseScreenshots = [
 ];
 
 export default function AppShowcase() {
-  const [deviceType, setDeviceType] = useState<'ios' | 'android' | 'desktop'>('desktop');
-
-  useEffect(() => {
-    const userAgent = window.navigator.userAgent.toLowerCase();
-    if (/iphone|ipad|ipod/.test(userAgent)) {
-      setDeviceType('ios');
-    } else if (/android/.test(userAgent)) {
-      setDeviceType('android');
-    }
-  }, []);
-
-  const getAppUrl = () => {
-    switch (deviceType) {
-      case 'ios':
-        return 'https://apps.apple.com/app/id6744860178';
-      case 'android':
-        return 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1';
-      default:
-        return 'https://app.myaiphotoshoot.com';
-    }
-  };
+  const appLink = usePlatformAppLink();
 
   return (
     <section className="overflow-hidden bg-white py-10 dark:bg-gray-900">
@@ -68,20 +48,14 @@ export default function AppShowcase() {
             {showcaseScreenshots.map((screenshot) => (
               <a
                 key={screenshot.src}
-                href={getAppUrl()}
+                href={appLink.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group block w-[68vw] max-w-[260px] shrink-0 snap-center overflow-hidden rounded-2xl border border-purple-200/70 bg-purple-950 shadow-lg shadow-purple-900/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-purple-700/50 lg:w-auto lg:max-w-none"
                 onClick={(e) => {
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
-                  const url = getAppUrl();
-                  const action = deviceType === 'ios'
-                    ? 'app_store_cta_click'
-                    : deviceType === 'android'
-                      ? 'google_play_cta_click'
-                      : 'webapp_cta_click';
-                  trackEventAndNavigate(action, url);
+                  trackEventAndNavigate(appLink.event, appLink.url);
                 }}
               >
                 <Image

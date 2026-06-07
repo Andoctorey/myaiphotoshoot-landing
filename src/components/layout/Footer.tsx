@@ -8,11 +8,13 @@ import { usePathname } from 'next/navigation';
 import { trackEventAndNavigate } from '@/lib/analytics';
 import { locales } from '@/i18n/request';
 import { localePath } from '@/lib/seo';
+import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
 
 export default function Footer() {
   const t = useTranslations('footer');
   const tBlog = useTranslations('blog');
   const pathname = usePathname();
+  const appLink = usePlatformAppLink();
   const firstPathSegment = pathname?.split('/')[1] || '';
   const locale = locales.includes(firstPathSegment as (typeof locales)[number]) ? firstPathSegment : 'en';
 
@@ -38,7 +40,7 @@ export default function Footer() {
               {t('description')}
             </p>
             <a
-              href="https://app.myaiphotoshoot.com"
+              href={appLink.url}
               className="group inline-flex w-full sm:w-auto items-center justify-center px-5 py-2.5 text-sm font-medium text-white/90 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-sm transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               target="_blank"
               rel="noopener noreferrer"
@@ -46,7 +48,7 @@ export default function Footer() {
               onClick={(e) => {
                 if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                 e.preventDefault();
-                trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+                trackEventAndNavigate(appLink.event, appLink.url);
               }}
             >
               <span>{tBlog('cta.button')}</span>

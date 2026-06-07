@@ -8,12 +8,15 @@ import { locales } from '@/i18n/request';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { env } from '@/lib/env';
 import { localePath } from '@/lib/seo';
+import { trackEventAndNavigate } from '@/lib/analytics';
+import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
 
 export default function Navigation() {
   const t = useTranslations('navigation');
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+  const appLink = usePlatformAppLink();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -244,8 +247,15 @@ export default function Navigation() {
                 )}
               </div>
               <a
-                href={isHomePage ? "#download" : homeHash('#download')}
+                href={appLink.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                  e.preventDefault();
+                  trackEventAndNavigate(appLink.event, appLink.url);
+                }}
               >
                 {t('download')}
               </a>
@@ -404,9 +414,16 @@ export default function Navigation() {
                 )}
               </div>
               <a
-                href={isHomePage ? "#download" : homeHash('#download')}
+                href={appLink.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-                onClick={handleNavLinkClick}
+                onClick={(e) => {
+                  handleNavLinkClick();
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                  e.preventDefault();
+                  trackEventAndNavigate(appLink.event, appLink.url);
+                }}
                 role="menuitem"
               >
                 {t('download')}

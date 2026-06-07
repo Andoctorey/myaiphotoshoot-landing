@@ -22,7 +22,7 @@ export default function Hero() {
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-4">
               {t('description')}
             </p>
-            <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 max-w-4xl mx-auto">
               {t('microcopy')}
             </p>
           </motion.div>
