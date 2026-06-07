@@ -145,7 +145,7 @@
   "download": {
     "title": "今日から作成を開始",
     "description": "Webアプリを開くかモバイルアプリをインストールして、数分で高品質なAI写真を作成できます。",
-    "choosePlatform": "プラットフォームを選択",
+    "choosePlatform": "どこからでも作成",
     "webApp": {
       "title": "Webアプリ",
       "description": "インストール不要。最新ブラウザでAIフォトスタジオを開けます。",

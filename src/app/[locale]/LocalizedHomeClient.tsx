@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useLocale } from '@/lib/utils';
 import Hero from '@/components/features/Hero';
+import AppShowcase from '@/components/features/AppShowcase';
 import Features from '@/components/features/Features';
 import UserGallery from '@/components/features/Testimonials';
 import Pricing from '@/components/features/Pricing';
@@ -70,6 +71,7 @@ export default function LocalizedHomeClient({
         ) : (
           <>
             <Hero />
+            <AppShowcase />
             <Features />
             <HomeUseCases initialUseCases={initialUseCases} locale={locale} />
             <HeadshotComparison />
