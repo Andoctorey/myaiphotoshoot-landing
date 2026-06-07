@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '@/lib/utils';
 import { trackEventAndNavigate } from '@/lib/analytics';
@@ -10,10 +8,6 @@ import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
 export default function Pricing() {
   const t = useTranslations('pricing');
   const appLink = usePlatformAppLink();
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
 
   const features = [
     t('features.training'),
@@ -34,13 +28,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto mt-10 max-w-5xl overflow-hidden rounded-3xl shadow-xl dark:shadow-purple-900/30 lg:flex"
-        >
+        <div className="mx-auto mt-10 max-w-5xl overflow-hidden rounded-3xl shadow-xl dark:shadow-purple-900/30 lg:flex">
           <div className="flex-1 bg-white px-6 py-8 dark:bg-gray-800 sm:px-8 lg:p-10">
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">{t('payAsYouGo')}</h3>
             <p className="mt-4 text-base text-gray-500 dark:text-gray-300 sm:text-lg">
@@ -92,7 +80,7 @@ export default function Pricing() {
               <p className="mt-1 text-2xl font-extrabold text-purple-600 dark:text-purple-400">{t('oneTimeFeeAmount')}</p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

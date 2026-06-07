@@ -17,10 +17,20 @@
     "description": "Importez quelques selfies et créez des headshots IA, photos de profil et portraits réalistes pour LinkedIn, CV, équipes, créateurs et marques personnelles.",
     "microcopy": "Entraînez une fois pour 2,99 $ -> générez des headshots et portraits pour 0,03 $ chacun -> sans abonnement"
   },
+  "appShowcase": {
+    "exploreStyles": "Découvrez les styles de photos IA dans My AI Photo Shoot",
+    "realisticPhotos": "Créez des photos IA réalistes dans My AI Photo Shoot",
+    "trainModel": "Entraînez votre modèle IA personnel dans My AI Photo Shoot",
+    "photosOfYou": "Créez des photos personnalisées de vous",
+    "photoIdeas": "Trouvez des idées de photos IA réutilisables",
+    "noSubscription": "Tarification à l’usage sans abonnement"
+  },
   "homeUseCases": {
     "eyebrow": "Cas d’usage photo IA",
     "title": "Commencez par des headshots professionnels, puis réutilisez votre modèle",
-    "description": "Créez d’abord des headshots professionnels, puis réutilisez le même modèle entraîné pour des photos de profil, portraits, looks photobooth et images réalistes de vous."
+    "description": "Créez d’abord des headshots professionnels, puis réutilisez le même modèle entraîné pour des photos de profil, portraits, looks photobooth et images réalistes de vous.",
+    "imageAlt": "Exemple de photo IA pour {title}",
+    "exploreAll": "Découvrir tous les cas d’usage"
   },
   "features": {
     "title": "Conçu pour de meilleurs headshots IA",

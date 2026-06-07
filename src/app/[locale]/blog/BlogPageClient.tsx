@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { withDefaultCdnWidth } from '@/lib/image';
@@ -88,22 +87,12 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           </nav>
           {/* Header */}
           <div className="text-center mb-12">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
-            >
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               {t('title')}
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
-            >
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               {t('description')}
-            </motion.p>
+            </p>
           </div>
 
           {/* Loading State */}
@@ -125,12 +114,9 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           {/* Blog Posts Grid */}
           {!isLoading && !isError && posts.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {posts.map((post: BlogListItem, index: number) => (
-                <motion.article
+              {posts.map((post: BlogListItem) => (
+                <article
                   key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
                   <Link href={localePath(locale, `/blog/${post.slug}/`)}>
@@ -166,7 +152,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                       )}
                     </div>
                   </Link>
-                </motion.article>
+                </article>
               ))}
             </div>
           )}
@@ -186,12 +172,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
 
           {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-center justify-center space-x-2"
-            >
+            <div className="flex items-center justify-center space-x-2">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -227,7 +208,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                 <ChevronRightIcon className="h-5 w-5 ltr:ml-2 rtl:mr-2 ltr:block rtl:hidden" />
                 <ChevronLeftIcon className="h-5 w-5 ltr:ml-2 rtl:mr-2 ltr:hidden rtl:block" />
               </button>
-            </motion.div>
+            </div>
           )}
         </div>
       </main>

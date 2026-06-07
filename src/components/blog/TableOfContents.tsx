@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 
 interface TOCItem {
   id: string;
@@ -96,10 +95,7 @@ export default function TableOfContents({ content, className = '', title = 'Tabl
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
+    <div
       className={`${
         className?.includes('bg-white/') || className?.includes('bg-gray-800/') || className?.includes('bg-transparent')
           ? '' 
@@ -136,6 +132,6 @@ export default function TableOfContents({ content, className = '', title = 'Tabl
           </button>
         ))}
       </nav>
-    </motion.div>
+    </div>
   );
-} 
+}

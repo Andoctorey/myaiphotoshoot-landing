@@ -17,10 +17,20 @@
     "description": "Upload a few selfies and create realistic AI headshots, profile pictures, and portraits for LinkedIn, resumes, teams, creators, and personal brands.",
     "microcopy": "Train once for $2.99 -> generate headshots and portraits for $0.03 each -> no subscription"
   },
+  "appShowcase": {
+    "exploreStyles": "Explore AI photo styles in My AI Photo Shoot",
+    "realisticPhotos": "Create realistic AI photos in My AI Photo Shoot",
+    "trainModel": "Train your personal AI model in My AI Photo Shoot",
+    "photosOfYou": "Create personalized photos of yourself",
+    "photoIdeas": "Find reusable AI photo ideas",
+    "noSubscription": "Pay-as-you-go pricing with no subscription"
+  },
   "homeUseCases": {
     "eyebrow": "AI photo use cases",
     "title": "Start with professional headshots, then reuse your model",
-    "description": "Create professional headshots first, then reuse the same trained model for profile pictures, portraits, photobooth looks, and realistic images of yourself."
+    "description": "Create professional headshots first, then reuse the same trained model for profile pictures, portraits, photobooth looks, and realistic images of yourself.",
+    "imageAlt": "AI photo example for {title}",
+    "exploreAll": "Explore all use cases"
   },
   "features": {
     "title": "Built for better AI headshots",

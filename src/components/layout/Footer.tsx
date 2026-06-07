@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { useTranslations } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -18,21 +16,10 @@ export default function Footer() {
   const firstPathSegment = pathname?.split('/')[1] || '';
   const locale = locales.includes(firstPathSegment as (typeof locales)[number]) ? firstPathSegment : 'en';
 
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   return (
     <footer className="bg-gray-900 text-white py-12" role="contentinfo" aria-label="Site footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
           {/* Main Brand Section */}
           <div>
             <h3 className="text-xl font-bold mb-4">{t('title')}</h3>
@@ -107,7 +94,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-        </motion.div>
+        </div>
 
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-center text-gray-400 text-sm">

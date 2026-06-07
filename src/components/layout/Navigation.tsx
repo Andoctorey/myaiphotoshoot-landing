@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { useTranslations, useLocale } from '@/lib/utils';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/request';
@@ -155,12 +154,9 @@ export default function Navigation() {
   };
 
   return (
-    <motion.header
+    <header
       className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 bg-white/0 dark:bg-black/80 backdrop-blur-sm data-[scrolled=true]:bg-white/80 data-[scrolled=true]:dark:bg-gray-900/80 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm data-[scrolled=true]:dark:shadow-gray-900"
       data-scrolled={isScrolled}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
       role="banner"
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
@@ -466,6 +462,6 @@ export default function Navigation() {
           </div>
         )}
       </nav>
-    </motion.header>
+    </header>
   );
 }

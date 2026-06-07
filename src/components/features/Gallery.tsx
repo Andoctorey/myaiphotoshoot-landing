@@ -10,7 +10,6 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { GalleryItem } from '@/types/gallery';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { useGallery } from '@/hooks/useSWRGallery';
@@ -256,11 +255,7 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
           /* Show actual gallery items once available */
           displayedItems.map((item, index) => (
             <li key={item.id}>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.02 }}
-              >
+              <div>
                 <PhotoCard
                   src={item.public_url}
                   alt={`${t('altPrefix')}: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
@@ -274,7 +269,7 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
                   ariaLabel={`${t('promptAriaPrefix')}: ${item.prompt}`}
                   figCaptionSrOnly={`${t('captionPrefix')}. ${item.prompt}`}
                 />
-              </motion.div>
+              </div>
             </li>
           ))
         )}

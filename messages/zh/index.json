@@ -17,10 +17,20 @@
     "description": "上传几张自拍，即可生成适合 LinkedIn、简历、团队、创作者和个人品牌的真实感 AI 头像照、个人资料照片和肖像。",
     "microcopy": "一次训练 $2.99 -> 每张头像照和肖像 $0.03 -> 无需订阅"
   },
+  "appShowcase": {
+    "exploreStyles": "在 My AI Photo Shoot 中探索 AI 照片风格",
+    "realisticPhotos": "在 My AI Photo Shoot 中创建真实感 AI 照片",
+    "trainModel": "在 My AI Photo Shoot 中训练个人 AI 模型",
+    "photosOfYou": "创建你的个性化照片",
+    "photoIdeas": "查找可复用的 AI 照片创意",
+    "noSubscription": "无需订阅的按量付费价格"
+  },
   "homeUseCases": {
     "eyebrow": "AI 照片使用场景",
     "title": "先生成专业头像照，再复用你的模型",
-    "description": "先创建专业头像照，然后用同一个训练模型生成个人资料照片、肖像、拍照亭风格照片和真实感个人照片。"
+    "description": "先创建专业头像照，然后用同一个训练模型生成个人资料照片、肖像、拍照亭风格照片和真实感个人照片。",
+    "imageAlt": "{title} 的 AI 照片示例",
+    "exploreAll": "查看所有使用场景"
   },
   "features": {
     "title": "为更出色的 AI 头像照打造",

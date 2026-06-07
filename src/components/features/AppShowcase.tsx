@@ -1,48 +1,44 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { trackEventAndNavigate } from '@/lib/analytics';
 import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
+import { useTranslations } from '@/lib/utils';
 
 const showcaseScreenshots = [
   {
     src: '/images/app-showcase/explore_ai_photo_styles.webp',
-    alt: 'Explore AI photo styles in My AI Photo Shoot',
+    altKey: 'exploreStyles',
   },
   {
     src: '/images/app-showcase/create_realistic_ai_photos.webp',
-    alt: 'Create realistic AI photos in My AI Photo Shoot',
+    altKey: 'realisticPhotos',
   },
   {
     src: '/images/app-showcase/train_your_ai_model.webp',
-    alt: 'Train your personal AI model in My AI Photo Shoot',
+    altKey: 'trainModel',
   },
   {
     src: '/images/app-showcase/create_photos_of_you.webp',
-    alt: 'Create personalized photos in My AI Photo Shoot',
+    altKey: 'photosOfYou',
   },
   {
     src: '/images/app-showcase/find_photo_ideas.webp',
-    alt: 'Find reusable AI photo ideas in My AI Photo Shoot',
+    altKey: 'photoIdeas',
   },
   {
     src: '/images/app-showcase/no_subscription.webp',
-    alt: 'Pay-as-you-go pricing with no subscription',
+    altKey: 'noSubscription',
   },
-];
+] as const;
 
 export default function AppShowcase() {
   const appLink = usePlatformAppLink();
+  const t = useTranslations('appShowcase');
 
   return (
     <section className="overflow-hidden bg-white py-10 dark:bg-gray-900">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-      >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="-mx-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
           <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-6">
             {showcaseScreenshots.map((screenshot) => (
@@ -60,7 +56,7 @@ export default function AppShowcase() {
               >
                 <Image
                   src={screenshot.src}
-                  alt={screenshot.alt}
+                  alt={t(screenshot.altKey)}
                   width={642}
                   height={1389}
                   className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.015]"
@@ -70,7 +66,7 @@ export default function AppShowcase() {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

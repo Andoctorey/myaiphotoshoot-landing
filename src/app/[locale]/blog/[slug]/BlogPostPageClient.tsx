@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -633,12 +632,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             </ol>
           </nav>
           {/* Article Header */}
-          <motion.article
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
-          >
+          <article className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
             <header className="p-8 border-b border-gray-200 dark:border-gray-700">
               {/* Article Title */}
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
@@ -767,7 +761,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                 </div>
               )} */}
             </div>
-          </motion.article>
+          </article>
 
 
         </div>

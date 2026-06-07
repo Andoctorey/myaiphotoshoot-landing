@@ -53,7 +53,13 @@ export default function HomeUseCases({ initialUseCases = [], locale = 'en' }: Pr
               <Link key={it.slug} href={localePath(locale, `/use-cases/${it.slug}/`)} className="block group">
                 <div className="h-full bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden transition group-hover:-translate-y-0.5 group-hover:border-purple-200 dark:group-hover:border-purple-700">
                   {Array.isArray(it.featured_image_urls) && it.featured_image_urls[0] && (
-                    <Image src={it.featured_image_urls[0]} alt="" width={640} height={360} className="w-full h-auto" />
+                    <Image
+                      src={it.featured_image_urls[0]}
+                      alt={tSection('imageAlt', { title: it.title })}
+                      width={640}
+                      height={360}
+                      className="w-full h-auto"
+                    />
                   )}
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:underline">{it.title}</h3>
@@ -69,7 +75,7 @@ export default function HomeUseCases({ initialUseCases = [], locale = 'en' }: Pr
             href={localePath(locale, '/use-cases/')}
             className="inline-flex items-center text-sm font-semibold text-purple-700 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200"
           >
-            Explore all {t('useCases').toLowerCase()}
+            {tSection('exploreAll')}
           </Link>
         </div>
       </div>

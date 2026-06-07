@@ -17,10 +17,20 @@
     "description": "数枚のセルフィーをアップロードするだけで、LinkedIn、履歴書、チーム、クリエイター、個人ブランドに使えるリアルなAIヘッドショット、プロフィール写真、ポートレートを作成できます。",
     "microcopy": "$2.99で1回だけ学習 -> ヘッドショットとポートレートを1枚$0.03で生成 -> サブスクリプションなし"
   },
+  "appShowcase": {
+    "exploreStyles": "My AI Photo ShootでAI写真スタイルを探す",
+    "realisticPhotos": "My AI Photo ShootでリアルなAI写真を作成",
+    "trainModel": "My AI Photo ShootでパーソナルAIモデルを学習",
+    "photosOfYou": "自分のパーソナル写真を作成",
+    "photoIdeas": "再利用できるAI写真のアイデアを探す",
+    "noSubscription": "サブスクリプション不要の従量課金"
+  },
   "homeUseCases": {
     "eyebrow": "AI写真のユースケース",
     "title": "まずプロ用ヘッドショットを作り、同じモデルを再利用",
-    "description": "最初にプロ用ヘッドショットを作成し、同じ学習済みモデルでプロフィール写真、ポートレート、フォトブース風の写真、リアルな自分の写真を生成できます。"
+    "description": "最初にプロ用ヘッドショットを作成し、同じ学習済みモデルでプロフィール写真、ポートレート、フォトブース風の写真、リアルな自分の写真を生成できます。",
+    "imageAlt": "{title}のAI写真例",
+    "exploreAll": "すべての活用例を見る"
   },
   "features": {
     "title": "より良いAIヘッドショットのために",

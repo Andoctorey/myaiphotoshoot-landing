@@ -17,10 +17,20 @@
     "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Headshots, Profilbilder und Porträts für LinkedIn, Lebensläufe, Teams, Creator und Personal Brands.",
     "microcopy": "Einmal für $2.99 trainieren -> Headshots und Porträts für je $0.03 generieren -> kein Abo"
   },
+  "appShowcase": {
+    "exploreStyles": "KI-Fotostile in My AI Photo Shoot entdecken",
+    "realisticPhotos": "Realistische KI-Fotos in My AI Photo Shoot erstellen",
+    "trainModel": "Ihr persönliches KI-Modell in My AI Photo Shoot trainieren",
+    "photosOfYou": "Personalisierte Fotos von sich erstellen",
+    "photoIdeas": "Wiederverwendbare KI-Fotoideen finden",
+    "noSubscription": "Nutzungsbasierte Preise ohne Abo"
+  },
   "homeUseCases": {
     "eyebrow": "KI-Foto-Anwendungsfälle",
     "title": "Beginnen Sie mit professionellen Headshots und nutzen Sie Ihr Modell weiter",
-    "description": "Erstellen Sie zuerst professionelle Headshots und verwenden Sie dasselbe trainierte Modell danach für Profilbilder, Porträts, Fotobooth-Looks und realistische Bilder von sich selbst."
+    "description": "Erstellen Sie zuerst professionelle Headshots und verwenden Sie dasselbe trainierte Modell danach für Profilbilder, Porträts, Fotobooth-Looks und realistische Bilder von sich selbst.",
+    "imageAlt": "KI-Fotobeispiel für {title}",
+    "exploreAll": "Alle Anwendungsfälle entdecken"
   },
   "features": {
     "title": "Entwickelt für bessere KI-Headshots",

@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { useId, useState } from 'react';
 import { useTranslations } from '@/lib/utils';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -15,10 +13,6 @@ export default function FAQ() {
   const t = useTranslations('faq');
   const faqId = useId();
   const [openItems, setOpenItems] = useState<number[]>([]);
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
 
   const toggleItem = (index: number) => {
     setOpenItems(prev => 
@@ -69,11 +63,7 @@ export default function FAQ() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div>
             <h2
               id={`${faqId}-title`}
               className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl"
@@ -86,21 +76,18 @@ export default function FAQ() {
             >
               {t('description')}
             </p>
-          </motion.div>
+          </div>
         </div>
 
-        <div ref={ref} className="space-y-4">
+        <div className="space-y-4">
           {faqItems.map((item, index) => {
             const isOpen = openItems.includes(index);
             const triggerId = `${faqId}-trigger-${index}`;
             const panelId = `${faqId}-panel-${index}`;
 
             return (
-              <motion.div
+              <div
                 key={item.question}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden"
               >
                 <h3>
@@ -124,21 +111,22 @@ export default function FAQ() {
                   </button>
                 </h3>
 
-                <motion.div
+                <div
                   id={panelId}
                   role="region"
                   aria-labelledby={triggerId}
                   aria-hidden={!isOpen}
-                  initial={false}
-                  animate={isOpen ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 motion-reduce:transition-none ${
+                    isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  }`}
                 >
-                  <div className="px-6 pb-4 text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {item.answer}
+                  <div className="overflow-hidden">
+                    <div className="px-6 pb-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {item.answer}
+                    </div>
                   </div>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
             );
           })}
         </div>

@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { useTranslations } from '@/lib/utils';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { env } from '@/lib/env';
 
 export default function SupportForm() {
@@ -16,11 +14,6 @@ export default function SupportForm() {
     email?: string;
     message?: string;
   }>({});
-
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
 
   const validateForm = () => {
     const errors: {
@@ -80,12 +73,7 @@ export default function SupportForm() {
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div>
         <h1 className="text-4xl font-extrabold text-center mb-4">{t('title')}</h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-12">{t('description')}</p>
         
@@ -177,7 +165,7 @@ export default function SupportForm() {
             </button>
           </form>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
-} 
+}
