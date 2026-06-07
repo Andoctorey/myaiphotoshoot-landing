@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
 import { useLocale, useTranslations } from '@/lib/utils';
@@ -23,11 +23,6 @@ function sortByMostRecent(posts: BlogListItem[]): BlogListItem[] {
 export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { initialPosts?: BlogListItem[] }) {
   const t = useTranslations('blog');
   const locale = useLocale();
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const initial = (initialPosts && initialPosts.length > 0) ? initialPosts : [];
   const hasFallback = Array.isArray(initial) && initial.length > 0;
@@ -66,7 +61,7 @@ export default function HomeBlog({ initialPosts = [] as BlogListItem[] }: { init
           </div>
         )}
 
-        {!isLoading && isClient && selectedPosts.length > 0 && (
+        {!isLoading && selectedPosts.length > 0 && (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 mb-10">
             {selectedPosts.map((post, index) => (
               <article

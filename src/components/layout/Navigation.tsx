@@ -76,6 +76,7 @@ export default function Navigation() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsLanguageMenuOpen(false);
+        setIsUseCasesMenuOpen(false);
         setMobileMenuOpen(false);
       }
     };
@@ -105,13 +106,13 @@ export default function Navigation() {
       }
     };
 
-    if (isLanguageMenuOpen) {
+    if (isLanguageMenuOpen || isUseCasesMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isLanguageMenuOpen]);
+  }, [isLanguageMenuOpen, isUseCasesMenuOpen]);
 
   // Fetch use cases list for selector
   useEffect(() => {

@@ -4,9 +4,12 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from '@/lib/utils';
+import { trackEventAndNavigate } from '@/lib/analytics';
+import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
 
 export default function Pricing() {
   const t = useTranslations('pricing');
+  const appLink = usePlatformAppLink();
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -74,8 +77,15 @@ export default function Pricing() {
             <div className="mt-8">
               <div className="rounded-xl shadow-lg">
                 <a
-                  href="#download-options"
+                  href={appLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-center px-8 py-5 border border-transparent text-lg font-semibold rounded-xl text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 lg:text-xl"
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    e.preventDefault();
+                    trackEventAndNavigate(appLink.event, appLink.url);
+                  }}
                 >
                   {t('getStarted')}
                 </a>
@@ -90,4 +100,4 @@ export default function Pricing() {
       </div>
     </section>
   );
-} 
+}

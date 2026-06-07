@@ -65,7 +65,7 @@ export default function LocalizedHomeClient({
   
   return (
     <>
-      <main className="min-h-screen">
+      <div className="min-h-screen">
         {isSupport ? (
           <SupportForm />
         ) : (
@@ -82,7 +82,7 @@ export default function LocalizedHomeClient({
             <Download />
           </>
         )}
-      </main>
+      </div>
     </>
   );
-} 
+}
