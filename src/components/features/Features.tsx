@@ -56,7 +56,7 @@ export default function Features() {
     <section id="features" className="py-12 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div ref={ref} className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -71,10 +71,7 @@ export default function Features() {
           </motion.div>
         </div>
 
-        <div
-          ref={ref}
-          className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <motion.div
               key={feature.name}
@@ -103,4 +100,4 @@ export default function Features() {
       </div>
     </section>
   );
-} 
+}
