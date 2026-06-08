@@ -1,232 +1,102 @@
 'use client';
 
-/**
- * Gallery Component
- * 
- * STATIC EXPORT NOTE:
- * Since we're using Cloudflare Pages static hosting without server components,
- * this component fetches data directly from Supabase on the client side.
- * The gallery-data API route exists only to provide an initial static dataset at build time.
- */
-
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GalleryItem } from '@/types/gallery';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
-import { useGallery } from '@/hooks/useSWRGallery';
 import { env } from '@/lib/env';
 import { useTranslations } from '@/lib/utils';
 import PhotoCard from '@/components/features/PhotoCard';
 
-// Placeholder component for images while they're loading
+const PAGE_SIZE = 24;
+const INITIAL_VISIBLE_COUNT = 20;
+const LOAD_MORE_COUNT = 20;
+
 const ImagePlaceholder = () => (
-  <div className="relative aspect-square overflow-hidden rounded-sm bg-gray-200 dark:bg-gray-800 animate-pulse" />
+  <div className="relative aspect-square overflow-hidden rounded-sm bg-gray-200 animate-pulse dark:bg-gray-800" />
 );
 
-export default function Gallery({ initialItems = [] as GalleryItem[] }: { initialItems?: GalleryItem[] }) {
+function mergeUniqueItems(currentItems: GalleryItem[], newItems: GalleryItem[]): GalleryItem[] {
+  const existingIds = new Set(currentItems.map((item) => item.id));
+  return [
+    ...currentItems,
+    ...newItems.filter((item) => !existingIds.has(item.id)),
+  ];
+}
+
+export default function Gallery({ initialItems = [] }: { initialItems?: GalleryItem[] }) {
   const t = useTranslations('gallery');
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(initialItems || []);
-  const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [displayCount, setDisplayCount] = useState<number>(20); // Default to 20 items (4 rows on desktop)
-  const [manuallyLoadedMore, setManuallyLoadedMore] = useState<boolean>(false); // Track if user manually loaded more
-  const fetchAttemptedRef = useRef(false);
-  const containerRef = useRef<HTMLUListElement>(null);
-  
-  // Use SWR hook for fetching gallery data directly from Supabase
-  const { gallery, isLoading, isError, error, mutate } = useGallery({ 
-    page: 1, 
-    limit: 24,
-    fallbackData: (initialItems && initialItems.length > 0) ? initialItems : [],
-  });
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(initialItems);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
+  const [nextPage, setNextPage] = useState(initialItems.length > 0 ? 2 : 1);
+  const [hasMore, setHasMore] = useState(initialItems.length === 0 || initialItems.length >= PAGE_SIZE);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const initialFetchAttemptedRef = useRef(false);
 
-  // Initialize state from sessionStorage on mount to persist user's "show more" progress
-  useEffect(() => {
-    const savedDisplayCount = sessionStorage.getItem('gallery-display-count');
-    const savedManuallyLoaded = sessionStorage.getItem('gallery-manually-loaded');
-    
-    if (savedDisplayCount) {
-      const count = parseInt(savedDisplayCount, 10);
-      if (count > 20) { // Only restore if user had loaded more than initial
-        setDisplayCount(count);
-        setManuallyLoadedMore(true);
-      }
-    }
-    
-    if (savedManuallyLoaded === 'true') {
-      setManuallyLoadedMore(true);
-    }
-  }, []);
-
-  // Save state to sessionStorage whenever it changes
-  useEffect(() => {
-    sessionStorage.setItem('gallery-display-count', displayCount.toString());
-    sessionStorage.setItem('gallery-manually-loaded', manuallyLoadedMore.toString());
-  }, [displayCount, manuallyLoadedMore]);
-
-  // Update local state when gallery data changes from SWR
-  useEffect(() => {
-    if (gallery.length > 0) {
-      setGalleryItems(prevItems => {
-        // Only replace if we don't have any items yet or if we're explicitly on page 1 and haven't manually loaded more
-        if (prevItems.length === 0 || (page === 1 && !manuallyLoadedMore)) {
-          return gallery;
-        } else {
-          // Otherwise, merge new items avoiding duplicates
-          const newItems = gallery.filter(
-            (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
-          );
-          return [...prevItems, ...newItems];
-        }
-      });
-      
-      if (gallery.length < 24) {
-        setHasMore(false);
-      }
-    }
-  }, [gallery, page, manuallyLoadedMore]);
-
-  // Fetch additional gallery items for pagination directly from Supabase
-  const fetchMoreGalleryItems = useCallback(async (pageNumber: number) => {
+  const fetchPage = useCallback(async (pageNumber: number, mode: 'append' | 'replace') => {
     if (isLoading) return;
 
+    setIsLoading(true);
+    setError(null);
+
     try {
-      const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${pageNumber}&limit=24`);
-      
+      const response = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${pageNumber}&limit=${PAGE_SIZE}`);
       if (!response.ok) {
-        console.error(`Failed to fetch gallery items: ${response.status} ${response.statusText}`);
-        return;
+        throw new Error(`${response.status} ${response.statusText}`.trim());
       }
-      
+
       const data = await response.json();
-      
-      if (data.length === 0) {
-        setHasMore(false);
-      } else {
-        // For pagination, append to existing items
-        setGalleryItems((prevItems) => {
-          const newItems = data.filter(
-            (newItem: GalleryItem) => !prevItems.some((prevItem) => prevItem.id === newItem.id)
-          );
-          return [...prevItems, ...newItems];
-        });
-        
-        // Increment page for next fetch
-        setPage(pageNumber + 1);
-        
-        // Reset fetch attempt flag so we can fetch again if needed
-        fetchAttemptedRef.current = false;
-      }
-    } catch (error) {
-      console.error('Error fetching more gallery items:', error);
-    }
-  }, [isLoading, setGalleryItems, setPage, setHasMore]);
+      const newItems = Array.isArray(data) ? (data as GalleryItem[]) : [];
 
-  // Set initial display count based on screen size
+      setGalleryItems((currentItems) => (
+        mode === 'replace' ? newItems : mergeUniqueItems(currentItems, newItems)
+      ));
+      setHasMore(newItems.length >= PAGE_SIZE);
+      setNextPage(pageNumber + 1);
+    } catch (fetchError) {
+      console.error('Error fetching gallery items:', fetchError);
+      setError(t('error'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isLoading, t]);
+
   useEffect(() => {
-    function updateDisplayCount() {
-      // Default to desktop: 5 columns x 4 rows = 20 items
-      let initialCount = 20;
-      
-      // Adjust based on viewport width
-      if (window.innerWidth < 640) {
-        // Mobile: 2 columns x 4 rows = 8 items
-        initialCount = 8;
-      } else if (window.innerWidth < 768) {
-        // Small tablet: 3 columns x 4 rows = 12 items
-        initialCount = 12;
-      } else if (window.innerWidth < 1024) {
-        // Tablet: 4 columns x 4 rows = 16 items
-        initialCount = 16;
-      }
-      
-      // Only update displayCount if it hasn't been manually increased
-      // This prevents Android Chrome mobile resize events from resetting the gallery
-      setDisplayCount(prevCount => {
-        // If user has manually loaded more items (displayCount > initialCount), preserve it
-        if (manuallyLoadedMore && prevCount > initialCount) {
-          return prevCount;
-        }
-        return initialCount;
-      });
+    if (
+      initialItems.length === 0
+      && galleryItems.length === 0
+      && !isLoading
+      && !error
+      && !initialFetchAttemptedRef.current
+    ) {
+      initialFetchAttemptedRef.current = true;
+      void fetchPage(1, 'replace');
     }
-    
-    // Debounce resize events to prevent rapid successive calls on Android Chrome
-    let resizeTimeout: NodeJS.Timeout;
-    const debouncedUpdateDisplayCount = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(updateDisplayCount, 150); // 150ms debounce
-    };
-    
-    // Call initially only if we haven't restored from sessionStorage
-    const savedDisplayCount = sessionStorage.getItem('gallery-display-count');
-    if (!savedDisplayCount || parseInt(savedDisplayCount, 10) <= 20) {
-      updateDisplayCount();
-    }
-    
-    // Add debounced resize listener
-    window.addEventListener('resize', debouncedUpdateDisplayCount);
-    
-    // Cleanup function to clear sessionStorage on page unload
-    const handleBeforeUnload = () => {
-      // Clear sessionStorage when navigating away from the page
-      sessionStorage.removeItem('gallery-display-count');
-      sessionStorage.removeItem('gallery-manually-loaded');
-    };
-    
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    
-    return () => {
-      clearTimeout(resizeTimeout);
-      window.removeEventListener('resize', debouncedUpdateDisplayCount);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [manuallyLoadedMore]);
+  }, [error, fetchPage, galleryItems.length, initialItems.length, isLoading]);
 
-  // Ensure we load enough items for initial display
-  useEffect(() => {
-    // Only trigger this effect when we need more items AND haven't attempted this fetch yet
-    if (galleryItems.length < displayCount && !isLoading && hasMore && !fetchAttemptedRef.current) {
-      fetchAttemptedRef.current = true; // Mark that we've attempted to fetch more
-      fetchMoreGalleryItems(page);
-    }
-  }, [displayCount, galleryItems.length, page, isLoading, hasMore, fetchMoreGalleryItems]);
+  const loadMore = async () => {
+    const nextVisibleCount = visibleCount + LOAD_MORE_COUNT;
 
-  const loadMore = () => {
-    // Mark that user has manually loaded more items
-    setManuallyLoadedMore(true);
-    
-    // Reset fetch attempt flag when user manually requests more items
-    fetchAttemptedRef.current = false;
-    
-    // Get number of columns based on current viewport
-    let columnsCount = 5; // Default desktop
-    if (window.innerWidth < 640) {
-      columnsCount = 2; // Mobile
-    } else if (window.innerWidth < 768) {
-      columnsCount = 3; // Small tablet
-    } else if (window.innerWidth < 1024) {
-      columnsCount = 4; // Tablet
+    if (galleryItems.length < nextVisibleCount && hasMore) {
+      await fetchPage(nextPage, 'append');
     }
-    
-    // Load 4 more rows
-    setDisplayCount((prev) => prev + columnsCount * 4);
+
+    setVisibleCount(nextVisibleCount);
   };
 
-  // No custom keyboard handling needed; native link semantics suffice
+  const displayedItems = useMemo(
+    () => galleryItems.slice(0, visibleCount),
+    [galleryItems, visibleCount]
+  );
+  const canLoadMore = hasMore || galleryItems.length > visibleCount;
 
-  // Get only the items we need to display
-  const displayedItems = galleryItems.slice(0, displayCount);
-
-  // Determine if we need to show the "Load More" button
-  const canLoadMore = hasMore || galleryItems.length > displayCount;
-
-  if (isError && galleryItems.length === 0) {
+  if (error && galleryItems.length === 0) {
     return (
-      <div className="mt-12 text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg" role="alert" aria-live="polite">
-        <p className="text-red-600 dark:text-red-400">{t('error')}</p>
-        <button 
-          onClick={() => mutate()}
-          className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      <div className="mt-12 rounded-lg bg-red-50 p-8 text-center dark:bg-red-900/20" role="alert" aria-live="polite">
+        <p className="text-red-600 dark:text-red-400">{error}</p>
+        <button
+          onClick={() => void fetchPage(1, 'replace')}
+          className="mt-4 rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           aria-label={t('tryAgain')}
         >
           {t('tryAgain')}
@@ -238,56 +108,49 @@ export default function Gallery({ initialItems = [] as GalleryItem[] }: { initia
   return (
     <div className="mt-12" aria-labelledby="gallery-heading">
       <h2 id="gallery-heading" className="sr-only">{t('seoHeading')}</h2>
-      
-      {/* Always show the grid to maintain layout consistency */}
-      <ul 
-        ref={containerRef}
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 md:gap-2"
+
+      <ul
+        className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 md:gap-2 lg:grid-cols-5"
         aria-label={t('ariaLabel')}
       >
-        {/* When loading and no items available yet, show placeholders */}
         {galleryItems.length === 0 ? (
-          Array.from({ length: displayCount }).map((_, index) => (
+          Array.from({ length: 10 }).map((_, index) => (
             <li key={`placeholder-${index}`}>
               <ImagePlaceholder />
             </li>
           ))
         ) : (
-          /* Show actual gallery items once available */
           displayedItems.map((item, index) => (
             <li key={item.id}>
-              <div>
-                <PhotoCard
-                  src={item.public_url}
-                  alt={`${t('altPrefix')}: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
-                  mode="fill"
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                  priority={index === 0}
-                  containerClassName="aspect-square rounded-sm cursor-pointer"
-                  imgClassName=""
-                  linkHref={`https://app.myaiphotoshoot.com/#generate/${item.id}`}
-                  linkExternal={true}
-                  ariaLabel={`${t('promptAriaPrefix')}: ${item.prompt}`}
-                  figCaptionSrOnly={`${t('captionPrefix')}. ${item.prompt}`}
-                />
-              </div>
+              <PhotoCard
+                src={item.public_url}
+                alt={`${t('altPrefix')}: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
+                mode="fill"
+                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                priority={index === 0}
+                containerClassName="aspect-square rounded-sm cursor-pointer"
+                linkHref={`https://app.myaiphotoshoot.com/#generate/${item.id}`}
+                linkExternal
+                ariaLabel={`${t('promptAriaPrefix')}: ${item.prompt}`}
+                figCaptionSrOnly={`${t('captionPrefix')}. ${item.prompt}`}
+              />
             </li>
           ))
         )}
       </ul>
 
       {error && galleryItems.length > 0 && (
-        <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-center" role="alert" aria-live="polite">
-          <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+        <div className="mt-4 rounded-lg bg-red-50 p-3 text-center dark:bg-red-900/20" role="alert" aria-live="polite">
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
 
       {canLoadMore && (
-        <div className="flex justify-center mt-8">
+        <div className="mt-8 flex justify-center">
           <button
-            onClick={loadMore}
+            onClick={() => void loadMore()}
             disabled={isLoading}
-            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-purple-300 dark:disabled:bg-purple-800 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            className="rounded-lg bg-purple-600 px-6 py-2 text-white transition hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-purple-300 dark:focus:ring-offset-gray-900 dark:disabled:bg-purple-800"
             aria-label={isLoading ? t('loading') : t('loadMore')}
             aria-busy={isLoading}
           >
