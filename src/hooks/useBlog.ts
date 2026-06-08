@@ -5,11 +5,10 @@ import { env } from '@/lib/env';
 
 /**
  * Blog posts list hook using SWR
- * 
- * STATIC EXPORT NOTE:
- * Since we're using Cloudflare Pages static hosting without server components,
- * all data fetching happens client-side using SWR. This hook fetches blog
- * data directly from Supabase rather than using server-rendered API routes.
+ *
+ * Pages can provide build-time data as SWR fallback data. Client-side
+ * pagination then fetches additional pages directly from the Supabase
+ * Function because the Cloudflare Pages deployment is a static export.
  */
 
 interface UseBlogPostsOptions {
@@ -131,4 +130,4 @@ export function useBlogPost({
     isValidating,
     mutate
   };
-} 
+}
