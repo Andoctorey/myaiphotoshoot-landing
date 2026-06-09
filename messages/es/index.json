@@ -12,22 +12,22 @@
     "language": "Idioma"
   },
   "hero": {
-    "title": "Generador de headshots con IA para",
+    "title": "Generador de retratos profesionales con IA para",
     "titleHighlight": "fotos de perfil realistas",
-    "description": "Sube algunas selfies y crea headshots, fotos de perfil y retratos realistas con IA para LinkedIn, currículums, equipos, creadores y marcas personales.",
-    "microcopy": "Entrena una vez por $2.99 -> genera headshots y retratos por $0.03 cada uno -> sin suscripción"
+    "description": "Sube algunas selfies y crea retratos profesionales, fotos de perfil y retratos creativos realistas con IA para LinkedIn, currículums, equipos, creadores y marcas personales.",
+    "microcopy": "Entrena tu modelo una vez por $2.99 • Genera imágenes por $0.03 cada una • Sin suscripción"
   },
   "appShowcase": {
     "exploreStyles": "Explora estilos de fotos con IA en My AI Photo Shoot",
     "realisticPhotos": "Crea fotos realistas con IA en My AI Photo Shoot",
     "trainModel": "Entrena tu modelo personal de IA en My AI Photo Shoot",
     "photosOfYou": "Crea fotos personalizadas de ti",
-    "photoIdeas": "Encuentra ideas reutilizables para fotos con IA",
+    "photoIdeas": "Encuentra inspiración para nuevas fotos con IA",
     "noSubscription": "Precio de pago por uso sin suscripción"
   },
   "homeUseCases": {
     "eyebrow": "Un modelo, muchos estilos",
-    "title": "Crea fotos para el trabajo, las citas y todo lo demás",
+    "title": "Crea fotos para el trabajo, las citas y cualquier ocasión",
     "description": "Entrena tu modelo personal de IA una vez y crea fotos profesionales, fotos para citas y retratos creativos cuando los necesites.",
     "imageAlt": "Ejemplo de foto con IA para {title}",
     "exploreAll": "Explorar todos los estilos de foto",
@@ -38,27 +38,27 @@
     }
   },
   "features": {
-    "title": "Diseñado para mejores headshots con IA",
+    "title": "Creado para conseguir mejores retratos profesionales con IA",
     "description": "Entrena una vez, crea fotos realistas en muchos estilos y mantén el control.",
     "advancedAI": {
-      "title": "Parecido consistente",
-      "description": "Entrena una vez con tus selfies y conserva un aspecto reconocible en cada imagen."
+      "title": "Tu aspecto, siempre reconocible",
+      "description": "Entrena el modelo una vez con tus selfies para mantener tus rasgos naturales y reconocibles en cada imagen."
     },
     "privacyFirst": {
       "title": "Tus fotos, tu control",
       "description": "Elige galerías públicas o privadas y elimina imágenes para siempre cuando quieras."
     },
     "affordablePricing": {
-      "title": "Precios transparentes de pago por uso",
+      "title": "Precios transparentes, sin suscripción",
       "description": "Sin suscripción ni cargos sorpresa. Entrena tu modelo una vez por $2.99 y luego genera imágenes por $0.03 cada una."
     },
     "thousandsOfStyles": {
-      "title": "Headshots y mucho más",
-      "description": "Crea headshots profesionales, fotos de perfil, retratos e imágenes de marca personal."
+      "title": "Mucho más que retratos profesionales",
+      "description": "Crea retratos profesionales, fotos de perfil, retratos creativos e imágenes de marca personal."
     },
     "easyCustomization": {
-      "title": "Constructor de prompts sencillo",
-      "description": "Ajusta prompts o remezcla fotos de la galería pública para crear rápidamente imágenes con IA personalizadas y de aspecto profesional."
+      "title": "Editor de prompts sencillo",
+      "description": "Ajusta tus prompts o usa fotos de la galería pública como inspiración para crear rápidamente imágenes con IA personalizadas y profesionales."
     },
     "multiplatform": {
       "title": "Crea desde cualquier lugar",
@@ -120,17 +120,17 @@
     }
   },
   "pricing": {
-    "title": "Precios simples de pago por uso",
+    "title": "Precios sencillos de pago por uso",
     "description": "Paga solo cuando creas. Sin plan mensual, sin paquetes de créditos y sin cargos ocultos.",
     "payAsYouGo": "Pago por uso",
-    "perfectFor": "Ideal para creadores, fundadores, marketers, equipos y cualquiera que necesite imágenes pulidas con IA bajo demanda.",
+    "perfectFor": "Ideal para creadores, fundadores, profesionales del marketing, equipos y cualquiera que necesite imágenes profesionales con IA bajo demanda.",
     "whatsIncluded": "Qué incluye",
     "features": {
       "training": "Entrenamiento de modelo personal de IA",
       "unlimited": "Generación ilimitada de imágenes",
       "custom": "Personalización avanzada de prompts",
       "privacy": "Opciones de galería privada y pública",
-      "social": "Compartir fácilmente en redes sociales",
+      "social": "Publicación sencilla en redes sociales",
       "download": "Descargas en alta resolución",
       "support": "Soporte al cliente ágil",
       "updates": "Mejoras continuas de calidad de IA"
@@ -144,7 +144,7 @@
   },
   "download": {
     "title": "Empieza a crear hoy",
-    "description": "Abre la app web o instala la app móvil y crea fotos con IA pulidas en minutos.",
+    "description": "Abre la app web o instala la app móvil y crea fotos profesionales con IA en cuestión de minutos.",
     "choosePlatform": "Crea desde cualquier lugar",
     "webApp": {
       "title": "App web",
@@ -216,7 +216,7 @@
     },
     "whyNotChatGPT": {
       "question": "¿En qué se diferencia de una herramienta general de imágenes con IA?",
-      "answer": "My AI Photo Shoot utiliza un modelo reutilizable entrenado con tus selfies. Esto facilita mantener un parecido reconocible en muchos estilos de headshot, retrato y foto de perfil, con precios predecibles de pago por uso."
+      "answer": "My AI Photo Shoot utiliza un modelo personal que entrenas una vez con tus selfies y puedes reutilizar siempre que quieras. Así resulta más fácil mantener tus rasgos en distintos estilos de retratos profesionales, retratos creativos y fotos de perfil, con precios claros de pago por uso."
     }
   },
   "useCase": {
@@ -250,7 +250,7 @@
       }
     },
     "stickyCta": {
-      "label": "Empieza por {oneTimeFee} • {price}/{perPhoto}"
+      "label": "Entrenamiento: {oneTimeFee} • {price} {perPhoto}"
     },
     "benefits": {
       "title": "Beneficios"

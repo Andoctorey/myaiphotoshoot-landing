@@ -12,22 +12,22 @@
     "language": "Langue"
   },
   "hero": {
-    "title": "Générateur de headshots IA pour",
-    "titleHighlight": "photos de profil réalistes",
-    "description": "Importez quelques selfies et créez des headshots IA, photos de profil et portraits réalistes pour LinkedIn, CV, équipes, créateurs et marques personnelles.",
-    "microcopy": "Entraînez une fois pour 2,99 $ -> générez des headshots et portraits pour 0,03 $ chacun -> sans abonnement"
+    "title": "Générateur de photos professionnelles par IA pour",
+    "titleHighlight": "des photos de profil réalistes",
+    "description": "Importez quelques selfies et créez des photos professionnelles, des photos de profil et des portraits créatifs réalistes pour LinkedIn, les CV, les équipes, les créateurs et les marques personnelles.",
+    "microcopy": "Un seul entraînement à 2,99 $ • Chaque image à 0,03 $ • Sans abonnement"
   },
   "appShowcase": {
     "exploreStyles": "Découvrez les styles de photos IA dans My AI Photo Shoot",
     "realisticPhotos": "Créez des photos IA réalistes dans My AI Photo Shoot",
     "trainModel": "Entraînez votre modèle IA personnel dans My AI Photo Shoot",
     "photosOfYou": "Créez des photos personnalisées de vous",
-    "photoIdeas": "Trouvez des idées de photos IA réutilisables",
+    "photoIdeas": "Trouvez de nouvelles idées de photos IA",
     "noSubscription": "Tarification à l’usage sans abonnement"
   },
   "homeUseCases": {
     "eyebrow": "Un modèle, de nombreux styles",
-    "title": "Créez des photos pour le travail, les rencontres et bien plus",
+    "title": "Créez des photos pour le travail, les rencontres et toutes les occasions",
     "description": "Entraînez une fois votre modèle IA personnel, puis créez à tout moment des portraits professionnels, des photos de rencontre et des portraits créatifs.",
     "imageAlt": "Exemple de photo IA pour {title}",
     "exploreAll": "Découvrir tous les styles photo",
@@ -38,11 +38,11 @@
     }
   },
   "features": {
-    "title": "Conçu pour de meilleurs headshots IA",
+    "title": "Conçu pour créer de meilleurs portraits professionnels avec l’IA",
     "description": "Entraînez une fois, créez des photos réalistes dans de nombreux styles et gardez le contrôle.",
     "advancedAI": {
-      "title": "Ressemblance cohérente",
-      "description": "Entraînez une fois avec vos selfies et conservez un visage reconnaissable sur chaque image."
+      "title": "Une ressemblance fidèle sur chaque image",
+      "description": "Entraînez le modèle une fois avec vos selfies pour conserver des traits naturels et reconnaissables sur chaque image."
     },
     "privacyFirst": {
       "title": "Vos photos, votre contrôle",
@@ -50,15 +50,15 @@
     },
     "affordablePricing": {
       "title": "Tarifs transparents à l’usage",
-      "description": "Aucun abonnement et aucuns frais surprise. Entraînez votre modèle une fois pour 2,99 $, puis générez des images pour 0,03 $ chacune."
+      "description": "Aucun abonnement ni frais imprévus. Entraînez votre modèle une fois pour 2,99 $, puis générez des images pour 0,03 $ chacune."
     },
     "thousandsOfStyles": {
-      "title": "Headshots et bien plus",
-      "description": "Créez des headshots professionnels, photos de profil, portraits et images de marque personnelle."
+      "title": "Bien plus que des portraits professionnels",
+      "description": "Créez des portraits professionnels, des photos de profil, des portraits créatifs et des images pour votre marque personnelle."
     },
     "easyCustomization": {
-      "title": "Générateur de prompts simple",
-      "description": "Ajustez vos prompts ou remixez des photos de la galerie publique pour créer rapidement des images IA personnalisées et professionnelles."
+      "title": "Éditeur de prompts simple",
+      "description": "Ajustez vos prompts ou inspirez-vous des photos de la galerie publique pour créer rapidement des images IA personnalisées et professionnelles."
     },
     "multiplatform": {
       "title": "Créez où que vous soyez",
@@ -120,10 +120,10 @@
     }
   },
   "pricing": {
-    "title": "Tarifs simples à l’usage",
-    "description": "Payez uniquement lorsque vous créez. Aucun forfait mensuel, aucun pack de crédits et aucuns frais cachés.",
+    "title": "Tarification simple à l’usage",
+    "description": "Vous ne payez que lorsque vous créez. Aucun forfait mensuel, aucun pack de crédits ni frais cachés.",
     "payAsYouGo": "Paiement à l’usage",
-    "perfectFor": "Idéal pour les créateurs, fondateurs, marketeurs, équipes et toute personne qui a besoin d’images IA soignées à la demande.",
+    "perfectFor": "Idéal pour les créateurs, les fondateurs, les professionnels du marketing, les équipes et toute personne qui a besoin d’images IA professionnelles à la demande.",
     "whatsIncluded": "Ce qui est inclus",
     "features": {
       "training": "Entraînement d’un modèle IA personnel",
@@ -132,7 +132,7 @@
       "privacy": "Options de galerie privée et publique",
       "social": "Partage facile sur les réseaux sociaux",
       "download": "Téléchargements haute résolution",
-      "support": "Support client réactif",
+      "support": "Service client réactif",
       "updates": "Améliorations continues de la qualité IA"
     },
     "price": "0,03 $",
@@ -140,7 +140,7 @@
     "getStarted": "Commencer à générer",
     "oneTimeFee": "Frais uniques d’entraînement IA",
     "oneTimeFeeAmount": "2,99 $",
-    "noSubscriptionShort": "Aucun abonnement. Payez uniquement ce que vous créez."
+    "noSubscriptionShort": "Aucun abonnement. Vous ne payez que les images que vous créez."
   },
   "download": {
     "title": "Commencez à créer aujourd’hui",
@@ -216,7 +216,7 @@
     },
     "whyNotChatGPT": {
       "question": "En quoi est-ce différent d’un outil généraliste d’images IA ?",
-      "answer": "My AI Photo Shoot repose sur un modèle réutilisable entraîné avec vos selfies. Il est ainsi plus facile de conserver une ressemblance reconnaissable dans de nombreux styles de headshots, portraits et photos de profil, avec un tarif à l’usage prévisible."
+      "answer": "My AI Photo Shoot repose sur un modèle personnel que vous entraînez une fois avec vos selfies, puis réutilisez à volonté. Vous conservez ainsi plus facilement vos traits dans différents styles de portraits professionnels, de portraits créatifs et de photos de profil, avec une tarification claire à l’usage."
     }
   },
   "useCase": {
@@ -250,7 +250,7 @@
       }
     },
     "stickyCta": {
-      "label": "Commencez pour {oneTimeFee} • {price}/{perPhoto}"
+      "label": "Lancez-vous dès {oneTimeFee} • {price} {perPhoto}"
     },
     "benefits": {
       "title": "Avantages"

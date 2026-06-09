@@ -14,20 +14,20 @@
   "hero": {
     "title": "KI-Headshot-Generator für",
     "titleHighlight": "realistische Profilfotos",
-    "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Headshots, Profilbilder und Porträts für LinkedIn, Lebensläufe, Teams, Creator und Personal Brands.",
-    "microcopy": "Einmal für $2.99 trainieren -> Headshots und Porträts für je $0.03 generieren -> kein Abo"
+    "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Headshots, Profilbilder und Porträts für LinkedIn, Lebensläufe, Teams, Kreative und persönliche Marken.",
+    "microcopy": "Einmaliges Training für $2.99 • Bilder für je $0.03 • kein Abo"
   },
   "appShowcase": {
     "exploreStyles": "KI-Fotostile in My AI Photo Shoot entdecken",
     "realisticPhotos": "Realistische KI-Fotos in My AI Photo Shoot erstellen",
     "trainModel": "Ihr persönliches KI-Modell in My AI Photo Shoot trainieren",
-    "photosOfYou": "Personalisierte Fotos von sich erstellen",
-    "photoIdeas": "Wiederverwendbare KI-Fotoideen finden",
+    "photosOfYou": "Personalisierte Fotos von Ihnen erstellen",
+    "photoIdeas": "Neue Ideen für KI-Fotos entdecken",
     "noSubscription": "Nutzungsbasierte Preise ohne Abo"
   },
   "homeUseCases": {
     "eyebrow": "Ein Modell, viele Looks",
-    "title": "Erstellen Sie Fotos für Beruf, Dating und alles dazwischen",
+    "title": "Fotos für Beruf, Dating und jeden Anlass",
     "description": "Trainieren Sie Ihr persönliches KI-Modell einmal und erstellen Sie jederzeit professionelle Headshots, Datingfotos und kreative Porträts.",
     "imageAlt": "KI-Fotobeispiel für {title}",
     "exploreAll": "Alle Fotostile entdecken",
@@ -38,18 +38,18 @@
     }
   },
   "features": {
-    "title": "Entwickelt für bessere KI-Headshots",
+    "title": "Für bessere KI-Headshots entwickelt",
     "description": "Einmal trainieren, realistische Fotos in vielen Stilen erstellen und die Kontrolle behalten.",
     "advancedAI": {
-      "title": "Konsistente Ähnlichkeit",
-      "description": "Einmal mit Ihren Selfies trainieren und in jedem Bild wiedererkennbar bleiben."
+      "title": "In jedem Bild wiedererkennbar",
+      "description": "Trainieren Sie das Modell einmal mit Ihren Selfies, damit Sie auf jedem Bild natürlich wiederzuerkennen sind."
     },
     "privacyFirst": {
       "title": "Ihre Fotos, Ihre Kontrolle",
       "description": "Wählen Sie öffentliche oder private Galerien und löschen Sie Bilder jederzeit dauerhaft."
     },
     "affordablePricing": {
-      "title": "Transparente Pay-as-you-go-Preise",
+      "title": "Transparente Preise nach Verbrauch",
       "description": "Kein Abo und keine überraschenden Gebühren. Trainieren Sie Ihr Modell einmal für $2.99 und generieren Sie danach Bilder für je $0.03."
     },
     "thousandsOfStyles": {
@@ -57,8 +57,8 @@
       "description": "Erstellen Sie professionelle Headshots, Profilbilder, Porträts und Personal-Brand-Fotos."
     },
     "easyCustomization": {
-      "title": "Einfacher Prompt-Builder",
-      "description": "Passen Sie Prompts an oder remixen Sie Fotos aus der öffentlichen Galerie, um schnell personalisierte, professionell wirkende KI-Bilder zu erstellen."
+      "title": "Einfacher Prompt-Editor",
+      "description": "Passen Sie Prompts an oder nutzen Sie Fotos aus der öffentlichen Galerie als Vorlage, um schnell personalisierte, professionell wirkende KI-Bilder zu erstellen."
     },
     "multiplatform": {
       "title": "Überall erstellen",
@@ -120,10 +120,10 @@
     }
   },
   "pricing": {
-    "title": "Einfache Pay-as-you-go-Preise",
+    "title": "Einfache Preise nach Verbrauch",
     "description": "Zahlen Sie nur, wenn Sie Bilder erstellen. Kein Monatsplan, keine Credit-Pakete und keine versteckten Gebühren.",
-    "payAsYouGo": "Pay as you go",
-    "perfectFor": "Ideal für Creator, Gründer, Marketer, Teams und alle, die bei Bedarf hochwertige KI-Bilder brauchen.",
+    "payAsYouGo": "Zahlen nach Verbrauch",
+    "perfectFor": "Ideal für Kreative, Gründer, Marketingteams und alle, die bei Bedarf hochwertige KI-Bilder benötigen.",
     "whatsIncluded": "Was enthalten ist",
     "features": {
       "training": "Training eines persönlichen KI-Modells",
@@ -140,7 +140,7 @@
     "getStarted": "Generieren starten",
     "oneTimeFee": "Einmalige KI-Trainingsgebühr",
     "oneTimeFeeAmount": "$2.99",
-    "noSubscriptionShort": "Kein Abo. Zahlen Sie nur für das, was Sie erstellen."
+    "noSubscriptionShort": "Kein Abo. Sie zahlen nur für die Bilder, die Sie erstellen."
   },
   "download": {
     "title": "Starten Sie heute",
@@ -216,7 +216,7 @@
     },
     "whyNotChatGPT": {
       "question": "Was unterscheidet My AI Photo Shoot von allgemeinen KI-Bildtools?",
-      "answer": "My AI Photo Shoot basiert auf einem wiederverwendbaren Modell, das mit Ihren Selfies trainiert wird. So bleibt Ihre Ähnlichkeit über viele Headshot-, Porträt- und Profilbildstile hinweg leichter erkennbar, bei klarer nutzungsbasierter Preisgestaltung."
+      "answer": "My AI Photo Shoot basiert auf einem persönlichen Modell, das Sie einmal mit Ihren Selfies trainieren und anschließend immer wieder verwenden können. So bleiben Sie in vielen Headshot-, Porträt- und Profilbildstilen gut wiederzuerkennen und zahlen nur nach tatsächlicher Nutzung."
     }
   },
   "useCase": {
@@ -250,7 +250,7 @@
       }
     },
     "stickyCta": {
-      "label": "Start für {oneTimeFee} • {price}/{perPhoto}"
+      "label": "Jetzt starten: {oneTimeFee} • {price} {perPhoto}"
     },
     "benefits": {
       "title": "Vorteile"

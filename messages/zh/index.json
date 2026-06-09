@@ -12,22 +12,22 @@
     "language": "语言"
   },
   "hero": {
-    "title": "AI 头像照生成器，适合",
-    "titleHighlight": "真实感个人资料照片",
+    "title": "AI 头像生成器：",
+    "titleHighlight": "真实自然的个人资料照片",
     "description": "上传几张自拍，即可生成适合 LinkedIn、简历、团队、创作者和个人品牌的真实感 AI 头像照、个人资料照片和肖像。",
-    "microcopy": "一次训练 $2.99 -> 每张头像照和肖像 $0.03 -> 无需订阅"
+    "microcopy": "模型训练仅需一次，费用 $2.99 • 每张图片 $0.03 • 无需订阅"
   },
   "appShowcase": {
     "exploreStyles": "在 My AI Photo Shoot 中探索 AI 照片风格",
     "realisticPhotos": "在 My AI Photo Shoot 中创建真实感 AI 照片",
     "trainModel": "在 My AI Photo Shoot 中训练个人 AI 模型",
     "photosOfYou": "创建你的个性化照片",
-    "photoIdeas": "查找可复用的 AI 照片创意",
+    "photoIdeas": "发现更多 AI 照片创意",
     "noSubscription": "无需订阅的按量付费价格"
   },
   "homeUseCases": {
     "eyebrow": "一个模型，多种风格",
-    "title": "为工作、约会和更多场景创建照片",
+    "title": "为工作、约会和每个重要场合创建照片",
     "description": "只需训练一次个人 AI 模型，即可随时创建专业头像照、约会照片和创意肖像。",
     "imageAlt": "{title} 的 AI 照片示例",
     "exploreAll": "查看所有照片风格",
@@ -38,11 +38,11 @@
     }
   },
   "features": {
-    "title": "为更出色的 AI 头像照打造",
+    "title": "轻松打造更自然的 AI 头像",
     "description": "只需训练一次，即可创作多种风格的真实照片，并始终掌控自己的内容。",
     "advancedAI": {
-      "title": "稳定保持相似度",
-      "description": "用自拍训练一次，即可在每张生成图片中保持清晰可辨的个人特征。"
+      "title": "每张照片都像你",
+      "description": "只需用自拍训练一次，即可在每张生成图片中自然保留你的面部特征。"
     },
     "privacyFirst": {
       "title": "你的照片，由你掌控",
@@ -57,8 +57,8 @@
       "description": "创建专业头像照、个人资料照片、肖像和个人品牌图片。"
     },
     "easyCustomization": {
-      "title": "简单提示词工具",
-      "description": "微调提示词，或基于公开图库照片重新创作，快速得到个性化、专业感的 AI 图像。"
+      "title": "简单好用的提示词编辑器",
+      "description": "微调提示词，或从公开图库照片中获取灵感，快速创作个性化、专业水准的 AI 图片。"
     },
     "multiplatform": {
       "title": "随时随地创作",
@@ -123,16 +123,16 @@
     "title": "简单按量付费",
     "description": "只在创作时付费。没有月费套餐、积分包或隐藏费用。",
     "payAsYouGo": "按量付费",
-    "perfectFor": "适合创作者、创业者、营销人员、团队，以及任何需要按需生成精致 AI 图片的人。",
+    "perfectFor": "适合创作者、创业者、营销人员、团队，以及任何需要随时生成高质量 AI 图片的人。",
     "whatsIncluded": "包含内容",
     "features": {
       "training": "个人 AI 模型训练",
-      "unlimited": "无限图片生成",
+      "unlimited": "图片生成不限量",
       "custom": "高级提示词自定义",
       "privacy": "私密和公开图库选项",
       "social": "便捷社交分享",
       "download": "高清下载",
-      "support": "及时客户支持",
+      "support": "快速响应的客户支持",
       "updates": "持续 AI 质量改进"
     },
     "price": "$0.03",
@@ -144,7 +144,7 @@
   },
   "download": {
     "title": "今天开始创作",
-    "description": "打开网页应用或安装移动应用，几分钟内创建精致 AI 照片。",
+    "description": "打开网页应用或安装移动应用，几分钟内即可创建高质量 AI 照片。",
     "choosePlatform": "随时随地创作",
     "webApp": {
       "title": "网页应用",
@@ -216,7 +216,7 @@
     },
     "whyNotChatGPT": {
       "question": "它与通用 AI 图片工具有什么不同？",
-      "answer": "My AI Photo Shoot 使用基于你自拍训练的可复用个人模型，更容易在多种头像照、肖像和个人资料照片风格中保持可识别的相似度，并采用清晰的按量付费模式。"
+      "answer": "My AI Photo Shoot 会根据你的自拍训练专属模型。模型只需训练一次，之后即可反复使用，并在不同风格的头像、肖像和个人资料照片中自然保留你的面部特征，同时按实际生成量收费。"
     }
   },
   "useCase": {
@@ -250,7 +250,7 @@
       }
     },
     "stickyCta": {
-      "label": "{oneTimeFee} 起 • {price}/{perPhoto}"
+      "label": "训练 {oneTimeFee} • {perPhoto} {price}"
     },
     "benefits": {
       "title": "优势"

@@ -12,22 +12,22 @@
     "language": "言語"
   },
   "hero": {
-    "title": "AIヘッドショット生成ツールで",
-    "titleHighlight": "リアルなプロフィール写真を",
+    "title": "AIヘッドショット生成ツールで、",
+    "titleHighlight": "自然なプロフィール写真を作成",
     "description": "数枚のセルフィーをアップロードするだけで、LinkedIn、履歴書、チーム、クリエイター、個人ブランドに使えるリアルなAIヘッドショット、プロフィール写真、ポートレートを作成できます。",
-    "microcopy": "$2.99で1回だけ学習 -> ヘッドショットとポートレートを1枚$0.03で生成 -> サブスクリプションなし"
+    "microcopy": "モデル学習は初回のみ$2.99 • 画像生成は1枚$0.03 • サブスクリプションなし"
   },
   "appShowcase": {
     "exploreStyles": "My AI Photo ShootでAI写真スタイルを探す",
     "realisticPhotos": "My AI Photo ShootでリアルなAI写真を作成",
     "trainModel": "My AI Photo ShootでパーソナルAIモデルを学習",
     "photosOfYou": "自分のパーソナル写真を作成",
-    "photoIdeas": "再利用できるAI写真のアイデアを探す",
+    "photoIdeas": "AI写真の新しいアイデアを探す",
     "noSubscription": "サブスクリプション不要の従量課金"
   },
   "homeUseCases": {
     "eyebrow": "1つのモデル、多彩なスタイル",
-    "title": "仕事、デート、そのほかの場面に合う写真を作成",
+    "title": "仕事にも、出会いにも、あらゆる場面に合う写真を作成",
     "description": "自分専用のAIモデルを一度学習すれば、必要なときにプロ用ヘッドショット、デート用写真、クリエイティブなポートレートを作成できます。",
     "imageAlt": "{title}のAI写真例",
     "exploreAll": "すべての写真スタイルを見る",
@@ -38,11 +38,11 @@
     }
   },
   "features": {
-    "title": "より良いAIヘッドショットのために",
-    "description": "一度学習すれば、多彩なスタイルのリアルな写真を自分で管理しながら作成できます。",
+    "title": "より自然なAIヘッドショットを",
+    "description": "一度学習するだけで、さまざまなスタイルのリアルな写真を自由に作成できます。",
     "advancedAI": {
-      "title": "安定した本人らしさ",
-      "description": "セルフィーで一度学習し、どの画像でも本人と分かる仕上がりを保ちます。"
+      "title": "どの写真でも自然な本人らしさ",
+      "description": "セルフィーで一度学習すれば、どの画像でもあなたらしい自然な仕上がりを保てます。"
     },
     "privacyFirst": {
       "title": "写真は自分で管理",
@@ -57,8 +57,8 @@
       "description": "プロ用ヘッドショット、プロフィール写真、ポートレート、個人ブランド画像を作成できます。"
     },
     "easyCustomization": {
-      "title": "シンプルなプロンプト作成",
-      "description": "プロンプトを調整したり公開ギャラリーの写真をリミックスしたりして、パーソナルでプロらしいAI画像をすばやく作成できます。"
+      "title": "かんたんプロンプト編集",
+      "description": "プロンプトを調整したり、公開ギャラリーの写真を参考にしたりして、自分らしくプロ品質のAI画像をすばやく作成できます。"
     },
     "multiplatform": {
       "title": "どこからでも作成",
@@ -127,8 +127,8 @@
     "whatsIncluded": "含まれるもの",
     "features": {
       "training": "パーソナルAIモデル学習",
-      "unlimited": "無制限の画像生成",
-      "custom": "高度なプロンプト調整",
+      "unlimited": "画像生成の回数制限なし",
+      "custom": "プロンプトを細かく調整",
       "privacy": "非公開・公開ギャラリー設定",
       "social": "簡単なSNS共有",
       "download": "高解像度ダウンロード",
@@ -166,7 +166,7 @@
     "openSource": "オープンソース",
     "twitter": "Twitter (X)",
     "support": "サポート",
-    "copyright": "© 2025 My AI Photo Shoot. All rights reserved.",
+    "copyright": "© 2025 My AI Photo Shoot. 無断転載を禁じます。",
     "opensInNewTab": "新しいタブで開きます"
   },
   "supportPage": {
@@ -234,7 +234,7 @@
     "howItWorks": {
       "title": "使い方",
       "step1": {
-        "title": "10-20枚のセルフィーをアップロード",
+        "title": "10〜20枚のセルフィーをアップロード",
         "time": "(約5分)",
         "desc": "鮮明な既存写真を使うか、新しく数枚セルフィーを撮影してください。"
       },
@@ -250,7 +250,7 @@
       }
     },
     "stickyCta": {
-      "label": "{oneTimeFee}で開始 • {price}/{perPhoto}"
+      "label": "初回{oneTimeFee} • 画像生成は{price}（{perPhoto}）"
     },
     "benefits": {
       "title": "メリット"
