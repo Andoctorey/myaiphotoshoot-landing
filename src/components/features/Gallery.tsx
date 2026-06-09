@@ -4,14 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GalleryItem, GalleryRandomSession } from '@/types/gallery';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { env } from '@/lib/env';
-import {
-  createDailyGalleryRandomSession,
-  isSameGalleryRandomSession,
-} from '@/lib/galleryRandom';
 import { useTranslations } from '@/lib/utils';
 import PhotoCard from '@/components/features/PhotoCard';
 
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 20;
 const INITIAL_VISIBLE_COUNT = 20;
 const LOAD_MORE_COUNT = 20;
 
@@ -70,7 +66,6 @@ export default function Gallery({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const initialFetchAttemptedRef = useRef(false);
-  const dailyRotationCheckedRef = useRef(false);
   const isLoadingRef = useRef(false);
 
   const fetchPage = useCallback(async (
@@ -107,26 +102,6 @@ export default function Gallery({
       setIsLoading(false);
     }
   }, [t]);
-
-  useEffect(() => {
-    if (dailyRotationCheckedRef.current) return;
-    dailyRotationCheckedRef.current = true;
-
-    const dailySession = createDailyGalleryRandomSession();
-    if (
-      initialRandomSession
-      && isSameGalleryRandomSession(initialRandomSession, dailySession)
-    ) {
-      return;
-    }
-
-    setRandomSession(dailySession);
-    setGalleryItems([]);
-    setVisibleCount(INITIAL_VISIBLE_COUNT);
-    setNextPage(1);
-    setHasMore(true);
-    void fetchPage(1, 'replace', 'random', dailySession);
-  }, [fetchPage, initialRandomSession]);
 
   useEffect(() => {
     if (
@@ -229,14 +204,13 @@ export default function Gallery({
             </li>
           ))
         ) : (
-          displayedItems.map((item, index) => (
+          displayedItems.map((item) => (
             <li key={item.id}>
               <PhotoCard
                 src={item.public_url}
                 alt={`${t('altPrefix')}: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
                 mode="fill"
                 sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                priority={index === 0}
                 containerClassName="aspect-square rounded-sm cursor-pointer"
                 linkHref={`https://app.myaiphotoshoot.com/#generate/${item.id}`}
                 linkExternal
