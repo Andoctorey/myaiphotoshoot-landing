@@ -26,11 +26,16 @@
     "noSubscription": "Nutzungsbasierte Preise ohne Abo"
   },
   "homeUseCases": {
-    "eyebrow": "KI-Foto-Anwendungsfälle",
-    "title": "Beginnen Sie mit professionellen Headshots und nutzen Sie Ihr Modell weiter",
-    "description": "Erstellen Sie zuerst professionelle Headshots und verwenden Sie dasselbe trainierte Modell danach für Profilbilder, Porträts, Fotobooth-Looks und realistische Bilder von sich selbst.",
+    "eyebrow": "Ein Modell, viele Looks",
+    "title": "Erstellen Sie Fotos für Beruf, Dating und alles dazwischen",
+    "description": "Trainieren Sie Ihr persönliches KI-Modell einmal und erstellen Sie jederzeit professionelle Headshots, Datingfotos und kreative Porträts.",
     "imageAlt": "KI-Fotobeispiel für {title}",
-    "exploreAll": "Alle Anwendungsfälle entdecken"
+    "exploreAll": "Alle Fotostile entdecken",
+    "cards": {
+      "linkedin": "LinkedIn- und Bewerbungsfotos",
+      "dating": "Dating-Profilfotos",
+      "portraits": "Kreative Porträts"
+    }
   },
   "features": {
     "title": "Entwickelt für bessere KI-Headshots",

@@ -26,11 +26,16 @@
     "noSubscription": "Precio de pago por uso sin suscripción"
   },
   "homeUseCases": {
-    "eyebrow": "Casos de uso de fotos con IA",
-    "title": "Empieza con headshots profesionales y reutiliza tu modelo",
-    "description": "Crea primero headshots profesionales y luego reutiliza el mismo modelo entrenado para fotos de perfil, retratos, looks de fotomatón e imágenes realistas de ti.",
+    "eyebrow": "Un modelo, muchos estilos",
+    "title": "Crea fotos para el trabajo, las citas y todo lo demás",
+    "description": "Entrena tu modelo personal de IA una vez y crea fotos profesionales, fotos para citas y retratos creativos cuando los necesites.",
     "imageAlt": "Ejemplo de foto con IA para {title}",
-    "exploreAll": "Explorar todos los casos de uso"
+    "exploreAll": "Explorar todos los estilos de foto",
+    "cards": {
+      "linkedin": "Fotos para LinkedIn y currículums",
+      "dating": "Fotos para perfiles de citas",
+      "portraits": "Retratos creativos"
+    }
   },
   "features": {
     "title": "Diseñado para mejores headshots con IA",

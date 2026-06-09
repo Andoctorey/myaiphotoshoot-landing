@@ -26,11 +26,16 @@
     "noSubscription": "Pay-as-you-go pricing with no subscription"
   },
   "homeUseCases": {
-    "eyebrow": "AI photo use cases",
-    "title": "Start with professional headshots, then reuse your model",
-    "description": "Create professional headshots first, then reuse the same trained model for profile pictures, portraits, photobooth looks, and realistic images of yourself.",
+    "eyebrow": "One model, many looks",
+    "title": "Create photos for work, dating, and everything in between",
+    "description": "Train your personal AI model once, then create polished headshots, dating photos, and creative portraits whenever you need them.",
     "imageAlt": "AI photo example for {title}",
-    "exploreAll": "Explore all use cases"
+    "exploreAll": "Explore all photo styles",
+    "cards": {
+      "linkedin": "LinkedIn & resume headshots",
+      "dating": "Dating profile photos",
+      "portraits": "Creative portraits"
+    }
   },
   "features": {
     "title": "Built for better AI headshots",
