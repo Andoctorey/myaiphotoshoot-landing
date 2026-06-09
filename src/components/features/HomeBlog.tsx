@@ -27,7 +27,7 @@ export default async function HomeBlog({
   const selectedPosts = takeFirst(sortByMostRecent(initialPosts), 6);
 
   return (
-    <section className="pt-16 pb-10 md:pt-24 md:pb-16 bg-white dark:bg-gray-900" id="home-blog">
+    <section className="bg-white py-12 dark:bg-gray-900 md:py-16" id="home-blog">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">

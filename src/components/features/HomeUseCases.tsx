@@ -36,7 +36,7 @@ export default async function HomeUseCases({ initialUseCases = [], locale = 'en'
   return (
     <section
       id="use-cases"
-      className="bg-gradient-to-b from-gray-50 via-white to-purple-50/40 py-16 dark:from-gray-950 dark:via-gray-900 dark:to-purple-950/20 md:py-20"
+      className="bg-gradient-to-b from-gray-50 via-white to-purple-50/40 py-12 dark:from-gray-950 dark:via-gray-900 dark:to-purple-950/20 md:py-16"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-4xl text-center">
@@ -82,7 +82,7 @@ export default async function HomeUseCases({ initialUseCases = [], locale = 'en'
         <div className="mt-10 text-center">
           <Link
             href={localePath(locale, '/use-cases/')}
-            className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-purple-700 transition-colors hover:bg-purple-100 hover:text-purple-800 dark:text-purple-300 dark:hover:bg-purple-900/30 dark:hover:text-purple-200"
+            className="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-6 py-2 text-white transition hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           >
             {tSection('exploreAll')}
             <span aria-hidden="true">→</span>

@@ -128,7 +128,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 bg-white/0 dark:bg-black/80 backdrop-blur-sm data-[scrolled=true]:bg-white/80 data-[scrolled=true]:dark:bg-gray-900/80 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-sm data-[scrolled=true]:dark:shadow-gray-900"
+      className="fixed left-0 right-0 top-0 z-50 bg-gradient-to-r from-white/70 via-purple-50/65 to-indigo-50/60 backdrop-blur-lg transition-all duration-300 dark:from-gray-950/70 dark:via-purple-950/65 dark:to-indigo-950/60 data-[scrolled=true]:from-white/85 data-[scrolled=true]:via-purple-50/80 data-[scrolled=true]:to-indigo-50/75 data-[scrolled=true]:shadow-sm data-[scrolled=true]:shadow-purple-900/10 data-[scrolled=true]:backdrop-blur-xl data-[scrolled=true]:dark:from-gray-950/85 data-[scrolled=true]:dark:via-purple-950/80 data-[scrolled=true]:dark:to-indigo-950/75"
       data-scrolled={isScrolled}
       role="banner"
     >
@@ -331,7 +331,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
         {mobileMenuOpen && (
           <div id="mobile-menu" className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md mt-2 shadow-lg dark:shadow-gray-900" role="menu">
-              {navItems.map((item) => (
+              {navItemsBeforeUseCases.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
@@ -376,6 +376,17 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                   </div>
                 )}
               </div>
+              {navItemsAfterUseCases.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  onClick={handleNavLinkClick}
+                  role="menuitem"
+                >
+                  {item.name}
+                </a>
+              ))}
               <a
                 href={appLink.url}
                 target="_blank"

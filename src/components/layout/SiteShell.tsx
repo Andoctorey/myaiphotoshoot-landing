@@ -17,9 +17,8 @@ export default async function SiteShell({ locale, children }: Props) {
     <>
       <HtmlLang locale={locale} dir={dir} />
       <Navigation useCases={navigationUseCases} />
-      <main className="pt-20 md:pt-24">{children}</main>
+      <main className="pt-16">{children}</main>
       <Footer />
     </>
   );
 }
-

@@ -35,7 +35,7 @@ export default async function FAQ({ locale }: { locale: string }) {
   ];
 
   return (
-    <section id="faq" className="bg-gray-50 py-12 dark:bg-gray-800">
+    <section id="faq" className="bg-gray-50 py-12 dark:bg-gray-800 md:py-16">
       <FAQAccordion
         title={t('title')}
         description={t('description')}

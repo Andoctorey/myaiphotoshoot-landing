@@ -33,7 +33,7 @@ export default async function Features({ locale }: { locale: string }) {
   ];
 
   return (
-    <section id="features" className="py-10 bg-white dark:bg-gray-900">
+    <section id="features" className="bg-white py-12 dark:bg-gray-900 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
