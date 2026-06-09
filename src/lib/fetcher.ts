@@ -39,7 +39,7 @@ export const fetcher = async <T>(url: string): Promise<T> => {
  * @returns Array of gallery items
  */
 export async function fetchGalleryPhotos<T>(page = 1, limit = 100): Promise<T> {
-  const url = `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${page}&limit=${limit}`;
+  const url = `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${page}&limit=${limit}&sort=popular`;
   return fetcher<T>(url);
 }
 

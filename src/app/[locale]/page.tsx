@@ -15,13 +15,14 @@ export async function generateStaticParams() {
 
 export default async function LocalizedHome({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const { initialGallery, initialBlog, initialUseCases } = await fetchHomeData(locale);
+  const { initialGallery, initialGallerySession, initialBlog, initialUseCases } = await fetchHomeData(locale);
   return (
     <>
       <HomeJsonLd locale={locale} />
       <HomeContent
         locale={locale}
         initialGallery={initialGallery}
+        initialGallerySession={initialGallerySession}
         initialBlog={initialBlog}
         initialUseCases={initialUseCases}
       />

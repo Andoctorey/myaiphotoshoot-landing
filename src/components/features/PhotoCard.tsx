@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import PromptOverlay from '@/components/features/PromptOverlay';
 import { withDefaultCdnWidth } from '@/lib/image';
-import { trackEventAndNavigate } from '@/lib/analytics';
+import { trackEvent } from '@/lib/analytics';
 
 interface PhotoCardProps {
   src: string;
@@ -74,17 +74,15 @@ export default function PhotoCard({
   if (linkHref) {
     return linkExternal ? (
       <a href={linkHref} target="_blank" rel="noopener noreferrer" className="block"
-        onClick={(e) => {
-          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        onClick={() => {
           const href = linkHref;
           if (!href) return;
           const isWebApp = href.includes('app.myaiphotoshoot.com');
           const isAppStore = href.includes('apps.apple.com');
           const isPlayStore = href.includes('play.google.com/store/apps/details?id=com.myaiphotoshoot');
           if (isWebApp || isAppStore || isPlayStore) {
-            e.preventDefault();
             const action = isWebApp ? 'webapp_cta_click' : isAppStore ? 'app_store_cta_click' : 'google_play_cta_click';
-            trackEventAndNavigate(action, href);
+            trackEvent(action, 'external_link', href);
           }
         }}
       >
@@ -99,5 +97,4 @@ export default function PhotoCard({
 
   return content;
 }
-
 

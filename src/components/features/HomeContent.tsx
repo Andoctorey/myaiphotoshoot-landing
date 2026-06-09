@@ -1,5 +1,5 @@
 import type { BlogListItem } from '@/types/blog';
-import type { GalleryItem } from '@/types/gallery';
+import type { GalleryItem, GalleryRandomSession } from '@/types/gallery';
 import AppShowcase from './AppShowcase';
 import FAQ from './FAQ';
 import Features from './Features';
@@ -18,6 +18,7 @@ type HomeUseCaseItem = {
 type Props = {
   locale: string;
   initialGallery?: GalleryItem[];
+  initialGallerySession: GalleryRandomSession;
   initialBlog?: BlogListItem[];
   initialUseCases?: HomeUseCaseItem[];
 };
@@ -25,6 +26,7 @@ type Props = {
 export default function HomeContent({
   locale,
   initialGallery = [],
+  initialGallerySession,
   initialBlog = [],
   initialUseCases = [],
 }: Props) {
@@ -35,7 +37,7 @@ export default function HomeContent({
       <Features locale={locale} />
       <Pricing locale={locale} />
       <HomeUseCases initialUseCases={initialUseCases} locale={locale} />
-      <UserGallery initialItems={initialGallery} />
+      <UserGallery initialItems={initialGallery} initialRandomSession={initialGallerySession} />
       <HomeBlog initialPosts={initialBlog} locale={locale} />
       <FAQ locale={locale} />
     </div>

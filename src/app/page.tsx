@@ -11,7 +11,7 @@ import SiteShell from '@/components/layout/SiteShell';
 export default async function Home() {
   const locale = 'en';
 
-  const { initialGallery, initialBlog, initialUseCases } = await fetchHomeData(locale);
+  const { initialGallery, initialGallerySession, initialBlog, initialUseCases } = await fetchHomeData(locale);
   const messages = await loadMessages(locale);
 
   return (
@@ -21,6 +21,7 @@ export default async function Home() {
         <HomeContent
           locale={locale}
           initialGallery={initialGallery}
+          initialGallerySession={initialGallerySession}
           initialBlog={initialBlog}
           initialUseCases={initialUseCases}
         />

@@ -1,21 +1,33 @@
 import { env } from '@/lib/env';
-import type { GalleryItem } from '@/types/gallery';
+import type { GalleryItem, GalleryRandomSession } from '@/types/gallery';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 
 export type HomeData = {
   initialGallery: GalleryItem[];
+  initialGallerySession: GalleryRandomSession;
   initialBlog: BlogListItem[];
   initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
 };
 
 export async function fetchHomeData(locale: string): Promise<HomeData> {
   let initialGallery: GalleryItem[] = [];
+  const initialGallerySession = {
+    seed: crypto.randomUUID(),
+    asOf: new Date().toISOString(),
+  };
   let initialBlog: BlogListItem[] = [];
   let initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }> = [];
+  const galleryParams = new URLSearchParams({
+    page: '1',
+    limit: '24',
+    sort: 'random',
+    seed: initialGallerySession.seed,
+    asOf: initialGallerySession.asOf,
+  });
 
   try {
     const [gRes, bRes, uRes] = await Promise.all([
-      fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=24`, { next: { revalidate: 3600 } }),
+      fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?${galleryParams.toString()}`, { next: { revalidate: 3600 } }),
       fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=6&locale=${locale}`, { next: { revalidate: 3600 } }),
       fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}`, { next: { revalidate: 3600 } })
     ]);
@@ -42,7 +54,5 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
     // Ignore and return empty data; clients can fetch on mount
   }
 
-  return { initialGallery, initialBlog, initialUseCases };
+  return { initialGallery, initialGallerySession, initialBlog, initialUseCases };
 }
-
-
