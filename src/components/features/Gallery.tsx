@@ -4,6 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GalleryItem, GalleryRandomSession } from '@/types/gallery';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { env } from '@/lib/env';
+import {
+  createDailyGalleryRandomSession,
+  isSameGalleryRandomSession,
+} from '@/lib/galleryRandom';
 import { useTranslations } from '@/lib/utils';
 import PhotoCard from '@/components/features/PhotoCard';
 
@@ -66,6 +70,7 @@ export default function Gallery({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const initialFetchAttemptedRef = useRef(false);
+  const dailyRotationCheckedRef = useRef(false);
   const isLoadingRef = useRef(false);
 
   const fetchPage = useCallback(async (
@@ -102,6 +107,26 @@ export default function Gallery({
       setIsLoading(false);
     }
   }, [t]);
+
+  useEffect(() => {
+    if (dailyRotationCheckedRef.current) return;
+    dailyRotationCheckedRef.current = true;
+
+    const dailySession = createDailyGalleryRandomSession();
+    if (
+      initialRandomSession
+      && isSameGalleryRandomSession(initialRandomSession, dailySession)
+    ) {
+      return;
+    }
+
+    setRandomSession(dailySession);
+    setGalleryItems([]);
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+    setNextPage(1);
+    setHasMore(true);
+    void fetchPage(1, 'replace', 'random', dailySession);
+  }, [fetchPage, initialRandomSession]);
 
   useEffect(() => {
     if (

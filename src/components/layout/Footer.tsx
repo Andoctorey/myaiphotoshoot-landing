@@ -28,7 +28,7 @@ export default function Footer() {
             </p>
             <a
               href={appLink.url}
-              className="group inline-flex w-full sm:w-auto items-center justify-center px-5 py-2.5 text-sm font-medium text-white/90 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-sm transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              className="group inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-purple-950/30 transition-all duration-200 hover:-translate-y-0.5 hover:from-purple-500 hover:to-indigo-500 hover:shadow-xl hover:shadow-purple-950/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 motion-reduce:transform-none sm:w-auto"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={tBlog('cta.button')}
@@ -40,7 +40,7 @@ export default function Footer() {
             >
               <span>{tBlog('cta.button')}</span>
               <svg
-                className="ml-2 h-4 w-4 text-white/80 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none"
+                className="ml-2 h-5 w-5 text-white transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transform-none"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"

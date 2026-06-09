@@ -1,4 +1,5 @@
 import { env } from '@/lib/env';
+import { createDailyGalleryRandomSession } from '@/lib/galleryRandom';
 import type { GalleryItem, GalleryRandomSession } from '@/types/gallery';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 
@@ -11,10 +12,7 @@ export type HomeData = {
 
 export async function fetchHomeData(locale: string): Promise<HomeData> {
   let initialGallery: GalleryItem[] = [];
-  const initialGallerySession = {
-    seed: crypto.randomUUID(),
-    asOf: new Date().toISOString(),
-  };
+  const initialGallerySession = createDailyGalleryRandomSession();
   let initialBlog: BlogListItem[] = [];
   let initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }> = [];
   const galleryParams = new URLSearchParams({
