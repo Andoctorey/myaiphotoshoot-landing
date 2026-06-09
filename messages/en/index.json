@@ -149,7 +149,7 @@
     "webApp": {
       "title": "Web App",
       "description": "No installation required. Open your AI photo studio in any modern browser.",
-      "button": "Launch Web App"
+      "button": "Open Web App"
     },
     "mobileApps": {
       "title": "Mobile Apps",

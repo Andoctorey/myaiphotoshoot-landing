@@ -18,7 +18,7 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
         href="https://app.myaiphotoshoot.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-12 w-[202px] items-center justify-center rounded-lg bg-gray-950 px-5 text-base font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:bg-purple-700 dark:bg-black dark:hover:bg-purple-700"
+        className="inline-flex h-12 w-[166px] items-center justify-center rounded-lg bg-gray-950 px-4 text-sm font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:bg-purple-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:bg-black dark:hover:bg-purple-700 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
@@ -26,7 +26,8 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
         }}
       >
         <svg className="h-5 w-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          <circle cx="12" cy="12" r="9" strokeWidth={2} />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12h18M12 3c2.25 2.46 3.5 5.61 3.5 9S14.25 18.54 12 21M12 3C9.75 5.46 8.5 8.61 8.5 12s1.25 6.54 3.5 9" />
         </svg>
         {webAppLabel}
       </a>
@@ -35,7 +36,7 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
         href={PLAY_STORE_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="transition duration-150 hover:-translate-y-0.5"
+        className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
@@ -47,7 +48,7 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
           src="/images/google-play-badge.svg"
           width={202}
           height={56}
-          className="h-12 w-auto object-contain"
+          className="h-12 w-full object-contain"
         />
       </a>
 
@@ -55,7 +56,7 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
         href="https://apps.apple.com/app/id6744860178"
         target="_blank"
         rel="noopener noreferrer"
-        className="transition duration-150 hover:-translate-y-0.5"
+        className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
@@ -67,7 +68,7 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
           src="/images/app-store-badge.svg"
           width={202}
           height={56}
-          className="h-12 w-auto object-contain"
+          className="h-12 w-full object-contain"
         />
       </a>
     </div>

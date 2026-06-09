@@ -5,12 +5,12 @@ import { useTranslations, useLocale } from '@/lib/utils';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/request';
 import ThemeToggle from '@/components/ui/ThemeToggle';
-import { env } from '@/lib/env';
 import { localePath } from '@/lib/seo';
 import { trackEventAndNavigate } from '@/lib/analytics';
 import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
+import type { NavigationUseCase } from '@/lib/navigationUseCases';
 
-export default function Navigation() {
+export default function Navigation({ useCases }: { useCases: NavigationUseCase[] }) {
   const t = useTranslations('navigation');
   const locale = useLocale();
   const pathname = usePathname();
@@ -27,9 +27,6 @@ export default function Navigation() {
   const useCasesButtonRef = useRef<HTMLButtonElement>(null);
   const [isMobileUseCasesOpen, setIsMobileUseCasesOpen] = useState(false);
   const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
-  const [isUseCasesLoading, setIsUseCasesLoading] = useState(true);
-  const [useCases, setUseCases] = useState<Array<{ slug: string; title: string }>>([]);
-  const tCommonLoading = useTranslations('blog');
   const homePath = localePath(locale, '/');
   const homeHash = (hash: string) => `${homePath}${hash}`;
 
@@ -52,11 +49,13 @@ export default function Navigation() {
     return languageNames[langCode] || langCode;
   };
 
-  const navItems = [
+  const navItemsBeforeUseCases = [
     { name: t('features'), href: isHomePage ? '#features' : homeHash('#features') },
+    { name: t('pricing'), href: isHomePage ? '#pricing' : homeHash('#pricing') },
+  ];
+  const navItemsAfterUseCases = [
     { name: t('gallery'), href: isHomePage ? '#gallery' : homeHash('#gallery') },
     { name: t('blog'), href: isHomePage ? '#home-blog' : homeHash('#home-blog') },
-    { name: t('pricing'), href: isHomePage ? '#pricing' : homeHash('#pricing') },
     { name: t('faq'), href: isHomePage ? '#faq' : homeHash('#faq') },
   ];
 
@@ -113,32 +112,6 @@ export default function Navigation() {
     };
   }, [isLanguageMenuOpen, isUseCasesMenuOpen]);
 
-  // Fetch use cases list for selector
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        setIsUseCasesLoading(true);
-        const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        const items = (data.items || []) as Array<{ slug?: string; title?: string }>;
-        if (!cancelled) {
-          setUseCases(
-            items
-              .filter(it => it.slug && it.title)
-              .map(it => ({ slug: it.slug!, title: it.title! }))
-              .sort((a, b) => a.title.localeCompare(b.title, locale, { sensitivity: 'base' }))
-          );
-        }
-      } catch {}
-      finally {
-        if (!cancelled) setIsUseCasesLoading(false);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, [locale]);
-
   // Close mobile menu when clicking on a link
   const handleNavLinkClick = () => {
     setMobileMenuOpen(false);
@@ -184,7 +157,7 @@ export default function Navigation() {
           </div>
           <div className="hidden md:block">
             <div className="ltr:ml-10 rtl:mr-10 flex items-center space-x-1 rtl:space-x-reverse lg:space-x-4" role="navigation">
-              {navItems.map((item) => (
+              {navItemsBeforeUseCases.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
@@ -215,15 +188,7 @@ export default function Navigation() {
                     aria-label={t('useCases')}
                   >
                     <div className="py-1" role="presentation">
-                      {isUseCasesLoading ? (
-                        <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 flex items-center gap-2">
-                          <svg className="animate-spin h-4 w-4 text-gray-400" viewBox="0 0 24 24" aria-hidden="true">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                          </svg>
-                          <span>{tCommonLoading('loading')}</span>
-                        </div>
-                      ) : useCases.length === 0 ? (
+                      {useCases.length === 0 ? (
                         <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300">{t('noUseCases')}</div>
                       ) : (
                         useCases.map((uc) => (
@@ -243,6 +208,15 @@ export default function Navigation() {
                   </div>
                 )}
               </div>
+              {navItemsAfterUseCases.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                >
+                  {item.name}
+                </a>
+              ))}
               <a
                 href={appLink.url}
                 target="_blank"
@@ -382,15 +356,7 @@ export default function Navigation() {
                 </button>
                 {isMobileUseCasesOpen && (
                   <div id="mobile-usecases-list" className="mt-1">
-                    {isUseCasesLoading ? (
-                      <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm flex items-center gap-2">
-                        <svg className="animate-spin h-4 w-4 text-gray-400" viewBox="0 0 24 24" aria-hidden="true">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                        </svg>
-                        <span>{tCommonLoading('loading')}</span>
-                      </div>
-                    ) : useCases.length === 0 ? (
+                    {useCases.length === 0 ? (
                       <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm">{t('noUseCases')}</div>
                     ) : (
                       <div className="max-h-64 overflow-auto">
