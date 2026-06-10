@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build && node scripts/fix-html-lang.js",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:worker": "node --experimental-default-type=module --test worker/deploy-proxy.test.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

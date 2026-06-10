@@ -15,24 +15,29 @@ if ! npx --no-install wrangler --version &> /dev/null; then
     exit 1
 fi
 
-# Deploy the worker
-echo "🌩️ Deploying worker to Cloudflare..."
-npx wrangler deploy
-
-echo "✅ Worker deployed successfully!"
-echo ""
-echo "📝 Next steps:"
-echo "1. Set up the deployment webhook URL:"
+# Check required configuration before deployment.
+echo "Required Worker secrets:"
 echo "   npx wrangler secret put DEPLOY_WEBHOOK_URL"
+echo "   npx wrangler secret put TEAM_DOMAIN"
+echo "   npx wrangler secret put POLICY_AUD"
+echo "   npx wrangler secret put DEPLOY_ALLOWED_EMAILS      # comma-separated"
 echo ""
-echo "2. (Optional) Enable GitHub workflow trigger for search updates:"
+echo "Optional GitHub workflow secrets:"
 echo "   npx wrangler secret put GITHUB_ACTIONS_TRIGGER_TOKEN"
 echo "   npx wrangler secret put GITHUB_OWNER                # default: Andoctorey"
 echo "   npx wrangler secret put GITHUB_REPO                 # default: myaiphotoshoot-landing"
 echo "   npx wrangler secret put SEARCH_UPDATES_WORKFLOW_ID  # default: submit-sitemap.yml"
 echo "   npx wrangler secret put SEARCH_UPDATES_REF          # default: main"
 echo ""
-echo "3. The worker will be available at:"
-echo "   https://myaiphotoshoot-landing-deploy-proxy.myaiphotoshoot.workers.dev"
-echo ""
-echo "4. Configure your admin interface to use this worker URL" 
+echo "Set the secrets above before continuing."
+read -r -p "Deploy the Worker to admin.myaiphotoshoot.com/api/deploy now? [y/N] " confirm
+if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+    echo "Deployment cancelled."
+    exit 0
+fi
+
+echo "🌩️ Deploying worker to Cloudflare..."
+npx wrangler deploy
+
+echo "✅ Worker deployed successfully!"
+echo "Endpoint: https://admin.myaiphotoshoot.com/api/deploy"

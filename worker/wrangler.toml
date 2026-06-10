@@ -1,9 +1,17 @@
 name = "myaiphotoshoot-landing-deploy-proxy"
 compatibility_date = "2024-12-01"
 main = "deploy-proxy.js"
+workers_dev = false
 
-# Required secret:
+[[routes]]
+pattern = "admin.myaiphotoshoot.com/api/deploy"
+zone_name = "myaiphotoshoot.com"
+
+# Required configuration:
 # - DEPLOY_WEBHOOK_URL (Cloudflare Pages deploy hook URL)
+# - TEAM_DOMAIN (Cloudflare Access team domain, for example team.cloudflareaccess.com)
+# - POLICY_AUD (Application Audience tag for the admin Access application)
+# - DEPLOY_ALLOWED_EMAILS (comma-separated allowlist)
 #
 # Optional secrets for triggering GitHub workflow after deploy trigger:
 # - GITHUB_ACTIONS_TRIGGER_TOKEN
