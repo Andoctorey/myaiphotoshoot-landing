@@ -45,6 +45,12 @@ async function checkSitemapExists(maxRetries = 5, delayMs = 3000) {
 
 async function submitSitemapViaFunction() {
   console.log('🔑 Submitting sitemap via Cloudflare Pages Function...');
+
+  const submissionToken = process.env.SEARCH_SUBMISSION_TOKEN;
+  if (!submissionToken) {
+    console.error('❌ SEARCH_SUBMISSION_TOKEN is not configured');
+    return false;
+  }
   
   try {
     const fetch = (await import('node-fetch')).default;
@@ -53,6 +59,7 @@ async function submitSitemapViaFunction() {
     const response = await fetch('https://myaiphotoshoot.com/submit-sitemap', {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${submissionToken}`,
         'Content-Type': 'application/json',
         'User-Agent': 'MyAIPhotoShoot-Deploy/1.0'
       },

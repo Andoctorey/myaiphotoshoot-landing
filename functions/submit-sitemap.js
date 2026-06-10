@@ -8,11 +8,31 @@
 export async function onRequest(context) {
   const { request, env } = context;
   
-  // Allow both GET and POST requests
-  if (request.method !== 'POST' && request.method !== 'GET') {
-    return new Response('Method not allowed. Use GET for status or POST for submission.', { 
+  if (request.method !== 'POST') {
+    return new Response('Method not allowed. Use POST for submission.', {
       status: 405,
-      headers: { 'Content-Type': 'text/plain' }
+      headers: {
+        'Allow': 'POST',
+        'Cache-Control': 'no-store',
+        'Content-Type': 'text/plain'
+      }
+    });
+  }
+
+  if (!env.SEARCH_SUBMISSION_TOKEN) {
+    console.error('SEARCH_SUBMISSION_TOKEN is not configured');
+    return jsonResponse({
+      success: false,
+      message: 'Sitemap submission authentication is not configured'
+    }, 500);
+  }
+
+  if (!await hasValidBearerToken(request, env.SEARCH_SUBMISSION_TOKEN)) {
+    return jsonResponse({
+      success: false,
+      message: 'Unauthorized'
+    }, 401, {
+      'WWW-Authenticate': 'Bearer'
     });
   }
   
@@ -25,14 +45,10 @@ export async function onRequest(context) {
     
     // Check environment variables
     if (!env.GOOGLE_SERVICE_ACCOUNT_KEY) {
-      return new Response(JSON.stringify({
+      return jsonResponse({
         success: false,
-        message: 'Google Service Account key not found in environment variables',
-        instructions: 'Please configure GOOGLE_SERVICE_ACCOUNT_KEY in Cloudflare Pages settings'
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+        message: 'Google Search Console integration is not configured'
+      }, 500);
     }
     
     // Parse credentials
@@ -40,34 +56,12 @@ export async function onRequest(context) {
     try {
       credentials = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY);
       console.log('✅ Service account credentials parsed successfully');
-      console.log('🔍 Client email:', credentials.client_email);
     } catch (parseError) {
       console.error('❌ Failed to parse service account credentials:', parseError.message);
-      return new Response(JSON.stringify({
+      return jsonResponse({
         success: false,
-        message: 'Invalid service account credentials format',
-        error: parseError.message
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-    
-    // For GET requests, just return status
-    if (request.method === 'GET') {
-      return new Response(JSON.stringify({
-        success: true,
-        message: 'Google Search Console API integration ready',
-        config: {
-          siteUrl: SITE_URL,
-          sitemapUrl: SITEMAP_URL,
-          serviceAccount: credentials.client_email
-        },
-        instructions: 'POST to this endpoint to submit sitemap'
-      }, null, 2), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      });
+        message: 'Google Search Console integration is misconfigured'
+      }, 500);
     }
     
     // Get OAuth2 access token
@@ -76,14 +70,10 @@ export async function onRequest(context) {
     
     if (!tokenResult.success) {
       console.error('❌ Failed to get access token:', tokenResult.error);
-      return new Response(JSON.stringify({
+      return jsonResponse({
         success: false,
-        message: 'Failed to authenticate with Google API',
-        error: tokenResult.error
-      }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
+        message: 'Failed to authenticate with Google API'
+      }, 502);
     }
     
     console.log('✅ Successfully authenticated with Google API');
@@ -98,7 +88,7 @@ export async function onRequest(context) {
       // Try to get sitemap status
       const statusResult = await getSitemapStatus(tokenResult.accessToken, SITE_URL, SITEMAP_URL);
       
-      return new Response(JSON.stringify({
+      return jsonResponse({
         success: true,
         message: 'Sitemap submitted successfully to Google Search Console',
         data: {
@@ -107,35 +97,62 @@ export async function onRequest(context) {
           submissionTime: new Date().toISOString(),
           status: statusResult.success ? statusResult.data : 'Status check failed'
         }
-      }, null, 2), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
       });
     } else {
       console.error('❌ Failed to submit sitemap:', submitResult.error);
-      return new Response(JSON.stringify({
+      return jsonResponse({
         success: false,
-        message: 'Failed to submit sitemap',
-        error: submitResult.error
-      }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
+        message: 'Failed to submit sitemap'
+      }, 502);
     }
     
   } catch (error) {
     console.error('❌ Unexpected error:', error);
     
-    return new Response(JSON.stringify({
+    return jsonResponse({
       success: false,
       message: 'Unexpected error occurred',
-      error: error.message,
       timestamp: new Date().toISOString()
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    }, 500);
   }
+}
+
+async function hasValidBearerToken(request, expectedToken) {
+  const authorization = request.headers.get('Authorization') || '';
+  if (!authorization.startsWith('Bearer ')) {
+    return false;
+  }
+
+  const providedToken = authorization.slice('Bearer '.length);
+  if (!providedToken) {
+    return false;
+  }
+
+  const encoder = new TextEncoder();
+  const [providedHash, expectedHash] = await Promise.all([
+    crypto.subtle.digest('SHA-256', encoder.encode(providedToken)),
+    crypto.subtle.digest('SHA-256', encoder.encode(expectedToken))
+  ]);
+  const providedBytes = new Uint8Array(providedHash);
+  const expectedBytes = new Uint8Array(expectedHash);
+  let difference = 0;
+
+  for (let i = 0; i < providedBytes.length; i++) {
+    difference |= providedBytes[i] ^ expectedBytes[i];
+  }
+
+  return difference === 0;
+}
+
+function jsonResponse(payload, status = 200, additionalHeaders = {}) {
+  return new Response(JSON.stringify(payload, null, 2), {
+    status,
+    headers: {
+      'Cache-Control': 'no-store',
+      'Content-Type': 'application/json; charset=utf-8',
+      ...additionalHeaders
+    }
+  });
 }
 
 /**

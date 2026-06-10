@@ -34,8 +34,8 @@ jobs:
           echo "🚀 Starting sitemap submission..."
           node scripts/submit-sitemap.js
         env:
-          # Add any environment variables if needed for the script
           NODE_ENV: production
+          SEARCH_SUBMISSION_TOKEN: ${{ secrets.SEARCH_SUBMISSION_TOKEN }}
 
       - name: Submit URLs to IndexNow
         run: |
@@ -44,23 +44,6 @@ jobs:
         env:
           NODE_ENV: production
           
-      - name: Check submission status
-        run: |
-          echo "🔍 Checking sitemap submission status..."
-          STATUS_BODY_FILE="/tmp/submit-sitemap-status.json"
-          HTTP_STATUS=$(curl -sS -o "$STATUS_BODY_FILE" -w "%{http_code}" "https://myaiphotoshoot.com/submit-sitemap" || true)
-          echo "HTTP status: ${HTTP_STATUS:-unknown}"
-          RESPONSE_BODY=$(cat "$STATUS_BODY_FILE" 2>/dev/null || true)
-          
-          if [ -n "$RESPONSE_BODY" ] && echo "$RESPONSE_BODY" | jq -e . >/dev/null 2>&1; then
-            echo "$RESPONSE_BODY" | jq '.'
-          else
-            echo "⚠️ Non-JSON or empty response from /submit-sitemap"
-            echo "$RESPONSE_BODY" | head -c 500
-            echo
-          fi
-        continue-on-error: true
-
       - name: Check IndexNow status
         run: |
           echo "🔍 Checking IndexNow status..."

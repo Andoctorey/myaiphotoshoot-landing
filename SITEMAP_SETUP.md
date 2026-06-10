@@ -8,7 +8,8 @@ The system consists of five components:
 
 1. **Google submission function** (`functions/submit-sitemap.js`)
    - Handles Google Search Console API authentication and sitemap submission.
-   - Uses a Google service account key from Cloudflare Pages environment variables.
+   - Requires Bearer authentication before using the Google service account.
+   - Uses encrypted Cloudflare Pages secrets for credentials.
 
 2. **IndexNow submission function** (`functions/submit-indexnow.js`)
    - Fetches URLs from `sitemap.xml` and submits them to `https://api.indexnow.org/indexnow`.
@@ -33,8 +34,18 @@ The system consists of five components:
 1. Create or choose a Google Cloud project.
 2. Enable **Search Console API**.
 3. Create a service account and generate a JSON key.
-4. Add the service account email as an **Owner** in Google Search Console for `myaiphotoshoot.com`.
-5. In Cloudflare Pages, set `GOOGLE_SERVICE_ACCOUNT_KEY` to the full JSON key content.
+4. Add the service account email as a **Full user** in Google Search Console for `myaiphotoshoot.com`. Full users can submit sitemaps; Owner access is not required.
+5. In Cloudflare Pages, add `GOOGLE_SERVICE_ACCOUNT_KEY` as an encrypted secret containing the full JSON key.
+6. Generate a high-entropy submission token, for example:
+
+```bash
+openssl rand -hex 32
+```
+
+7. Add that token as an encrypted Cloudflare Pages secret named `SEARCH_SUBMISSION_TOKEN`.
+8. Add the same token as a GitHub Actions repository secret named `SEARCH_SUBMISSION_TOKEN`.
+
+The Cloudflare and GitHub secret values must match. Do not store either value in source control.
 
 ### 2. IndexNow Setup
 
@@ -48,7 +59,7 @@ The system consists of five components:
 
 After deploy, verify these endpoints:
 
-- `https://myaiphotoshoot.com/submit-sitemap` (Google status/submission)
+- `https://myaiphotoshoot.com/submit-sitemap` (authenticated Google submission)
 - `https://myaiphotoshoot.com/submit-indexnow` (IndexNow status/submission)
 - `https://myaiphotoshoot.com/indexnow-key.txt` (IndexNow key verification file)
 
@@ -57,9 +68,9 @@ After deploy, verify these endpoints:
 The existing workflow now:
 
 - waits 130 seconds for deployment completion,
-- submits sitemap updates to Google Search Console,
+- submits authenticated sitemap updates to Google Search Console,
 - submits sitemap URLs through IndexNow,
-- checks status endpoints for both integrations.
+- checks the public IndexNow status endpoint.
 
 ## How It Works
 
@@ -70,16 +81,14 @@ The existing workflow now:
 3. GitHub Actions waits for deployment to settle.
 4. `scripts/submit-sitemap.js` calls `/submit-sitemap`.
 5. `scripts/submit-indexnow.js` calls `/submit-indexnow`.
-6. Workflow logs status responses from both endpoints.
+6. Workflow logs the Google submission result and the public IndexNow status response.
 
 ## Manual Testing
 
 ```bash
-# Google endpoint status
-curl -X GET "https://myaiphotoshoot.com/submit-sitemap"
-
 # Google submission
 curl -X POST "https://myaiphotoshoot.com/submit-sitemap" \
+  -H "Authorization: Bearer ${SEARCH_SUBMISSION_TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"action": "submit-sitemap"}'
 
@@ -95,9 +104,11 @@ curl -X POST "https://myaiphotoshoot.com/submit-indexnow" \
 curl -X GET "https://myaiphotoshoot.com/indexnow-key.txt"
 
 # Run scripts locally
-node scripts/submit-sitemap.js
+SEARCH_SUBMISSION_TOKEN="your-token" node scripts/submit-sitemap.js
 node scripts/submit-indexnow.js
 ```
+
+`GET /submit-sitemap` is intentionally disabled. The endpoint returns `401` when the Bearer token is missing or invalid and fails with `500` when server-side authentication is not configured.
 
 ## Troubleshooting
 
@@ -106,17 +117,24 @@ node scripts/submit-indexnow.js
 1. **Google key missing / invalid**
    - Verify `GOOGLE_SERVICE_ACCOUNT_KEY` is present and valid JSON.
 
-2. **IndexNow key missing**
+2. **Google submission returns `401`**
+   - Verify the request sends `Authorization: Bearer <token>`.
+   - Verify the Cloudflare and GitHub `SEARCH_SUBMISSION_TOKEN` secrets have identical values.
+
+3. **Google submission authentication is not configured**
+   - Add `SEARCH_SUBMISSION_TOKEN` as an encrypted Cloudflare Pages secret and redeploy.
+
+4. **IndexNow key missing**
    - Verify `INDEXNOW_KEY` exists in Cloudflare Pages environment variables.
 
-3. **IndexNow key verification mismatch**
+5. **IndexNow key verification mismatch**
    - `https://myaiphotoshoot.com/indexnow-key.txt` must return exactly the same value as `INDEXNOW_KEY`.
 
-4. **Sitemap unavailable**
+6. **Sitemap unavailable**
    - Wait longer for deployment propagation.
    - Confirm `https://myaiphotoshoot.com/sitemap.xml` returns `200`.
 
-5. **IndexNow API rejection**
+7. **IndexNow API rejection**
    - Ensure submitted URLs are valid for `myaiphotoshoot.com`.
    - Verify endpoint connectivity and retry on transient errors.
 
@@ -135,7 +153,7 @@ curl -I "https://myaiphotoshoot.com/sitemap.xml"
 ### Success Indicators
 
 - GitHub Actions workflow completes successfully.
-- `/submit-sitemap` and `/submit-indexnow` return `success: true`.
+- Authenticated `POST /submit-sitemap` and `POST /submit-indexnow` return `success: true`.
 - `indexnow-key.txt` serves the configured key.
 - New pages appear in Google Search Console and IndexNow-enabled engines faster.
 
@@ -147,7 +165,9 @@ curl -I "https://myaiphotoshoot.com/sitemap.xml"
 
 ## Security Notes
 
-- Keep `GOOGLE_SERVICE_ACCOUNT_KEY` and `INDEXNOW_KEY` in Cloudflare environment variables.
+- Keep `GOOGLE_SERVICE_ACCOUNT_KEY` and `SEARCH_SUBMISSION_TOKEN` in encrypted Cloudflare Pages secrets.
+- Keep `SEARCH_SUBMISSION_TOKEN` in GitHub Actions secrets.
+- Keep `INDEXNOW_KEY` in Cloudflare configuration; it is intentionally exposed through the IndexNow verification endpoint.
 - Do not store service account JSON in source control.
 - IndexNow keys are expected to be publicly verifiable via the key file endpoint.
 

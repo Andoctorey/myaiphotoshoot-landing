@@ -7,6 +7,7 @@
     "build": "next build && node scripts/fix-html-lang.js",
     "start": "next start",
     "lint": "next lint",
+    "test:sitemap": "node --experimental-default-type=module --test functions/submit-sitemap.test.js",
     "test:worker": "node --experimental-default-type=module --test worker/deploy-proxy.test.js"
   },
   "dependencies": {
