@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { Turnstile } from '@marsidev/react-turnstile';
+import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import { useTranslations } from '@/lib/utils';
 import { env } from '@/lib/env';
 
@@ -8,6 +10,8 @@ export default function SupportForm() {
   const t = useTranslations('supportPage');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [validationErrors, setValidationErrors] = useState<{
@@ -42,6 +46,11 @@ export default function SupportForm() {
       return;
     }
     
+    if (env.TURNSTILE_SITE_KEY && !turnstileToken) {
+      setSubmitStatus('error');
+      return;
+    }
+    
     setIsSubmitting(true);
     setSubmitStatus('idle');
     
@@ -51,16 +60,18 @@ export default function SupportForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, message }),
+        body: JSON.stringify({ email, message, turnstileToken: env.TURNSTILE_SITE_KEY ? turnstileToken : 'dummy-token-for-dev' }),
       });
       
       if (response.ok) {
         setSubmitStatus('success');
         setEmail('');
         setMessage('');
+        turnstileRef.current?.reset();
       } else {
         console.error('Support form submission failed:', await response.text());
         setSubmitStatus('error');
+        turnstileRef.current?.reset();
       }
     } catch (error) {
       // Handle error
@@ -145,11 +156,24 @@ export default function SupportForm() {
                 {t('form.privacyNotice')}
               </p>
             </div>
+
+            {env.TURNSTILE_SITE_KEY && (
+              <div className="mb-6 flex justify-center">
+                <Turnstile
+                  siteKey={env.TURNSTILE_SITE_KEY}
+                  onSuccess={setTurnstileToken}
+                  ref={turnstileRef}
+                  options={{
+                    theme: 'auto',
+                  }}
+                />
+              </div>
+            )}
             
             <button
               type="submit"
               className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50"
-              disabled={isSubmitting}
+              disabled={isSubmitting || (!!env.TURNSTILE_SITE_KEY && !turnstileToken)}
             >
               {isSubmitting ? (
                 <span className="flex items-center justify-center">

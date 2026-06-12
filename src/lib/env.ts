@@ -15,9 +15,15 @@ if (!SUPABASE_FUNCTIONS_URL) {
   logEnvWarning('NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL');
 }
 
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+if (!TURNSTILE_SITE_KEY) {
+  logEnvWarning('NEXT_PUBLIC_TURNSTILE_SITE_KEY');
+}
+
 export const env = {
   // API endpoints
   SUPABASE_FUNCTIONS_URL: SUPABASE_FUNCTIONS_URL || 'https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1',
+  TURNSTILE_SITE_KEY: TURNSTILE_SITE_KEY || '',
 };
 
 // This ensures we're using environment variables safely
