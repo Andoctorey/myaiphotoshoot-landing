@@ -75,7 +75,7 @@ export default async function BlogPage({ params }: Props) {
   let initialPagination: { total: number; page: number; limit: number; totalPages: number } | null = null;
 
   try {
-    const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=10&locale=${locale}`, { next: { revalidate: 3600 } });
+    const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${locale}`, { next: { revalidate: 3600 } });
     if (res.ok) {
       const json = (await res.json()) as BlogPostsResponse;
       initialPosts = json.posts || [];

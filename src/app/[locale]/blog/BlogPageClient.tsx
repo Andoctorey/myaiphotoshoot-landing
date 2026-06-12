@@ -19,7 +19,7 @@ type Props = {
 export default function BlogPageClient({ locale, initialPosts = [], initialPagination }: Props) {
   const t = useTranslations('blog');
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 10;
+  const postsPerPage = 12;
 
   const fallbackData = initialPosts.length > 0 && initialPagination ? {
     posts: initialPosts,
@@ -61,7 +61,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
               name: 'My AI Photo Shoot',
               url: 'https://myaiphotoshoot.com'
             },
-            hasPart: posts.slice(0, 10).map((p) => ({
+            hasPart: posts.slice(0, 12).map((p) => ({
               '@type': 'BlogPosting',
               headline: p.title,
               url: canonicalUrl(locale, `/blog/${p.slug}/`),

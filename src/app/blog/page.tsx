@@ -67,7 +67,7 @@ export default async function BlogPage() {
 
   try {
     const res = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=10&locale=${defaultLocale}`,
+      `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${defaultLocale}`,
       { next: { revalidate: 3600 } }
     );
     if (res.ok) {
