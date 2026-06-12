@@ -13,6 +13,28 @@ import type { BlogPost } from '@/types/blog';
 import { withDefaultCdnWidth } from '@/lib/image';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
 import { canonicalUrl, localePath } from '@/lib/seo';
+import DOMPurify from 'isomorphic-dompurify';
+
+DOMPurify.addHook('uponSanitizeElement', (node, data) => {
+  if (data.tagName === 'iframe') {
+    const el = node as Element;
+    const src = el.getAttribute('src');
+    if (!src) {
+      return el.parentNode?.removeChild(el);
+    }
+    try {
+      const url = new URL(src);
+      const isYouTube = url.hostname === 'youtube.com' || url.hostname === 'www.youtube.com' ||
+                        url.hostname === 'youtube-nocookie.com' || url.hostname === 'www.youtube-nocookie.com';
+      if (url.protocol !== 'https:' || !isYouTube || !url.pathname.startsWith('/embed/')) {
+        return el.parentNode?.removeChild(el);
+      }
+    } catch {
+      return el.parentNode?.removeChild(el);
+    }
+    el.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+  }
+});
 
 interface Props {
   slug: string;
@@ -77,7 +99,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   const processedContent = useMemo(() => {
     if (!safeContent) return '';
     const withWidth = addWidthParamToImages(safeContent);
-    return withWidth.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
+    const updatedHtml = withWidth.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
       if (/\salt=(["']).*?\1/i.test(attrs)) {
         return ['<img ', attrs, '>'].join('');
       }
@@ -88,6 +110,13 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         .replaceAll('<', '&lt;')
         .replaceAll('>', '&gt;');
       return ['<img ', attrs, ' alt="', safeAlt, '">'].join('');
+    });
+
+    // We want to allow iframes for embeds, like YouTube. DOMPurify removes iframes by default.
+    // Also allow common elements that might be used in blogs.
+    return DOMPurify.sanitize(updatedHtml, {
+      ADD_TAGS: ['iframe'],
+      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
     });
   }, [featuredImageAlt, safeContent]);
 
