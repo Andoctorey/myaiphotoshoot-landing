@@ -90,7 +90,7 @@ export async function onRequest(context) {
             batchCount: batches.length
           },
           submissions
-        }, 502);
+        }, 500);
       }
     }
 
@@ -213,7 +213,8 @@ async function submitBatchToIndexNow(payload) {
     const response = await fetch(INDEXNOW_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
+        'User-Agent': 'myaiphotoshoot.com/1.0 (IndexNowBot)'
       },
       body: JSON.stringify(payload)
     });
