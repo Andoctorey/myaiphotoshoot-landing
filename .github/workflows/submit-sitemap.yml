@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "⏳ Waiting for deployment to complete..."
           echo "This allows time for Cloudflare Pages to build and deploy the site"
-          sleep 130
+          sleep 240
           
       - name: Submit sitemap to Google Search Console
         run: |
