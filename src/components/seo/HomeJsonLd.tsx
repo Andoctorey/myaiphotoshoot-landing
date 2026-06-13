@@ -25,7 +25,7 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
         name: 'My AI Photo Shoot',
         operatingSystem: 'iOS, Android',
         applicationCategory: 'Photo & Video',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },
         sameAs: [
           'https://apps.apple.com/app/id6744860178',
           'https://play.google.com/store/apps/details?id=com.myaiphotoshoot'

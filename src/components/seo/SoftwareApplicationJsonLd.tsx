@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import { buildDigitalOfferPolicies } from '@/lib/product-offer';
+import { canonicalUrl } from '@/lib/seo';
 
 type Props = {
   idUrl: string; // canonical page URL without hash
@@ -17,12 +19,17 @@ export default function SoftwareApplicationJsonLd({
   applicationCategory = 'Photo & Video',
   inLanguage,
 }: Props) {
+  const offerPolicies = buildDigitalOfferPolicies({
+    priceCurrency: 'USD',
+    policyUrl: canonicalUrl(inLanguage || 'en', '/legal/'),
+  });
+
   const webApp = {
     '@type': 'WebApplication',
     name,
     applicationCategory,
     browserRequirements: 'Requires JavaScript. Works best on modern browsers.',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },
     url: 'https://app.myaiphotoshoot.com',
   } as const;
 
@@ -31,7 +38,7 @@ export default function SoftwareApplicationJsonLd({
     name: 'My AI Photo Shoot',
     operatingSystem: 'iOS',
     applicationCategory,
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },
     downloadUrl: 'https://apps.apple.com/app/id6744860178',
     sameAs: ['https://apps.apple.com/app/id6744860178'],
   } as const;
@@ -41,7 +48,7 @@ export default function SoftwareApplicationJsonLd({
     name: 'My AI Photo Shoot',
     operatingSystem: 'Android',
     applicationCategory,
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },
     downloadUrl: 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot',
     sameAs: ['https://play.google.com/store/apps/details?id=com.myaiphotoshoot'],
   } as const;
@@ -54,7 +61,7 @@ export default function SoftwareApplicationJsonLd({
     description: description || undefined,
     applicationCategory,
     inLanguage: inLanguage || undefined,
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },
     isRelatedTo: [webApp, iosApp, androidApp],
   };
 
