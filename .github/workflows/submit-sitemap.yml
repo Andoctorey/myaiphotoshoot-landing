@@ -43,12 +43,15 @@ jobs:
           node scripts/submit-indexnow.js
         env:
           NODE_ENV: production
+          SEARCH_SUBMISSION_TOKEN: ${{ secrets.SEARCH_SUBMISSION_TOKEN }}
           
       - name: Check IndexNow status
         run: |
           echo "🔍 Checking IndexNow status..."
           STATUS_BODY_FILE="/tmp/submit-indexnow-status.json"
-          HTTP_STATUS=$(curl -sS -o "$STATUS_BODY_FILE" -w "%{http_code}" "https://myaiphotoshoot.com/submit-indexnow" || true)
+          HTTP_STATUS=$(curl -sS -o "$STATUS_BODY_FILE" -w "%{http_code}" \
+            -H "Authorization: Bearer ${SEARCH_SUBMISSION_TOKEN}" \
+            "https://myaiphotoshoot.com/submit-indexnow" || true)
           echo "HTTP status: ${HTTP_STATUS:-unknown}"
           RESPONSE_BODY=$(cat "$STATUS_BODY_FILE" 2>/dev/null || true)
 
@@ -60,6 +63,8 @@ jobs:
             echo
           fi
         continue-on-error: true
+        env:
+          SEARCH_SUBMISSION_TOKEN: ${{ secrets.SEARCH_SUBMISSION_TOKEN }}
         
       - name: Success notification
         if: success()

@@ -60,7 +60,7 @@ The Cloudflare and GitHub secret values must match. Do not store either value in
 After deploy, verify these endpoints:
 
 - `https://myaiphotoshoot.com/submit-sitemap` (authenticated Google submission)
-- `https://myaiphotoshoot.com/submit-indexnow` (IndexNow status/submission)
+- `https://myaiphotoshoot.com/submit-indexnow` (authenticated IndexNow status/submission)
 - `https://myaiphotoshoot.com/indexnow-key.txt` (IndexNow key verification file)
 
 ### 4. GitHub Actions Workflow
@@ -69,8 +69,8 @@ The existing workflow now:
 
 - waits 130 seconds for deployment completion,
 - submits authenticated sitemap updates to Google Search Console,
-- submits sitemap URLs through IndexNow,
-- checks the public IndexNow status endpoint.
+- submits authenticated sitemap URLs through IndexNow,
+- checks the authenticated IndexNow status endpoint.
 
 ## How It Works
 
@@ -81,7 +81,7 @@ The existing workflow now:
 3. GitHub Actions waits for deployment to settle.
 4. `scripts/submit-sitemap.js` calls `/submit-sitemap`.
 5. `scripts/submit-indexnow.js` calls `/submit-indexnow`.
-6. Workflow logs the Google submission result and the public IndexNow status response.
+6. Workflow logs the Google submission result and the authenticated IndexNow status response.
 
 ## Manual Testing
 
@@ -93,10 +93,12 @@ curl -X POST "https://myaiphotoshoot.com/submit-sitemap" \
   -d '{"action": "submit-sitemap"}'
 
 # IndexNow endpoint status
-curl -X GET "https://myaiphotoshoot.com/submit-indexnow"
+curl -X GET "https://myaiphotoshoot.com/submit-indexnow" \
+  -H "Authorization: Bearer ${SEARCH_SUBMISSION_TOKEN}"
 
 # IndexNow submission
 curl -X POST "https://myaiphotoshoot.com/submit-indexnow" \
+  -H "Authorization: Bearer ${SEARCH_SUBMISSION_TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"action": "submit-indexnow"}'
 
@@ -105,10 +107,10 @@ curl -X GET "https://myaiphotoshoot.com/indexnow-key.txt"
 
 # Run scripts locally
 SEARCH_SUBMISSION_TOKEN="your-token" node scripts/submit-sitemap.js
-node scripts/submit-indexnow.js
+SEARCH_SUBMISSION_TOKEN="your-token" node scripts/submit-indexnow.js
 ```
 
-`GET /submit-sitemap` is intentionally disabled. The endpoint returns `401` when the Bearer token is missing or invalid and fails with `500` when server-side authentication is not configured.
+`GET /submit-sitemap` is intentionally disabled. Both submission endpoints return `401` when the Bearer token is missing or invalid and fail with `500` when server-side authentication is not configured.
 
 ## Troubleshooting
 

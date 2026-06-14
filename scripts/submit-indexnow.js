@@ -42,10 +42,16 @@ async function checkSitemapExists(maxRetries = 5, delayMs = 3000) {
 
 async function submitIndexNow() {
   const fetch = (await import('node-fetch')).default;
+  const submissionToken = process.env.SEARCH_SUBMISSION_TOKEN;
+
+  if (!submissionToken) {
+    throw new Error('SEARCH_SUBMISSION_TOKEN is not configured');
+  }
 
   const response = await fetch(SUBMIT_URL, {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${submissionToken}`,
       'Content-Type': 'application/json',
       'User-Agent': 'MyAIPhotoShoot-Deploy/1.0'
     },
