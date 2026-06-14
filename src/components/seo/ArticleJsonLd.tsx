@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { serializeJsonLd } from '@/lib/json-ld';
 
 type Props = {
   locale: string;
@@ -49,6 +50,6 @@ export default function ArticleJsonLd({
   } as const;
 
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
   );
 }

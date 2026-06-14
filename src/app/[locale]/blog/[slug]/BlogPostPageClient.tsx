@@ -11,6 +11,7 @@ import { useBlogPost } from '@/hooks/useBlog';
 import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 import type { BlogPost } from '@/types/blog';
 import { withDefaultCdnWidth } from '@/lib/image';
+import { serializeJsonLd } from '@/lib/json-ld';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import DOMPurify from 'isomorphic-dompurify';
@@ -643,7 +644,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
       {breadcrumbLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }}
         />
       )}
       <FAQSchema faqs={faqs} />

@@ -1,3 +1,5 @@
+import { serializeJsonLd } from '@/lib/json-ld';
+
 interface FAQ {
   question: string;
   answer: string;
@@ -30,7 +32,7 @@ export default function FAQSchema({ faqs, inLanguage }: FAQSchemaProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }}
     />
   );
 }
@@ -78,4 +80,4 @@ export const extractFAQsFromContent = (content: string): FAQ[] => {
   });
   
   return faqs;
-}; 
+};

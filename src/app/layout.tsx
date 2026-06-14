@@ -12,6 +12,7 @@ import TikTokPageTracker from "@/components/TikTokPageTracker";
 import { GA_MEASUREMENT_ID, TIKTOK_PIXEL_ID } from "@/lib/analytics";
 import ConsentBanner from "@/components/ConsentBanner";
 import { env } from "@/lib/env";
+import { serializeJsonLd } from "@/lib/json-ld";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -135,7 +136,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: serializeJsonLd({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               '@id': 'https://myaiphotoshoot.com/#organization',
@@ -168,7 +169,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: serializeJsonLd({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               '@id': 'https://myaiphotoshoot.com/#website',

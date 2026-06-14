@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { serializeJsonLd } from '@/lib/json-ld';
 import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 import { canonicalUrl } from '@/lib/seo';
 
@@ -62,7 +63,7 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
     />
   );
 }

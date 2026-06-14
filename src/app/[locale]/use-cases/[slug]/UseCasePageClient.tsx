@@ -8,6 +8,7 @@ import { useUseCase } from '@/hooks/useUseCase';
 import { useTranslations } from '@/lib/utils';
 import type { UseCase } from '@/types/usecase';
 import { withDefaultCdnWidth } from '@/lib/image';
+import { serializeJsonLd } from '@/lib/json-ld';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 import HowToJsonLd from '@/components/seo/HowToJsonLd';
@@ -164,7 +165,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       {/* Breadcrumb JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }}
       />
       {/* SEO Schema for FAQ */}
       {faqs.length > 0 && (

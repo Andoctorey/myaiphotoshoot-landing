@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { serializeJsonLd } from '@/lib/json-ld';
 import FAQAccordion, { type FAQItem } from './FAQAccordion';
 
 export default async function FAQ({ locale }: { locale: string }) {
@@ -44,7 +45,7 @@ export default async function FAQ({ locale }: { locale: string }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
             mainEntity: items.map((item) => ({

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import { withDefaultCdnWidth } from '@/lib/image';
+import { serializeJsonLd } from '@/lib/json-ld';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogListItem } from '@/types/blog';
@@ -50,7 +51,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
             name: t('title'),

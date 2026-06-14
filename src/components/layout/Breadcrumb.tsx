@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Script from 'next/script'
+import { serializeJsonLd } from '@/lib/json-ld'
 
 interface BreadcrumbProps {
   items: {
@@ -23,10 +23,9 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
 
   return (
     <>
-      <Script
-        id="breadcrumb-jsonld"
+      <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <nav className="flex mb-4" aria-label="Breadcrumb">
         <ol className="inline-flex items-center ltr:space-x-1 rtl:space-x-reverse md:ltr:space-x-3 md:rtl:space-x-reverse">
@@ -53,4 +52,4 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       </nav>
     </>
   )
-} 
+}

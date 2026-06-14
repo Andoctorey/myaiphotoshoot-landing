@@ -1,7 +1,9 @@
+# Per-page script hashes are injected into exported HTML by scripts/apply-csp.js.
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;
 # Default HTML caching (short-lived, edge-friendly)
 /*
   Cache-Control: public, s-maxage=86400, max-age=300, stale-while-revalidate=60

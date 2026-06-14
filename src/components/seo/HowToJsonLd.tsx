@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { serializeJsonLd } from '@/lib/json-ld';
 
 type HowToStepInput = {
   name: string;
@@ -39,8 +40,7 @@ export default function HowToJsonLd({ idUrl, name, description, steps, inLanguag
   };
 
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
   );
 }
-
 

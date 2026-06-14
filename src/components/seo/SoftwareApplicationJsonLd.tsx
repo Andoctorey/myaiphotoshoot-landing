@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { buildDigitalOfferPolicies } from '@/lib/product-offer';
+import { serializeJsonLd } from '@/lib/json-ld';
 import { canonicalUrl } from '@/lib/seo';
 
 type Props = {
@@ -66,8 +67,7 @@ export default function SoftwareApplicationJsonLd({
   };
 
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
   );
 }
-
 

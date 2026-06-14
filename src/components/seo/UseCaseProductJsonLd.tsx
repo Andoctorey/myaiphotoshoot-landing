@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { serializeJsonLd } from '@/lib/json-ld';
 import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 
 type Props = {
@@ -72,7 +73,6 @@ export default function UseCaseProductJsonLd({
   };
 
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
   );
 }
-
