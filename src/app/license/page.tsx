@@ -119,7 +119,7 @@ export default function LicensePage() {
               <p className="text-gray-700 dark:text-gray-300">
                 For complete terms of service and privacy policy, please visit our{' '}
                 <Link
-                  href="/legal"
+                  href="/legal/"
                   className="text-purple-600 dark:text-purple-400 hover:underline"
                 >
                   legal page
