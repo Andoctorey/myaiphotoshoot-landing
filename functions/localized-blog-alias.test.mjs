@@ -10,6 +10,7 @@ const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSou
 const {
   buildFunctionsUrl,
   fetchCanonicalSlug,
+  getLegacyEnglishSlug,
   onRequest,
   slugsMatch,
 } = await import(functionModuleUrl);
@@ -59,6 +60,57 @@ test('redirects localized English slug aliases to the translated canonical slug'
     response.headers.get('Location'),
     'https://myaiphotoshoot.com/de/blog/vintage-foto-ideen/?utm_source=test'
   );
+  assert.equal(nextCalls, 0);
+});
+
+test('redirects legacy localized slugs that no longer resolve directly', async () => {
+  const requestedUrls = [];
+  globalThis.fetch = async (url) => {
+    requestedUrls.push(url);
+
+    if (url === 'https://functions.example.test/functions/v1/blog-post?slug=biyo-portraito-retouch-guide&locale=ja') {
+      return new Response('Not found', { status: 404 });
+    }
+
+    assert.equal(
+      url,
+      'https://functions.example.test/functions/v1/blog-post?slug=beauty-portrait-retouching&locale=ja'
+    );
+    return Response.json({
+      slug: 'beauty-portrait-retouching',
+      translations: {
+        ja: {
+          slug: '美容ポートレートレタッチガイド',
+        },
+      },
+    });
+  };
+
+  let nextCalls = 0;
+  const response = await onRequest({
+    request: new Request('https://myaiphotoshoot.com/ja/blog/biyo-portraito-retouch-guide/'),
+    params: {
+      locale: 'ja',
+      slug: 'biyo-portraito-retouch-guide',
+    },
+    env: {
+      SUPABASE_FUNCTIONS_URL: 'https://functions.example.test/functions/v1',
+    },
+    next: async () => {
+      nextCalls += 1;
+      return new Response('static');
+    },
+  });
+
+  assert.equal(response.status, 308);
+  assert.equal(
+    response.headers.get('Location'),
+    'https://myaiphotoshoot.com/ja/blog/%E7%BE%8E%E5%AE%B9%E3%83%9D%E3%83%BC%E3%83%88%E3%83%AC%E3%83%BC%E3%83%88%E3%83%AC%E3%82%BF%E3%83%83%E3%83%81%E3%82%AC%E3%82%A4%E3%83%89/'
+  );
+  assert.deepEqual(requestedUrls, [
+    'https://functions.example.test/functions/v1/blog-post?slug=biyo-portraito-retouch-guide&locale=ja',
+    'https://functions.example.test/functions/v1/blog-post?slug=beauty-portrait-retouching&locale=ja',
+  ]);
   assert.equal(nextCalls, 0);
 });
 
@@ -151,4 +203,11 @@ test('uses the localized slug when resolving canonical slug', async () => {
   });
 
   assert.equal(slug, '线条艺术头像');
+});
+
+test('maps legacy localized slugs back to their English source slugs', () => {
+  assert.equal(getLegacyEnglishSlug('zh', '%E7%94%B5%E5%BD%B1%E5%A4%AA%E7%A9%BA%E7%85%A7%E7%89%87'), 'cinematic-space-photos');
+  assert.equal(getLegacyEnglishSlug('es', 'fotos-de-tinder-hombres'), 'tinder-photos-men');
+  assert.equal(getLegacyEnglishSlug('ru', 'idei-astro-portretov'), 'astro-portrait-ideas');
+  assert.equal(getLegacyEnglishSlug('de', 'not-a-known-slug'), null);
 });
