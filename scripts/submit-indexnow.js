@@ -48,6 +48,7 @@ async function submitIndexNow() {
     throw new Error('SEARCH_SUBMISSION_TOKEN is not configured');
   }
 
+  console.log(`Submitting URLs via IndexNow endpoint: ${SUBMIT_URL}`);
   const response = await fetch(SUBMIT_URL, {
     method: 'POST',
     headers: {
@@ -62,6 +63,7 @@ async function submitIndexNow() {
   });
 
   const text = await response.text();
+  console.log(`IndexNow submission endpoint responded with HTTP ${response.status}.`);
   let parsed;
 
   try {
@@ -73,7 +75,8 @@ async function submitIndexNow() {
   if (!response.ok || !parsed?.success) {
     const message = parsed?.message || `HTTP ${response.status}`;
     const detail = parsed?.error ? ` (${parsed.error})` : '';
-    console.error('Submission failed with response:', JSON.stringify(parsed, null, 2) || text);
+    const responseDetails = parsed ? JSON.stringify(parsed, null, 2) : text.slice(0, 1000);
+    console.error('IndexNow submission failed with response:', responseDetails || '(empty response body)');
     throw new Error(`IndexNow submission failed: ${message}${detail}`);
   }
 
@@ -101,7 +104,7 @@ async function main() {
 
 if (require.main === module) {
   main().catch((error) => {
-    console.error(error.message || error);
+    console.error(error.stack || error.message || error);
     process.exitCode = 1;
   });
 }

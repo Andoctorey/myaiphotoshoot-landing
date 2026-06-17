@@ -38,9 +38,14 @@ jobs:
           SEARCH_SUBMISSION_TOKEN: ${{ secrets.SEARCH_SUBMISSION_TOKEN }}
 
       - name: Submit URLs to IndexNow
+        id: submit-indexnow
+        continue-on-error: true
         run: |
           echo "🚀 Starting IndexNow submission..."
-          node scripts/submit-indexnow.js
+          if ! node scripts/submit-indexnow.js; then
+            echo "::warning title=IndexNow submission failed::IndexNow submission failed. See the step logs for the HTTP status, response body, or exception."
+            exit 1
+          fi
         env:
           NODE_ENV: production
           SEARCH_SUBMISSION_TOKEN: ${{ secrets.SEARCH_SUBMISSION_TOKEN }}
@@ -69,9 +74,15 @@ jobs:
       - name: Success notification
         if: success()
         run: |
-          echo "✅ Search engine submissions completed successfully!"
-          echo "📈 Your new content should be indexed faster by Google and IndexNow engines"
+          echo "✅ Required search engine submissions completed successfully!"
+          echo "📈 Your new content should be indexed faster by Google"
           echo "🔄 Future deployments will automatically notify both systems"
+
+      - name: IndexNow warning
+        if: steps.submit-indexnow.outcome == 'failure'
+        run: |
+          echo "⚠️ IndexNow submission failed, but it is non-blocking."
+          echo "ℹ️ Google sitemap submission completed, and IndexNow can be retried manually."
           
       - name: Failure notification
         if: failure()
