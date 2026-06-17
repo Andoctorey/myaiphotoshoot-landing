@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:indexnow": "node --test functions/submit-indexnow.test.mjs",
+    "test:localized-blog": "node --test functions/localized-blog-alias.test.mjs",
     "test:json-ld": "node --test src/lib/json-ld.test.mjs",
     "test:csp": "node --test scripts/apply-csp.test.js",
     "test:security": "npm run test:json-ld && npm run test:csp",
