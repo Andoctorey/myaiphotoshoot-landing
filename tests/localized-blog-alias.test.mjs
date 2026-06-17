@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { afterEach, test } from 'node:test';
 
 const functionSource = await readFile(
-  new URL('./[locale]/blog/[slug].js', import.meta.url),
+  new URL('../functions/[locale]/blog/[slug].js', import.meta.url),
   'utf8'
 );
 const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSource).toString('base64')}`;

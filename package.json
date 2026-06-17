@@ -7,12 +7,12 @@
     "build": "npm run test:security && next build && node scripts/fix-html-lang.js && node scripts/apply-csp.js",
     "start": "next start",
     "lint": "next lint",
-    "test:indexnow": "node --test functions/submit-indexnow.test.mjs",
-    "test:localized-blog": "node --test functions/localized-blog-alias.test.mjs",
+    "test:indexnow": "node --test tests/submit-indexnow.test.mjs",
+    "test:localized-blog": "node --test tests/localized-blog-alias.test.mjs",
     "test:json-ld": "node --test src/lib/json-ld.test.mjs",
     "test:csp": "node --test scripts/apply-csp.test.js",
     "test:security": "npm run test:json-ld && npm run test:csp",
-    "test:sitemap": "node --experimental-default-type=module --test functions/submit-sitemap.test.js",
+    "test:sitemap": "node --test tests/submit-sitemap.test.mjs",
     "test:worker": "node --experimental-default-type=module --test worker/deploy-proxy.test.js"
   },
   "dependencies": {
