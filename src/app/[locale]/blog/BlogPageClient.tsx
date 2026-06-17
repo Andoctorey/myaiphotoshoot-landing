@@ -15,9 +15,10 @@ type Props = {
   locale: string;
   initialPosts?: BlogListItem[];
   initialPagination?: { total: number; page: number; limit: number; totalPages: number };
+  archivePosts?: Array<{ slug: string; title: string }>;
 };
 
-export default function BlogPageClient({ locale, initialPosts = [], initialPagination }: Props) {
+export default function BlogPageClient({ locale, initialPosts = [], initialPagination, archivePosts = [] }: Props) {
   const t = useTranslations('blog');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 12;
@@ -210,6 +211,26 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                 <ChevronLeftIcon className="h-5 w-5 ltr:ml-2 rtl:mr-2 ltr:hidden rtl:block" />
               </button>
             </div>
+          )}
+
+          {archivePosts.length > posts.length && (
+            <section className="mt-16 border-t border-gray-200 pt-10 dark:border-gray-700">
+              <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+                {t('title')}
+              </h2>
+              <ul className="grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
+                {archivePosts.map((post) => (
+                  <li key={post.slug}>
+                    <Link
+                      href={localePath(locale, `/blog/${post.slug}/`)}
+                      className="text-gray-700 underline-offset-4 hover:text-purple-700 hover:underline dark:text-gray-300 dark:hover:text-purple-300"
+                    >
+                      {post.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
         </div>
       </main>

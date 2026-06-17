@@ -5,10 +5,35 @@ import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocal
 import { env } from '@/lib/env';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
+import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, type BlogListEntry } from '@/lib/blog-static-params';
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
+
+const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
+  const base = new URL(env.SUPABASE_FUNCTIONS_URL);
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const basePath = base.pathname.replace(/\/$/, '');
+  base.pathname = `${basePath}${normalizedPath}`;
+  if (params) {
+    const searchParams = new URLSearchParams(base.search);
+    Object.entries(params).forEach(([key, value]) => {
+      searchParams.set(key, value);
+    });
+    base.search = searchParams.toString();
+  }
+  return base.toString();
+};
+
+function getArchivePostTitle(post: BlogListEntry, locale: string): string {
+  const localizedTitle = post.translations?.[locale]?.title?.trim();
+  if (localizedTitle) {
+    return localizedTitle;
+  }
+
+  return post.title?.trim() || post.slug;
+}
 
 // SEO metadata for the blog listing page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -73,10 +98,18 @@ export default async function BlogPage({ params }: Props) {
 
   let initialPosts: BlogListItem[] = [];
   let initialPagination: { total: number; page: number; limit: number; totalPages: number } | null = null;
+  let archivePosts: Array<{ slug: string; title: string }> = [];
 
   try {
-    const res = await fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${locale}`, { next: { revalidate: 3600 } });
-    if (res.ok) {
+    const [postsResult, archiveResult] = await Promise.allSettled([
+      fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${locale}`, { next: { revalidate: 3600 } }),
+      fetchAllPublishedBlogPosts(
+        buildFunctionsUrl,
+        `Failed to fetch blog archive posts for locale ${locale}`,
+      ),
+    ]);
+    const res = postsResult.status === 'fulfilled' ? postsResult.value : null;
+    if (res?.ok) {
       const json = (await res.json()) as BlogPostsResponse;
       initialPosts = json.posts || [];
       initialPagination = {
@@ -86,9 +119,23 @@ export default async function BlogPage({ params }: Props) {
         totalPages: json.totalPages,
       };
     }
+    const allPosts = archiveResult.status === 'fulfilled' ? archiveResult.value : [];
+    archivePosts = allPosts
+      .map((post) => {
+        const slug = getBlogSlugForLocale(post, locale);
+        return slug ? { slug, title: getArchivePostTitle(post, locale) } : null;
+      })
+      .filter((post): post is { slug: string; title: string } => post !== null);
   } catch {
     // Non-fatal: fall back to client fetch
   }
 
-  return <BlogPageClient locale={locale} initialPosts={initialPosts} initialPagination={initialPagination || undefined} />;
+  return (
+    <BlogPageClient
+      locale={locale}
+      initialPosts={initialPosts}
+      initialPagination={initialPagination || undefined}
+      archivePosts={archivePosts}
+    />
+  );
 }
