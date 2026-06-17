@@ -51,6 +51,18 @@ function articleTagsFromPhotoTopics(photoTopics: unknown): string[] {
   return tags.length > 0 ? tags : ['AI photography'];
 }
 
+function slugsMatch(left: string, right: string): boolean {
+  return decodeSlug(left) === decodeSlug(right);
+}
+
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string; locale: string }>;
 }
@@ -103,7 +115,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       slugMap[locale] = slug;
     }
     const canonicalSlugForLocale = slugMap[locale] || slug;
-    const isCanonicalSlug = slug === canonicalSlugForLocale;
+    const isCanonicalSlug = slugsMatch(slug, canonicalSlugForLocale);
     const currentPath = `/blog/${canonicalSlugForLocale}/`;
     const languages = Object.fromEntries(
       Object.entries(slugMap).map(([language, localizedSlug]) => [
