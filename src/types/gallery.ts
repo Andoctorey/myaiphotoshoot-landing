@@ -3,6 +3,7 @@ export interface GalleryItem {
   created_at: string;
   public_url: string;
   prompt: string;
+  preset_id?: string | null;
 }
 
 export interface GalleryRandomSession {

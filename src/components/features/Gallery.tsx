@@ -10,6 +10,7 @@ import PhotoCard from '@/components/features/PhotoCard';
 const PAGE_SIZE = 20;
 const INITIAL_VISIBLE_COUNT = 20;
 const LOAD_MORE_COUNT = 20;
+const WEB_APP_URL = 'https://app.myaiphotoshoot.com';
 
 type GallerySort = 'popular' | 'new' | 'random';
 
@@ -45,6 +46,15 @@ function buildGalleryUrl(page: number, sort: GallerySort, randomSession: Gallery
   }
 
   return `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?${params.toString()}`;
+}
+
+function buildGalleryItemAppHref(item: GalleryItem): string {
+  const presetKey = item.preset_id?.trim();
+  if (presetKey) {
+    return `${WEB_APP_URL}/#preset/${encodeURIComponent(presetKey)}`;
+  }
+
+  return `${WEB_APP_URL}/#generate/${item.id}`;
 }
 
 export default function Gallery({
@@ -212,7 +222,7 @@ export default function Gallery({
                 mode="fill"
                 sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                 containerClassName="aspect-square rounded-sm cursor-pointer"
-                linkHref={`https://app.myaiphotoshoot.com/#generate/${item.id}`}
+                linkHref={buildGalleryItemAppHref(item)}
                 linkExternal
                 ariaLabel={`${t('promptAriaPrefix')}: ${item.prompt}`}
                 figCaptionSrOnly={`${t('captionPrefix')}. ${item.prompt}`}
