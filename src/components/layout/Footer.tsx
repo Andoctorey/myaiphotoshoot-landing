@@ -64,17 +64,6 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/Andoctorey/myaiphotoshoot-kmp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
-                  aria-label={`${t('openSource')} (${t('opensInNewTab')})`}
-                >
-                  {t('openSource')}
-                </a>
-              </li>
-              <li>
-                <a
                   href="https://x.com/andoctorey"
                   target="_blank"
                   rel="noopener noreferrer"

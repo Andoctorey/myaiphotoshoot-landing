@@ -8,7 +8,7 @@ This landing page showcases AI-generated photos with social media sharing capabi
 
 **App Website: [myaiphotoshoot.com](https://myaiphotoshoot.com)**
 
-**Main Project: [GitHub Repository](https://github.com/Andoctorey/myaiphotoshoot-kmp)** - This project is open source!
+**Main Project: [GitHub Repository](https://github.com/Andoctorey/myaiphotoshoot-kmp)**
 
 ## Download the App
 
