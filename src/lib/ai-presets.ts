@@ -44,6 +44,8 @@ export function aiPresetsPagePath(page: number): string {
 }
 
 async function postAiPresetsRpc(body: Record<string, unknown>): Promise<Response> {
+  // public.list_ai_presets is defined in myaiphotoshoot-functions migrations; update
+  // src/types/ai-preset.ts and admin/src/lib/presetService.ts when its output changes.
   return fetch(`${getSupabaseUrl()}/rest/v1/rpc/list_ai_presets`, {
     method: 'POST',
     headers: {
