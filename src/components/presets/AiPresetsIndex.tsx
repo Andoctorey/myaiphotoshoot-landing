@@ -14,7 +14,6 @@ type Props = {
 export default async function AiPresetsIndex({ locale, page = 1, pageData }: Props) {
   const t = await getTranslations({ locale, namespace: 'presets' });
   const tNav = await getTranslations({ locale, namespace: 'navigation' });
-  const tPricing = await getTranslations({ locale, namespace: 'pricing' });
   const presetsPage = pageData || await fetchAiPresetsPage(locale, page);
   const { presets } = presetsPage;
   const pageUrl = canonicalUrl(locale, aiPresetsPagePath(presetsPage.page));
@@ -124,11 +123,6 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
                         {preset.subtitle}
                       </p>
                     )}
-                    {formattedCost ? (
-                      <p className="mt-3 text-xs font-medium text-gray-500 dark:text-gray-400">
-                        {tPricing('perPhoto')}
-                      </p>
-                    ) : null}
                   </div>
                 </Link>
               );
