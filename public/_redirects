@@ -13,6 +13,11 @@
 /en/use-cases /use-cases/ 308
 /en/use-cases/ /use-cases/ 308
 /en/use-cases/* /use-cases/:splat 308
+/presets /presets/ 308
+/en/presets /presets/ 308
+/en/presets/ /presets/ 308
+/en/presets/* /presets/:splat 308
+/en/ai-presets/browse/* /ai-presets/browse/:splat 308
 /legal /legal/ 308
 /en/legal /legal/ 308
 /en/legal/ /legal/ 308

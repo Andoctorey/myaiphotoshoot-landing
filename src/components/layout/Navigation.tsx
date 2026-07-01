@@ -54,6 +54,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
     { name: t('pricing'), href: isHomePage ? '#pricing' : homeHash('#pricing') },
   ];
   const navItemsAfterUseCases = [
+    { name: t('presets'), href: localePath(locale, '/presets/') },
     { name: t('gallery'), href: isHomePage ? '#gallery' : homeHash('#gallery') },
     { name: t('blog'), href: isHomePage ? '#home-blog' : homeHash('#home-blog') },
     { name: t('faq'), href: isHomePage ? '#faq' : homeHash('#faq') },

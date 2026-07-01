@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { locales } from '@/i18n/request'
 import { env } from '@/lib/env'
 import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, getBlogSlugMap } from '@/lib/blog-static-params'
+import { aiPresetsPagePath, fetchAiPresets, fetchAiPresetsPage } from '@/lib/ai-presets'
 
 /**
  * Sitemap generator
@@ -26,6 +27,13 @@ interface SitemapUseCase {
   slug: string | null
   created_at?: string
   featured_image_urls?: string[] | null
+}
+
+interface SitemapAiPreset {
+  slug: string
+  created_at?: string | null
+  updated_at?: string | null
+  featured_graphics?: string | null
 }
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
@@ -140,6 +148,27 @@ async function getAllUseCases(): Promise<SitemapUseCase[]> {
   }
 }
 
+async function getAllAiPresets(): Promise<SitemapAiPreset[]> {
+  try {
+    const presets = await fetchAiPresets('en');
+    console.log(`Sitemap: Fetched ${presets.length} total AI presets`);
+    return presets;
+  } catch (error) {
+    console.error('Error fetching AI presets for sitemap:', error);
+    return [];
+  }
+}
+
+async function getAiPresetTotalPages(): Promise<number> {
+  try {
+    const page = await fetchAiPresetsPage('en', 1);
+    return page.totalPages;
+  } catch (error) {
+    console.error('Error fetching AI preset page count for sitemap:', error);
+    return 1;
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://myaiphotoshoot.com';
   
@@ -194,6 +223,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: buildHreflangLanguages(baseUrl, '/use-cases/', locales),
       },
     })),
+    // AI preset listing pages for all locales
+    ...locales.map(locale => ({
+      url: buildLocalizedUrl(baseUrl, locale, '/presets/'),
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/presets/', locales),
+      },
+    })),
     // Support pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/support/'),
@@ -224,6 +263,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const blogPosts = await getAllBlogPosts();
     // Fetch all use-cases
     const useCases = await getAllUseCases();
+    // Fetch all AI presets
+    const aiPresets = await getAllAiPresets();
+    const aiPresetTotalPages = await getAiPresetTotalPages();
 
     const blogPostEntries: MetadataRoute.Sitemap = [];
     for (const post of blogPosts) {
@@ -260,7 +302,39 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
     }
 
-    return [...staticPages, ...blogPostEntries, ...useCaseEntries];
+    const aiPresetEntries: MetadataRoute.Sitemap = [];
+    const aiPresetPaginatedEntries: MetadataRoute.Sitemap = [];
+    for (let page = 2; page <= aiPresetTotalPages; page += 1) {
+      const path = aiPresetsPagePath(page);
+      const languages = buildHreflangLanguages(baseUrl, path, locales);
+      for (const locale of locales) {
+        aiPresetPaginatedEntries.push({
+          url: buildLocalizedUrl(baseUrl, locale, path),
+          lastModified: new Date(),
+          changeFrequency: 'daily',
+          priority: 0.65,
+          alternates: { languages },
+        });
+      }
+    }
+
+    for (const item of aiPresets) {
+      if (!item.slug) continue;
+      const languages = buildHreflangLanguages(baseUrl, `/presets/${item.slug}/`, locales);
+      const lastModified = item.updated_at || item.created_at;
+      for (const locale of locales) {
+        aiPresetEntries.push({
+          url: buildLocalizedUrl(baseUrl, locale, `/presets/${item.slug}/`),
+          lastModified: lastModified ? new Date(lastModified) : new Date(),
+          changeFrequency: 'weekly',
+          priority: 0.75,
+          alternates: { languages },
+          images: item.featured_graphics ? [item.featured_graphics] : [],
+        });
+      }
+    }
+
+    return [...staticPages, ...aiPresetPaginatedEntries, ...blogPostEntries, ...useCaseEntries, ...aiPresetEntries];
   } catch (error) {
     console.error('Error generating sitemap:', error);
     // Return just the static pages if we can't fetch content

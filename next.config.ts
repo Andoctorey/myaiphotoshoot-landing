@@ -30,9 +30,14 @@ const nextConfig: NextConfig = {
         hostname: 'myaiphotoshoot.b-cdn.net',
         pathname: '**',
       } as RemotePattern,
+      {
+        protocol: 'https',
+        hostname: 'system-images.b-cdn.net',
+        pathname: '**',
+      } as RemotePattern,
     ],
   },
-  
+
   // Increase memory and timeout limits to handle large static site generation
   experimental: {
     // Increase parallel workers based on memory
@@ -42,4 +47,4 @@ const nextConfig: NextConfig = {
   // Removed rewrites section as it's not compatible with static export
 };
 
-export default withNextIntl(nextConfig); 
+export default withNextIntl(nextConfig);
