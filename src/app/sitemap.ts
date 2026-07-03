@@ -233,6 +233,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: buildHreflangLanguages(baseUrl, '/presets/', locales),
       },
     })),
+    // Supported AI model pages for all locales
+    ...locales.map(locale => ({
+      url: buildLocalizedUrl(baseUrl, locale, '/models/'),
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.75,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/models/', locales),
+      },
+    })),
     // Support pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/support/'),

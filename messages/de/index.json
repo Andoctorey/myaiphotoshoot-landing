@@ -10,7 +10,8 @@
     "useCases": "Anwendungsfälle",
     "presets": "KI-Presets",
     "noUseCases": "Noch keine Anwendungsfälle",
-    "language": "Sprache"
+    "language": "Sprache",
+    "models": "Modelle"
   },
   "presets": {
     "title": "KI-Fotopresets",
@@ -196,7 +197,8 @@
     "twitter": "Twitter (X)",
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. Alle Rechte vorbehalten.",
-    "opensInNewTab": "wird in einem neuen Tab geöffnet"
+    "opensInNewTab": "wird in einem neuen Tab geöffnet",
+    "models": "Modelle"
   },
   "supportPage": {
     "title": "Kundensupport",
@@ -283,6 +285,94 @@
     },
     "benefits": {
       "title": "Vorteile"
+    }
+  },
+  "models": {
+    "meta": {
+      "title": "KI-Fotomodelle und Preise",
+      "description": "Vergleichen Sie Modelle und Preise von My AI Photo Shoot für KI-Headshots, Bildgenerierung per Prompt, Fotobearbeitung, Poster und textlastige Designs."
+    },
+    "breadcrumb": "Modelle",
+    "eyebrow": "Unterstützte KI-Modelle",
+    "heading": "Wählen Sie das passende KI-Fotomodell, bevor Sie Bilder erstellen",
+    "description": "My AI Photo Shoot bietet ein trainiertes persönliches Modell für konsistente Fotos von Ihnen sowie Generierungs- und Bearbeitungsmodelle für schnelle Bilder, Poster, textlastige Designs und Fotobearbeitung.",
+    "screenshotAlt": "My AI Photo Shoot App mit Auswahl der KI-Modelle",
+    "summary": {
+      "training": "einmaliges Training für Ihr persönliches Modell",
+      "personalPhoto": "pro Foto mit Ihrem persönlichen Modell",
+      "otherModels": "pro Foto für schnelle Generierung und Fotobearbeitung"
+    },
+    "chooser": {
+      "title": "Welches Modell sollten Sie nutzen?",
+      "description": "Beginnen Sie mit dem, was Sie erstellen möchten. Die App kann sinnvolle Standardwerte wählen, und diese Übersicht zeigt, wofür jede Modellfamilie am besten geeignet ist.",
+      "personal": {
+        "title": "Fotos von Ihnen",
+        "description": "Trainieren Sie einmal mit Ihren Selfies und erstellen Sie wiedererkennbare Headshots, Datingfotos, Porträts und Personal-Brand-Bilder."
+      },
+      "generate": {
+        "title": "Neue Bilder aus Prompts",
+        "description": "Nutzen Sie Generierungsmodelle für neue Szenen, kreative Stile, Poster, Produktkonzepte und schnelle visuelle Ideen."
+      },
+      "edit": {
+        "title": "Ein vorhandenes Foto ändern",
+        "description": "Nutzen Sie Bearbeitungsmodelle, wenn Sie ein Foto anpassen, das Original erkennbar halten oder Text und Layout ändern möchten."
+      }
+    },
+    "table": {
+      "title": "Unterstützte Modelle und Preise",
+      "description": "Dies sind die Produktpreise von My AI Photo Shoot. Das zahlen Sie in der App, nicht die API-Kosten des Anbieters.",
+      "priceNote": "Das Training des persönlichen Modells kostet einmalig {trainingPrice}.",
+      "columns": {
+        "model": "Modell",
+        "type": "Typ",
+        "bestFor": "Am besten für",
+        "price": "Preis",
+        "status": "Status"
+      }
+    },
+    "groups": {
+      "personal": "Persönliches KI-Modell",
+      "generate": "Bildgenerierung",
+      "edit": "Fotobearbeitung"
+    },
+    "tiers": {
+      "personal": "Beste Konsistenz der Ähnlichkeit",
+      "bestValue": "Bester Wert",
+      "highDetail": "Hohe Details",
+      "topQuality": "Top-Qualität",
+      "precise": "Präzise",
+      "creative": "Kreativ",
+      "textPosters": "Text und Poster",
+      "proEdits": "Pro-Bearbeitung",
+      "smartEdits": "Smarte Bearbeitung",
+      "textEdits": "Textbearbeitung"
+    },
+    "bestFor": {
+      "personal": "Konsistente Fotos von Ihnen nach nur einer Trainingssitzung.",
+      "realistic": "Realistische Porträts, Profilfotos und ausgewogene KI-Bilder für den Alltag.",
+      "detail": "Detailreichere Szenen, bei denen Schärfe und aufwendigere Komposition wichtig sind.",
+      "quality": "Premium-Generierung, wenn Sie die beste Gesamtqualität wünschen.",
+      "precise": "Prompts, die präzise Befolgung und saubere Objektplatzierung brauchen.",
+      "creative": "Stilisierte Konzepte, ausdrucksstarke Looks und schnelle kreative Erkundung.",
+      "textPosters": "Bilder, bei denen lesbarer Text, Schilder oder posterartige Layouts wichtig sind.",
+      "edits": "Allgemeine Fotobearbeitung mit gutem Verhältnis von Preis und Qualität.",
+      "proEdits": "Anspruchsvollere Bearbeitungen, bei denen Detail und Kontrolle wichtig sind.",
+      "smartEdits": "Smarte Objekt-, Outfit- und Szenenänderungen aus einem vorhandenen Bild.",
+      "textEdits": "Bearbeitung von Bildern mit Typografie, Labels oder grafischem Layout."
+    },
+    "pricing": {
+      "training": "einmaliges Training",
+      "personalPhoto": "pro Foto nach dem Training",
+      "photo": "pro Foto"
+    },
+    "status": {
+      "supported": "Unterstützt"
+    },
+    "cta": {
+      "title": "Bereit, mit dem passenden Modell zu erstellen?",
+      "description": "Öffnen Sie die App, wählen Sie einen Stil oder ein Preset, und die Modellauswahl hilft Ihnen, das benötigte Bild zu erstellen.",
+      "primary": "Jetzt erstellen",
+      "secondary": "Presets ansehen"
     }
   }
 }

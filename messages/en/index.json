@@ -10,7 +10,8 @@
     "useCases": "Use Cases",
     "presets": "AI Presets",
     "noUseCases": "No use cases yet",
-    "language": "Language"
+    "language": "Language",
+    "models": "Models"
   },
   "presets": {
     "title": "AI Photo Presets",
@@ -196,7 +197,8 @@
     "twitter": "Twitter (X)",
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. All rights reserved.",
-    "opensInNewTab": "opens in a new tab"
+    "opensInNewTab": "opens in a new tab",
+    "models": "Models"
   },
   "supportPage": {
     "title": "Customer Support",
@@ -283,6 +285,94 @@
     },
     "benefits": {
       "title": "Benefits"
+    }
+  },
+  "models": {
+    "meta": {
+      "title": "AI Photo Models and Pricing",
+      "description": "Compare My AI Photo Shoot models and pricing for AI headshots, prompt image generation, photo editing, posters, and text-heavy image designs."
+    },
+    "breadcrumb": "Models",
+    "eyebrow": "Supported AI models",
+    "heading": "Choose the right AI photo model before you create",
+    "description": "My AI Photo Shoot gives you a trained personal model for consistent photos of yourself, plus generation and editing models for quick images, posters, text-heavy designs, and photo edits.",
+    "screenshotAlt": "My AI Photo Shoot app showing the AI model chooser",
+    "summary": {
+      "training": "one-time training for your personal model",
+      "personalPhoto": "per photo with your personal model",
+      "otherModels": "per photo for quick generation and photo edits"
+    },
+    "chooser": {
+      "title": "Which model should you use?",
+      "description": "Start with what you want to make. The app can pick sensible defaults, and this guide shows what each model family is best at.",
+      "personal": {
+        "title": "Photos of you",
+        "description": "Train once with your selfies, then create recognizable headshots, dating photos, portraits, and personal-brand images."
+      },
+      "generate": {
+        "title": "New images from prompts",
+        "description": "Use generation models for new scenes, creative styles, posters, product concepts, and quick visual ideas."
+      },
+      "edit": {
+        "title": "Change an existing photo",
+        "description": "Use editing models when you want to adjust a photo, keep the original recognizable, or modify text and layout."
+      }
+    },
+    "table": {
+      "title": "Supported models and prices",
+      "description": "These are My AI Photo Shoot product prices. They are what you pay in the app, not provider API costs.",
+      "priceNote": "Personal model training is {trainingPrice} once.",
+      "columns": {
+        "model": "Model",
+        "type": "Type",
+        "bestFor": "Best for",
+        "price": "Price",
+        "status": "Status"
+      }
+    },
+    "groups": {
+      "personal": "Personal AI Model",
+      "generate": "Image generation",
+      "edit": "Photo editing"
+    },
+    "tiers": {
+      "personal": "Best likeness consistency",
+      "bestValue": "Best value",
+      "highDetail": "High detail",
+      "topQuality": "Top quality",
+      "precise": "Precise",
+      "creative": "Creative",
+      "textPosters": "Text and posters",
+      "proEdits": "Pro edits",
+      "smartEdits": "Smart edits",
+      "textEdits": "Text edits"
+    },
+    "bestFor": {
+      "personal": "Consistent photos of yourself after one training session.",
+      "realistic": "Realistic portraits, profile photos, and balanced everyday AI images.",
+      "detail": "Higher-detail scenes where sharpness and richer composition matter.",
+      "quality": "Premium generation when you want the strongest overall image quality.",
+      "precise": "Prompts that need careful instruction following and clean object placement.",
+      "creative": "Stylized concepts, expressive looks, and fast creative exploration.",
+      "textPosters": "Images where readable text, signs, or poster-like layouts matter.",
+      "edits": "General photo edits with a strong balance of price and quality.",
+      "proEdits": "More demanding edits where detail and control are important.",
+      "smartEdits": "Smart object, outfit, and scene changes from an existing image.",
+      "textEdits": "Editing images that include typography, labels, or graphic layout."
+    },
+    "pricing": {
+      "training": "one-time training",
+      "personalPhoto": "per photo after training",
+      "photo": "per photo"
+    },
+    "status": {
+      "supported": "Supported"
+    },
+    "cta": {
+      "title": "Ready to create with the right model?",
+      "description": "Open the app, choose a style or preset, and the model picker will help you create the kind of image you need.",
+      "primary": "Start creating",
+      "secondary": "Browse presets"
     }
   }
 }

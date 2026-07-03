@@ -10,7 +10,8 @@
     "useCases": "使用场景",
     "presets": "AI 预设",
     "noUseCases": "暂无使用场景",
-    "language": "语言"
+    "language": "语言",
+    "models": "模型"
   },
   "presets": {
     "title": "AI 照片预设",
@@ -196,7 +197,8 @@
     "twitter": "Twitter (X)",
     "support": "支持",
     "copyright": "© 2025 My AI Photo Shoot. 版权所有。",
-    "opensInNewTab": "在新标签页中打开"
+    "opensInNewTab": "在新标签页中打开",
+    "models": "模型"
   },
   "supportPage": {
     "title": "客户支持",
@@ -283,6 +285,94 @@
     },
     "benefits": {
       "title": "优势"
+    }
+  },
+  "models": {
+    "meta": {
+      "title": "AI 照片模型和价格",
+      "description": "比较 My AI Photo Shoot 的模型和价格，适用于 AI 头像、提示词图像生成、照片编辑、海报和文字密集型设计。"
+    },
+    "breadcrumb": "模型",
+    "eyebrow": "支持的 AI 模型",
+    "heading": "创建前先选择合适的 AI 照片模型",
+    "description": "My AI Photo Shoot 提供经过训练的个人模型，用于稳定生成你的照片，也提供生成和编辑模型，用于快速图片、海报、文字密集型设计和照片修改。",
+    "screenshotAlt": "My AI Photo Shoot 应用中的 AI 模型选择器",
+    "summary": {
+      "training": "为你的个人模型进行一次性训练",
+      "personalPhoto": "使用个人模型每张照片",
+      "otherModels": "快速生成和照片编辑每张价格"
+    },
+    "chooser": {
+      "title": "应该使用哪个模型？",
+      "description": "先想清楚你要创建什么。应用可以选择合理默认值，这里说明每类模型最适合什么场景。",
+      "personal": {
+        "title": "你的个人照片",
+        "description": "用自拍训练一次，然后创建保持本人相似度的头像、约会照片、人像和个人品牌图片。"
+      },
+      "generate": {
+        "title": "从提示词生成新图",
+        "description": "生成模型适合新场景、创意风格、海报、产品概念和快速视觉想法。"
+      },
+      "edit": {
+        "title": "修改现有照片",
+        "description": "当你想调整照片、让原图保持可识别，或修改文字和版式时使用编辑模型。"
+      }
+    },
+    "table": {
+      "title": "支持的模型和价格",
+      "description": "这些是 My AI Photo Shoot 的产品价格，也就是你在应用中支付的价格，不是供应商 API 成本。",
+      "priceNote": "个人模型训练一次性收费 {trainingPrice}。",
+      "columns": {
+        "model": "模型",
+        "type": "类型",
+        "bestFor": "最适合",
+        "price": "价格",
+        "status": "状态"
+      }
+    },
+    "groups": {
+      "personal": "个人 AI 模型",
+      "generate": "图像生成",
+      "edit": "照片编辑"
+    },
+    "tiers": {
+      "personal": "最佳相似度一致性",
+      "bestValue": "最划算",
+      "highDetail": "高细节",
+      "topQuality": "顶级质量",
+      "precise": "精准",
+      "creative": "创意",
+      "textPosters": "文字和海报",
+      "proEdits": "专业编辑",
+      "smartEdits": "智能编辑",
+      "textEdits": "文字编辑"
+    },
+    "bestFor": {
+      "personal": "一次训练后稳定生成你的个人照片。",
+      "realistic": "真实人像、头像和日常均衡的 AI 图片。",
+      "detail": "需要清晰度和更丰富构图的高细节场景。",
+      "quality": "想要整体图像质量最强时的高级生成。",
+      "precise": "需要仔细遵循指令和清晰放置对象的提示词。",
+      "creative": "风格化概念、表现力造型和快速创意探索。",
+      "textPosters": "需要可读文字、标识或海报式版面的图片。",
+      "edits": "价格和质量平衡较好的通用照片编辑。",
+      "proEdits": "需要更多细节和控制的复杂编辑。",
+      "smartEdits": "基于现有图片进行物体、服装和场景智能修改。",
+      "textEdits": "编辑包含字体、标签或图形版式的图片。"
+    },
+    "pricing": {
+      "training": "一次性训练",
+      "personalPhoto": "训练后每张照片",
+      "photo": "每张照片"
+    },
+    "status": {
+      "supported": "支持"
+    },
+    "cta": {
+      "title": "准备使用合适的模型创建了吗？",
+      "description": "打开应用，选择风格或预设，模型选择器会帮助你创建需要的图片。",
+      "primary": "开始创建",
+      "secondary": "浏览预设"
     }
   }
 }

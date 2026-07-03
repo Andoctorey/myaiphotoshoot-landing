@@ -10,7 +10,8 @@
     "useCases": "活用例",
     "presets": "AIプリセット",
     "noUseCases": "活用例はまだありません",
-    "language": "言語"
+    "language": "言語",
+    "models": "モデル"
   },
   "presets": {
     "title": "AI写真プリセット",
@@ -196,7 +197,8 @@
     "twitter": "Twitter (X)",
     "support": "サポート",
     "copyright": "© 2025 My AI Photo Shoot. 無断転載を禁じます。",
-    "opensInNewTab": "新しいタブで開きます"
+    "opensInNewTab": "新しいタブで開きます",
+    "models": "モデル"
   },
   "supportPage": {
     "title": "カスタマーサポート",
@@ -283,6 +285,94 @@
     },
     "benefits": {
       "title": "メリット"
+    }
+  },
+  "models": {
+    "meta": {
+      "title": "AI写真モデルと料金",
+      "description": "AIヘッドショット、プロンプト画像生成、写真編集、ポスター、文字中心のデザイン向けに、My AI Photo Shootのモデルと料金を比較できます。"
+    },
+    "breadcrumb": "モデル",
+    "eyebrow": "対応AIモデル",
+    "heading": "作成前に適切なAI写真モデルを選ぶ",
+    "description": "My AI Photo Shootでは、自分らしい写真を安定して作るためのトレーニング済み個人モデルに加え、素早い画像、ポスター、文字中心のデザイン、写真編集向けの生成・編集モデルを使えます。",
+    "screenshotAlt": "AIモデル選択を表示しているMy AI Photo Shootアプリ",
+    "summary": {
+      "training": "個人モデルの一回限りのトレーニング",
+      "personalPhoto": "個人モデルで1枚あたり",
+      "otherModels": "高速生成と写真編集で1枚あたり"
+    },
+    "chooser": {
+      "title": "どのモデルを使うべきですか？",
+      "description": "まず作りたいものから考えます。アプリは適切な初期設定を選べます。このガイドでは各モデル群の得意分野を説明します。",
+      "personal": {
+        "title": "自分の写真",
+        "description": "自撮りで一度トレーニングすると、本人らしさを保ったヘッドショット、マッチング写真、ポートレート、個人ブランド画像を作れます。"
+      },
+      "generate": {
+        "title": "プロンプトから新しい画像",
+        "description": "新しいシーン、クリエイティブなスタイル、ポスター、商品コンセプト、素早いビジュアル案には生成モデルを使います。"
+      },
+      "edit": {
+        "title": "既存の写真を変更",
+        "description": "写真を調整したい、元画像らしさを保ちたい、文字やレイアウトを変更したい場合は編集モデルを使います。"
+      }
+    },
+    "table": {
+      "title": "対応モデルと料金",
+      "description": "表示されているのはMy AI Photo Shootの製品料金です。プロバイダーのAPIコストではなく、アプリ内で支払う金額です。",
+      "priceNote": "個人モデルのトレーニングは一回限り{trainingPrice}です。",
+      "columns": {
+        "model": "モデル",
+        "type": "種類",
+        "bestFor": "最適な用途",
+        "price": "料金",
+        "status": "状態"
+      }
+    },
+    "groups": {
+      "personal": "個人用AIモデル",
+      "generate": "画像生成",
+      "edit": "写真編集"
+    },
+    "tiers": {
+      "personal": "本人らしさの安定性が最も高い",
+      "bestValue": "高コスパ",
+      "highDetail": "高精細",
+      "topQuality": "最高品質",
+      "precise": "精密",
+      "creative": "クリエイティブ",
+      "textPosters": "文字とポスター",
+      "proEdits": "プロ編集",
+      "smartEdits": "スマート編集",
+      "textEdits": "文字編集"
+    },
+    "bestFor": {
+      "personal": "一度のトレーニング後、自分らしい写真を安定して作成。",
+      "realistic": "リアルなポートレート、プロフィール写真、日常向けのバランスのよいAI画像。",
+      "detail": "シャープさと豊かな構図が重要な高精細シーン。",
+      "quality": "全体的な画像品質を最優先したいときのプレミアム生成。",
+      "precise": "指示への忠実さときれいなオブジェクト配置が必要なプロンプト。",
+      "creative": "スタイライズされたコンセプト、表現力のある見た目、素早いクリエイティブ探索。",
+      "textPosters": "読みやすい文字、看板、ポスター風レイアウトが重要な画像。",
+      "edits": "価格と品質のバランスがよい一般的な写真編集。",
+      "proEdits": "細部とコントロールが重要な、より高度な編集。",
+      "smartEdits": "既存画像からオブジェクト、服装、シーンを賢く変更。",
+      "textEdits": "タイポグラフィ、ラベル、グラフィックレイアウトを含む画像の編集。"
+    },
+    "pricing": {
+      "training": "一回限りのトレーニング",
+      "personalPhoto": "トレーニング後1枚あたり",
+      "photo": "1枚あたり"
+    },
+    "status": {
+      "supported": "対応"
+    },
+    "cta": {
+      "title": "適切なモデルで作成しますか？",
+      "description": "アプリを開き、スタイルやプリセットを選ぶと、モデル選択が必要な画像作成を手助けします。",
+      "primary": "作成を始める",
+      "secondary": "プリセットを見る"
     }
   }
 }

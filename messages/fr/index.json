@@ -10,7 +10,8 @@
     "useCases": "Cas d’usage",
     "presets": "Préréglages IA",
     "noUseCases": "Aucun cas d’usage pour le moment",
-    "language": "Langue"
+    "language": "Langue",
+    "models": "Modèles"
   },
   "presets": {
     "title": "Préréglages photo IA",
@@ -196,7 +197,8 @@
     "twitter": "Twitter (X)",
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. Tous droits réservés.",
-    "opensInNewTab": "s’ouvre dans un nouvel onglet"
+    "opensInNewTab": "s’ouvre dans un nouvel onglet",
+    "models": "Modèles"
   },
   "supportPage": {
     "title": "Support client",
@@ -283,6 +285,94 @@
     },
     "benefits": {
       "title": "Avantages"
+    }
+  },
+  "models": {
+    "meta": {
+      "title": "Modèles photo IA et tarifs",
+      "description": "Comparez les modèles et tarifs de My AI Photo Shoot pour portraits professionnels IA, génération d’images, retouche photo, affiches et designs riches en texte."
+    },
+    "breadcrumb": "Modèles",
+    "eyebrow": "Modèles IA compatibles",
+    "heading": "Choisissez le bon modèle photo IA avant de créer",
+    "description": "My AI Photo Shoot vous donne un modèle personnel entraîné pour créer des photos cohérentes de vous, ainsi que des modèles de génération et d’édition pour des images rapides, affiches, designs riches en texte et retouches photo.",
+    "screenshotAlt": "Application My AI Photo Shoot affichant le sélecteur de modèles IA",
+    "summary": {
+      "training": "entraînement unique pour votre modèle personnel",
+      "personalPhoto": "par photo avec votre modèle personnel",
+      "otherModels": "par photo pour génération rapide et retouches photo"
+    },
+    "chooser": {
+      "title": "Quel modèle utiliser ?",
+      "description": "Commencez par ce que vous voulez créer. L’application peut choisir de bons réglages par défaut, et ce guide explique le rôle de chaque famille de modèles.",
+      "personal": {
+        "title": "Photos de vous",
+        "description": "Entraînez une fois avec vos selfies, puis créez des portraits professionnels, photos de rencontre, portraits et images de marque personnelle reconnaissables."
+      },
+      "generate": {
+        "title": "Nouvelles images depuis des prompts",
+        "description": "Utilisez les modèles de génération pour de nouvelles scènes, des styles créatifs, des affiches, des concepts produit et des idées visuelles rapides."
+      },
+      "edit": {
+        "title": "Modifier une photo existante",
+        "description": "Utilisez les modèles d’édition pour ajuster une photo, garder l’image d’origine reconnaissable ou modifier le texte et la mise en page."
+      }
+    },
+    "table": {
+      "title": "Modèles compatibles et tarifs",
+      "description": "Ce sont les tarifs produit de My AI Photo Shoot. C’est ce que vous payez dans l’application, pas les coûts API des fournisseurs.",
+      "priceNote": "L’entraînement du modèle personnel coûte {trainingPrice} une seule fois.",
+      "columns": {
+        "model": "Modèle",
+        "type": "Type",
+        "bestFor": "Idéal pour",
+        "price": "Prix",
+        "status": "Statut"
+      }
+    },
+    "groups": {
+      "personal": "Modèle IA personnel",
+      "generate": "Génération d’images",
+      "edit": "Retouche photo"
+    },
+    "tiers": {
+      "personal": "Meilleure cohérence de ressemblance",
+      "bestValue": "Meilleur choix",
+      "highDetail": "Très détaillé",
+      "topQuality": "Qualité maximale",
+      "precise": "Précis",
+      "creative": "Créatif",
+      "textPosters": "Texte et affiches",
+      "proEdits": "Retouches pro",
+      "smartEdits": "Retouches intelligentes",
+      "textEdits": "Retouches texte"
+    },
+    "bestFor": {
+      "personal": "Photos cohérentes de vous après une seule session d’entraînement.",
+      "realistic": "Portraits réalistes, photos de profil et images IA équilibrées pour un usage quotidien.",
+      "detail": "Scènes plus détaillées où la netteté et une composition riche comptent.",
+      "quality": "Génération premium lorsque vous voulez la meilleure qualité globale.",
+      "precise": "Prompts nécessitant un suivi précis des instructions et un placement propre des objets.",
+      "creative": "Concepts stylisés, looks expressifs et exploration créative rapide.",
+      "textPosters": "Images où le texte lisible, les panneaux ou les mises en page d’affiche comptent.",
+      "edits": "Retouches photo générales avec un bon équilibre prix/qualité.",
+      "proEdits": "Retouches plus exigeantes où le détail et le contrôle sont importants.",
+      "smartEdits": "Changements intelligents d’objet, de tenue et de scène à partir d’une image existante.",
+      "textEdits": "Édition d’images contenant typographie, libellés ou mise en page graphique."
+    },
+    "pricing": {
+      "training": "entraînement unique",
+      "personalPhoto": "par photo après entraînement",
+      "photo": "par photo"
+    },
+    "status": {
+      "supported": "Compatible"
+    },
+    "cta": {
+      "title": "Prêt à créer avec le bon modèle ?",
+      "description": "Ouvrez l’application, choisissez un style ou un préréglage, et le sélecteur de modèle vous aidera à créer l’image dont vous avez besoin.",
+      "primary": "Commencer",
+      "secondary": "Voir les préréglages"
     }
   }
 }
