@@ -3,22 +3,15 @@
 /blog /blog/ 308
 /en/blog /blog/ 308
 /en/blog/ /blog/ 308
-
-# Localized blog alias redirects are generated here at build time before this first splat rule.
-/en/blog/* /blog/:splat 308
-
 /support /support/ 308
 /en/support /support/ 308
 /en/support/ /support/ 308
 /use-cases /use-cases/ 308
 /en/use-cases /use-cases/ 308
 /en/use-cases/ /use-cases/ 308
-/en/use-cases/* /use-cases/:splat 308
 /presets /presets/ 308
 /en/presets /presets/ 308
 /en/presets/ /presets/ 308
-/en/presets/* /presets/:splat 308
-/en/ai-presets/browse/* /ai-presets/browse/:splat 308
 /legal /legal/ 308
 /en/legal /legal/ 308
 /en/legal/ /legal/ 308
@@ -42,6 +35,11 @@
 /fr/license/ /license/ 308
 /ar/license/ /license/ 308
 
+# Localized blog alias redirects are generated here at build time before this first splat rule.
+/en/blog/* /blog/:splat 308
+/en/use-cases/* /use-cases/:splat 308
+/en/presets/* /presets/:splat 308
+/en/ai-presets/browse/* /ai-presets/browse/:splat 308
 
 # Gone: photo detail pages removed
 #
