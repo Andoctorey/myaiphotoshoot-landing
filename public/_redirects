@@ -3,9 +3,10 @@
 /blog /blog/ 308
 /en/blog /blog/ 308
 /en/blog/ /blog/ 308
+
+# Localized blog alias redirects are generated here at build time before this first splat rule.
 /en/blog/* /blog/:splat 308
 
-# Localized blog alias redirects are generated at build time before splat rules.
 /support /support/ 308
 /en/support /support/ 308
 /en/support/ /support/ 308

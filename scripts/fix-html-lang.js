@@ -153,6 +153,7 @@ async function appendBlogAliasRedirects() {
     return 0;
   }
 
+  // Keep localized blog paths out of _routes.json; Pages Functions prevent _redirects from running.
   const { LEGACY_LOCALIZED_SLUGS } = await import('../functions/_shared/legacy-localized-slugs.js');
   const sitemapXml = fs.readFileSync(SITEMAP_PATH, 'utf8');
   const redirects = generateBlogAliasRedirects(sitemapXml, LEGACY_LOCALIZED_SLUGS);
