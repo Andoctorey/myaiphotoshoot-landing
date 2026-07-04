@@ -1,21 +1,16 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import { afterEach, test } from 'node:test';
 
-const functionSource = await readFile(
-  new URL('../functions/[locale]/blog/[slug].js', import.meta.url),
-  'utf8'
-);
-const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSource).toString('base64')}`;
 const {
   buildFunctionsUrl,
-  canonicalizeLocalizedBlogRequest,
+  canonicalizeLocalizedBlogAliasRequest,
   fetchCanonicalSlug,
   getLocalizedBlogRoute,
-  getLegacyEnglishSlug,
-  onRequest,
   slugsMatch,
-} = await import(functionModuleUrl);
+} = await import(new URL('../functions/_shared/localized-blog-alias.js', import.meta.url));
+const {
+  getLegacyEnglishSlug,
+} = await import(new URL('../functions/_shared/legacy-localized-slugs.js', import.meta.url));
 const { onRequest: onRussianBlogAliasRequest } = await import(
   new URL('../functions/ru/blog/[[path]].js', import.meta.url)
 );
@@ -45,7 +40,7 @@ test('redirects localized English slug aliases to the translated canonical slug'
   };
 
   let nextCalls = 0;
-  const response = await onRequest({
+  const response = await canonicalizeLocalizedBlogAliasRequest({
     request: new Request('https://myaiphotoshoot.com/de/blog/vintage-photo-ideas/?utm_source=test'),
     params: {
       locale: 'de',
@@ -86,7 +81,7 @@ test('redirects localized English slug aliases when route params are unavailable
   };
 
   let nextCalls = 0;
-  const response = await canonicalizeLocalizedBlogRequest({
+  const response = await canonicalizeLocalizedBlogAliasRequest({
     request: new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
     params: {},
     env: {
@@ -171,7 +166,7 @@ test('redirects legacy localized slugs that no longer resolve directly', async (
   };
 
   let nextCalls = 0;
-  const response = await onRequest({
+  const response = await canonicalizeLocalizedBlogAliasRequest({
     request: new Request('https://myaiphotoshoot.com/ja/blog/biyo-portraito-retouch-guide/'),
     params: {
       locale: 'ja',
@@ -209,7 +204,7 @@ test('passes canonical localized slugs through to static assets', async () => {
   });
 
   let nextCalls = 0;
-  const response = await onRequest({
+  const response = await canonicalizeLocalizedBlogAliasRequest({
     request: new Request('https://myaiphotoshoot.com/de/blog/vintage-foto-ideen/'),
     params: {
       locale: 'de',
@@ -237,7 +232,7 @@ test('fails open when canonical lookup fails', async () => {
   };
 
   let nextCalls = 0;
-  const response = await onRequest({
+  const response = await canonicalizeLocalizedBlogAliasRequest({
     request: new Request('https://myaiphotoshoot.com/de/blog/vintage-photo-ideas/'),
     params: {
       locale: 'de',

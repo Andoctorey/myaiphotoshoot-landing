@@ -1,4 +1,5 @@
-import { getLegacyEnglishSlug } from '../[locale]/blog/[slug].js';
+// Keep legacy slug data under _shared; a generic functions/[locale]/blog route can shadow locale-specific Pages Functions.
+import { getLegacyEnglishSlug } from './legacy-localized-slugs.js';
 
 const SUPPORTED_LOCALES = new Set(['zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar']);
 const DEFAULT_FUNCTIONS_URL = 'https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1';

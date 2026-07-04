@@ -5,7 +5,7 @@
 /en/blog/ /blog/ 308
 /en/blog/* /blog/:splat 308
 
-# Localized blog English-slug aliases are generated into out/_redirects after build.
+# Localized blog English-slug aliases are handled by Cloudflare Pages Functions to avoid the _redirects dynamic-rule limit.
 /support /support/ 308
 /en/support /support/ 308
 /en/support/ /support/ 308
