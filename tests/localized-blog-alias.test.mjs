@@ -11,8 +11,8 @@ const {
 const {
   getLegacyEnglishSlug,
 } = await import(new URL('../functions/_shared/legacy-localized-slugs.js', import.meta.url));
-const { onRequest: onRussianBlogAliasRequest } = await import(
-  new URL('../functions/ru/blog/[[path]].js', import.meta.url)
+const { onRequest: onLocalizedBlogAliasRequest } = await import(
+  new URL('../functions/[[path]].js', import.meta.url)
 );
 
 const originalFetch = globalThis.fetch;
@@ -102,7 +102,7 @@ test('redirects localized English slug aliases when route params are unavailable
   assert.equal(nextCalls, 0);
 });
 
-test('redirects localized English slug aliases from literal locale routes', async () => {
+test('redirects localized English slug aliases from the root catch-all route', async () => {
   globalThis.fetch = async (url) => {
     assert.equal(
       url,
@@ -119,7 +119,7 @@ test('redirects localized English slug aliases from literal locale routes', asyn
   };
 
   let nextCalls = 0;
-  const response = await onRussianBlogAliasRequest({
+  const response = await onLocalizedBlogAliasRequest({
     request: new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
     params: {
       slug: 'greek-hero-portraits',
