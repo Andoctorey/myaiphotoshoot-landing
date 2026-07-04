@@ -332,17 +332,21 @@ const LEGACY_LOCALIZED_SLUGS = {
 };
 
 export async function onRequest(context) {
+  return canonicalizeLocalizedBlogRequest(context);
+}
+
+export async function canonicalizeLocalizedBlogRequest(context) {
   const { request, params, env } = context;
 
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     return context.next();
   }
 
-  const locale = typeof params.locale === 'string' ? params.locale : '';
-  const slug = typeof params.slug === 'string' ? params.slug : '';
-  if (!SUPPORTED_LOCALES.has(locale) || !slug) {
+  const route = getLocalizedBlogRoute(request, params);
+  if (!route) {
     return context.next();
   }
+  const { locale, slug } = route;
 
   try {
     let canonicalSlug = await fetchCanonicalSlug({
@@ -374,12 +378,41 @@ export async function onRequest(context) {
       headers: {
         Location: redirectUrl.toString(),
         'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+        'X-Redirect-By': 'localized-blog-slug',
       },
     });
   } catch (error) {
     console.warn('Failed to canonicalize localized blog slug alias:', error);
     return context.next();
   }
+}
+
+export function getLocalizedBlogRoute(request, params = {}) {
+  const routeParamLocale = typeof params.locale === 'string' ? params.locale : '';
+  const routeParamSlug = typeof params.slug === 'string' ? params.slug : '';
+  if (SUPPORTED_LOCALES.has(routeParamLocale) && routeParamSlug) {
+    return {
+      locale: routeParamLocale,
+      slug: routeParamSlug,
+    };
+  }
+
+  // Root middleware does not receive this route's params, so parse the same invariant from the URL path.
+  const { pathname } = new URL(request.url);
+  const match = pathname.match(/^\/([^/]+)\/blog\/([^/]+)\/?$/);
+  if (!match) {
+    return null;
+  }
+
+  const [, pathLocale, pathSlug] = match;
+  if (!SUPPORTED_LOCALES.has(pathLocale) || !pathSlug) {
+    return null;
+  }
+
+  return {
+    locale: pathLocale,
+    slug: pathSlug,
+  };
 }
 
 export async function fetchCanonicalSlug({ env, locale, slug }) {

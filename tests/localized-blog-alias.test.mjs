@@ -9,7 +9,9 @@ const functionSource = await readFile(
 const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSource).toString('base64')}`;
 const {
   buildFunctionsUrl,
+  canonicalizeLocalizedBlogRequest,
   fetchCanonicalSlug,
+  getLocalizedBlogRoute,
   getLegacyEnglishSlug,
   onRequest,
   slugsMatch,
@@ -60,6 +62,45 @@ test('redirects localized English slug aliases to the translated canonical slug'
     response.headers.get('Location'),
     'https://myaiphotoshoot.com/de/blog/vintage-foto-ideen/?utm_source=test'
   );
+  assert.equal(response.headers.get('X-Redirect-By'), 'localized-blog-slug');
+  assert.equal(nextCalls, 0);
+});
+
+test('redirects localized English slug aliases from root middleware without route params', async () => {
+  globalThis.fetch = async (url) => {
+    assert.equal(
+      url,
+      'https://functions.example.test/functions/v1/blog-post?slug=greek-hero-portraits&locale=ru'
+    );
+    return Response.json({
+      slug: 'greek-hero-portraits',
+      translations: {
+        ru: {
+          slug: 'portrety-grecheskih-geroev',
+        },
+      },
+    });
+  };
+
+  let nextCalls = 0;
+  const response = await canonicalizeLocalizedBlogRequest({
+    request: new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
+    params: {},
+    env: {
+      SUPABASE_FUNCTIONS_URL: 'https://functions.example.test/functions/v1',
+    },
+    next: async () => {
+      nextCalls += 1;
+      return new Response('static');
+    },
+  });
+
+  assert.equal(response.status, 308);
+  assert.equal(
+    response.headers.get('Location'),
+    'https://myaiphotoshoot.com/ru/blog/portrety-grecheskih-geroev/'
+  );
+  assert.equal(response.headers.get('X-Redirect-By'), 'localized-blog-slug');
   assert.equal(nextCalls, 0);
 });
 
@@ -210,4 +251,24 @@ test('maps legacy localized slugs back to their English source slugs', () => {
   assert.equal(getLegacyEnglishSlug('es', 'fotos-de-tinder-hombres'), 'tinder-photos-men');
   assert.equal(getLegacyEnglishSlug('ru', 'idei-astro-portretov'), 'astro-portrait-ideas');
   assert.equal(getLegacyEnglishSlug('de', 'not-a-known-slug'), null);
+});
+
+test('parses localized blog routes from URLs when params are unavailable', () => {
+  assert.deepEqual(
+    getLocalizedBlogRoute(
+      new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
+      {}
+    ),
+    {
+      locale: 'ru',
+      slug: 'greek-hero-portraits',
+    }
+  );
+  assert.equal(
+    getLocalizedBlogRoute(
+      new Request('https://myaiphotoshoot.com/blog/greek-hero-portraits/'),
+      {}
+    ),
+    null
+  );
 });
