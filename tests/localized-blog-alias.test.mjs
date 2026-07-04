@@ -17,7 +17,7 @@ const {
   slugsMatch,
 } = await import(functionModuleUrl);
 const { onRequest: onRussianBlogAliasRequest } = await import(
-  new URL('../functions/ru/blog/[slug].js', import.meta.url)
+  new URL('../functions/ru/blog/[[path]].js', import.meta.url)
 );
 
 const originalFetch = globalThis.fetch;

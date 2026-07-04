@@ -1,3 +1,5 @@
+import { getLegacyEnglishSlug } from '../[locale]/blog/[slug].js';
+
 const SUPPORTED_LOCALES = new Set(['zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar']);
 const DEFAULT_FUNCTIONS_URL = 'https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1';
 
@@ -16,7 +18,15 @@ export async function canonicalizeLocalizedBlogAliasRequest(context, fixedLocale
   const { locale, slug } = route;
 
   try {
-    const canonicalSlug = await fetchCanonicalSlug({ env, locale, slug });
+    let canonicalSlug = await fetchCanonicalSlug({ env, locale, slug });
+
+    if (!canonicalSlug) {
+      const legacyEnglishSlug = getLegacyEnglishSlug(locale, slug);
+      if (legacyEnglishSlug) {
+        canonicalSlug = await fetchCanonicalSlug({ env, locale, slug: legacyEnglishSlug });
+      }
+    }
+
     if (!canonicalSlug || slugsMatch(slug, canonicalSlug)) {
       return context.next();
     }
