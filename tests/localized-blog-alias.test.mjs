@@ -16,6 +16,9 @@ const {
   onRequest,
   slugsMatch,
 } = await import(functionModuleUrl);
+const { onRequest: onRussianBlogAliasRequest } = await import(
+  new URL('../functions/ru/blog/[slug].js', import.meta.url)
+);
 
 const originalFetch = globalThis.fetch;
 const originalWarn = console.warn;
@@ -66,7 +69,7 @@ test('redirects localized English slug aliases to the translated canonical slug'
   assert.equal(nextCalls, 0);
 });
 
-test('redirects localized English slug aliases from root middleware without route params', async () => {
+test('redirects localized English slug aliases when route params are unavailable', async () => {
   globalThis.fetch = async (url) => {
     assert.equal(
       url,
@@ -86,6 +89,46 @@ test('redirects localized English slug aliases from root middleware without rout
   const response = await canonicalizeLocalizedBlogRequest({
     request: new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
     params: {},
+    env: {
+      SUPABASE_FUNCTIONS_URL: 'https://functions.example.test/functions/v1',
+    },
+    next: async () => {
+      nextCalls += 1;
+      return new Response('static');
+    },
+  });
+
+  assert.equal(response.status, 308);
+  assert.equal(
+    response.headers.get('Location'),
+    'https://myaiphotoshoot.com/ru/blog/portrety-grecheskih-geroev/'
+  );
+  assert.equal(response.headers.get('X-Redirect-By'), 'localized-blog-slug');
+  assert.equal(nextCalls, 0);
+});
+
+test('redirects localized English slug aliases from literal locale routes', async () => {
+  globalThis.fetch = async (url) => {
+    assert.equal(
+      url,
+      'https://functions.example.test/functions/v1/blog-post?slug=greek-hero-portraits&locale=ru'
+    );
+    return Response.json({
+      slug: 'greek-hero-portraits',
+      translations: {
+        ru: {
+          slug: 'portrety-grecheskih-geroev',
+        },
+      },
+    });
+  };
+
+  let nextCalls = 0;
+  const response = await onRussianBlogAliasRequest({
+    request: new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
+    params: {
+      slug: 'greek-hero-portraits',
+    },
     env: {
       SUPABASE_FUNCTIONS_URL: 'https://functions.example.test/functions/v1',
     },
