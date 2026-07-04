@@ -70,7 +70,8 @@ interface BlogPostPageProps {
 // Generate dynamic metadata for SEO
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   try {
-    const { slug, locale } = await params;
+    const { slug: rawSlug, locale } = await params;
+    const slug = decodeSlug(rawSlug);
     
     // Fetch blog post data for metadata
     const response = await fetch(
@@ -216,7 +217,8 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug, locale } = await params;
+  const { slug: rawSlug, locale } = await params;
+  const slug = decodeSlug(rawSlug);
   const res = await fetch(
     buildFunctionsUrl('/blog-post', { slug, locale }),
     { next: { revalidate: 3600 } }
