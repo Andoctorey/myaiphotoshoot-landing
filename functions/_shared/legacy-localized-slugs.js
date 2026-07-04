@@ -1,4 +1,4 @@
-const LEGACY_LOCALIZED_SLUGS = {
+export const LEGACY_LOCALIZED_SLUGS = {
   zh: {
     "ao-yun-hui-yun-dong-yuan-zhao-pian": "olympic-athlete-photos",
     "dongji-aoyun-huaxiang": "winter-olympics-photos",

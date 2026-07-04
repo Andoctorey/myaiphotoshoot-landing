@@ -11,9 +11,6 @@ const {
 const {
   getLegacyEnglishSlug,
 } = await import(new URL('../functions/_shared/legacy-localized-slugs.js', import.meta.url));
-const { onRequest: onLocalizedBlogAliasRequest } = await import(
-  new URL('../functions/[[path]].js', import.meta.url)
-);
 
 const originalFetch = globalThis.fetch;
 const originalWarn = console.warn;
@@ -84,46 +81,6 @@ test('redirects localized English slug aliases when route params are unavailable
   const response = await canonicalizeLocalizedBlogAliasRequest({
     request: new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
     params: {},
-    env: {
-      SUPABASE_FUNCTIONS_URL: 'https://functions.example.test/functions/v1',
-    },
-    next: async () => {
-      nextCalls += 1;
-      return new Response('static');
-    },
-  });
-
-  assert.equal(response.status, 308);
-  assert.equal(
-    response.headers.get('Location'),
-    'https://myaiphotoshoot.com/ru/blog/portrety-grecheskih-geroev/'
-  );
-  assert.equal(response.headers.get('X-Redirect-By'), 'localized-blog-slug');
-  assert.equal(nextCalls, 0);
-});
-
-test('redirects localized English slug aliases from the root catch-all route', async () => {
-  globalThis.fetch = async (url) => {
-    assert.equal(
-      url,
-      'https://functions.example.test/functions/v1/blog-post?slug=greek-hero-portraits&locale=ru'
-    );
-    return Response.json({
-      slug: 'greek-hero-portraits',
-      translations: {
-        ru: {
-          slug: 'portrety-grecheskih-geroev',
-        },
-      },
-    });
-  };
-
-  let nextCalls = 0;
-  const response = await onLocalizedBlogAliasRequest({
-    request: new Request('https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/'),
-    params: {
-      slug: 'greek-hero-portraits',
-    },
     env: {
       SUPABASE_FUNCTIONS_URL: 'https://functions.example.test/functions/v1',
     },
