@@ -5,7 +5,7 @@ import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocal
 import { env } from '@/lib/env';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
-import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, type BlogListEntry } from '@/lib/blog-static-params';
+import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, localizeBlogListItemSlugs, type BlogListEntry } from '@/lib/blog-static-params';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -120,6 +120,7 @@ export default async function BlogPage({ params }: Props) {
       };
     }
     const allPosts = archiveResult.status === 'fulfilled' ? archiveResult.value : [];
+    initialPosts = localizeBlogListItemSlugs(initialPosts, allPosts, locale);
     archivePosts = allPosts
       .map((post) => {
         const slug = getBlogSlugForLocale(post, locale);

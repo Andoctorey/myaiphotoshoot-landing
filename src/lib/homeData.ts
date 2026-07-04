@@ -1,4 +1,5 @@
 import { env } from '@/lib/env';
+import { fetchAllPublishedBlogPosts, localizeBlogListItemSlugs, type BlogListEntry } from '@/lib/blog-static-params';
 import type { GalleryItem, GalleryRandomSession } from '@/types/gallery';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 
@@ -7,6 +8,21 @@ export type HomeData = {
   initialGallerySession: GalleryRandomSession;
   initialBlog: BlogListItem[];
   initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
+};
+
+const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
+  const base = new URL(env.SUPABASE_FUNCTIONS_URL);
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const basePath = base.pathname.replace(/\/$/, '');
+  base.pathname = `${basePath}${normalizedPath}`;
+  if (params) {
+    const searchParams = new URLSearchParams(base.search);
+    Object.entries(params).forEach(([key, value]) => {
+      searchParams.set(key, value);
+    });
+    base.search = searchParams.toString();
+  }
+  return base.toString();
 };
 
 export async function fetchHomeData(locale: string): Promise<HomeData> {
@@ -26,10 +42,14 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
   });
 
   try {
-    const [gRes, bRes, uRes] = await Promise.all([
+    const [gRes, bRes, uRes, blogArchive] = await Promise.all([
       fetch(`${env.SUPABASE_FUNCTIONS_URL}/public-gallery?${galleryParams.toString()}`, { next: { revalidate: 3600 } }),
       fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=6&locale=${locale}`, { next: { revalidate: 3600 } }),
-      fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}`, { next: { revalidate: 3600 } })
+      fetch(`${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}`, { next: { revalidate: 3600 } }),
+      fetchAllPublishedBlogPosts(
+        buildFunctionsUrl,
+        `Failed to fetch home blog archive posts for locale ${locale}`,
+      ).catch(() => [] as BlogListEntry[]),
     ]);
 
     if (gRes.ok) {
@@ -37,7 +57,7 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
     }
     if (bRes.ok) {
       const blogJson = (await bRes.json()) as BlogPostsResponse;
-      initialBlog = blogJson.posts || [];
+      initialBlog = localizeBlogListItemSlugs(blogJson.posts || [], blogArchive, locale);
     }
     if (uRes.ok) {
       const useJson = await uRes.json();

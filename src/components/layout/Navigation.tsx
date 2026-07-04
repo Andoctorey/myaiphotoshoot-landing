@@ -118,13 +118,51 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
     setMobileMenuOpen(false);
   };
 
+  const getBlogHreflangPath = (newLocale: string): string | null => {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    const segments = window.location.pathname.split('/').filter(Boolean);
+    const hasLocalePrefix = locales.includes(segments[0] as typeof locales[number]);
+    const blogIndex = hasLocalePrefix ? 1 : 0;
+    const isBlogPostPath = segments[blogIndex] === 'blog' && segments.length === blogIndex + 2;
+
+    if (!isBlogPostPath) {
+      return null;
+    }
+
+    const alternate = Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]'))
+      .find((link) => link.getAttribute('hreflang') === newLocale);
+    const href = alternate?.getAttribute('href');
+    if (!href) {
+      return null;
+    }
+
+    // Blog posts have localized slugs; use the page hreflang URL instead of same-slug locale switching.
+    const url = new URL(href, window.location.origin);
+    return `${url.pathname}${url.search}${url.hash}`;
+  };
+
   // Handle language change
   const handleLanguageChange = (newLocale: string) => {
-    // Navigate to the same page with the new locale using static-compatible router
-    router.push(pathname, { locale: newLocale, scroll: false });
-
     // Close the language menu
     setIsLanguageMenuOpen(false);
+    setIsMobileLanguageOpen(false);
+    setMobileMenuOpen(false);
+
+    if (newLocale === locale) {
+      return;
+    }
+
+    const blogHreflangPath = getBlogHreflangPath(newLocale);
+    if (blogHreflangPath) {
+      window.location.assign(blogHreflangPath);
+      return;
+    }
+
+    // Navigate to the same page with the new locale using static-compatible router
+    router.push(pathname, { locale: newLocale, scroll: false });
   };
 
   return (

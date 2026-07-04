@@ -1,45 +1,41 @@
 # Cloudflare Pages Deployment
 
-This project is deployed on **Cloudflare Pages** with native Next.js support.
+This site is a Next.js static export deployed to Cloudflare Pages.
 
-## Configuration
+## Required Pages Settings
 
-### Build Settings
-- **Build command**: `npm run build`
-- **Build output directory**: `.next`
-- **Node.js version**: 18+
+- Build command: `npm run build`
+- Build output directory: `out`
+- Production branch: the branch used for `myaiphotoshoot.com`
+- Required env var: `NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL`
 
-### Environment Variables
-- `NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL`: Your Supabase Functions URL
+## SEO-Safe Rules
 
-## Benefits
+- Keep `https://myaiphotoshoot.com` as the canonical host.
+- Redirect `www` and `http` traffic to the canonical host before Google sees page HTML.
+- Do not submit preview or `*.pages.dev` URLs to Search Console.
+- If preview deployments are public, block them from indexing in Cloudflare with `X-Robots-Tag: noindex, nofollow` or disable the public `pages.dev` route.
+- Purge Cloudflare cache after SEO fixes that remove pages, change redirects, or change robots/canonical tags.
 
-✅ **Edge Runtime**: Runs on Cloudflare Workers for ultra-fast performance  
-✅ **Dynamic routing**: Blog posts load dynamically without pre-generation  
-✅ **SSR support**: Perfect SEO with server-side rendering  
-✅ **Global CDN**: Automatic caching and optimization  
-✅ **No build-time limitations**: Content updates instantly  
+## Repo-Managed Safeguards
 
-## SEO Features
+- `public/_redirects` canonicalizes root English paths and legal/license aliases.
+- `scripts/fix-html-lang.js` appends generated localized blog alias redirects into `out/_redirects`.
+- `public/_headers` keeps HTML, sitemap, and robots caching short so Search Console sees SEO fixes quickly.
+- `src/app/sitemap.ts` must list only canonical, indexable URLs.
 
-- **Dynamic metadata**: Each blog post generates unique meta tags
-- **Auto-updating sitemap**: `/sitemap.xml` includes all content automatically
-- **Robots.txt**: Generated dynamically at `/robots.txt`
-- **JSON-LD structured data**: Rich snippets for search engines
-- **OpenGraph + Twitter Cards**: Perfect social media sharing
+## Post-Deploy Checks
 
-## Performance
+Run these after deploy:
 
-- **Edge caching**: Content cached globally on Cloudflare's network
-- **Instant updates**: No rebuild required for new content
-- **Core Web Vitals**: Optimized for Google's performance metrics
-- **Image optimization**: Next.js Image component works perfectly
+```bash
+curl -I https://myaiphotoshoot.com/en/
+curl -I https://myaiphotoshoot.com/ru/blog/greek-hero-portraits/
+curl -fsSL https://myaiphotoshoot.com/sitemap.xml
+```
 
-## Deployment
+Expected:
 
-1. Connect your GitHub repository to Cloudflare Pages
-2. Set the build settings above
-3. Add environment variables
-4. Deploy!
-
-No additional configuration needed - Cloudflare Pages handles everything automatically. 
+- `/en/` returns `308` to `/`.
+- localized English-slug blog aliases return `308` to the localized canonical slug.
+- sitemap contains canonical localized blog URLs, not localized English-slug aliases.

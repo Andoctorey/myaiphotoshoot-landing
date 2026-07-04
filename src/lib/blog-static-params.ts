@@ -132,6 +132,12 @@ export async function fetchAllPublishedBlogSlugs(
   return slugs;
 }
 
+/*
+ * Blog SEO invariant:
+ * - English posts live at /blog/:englishSlug/.
+ * - Non-English posts must live at /:locale/blog/:localizedSlug/.
+ * - /:locale/blog/:englishSlug/ is only an alias and should redirect, never become an indexed page.
+ */
 export function getBlogSlugForLocale(
   post: { slug?: string | null; translations?: Record<string, BlogTranslation> | null },
   locale: string,
@@ -142,7 +148,7 @@ export function getBlogSlugForLocale(
   }
 
   const localizedSlug = post.translations?.[locale]?.slug?.trim();
-  return localizedSlug || defaultSlug || null;
+  return localizedSlug || null;
 }
 
 export function getBlogSlugMap(
@@ -157,6 +163,33 @@ export function getBlogSlugMap(
     }
   }
   return slugMap;
+}
+
+export function localizeBlogListItemSlugs<T extends { slug?: string | null }>(
+  posts: T[],
+  allPosts: BlogListEntry[],
+  locale: string,
+): T[] {
+  const canonicalSlugs = new Set<string>();
+  const localizedSlugByDefault = new Map<string, string>();
+
+  for (const post of allPosts) {
+    const localizedSlug = getBlogSlugForLocale(post, locale);
+    if (!localizedSlug) continue;
+
+    canonicalSlugs.add(localizedSlug);
+    localizedSlugByDefault.set(post.slug, localizedSlug);
+  }
+
+  return posts.map((post) => {
+    const currentSlug = post.slug?.trim();
+    if (!currentSlug || canonicalSlugs.has(currentSlug)) {
+      return post;
+    }
+
+    const localizedSlug = localizedSlugByDefault.get(currentSlug);
+    return localizedSlug ? { ...post, slug: localizedSlug } : post;
+  });
 }
 
 export async function fetchAllPublishedBlogLocalizedParams(

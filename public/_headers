@@ -4,9 +4,15 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Content-Security-Policy: object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;
-# Default HTML caching (short-lived, edge-friendly)
+# Default HTML caching. Keep this short so SEO fixes and removed alias pages age out quickly.
 /*
-  Cache-Control: public, s-maxage=86400, max-age=300, stale-while-revalidate=60
+  Cache-Control: public, s-maxage=3600, max-age=300, stale-while-revalidate=60
+
+/sitemap.xml
+  Cache-Control: public, s-maxage=3600, max-age=300, stale-while-revalidate=60
+
+/robots.txt
+  Cache-Control: public, s-maxage=3600, max-age=300, stale-while-revalidate=60
 
 # Preserve more aggressive caching for specific assets below
 

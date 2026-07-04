@@ -71,6 +71,7 @@ interface BlogPostPageProps {
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   try {
     const { slug: rawSlug, locale } = await params;
+    // Next static export can pass Unicode slugs percent-encoded; decode before API lookup.
     const slug = decodeSlug(rawSlug);
     
     // Fetch blog post data for metadata
@@ -218,6 +219,7 @@ export async function generateStaticParams() {
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug: rawSlug, locale } = await params;
+  // Keep this in sync with metadata lookup so Unicode localized URLs don't build as noindex 404s.
   const slug = decodeSlug(rawSlug);
   const res = await fetch(
     buildFunctionsUrl('/blog-post', { slug, locale }),
