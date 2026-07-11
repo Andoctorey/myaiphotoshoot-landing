@@ -13,6 +13,8 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
     window.gtag = function gtag() {
+      // Google tag requires the native arguments object rather than a rest-parameter array.
+      // eslint-disable-next-line prefer-rest-params
       window.dataLayer.push(arguments);
     };
     window.gtag('consent', 'default', {
