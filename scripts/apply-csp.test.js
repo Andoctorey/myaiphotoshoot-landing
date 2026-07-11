@@ -21,14 +21,18 @@ test('hashes each distinct inline script and injects CSP before page content', (
   }
 });
 
-test('policy blocks arbitrary inline scripts and allows documented GA4 endpoints', () => {
+test('policy blocks arbitrary inline scripts and allows analytics endpoints', () => {
   const policy = buildPolicy('https://api.example.com', ["'sha256-test'"]);
 
   assert.doesNotMatch(policy, /script-src[^;]*'unsafe-inline'/);
   assert.match(policy, /script-src 'self' 'sha256-test'/);
   assert.match(policy, /https:\/\/\*\.google-analytics\.com/);
   assert.match(policy, /https:\/\/\*\.analytics\.google\.com/);
+  assert.match(policy, /https:\/\/analytics\.google\.com/);
   assert.match(policy, /https:\/\/\*\.googletagmanager\.com/);
+  assert.match(policy, /https:\/\/www\.google\.com/);
+  assert.match(policy, /https:\/\/static\.cloudflareinsights\.com/);
+  assert.match(policy, /https:\/\/cloudflareinsights\.com/);
 });
 
 test('rejects non-HTTPS API URLs', () => {
