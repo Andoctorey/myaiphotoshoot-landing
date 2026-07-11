@@ -332,7 +332,7 @@
     },
     "groups": {
       "personal": "Modelo personal de IA",
-      "generate": "Generación de imágenes",
+      "generate": "Crear imagen",
       "edit": "Edición de fotos"
     },
     "tiers": {

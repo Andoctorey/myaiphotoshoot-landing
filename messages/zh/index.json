@@ -332,7 +332,7 @@
     },
     "groups": {
       "personal": "个人 AI 模型",
-      "generate": "图像生成",
+      "generate": "创建图像",
       "edit": "照片编辑"
     },
     "tiers": {

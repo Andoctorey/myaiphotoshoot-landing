@@ -332,7 +332,7 @@
     },
     "groups": {
       "personal": "Personal AI Model",
-      "generate": "Image generation",
+      "generate": "Create Image",
       "edit": "Photo editing"
     },
     "tiers": {
