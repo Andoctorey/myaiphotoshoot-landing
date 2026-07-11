@@ -343,9 +343,9 @@
       "precise": "Precise",
       "creative": "Creative",
       "textPosters": "Text and posters",
-      "proEdits": "Pro edits",
-      "smartEdits": "Smart edits",
-      "textEdits": "Text edits"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "Text Layers"
     },
     "bestFor": {
       "personal": "Consistent photos of yourself after one training session.",

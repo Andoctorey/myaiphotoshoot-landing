@@ -343,9 +343,9 @@
       "precise": "Точный",
       "creative": "Креативный",
       "textPosters": "Текст и постеры",
-      "proEdits": "Профи-правки",
-      "smartEdits": "Умные правки",
-      "textEdits": "Правки текста"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "Слои текста"
     },
     "bestFor": {
       "personal": "Стабильные фото с вами после одной сессии обучения.",

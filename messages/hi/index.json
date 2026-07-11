@@ -343,9 +343,9 @@
       "precise": "सटीक",
       "creative": "रचनात्मक",
       "textPosters": "टेक्स्ट और पोस्टर",
-      "proEdits": "प्रो एडिट",
-      "smartEdits": "स्मार्ट एडिट",
-      "textEdits": "टेक्स्ट एडिट"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "टेक्स्ट लेयर"
     },
     "bestFor": {
       "personal": "एक ट्रेनिंग सेशन के बाद आपकी लगातार पहचान वाली तस्वीरें।",

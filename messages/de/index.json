@@ -343,9 +343,9 @@
       "precise": "Präzise",
       "creative": "Kreativ",
       "textPosters": "Text und Poster",
-      "proEdits": "Pro-Bearbeitung",
-      "smartEdits": "Smarte Bearbeitung",
-      "textEdits": "Textbearbeitung"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "Textebenen"
     },
     "bestFor": {
       "personal": "Konsistente Fotos von Ihnen nach nur einer Trainingssitzung.",

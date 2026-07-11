@@ -343,9 +343,9 @@
       "precise": "精密",
       "creative": "クリエイティブ",
       "textPosters": "文字とポスター",
-      "proEdits": "プロ編集",
-      "smartEdits": "スマート編集",
-      "textEdits": "文字編集"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "文字レイヤー"
     },
     "bestFor": {
       "personal": "一度のトレーニング後、自分らしい写真を安定して作成。",

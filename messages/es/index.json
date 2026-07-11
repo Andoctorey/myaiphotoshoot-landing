@@ -343,9 +343,9 @@
       "precise": "Preciso",
       "creative": "Creativo",
       "textPosters": "Texto y pósters",
-      "proEdits": "Ediciones pro",
-      "smartEdits": "Ediciones inteligentes",
-      "textEdits": "Ediciones de texto"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "Capas de texto"
     },
     "bestFor": {
       "personal": "Fotos coherentes de ti después de una sola sesión de entrenamiento.",

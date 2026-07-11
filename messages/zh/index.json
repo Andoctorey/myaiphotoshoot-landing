@@ -343,9 +343,9 @@
       "precise": "精准",
       "creative": "创意",
       "textPosters": "文字和海报",
-      "proEdits": "专业编辑",
-      "smartEdits": "智能编辑",
-      "textEdits": "文字编辑"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "文字图层"
     },
     "bestFor": {
       "personal": "一次训练后稳定生成你的个人照片。",

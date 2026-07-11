@@ -343,9 +343,9 @@
       "precise": "Précis",
       "creative": "Créatif",
       "textPosters": "Texte et affiches",
-      "proEdits": "Retouches pro",
-      "smartEdits": "Retouches intelligentes",
-      "textEdits": "Retouches texte"
+      "proEdits": "Pro",
+      "smartEdits": "Max",
+      "textEdits": "Calques de texte"
     },
     "bestFor": {
       "personal": "Photos cohérentes de vous après une seule session d’entraînement.",
