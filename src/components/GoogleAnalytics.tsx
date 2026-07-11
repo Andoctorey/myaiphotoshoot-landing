@@ -12,8 +12,8 @@ interface GoogleAnalyticsProps {
 export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
-    window.gtag = (...args: unknown[]) => {
-      window.dataLayer.push(args);
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments);
     };
     window.gtag('consent', 'default', {
       analytics_storage: 'denied',
