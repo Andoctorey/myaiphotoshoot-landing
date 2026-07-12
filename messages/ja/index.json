@@ -46,7 +46,7 @@
     "title": "AIヘッドショット生成ツールで、",
     "titleHighlight": "自然なプロフィール写真を作成",
     "description": "数枚のセルフィーをアップロードするだけで、LinkedIn、履歴書、チーム、クリエイター、個人ブランドに使えるリアルなAIヘッドショット、プロフィール写真、ポートレートを作成できます。",
-    "microcopy": "モデル学習は初回のみ$2.99 • 画像生成は1枚$0.03 • サブスクリプションなし"
+    "microcopy": "モデル学習は$2.99から1回のみ • パーソナルモデル写真は1枚$0.03 • サブスクリプションなし"
   },
   "appShowcase": {
     "exploreStyles": "My AI Photo ShootでAI写真スタイルを探す",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "わかりやすい従量課金",
-      "description": "サブスクリプションも予期しない料金もありません。モデル学習は1回$2.99、その後は1枚$0.03で画像を生成できます。"
+      "description": "サブスクリプションも予期しない料金もありません。学習は$2.99から、パーソナルモデル写真は1枚$0.03、Studioモデルは1枚$0.09〜$0.29です。"
     },
     "thousandsOfStyles": {
       "title": "ヘッドショットだけではありません",
@@ -158,7 +158,7 @@
     "whatsIncluded": "含まれるもの",
     "features": {
       "training": "パーソナルAIモデル学習",
-      "unlimited": "画像生成の回数制限なし",
+      "unlimited": "月間の生成上限なし",
       "custom": "プロンプトを細かく調整",
       "privacy": "非公開・公開ギャラリー設定",
       "social": "簡単なSNS共有",
@@ -168,8 +168,14 @@
     },
     "price": "$0.03",
     "perPhoto": "1枚あたり",
+    "personalPhotos": "パーソナルモデル写真",
+    "studioPhotos": "Studioで作成・編集",
+    "studioPrice": "$0.09〜$0.29",
+    "studioPerPhoto": "1枚あたり",
+    "trainingLabel": "パーソナルAIモデル学習",
+    "trainingRange": "1回$2.99〜$9.99",
     "getStarted": "生成を始める",
-    "oneTimeFee": "1回限りのAI学習料金",
+    "oneTimeFee": "パーソナルAIモデル学習の開始価格",
     "oneTimeFeeAmount": "$2.99",
     "noSubscriptionShort": "サブスクリプションなし。作成した分だけお支払い。"
   },
@@ -231,7 +237,7 @@
     },
     "pricing": {
       "question": "料金と生成上限を教えてください。",
-      "answer": "パーソナルモデルの学習は初回のみ$2.99です。その後は生成画像1枚あたり$0.03で、サブスクリプション、固定パック、月間生成上限はありません。"
+      "answer": "パーソナルモデルの学習は品質に応じて1回$2.99〜$9.99です。パーソナルモデル写真は1枚$0.03、Studioモデルは1枚$0.09〜$0.29です。サブスクリプションや月間生成上限はありません。"
     },
     "imageQuality": {
       "question": "画像品質に影響するものは何ですか？",
@@ -281,7 +287,7 @@
       }
     },
     "stickyCta": {
-      "label": "初回{oneTimeFee} • 画像生成は{price}（{perPhoto}）"
+      "label": "学習は{oneTimeFee}から • パーソナルモデル写真は{price}（{perPhoto}）"
     },
     "benefits": {
       "title": "メリット"
@@ -298,7 +304,7 @@
     "description": "My AI Photo Shootでは、自分らしい写真を安定して作るためのトレーニング済み個人モデルに加え、素早い画像、ポスター、文字中心のデザイン、写真編集向けの生成・編集モデルを使えます。",
     "screenshotAlt": "AIモデル選択を表示しているMy AI Photo Shootアプリ",
     "summary": {
-      "training": "個人モデルの一回限りのトレーニング",
+      "training": "パーソナルモデルの1回限りの学習の開始価格",
       "personalPhoto": "個人モデルで1枚あたり",
       "otherModels": "高速生成と写真編集で1枚あたり"
     },
@@ -321,7 +327,7 @@
     "table": {
       "title": "対応モデルと料金",
       "description": "表示されているのはMy AI Photo Shootの製品料金です。プロバイダーのAPIコストではなく、アプリ内で支払う金額です。",
-      "priceNote": "個人モデルのトレーニングは一回限り{trainingPrice}です。",
+      "priceNote": "個人モデルの学習は{trainingPrice}からです。",
       "columns": {
         "model": "モデル",
         "type": "種類",
@@ -361,7 +367,7 @@
       "textEdits": "タイポグラフィ、ラベル、グラフィックレイアウトを含む画像の編集。"
     },
     "pricing": {
-      "training": "一回限りのトレーニング",
+      "training": "1回限りの学習の開始価格",
       "personalPhoto": "トレーニング後1枚あたり",
       "photo": "1枚あたり"
     },

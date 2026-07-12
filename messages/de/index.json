@@ -46,7 +46,7 @@
     "title": "KI-Headshot-Generator für",
     "titleHighlight": "realistische Profilfotos",
     "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Headshots, Profilbilder und Porträts für LinkedIn, Lebensläufe, Teams, Kreative und persönliche Marken.",
-    "microcopy": "Einmaliges Training für $2.99 • Bilder für je $0.03 • kein Abo"
+    "microcopy": "Einmaliges Training ab $2.99 • persönliche Modellfotos je $0.03 • kein Abo"
   },
   "appShowcase": {
     "exploreStyles": "KI-Fotostile in My AI Photo Shoot entdecken",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Transparente Preise nach Verbrauch",
-      "description": "Kein Abo und keine überraschenden Gebühren. Trainieren Sie Ihr Modell einmal für $2.99 und generieren Sie danach Bilder für je $0.03."
+      "description": "Kein Abo und keine überraschenden Gebühren. Training ab $2.99, persönliche Modellfotos für je $0.03 oder Studio-Modelle für $0.09–$0.29 pro Bild."
     },
     "thousandsOfStyles": {
       "title": "Headshots und mehr",
@@ -158,7 +158,7 @@
     "whatsIncluded": "Was enthalten ist",
     "features": {
       "training": "Training eines persönlichen KI-Modells",
-      "unlimited": "Unbegrenzte Bildgenerierung",
+      "unlimited": "Kein monatliches Generierungslimit",
       "custom": "Erweiterte Prompt-Anpassung",
       "privacy": "Private und öffentliche Galerieoptionen",
       "social": "Einfaches Teilen in sozialen Medien",
@@ -168,8 +168,14 @@
     },
     "price": "$0.03",
     "perPhoto": "pro Bild",
+    "personalPhotos": "Fotos mit persönlichem Modell",
+    "studioPhotos": "Erstellen und Bearbeiten im Studio",
+    "studioPrice": "$0.09–$0.29",
+    "studioPerPhoto": "pro Bild",
+    "trainingLabel": "Training eines persönlichen KI-Modells",
+    "trainingRange": "einmalig $2.99–$9.99",
     "getStarted": "Generieren starten",
-    "oneTimeFee": "Einmalige KI-Trainingsgebühr",
+    "oneTimeFee": "Training des persönlichen KI-Modells ab",
     "oneTimeFeeAmount": "$2.99",
     "noSubscriptionShort": "Kein Abo. Sie zahlen nur für die Bilder, die Sie erstellen."
   },
@@ -231,7 +237,7 @@
     },
     "pricing": {
       "question": "Was kostet es und gibt es Limits?",
-      "answer": "Das einmalige Training Ihres persönlichen Modells kostet $2.99. Jedes generierte Bild kostet $0.03. Es gibt kein Abo, kein festes Paket und kein monatliches Generierungslimit."
+      "answer": "Das einmalige Training Ihres persönlichen KI-Modells kostet je nach Qualität $2.99–$9.99. Fotos mit dem persönlichen Modell kosten je $0.03, Studio-Modelle $0.09–$0.29 pro Bild. Es gibt kein Abo oder monatliches Generierungslimit."
     },
     "imageQuality": {
       "question": "Was beeinflusst die Bildqualität?",
@@ -281,7 +287,7 @@
       }
     },
     "stickyCta": {
-      "label": "Jetzt starten: {oneTimeFee} • {price} {perPhoto}"
+      "label": "Training ab {oneTimeFee} • persönliche Modellfotos {price} {perPhoto}"
     },
     "benefits": {
       "title": "Vorteile"
@@ -298,7 +304,7 @@
     "description": "My AI Photo Shoot bietet ein trainiertes persönliches Modell für konsistente Fotos von Ihnen sowie Generierungs- und Bearbeitungsmodelle für schnelle Bilder, Poster, textlastige Designs und Fotobearbeitung.",
     "screenshotAlt": "My AI Photo Shoot App mit Auswahl der KI-Modelle",
     "summary": {
-      "training": "einmaliges Training für Ihr persönliches Modell",
+      "training": "Startpreis für das einmalige Training Ihres persönlichen Modells",
       "personalPhoto": "pro Foto mit Ihrem persönlichen Modell",
       "otherModels": "pro Foto für schnelle Generierung und Fotobearbeitung"
     },
@@ -321,7 +327,7 @@
     "table": {
       "title": "Unterstützte Modelle und Preise",
       "description": "Dies sind die Produktpreise von My AI Photo Shoot. Das zahlen Sie in der App, nicht die API-Kosten des Anbieters.",
-      "priceNote": "Das Training des persönlichen Modells kostet einmalig {trainingPrice}.",
+      "priceNote": "Das Training des persönlichen Modells beginnt bei {trainingPrice}.",
       "columns": {
         "model": "Modell",
         "type": "Typ",
@@ -361,7 +367,7 @@
       "textEdits": "Bearbeitung von Bildern mit Typografie, Labels oder grafischem Layout."
     },
     "pricing": {
-      "training": "einmaliges Training",
+      "training": "Startpreis für einmaliges Training",
       "personalPhoto": "pro Foto nach dem Training",
       "photo": "pro Foto"
     },

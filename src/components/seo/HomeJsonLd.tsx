@@ -35,24 +35,22 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     ],
     offers: [
       {
-        '@type': 'Offer',
-        name: 'One-time AI training fee',
-        price: '2.99',
+        '@type': 'AggregateOffer',
+        name: 'One-time personal AI model training',
+        lowPrice: '2.99',
+        highPrice: '9.99',
+        offerCount: '3',
         priceCurrency: 'USD',
         url: `${canonicalUrl(locale, '/')}#pricing`,
         ...offerPolicies,
       },
       {
-        '@type': 'Offer',
+        '@type': 'AggregateOffer',
         name: 'Per-image generation',
-        price: '0.03',
+        lowPrice: '0.03',
+        highPrice: '0.29',
+        offerCount: '10',
         priceCurrency: 'USD',
-        priceSpecification: {
-          '@type': 'UnitPriceSpecification',
-          price: '0.03',
-          priceCurrency: 'USD',
-          unitText: 'per image'
-        },
         url: `${canonicalUrl(locale, '/')}#pricing`,
         ...offerPolicies,
       }

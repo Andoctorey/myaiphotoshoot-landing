@@ -48,7 +48,7 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
 
   const baseTitle = String(uc.meta_title || uc.title || '').trim();
   const siteSuffix = ' | My AI Photo Shoot';
-  const pricedSuffix = ' | $2.99 - My AI Photo Shoot';
+  const pricedSuffix = ' | From $2.99 - My AI Photo Shoot';
   let title = baseTitle;
   if (baseTitle) {
     const pricedCandidate = `${baseTitle}${pricedSuffix}`;
@@ -61,10 +61,10 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
   }
 
   const baseDescription = String(uc.meta_description || uc.title || '').trim();
-  const pricingSentence = ' One-time $2.99 model training, $0.03 per image. No subscription.';
+  const pricingSentence = ' Model training from $2.99, personal-model images $0.03 each. No subscription.';
   let description = baseDescription;
   if (baseDescription) {
-    const alreadyHasPricing = /\b\$2\.99\b|No subscription/i.test(baseDescription);
+    const alreadyHasPricing = /\$2\.99|No subscription/i.test(baseDescription);
     const withPricing = alreadyHasPricing ? baseDescription : `${baseDescription}${pricingSentence}`;
     description = withPricing.length <= 160 ? withPricing : baseDescription;
   }

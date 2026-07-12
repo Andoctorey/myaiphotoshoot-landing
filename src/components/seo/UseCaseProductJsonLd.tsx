@@ -11,8 +11,10 @@ type Props = {
   imageUrls?: string[];
   brandName?: string;
   priceCurrency?: string;
-  perImagePrice?: string; // e.g. "0.03"
-  oneTimeTrainingPrice?: string; // e.g. "2.99"
+  perImageLowPrice?: string;
+  perImageHighPrice?: string;
+  trainingLowPrice?: string;
+  trainingHighPrice?: string;
   inLanguage?: string;
 };
 
@@ -23,8 +25,10 @@ export default function UseCaseProductJsonLd({
   imageUrls,
   brandName = 'My AI Photo Shoot',
   priceCurrency = 'USD',
-  perImagePrice = '0.03',
-  oneTimeTrainingPrice = '2.99',
+  perImageLowPrice = '0.03',
+  perImageHighPrice = '0.29',
+  trainingLowPrice = '2.99',
+  trainingHighPrice = '9.99',
   inLanguage,
 }: Props) {
   const images = Array.isArray(imageUrls)
@@ -45,31 +49,28 @@ export default function UseCaseProductJsonLd({
     inLanguage: inLanguage || undefined,
     mainEntityOfPage: idUrl,
     brand: { '@type': 'Organization', name: brandName },
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency,
-      lowPrice: perImagePrice,
-      highPrice: oneTimeTrainingPrice,
-      offerCount: '2',
-      offers: [
-        {
-          '@type': 'Offer',
-          name: 'Per Image',
-          price: perImagePrice,
-          priceCurrency,
-          url: 'https://app.myaiphotoshoot.com',
-          ...offerPolicies,
-        },
-        {
-          '@type': 'Offer',
-          name: 'One-time Training',
-          price: oneTimeTrainingPrice,
-          priceCurrency,
-          url: 'https://app.myaiphotoshoot.com',
-          ...offerPolicies,
-        },
-      ],
-    },
+    offers: [
+      {
+        '@type': 'AggregateOffer',
+        name: 'Per-image generation',
+        priceCurrency,
+        lowPrice: perImageLowPrice,
+        highPrice: perImageHighPrice,
+        offerCount: '10',
+        url: 'https://app.myaiphotoshoot.com',
+        ...offerPolicies,
+      },
+      {
+        '@type': 'AggregateOffer',
+        name: 'One-time personal AI model training',
+        priceCurrency,
+        lowPrice: trainingLowPrice,
+        highPrice: trainingHighPrice,
+        offerCount: '3',
+        url: 'https://app.myaiphotoshoot.com',
+        ...offerPolicies,
+      },
+    ],
   };
 
   return (

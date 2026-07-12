@@ -11,6 +11,11 @@ export default async function Pricing({ locale }: { locale: string }) {
     t('features.privacy'),
     t('features.download'),
   ];
+  const priceRows = [
+    { label: t('personalPhotos'), price: t('price'), unit: t('perPhoto') },
+    { label: t('studioPhotos'), price: t('studioPrice'), unit: t('studioPerPhoto') },
+    { label: t('trainingLabel'), price: t('trainingRange'), unit: '' },
+  ];
 
   return (
     <section id="pricing" className="bg-white py-12 dark:bg-gray-900 md:py-16">
@@ -50,9 +55,18 @@ export default async function Pricing({ locale }: { locale: string }) {
             </div>
           </div>
           <div className="bg-gradient-to-br from-purple-50 to-indigo-50 px-6 py-8 text-center dark:bg-gray-700 dark:from-purple-900/20 dark:to-indigo-900/20 sm:px-8 lg:flex lg:w-[38%] lg:flex-shrink-0 lg:flex-col lg:justify-center lg:p-10">
-            <div className="flex items-center justify-center text-5xl font-extrabold text-gray-900 dark:text-white">
-              <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">{t('price')}</span>
-              <span className="text-xl font-medium text-gray-500 dark:text-gray-300 ltr:ml-3 rtl:mr-3">{t('perPhoto')}</span>
+            <div className="space-y-3 text-start">
+              {priceRows.map(({ label, price, unit }) => (
+                <div key={label} className="rounded-2xl bg-white/70 p-4 dark:bg-gray-800/70">
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">{label}</p>
+                  <div className="mt-1 flex flex-wrap items-baseline gap-x-2">
+                    <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-2xl font-extrabold text-transparent">
+                      {price}
+                    </span>
+                    {unit && <span className="text-sm font-medium text-gray-500 dark:text-gray-300">{unit}</span>}
+                  </div>
+                </div>
+              ))}
             </div>
             <div className="mt-6">
               <div className="rounded-xl shadow-md">
@@ -62,10 +76,6 @@ export default async function Pricing({ locale }: { locale: string }) {
                   {t('getStarted')}
                 </PlatformAppLink>
               </div>
-            </div>
-            <div className="mt-5 rounded-2xl bg-white/60 p-4 backdrop-blur-sm dark:bg-gray-800/60">
-              <p className="text-base font-bold text-gray-900 dark:text-white">{t('oneTimeFee')}</p>
-              <p className="mt-1 text-2xl font-extrabold text-purple-600 dark:text-purple-400">{t('oneTimeFeeAmount')}</p>
             </div>
           </div>
         </div>

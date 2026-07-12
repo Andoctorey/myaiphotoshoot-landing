@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     default: "AI Headshot Generator - My AI Photo Shoot",
     template: "%s | My AI Photo Shoot",
   },
-  description: "Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.",
+  description: "Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $2.99, images from $0.03, no subscription.",
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "AI Headshot Generator - Realistic Profile Photos From Selfies",
-    description: "Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.",
+    description: "Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $2.99, images from $0.03, no subscription.",
     url: "https://myaiphotoshoot.com",
     siteName: "My AI Photo Shoot",
     images: [
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AI Headshot Generator - Realistic Profile Photos From Selfies",
-    description: "Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.",
+    description: "Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $2.99, images from $0.03, no subscription.",
     images: ["/og-image.png"],
   },
 };

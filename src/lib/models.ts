@@ -114,18 +114,8 @@ export const supportedModels: SupportedModel[] = [
     tierKey: 'smartEdits',
     bestForKey: 'smartEdits',
     pricingKey: 'photo',
-    priceUsd: 0.19,
+    priceUsd: 0.29,
     providerModel: 'google/nano-banana-2',
-  },
-  {
-    id: 'ideogram_edit',
-    name: 'Ideogram Edit',
-    group: 'edit',
-    tierKey: 'textEdits',
-    bestForKey: 'textEdits',
-    pricingKey: 'photo',
-    priceUsd: 0.19,
-    providerModel: 'ideogram-ai/layerize',
   },
 ];
 

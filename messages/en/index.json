@@ -46,7 +46,7 @@
     "title": "AI Headshot Generator for",
     "titleHighlight": "Realistic Profile Photos",
     "description": "Upload a few selfies and create realistic AI headshots, profile pictures, and portraits for LinkedIn, resumes, teams, creators, and personal brands.",
-    "microcopy": "Train once for $2.99 -> generate headshots and portraits for $0.03 each -> no subscription"
+    "microcopy": "Train once from $2.99 • personal-model photos $0.03 each • no subscription"
   },
   "appShowcase": {
     "exploreStyles": "Explore AI photo styles in My AI Photo Shoot",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Transparent Pay-As-You-Go Pricing",
-      "description": "No subscription and no surprise fees. Train your model once for $2.99, then generate images for $0.03 each."
+      "description": "No subscription or surprise fees. Train from $2.99, create personal-model photos for $0.03 each, or use Studio models for $0.09–$0.29."
     },
     "thousandsOfStyles": {
       "title": "Headshots and more",
@@ -158,7 +158,7 @@
     "whatsIncluded": "What You Get",
     "features": {
       "training": "Personal AI model training",
-      "unlimited": "Unlimited image generation",
+      "unlimited": "No monthly generation limit",
       "custom": "Advanced prompt customization",
       "privacy": "Private and public gallery options",
       "social": "Easy social sharing",
@@ -168,8 +168,14 @@
     },
     "price": "$0.03",
     "perPhoto": "per image",
+    "personalPhotos": "Personal-model photos",
+    "studioPhotos": "Studio creation and editing",
+    "studioPrice": "$0.09–$0.29",
+    "studioPerPhoto": "per image",
+    "trainingLabel": "Personal AI model training",
+    "trainingRange": "$2.99–$9.99 once",
     "getStarted": "Start Generating",
-    "oneTimeFee": "One-time AI training fee",
+    "oneTimeFee": "Personal AI model training from",
     "oneTimeFeeAmount": "$2.99",
     "noSubscriptionShort": "No subscription. Pay only for what you create."
   },
@@ -231,7 +237,7 @@
     },
     "pricing": {
       "question": "How much does it cost, and are there limits?",
-      "answer": "Training your personal model costs $2.99 once. Each generated image costs $0.03, with no subscription, fixed bundle, or monthly generation limit."
+      "answer": "Personal AI model training costs $2.99–$9.99 once, depending on quality. Personal-model photos cost $0.03 each, while Studio models cost $0.09–$0.29 per image. There is no subscription or monthly generation limit."
     },
     "imageQuality": {
       "question": "What affects image quality?",
@@ -281,7 +287,7 @@
       }
     },
     "stickyCta": {
-      "label": "Start for {oneTimeFee} • {price}/{perPhoto}"
+      "label": "Train from {oneTimeFee} • personal-model photos {price} {perPhoto}"
     },
     "benefits": {
       "title": "Benefits"
@@ -298,7 +304,7 @@
     "description": "My AI Photo Shoot gives you a trained personal model for consistent photos of yourself, plus generation and editing models for quick images, posters, text-heavy designs, and photo edits.",
     "screenshotAlt": "My AI Photo Shoot app showing the AI model chooser",
     "summary": {
-      "training": "one-time training for your personal model",
+      "training": "starting price for one-time personal-model training",
       "personalPhoto": "per photo with your personal model",
       "otherModels": "per photo for quick generation and photo edits"
     },
@@ -321,7 +327,7 @@
     "table": {
       "title": "Supported models and prices",
       "description": "These are My AI Photo Shoot product prices. They are what you pay in the app, not provider API costs.",
-      "priceNote": "Personal model training is {trainingPrice} once.",
+      "priceNote": "Personal model training starts at {trainingPrice}.",
       "columns": {
         "model": "Model",
         "type": "Type",
@@ -361,7 +367,7 @@
       "textEdits": "Editing images that include typography, labels, or graphic layout."
     },
     "pricing": {
-      "training": "one-time training",
+      "training": "starting one-time training price",
       "personalPhoto": "per photo after training",
       "photo": "per photo"
     },

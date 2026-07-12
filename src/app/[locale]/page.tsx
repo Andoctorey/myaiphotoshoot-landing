@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .join(' ') || 'AI Headshot Generator - My AI Photo Shoot';
   const description = typeof m.hero?.description === 'string'
     ? m.hero.description
-    : 'Create realistic AI headshots, profile pictures, and portraits from selfies. $2.99 training, $0.03 images, no subscription.';
+    : 'Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $2.99, images from $0.03, no subscription.';
   return {
     title: { absolute: title }, // concise HTML title
     description,

@@ -46,7 +46,7 @@
     "title": "AI 头像生成器：",
     "titleHighlight": "真实自然的个人资料照片",
     "description": "上传几张自拍，即可生成适合 LinkedIn、简历、团队、创作者和个人品牌的真实感 AI 头像照、个人资料照片和肖像。",
-    "microcopy": "模型训练仅需一次，费用 $2.99 • 每张图片 $0.03 • 无需订阅"
+    "microcopy": "模型训练一次，$2.99 起 • 个人模型照片每张 $0.03 • 无需订阅"
   },
   "appShowcase": {
     "exploreStyles": "在 My AI Photo Shoot 中探索 AI 照片风格",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "透明按量付费",
-      "description": "无需订阅，没有隐藏费用。一次训练模型 $2.99，之后每张图片 $0.03。"
+      "description": "无需订阅，没有隐藏费用。训练 $2.99 起，个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。"
     },
     "thousandsOfStyles": {
       "title": "不止是头像照",
@@ -158,7 +158,7 @@
     "whatsIncluded": "包含内容",
     "features": {
       "training": "个人 AI 模型训练",
-      "unlimited": "图片生成不限量",
+      "unlimited": "无每月生成上限",
       "custom": "高级提示词自定义",
       "privacy": "私密和公开图库选项",
       "social": "便捷社交分享",
@@ -168,8 +168,14 @@
     },
     "price": "$0.03",
     "perPhoto": "每张图片",
+    "personalPhotos": "个人模型照片",
+    "studioPhotos": "Studio 创建与编辑",
+    "studioPrice": "$0.09–$0.29",
+    "studioPerPhoto": "每张图片",
+    "trainingLabel": "个人 AI 模型训练",
+    "trainingRange": "一次性 $2.99–$9.99",
     "getStarted": "开始生成",
-    "oneTimeFee": "一次性 AI 训练费",
+    "oneTimeFee": "个人 AI 模型训练起价",
     "oneTimeFeeAmount": "$2.99",
     "noSubscriptionShort": "无需订阅，只为你创建的内容付费。"
   },
@@ -231,7 +237,7 @@
     },
     "pricing": {
       "question": "费用是多少？有生成限制吗？",
-      "answer": "个人模型只需支付一次 $2.99 训练费，之后每张生成图片 $0.03。无需订阅、没有固定套餐，也没有每月生成上限。"
+      "answer": "个人模型训练根据质量一次性收费 $2.99–$9.99。个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。无需订阅，也没有每月生成上限。"
     },
     "imageQuality": {
       "question": "哪些因素会影响图片质量？",
@@ -281,7 +287,7 @@
       }
     },
     "stickyCta": {
-      "label": "训练 {oneTimeFee} • {perPhoto} {price}"
+      "label": "训练 {oneTimeFee} 起 • 个人模型照片{perPhoto} {price}"
     },
     "benefits": {
       "title": "优势"
@@ -298,7 +304,7 @@
     "description": "My AI Photo Shoot 提供经过训练的个人模型，用于稳定生成你的照片，也提供生成和编辑模型，用于快速图片、海报、文字密集型设计和照片修改。",
     "screenshotAlt": "My AI Photo Shoot 应用中的 AI 模型选择器",
     "summary": {
-      "training": "为你的个人模型进行一次性训练",
+      "training": "个人模型一次性训练起价",
       "personalPhoto": "使用个人模型每张照片",
       "otherModels": "快速生成和照片编辑每张价格"
     },
@@ -321,7 +327,7 @@
     "table": {
       "title": "支持的模型和价格",
       "description": "这些是 My AI Photo Shoot 的产品价格，也就是你在应用中支付的价格，不是供应商 API 成本。",
-      "priceNote": "个人模型训练一次性收费 {trainingPrice}。",
+      "priceNote": "个人模型训练 {trainingPrice} 起。",
       "columns": {
         "model": "模型",
         "type": "类型",
@@ -361,7 +367,7 @@
       "textEdits": "编辑包含字体、标签或图形版式的图片。"
     },
     "pricing": {
-      "training": "一次性训练",
+      "training": "一次性训练起价",
       "personalPhoto": "训练后每张照片",
       "photo": "每张照片"
     },

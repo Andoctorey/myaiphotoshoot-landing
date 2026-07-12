@@ -191,9 +191,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             )}
             {/* Inline pricing under description */}
             <div className="mt-3 text-base text-gray-900 dark:text-gray-100">
-              <span className="font-semibold">{tPricing('price')} {tPricing('perPhoto')}</span>
+              <span className="font-semibold">{tPricing('personalPhotos')}: {tPricing('price')} {tPricing('perPhoto')}</span>
               <span className="mx-2 text-gray-400">·</span>
-              <span>{tPricing('oneTimeFeeAmount')} <span className="text-gray-600 dark:text-gray-300">({tPricing('oneTimeFee')})</span></span>
+              <span>{tPricing('oneTimeFee')} <strong>{tPricing('oneTimeFeeAmount')}</strong></span>
             </div>
             {/* Conversion highlights */}
             <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
@@ -521,8 +521,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           <div className="min-w-0">
             <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-200">{tPricing('title')}</h3>
             <ul className="mt-2 space-y-1 text-gray-900 dark:text-gray-100">
-              <li>{tPricing('oneTimeFee')}: <strong>{tPricing('oneTimeFeeAmount')}</strong></li>
-              <li>{tPricing('getStarted')}: <strong>{tPricing('price')}</strong> {tPricing('perPhoto')}</li>
+              <li>{tPricing('oneTimeFee')} <strong>{tPricing('oneTimeFeeAmount')}</strong></li>
+              <li>{tPricing('personalPhotos')}: <strong>{tPricing('price')}</strong> {tPricing('perPhoto')}</li>
               <li>{tPricing('noSubscriptionShort')}</li>
             </ul>
           </div>

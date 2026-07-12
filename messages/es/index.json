@@ -46,7 +46,7 @@
     "title": "Generador de retratos profesionales con IA para",
     "titleHighlight": "fotos de perfil realistas",
     "description": "Sube algunas selfies y crea retratos profesionales, fotos de perfil y retratos creativos realistas con IA para LinkedIn, currículums, equipos, creadores y marcas personales.",
-    "microcopy": "Entrena tu modelo una vez por $2.99 • Genera imágenes por $0.03 cada una • Sin suscripción"
+    "microcopy": "Entrena tu modelo desde $2.99 • Fotos con modelo personal por $0.03 • Sin suscripción"
   },
   "appShowcase": {
     "exploreStyles": "Explora estilos de fotos con IA en My AI Photo Shoot",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Precios transparentes, sin suscripción",
-      "description": "Sin suscripción ni cargos sorpresa. Entrena tu modelo una vez por $2.99 y luego genera imágenes por $0.03 cada una."
+      "description": "Sin suscripción ni cargos sorpresa. Entrena desde $2.99, crea fotos con tu modelo personal por $0.03 o usa modelos de Studio por $0.09–$0.29 por imagen."
     },
     "thousandsOfStyles": {
       "title": "Mucho más que retratos profesionales",
@@ -158,7 +158,7 @@
     "whatsIncluded": "Qué incluye",
     "features": {
       "training": "Entrenamiento de modelo personal de IA",
-      "unlimited": "Generación ilimitada de imágenes",
+      "unlimited": "Sin límite mensual de generación",
       "custom": "Personalización avanzada de prompts",
       "privacy": "Opciones de galería privada y pública",
       "social": "Publicación sencilla en redes sociales",
@@ -168,8 +168,14 @@
     },
     "price": "$0.03",
     "perPhoto": "por imagen",
+    "personalPhotos": "Fotos con modelo personal",
+    "studioPhotos": "Creación y edición en Studio",
+    "studioPrice": "$0.09–$0.29",
+    "studioPerPhoto": "por imagen",
+    "trainingLabel": "Entrenamiento de modelo personal de IA",
+    "trainingRange": "$2.99–$9.99 una sola vez",
     "getStarted": "Empezar a generar",
-    "oneTimeFee": "Tarifa única de entrenamiento de IA",
+    "oneTimeFee": "Entrenamiento del modelo personal desde",
     "oneTimeFeeAmount": "$2.99",
     "noSubscriptionShort": "Sin suscripción. Paga solo por lo que creas."
   },
@@ -231,7 +237,7 @@
     },
     "pricing": {
       "question": "¿Cuánto cuesta y hay límites?",
-      "answer": "Entrenar tu modelo personal cuesta $2.99 una sola vez. Cada imagen generada cuesta $0.03, sin suscripción, paquete fijo ni límite mensual de generación."
+      "answer": "Entrenar tu modelo personal cuesta $2.99–$9.99 una sola vez, según la calidad. Las fotos con el modelo personal cuestan $0.03 y los modelos de Studio $0.09–$0.29 por imagen. No hay suscripción ni límite mensual de generación."
     },
     "imageQuality": {
       "question": "¿Qué influye en la calidad de las imágenes?",
@@ -281,7 +287,7 @@
       }
     },
     "stickyCta": {
-      "label": "Entrenamiento: {oneTimeFee} • {price} {perPhoto}"
+      "label": "Entrenamiento desde {oneTimeFee} • fotos con modelo personal {price} {perPhoto}"
     },
     "benefits": {
       "title": "Beneficios"
@@ -298,7 +304,7 @@
     "description": "My AI Photo Shoot te ofrece un modelo personal entrenado para crear fotos consistentes de ti, además de modelos de generación y edición para imágenes rápidas, pósters, diseños con texto y retoques de fotos.",
     "screenshotAlt": "App My AI Photo Shoot mostrando el selector de modelos de IA",
     "summary": {
-      "training": "entrenamiento único para tu modelo personal",
+      "training": "precio inicial del entrenamiento único de tu modelo personal",
       "personalPhoto": "por foto con tu modelo personal",
       "otherModels": "por foto para generación rápida y retoques de fotos"
     },
@@ -321,7 +327,7 @@
     "table": {
       "title": "Modelos compatibles y precios",
       "description": "Estos son los precios de producto de My AI Photo Shoot. Es lo que pagas en la app, no los costes de API del proveedor.",
-      "priceNote": "El entrenamiento del modelo personal cuesta {trainingPrice} una sola vez.",
+      "priceNote": "El entrenamiento del modelo personal empieza en {trainingPrice}.",
       "columns": {
         "model": "Modelo",
         "type": "Tipo",
@@ -361,7 +367,7 @@
       "textEdits": "Editar imágenes con tipografía, etiquetas o composición gráfica."
     },
     "pricing": {
-      "training": "entrenamiento único",
+      "training": "precio inicial del entrenamiento único",
       "personalPhoto": "por foto después del entrenamiento",
       "photo": "por foto"
     },
