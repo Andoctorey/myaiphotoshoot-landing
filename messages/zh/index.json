@@ -18,22 +18,22 @@
     "breadcrumb": "AI 预设",
     "eyebrow": "快速 AI 预设",
     "heading": "用于快速照片变换的 AI 预设",
-    "description": "选择一个预设，上传一张照片，无需先训练个人模型即可生成可分享的 AI 结果。",
+    "description": "选择一个预设，上传一张照片，无需先训练个人模型即可生成可分享的 AI 照片。",
     "empty": "暂无已发布的 AI 预设。",
     "quickPreset": "快速 AI 预设",
     "tryPreset": "试用此预设",
     "browsePresets": "浏览预设",
     "imageAlt": "{name} AI 预设示例",
     "readyTitle": "准备试试吗？",
-    "readyDescription": "在应用中打开预设，选择一张清晰照片，即可快速生成结果。",
+    "readyDescription": "在应用中打开预设，选择一张清晰照片，即可快速创建照片。",
     "howItWorksTitle": "使用方式",
-    "howItWorksDescription": "从预设页面开始，使用一张清晰照片，获得可直接分享的 AI 结果。",
+    "howItWorksDescription": "打开预设，选择一张清晰照片，即可生成可直接分享的 AI 照片。",
     "stepOpenTitle": "打开预设",
     "stepOpenDescription": "在应用中直接进入 {name}。",
     "stepPhotoTitle": "选择照片",
     "stepPhotoDescription": "使用光线良好的清晰自拍或人像照片。",
     "stepCreateTitle": "生成并分享",
-    "stepCreateDescription": "创建结果，下载图片，或发送给朋友。",
+    "stepCreateDescription": "下载照片，或发送给朋友。",
     "aboutTitle": "关于此预设",
     "faqTitle": "{name} 常见问题",
     "paginationLabel": "AI 预设分页",
@@ -154,7 +154,7 @@
     "title": "简单按量付费",
     "description": "只在创作时付费。没有月费套餐、积分包或隐藏费用。",
     "payAsYouGo": "按量付费",
-    "perfectFor": "适合创作者、创业者、营销人员、团队，以及任何需要随时生成高质量 AI 图片的人。",
+    "perfectFor": "适合创作者、创业者、营销人员、团队，以及任何随时需要高质量 AI 图片的人。",
     "whatsIncluded": "包含内容",
     "features": {
       "training": "个人 AI 模型训练",
@@ -278,7 +278,7 @@
       "step2": {
         "title": "训练你的 AI 模型",
         "time": "(约 2 分钟)",
-        "desc": "我们会微调个人模型，让后续图片保持你的相似度。"
+        "desc": "我们会训练个人模型，让新图片保持你的样貌。"
       },
       "step3": {
         "title": "生成并下载喜欢的作品",
@@ -310,7 +310,7 @@
     },
     "chooser": {
       "title": "应该使用哪个模型？",
-      "description": "先想清楚你要创建什么。应用可以选择合理默认值，这里说明每类模型最适合什么场景。",
+      "description": "从你想创建的图片开始。应用可以帮你选择模型，本指南则会说明每个模型最适合的场景。",
       "personal": {
         "title": "你的个人照片",
         "description": "用自拍训练一次，然后创建保持本人相似度的头像、约会照片、人像和个人品牌图片。"
@@ -376,7 +376,7 @@
     },
     "cta": {
       "title": "准备使用合适的模型创建了吗？",
-      "description": "打开应用，选择风格或预设，模型选择器会帮助你创建需要的图片。",
+      "description": "打开应用，选择风格或预设，应用会帮你为图片选择合适的模型。",
       "primary": "开始创建",
       "secondary": "浏览预设"
     }

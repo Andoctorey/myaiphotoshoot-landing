@@ -11,7 +11,7 @@ const DEFAULT_SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyemdmYWp2eWpwdmJxZWR5eHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM1NTA5MzAsImV4cCI6MjA0OTEyNjkzMH0.39Qdq2nTCuoIpAfc7L725MZA2ls3NegFy6zCjOTzW9M';
 export const AI_PRESETS_INDEX_TITLE = 'AI Photo Presets | My AI Photo Shoot';
 export const AI_PRESETS_INDEX_DESCRIPTION =
-  'Browse quick AI photo presets for personality results, viral looks, and shareable photo transformations.';
+  'Browse quick AI photo presets for fun looks and shareable photo transformations.';
 
 function getSupabaseUrl(): string {
   return (process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL).replace(/\/$/, '');

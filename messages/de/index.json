@@ -18,22 +18,22 @@
     "breadcrumb": "KI-Presets",
     "eyebrow": "Schnelle KI-Presets",
     "heading": "KI-Fotopresets für schnelle Bildverwandlungen",
-    "description": "Wähle ein Preset, lade ein Foto hoch und erstelle ein KI-Ergebnis zum Teilen, ohne vorher ein persönliches Modell zu trainieren.",
+    "description": "Wähle ein Preset, lade ein Foto hoch und erstelle ein KI-Foto zum Teilen, ohne vorher ein persönliches Modell zu trainieren.",
     "empty": "Es sind noch keine KI-Presets veröffentlicht.",
     "quickPreset": "Schnelles KI-Preset",
     "tryPreset": "Preset ausprobieren",
     "browsePresets": "Presets ansehen",
     "imageAlt": "Beispiel für das KI-Preset {name}",
     "readyTitle": "Bereit zum Ausprobieren?",
-    "readyDescription": "Öffne das Preset in der App, wähle ein klares Foto aus und erhalte direkt dein Ergebnis.",
+    "readyDescription": "Öffne das Preset in der App, wähle ein klares Foto aus und erstelle direkt dein Foto.",
     "howItWorksTitle": "So funktioniert es",
-    "howItWorksDescription": "Starte auf der Preset-Seite, nutze ein klares Foto und erhalte ein KI-Ergebnis, das du direkt teilen kannst.",
+    "howItWorksDescription": "Öffne ein Preset, wähle ein klares Foto aus und erstelle ein KI-Foto, das du direkt teilen kannst.",
     "stepOpenTitle": "Preset öffnen",
     "stepOpenDescription": "Gehe in der App direkt zu {name}.",
     "stepPhotoTitle": "Foto auswählen",
     "stepPhotoDescription": "Nutze ein klares Selfie oder Porträt mit gutem Licht.",
     "stepCreateTitle": "Generieren und teilen",
-    "stepCreateDescription": "Erstelle das Ergebnis, lade es herunter oder sende es an Freunde.",
+    "stepCreateDescription": "Lade dein Foto herunter oder sende es an Freunde.",
     "aboutTitle": "Über dieses Preset",
     "faqTitle": "{name} FAQ",
     "paginationLabel": "Navigation durch KI-Presets",
@@ -89,7 +89,7 @@
     },
     "easyCustomization": {
       "title": "Einfacher Prompt-Editor",
-      "description": "Passen Sie Prompts an oder nutzen Sie Fotos aus der öffentlichen Galerie als Vorlage, um schnell personalisierte, professionell wirkende KI-Bilder zu erstellen."
+      "description": "Passen Sie Prompts an oder nutzen Sie Fotos aus der öffentlichen Galerie als Inspiration, um schnell personalisierte, professionell wirkende KI-Bilder zu erstellen."
     },
     "multiplatform": {
       "title": "Überall erstellen",
@@ -154,7 +154,7 @@
     "title": "Einfache Preise nach Verbrauch",
     "description": "Zahlen Sie nur, wenn Sie Bilder erstellen. Kein Monatsplan, keine Credit-Pakete und keine versteckten Gebühren.",
     "payAsYouGo": "Zahlen nach Verbrauch",
-    "perfectFor": "Ideal für Kreative, Gründer, Marketingteams und alle, die bei Bedarf hochwertige KI-Bilder benötigen.",
+    "perfectFor": "Ideal für Kreative, Gründer, Marketingteams und alle, die jederzeit hochwertige KI-Bilder benötigen.",
     "whatsIncluded": "Was enthalten ist",
     "features": {
       "training": "Training eines persönlichen KI-Modells",
@@ -278,7 +278,7 @@
       "step2": {
         "title": "KI-Modell trainieren",
         "time": "(ca. 2 Minuten)",
-        "desc": "Wir passen ein persönliches Modell an, damit zukünftige Bilder Ihre Ähnlichkeit behalten."
+        "desc": "Wir trainieren ein persönliches Modell, damit neue Bilder wie Sie aussehen."
       },
       "step3": {
         "title": "Generieren und Favoriten herunterladen",
@@ -310,7 +310,7 @@
     },
     "chooser": {
       "title": "Welches Modell sollten Sie nutzen?",
-      "description": "Beginnen Sie mit dem, was Sie erstellen möchten. Die App kann sinnvolle Standardwerte wählen, und diese Übersicht zeigt, wofür jede Modellfamilie am besten geeignet ist.",
+      "description": "Beginnen Sie mit dem Bild, das Sie erstellen möchten. Die App kann ein Modell für Sie auswählen, und diese Übersicht zeigt, wofür jedes Modell am besten geeignet ist.",
       "personal": {
         "title": "Fotos von Ihnen",
         "description": "Trainieren Sie einmal mit Ihren Selfies und erstellen Sie wiedererkennbare Headshots, Datingfotos, Porträts und Personal-Brand-Bilder."
@@ -376,7 +376,7 @@
     },
     "cta": {
       "title": "Bereit, mit dem passenden Modell zu erstellen?",
-      "description": "Öffnen Sie die App, wählen Sie einen Stil oder ein Preset, und die Modellauswahl hilft Ihnen, das benötigte Bild zu erstellen.",
+      "description": "Öffnen Sie die App, wählen Sie einen Stil oder ein Preset, und die App hilft Ihnen, das richtige Modell für Ihr Bild auszuwählen.",
       "primary": "Jetzt erstellen",
       "secondary": "Presets ansehen"
     }

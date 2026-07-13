@@ -1,3 +1,4 @@
+// Keep copy short, clear, and professional; preserve established product names and standard photo/AI vocabulary.
 export async function loadMessages(locale: string) {
   try {
     return (await import(`../../messages/${locale}/index.json`)).default as Record<string, unknown>;
@@ -5,6 +6,5 @@ export async function loadMessages(locale: string) {
     return (await import(`../../messages/en/index.json`)).default as Record<string, unknown>;
   }
 }
-
 
 

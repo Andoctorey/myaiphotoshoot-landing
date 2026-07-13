@@ -18,22 +18,22 @@
     "breadcrumb": "Presets de IA",
     "eyebrow": "Presets rápidos de IA",
     "heading": "Presets de IA para transformar fotos al instante",
-    "description": "Elige un preset, sube una foto y crea un resultado de IA para compartir sin entrenar primero un modelo personal.",
+    "description": "Elige un preset, sube una foto y crea una foto con IA para compartir sin entrenar primero un modelo personal.",
     "empty": "Aún no hay presets de IA publicados.",
     "quickPreset": "Preset rápido de IA",
     "tryPreset": "Probar este preset",
     "browsePresets": "Ver presets",
     "imageAlt": "Ejemplo del preset de IA {name}",
     "readyTitle": "¿Listo para probarlo?",
-    "readyDescription": "Abre el preset en la app, elige una foto nítida y obtén el resultado al instante.",
+    "readyDescription": "Abre el preset en la app, elige una foto nítida y crea tu foto al instante.",
     "howItWorksTitle": "Cómo funciona",
-    "howItWorksDescription": "Empieza desde la página del preset, usa una foto clara y obtén un resultado de IA listo para compartir.",
+    "howItWorksDescription": "Abre un preset, elige una foto nítida y crea una foto con IA lista para compartir.",
     "stepOpenTitle": "Abre el preset",
     "stepOpenDescription": "Ve directamente a {name} en la app.",
     "stepPhotoTitle": "Elige una foto",
     "stepPhotoDescription": "Usa una selfie o un retrato claro con buena iluminación.",
     "stepCreateTitle": "Genera y comparte",
-    "stepCreateDescription": "Crea el resultado, descárgalo o envíalo a tus amigos.",
+    "stepCreateDescription": "Descarga tu foto o envíasela a tus amigos.",
     "aboutTitle": "Acerca de este preset",
     "faqTitle": "Preguntas frecuentes sobre {name}",
     "paginationLabel": "Navegación de presets de IA",
@@ -89,7 +89,7 @@
     },
     "easyCustomization": {
       "title": "Editor de prompts sencillo",
-      "description": "Ajusta tus prompts o usa fotos de la galería pública como inspiración para crear rápidamente imágenes con IA personalizadas y profesionales."
+      "description": "Ajusta tus prompts o usa fotos de la galería pública como inspiración para crear rápidamente imágenes con IA personalizadas y de aspecto profesional."
     },
     "multiplatform": {
       "title": "Crea desde cualquier lugar",
@@ -154,7 +154,7 @@
     "title": "Precios sencillos de pago por uso",
     "description": "Paga solo cuando creas. Sin plan mensual, sin paquetes de créditos y sin cargos ocultos.",
     "payAsYouGo": "Pago por uso",
-    "perfectFor": "Ideal para creadores, fundadores, profesionales del marketing, equipos y cualquiera que necesite imágenes profesionales con IA bajo demanda.",
+    "perfectFor": "Ideal para creadores, fundadores, profesionales del marketing, equipos y cualquiera que necesite imágenes profesionales con IA en cualquier momento.",
     "whatsIncluded": "Qué incluye",
     "features": {
       "training": "Entrenamiento de modelo personal de IA",
@@ -278,7 +278,7 @@
       "step2": {
         "title": "Entrena tu modelo de IA",
         "time": "(unos 2 minutos)",
-        "desc": "Ajustamos un modelo personal para que las futuras imágenes mantengan tu parecido."
+        "desc": "Entrenamos un modelo personal para que las nuevas imágenes se parezcan a ti."
       },
       "step3": {
         "title": "Genera y descarga tus favoritas",
@@ -310,7 +310,7 @@
     },
     "chooser": {
       "title": "¿Qué modelo deberías usar?",
-      "description": "Empieza por lo que quieres crear. La app puede elegir valores por defecto razonables, y esta guía muestra para qué sirve mejor cada familia de modelos.",
+      "description": "Empieza por la imagen que quieres crear. La app puede elegir un modelo por ti, y esta guía explica para qué sirve mejor cada modelo.",
       "personal": {
         "title": "Fotos de ti",
         "description": "Entrena una vez con tus selfies y crea fotos profesionales, fotos para citas, retratos e imágenes de marca personal reconocibles."
@@ -376,7 +376,7 @@
     },
     "cta": {
       "title": "¿Listo para crear con el modelo adecuado?",
-      "description": "Abre la app, elige un estilo o preset y el selector de modelos te ayudará a crear la imagen que necesitas.",
+      "description": "Abre la app, elige un estilo o preset y la app te ayudará a elegir el modelo adecuado para tu imagen.",
       "primary": "Empezar a crear",
       "secondary": "Ver presets"
     }

@@ -18,22 +18,22 @@
     "breadcrumb": "AI Presets",
     "eyebrow": "Quick AI presets",
     "heading": "AI photo presets for quick transformations",
-    "description": "Pick a preset, upload one photo, and create a shareable AI result without training a personal model first.",
+    "description": "Pick a preset, upload one photo, and create a shareable AI photo without training a personal model first.",
     "empty": "No AI presets are published yet.",
     "quickPreset": "Quick AI preset",
     "tryPreset": "Try this preset",
     "browsePresets": "Browse presets",
     "imageAlt": "{name} AI preset example",
     "readyTitle": "Ready to try it?",
-    "readyDescription": "Open the preset in the app, choose a clear photo, and get your result right away.",
+    "readyDescription": "Open the preset in the app, choose a clear photo, and create your photo right away.",
     "howItWorksTitle": "How it works",
-    "howItWorksDescription": "Start from the preset page, use one clear photo, and get a ready-to-share AI result.",
+    "howItWorksDescription": "Open a preset, choose one clear photo, and create an AI photo that is ready to share.",
     "stepOpenTitle": "Open the preset",
     "stepOpenDescription": "Go straight to {name} in the app.",
     "stepPhotoTitle": "Choose a photo",
     "stepPhotoDescription": "Use a clear selfie or portrait with good lighting.",
     "stepCreateTitle": "Generate and share",
-    "stepCreateDescription": "Create the result, download it, or send it to friends.",
+    "stepCreateDescription": "Download your photo or send it to friends.",
     "aboutTitle": "About this preset",
     "faqTitle": "{name} FAQ",
     "paginationLabel": "AI presets pagination",
@@ -89,7 +89,7 @@
     },
     "easyCustomization": {
       "title": "Simple Prompt Builder",
-      "description": "Fine-tune prompts or remix public gallery photos to create personalized, professional-looking AI images quickly."
+      "description": "Adjust prompts or use public gallery photos as inspiration to quickly create personalized, professional-looking AI images."
     },
     "multiplatform": {
       "title": "Create anywhere",
@@ -154,7 +154,7 @@
     "title": "Simple Pay-As-You-Go Pricing",
     "description": "Pay only when you create. No monthly plan, no bundled credits, and no hidden fees.",
     "payAsYouGo": "Pay As You Go",
-    "perfectFor": "Ideal for creators, founders, marketers, teams, and anyone who needs polished AI imagery on demand.",
+    "perfectFor": "Ideal for creators, founders, marketers, teams, and anyone who needs polished AI images anytime.",
     "whatsIncluded": "What You Get",
     "features": {
       "training": "Personal AI model training",
@@ -278,7 +278,7 @@
       "step2": {
         "title": "Train your AI model",
         "time": "(about 2 minutes)",
-        "desc": "We fine-tune a personal model so future images keep your likeness."
+        "desc": "We train a personal model so new images look like you."
       },
       "step3": {
         "title": "Generate and download favorites",
@@ -310,7 +310,7 @@
     },
     "chooser": {
       "title": "Which model should you use?",
-      "description": "Start with what you want to make. The app can pick sensible defaults, and this guide shows what each model family is best at.",
+      "description": "Start with the image you want to make. The app can choose a model for you, and this guide explains what each model is best at.",
       "personal": {
         "title": "Photos of you",
         "description": "Train once with your selfies, then create recognizable headshots, dating photos, portraits, and personal-brand images."
@@ -376,7 +376,7 @@
     },
     "cta": {
       "title": "Ready to create with the right model?",
-      "description": "Open the app, choose a style or preset, and the model picker will help you create the kind of image you need.",
+      "description": "Open the app, choose a style or preset, and the app will help you choose the right model for your image.",
       "primary": "Start creating",
       "secondary": "Browse presets"
     }
