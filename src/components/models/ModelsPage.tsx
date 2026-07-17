@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { canonicalUrl, localePath } from '@/lib/seo';
@@ -142,17 +141,32 @@ export default async function ModelsPage({ locale }: Props) {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-sm">
-            <div className="relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl shadow-gray-950/10 dark:border-gray-800 dark:bg-gray-950">
-              <Image
-                src="/images/models-chooser.webp"
-                alt={t('screenshotAlt')}
-                width={720}
-                height={1565}
-                priority
-                className="h-auto w-full"
-                sizes="(min-width: 1024px) 420px, (min-width: 640px) 384px, 100vw"
-              />
+          <div className="mx-auto w-full max-w-md">
+            <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-xl shadow-gray-950/10 dark:border-gray-800 dark:bg-gray-950">
+              <p className="text-sm font-semibold uppercase tracking-wide text-purple-700 dark:text-purple-300">
+                {t('chooser.title')}
+              </p>
+              <div className="mt-5 space-y-5">
+                {groupOrder.map((group) => (
+                  <div key={group}>
+                    <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+                      {t(`groups.${group}`)}
+                    </h2>
+                    <div className="mt-2 divide-y divide-gray-100 rounded-lg border border-gray-200 dark:divide-gray-800 dark:border-gray-800">
+                      {modelsByGroup(group).map((model) => (
+                        <div key={model.id} className="flex items-start justify-between gap-4 px-3 py-2.5">
+                          <span className="font-medium text-gray-950 dark:text-white">{model.name}</span>
+                          <span className="text-right text-xs leading-5 text-gray-500 dark:text-gray-400">
+                            {formatModelPriceUsd(model.priceUsd, locale)}
+                            <br />
+                            {t(`tiers.${model.tierKey}`)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

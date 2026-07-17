@@ -88,14 +88,14 @@ export const supportedModels: SupportedModel[] = [
     providerModel: 'qwen/qwen-image-2',
   },
   {
-    id: 'flux_kontext_pro',
-    name: 'Flux Kontext Pro',
+    id: 'nano_banana_2_lite',
+    name: 'Nano Banana 2 Lite',
     group: 'edit',
-    tierKey: 'bestValue',
+    tierKey: 'standardEdits',
     bestForKey: 'edits',
     pricingKey: 'photo',
     priceUsd: 0.09,
-    providerModel: 'black-forest-labs/flux-kontext-pro',
+    providerModel: 'google/nano-banana-2-lite',
   },
   {
     id: 'flux_kontext_max',
