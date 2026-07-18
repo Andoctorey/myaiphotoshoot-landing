@@ -46,7 +46,7 @@
     "title": "KI-Headshot-Generator für",
     "titleHighlight": "realistische Profilfotos",
     "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Headshots, Profilbilder und Porträts für LinkedIn, Lebensläufe, Teams, Kreative und persönliche Marken.",
-    "microcopy": "Einmaliges Training ab $2.99 • persönliche Modellfotos je $0.03 • kein Abo"
+    "microcopy": "Einmaliges Training ab $5.99 • persönliche Modellfotos je $0.03 • kein Abo"
   },
   "appShowcase": {
     "exploreStyles": "KI-Fotostile in My AI Photo Shoot entdecken",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Transparente Preise nach Verbrauch",
-      "description": "Kein Abo und keine überraschenden Gebühren. Training ab $2.99, persönliche Modellfotos für je $0.03 oder Studio-Modelle für $0.09–$0.29 pro Bild."
+      "description": "Kein Abo und keine überraschenden Gebühren. Training ab $5.99, persönliche Modellfotos für je $0.03 oder Studio-Modelle für $0.09–$0.29 pro Bild."
     },
     "thousandsOfStyles": {
       "title": "Headshots und mehr",
@@ -173,10 +173,10 @@
     "studioPrice": "$0.09–$0.29",
     "studioPerPhoto": "pro Bild",
     "trainingLabel": "Training eines persönlichen KI-Modells",
-    "trainingRange": "einmalig $2.99–$9.99",
+    "trainingRange": "Standard (2.500 Schritte) $5.99 · Max (5.000 Schritte) $9.99",
     "getStarted": "Generieren starten",
     "oneTimeFee": "Training des persönlichen KI-Modells ab",
-    "oneTimeFeeAmount": "$2.99",
+    "oneTimeFeeAmount": "$5.99",
     "noSubscriptionShort": "Kein Abo. Sie zahlen nur für die Bilder, die Sie erstellen."
   },
   "download": {
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "Was kostet es und gibt es Limits?",
-      "answer": "Das einmalige Training Ihres persönlichen KI-Modells kostet je nach Qualität $2.99–$9.99. Fotos mit dem persönlichen Modell kosten je $0.03, Studio-Modelle $0.09–$0.29 pro Bild. Es gibt kein Abo oder monatliches Generierungslimit."
+      "answer": "Das einmalige Training Ihres persönlichen KI-Modells kostet $5.99 für Standard oder $9.99 für Max. Fotos mit dem persönlichen Modell kosten je $0.03, Studio-Modelle $0.09–$0.29 pro Bild. Es gibt kein Abo oder monatliches Generierungslimit."
     },
     "imageQuality": {
       "question": "Was beeinflusst die Bildqualität?",

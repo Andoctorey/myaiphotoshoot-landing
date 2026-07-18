@@ -46,7 +46,7 @@
     "title": "AI 头像生成器：",
     "titleHighlight": "真实自然的个人资料照片",
     "description": "上传几张自拍，即可生成适合 LinkedIn、简历、团队、创作者和个人品牌的真实感 AI 头像照、个人资料照片和肖像。",
-    "microcopy": "模型训练一次，$2.99 起 • 个人模型照片每张 $0.03 • 无需订阅"
+    "microcopy": "模型训练一次，$5.99 起 • 个人模型照片每张 $0.03 • 无需订阅"
   },
   "appShowcase": {
     "exploreStyles": "在 My AI Photo Shoot 中探索 AI 照片风格",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "透明按量付费",
-      "description": "无需订阅，没有隐藏费用。训练 $2.99 起，个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。"
+      "description": "无需订阅，没有隐藏费用。训练 $5.99 起，个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。"
     },
     "thousandsOfStyles": {
       "title": "不止是头像照",
@@ -173,10 +173,10 @@
     "studioPrice": "$0.09–$0.29",
     "studioPerPhoto": "每张图片",
     "trainingLabel": "个人 AI 模型训练",
-    "trainingRange": "一次性 $2.99–$9.99",
+    "trainingRange": "标准（2,500 步）$5.99 · 最高（5,000 步）$9.99",
     "getStarted": "开始生成",
     "oneTimeFee": "个人 AI 模型训练起价",
-    "oneTimeFeeAmount": "$2.99",
+    "oneTimeFeeAmount": "$5.99",
     "noSubscriptionShort": "无需订阅，只为你创建的内容付费。"
   },
   "download": {
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "费用是多少？有生成限制吗？",
-      "answer": "个人模型训练根据质量一次性收费 $2.99–$9.99。个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。无需订阅，也没有每月生成上限。"
+      "answer": "个人模型训练一次性收费：标准 $5.99，最高 $9.99。个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。无需订阅，也没有每月生成上限。"
     },
     "imageQuality": {
       "question": "哪些因素会影响图片质量？",

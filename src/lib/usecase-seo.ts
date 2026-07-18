@@ -46,9 +46,9 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
     return { title: 'AI Photo Use Case', description: 'AI portrait examples and use cases from My AI Photo Shoot.' };
   }
 
-  const baseTitle = String(uc.meta_title || uc.title || '').trim();
+  const baseTitle = replaceLegacyTrainingPrice(String(uc.meta_title || uc.title || '').trim());
   const siteSuffix = ' | My AI Photo Shoot';
-  const pricedSuffix = ' | From $2.99 - My AI Photo Shoot';
+  const pricedSuffix = ' | From $5.99 - My AI Photo Shoot';
   let title = baseTitle;
   if (baseTitle) {
     const pricedCandidate = `${baseTitle}${pricedSuffix}`;
@@ -60,11 +60,11 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
     }
   }
 
-  const baseDescription = String(uc.meta_description || uc.title || '').trim();
-  const pricingSentence = ' Model training from $2.99, personal-model images $0.03 each. No subscription.';
+  const baseDescription = replaceLegacyTrainingPrice(String(uc.meta_description || uc.title || '').trim());
+  const pricingSentence = ' Model training from $5.99, personal-model images $0.03 each. No subscription.';
   let description = baseDescription;
   if (baseDescription) {
-    const alreadyHasPricing = /\$2\.99|No subscription/i.test(baseDescription);
+    const alreadyHasPricing = /\$5\.99|5,99 \$|No subscription/i.test(baseDescription);
     const withPricing = alreadyHasPricing ? baseDescription : `${baseDescription}${pricingSentence}`;
     description = withPricing.length <= 160 ? withPricing : baseDescription;
   }
@@ -89,4 +89,8 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
     },
     twitter: { card: 'summary_large_image', title, description, images: [imageUrl] },
   };
+}
+
+function replaceLegacyTrainingPrice(value: string): string {
+  return value.replaceAll('$2.99', '$5.99').replaceAll('2,99 $', '5,99 $');
 }

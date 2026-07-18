@@ -46,7 +46,7 @@
     "title": "Générateur de photos professionnelles par IA pour",
     "titleHighlight": "des photos de profil réalistes",
     "description": "Importez quelques selfies et créez des photos professionnelles, des photos de profil et des portraits créatifs réalistes pour LinkedIn, les CV, les équipes, les créateurs et les marques personnelles.",
-    "microcopy": "Entraînement unique dès 2,99 $ • photos avec modèle personnel à 0,03 $ • sans abonnement"
+    "microcopy": "Entraînement unique dès 5,99 $ • photos avec modèle personnel à 0,03 $ • sans abonnement"
   },
   "appShowcase": {
     "exploreStyles": "Découvrez les styles de photos IA dans My AI Photo Shoot",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Tarifs transparents à l’usage",
-      "description": "Aucun abonnement ni frais imprévus. Entraînement dès 2,99 $, photos avec modèle personnel à 0,03 $ ou modèles Studio à 0,09–0,29 $ par image."
+      "description": "Aucun abonnement ni frais imprévus. Entraînement dès 5,99 $, photos avec modèle personnel à 0,03 $ ou modèles Studio à 0,09–0,29 $ par image."
     },
     "thousandsOfStyles": {
       "title": "Bien plus que des portraits professionnels",
@@ -173,10 +173,10 @@
     "studioPrice": "0,09–0,29 $",
     "studioPerPhoto": "par image",
     "trainingLabel": "Entraînement du modèle IA personnel",
-    "trainingRange": "2,99–9,99 $ une seule fois",
+    "trainingRange": "Standard (2 500 étapes) 5,99 $ · Max (5 000 étapes) 9,99 $",
     "getStarted": "Commencer à générer",
     "oneTimeFee": "Entraînement du modèle personnel dès",
-    "oneTimeFeeAmount": "2,99 $",
+    "oneTimeFeeAmount": "5,99 $",
     "noSubscriptionShort": "Aucun abonnement. Vous ne payez que les images que vous créez."
   },
   "download": {
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "Combien cela coûte-t-il et y a-t-il des limites ?",
-      "answer": "L’entraînement du modèle personnel coûte 2,99–9,99 $ une seule fois selon la qualité. Les photos avec le modèle personnel coûtent 0,03 $, et les modèles Studio 0,09–0,29 $ par image. Aucun abonnement ni limite mensuelle de génération."
+      "answer": "L’entraînement du modèle personnel coûte 5,99 $ en Standard ou 9,99 $ en Max, en un seul paiement. Les photos avec le modèle personnel coûtent 0,03 $, et les modèles Studio 0,09–0,29 $ par image. Aucun abonnement ni limite mensuelle de génération."
     },
     "imageQuality": {
       "question": "Qu’est-ce qui influence la qualité des images ?",

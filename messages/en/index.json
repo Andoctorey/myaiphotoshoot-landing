@@ -46,7 +46,7 @@
     "title": "AI Headshot Generator for",
     "titleHighlight": "Realistic Profile Photos",
     "description": "Upload a few selfies and create realistic AI headshots, profile pictures, and portraits for LinkedIn, resumes, teams, creators, and personal brands.",
-    "microcopy": "Train once from $2.99 • personal-model photos $0.03 each • no subscription"
+    "microcopy": "Train once from $5.99 • personal-model photos $0.03 each • no subscription"
   },
   "appShowcase": {
     "exploreStyles": "Explore AI photo styles in My AI Photo Shoot",
@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Transparent Pay-As-You-Go Pricing",
-      "description": "No subscription or surprise fees. Train from $2.99, create personal-model photos for $0.03 each, or use Studio models for $0.09–$0.29."
+      "description": "No subscription or surprise fees. Train from $5.99, create personal-model photos for $0.03 each, or use Studio models for $0.09–$0.29."
     },
     "thousandsOfStyles": {
       "title": "Headshots and more",
@@ -173,10 +173,10 @@
     "studioPrice": "$0.09–$0.29",
     "studioPerPhoto": "per image",
     "trainingLabel": "Personal AI model training",
-    "trainingRange": "$2.99–$9.99 once",
+    "trainingRange": "Standard (2,500 steps) $5.99 · Max (5,000 steps) $9.99",
     "getStarted": "Start Generating",
     "oneTimeFee": "Personal AI model training from",
-    "oneTimeFeeAmount": "$2.99",
+    "oneTimeFeeAmount": "$5.99",
     "noSubscriptionShort": "No subscription. Pay only for what you create."
   },
   "download": {
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "How much does it cost, and are there limits?",
-      "answer": "Personal AI model training costs $2.99–$9.99 once, depending on quality. Personal-model photos cost $0.03 each, while Studio models cost $0.09–$0.29 per image. There is no subscription or monthly generation limit."
+      "answer": "Personal AI model training costs $5.99 for Standard or $9.99 for Max, paid once. Personal-model photos cost $0.03 each, while Studio models cost $0.09–$0.29 per image. There is no subscription or monthly generation limit."
     },
     "imageQuality": {
       "question": "What affects image quality?",

@@ -27,7 +27,7 @@ export default function UseCaseProductJsonLd({
   priceCurrency = 'USD',
   perImageLowPrice = '0.03',
   perImageHighPrice = '0.29',
-  trainingLowPrice = '2.99',
+  trainingLowPrice = '5.99',
   trainingHighPrice = '9.99',
   inLanguage,
 }: Props) {
@@ -66,7 +66,7 @@ export default function UseCaseProductJsonLd({
         priceCurrency,
         lowPrice: trainingLowPrice,
         highPrice: trainingHighPrice,
-        offerCount: '3',
+        offerCount: '2',
         url: 'https://app.myaiphotoshoot.com',
         ...offerPolicies,
       },

@@ -37,9 +37,9 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
       {
         '@type': 'AggregateOffer',
         name: 'One-time personal AI model training',
-        lowPrice: '2.99',
+        lowPrice: '5.99',
         highPrice: '9.99',
-        offerCount: '3',
+        offerCount: '2',
         priceCurrency: 'USD',
         url: `${canonicalUrl(locale, '/')}#pricing`,
         ...offerPolicies,

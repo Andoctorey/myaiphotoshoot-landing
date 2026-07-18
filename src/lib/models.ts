@@ -11,7 +11,7 @@ export type SupportedModel = {
   providerModel?: string;
 };
 
-export const TRAINING_PRICE_USD = 2.99;
+export const TRAINING_PRICE_USD = 5.99;
 export const PERSONAL_MODEL_PHOTO_PRICE_USD = 0.03;
 export const LOWEST_GENERAL_MODEL_PRICE_USD = 0.09;
 
