@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Transparente Preise nach Verbrauch",
-      "description": "Kein Abo und keine überraschenden Gebühren. Training ab $5.99, persönliche Modellfotos für je $0.03 oder Studio-Modelle für $0.09–$0.29 pro Bild."
+      "description": "Kein Abo und keine überraschenden Gebühren. Training ab $5.99, Fotos mit persönlichem KI-Modell für je $0.03, Studio-Fotos für $0.29 und KI-Presets für $0.09–$0.29."
     },
     "thousandsOfStyles": {
       "title": "Headshots und mehr",
@@ -168,12 +168,12 @@
     },
     "price": "$0.03",
     "perPhoto": "pro Bild",
-    "personalPhotos": "Fotos mit persönlichem Modell",
-    "studioPhotos": "Erstellen und Bearbeiten im Studio",
+    "personalPhotos": "Fotos mit persönlichem KI-Modell",
+    "personalDescription": "Trainieren Sie jedes KI-Modell einmalig ab $5.99.",
+    "studioPhotos": "Studio-Fotos und KI-Presets",
+    "studioDescription": "Studio-Fotos kosten $0.29. KI-Presets kosten zwischen $0.09 und $0.29.",
     "studioPrice": "$0.09–$0.29",
     "studioPerPhoto": "pro Bild",
-    "trainingLabel": "Training eines persönlichen KI-Modells",
-    "trainingRange": "Standard (2.500 Schritte) $5.99 · Max (5.000 Schritte) $9.99",
     "getStarted": "Generieren starten",
     "oneTimeFee": "Training des persönlichen KI-Modells ab",
     "oneTimeFeeAmount": "$5.99",
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "Was kostet es und gibt es Limits?",
-      "answer": "Das einmalige Training Ihres persönlichen KI-Modells kostet $5.99 für Standard oder $9.99 für Max. Fotos mit dem persönlichen Modell kosten je $0.03, Studio-Modelle $0.09–$0.29 pro Bild. Es gibt kein Abo oder monatliches Generierungslimit."
+      "answer": "Das einmalige Training jedes persönlichen KI-Modells kostet $5.99 für Standard oder $9.99 für Max. Fotos mit dem persönlichen Modell kosten je $0.03. Studio-Fotos kosten $0.29 und KI-Presets $0.09–$0.29 pro Bild. Es gibt kein Abo oder monatliches Generierungslimit."
     },
     "imageQuality": {
       "question": "Was beeinflusst die Bildqualität?",

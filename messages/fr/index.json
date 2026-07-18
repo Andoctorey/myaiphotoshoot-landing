@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Tarifs transparents à l’usage",
-      "description": "Aucun abonnement ni frais imprévus. Entraînement dès 5,99 $, photos avec modèle personnel à 0,03 $ ou modèles Studio à 0,09–0,29 $ par image."
+      "description": "Aucun abonnement ni frais imprévus. L’entraînement commence à 5,99 $, les photos avec modèle personnel coûtent 0,03 $, les photos Studio 0,29 $ et les préréglages IA entre 0,09 et 0,29 $."
     },
     "thousandsOfStyles": {
       "title": "Bien plus que des portraits professionnels",
@@ -168,12 +168,12 @@
     },
     "price": "0,03 $",
     "perPhoto": "par image",
-    "personalPhotos": "Photos avec modèle personnel",
-    "studioPhotos": "Création et retouche dans Studio",
+    "personalPhotos": "Photos avec votre modèle IA personnel",
+    "personalDescription": "Entraînez chaque modèle IA une seule fois, à partir de 5,99 $.",
+    "studioPhotos": "Photos Studio et préréglages IA",
+    "studioDescription": "Les photos Studio coûtent 0,29 $. Les préréglages IA coûtent entre 0,09 et 0,29 $.",
     "studioPrice": "0,09–0,29 $",
     "studioPerPhoto": "par image",
-    "trainingLabel": "Entraînement du modèle IA personnel",
-    "trainingRange": "Standard (2 500 étapes) 5,99 $ · Max (5 000 étapes) 9,99 $",
     "getStarted": "Commencer à générer",
     "oneTimeFee": "Entraînement du modèle personnel dès",
     "oneTimeFeeAmount": "5,99 $",
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "Combien cela coûte-t-il et y a-t-il des limites ?",
-      "answer": "L’entraînement du modèle personnel coûte 5,99 $ en Standard ou 9,99 $ en Max, en un seul paiement. Les photos avec le modèle personnel coûtent 0,03 $, et les modèles Studio 0,09–0,29 $ par image. Aucun abonnement ni limite mensuelle de génération."
+      "answer": "L’entraînement de chaque modèle personnel coûte 5,99 $ en Standard ou 9,99 $ en Max, en un seul paiement par modèle. Les photos avec le modèle personnel coûtent 0,03 $. Les photos Studio coûtent 0,29 $ et les préréglages IA entre 0,09 et 0,29 $ par image. Aucun abonnement ni limite mensuelle de génération."
     },
     "imageQuality": {
       "question": "Qu’est-ce qui influence la qualité des images ?",

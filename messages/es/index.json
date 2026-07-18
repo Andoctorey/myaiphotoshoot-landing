@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "Precios transparentes, sin suscripción",
-      "description": "Sin suscripción ni cargos sorpresa. Entrena desde $5.99, crea fotos con tu modelo personal por $0.03 o usa modelos de Studio por $0.09–$0.29 por imagen."
+      "description": "Sin suscripción ni cargos sorpresa. El entrenamiento comienza en $5.99, las fotos con tu modelo personal cuestan $0.03, las fotos de Studio $0.29 y los presets de IA entre $0.09 y $0.29."
     },
     "thousandsOfStyles": {
       "title": "Mucho más que retratos profesionales",
@@ -168,12 +168,12 @@
     },
     "price": "$0.03",
     "perPhoto": "por imagen",
-    "personalPhotos": "Fotos con modelo personal",
-    "studioPhotos": "Creación y edición en Studio",
+    "personalPhotos": "Fotos con tu modelo personal de IA",
+    "personalDescription": "Entrena cada modelo de IA una vez desde $5.99.",
+    "studioPhotos": "Fotos de Studio y presets de IA",
+    "studioDescription": "Las fotos de Studio cuestan $0.29. Los presets de IA cuestan entre $0.09 y $0.29.",
     "studioPrice": "$0.09–$0.29",
     "studioPerPhoto": "por imagen",
-    "trainingLabel": "Entrenamiento de modelo personal de IA",
-    "trainingRange": "Estándar (2.500 pasos) $5.99 · Máx. (5.000 pasos) $9.99",
     "getStarted": "Empezar a generar",
     "oneTimeFee": "Entrenamiento del modelo personal desde",
     "oneTimeFeeAmount": "$5.99",
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "¿Cuánto cuesta y hay límites?",
-      "answer": "Entrenar tu modelo personal cuesta $5.99 con Estándar o $9.99 con Máx., en un único pago. Las fotos con el modelo personal cuestan $0.03 y los modelos de Studio $0.09–$0.29 por imagen. No hay suscripción ni límite mensual de generación."
+      "answer": "Entrenar cada modelo personal cuesta $5.99 con Estándar o $9.99 con Máx., en un único pago por modelo. Las fotos con el modelo personal cuestan $0.03. Las fotos de Studio cuestan $0.29 y los presets de IA entre $0.09 y $0.29 por imagen. No hay suscripción ni límite mensual de generación."
     },
     "imageQuality": {
       "question": "¿Qué influye en la calidad de las imágenes?",

@@ -81,7 +81,7 @@
     },
     "affordablePricing": {
       "title": "透明按量付费",
-      "description": "无需订阅，没有隐藏费用。训练 $5.99 起，个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。"
+      "description": "无需订阅，没有隐藏费用。训练 $5.99 起，个人 AI 模型照片每张 $0.03，Studio 照片每张 $0.29，AI 预设每张 $0.09–$0.29。"
     },
     "thousandsOfStyles": {
       "title": "不止是头像照",
@@ -168,12 +168,12 @@
     },
     "price": "$0.03",
     "perPhoto": "每张图片",
-    "personalPhotos": "个人模型照片",
-    "studioPhotos": "Studio 创建与编辑",
+    "personalPhotos": "个人 AI 模型照片",
+    "personalDescription": "每个 AI 模型仅需训练一次，起价 $5.99。",
+    "studioPhotos": "Studio 照片与 AI 预设",
+    "studioDescription": "Studio 照片价格为 $0.29。AI 预设价格为 $0.09–$0.29。",
     "studioPrice": "$0.09–$0.29",
     "studioPerPhoto": "每张图片",
-    "trainingLabel": "个人 AI 模型训练",
-    "trainingRange": "标准（2,500 步）$5.99 · 最高（5,000 步）$9.99",
     "getStarted": "开始生成",
     "oneTimeFee": "个人 AI 模型训练起价",
     "oneTimeFeeAmount": "$5.99",
@@ -237,7 +237,7 @@
     },
     "pricing": {
       "question": "费用是多少？有生成限制吗？",
-      "answer": "个人模型训练一次性收费：标准 $5.99，最高 $9.99。个人模型照片每张 $0.03，Studio 模型每张 $0.09–$0.29。无需订阅，也没有每月生成上限。"
+      "answer": "每个个人 AI 模型的训练均为一次性收费：标准 $5.99，最高 $9.99。个人 AI 模型照片每张 $0.03。Studio 照片每张 $0.29，AI 预设每张 $0.09–$0.29。无需订阅，也没有每月生成上限。"
     },
     "imageQuality": {
       "question": "哪些因素会影响图片质量？",

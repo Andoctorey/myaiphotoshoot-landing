@@ -12,9 +12,18 @@ export default async function Pricing({ locale }: { locale: string }) {
     t('features.download'),
   ];
   const priceRows = [
-    { label: t('personalPhotos'), price: t('price'), unit: t('perPhoto') },
-    { label: t('studioPhotos'), price: t('studioPrice'), unit: t('studioPerPhoto') },
-    { label: t('trainingLabel'), price: t('trainingRange'), unit: '' },
+    {
+      label: t('personalPhotos'),
+      price: t('price'),
+      unit: t('perPhoto'),
+      description: t('personalDescription'),
+    },
+    {
+      label: t('studioPhotos'),
+      price: t('studioPrice'),
+      unit: t('studioPerPhoto'),
+      description: t('studioDescription'),
+    },
   ];
 
   return (
@@ -56,7 +65,7 @@ export default async function Pricing({ locale }: { locale: string }) {
           </div>
           <div className="bg-gradient-to-br from-purple-50 to-indigo-50 px-6 py-8 text-center dark:bg-gray-700 dark:from-purple-900/20 dark:to-indigo-900/20 sm:px-8 lg:flex lg:w-[38%] lg:flex-shrink-0 lg:flex-col lg:justify-center lg:p-10">
             <div className="space-y-3 text-start">
-              {priceRows.map(({ label, price, unit }) => (
+              {priceRows.map(({ label, price, unit, description }) => (
                 <div key={label} className="rounded-2xl bg-white/70 p-4 dark:bg-gray-800/70">
                   <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">{label}</p>
                   <div className="mt-1 flex flex-wrap items-baseline gap-x-2">
@@ -65,6 +74,7 @@ export default async function Pricing({ locale }: { locale: string }) {
                     </span>
                     {unit && <span className="text-sm font-medium text-gray-500 dark:text-gray-300">{unit}</span>}
                   </div>
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">{description}</p>
                 </div>
               ))}
             </div>
