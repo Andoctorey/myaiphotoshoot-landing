@@ -10,7 +10,7 @@ export default function SupportForm() {
   const t = useTranslations('supportPage');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const [turnstileToken, setTurnstileToken] = useState('');
   const turnstileRef = useRef<TurnstileInstance>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -18,6 +18,7 @@ export default function SupportForm() {
     email?: string;
     message?: string;
   }>({});
+  const clearTurnstileToken = () => setTurnstileToken('');
 
   const validateForm = () => {
     const errors: {
@@ -50,7 +51,12 @@ export default function SupportForm() {
       setSubmitStatus('error');
       return;
     }
-    
+
+    const submittedTurnstileToken = turnstileToken;
+    if (env.TURNSTILE_SITE_KEY) {
+      clearTurnstileToken();
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
     
@@ -60,24 +66,28 @@ export default function SupportForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, message, turnstileToken: env.TURNSTILE_SITE_KEY ? turnstileToken : 'dummy-token-for-dev' }),
+        body: JSON.stringify({
+          email,
+          message,
+          turnstileToken: env.TURNSTILE_SITE_KEY ? submittedTurnstileToken : 'dummy-token-for-dev',
+        }),
       });
       
       if (response.ok) {
         setSubmitStatus('success');
         setEmail('');
         setMessage('');
-        turnstileRef.current?.reset();
       } else {
         console.error('Support form submission failed:', await response.text());
         setSubmitStatus('error');
-        turnstileRef.current?.reset();
       }
     } catch (error) {
-      // Handle error
       console.error('Support form submission error:', error);
       setSubmitStatus('error');
     } finally {
+      if (env.TURNSTILE_SITE_KEY) {
+        turnstileRef.current?.reset();
+      }
       setIsSubmitting(false);
     }
   };
@@ -162,6 +172,9 @@ export default function SupportForm() {
                 <Turnstile
                   siteKey={env.TURNSTILE_SITE_KEY}
                   onSuccess={setTurnstileToken}
+                  onExpire={clearTurnstileToken}
+                  onError={clearTurnstileToken}
+                  onTimeout={clearTurnstileToken}
                   ref={turnstileRef}
                   options={{
                     theme: 'auto',

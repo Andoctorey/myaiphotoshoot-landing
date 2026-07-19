@@ -5,7 +5,12 @@ import { locales, defaultLocale } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { BlogListItem, BlogPostsResponse } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
-import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, type BlogListEntry } from '@/lib/blog-static-params';
+import {
+  fetchAllPublishedBlogPosts,
+  getBlogSlugForLocale,
+  projectBlogListItems,
+  type BlogListEntry,
+} from '@/lib/blog-static-params';
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const base = new URL(env.SUPABASE_FUNCTIONS_URL);
@@ -100,7 +105,7 @@ export default async function BlogPage() {
     const res = postsResult.status === 'fulfilled' ? postsResult.value : null;
     if (res?.ok) {
       const json = (await res.json()) as BlogPostsResponse;
-      initialPosts = json.posts || [];
+      initialPosts = projectBlogListItems(json.posts);
       initialPagination = {
         total: json.total,
         page: json.page,

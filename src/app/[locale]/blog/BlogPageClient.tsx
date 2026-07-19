@@ -73,7 +73,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           })
         }}
       />
-      <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
@@ -233,7 +233,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
             </section>
           )}
         </div>
-      </main>
+      </div>
     </>
   );
 }

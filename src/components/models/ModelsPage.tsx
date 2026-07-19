@@ -36,7 +36,7 @@ export default async function ModelsPage({ locale }: Props) {
   });
 
   return (
-    <main className="min-h-screen bg-white pt-24 text-gray-950 dark:bg-gray-950 dark:text-white">
+    <div className="min-h-screen bg-white pt-24 text-gray-950 dark:bg-gray-950 dark:text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -271,6 +271,6 @@ export default async function ModelsPage({ locale }: Props) {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

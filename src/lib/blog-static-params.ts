@@ -1,4 +1,5 @@
 import { defaultLocale } from '@/i18n/request';
+import type { BlogListItem } from '@/types/blog';
 
 type BuildFunctionsUrl = (path: string, params?: Record<string, string>) => string;
 
@@ -190,6 +191,24 @@ export function localizeBlogListItemSlugs<T extends { slug?: string | null }>(
     const localizedSlug = localizedSlugByDefault.get(currentSlug);
     return localizedSlug ? { ...post, slug: localizedSlug } : post;
   });
+}
+
+export function projectBlogListItems(posts?: readonly BlogListItem[] | null): BlogListItem[] {
+  return (posts ?? []).map(({
+    id,
+    title,
+    slug,
+    meta_description,
+    featured_image_url,
+    created_at,
+  }) => ({
+    id,
+    title,
+    slug,
+    meta_description,
+    featured_image_url,
+    created_at,
+  }));
 }
 
 export async function fetchAllPublishedBlogLocalizedParams(

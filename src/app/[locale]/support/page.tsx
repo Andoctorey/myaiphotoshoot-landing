@@ -42,13 +42,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function SupportPage({ params }: { params: Promise<{ locale: string }> }) {
-  await params;
+export default function SupportPage() {
   return (
-    <>
-      <main className="min-h-screen pt-24">
-        <SupportForm />
-      </main>
-    </>
+    <div className="min-h-screen pt-24">
+      <SupportForm />
+    </div>
   );
 }

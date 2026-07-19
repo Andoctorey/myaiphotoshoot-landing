@@ -36,8 +36,8 @@ export default function TableOfContents({ content, className = '', title = 'Tabl
 
     setTocItems(items);
 
-    // Add IDs to actual rendered headings in the DOM
-    setTimeout(() => {
+    let headingObserver: IntersectionObserver | null = null;
+    const timeoutId = window.setTimeout(() => {
       const articleContainer = document.querySelector('.medium-style-article');
       if (articleContainer) {
         const actualHeadings = articleContainer.querySelectorAll('h1, h2, h3, h4, h5, h6');
@@ -46,7 +46,7 @@ export default function TableOfContents({ content, className = '', title = 'Tabl
         });
 
         // Set up intersection observer for active heading
-        const observer = new IntersectionObserver(
+        headingObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
@@ -59,17 +59,19 @@ export default function TableOfContents({ content, className = '', title = 'Tabl
             threshold: 0,
           }
         );
-
         // Observe the headings with IDs
-        actualHeadings.forEach((heading) => {
+        for (const heading of actualHeadings) {
           if (heading.id) {
-            observer.observe(heading);
+            headingObserver.observe(heading);
           }
-        });
-
-        return () => observer.disconnect();
+        }
       }
     }, 200);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      headingObserver?.disconnect();
+    };
   }, [content]);
 
   if (tocItems.length <= 1) {

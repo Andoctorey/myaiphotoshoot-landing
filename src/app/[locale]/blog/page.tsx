@@ -5,7 +5,13 @@ import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocal
 import { env } from '@/lib/env';
 import type { BlogPostsResponse, BlogListItem } from '@/types/blog';
 import { loadMessages } from '@/lib/i18n-messages';
-import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, localizeBlogListItemSlugs, type BlogListEntry } from '@/lib/blog-static-params';
+import {
+  fetchAllPublishedBlogPosts,
+  getBlogSlugForLocale,
+  localizeBlogListItemSlugs,
+  projectBlogListItems,
+  type BlogListEntry,
+} from '@/lib/blog-static-params';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -111,7 +117,7 @@ export default async function BlogPage({ params }: Props) {
     const res = postsResult.status === 'fulfilled' ? postsResult.value : null;
     if (res?.ok) {
       const json = (await res.json()) as BlogPostsResponse;
-      initialPosts = json.posts || [];
+      initialPosts = projectBlogListItems(json.posts);
       initialPagination = {
         total: json.total,
         page: json.page,

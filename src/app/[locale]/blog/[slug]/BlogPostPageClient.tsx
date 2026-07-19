@@ -162,43 +162,39 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   // Loading state
   if (isLoading) {
     return (
-      <>
-        <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="flex flex-col items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">Loading blog post...</p>
-            </div>
+      <div className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">Loading blog post...</p>
           </div>
-        </main>
-      </>
+        </div>
+      </div>
     );
   }
 
   // Error state
   if (isError || !post) {
     return (
-      <>
-        <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="text-center py-12">
-              <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">📝</div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                {t('notFound')}
-              </h1>
-              <p className="text-gray-600 dark:text-gray-300 mb-8">
-                {t('errorDescription')}
-              </p>
-              <Link
-                href={localePath(locale, '/blog/')}
-                className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200"
-              >
-                {t('backToBlog')}
-              </Link>
-            </div>
+      <div className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center py-12">
+            <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">📝</div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              {t('notFound')}
+            </h1>
+            <p className="text-gray-600 dark:text-gray-300 mb-8">
+              {t('errorDescription')}
+            </p>
+            <Link
+              href={localePath(locale, '/blog/')}
+              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200"
+            >
+              {t('backToBlog')}
+            </Link>
           </div>
-        </main>
-      </>
+        </div>
+      </div>
     );
   }
 
@@ -648,7 +644,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         />
       )}
       <FAQSchema faqs={faqs} />
-      <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
@@ -800,13 +796,13 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
 
         </div>
-      </main>
+      </div>
     </>
     );
   } catch (error) {
     console.error('Blog post render error:', error);
     return (
-      <main className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center py-12">
             <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">⚠️</div>
@@ -824,7 +820,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             </Link>
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 }

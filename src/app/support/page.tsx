@@ -46,9 +46,9 @@ export default async function SupportPage() {
   return (
     <NextIntlClientProvider locale={defaultLocale} messages={messages}>
       <SiteShell locale={defaultLocale}>
-        <main className="min-h-screen pt-24">
+        <div className="min-h-screen pt-24">
           <SupportForm />
-        </main>
+        </div>
       </SiteShell>
     </NextIntlClientProvider>
   );

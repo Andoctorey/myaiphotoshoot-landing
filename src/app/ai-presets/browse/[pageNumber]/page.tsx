@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export async function generateStaticParams() {
   const page = await fetchAiPresetsPage(defaultLocale, 1);
-  return Array.from({ length: Math.max(1, page.totalPages - 1) }, (_, index) => ({
+  return Array.from({ length: Math.max(0, page.totalPages - 1) }, (_, index) => ({
     pageNumber: String(index + 2),
   }));
 }
@@ -68,6 +68,6 @@ export default async function PresetsPaginatedPage({ params }: PageProps) {
   const parsedPage = parsePageParam((await params).pageNumber);
   if (!parsedPage) notFound();
   const pageData = await fetchAiPresetsPage(defaultLocale, parsedPage);
-  if (pageData.totalPages > 1 && (parsedPage > pageData.totalPages || pageData.presets.length === 0)) notFound();
+  if (parsedPage > pageData.totalPages || pageData.presets.length === 0) notFound();
   return <AiPresetsIndex locale={defaultLocale} page={parsedPage} pageData={pageData} />;
 }
