@@ -64,5 +64,10 @@ declare global {
       grantConsent: () => void;
       revokeConsent: () => void;
     };
+    __enableTikTokPixel?: () => void;
+    __grantTikTokConsent?: () => void;
+    __revokeTikTokConsent?: () => void;
+    __tiktokPixelLoaded?: boolean;
+    __tiktokTrackingEnabled?: boolean;
   }
 } 

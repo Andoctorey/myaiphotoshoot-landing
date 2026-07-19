@@ -16,14 +16,29 @@ export default function TikTokPixel({ pixelId }: TikTokPixelProps) {
             n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;
             e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
+            w.__enableTikTokPixel=function(){
+              if(w.__tiktokTrackingEnabled)return;
+              if(!w.__tiktokPixelLoaded){
+                ttq.load('${pixelId}');
+                w.__tiktokPixelLoaded=true;
+              }
+              w.__tiktokTrackingEnabled=true;
+              ttq.page();
+            };
+            w.__grantTikTokConsent=function(){
+              ttq.grantConsent();
+              w.__enableTikTokPixel();
+            };
+            w.__revokeTikTokConsent=function(){
+              w.__tiktokTrackingEnabled=false;
+              ttq.revokeConsent();
+            };
+
             try {
               var consentChoice = localStorage.getItem('consent_choice');
-              if (consentChoice === 'accepted') ttq.grantConsent();
-              if (consentChoice === 'rejected') ttq.revokeConsent();
+              if (consentChoice === 'accepted') w.__grantTikTokConsent();
+              if (consentChoice === 'rejected') w.__revokeTikTokConsent();
             } catch(e) {}
-
-            ttq.load('${pixelId}');
-            ttq.page();
           }(window, document, 'ttq');
         `,
       }}

@@ -2,13 +2,22 @@
 
 import { useEffect, useState } from 'react';
 
+const EEA_COUNTRIES = new Set([
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL', 'GR',
+  'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI',
+  'ES', 'SE', 'IS', 'LI', 'NO', 'GB',
+]);
+
 export default function ConsentBanner() {
   const [show, setShow] = useState(false);
   const [isEEA, setIsEEA] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem('consent_choice');
-    if (stored) return;
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem('consent_choice');
+    } catch {}
+    if (stored === 'accepted' || stored === 'rejected') return;
 
     let cancelled = false;
 
@@ -45,6 +54,7 @@ export default function ConsentBanner() {
       ) {
         setIsEEA(false);
         setShow(false);
+        window.__enableTikTokPixel?.();
         return;
       }
       const controller = new AbortController();
@@ -53,10 +63,17 @@ export default function ConsentBanner() {
         .then(async (res) => {
           if (!res.ok) throw new Error('geo failed');
           const data = await res.json();
-          const eeaCountries = new Set(['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','EL','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB']);
-          const inEEA = eeaCountries.has(String(data.country || '').toUpperCase());
+          const country = String(data.country || '').toUpperCase();
+          // Cloudflare can report XX (unknown) or T1 (Tor); neither proves consent is unnecessary.
+          if (!/^[A-Z]{2}$/.test(country) || country === 'XX') {
+            throw new Error('geo returned an unresolved country');
+          }
+          const inEEA = EEA_COUNTRIES.has(country);
           setIsEEA(inEEA);
           setShow(inEEA);
+          if (!inEEA) {
+            window.__enableTikTokPixel?.();
+          }
         })
         .catch(() => {
           setIsEEA(false);
@@ -81,7 +98,7 @@ export default function ConsentBanner() {
         ad_personalization: 'granted',
       });
     }
-    window.ttq?.grantConsent();
+    window.__grantTikTokConsent?.();
     setShow(false);
   };
 
@@ -95,7 +112,7 @@ export default function ConsentBanner() {
         ad_personalization: 'denied',
       });
     }
-    window.ttq?.revokeConsent();
+    window.__revokeTikTokConsent?.();
     setShow(false);
   };
 
@@ -129,4 +146,3 @@ export default function ConsentBanner() {
     </div>
   );
 }
-

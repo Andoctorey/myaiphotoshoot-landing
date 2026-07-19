@@ -27,6 +27,38 @@ type BlogPostsPage = {
   totalPages?: unknown;
 };
 
+const normalizeBlogTranslations = (
+  value: unknown,
+  context: string,
+): Record<string, BlogTranslation> | null => {
+  if (value == null) return null;
+  if (typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`${context} returned invalid blog translations.`);
+  }
+
+  const translations: Record<string, BlogTranslation> = {};
+  for (const [locale, rawTranslation] of Object.entries(value)) {
+    if (!rawTranslation || typeof rawTranslation !== 'object' || Array.isArray(rawTranslation)) {
+      throw new Error(`${context} returned an invalid "${locale}" blog translation.`);
+    }
+
+    const translation = rawTranslation as Record<string, unknown>;
+    for (const field of ['slug', 'title', 'meta_description'] as const) {
+      if (translation[field] != null && typeof translation[field] !== 'string') {
+        throw new Error(`${context} returned a non-string ${field} for the "${locale}" blog translation.`);
+      }
+    }
+
+    translations[locale] = {
+      slug: typeof translation.slug === 'string' ? translation.slug.trim() || null : null,
+      title: typeof translation.title === 'string' ? translation.title : null,
+      meta_description: typeof translation.meta_description === 'string' ? translation.meta_description : null,
+    };
+  }
+
+  return translations;
+};
+
 const normalizeBlogPosts = (payload: unknown, context: string): BlogListEntry[] => {
   const posts = (payload as BlogPostsPage)?.posts;
   if (!Array.isArray(posts)) {
@@ -47,9 +79,7 @@ const normalizeBlogPosts = (payload: unknown, context: string): BlogListEntry[] 
       featured_image_url: typeof post.featured_image_url === 'string' ? post.featured_image_url : null,
       title: typeof post.title === 'string' ? post.title : null,
       meta_description: typeof post.meta_description === 'string' ? post.meta_description : null,
-      translations: (post.translations && typeof post.translations === 'object')
-        ? (post.translations as Record<string, BlogTranslation>)
-        : null,
+      translations: normalizeBlogTranslations(post.translations, context),
     });
   }
 
@@ -100,30 +130,51 @@ export async function fetchAllPublishedBlogPosts(
   buildFunctionsUrl: BuildFunctionsUrl,
   context: string,
 ): Promise<BlogListEntry[]> {
+  try {
+    return await fetchPublishedBlogInventory(buildFunctionsUrl, context);
+  } catch (error) {
+    console.warn(`${context} could not fetch the slim localized inventory; falling back to the paginated blog list.`, error);
+    return fetchPaginatedPublishedBlogPosts(buildFunctionsUrl, context);
+  }
+}
+
+export async function fetchPublishedBlogInventory(
+  buildFunctionsUrl: BuildFunctionsUrl,
+  context: string,
+): Promise<BlogListEntry[]> {
   const url = buildFunctionsUrl('/blog-posts', {
     sitemap: '1',
   });
+  const retryUrl = buildFunctionsUrl('/blog-posts', {
+    sitemap: '1',
+    inventory_retry: '1',
+  });
+  const inventoryUrls = [url, retryUrl];
+  let lastError: unknown;
 
-  try {
-    const response = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
-    if (response.ok) {
+  for (const inventoryUrl of inventoryUrls) {
+    try {
+      const response = await fetch(inventoryUrl, { next: { revalidate: REVALIDATE_SECONDS } });
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}.`);
+      }
       const data = await response.json();
       return normalizeBlogPosts(data, context);
+    } catch (error) {
+      lastError = error;
     }
-
-    console.warn(`${context} failed to fetch slim ${url} (status ${response.status}); falling back to paginated blog list.`);
-  } catch (error) {
-    console.warn(`${context} failed to fetch slim ${url}; falling back to paginated blog list.`, error);
   }
 
-  return fetchPaginatedPublishedBlogPosts(buildFunctionsUrl, context);
+  throw new Error(`${context} failed to fetch the complete localized blog inventory from ${url}.`, {
+    cause: lastError,
+  });
 }
 
 export async function fetchAllPublishedBlogSlugs(
   buildFunctionsUrl: BuildFunctionsUrl,
   context: string,
 ): Promise<string[]> {
-  const posts = await fetchAllPublishedBlogPosts(buildFunctionsUrl, context);
+  const posts = await fetchPublishedBlogInventory(buildFunctionsUrl, context);
   const slugs = Array.from(new Set(posts.map((post) => post.slug).filter(Boolean)));
 
   if (slugs.length === 0) {
@@ -163,6 +214,42 @@ export function getBlogSlugMap(
       slugMap[locale] = slug;
     }
   }
+  return slugMap;
+}
+
+export function normalizeBlogRouteSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug).normalize('NFC');
+  } catch {
+    return slug.normalize('NFC');
+  }
+}
+
+export function getBlogSlugMapForRoute(
+  posts: BlogListEntry[],
+  routeLocale: string,
+  routeSlug: string,
+  supportedLocales: readonly string[],
+): Record<string, string> {
+  const normalizedRouteSlug = normalizeBlogRouteSlug(routeSlug);
+  const matches = posts.filter((post) => {
+    const localizedSlug = getBlogSlugForLocale(post, routeLocale);
+    return localizedSlug !== null && normalizeBlogRouteSlug(localizedSlug) === normalizedRouteSlug;
+  });
+
+  if (matches.length !== 1) {
+    throw new Error(
+      `Expected one blog inventory match for locale "${routeLocale}" and slug "${routeSlug}", found ${matches.length}.`,
+    );
+  }
+
+  const slugMap = getBlogSlugMap(matches[0], supportedLocales);
+  if (!slugMap[defaultLocale] || !slugMap[routeLocale]) {
+    throw new Error(
+      `Blog inventory match for locale "${routeLocale}" and slug "${routeSlug}" had an incomplete slug map.`,
+    );
+  }
+
   return slugMap;
 }
 
@@ -216,7 +303,7 @@ export async function fetchAllPublishedBlogLocalizedParams(
   context: string,
   supportedLocales: readonly string[],
 ): Promise<Array<{ locale: string; slug: string }>> {
-  const posts = await fetchAllPublishedBlogPosts(buildFunctionsUrl, context);
+  const posts = await fetchPublishedBlogInventory(buildFunctionsUrl, context);
   const params: Array<{ locale: string; slug: string }> = [];
   const seen = new Set<string>();
 

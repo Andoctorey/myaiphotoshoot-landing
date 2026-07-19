@@ -17,6 +17,13 @@ import { canonicalUrl, localePath } from '@/lib/seo';
 import DOMPurify from 'isomorphic-dompurify';
 
 DOMPurify.addHook('uponSanitizeElement', (node, data) => {
+  if (data.tagName === 'img') {
+    const el = node as Element;
+    el.setAttribute('loading', 'lazy');
+    el.setAttribute('decoding', 'async');
+    return;
+  }
+
   if (data.tagName === 'iframe') {
     const el = node as Element;
     const src = el.getAttribute('src');

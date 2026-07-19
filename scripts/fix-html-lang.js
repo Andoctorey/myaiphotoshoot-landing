@@ -4,6 +4,7 @@ const path = require('path');
 const OUT_DIR = path.join(__dirname, '..', 'out');
 const REDIRECTS_PATH = path.join(OUT_DIR, '_redirects');
 const SITEMAP_PATH = path.join(OUT_DIR, 'sitemap.xml');
+const SITE_ORIGIN = 'https://myaiphotoshoot.com';
 const BLOG_ALIAS_REDIRECTS_START = '# Generated localized blog alias redirects';
 const BLOG_ALIAS_REDIRECTS_END = '# End generated localized blog alias redirects';
 const LOCALE_DIRECTIONS = {
@@ -50,8 +51,130 @@ function fixHtmlTag(html, locale) {
 }
 
 function extractAttribute(tag, attribute) {
-  const match = tag.match(new RegExp(`${attribute}="([^"]+)"`));
-  return match ? match[1] : null;
+  const match = tag.match(new RegExp(`${attribute}\\s*=\\s*(["'])(.*?)\\1`, 'i'));
+  return match ? match[2] : null;
+}
+
+function decodeXmlEntities(value) {
+  return value
+    .replaceAll('&amp;', '&')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'");
+}
+
+function normalizeSiteUrl(value) {
+  const url = new URL(decodeXmlEntities(value), SITE_ORIGIN);
+  url.hash = '';
+  return url.href;
+}
+
+function extractAlternateLinks(tags) {
+  const links = new Map();
+  const duplicates = new Set();
+  for (const tag of tags) {
+    const rel = extractAttribute(tag, 'rel');
+    const hreflang = extractAttribute(tag, 'hreflang');
+    const href = extractAttribute(tag, 'href');
+    if (rel?.toLowerCase() !== 'alternate' || !hreflang || !href) continue;
+    const language = hreflang.toLowerCase();
+    if (links.has(language)) duplicates.add(language);
+    links.set(language, normalizeSiteUrl(href));
+  }
+  return { links, duplicates };
+}
+
+function buildSitemapBlogHreflangIndex(sitemapXml) {
+  const index = new Map();
+  const sitemapUrls = new Set();
+  const urlBlocks = sitemapXml.match(/<url>[\s\S]*?<\/url>/g) || [];
+
+  for (const block of urlBlocks) {
+    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1];
+    if (!loc) continue;
+
+    const canonicalUrl = normalizeSiteUrl(loc);
+    sitemapUrls.add(canonicalUrl);
+    const pathname = new URL(canonicalUrl).pathname;
+    if (!/^\/(?:[^/]+\/)?blog\/[^/]+\/$/.test(pathname)) continue;
+
+    const alternateTags = block.match(/<xhtml:link\b[^>]*>/gi) || [];
+    index.set(canonicalUrl, extractAlternateLinks(alternateTags));
+  }
+
+  return { index, sitemapUrls };
+}
+
+function mapsMatch(actual, expected) {
+  return actual.size === expected.size
+    && Array.from(expected).every(([key, value]) => actual.get(key) === value);
+}
+
+function validateBlogHreflang(sitemapXml) {
+  const { index, sitemapUrls } = buildSitemapBlogHreflangIndex(sitemapXml);
+  const failures = [];
+  const seenCanonicalUrls = new Set();
+  let checkedCount = 0;
+
+  if (index.size === 0) {
+    throw new Error('The sitemap contained no blog article URLs to validate.');
+  }
+
+  for (const [canonicalUrl, expected] of index) {
+    if (expected.duplicates.size > 0) {
+      failures.push(`${canonicalUrl} has duplicate sitemap languages: ${Array.from(expected.duplicates).join(', ')}`);
+    }
+
+    for (const targetUrl of expected.links.values()) {
+      const target = index.get(targetUrl);
+      if (!target || !mapsMatch(target.links, expected.links)) {
+        failures.push(`${canonicalUrl} has a non-reciprocal sitemap target: ${targetUrl}`);
+        break;
+      }
+    }
+  }
+
+  for (const filePath of walk(OUT_DIR)) {
+    const html = fs.readFileSync(filePath, 'utf8');
+    const linkTags = html.match(/<link\b[^>]*>/gi) || [];
+    const canonicalTag = linkTags.find((tag) => extractAttribute(tag, 'rel')?.toLowerCase() === 'canonical');
+    const canonicalHref = canonicalTag ? extractAttribute(canonicalTag, 'href') : null;
+    if (!canonicalHref) continue;
+
+    const canonicalUrl = normalizeSiteUrl(canonicalHref);
+    const expected = index.get(canonicalUrl);
+    if (!expected) continue;
+
+    seenCanonicalUrls.add(canonicalUrl);
+    checkedCount += 1;
+    const actual = extractAlternateLinks(linkTags);
+    const englishUrl = actual.links.get('en');
+    const defaultUrl = actual.links.get('x-default');
+    const targetsExist = Array.from(actual.links.values()).every((url) => sitemapUrls.has(url));
+    if (
+      actual.duplicates.size > 0
+      || !mapsMatch(actual.links, expected.links)
+      || !englishUrl
+      || defaultUrl !== englishUrl
+      || !targetsExist
+    ) {
+      failures.push(`${path.relative(OUT_DIR, filePath)} -> ${canonicalUrl}`);
+    }
+  }
+
+  const missingCanonicalUrls = Array.from(index.keys())
+    .filter((canonicalUrl) => !seenCanonicalUrls.has(canonicalUrl));
+  if (failures.length > 0 || missingCanonicalUrls.length > 0) {
+    const details = [
+      ...failures.map((failure) => `Invalid: ${failure}`),
+      ...missingCanonicalUrls.map((canonicalUrl) => `Missing export: ${canonicalUrl}`),
+    ];
+    throw new Error(
+      `Exported blog hreflang validation found ${failures.length} invalid entries and `
+      + `${missingCanonicalUrls.length} missing sitemap exports:\n${details.slice(0, 10).join('\n')}`,
+    );
+  }
+
+  return checkedCount;
 }
 
 function pathFromAbsoluteUrl(url) {
@@ -197,6 +320,10 @@ async function main() {
   if (generatedRedirects > 0) {
     console.log(`Added ${generatedRedirects} localized blog alias redirects.`);
   }
+
+  const sitemapXml = fs.readFileSync(SITEMAP_PATH, 'utf8');
+  const validatedCount = validateBlogHreflang(sitemapXml);
+  console.log(`Validated hreflang metadata in ${validatedCount} exported blog article pages.`);
 }
 
 main().catch((error) => {

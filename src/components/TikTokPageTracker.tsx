@@ -13,7 +13,9 @@ export default function TikTokPageTracker() {
       return;
     }
 
-    window.ttq?.page();
+    if (window.__tiktokTrackingEnabled) {
+      window.ttq?.page();
+    }
   }, [pathname]);
 
   return null;

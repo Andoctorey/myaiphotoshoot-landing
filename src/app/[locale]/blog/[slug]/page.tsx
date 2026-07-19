@@ -12,10 +12,15 @@ import BlogPostPageClient from './BlogPostPageClient';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { env } from '@/lib/env';
-import { locales } from '@/i18n/request';
+import { defaultLocale, locales } from '@/i18n/request';
 import { BASE_URL, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
-import { fetchAllPublishedBlogLocalizedParams, getBlogSlugMap } from '@/lib/blog-static-params';
+import {
+  fetchAllPublishedBlogLocalizedParams,
+  fetchPublishedBlogInventory,
+  getBlogSlugMapForRoute,
+  normalizeBlogRouteSlug,
+} from '@/lib/blog-static-params';
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const base = new URL(env.SUPABASE_FUNCTIONS_URL);
@@ -52,15 +57,7 @@ function articleTagsFromPhotoTopics(photoTopics: unknown): string[] {
 }
 
 function slugsMatch(left: string, right: string): boolean {
-  return decodeSlug(left) === decodeSlug(right);
-}
-
-function decodeSlug(slug: string): string {
-  try {
-    return decodeURIComponent(slug);
-  } catch {
-    return slug;
-  }
+  return normalizeBlogRouteSlug(left) === normalizeBlogRouteSlug(right);
 }
 
 interface BlogPostPageProps {
@@ -72,13 +69,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   try {
     const { slug: rawSlug, locale } = await params;
     // Next static export can pass Unicode slugs percent-encoded; decode before API lookup.
-    const slug = decodeSlug(rawSlug);
+    const slug = normalizeBlogRouteSlug(rawSlug);
     
-    // Fetch blog post data for metadata
-    const response = await fetch(
-      buildFunctionsUrl('/blog-post', { slug, locale }),
-      { next: { revalidate: 3600 } }
-    );
+    const [response, blogInventory] = await Promise.all([
+      fetch(
+        buildFunctionsUrl('/blog-post', { slug, locale }),
+        { next: { revalidate: 3600 } },
+      ),
+      fetchPublishedBlogInventory(
+        buildFunctionsUrl,
+        `Failed to fetch blog route inventory for metadata locale ${locale}`,
+      ),
+    ]);
     
     if (!response.ok) {
       if (response.status === 404) {
@@ -112,11 +114,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const socialTitle = `${post.title} | My AI Photo Shoot`;
     const description = post.meta_description || post.title;
     const articleTags = articleTagsFromPhotoTopics(post.photo_topics);
-    const slugMap = getBlogSlugMap(post, locales);
-    if (!slugMap[locale]) {
-      slugMap[locale] = slug;
-    }
-    const canonicalSlugForLocale = slugMap[locale] || slug;
+    const slugMap = getBlogSlugMapForRoute(blogInventory, locale, slug, locales);
+    const canonicalSlugForLocale = slugMap[locale];
     const isCanonicalSlug = slugsMatch(slug, canonicalSlugForLocale);
     const currentPath = `/blog/${canonicalSlugForLocale}/`;
     const languages = Object.fromEntries(
@@ -125,7 +124,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         localePath(language, `/blog/${localizedSlug}/`),
       ]),
     );
-    languages['x-default'] = localePath('en', `/blog/${slugMap.en || slug}/`);
+    languages['x-default'] = localePath(defaultLocale, `/blog/${slugMap[defaultLocale]}/`);
     const url = `${BASE_URL}${localePath(locale, currentPath)}`;
     const imageUrl = typeof post.featured_image_url === 'string'
       ? post.featured_image_url
@@ -220,7 +219,7 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug: rawSlug, locale } = await params;
   // Keep this in sync with metadata lookup so Unicode localized URLs don't build as noindex 404s.
-  const slug = decodeSlug(rawSlug);
+  const slug = normalizeBlogRouteSlug(rawSlug);
   const res = await fetch(
     buildFunctionsUrl('/blog-post', { slug, locale }),
     { next: { revalidate: 3600 } }

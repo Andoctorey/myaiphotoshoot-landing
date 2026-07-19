@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { defaultLocale, locales } from '@/i18n/request'
 import { env } from '@/lib/env'
-import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, getBlogSlugMap } from '@/lib/blog-static-params'
+import { fetchPublishedBlogInventory, getBlogSlugForLocale, getBlogSlugMap } from '@/lib/blog-static-params'
 import { AI_PRESETS_PAGE_SIZE, aiPresetsPagePath, fetchAiPresetsStrict } from '@/lib/ai-presets'
 import { fetchUseCaseInventory } from '@/lib/usecase-seo'
 
@@ -100,7 +100,7 @@ function buildBlogPostHreflangLanguages(
  * Fetch all blog posts once for sitemap generation
  */
 async function getAllBlogPosts(): Promise<SitemapBlogPost[]> {
-  const posts = await fetchAllPublishedBlogPosts(
+  const posts = await fetchPublishedBlogInventory(
     buildFunctionsUrl,
     'Failed to fetch blog posts for sitemap',
   );
