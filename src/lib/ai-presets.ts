@@ -35,6 +35,26 @@ export interface AiPresetsPage {
   hasNextPage: boolean;
 }
 
+function emptyAiPresetsPage(page: number, pageSize: number): AiPresetsPage {
+  return {
+    presets: [],
+    totalCount: 0,
+    page,
+    pageSize,
+    totalPages: 1,
+    hasPreviousPage: page > 1,
+    hasNextPage: false,
+  };
+}
+
+function isAiPresetRow(item: unknown): item is AiPreset {
+  if (!item || typeof item !== 'object') return false;
+  const record = item as Record<string, unknown>;
+  return typeof record.id === 'string'
+    && typeof record.slug === 'string'
+    && typeof record.name === 'string';
+}
+
 function normalizePositiveInteger(value: number, fallback: number): number {
   return Number.isInteger(value) && value > 0 ? value : fallback;
 }
@@ -58,10 +78,11 @@ async function postAiPresetsRpc(body: Record<string, unknown>): Promise<Response
   });
 }
 
-export async function fetchAiPresetsPage(
-  locale: string = defaultLocale,
-  page: number = 1,
-  pageSize: number = AI_PRESETS_PAGE_SIZE,
+async function fetchAiPresetsPageInternal(
+  locale: string,
+  page: number,
+  pageSize: number,
+  strict: boolean,
 ): Promise<AiPresetsPage> {
   const normalizedPage = normalizePositiveInteger(page, 1);
   const normalizedPageSize = Math.min(normalizePositiveInteger(pageSize, AI_PRESETS_PAGE_SIZE), AI_PRESETS_MAX_PAGE_SIZE);
@@ -73,37 +94,48 @@ export async function fetchAiPresetsPage(
       p_limit: normalizedPageSize,
       p_offset: offset,
     });
+    const paginatedStatus = res.status;
     let usedLegacyRpc = false;
 
     if (!res.ok) {
       res = await postAiPresetsRpc({ p_locale: locale });
       usedLegacyRpc = true;
       if (!res.ok) {
-        return {
-          presets: [],
-          totalCount: 0,
-          page: normalizedPage,
-          pageSize: normalizedPageSize,
-          totalPages: 1,
-          hasPreviousPage: normalizedPage > 1,
-          hasNextPage: false,
-        };
+        if (strict) {
+          throw new Error(
+            `Paginated RPC returned ${paginatedStatus} and legacy RPC returned ${res.status}.`,
+          );
+        }
+        return emptyAiPresetsPage(normalizedPage, normalizedPageSize);
       }
     }
 
-    const data = await res.json();
-    const allRows = Array.isArray(data)
-      ? data.filter((item): item is AiPreset =>
-          typeof item?.id === 'string' &&
-          typeof item?.slug === 'string' &&
-          typeof item?.name === 'string',
-        ).map(normalizeAiPreset)
-      : [];
+    const data: unknown = await res.json();
+    if (!Array.isArray(data)) {
+      if (strict) {
+        throw new Error('Preset RPC response was not an array.');
+      }
+      return emptyAiPresetsPage(normalizedPage, normalizedPageSize);
+    }
+    if (strict && data.some((item) => {
+      if (!isAiPresetRow(item)) return true;
+      return !item.id.trim() || !item.slug.trim() || !item.name.trim();
+    })) {
+      throw new Error('Preset RPC response contained an invalid route record.');
+    }
+
+    const allRows = data.filter(isAiPresetRow).map(normalizeAiPreset);
+    if (strict && normalizedPage === 1 && allRows.length === 0) {
+      throw new Error('Preset RPC response contained no published presets.');
+    }
     const presets = usedLegacyRpc
       ? allRows.slice(offset, offset + normalizedPageSize)
       : allRows;
     if (!usedLegacyRpc && normalizedPage > 1 && presets.length === 0) {
-      const firstPage = await fetchAiPresetsPage(locale, 1, normalizedPageSize);
+      const firstPage = await fetchAiPresetsPageInternal(locale, 1, normalizedPageSize, strict);
+      if (strict && normalizedPage <= firstPage.totalPages) {
+        throw new Error(`Preset RPC returned an empty page ${normalizedPage} of ${firstPage.totalPages}.`);
+      }
       return {
         ...firstPage,
         presets: [],
@@ -113,9 +145,24 @@ export async function fetchAiPresetsPage(
       };
     }
 
+    const reportedTotalCount = presets[0]?.total_count;
+    const hasValidReportedTotalCount = typeof reportedTotalCount === 'number'
+      && Number.isInteger(reportedTotalCount)
+      && reportedTotalCount >= offset + presets.length;
+    if (strict && !usedLegacyRpc && (
+      !hasValidReportedTotalCount
+      || presets.some((preset) => preset.total_count !== reportedTotalCount)
+    )) {
+      throw new Error('Paginated preset RPC response contained an invalid or inconsistent total_count.');
+    }
+
     const totalCount = usedLegacyRpc
       ? allRows.length
-      : presets[0]?.total_count || (normalizedPage === 1 ? presets.length : offset + presets.length);
+      : hasValidReportedTotalCount
+        ? reportedTotalCount
+        : normalizedPage === 1
+          ? presets.length
+          : offset + presets.length;
     const totalPages = Math.max(1, Math.ceil(totalCount / normalizedPageSize));
 
     return {
@@ -127,32 +174,65 @@ export async function fetchAiPresetsPage(
       hasPreviousPage: normalizedPage > 1,
       hasNextPage: normalizedPage < totalPages,
     };
-  } catch {
-    return {
-      presets: [],
-      totalCount: 0,
-      page: normalizedPage,
-      pageSize: normalizedPageSize,
-      totalPages: 1,
-      hasPreviousPage: normalizedPage > 1,
-      hasNextPage: false,
-    };
+  } catch (error) {
+    if (strict) {
+      throw new Error(`Failed to fetch AI presets for locale "${locale}", page ${normalizedPage}.`, {
+        cause: error,
+      });
+    }
+    return emptyAiPresetsPage(normalizedPage, normalizedPageSize);
   }
 }
 
-export async function fetchAiPresets(locale: string = defaultLocale): Promise<AiPreset[]> {
+export async function fetchAiPresetsPage(
+  locale: string = defaultLocale,
+  page: number = 1,
+  pageSize: number = AI_PRESETS_PAGE_SIZE,
+): Promise<AiPresetsPage> {
+  return fetchAiPresetsPageInternal(locale, page, pageSize, false);
+}
+
+export async function fetchAiPresetsPageStrict(
+  locale: string = defaultLocale,
+  page: number = 1,
+  pageSize: number = AI_PRESETS_PAGE_SIZE,
+): Promise<AiPresetsPage> {
+  return fetchAiPresetsPageInternal(locale, page, pageSize, true);
+}
+
+async function fetchAiPresetsInternal(locale: string, strict: boolean): Promise<AiPreset[]> {
   const presets: AiPreset[] = [];
   let page = 1;
   let hasNextPage = true;
+  let expectedTotalCount: number | null = null;
 
   while (hasNextPage) {
-    const result = await fetchAiPresetsPage(locale, page, AI_PRESETS_MAX_PAGE_SIZE);
+    const result = await fetchAiPresetsPageInternal(locale, page, AI_PRESETS_MAX_PAGE_SIZE, strict);
+    if (page === 1) {
+      expectedTotalCount = result.totalCount;
+    } else if (strict && result.totalCount !== expectedTotalCount) {
+      throw new Error(
+        `AI preset total changed from ${expectedTotalCount} to ${result.totalCount} while fetching locale "${locale}".`,
+      );
+    }
     presets.push(...result.presets);
     hasNextPage = result.hasNextPage && result.presets.length > 0;
     page += 1;
   }
 
+  if (strict && expectedTotalCount !== null && presets.length !== expectedTotalCount) {
+    throw new Error(`Expected ${expectedTotalCount} AI presets for locale "${locale}", received ${presets.length}.`);
+  }
+
   return presets;
+}
+
+export async function fetchAiPresets(locale: string = defaultLocale): Promise<AiPreset[]> {
+  return fetchAiPresetsInternal(locale, false);
+}
+
+export async function fetchAiPresetsStrict(locale: string = defaultLocale): Promise<AiPreset[]> {
+  return fetchAiPresetsInternal(locale, true);
 }
 
 function isStringArray(value: unknown): value is string[] {
@@ -221,14 +301,19 @@ export function formatPresetCostUsd(cost: number | null | undefined, locale: str
 }
 
 export async function fetchAiPreset(slug: string, locale: string): Promise<AiPreset | undefined> {
-  const presets = await fetchAiPresets(locale);
+  const presets = await fetchAiPresetsStrict(locale);
   const preset = presets.find((item) => item.slug === slug);
   return preset ? normalizeAiPreset(preset) : undefined;
 }
 
 export async function fetchAiPresetSlugs(): Promise<string[]> {
-  const presets = await fetchAiPresets(defaultLocale);
-  return Array.from(new Set(presets.map((preset) => preset.slug).filter(Boolean)));
+  const presets = await fetchAiPresetsStrict(defaultLocale);
+  const slugs = presets.map((preset) => preset.slug.trim());
+  const uniqueSlugs = Array.from(new Set(slugs));
+  if (uniqueSlugs.length !== presets.length) {
+    throw new Error('AI preset route inventory contained duplicate slugs.');
+  }
+  return uniqueSlugs;
 }
 
 export function buildPresetProvidedDescription(preset: Pick<AiPreset, 'subtitle' | 'meta_description'>): string | null {

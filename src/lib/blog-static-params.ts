@@ -39,7 +39,7 @@ const normalizeBlogPosts = (payload: unknown, context: string): BlogListEntry[] 
     const slug = typeof post.slug === 'string' ? post.slug.trim() : '';
     const createdAt = typeof post.created_at === 'string' ? post.created_at.trim() : '';
     if (!slug || !createdAt) {
-      continue;
+      throw new Error(`${context} returned a blog post without a valid slug or created_at value.`);
     }
     normalized.push({
       slug,

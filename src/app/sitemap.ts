@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
-import { locales } from '@/i18n/request'
+import { defaultLocale, locales } from '@/i18n/request'
 import { env } from '@/lib/env'
 import { fetchAllPublishedBlogPosts, getBlogSlugForLocale, getBlogSlugMap } from '@/lib/blog-static-params'
-import { aiPresetsPagePath, fetchAiPresets, fetchAiPresetsPage } from '@/lib/ai-presets'
+import { AI_PRESETS_PAGE_SIZE, aiPresetsPagePath, fetchAiPresetsStrict } from '@/lib/ai-presets'
+import { fetchUseCaseInventory } from '@/lib/usecase-seo'
 
 /**
  * Sitemap generator
@@ -17,16 +18,10 @@ export const dynamic = 'force-static';
  * Sitemap API response types
  */
 interface SitemapBlogPost {
-  slug: string | null
+  slug: string
   created_at: string
   featured_image_url: string | null
   translations?: Record<string, { slug?: string | null }> | null
-}
-
-interface SitemapUseCase {
-  slug: string | null
-  created_at?: string
-  featured_image_urls?: string[] | null
 }
 
 interface SitemapAiPreset {
@@ -105,68 +100,26 @@ function buildBlogPostHreflangLanguages(
  * Fetch all blog posts once for sitemap generation
  */
 async function getAllBlogPosts(): Promise<SitemapBlogPost[]> {
-  try {
-    const posts = await fetchAllPublishedBlogPosts(
-      buildFunctionsUrl,
-      'Failed to fetch blog posts for sitemap',
-    );
-    console.log(`Sitemap: Fetched ${posts.length} total blog posts`);
-    return posts.map((post) => ({
-      slug: post.slug,
-      created_at: post.created_at,
-      featured_image_url: post.featured_image_url ?? null,
-      translations: post.translations ?? null,
-    }));
-  } catch (error) {
-    console.error('Error fetching blog posts for sitemap:', error);
-    return [];
+  const posts = await fetchAllPublishedBlogPosts(
+    buildFunctionsUrl,
+    'Failed to fetch blog posts for sitemap',
+  );
+  if (posts.length === 0) {
+    throw new Error('Blog sitemap inventory contained no published posts.');
   }
-}
-
-/**
- * Fetch all use-cases once for sitemap generation
- */
-async function getAllUseCases(): Promise<SitemapUseCase[]> {
-  try {
-    const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/use-cases?sitemap=1`,
-      { next: { revalidate: 3600 } }
-    );
-
-    if (!response.ok) {
-      console.warn(`Failed to fetch use-cases for sitemap:`, response.status);
-      return [];
-    }
-
-    const data = await response.json();
-    const items = (data.items || []) as SitemapUseCase[];
-    console.log(`Sitemap: Fetched ${items.length} total use-cases`);
-    return items;
-  } catch (error) {
-    console.error('Error fetching use-cases for sitemap:', error);
-    return [];
-  }
+  console.log(`Sitemap: Fetched ${posts.length} total blog posts`);
+  return posts.map((post) => ({
+    slug: post.slug,
+    created_at: post.created_at,
+    featured_image_url: post.featured_image_url ?? null,
+    translations: post.translations ?? null,
+  }));
 }
 
 async function getAllAiPresets(): Promise<SitemapAiPreset[]> {
-  try {
-    const presets = await fetchAiPresets('en');
-    console.log(`Sitemap: Fetched ${presets.length} total AI presets`);
-    return presets;
-  } catch (error) {
-    console.error('Error fetching AI presets for sitemap:', error);
-    return [];
-  }
-}
-
-async function getAiPresetTotalPages(): Promise<number> {
-  try {
-    const page = await fetchAiPresetsPage('en', 1);
-    return page.totalPages;
-  } catch (error) {
-    console.error('Error fetching AI preset page count for sitemap:', error);
-    return 1;
-  }
+  const presets = await fetchAiPresetsStrict(defaultLocale);
+  console.log(`Sitemap: Fetched ${presets.length} total AI presets`);
+  return presets;
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -269,17 +222,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    // Fetch all blog posts
-    const blogPosts = await getAllBlogPosts();
-    // Fetch all use-cases
-    const useCases = await getAllUseCases();
-    // Fetch all AI presets
-    const aiPresets = await getAllAiPresets();
-    const aiPresetTotalPages = await getAiPresetTotalPages();
+    const [blogPosts, useCases, aiPresets] = await Promise.all([
+      getAllBlogPosts(),
+      fetchUseCaseInventory(),
+      getAllAiPresets(),
+    ]);
+    console.log(`Sitemap: Fetched ${useCases.length} total use-cases`);
+    const aiPresetTotalPages = Math.ceil(aiPresets.length / AI_PRESETS_PAGE_SIZE);
 
     const blogPostEntries: MetadataRoute.Sitemap = [];
     for (const post of blogPosts) {
-      if (!post.slug) continue;
       const slugMap = getBlogSlugMap(post, locales);
       const languages = buildBlogPostHreflangLanguages(baseUrl, slugMap);
       for (const locale of locales) {
@@ -298,7 +250,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     
     const useCaseEntries: MetadataRoute.Sitemap = [];
     for (const item of useCases) {
-      if (!item.slug) continue;
       const languages = buildHreflangLanguages(baseUrl, `/use-cases/${item.slug}/`, locales);
       for (const locale of locales) {
         useCaseEntries.push({
@@ -346,8 +297,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [...staticPages, ...aiPresetPaginatedEntries, ...blogPostEntries, ...useCaseEntries, ...aiPresetEntries];
   } catch (error) {
-    console.error('Error generating sitemap:', error);
-    // Return just the static pages if we can't fetch content
-    return staticPages;
+    throw new Error('Failed to generate a complete sitemap.', { cause: error });
   }
 } 

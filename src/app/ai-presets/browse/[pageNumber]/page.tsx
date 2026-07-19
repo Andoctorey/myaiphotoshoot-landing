@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation';
 import AiPresetsIndex from '@/components/presets/AiPresetsIndex';
 import { defaultLocale, locales } from '@/i18n/request';
 import {
+  AI_PRESETS_PAGE_SIZE,
   AI_PRESETS_INDEX_DESCRIPTION,
   AI_PRESETS_INDEX_TITLE,
   aiPresetsPagePath,
-  fetchAiPresetsPage,
+  fetchAiPresetSlugs,
+  fetchAiPresetsPageStrict,
 } from '@/lib/ai-presets';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 
@@ -24,7 +26,7 @@ function parsePageParam(value: string): number | null {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const parsedPage = parsePageParam((await params).pageNumber);
   if (!parsedPage) return { robots: { index: false, follow: true } };
-  const pageData = await fetchAiPresetsPage(defaultLocale, parsedPage);
+  const pageData = await fetchAiPresetsPageStrict(defaultLocale, parsedPage);
   const shouldIndex = parsedPage <= pageData.totalPages && pageData.presets.length > 0;
   const path = aiPresetsPagePath(parsedPage);
   const title = `${AI_PRESETS_INDEX_TITLE} - Page ${parsedPage}`;
@@ -58,8 +60,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const page = await fetchAiPresetsPage(defaultLocale, 1);
-  return Array.from({ length: Math.max(0, page.totalPages - 1) }, (_, index) => ({
+  const slugs = await fetchAiPresetSlugs();
+  const totalPages = Math.ceil(slugs.length / AI_PRESETS_PAGE_SIZE);
+  return Array.from({ length: totalPages - 1 }, (_, index) => ({
     pageNumber: String(index + 2),
   }));
 }
@@ -67,7 +70,7 @@ export async function generateStaticParams() {
 export default async function PresetsPaginatedPage({ params }: PageProps) {
   const parsedPage = parsePageParam((await params).pageNumber);
   if (!parsedPage) notFound();
-  const pageData = await fetchAiPresetsPage(defaultLocale, parsedPage);
+  const pageData = await fetchAiPresetsPageStrict(defaultLocale, parsedPage);
   if (parsedPage > pageData.totalPages || pageData.presets.length === 0) notFound();
   return <AiPresetsIndex locale={defaultLocale} page={parsedPage} pageData={pageData} />;
 }
