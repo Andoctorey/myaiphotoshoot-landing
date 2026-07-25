@@ -1,0 +1,207 @@
+'use client';
+
+import Image from 'next/image';
+import { useMemo, useState } from 'react';
+import { AI_MASKS_APP_URL } from '@/lib/app-links';
+import type {
+  AiMask,
+  AiMaskCategory,
+  AiMasksCatalog,
+  MaskAudienceGender,
+} from '@/types/ai-mask';
+
+type PreviewGender = Extract<MaskAudienceGender, 'female' | 'male'>;
+
+export type MasksCatalogLabels = {
+  after: string;
+  before: string;
+  categoryNav: string;
+  female: string;
+  genderLabel: string;
+  male: string;
+  maskCount: string;
+  readyDescription: string;
+  readyTitle: string;
+  resultAlt: string;
+  sourceAlt: string;
+  tryMasks: string;
+  yourPhoto: string;
+};
+
+type Props = {
+  catalog: AiMasksCatalog;
+  labels: MasksCatalogLabels;
+};
+
+const previewVariantId = (gender: PreviewGender) => (
+  gender === 'male' ? 'white_male' : 'white_female'
+);
+
+function categoryPreviewUrl(category: AiMaskCategory, gender: PreviewGender): string {
+  return category.sourceImageVariants[previewVariantId(gender)] || category.sourceImageUrl;
+}
+
+function maskPreviewUrl(mask: AiMask, gender: PreviewGender): string {
+  return mask.featuredGraphicsVariants[previewVariantId(gender)] || mask.featuredGraphics;
+}
+
+function interpolate(label: string, key: string, value: string | number): string {
+  return label.replace(`{${key}}`, String(value));
+}
+
+export default function MasksCatalogBrowser({ catalog, labels }: Props) {
+  const [gender, setGender] = useState<PreviewGender>('male');
+  const visibleCategories = useMemo(() => {
+    const filtered = catalog.categories.filter((category) => (
+      category.audienceGender === 'unisex' || category.audienceGender === gender
+    ));
+    return filtered.length > 0 ? filtered : catalog.categories;
+  }, [catalog.categories, gender]);
+
+  return (
+    <>
+      <nav
+        aria-label={labels.categoryNav}
+        className="sticky top-16 z-20 -mx-4 border-y border-gray-200 bg-gray-50/90 px-4 py-3 backdrop-blur-lg dark:border-gray-800 dark:bg-gray-950/90 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-2xl lg:border lg:px-4"
+      >
+        <div className="flex items-center gap-3">
+          <div
+            aria-label={labels.genderLabel}
+            className="flex h-11 w-[92px] shrink-0 items-center rounded-full border border-gray-300 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+            role="radiogroup"
+          >
+            {([
+              { value: 'male', symbol: '♂', label: labels.male },
+              { value: 'female', symbol: '♀', label: labels.female },
+            ] as const).map((choice) => {
+              const selected = gender === choice.value;
+              return (
+                <button
+                  key={choice.value}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  aria-label={choice.label}
+                  title={choice.label}
+                  onClick={() => setGender(choice.value)}
+                  className={`flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition ${
+                    selected
+                      ? 'bg-purple-600 text-white shadow-sm'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-purple-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-purple-300'
+                  }`}
+                >
+                  <span aria-hidden="true">{choice.symbol}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="h-7 w-px shrink-0 bg-gray-200 dark:bg-gray-800" aria-hidden="true" />
+
+          <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto py-0.5">
+            {visibleCategories.map((category) => (
+              <a
+                key={category.id}
+                href={`#${category.slug}`}
+                className="shrink-0 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-gray-200 transition hover:text-purple-700 hover:ring-purple-300 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:text-purple-300 dark:hover:ring-purple-700"
+              >
+                {category.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      <div className="mt-12 space-y-16">
+        {visibleCategories.map((category) => {
+          const masks = catalog.masks.filter((mask) => mask.categoryId === category.id);
+          return (
+            <section
+              key={category.id}
+              id={category.slug}
+              aria-labelledby={`${category.slug}-title`}
+              className="scroll-mt-36"
+            >
+              <div className="mb-6">
+                <h2
+                  id={`${category.slug}-title`}
+                  className="text-3xl font-bold tracking-tight text-gray-950 dark:text-white"
+                >
+                  {category.name}
+                </h2>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  {interpolate(labels.maskCount, 'count', masks.length)}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                <article className="overflow-hidden rounded-2xl border border-dashed border-purple-300 bg-purple-50 dark:border-purple-800 dark:bg-purple-950/20">
+                  <div className="relative overflow-hidden">
+                    <Image
+                      src={categoryPreviewUrl(category, gender)}
+                      alt={interpolate(labels.sourceAlt, 'category', category.name)}
+                      width={560}
+                      height={700}
+                      sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
+                      className="aspect-[4/5] w-full object-cover"
+                    />
+                    <span className="absolute left-2 top-2 rounded-full bg-black/65 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                      {labels.before}
+                    </span>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-gray-950 dark:text-white">
+                      {labels.yourPhoto}
+                    </h3>
+                  </div>
+                </article>
+
+                {masks.map((mask) => (
+                  <article
+                    key={mask.id}
+                    className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
+                  >
+                    <div className="relative overflow-hidden">
+                      <Image
+                        src={maskPreviewUrl(mask, gender)}
+                        alt={interpolate(labels.resultAlt, 'name', mask.name)}
+                        width={560}
+                        height={700}
+                        sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
+                        className="aspect-[4/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                      <span className="absolute right-2 top-2 rounded-full bg-purple-600/90 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                        {labels.after}
+                      </span>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-gray-950 dark:text-white">
+                        {mask.name}
+                      </h3>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      <section className="mt-16 rounded-3xl bg-purple-100 px-6 py-9 text-center dark:bg-purple-950/40 sm:px-10">
+        <h2 className="text-2xl font-bold text-gray-950 dark:text-white">
+          {labels.readyTitle}
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-gray-600 dark:text-gray-300">
+          {labels.readyDescription}
+        </p>
+        <a
+          href={AI_MASKS_APP_URL}
+          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+        >
+          {labels.tryMasks}
+        </a>
+      </section>
+    </>
+  );
+}
