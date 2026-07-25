@@ -114,7 +114,7 @@ export const supportedModels: SupportedModel[] = [
     tierKey: 'smartEdits',
     bestForKey: 'smartEdits',
     pricingKey: 'photo',
-    priceUsd: 0.29,
+    priceUsd: 0.19,
     providerModel: 'google/nano-banana-2',
   },
 ];
