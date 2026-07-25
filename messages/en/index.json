@@ -8,9 +8,10 @@
     "faq": "FAQ",
     "download": "Get Started",
     "useCases": "Use Cases",
-    "presets": "AI Presets",
+    "presets": "Presets",
     "noUseCases": "No use cases yet",
     "language": "Language",
+    "masks": "Masks",
     "models": "Models"
   },
   "presets": {
@@ -18,7 +19,7 @@
     "breadcrumb": "AI Presets",
     "eyebrow": "Quick AI presets",
     "heading": "AI photo presets for quick transformations",
-    "description": "Pick a preset, upload one photo, and create a shareable AI photo without training a personal model first.",
+    "description": "Pick a preset, upload one photo, and create a shareable AI transformation in seconds.",
     "empty": "No AI presets are published yet.",
     "quickPreset": "Quick AI preset",
     "tryPreset": "Try this preset",
@@ -41,6 +42,45 @@
     "previousPage": "Previous",
     "nextPage": "Next",
     "paginationPageTitle": "Page {page}"
+  },
+  "masks": {
+    "title": "AI Masks",
+    "breadcrumb": "AI Masks",
+    "eyebrow": "One photo. A new look.",
+    "heading": "Explore AI Masks",
+    "description": "Upload one photo and try hairstyles, makeup, outfits, aging effects, and more in seconds.",
+    "homeTitle": "Try a new look in one photo",
+    "homeDescription": "Try hairstyles, makeup, outfits, aging effects, and more from a single photo with AI Masks.",
+    "pricePerImage": "{price} per image",
+    "browseAll": "Browse AI Masks",
+    "before": "Before",
+    "after": "After",
+    "sourceAlt": "Original portrait for the {category} mask category",
+    "resultAlt": "{name} AI Mask result",
+    "tryMasks": "Try AI Masks",
+    "genderLabel": "Preview model gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "howTitle": "How AI Masks work",
+    "categoryNav": "Browse AI Mask categories",
+    "maskCount": "{count} masks",
+    "yourPhoto": "Your photo",
+    "readyTitle": "Ready to try a new look?",
+    "readyDescription": "Open Masks in the app and upload one clear portrait to get started.",
+    "steps": {
+      "photo": {
+        "title": "Choose one photo",
+        "description": "Upload a clear selfie or portrait to get the best result."
+      },
+      "mask": {
+        "title": "Pick a mask",
+        "description": "Explore hairstyles, makeup, outfits, aging effects, and more."
+      },
+      "create": {
+        "title": "Create and compare",
+        "description": "Generate your new look, compare it with the original, and download it."
+      }
+    }
   },
   "hero": {
     "title": "AI Headshot Generator for",
@@ -173,6 +213,9 @@
     "studioPhotos": "Studio photos & AI presets",
     "studioDescription": "Studio photos cost $0.29. AI preset prices range from $0.09 to $0.29.",
     "studioPrice": "$0.09–$0.29",
+    "maskPhotos": "AI Masks",
+    "maskDescription": "Transform one existing photo with a ready-made look.",
+    "maskPrice": "$0.19",
     "studioPerPhoto": "per image",
     "getStarted": "Start Generating",
     "oneTimeFee": "Personal AI model training from",

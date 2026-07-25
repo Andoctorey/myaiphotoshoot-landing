@@ -8,9 +8,10 @@
     "faq": "FAQ",
     "download": "始める",
     "useCases": "活用例",
-    "presets": "AIプリセット",
+    "presets": "プリセット",
     "noUseCases": "活用例はまだありません",
     "language": "言語",
+    "masks": "マスク",
     "models": "モデル"
   },
   "presets": {
@@ -18,7 +19,7 @@
     "breadcrumb": "AIプリセット",
     "eyebrow": "クイックAIプリセット",
     "heading": "写真をすばやく変換するAIプリセット",
-    "description": "プリセットを選び、写真を1枚アップロードするだけで、パーソナルモデルを先に学習しなくても共有しやすいAI写真を作成できます。",
+    "description": "プリセットを選び、写真を1枚アップロードするだけで、共有しやすいAI変換をすぐに作成できます。",
     "empty": "公開済みのAIプリセットはまだありません。",
     "quickPreset": "クイックAIプリセット",
     "tryPreset": "このプリセットを試す",
@@ -41,6 +42,45 @@
     "previousPage": "前へ",
     "nextPage": "次へ",
     "paginationPageTitle": "{page}ページ"
+  },
+  "masks": {
+    "title": "AIマスク",
+    "breadcrumb": "AIマスク",
+    "eyebrow": "写真1枚で、新しいスタイルへ。",
+    "heading": "AIマスクを探す",
+    "description": "写真を1枚アップロードするだけで、髪型、メイク、服装、年齢変化などをすぐに試せます。",
+    "homeTitle": "写真1枚で新しいスタイルを試す",
+    "homeDescription": "ワンタップのAIマスクで、髪型、メイク、服装、年齢変化などをプレビューできます。",
+    "pricePerImage": "1枚 {price}",
+    "browseAll": "AIマスクを見る",
+    "before": "適用前",
+    "after": "適用後",
+    "sourceAlt": "{category}カテゴリーの元ポートレート",
+    "resultAlt": "{name} AIマスクの仕上がりイメージ",
+    "tryMasks": "AIマスクを試す",
+    "genderLabel": "プレビューモデルの性別",
+    "genderMale": "男性",
+    "genderFemale": "女性",
+    "howTitle": "AIマスクの使い方",
+    "categoryNav": "AIマスクのカテゴリー一覧",
+    "maskCount": "{count}種類のマスク",
+    "yourPhoto": "あなたの写真",
+    "readyTitle": "新しいスタイルを試しますか？",
+    "readyDescription": "アプリで「マスク」を開き、鮮明なポートレートを1枚アップロードして始めましょう。",
+    "steps": {
+      "photo": {
+        "title": "写真を1枚選ぶ",
+        "description": "最適な結果を得るため、鮮明なセルフィーまたはポートレートをアップロードします。"
+      },
+      "mask": {
+        "title": "マスクを選ぶ",
+        "description": "髪型、メイク、服装、年齢変化などから選べます。"
+      },
+      "create": {
+        "title": "作成して比較",
+        "description": "新しいスタイルを生成し、元の写真と比較してダウンロードできます。"
+      }
+    }
   },
   "hero": {
     "title": "AIヘッドショット生成ツールで、",
@@ -173,6 +213,9 @@
     "studioPhotos": "Studio写真とAIプリセット",
     "studioDescription": "Studio写真は1枚$0.29。AIプリセットは1枚$0.09〜$0.29です。",
     "studioPrice": "$0.09〜$0.29",
+    "maskPhotos": "AIマスク",
+    "maskDescription": "用意されたスタイルで既存の写真1枚を変換できます。",
+    "maskPrice": "$0.19",
     "studioPerPhoto": "1枚あたり",
     "getStarted": "生成を始める",
     "oneTimeFee": "パーソナルAIモデル学習の開始価格",

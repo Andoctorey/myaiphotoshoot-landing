@@ -24,6 +24,12 @@ export default async function Pricing({ locale }: { locale: string }) {
       unit: t('studioPerPhoto'),
       description: t('studioDescription'),
     },
+    {
+      label: t('maskPhotos'),
+      price: t('maskPrice'),
+      unit: t('studioPerPhoto'),
+      description: t('maskDescription'),
+    },
   ];
 
   return (

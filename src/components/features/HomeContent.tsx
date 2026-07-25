@@ -5,6 +5,8 @@ import FAQ from './FAQ';
 import Features from './Features';
 import Hero from './Hero';
 import HomeBlog from './HomeBlog';
+import HomeMasks from './HomeMasks';
+import HomePresets from './HomePresets';
 import HomeUseCases from './HomeUseCases';
 import Pricing from './Pricing';
 import UserGallery from './Testimonials';
@@ -35,6 +37,8 @@ export default function HomeContent({
       <Hero locale={locale} />
       <AppShowcase locale={locale} />
       <Features locale={locale} />
+      <HomePresets locale={locale} />
+      <HomeMasks locale={locale} />
       <Pricing locale={locale} />
       <HomeUseCases initialUseCases={initialUseCases} locale={locale} />
       <UserGallery initialItems={initialGallery} initialRandomSession={initialGallerySession} />

@@ -55,6 +55,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
   ];
   const navItemsAfterUseCases = [
     { name: t('presets'), href: localePath(locale, '/presets/') },
+    { name: t('masks'), href: localePath(locale, '/masks/') },
     { name: t('gallery'), href: isHomePage ? '#gallery' : homeHash('#gallery') },
     { name: t('blog'), href: isHomePage ? '#home-blog' : homeHash('#home-blog') },
     { name: t('faq'), href: isHomePage ? '#faq' : homeHash('#faq') },
@@ -195,7 +196,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
             </a>
           </div>
           <div className="hidden md:block">
-            <div className="ltr:ml-10 rtl:mr-10 flex items-center space-x-1 rtl:space-x-reverse lg:space-x-4" role="navigation">
+            <div className="ltr:ml-10 rtl:mr-10 flex items-center space-x-1 rtl:space-x-reverse lg:space-x-2" role="navigation">
               {navItemsBeforeUseCases.map((item) => (
                 <a
                   key={item.name}

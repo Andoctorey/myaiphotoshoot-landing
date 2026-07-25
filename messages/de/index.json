@@ -8,9 +8,10 @@
     "faq": "FAQ",
     "download": "Loslegen",
     "useCases": "Anwendungsfälle",
-    "presets": "KI-Presets",
+    "presets": "Presets",
     "noUseCases": "Noch keine Anwendungsfälle",
     "language": "Sprache",
+    "masks": "Masken",
     "models": "Modelle"
   },
   "presets": {
@@ -18,7 +19,7 @@
     "breadcrumb": "KI-Presets",
     "eyebrow": "Schnelle KI-Presets",
     "heading": "KI-Fotopresets für schnelle Bildverwandlungen",
-    "description": "Wähle ein Preset, lade ein Foto hoch und erstelle ein KI-Foto zum Teilen, ohne vorher ein persönliches Modell zu trainieren.",
+    "description": "Wähle ein Preset, lade ein Foto hoch und erstelle in Sekunden eine teilbare KI-Verwandlung.",
     "empty": "Es sind noch keine KI-Presets veröffentlicht.",
     "quickPreset": "Schnelles KI-Preset",
     "tryPreset": "Preset ausprobieren",
@@ -41,6 +42,45 @@
     "previousPage": "Zurück",
     "nextPage": "Weiter",
     "paginationPageTitle": "Seite {page}"
+  },
+  "masks": {
+    "title": "AI-Masken",
+    "breadcrumb": "AI-Masken",
+    "eyebrow": "Ein Foto. Ein neuer Look.",
+    "heading": "AI-Masken entdecken",
+    "description": "Lade ein Foto hoch und probiere in Sekunden Frisuren, Make-up, Outfits, Alterungseffekte und mehr aus.",
+    "homeTitle": "Ein neuer Look mit nur einem Foto",
+    "homeDescription": "Probiere mit AI-Masken Frisuren, Make-up, Outfits, Alterungseffekte und mehr anhand eines einzigen Fotos aus.",
+    "pricePerImage": "{price} pro Bild",
+    "browseAll": "AI-Masken ansehen",
+    "before": "Vorher",
+    "after": "Nachher",
+    "sourceAlt": "Originalporträt für AI-Masken in der Kategorie {category}",
+    "resultAlt": "Ergebnis der AI-Maske „{name}“",
+    "tryMasks": "AI-Masken ausprobieren",
+    "genderLabel": "Geschlecht des Vorschaumodells",
+    "genderMale": "Männlich",
+    "genderFemale": "Weiblich",
+    "howTitle": "So funktionieren AI-Masken",
+    "categoryNav": "Kategorien der AI-Masken durchsuchen",
+    "maskCount": "{count} Masken",
+    "yourPhoto": "Dein Foto",
+    "readyTitle": "Bereit für einen neuen Look?",
+    "readyDescription": "Öffne den Bereich „Masken“ in der App und lade zum Start ein klares Porträt hoch.",
+    "steps": {
+      "photo": {
+        "title": "Ein Foto auswählen",
+        "description": "Lade ein klares Selfie oder Porträt hoch, um das beste Ergebnis zu erhalten."
+      },
+      "mask": {
+        "title": "Maske auswählen",
+        "description": "Entdecke Frisuren, Make-up, Outfits, Alterungseffekte und mehr."
+      },
+      "create": {
+        "title": "Erstellen und vergleichen",
+        "description": "Erstelle deinen neuen Look, vergleiche ihn mit dem Original und lade ihn herunter."
+      }
+    }
   },
   "hero": {
     "title": "KI-Headshot-Generator für",
@@ -173,6 +213,9 @@
     "studioPhotos": "Studio-Fotos und KI-Presets",
     "studioDescription": "Studio-Fotos kosten $0.29. KI-Presets kosten zwischen $0.09 und $0.29.",
     "studioPrice": "$0.09–$0.29",
+    "maskPhotos": "KI-Masken",
+    "maskDescription": "Verwandle ein vorhandenes Foto mit einem fertigen Look.",
+    "maskPrice": "$0.19",
     "studioPerPhoto": "pro Bild",
     "getStarted": "Generieren starten",
     "oneTimeFee": "Training des persönlichen KI-Modells ab",

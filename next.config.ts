@@ -14,6 +14,8 @@ const isDev = process.env.NODE_ENV === 'development';
  */
 const nextConfig: NextConfig = {
   ...(isDev ? {} : { output: 'export' }), // Keep export for Cloudflare Pages builds
+  // Keep verification builds from replacing a running dev server's artifacts.
+  distDir: isDev ? '.next-dev' : '.next',
   trailingSlash: true, // Helps with static export route matching
 
   /* config options here */

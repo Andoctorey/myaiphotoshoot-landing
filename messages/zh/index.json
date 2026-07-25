@@ -8,9 +8,10 @@
     "faq": "FAQ",
     "download": "开始使用",
     "useCases": "使用场景",
-    "presets": "AI 预设",
+    "presets": "预设",
     "noUseCases": "暂无使用场景",
     "language": "语言",
+    "masks": "面具",
     "models": "模型"
   },
   "presets": {
@@ -18,7 +19,7 @@
     "breadcrumb": "AI 预设",
     "eyebrow": "快速 AI 预设",
     "heading": "用于快速照片变换的 AI 预设",
-    "description": "选择一个预设，上传一张照片，无需先训练个人模型即可生成可分享的 AI 照片。",
+    "description": "选择一个预设，上传一张照片，几秒内即可生成可分享的 AI 变换效果。",
     "empty": "暂无已发布的 AI 预设。",
     "quickPreset": "快速 AI 预设",
     "tryPreset": "试用此预设",
@@ -41,6 +42,45 @@
     "previousPage": "上一页",
     "nextPage": "下一页",
     "paginationPageTitle": "第 {page} 页"
+  },
+  "masks": {
+    "title": "AI 面具",
+    "breadcrumb": "AI 面具",
+    "eyebrow": "一张照片，焕然一新。",
+    "heading": "探索 AI 面具",
+    "description": "上传一张照片，几秒内即可尝试发型、妆容、穿搭、年龄变化等效果。",
+    "homeTitle": "用一张照片尝试新造型",
+    "homeDescription": "使用一键 AI 面具预览发型、妆容、穿搭、年龄变化等效果。",
+    "pricePerImage": "每张 {price}",
+    "browseAll": "浏览 AI 面具",
+    "before": "之前",
+    "after": "之后",
+    "sourceAlt": "{category}类别的原始人像",
+    "resultAlt": "{name} AI 面具效果预览",
+    "tryMasks": "试用 AI 面具",
+    "genderLabel": "预览模特性别",
+    "genderMale": "男性",
+    "genderFemale": "女性",
+    "howTitle": "AI 面具的使用方式",
+    "categoryNav": "浏览 AI 面具分类",
+    "maskCount": "{count} 个面具",
+    "yourPhoto": "你的照片",
+    "readyTitle": "准备尝试新造型了吗？",
+    "readyDescription": "在应用中打开“面具”，上传一张清晰的人像照片即可开始。",
+    "steps": {
+      "photo": {
+        "title": "选择一张照片",
+        "description": "上传清晰的自拍或人像照片，以获得最佳效果。"
+      },
+      "mask": {
+        "title": "选择面具",
+        "description": "探索发型、妆容、穿搭、年龄变化等多种效果。"
+      },
+      "create": {
+        "title": "生成并对比",
+        "description": "生成新造型，与原图对比，然后下载结果。"
+      }
+    }
   },
   "hero": {
     "title": "AI 头像生成器：",
@@ -173,6 +213,9 @@
     "studioPhotos": "Studio 照片与 AI 预设",
     "studioDescription": "Studio 照片价格为 $0.29。AI 预设价格为 $0.09–$0.29。",
     "studioPrice": "$0.09–$0.29",
+    "maskPhotos": "AI 面具",
+    "maskDescription": "使用现成造型变换一张现有照片。",
+    "maskPrice": "$0.19",
     "studioPerPhoto": "每张图片",
     "getStarted": "开始生成",
     "oneTimeFee": "个人 AI 模型训练起价",

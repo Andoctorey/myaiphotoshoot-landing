@@ -8,9 +8,10 @@
     "faq": "FAQ",
     "download": "Empezar",
     "useCases": "Casos de uso",
-    "presets": "Presets de IA",
+    "presets": "Presets",
     "noUseCases": "Aún no hay casos de uso",
     "language": "Idioma",
+    "masks": "Máscaras",
     "models": "Modelos"
   },
   "presets": {
@@ -18,7 +19,7 @@
     "breadcrumb": "Presets de IA",
     "eyebrow": "Presets rápidos de IA",
     "heading": "Presets de IA para transformar fotos al instante",
-    "description": "Elige un preset, sube una foto y crea una foto con IA para compartir sin entrenar primero un modelo personal.",
+    "description": "Elige un preset, sube una foto y crea una transformación con IA para compartir en segundos.",
     "empty": "Aún no hay presets de IA publicados.",
     "quickPreset": "Preset rápido de IA",
     "tryPreset": "Probar este preset",
@@ -41,6 +42,45 @@
     "previousPage": "Anterior",
     "nextPage": "Siguiente",
     "paginationPageTitle": "Página {page}"
+  },
+  "masks": {
+    "title": "Máscaras con IA",
+    "breadcrumb": "Máscaras con IA",
+    "eyebrow": "Una foto. Un look nuevo.",
+    "heading": "Explora las máscaras con IA",
+    "description": "Sube una foto y prueba en segundos peinados, maquillaje, conjuntos, efectos de edad y mucho más.",
+    "homeTitle": "Prueba un look nuevo con una sola foto",
+    "homeDescription": "Prueba peinados, maquillaje, conjuntos, efectos de edad y mucho más a partir de una sola foto.",
+    "pricePerImage": "{price} por imagen",
+    "browseAll": "Ver máscaras con IA",
+    "before": "Antes",
+    "after": "Después",
+    "sourceAlt": "Retrato original de la categoría {category}",
+    "resultAlt": "Resultado de la máscara con IA {name}",
+    "tryMasks": "Probar máscaras con IA",
+    "genderLabel": "Género de la vista previa",
+    "genderMale": "Masculino",
+    "genderFemale": "Femenino",
+    "howTitle": "Cómo funcionan las máscaras con IA",
+    "categoryNav": "Explorar categorías de máscaras con IA",
+    "maskCount": "{count} máscaras",
+    "yourPhoto": "Tu foto",
+    "readyTitle": "¿Listo para probar un look nuevo?",
+    "readyDescription": "Abre Máscaras en la app y sube un retrato nítido para empezar.",
+    "steps": {
+      "photo": {
+        "title": "Elige una foto",
+        "description": "Sube una selfie o un retrato nítido para obtener el mejor resultado."
+      },
+      "mask": {
+        "title": "Elige una máscara",
+        "description": "Explora peinados, maquillaje, conjuntos, efectos de edad y mucho más."
+      },
+      "create": {
+        "title": "Crea y compara",
+        "description": "Genera tu nuevo look, compáralo con el original y descárgalo."
+      }
+    }
   },
   "hero": {
     "title": "Generador de retratos profesionales con IA para",
@@ -173,6 +213,9 @@
     "studioPhotos": "Fotos de Studio y presets de IA",
     "studioDescription": "Las fotos de Studio cuestan $0.29. Los presets de IA cuestan entre $0.09 y $0.29.",
     "studioPrice": "$0.09–$0.29",
+    "maskPhotos": "Máscaras de IA",
+    "maskDescription": "Transforma una foto existente con un look listo para usar.",
+    "maskPrice": "$0.19",
     "studioPerPhoto": "por imagen",
     "getStarted": "Empezar a generar",
     "oneTimeFee": "Entrenamiento del modelo personal desde",

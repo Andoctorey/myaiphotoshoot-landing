@@ -1,25 +1,15 @@
 import type { Metadata } from 'next';
 import { defaultLocale, locales } from '@/i18n/request';
+import { postPublicSupabaseRpc } from '@/lib/public-supabase';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { AiPreset, AiPresetFaq, AiPresetSeoSection } from '@/types/ai-preset';
 
 const PRESET_REVALIDATE_SECONDS = 3600;
 export const AI_PRESETS_PAGE_SIZE = 12;
 const AI_PRESETS_MAX_PAGE_SIZE = 100;
-const DEFAULT_SUPABASE_URL = 'https://trzgfajvyjpvbqedyxug.supabase.co';
-const DEFAULT_SUPABASE_ANON_KEY =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyemdmYWp2eWpwdmJxZWR5eHVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM1NTA5MzAsImV4cCI6MjA0OTEyNjkzMH0.39Qdq2nTCuoIpAfc7L725MZA2ls3NegFy6zCjOTzW9M';
 export const AI_PRESETS_INDEX_TITLE = 'AI Photo Presets | My AI Photo Shoot';
 export const AI_PRESETS_INDEX_DESCRIPTION =
   'Browse quick AI photo presets for fun looks and shareable photo transformations.';
-
-function getSupabaseUrl(): string {
-  return (process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL).replace(/\/$/, '');
-}
-
-function getSupabaseAnonKey(): string {
-  return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;
-}
 
 export function buildPresetAppUrl(slug: string): string {
   return `https://app.myaiphotoshoot.com/#preset/${encodeURIComponent(slug)}`;
@@ -66,16 +56,7 @@ export function aiPresetsPagePath(page: number): string {
 async function postAiPresetsRpc(body: Record<string, unknown>): Promise<Response> {
   // public.list_ai_presets is defined in myaiphotoshoot-functions migrations; update
   // src/types/ai-preset.ts and admin/src/lib/presetService.ts when its output changes.
-  return fetch(`${getSupabaseUrl()}/rest/v1/rpc/list_ai_presets`, {
-    method: 'POST',
-    headers: {
-      apikey: getSupabaseAnonKey(),
-      authorization: `Bearer ${getSupabaseAnonKey()}`,
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(body),
-    next: { revalidate: PRESET_REVALIDATE_SECONDS },
-  });
+  return postPublicSupabaseRpc('list_ai_presets', body, PRESET_REVALIDATE_SECONDS);
 }
 
 async function fetchAiPresetsPageInternal(

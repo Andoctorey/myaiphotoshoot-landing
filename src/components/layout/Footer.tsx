@@ -57,6 +57,14 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
+                  href={localePath(locale, '/masks/')}
+                  className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
+                >
+                  {tNav('masks')}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={localePath(locale, '/presets/')}
                   className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-sm p-1 block"
                 >

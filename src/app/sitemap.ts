@@ -186,6 +186,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: buildHreflangLanguages(baseUrl, '/presets/', locales),
       },
     })),
+    // AI mask catalog pages for all locales
+    ...locales.map(locale => ({
+      url: buildLocalizedUrl(baseUrl, locale, '/masks/'),
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/masks/', locales),
+      },
+    })),
     // Supported AI model pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/models/'),

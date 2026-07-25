@@ -8,9 +8,10 @@
     "faq": "FAQ",
     "download": "Commencer",
     "useCases": "Cas d’usage",
-    "presets": "Préréglages IA",
+    "presets": "Préréglages",
     "noUseCases": "Aucun cas d’usage pour le moment",
     "language": "Langue",
+    "masks": "Masques",
     "models": "Modèles"
   },
   "presets": {
@@ -18,7 +19,7 @@
     "breadcrumb": "Préréglages IA",
     "eyebrow": "Préréglages IA rapides",
     "heading": "Des préréglages IA pour transformer vos photos rapidement",
-    "description": "Choisissez un préréglage, importez une photo et créez une photo IA à partager sans entraîner d’abord un modèle personnel.",
+    "description": "Choisissez un préréglage, importez une photo et créez une transformation IA à partager en quelques secondes.",
     "empty": "Aucun préréglage IA n’est encore publié.",
     "quickPreset": "Préréglage IA rapide",
     "tryPreset": "Essayer ce préréglage",
@@ -41,6 +42,45 @@
     "previousPage": "Précédent",
     "nextPage": "Suivant",
     "paginationPageTitle": "Page {page}"
+  },
+  "masks": {
+    "title": "Masques IA",
+    "breadcrumb": "Masques IA",
+    "eyebrow": "Une photo. Un nouveau look.",
+    "heading": "Découvrez les masques IA",
+    "description": "Importez une photo et essayez en quelques secondes des coiffures, du maquillage, des tenues, des effets de vieillissement et bien plus encore.",
+    "homeTitle": "Un nouveau look à partir d’une seule photo",
+    "homeDescription": "Testez des coiffures, du maquillage, des tenues, des effets de vieillissement et plus encore avec les masques IA.",
+    "pricePerImage": "{price} par image",
+    "browseAll": "Voir les masques IA",
+    "before": "Avant",
+    "after": "Après",
+    "sourceAlt": "Portrait original de la catégorie {category}",
+    "resultAlt": "Résultat du masque IA {name}",
+    "tryMasks": "Essayer les masques IA",
+    "genderLabel": "Genre du modèle d’aperçu",
+    "genderMale": "Homme",
+    "genderFemale": "Femme",
+    "howTitle": "Comment fonctionnent les masques IA",
+    "categoryNav": "Parcourir les catégories de masques IA",
+    "maskCount": "{count} masques",
+    "yourPhoto": "Votre photo",
+    "readyTitle": "Prêt à essayer un nouveau look ?",
+    "readyDescription": "Ouvrez la section Masques dans l’application et importez un portrait net pour commencer.",
+    "steps": {
+      "photo": {
+        "title": "Choisissez une photo",
+        "description": "Importez un selfie ou un portrait net pour obtenir le meilleur résultat."
+      },
+      "mask": {
+        "title": "Choisissez un masque",
+        "description": "Découvrez des coiffures, du maquillage, des tenues, des effets de vieillissement et plus encore."
+      },
+      "create": {
+        "title": "Créez et comparez",
+        "description": "Générez votre nouveau look, comparez-le à l’original et téléchargez-le."
+      }
+    }
   },
   "hero": {
     "title": "Générateur de photos professionnelles par IA pour",
@@ -173,6 +213,9 @@
     "studioPhotos": "Photos Studio et préréglages IA",
     "studioDescription": "Les photos Studio coûtent 0,29 $. Les préréglages IA coûtent entre 0,09 et 0,29 $.",
     "studioPrice": "0,09–0,29 $",
+    "maskPhotos": "Masques IA",
+    "maskDescription": "Transformez une photo existante avec un look prêt à l’emploi.",
+    "maskPrice": "0,19 $",
     "studioPerPhoto": "par image",
     "getStarted": "Commencer à générer",
     "oneTimeFee": "Entraînement du modèle personnel dès",
