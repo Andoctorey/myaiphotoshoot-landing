@@ -15,6 +15,7 @@ type MaskCategoryRow = {
   id: string;
   slug: string;
   name: string;
+  icon_path?: string | null;
   source_image_url: string;
   source_image_variants?: unknown;
   audience_gender: MaskAudienceGender;
@@ -84,6 +85,9 @@ function normalizeCategory(row: MaskCategoryRow): AiMaskCategory {
     id: row.id.trim(),
     slug: row.slug.trim(),
     name: row.name.trim(),
+    iconPath: typeof row.icon_path === 'string' && row.icon_path.trim()
+      ? row.icon_path.trim()
+      : null,
     sourceImageUrl: row.source_image_url.trim(),
     sourceImageVariants: normalizeImageVariants(row.source_image_variants),
     audienceGender: row.audience_gender,

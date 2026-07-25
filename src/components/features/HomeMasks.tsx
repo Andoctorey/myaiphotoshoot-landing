@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
 import {
   fetchMasksCatalog,
   masksForCategory,
@@ -101,7 +102,8 @@ export default async function HomeMasks({ locale }: { locale: string }) {
                     </div>
                   </div>
                   <div className="p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-purple-600 dark:text-purple-300">
+                    <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-purple-600 dark:text-purple-300">
+                      <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
                       {category.name}
                     </p>
                     <h3 className="mt-1 text-lg font-semibold text-gray-950 dark:text-white">

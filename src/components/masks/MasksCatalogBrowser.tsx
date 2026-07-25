@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
+import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
 import { AI_MASKS_APP_URL } from '@/lib/app-links';
 import type {
   AiMask,
@@ -103,8 +104,9 @@ export default function MasksCatalogBrowser({ catalog, labels }: Props) {
               <a
                 key={category.id}
                 href={`#${category.slug}`}
-                className="shrink-0 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-gray-200 transition hover:text-purple-700 hover:ring-purple-300 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:text-purple-300 dark:hover:ring-purple-700"
+                className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-gray-200 transition hover:text-purple-700 hover:ring-purple-300 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:text-purple-300 dark:hover:ring-purple-700"
               >
+                <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
                 {category.name}
               </a>
             ))}
@@ -123,15 +125,24 @@ export default function MasksCatalogBrowser({ catalog, labels }: Props) {
               className="scroll-mt-36"
             >
               <div className="mb-6">
-                <h2
-                  id={`${category.slug}-title`}
-                  className="text-3xl font-bold tracking-tight text-gray-950 dark:text-white"
-                >
-                  {category.name}
-                </h2>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  {interpolate(labels.maskCount, 'count', masks.length)}
-                </p>
+                <div className="flex items-center gap-3">
+                  {category.iconPath ? (
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                      <MaskCategoryIcon iconPath={category.iconPath} className="h-6 w-6" />
+                    </span>
+                  ) : null}
+                  <div>
+                    <h2
+                      id={`${category.slug}-title`}
+                      className="text-3xl font-bold tracking-tight text-gray-950 dark:text-white"
+                    >
+                      {category.name}
+                    </h2>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                      {interpolate(labels.maskCount, 'count', masks.length)}
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">

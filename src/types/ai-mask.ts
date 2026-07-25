@@ -4,6 +4,7 @@ export interface AiMaskCategory {
   id: string;
   slug: string;
   name: string;
+  iconPath: string | null;
   sourceImageUrl: string;
   sourceImageVariants: Record<string, string>;
   audienceGender: MaskAudienceGender;
