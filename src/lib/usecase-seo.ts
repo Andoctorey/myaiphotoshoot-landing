@@ -122,7 +122,7 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
   }
 
   const baseDescription = replaceLegacyTrainingPrice(String(uc.meta_description || uc.title || '').trim());
-  const pricingSentence = ' Model training from $5.99, personal-model images $0.03 each. No subscription.';
+  const pricingSentence = ' Model training from $5.99, personal-model images $0.03 each. No subscription required.';
   let description = baseDescription;
   if (baseDescription) {
     const alreadyHasPricing = /\$5\.99|5,99 \$|No subscription/i.test(baseDescription);

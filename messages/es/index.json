@@ -86,7 +86,7 @@
     "title": "Generador de retratos profesionales con IA para",
     "titleHighlight": "fotos de perfil realistas",
     "description": "Sube algunas selfies y crea retratos profesionales, fotos de perfil y retratos creativos realistas con IA para LinkedIn, currículums, equipos, creadores y marcas personales.",
-    "microcopy": "Entrena tu modelo desde $5.99 • Fotos con modelo personal por $0.03 • Sin suscripción"
+    "microcopy": "Entrena tu modelo desde $5.99 • Fotos con modelo personal por $0.03 • Suscripción opcional"
   },
   "appShowcase": {
     "exploreStyles": "Explora estilos de fotos con IA en My AI Photo Shoot",
@@ -94,7 +94,7 @@
     "trainModel": "Entrena tu modelo personal de IA en My AI Photo Shoot",
     "photosOfYou": "Crea fotos personalizadas de ti",
     "photoIdeas": "Encuentra inspiración para nuevas fotos con IA",
-    "noSubscription": "Precio de pago por uso sin suscripción"
+    "noSubscription": "Precio de pago por uso sin suscripción obligatoria"
   },
   "homeUseCases": {
     "eyebrow": "Un modelo, muchos estilos",
@@ -120,8 +120,8 @@
       "description": "Elige galerías públicas o privadas y elimina imágenes para siempre cuando quieras."
     },
     "affordablePricing": {
-      "title": "Precios transparentes, sin suscripción",
-      "description": "Sin suscripción ni cargos sorpresa. El entrenamiento comienza en $5.99, las fotos con tu modelo personal cuestan $0.03, las fotos de Studio $0.29 y los presets de IA entre $0.09 y $0.29."
+      "title": "Precios transparentes de pago por uso",
+      "description": "Sin suscripción obligatoria ni cargos sorpresa. El entrenamiento comienza en $5.99, las fotos con tu modelo personal cuestan $0.03, las fotos de Studio $0.29 y los presets de IA entre $0.09 y $0.29."
     },
     "thousandsOfStyles": {
       "title": "Mucho más que retratos profesionales",
@@ -220,7 +220,7 @@
     "getStarted": "Empezar a generar",
     "oneTimeFee": "Entrenamiento del modelo personal desde",
     "oneTimeFeeAmount": "$5.99",
-    "noSubscriptionShort": "Sin suscripción. Paga solo por lo que creas."
+    "noSubscriptionShort": "Suscripción opcional. Paga solo por lo que creas."
   },
   "download": {
     "title": "Empieza a crear hoy",
@@ -280,7 +280,7 @@
     },
     "pricing": {
       "question": "¿Cuánto cuesta y hay límites?",
-      "answer": "Entrenar cada modelo personal cuesta $5.99 con Estándar o $9.99 con Máx., en un único pago por modelo. Las fotos con el modelo personal cuestan $0.03. Las fotos de Studio cuestan $0.29 y los presets de IA entre $0.09 y $0.29 por imagen. No hay suscripción ni límite mensual de generación."
+      "answer": "Entrenar cada modelo personal cuesta $5.99 con Estándar o $9.99 con Máx., en un único pago por modelo. Las fotos con el modelo personal cuestan $0.03. Las fotos de Studio cuestan $0.29 y los presets de IA entre $0.09 y $0.29 por imagen. El pago por uso no tiene límite mensual; las suscripciones opcionales Pro y Máx. añaden créditos periódicos y funciones premium."
     },
     "imageQuality": {
       "question": "¿Qué influye en la calidad de las imágenes?",
@@ -307,7 +307,7 @@
     "notFound": "Caso de uso no encontrado.",
     "badges": {
       "cheapest": "Fotos con IA de bajo costo",
-      "noSubscription": "Sin suscripción",
+      "noSubscription": "Sin suscripción obligatoria",
       "poweredByFlux": "Impulsado por Flux"
     },
     "galleryDisclaimer": "Todos los ejemplos mostrados fueron generados por nuestra IA a partir de selfies de usuarios.",

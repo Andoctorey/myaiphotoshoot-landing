@@ -23,10 +23,6 @@ const showcaseScreenshots = [
     src: '/images/app-showcase/find_photo_ideas.webp',
     altKey: 'photoIdeas',
   },
-  {
-    src: '/images/app-showcase/no_subscription.webp',
-    altKey: 'noSubscription',
-  },
 ] as const;
 
 export default async function AppShowcase({ locale }: { locale: string }) {
@@ -36,7 +32,7 @@ export default async function AppShowcase({ locale }: { locale: string }) {
     <section className="overflow-hidden bg-white py-10 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="-mx-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
-          <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-6">
+          <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-5">
             {showcaseScreenshots.map((screenshot) => (
               <PlatformAppLink
                 key={screenshot.src}

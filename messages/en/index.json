@@ -86,7 +86,7 @@
     "title": "AI Headshot Generator for",
     "titleHighlight": "Realistic Profile Photos",
     "description": "Upload a few selfies and create realistic AI headshots, profile pictures, and portraits for LinkedIn, resumes, teams, creators, and personal brands.",
-    "microcopy": "Train once from $5.99 • personal-model photos $0.03 each • no subscription"
+    "microcopy": "Train once from $5.99 • personal-model photos $0.03 each • subscription optional"
   },
   "appShowcase": {
     "exploreStyles": "Explore AI photo styles in My AI Photo Shoot",
@@ -94,7 +94,7 @@
     "trainModel": "Train your personal AI model in My AI Photo Shoot",
     "photosOfYou": "Create personalized photos of yourself",
     "photoIdeas": "Find reusable AI photo ideas",
-    "noSubscription": "Pay-as-you-go pricing with no subscription"
+    "noSubscription": "Pay-as-you-go pricing without a required subscription"
   },
   "homeUseCases": {
     "eyebrow": "One model, many looks",
@@ -121,7 +121,7 @@
     },
     "affordablePricing": {
       "title": "Transparent Pay-As-You-Go Pricing",
-      "description": "No subscription or surprise fees. Training starts at $5.99, personal AI model photos cost $0.03 each, Studio photos cost $0.29, and AI presets cost $0.09–$0.29."
+      "description": "No subscription required or surprise fees. Training starts at $5.99, personal AI model photos cost $0.03 each, Studio photos cost $0.29, and AI presets cost $0.09–$0.29."
     },
     "thousandsOfStyles": {
       "title": "Headshots and more",
@@ -220,7 +220,7 @@
     "getStarted": "Start Generating",
     "oneTimeFee": "Personal AI model training from",
     "oneTimeFeeAmount": "$5.99",
-    "noSubscriptionShort": "No subscription. Pay only for what you create."
+    "noSubscriptionShort": "Subscription optional. Pay only for what you create."
   },
   "download": {
     "title": "Start Creating Today",
@@ -280,7 +280,7 @@
     },
     "pricing": {
       "question": "How much does it cost, and are there limits?",
-      "answer": "Personal AI model training costs $5.99 for Standard or $9.99 for Max, paid once per model. Personal AI model photos cost $0.03 each. Studio photos cost $0.29, and AI presets range from $0.09 to $0.29 per image. There is no subscription or monthly generation limit."
+      "answer": "Personal AI model training costs $5.99 for Standard or $9.99 for Max, paid once per model. Personal AI model photos cost $0.03 each. Studio photos cost $0.29, and AI presets range from $0.09 to $0.29 per image. Pay-as-you-go has no monthly generation limit; optional Pro and Max subscriptions add recurring credits and premium features."
     },
     "imageQuality": {
       "question": "What affects image quality?",

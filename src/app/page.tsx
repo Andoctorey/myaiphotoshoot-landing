@@ -31,7 +31,7 @@ export default async function Home() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const description = 'Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $5.99, images from $0.03, no subscription.';
+  const description = 'Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $5.99 and images from $0.03, with no subscription required.';
   const title = 'AI Headshot Generator - My AI Photo Shoot';
   return {
     title: { absolute: title }, // concise HTML title

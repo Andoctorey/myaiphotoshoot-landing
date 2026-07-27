@@ -86,7 +86,7 @@
     "title": "Générateur de photos professionnelles par IA pour",
     "titleHighlight": "des photos de profil réalistes",
     "description": "Importez quelques selfies et créez des photos professionnelles, des photos de profil et des portraits créatifs réalistes pour LinkedIn, les CV, les équipes, les créateurs et les marques personnelles.",
-    "microcopy": "Entraînement unique dès 5,99 $ • photos avec modèle personnel à 0,03 $ • sans abonnement"
+    "microcopy": "Entraînement unique dès 5,99 $ • photos avec modèle personnel à 0,03 $ • abonnement facultatif"
   },
   "appShowcase": {
     "exploreStyles": "Découvrez les styles de photos IA dans My AI Photo Shoot",
@@ -94,7 +94,7 @@
     "trainModel": "Entraînez votre modèle IA personnel dans My AI Photo Shoot",
     "photosOfYou": "Créez des photos personnalisées de vous",
     "photoIdeas": "Trouvez de nouvelles idées de photos IA",
-    "noSubscription": "Tarification à l’usage sans abonnement"
+    "noSubscription": "Tarification à l’usage sans abonnement obligatoire"
   },
   "homeUseCases": {
     "eyebrow": "Un modèle, de nombreux styles",
@@ -121,7 +121,7 @@
     },
     "affordablePricing": {
       "title": "Tarifs transparents à l’usage",
-      "description": "Aucun abonnement ni frais imprévus. L’entraînement commence à 5,99 $, les photos avec modèle personnel coûtent 0,03 $, les photos Studio 0,29 $ et les préréglages IA entre 0,09 et 0,29 $."
+      "description": "Aucun abonnement obligatoire ni frais imprévus. L’entraînement commence à 5,99 $, les photos avec modèle personnel coûtent 0,03 $, les photos Studio 0,29 $ et les préréglages IA entre 0,09 et 0,29 $."
     },
     "thousandsOfStyles": {
       "title": "Bien plus que des portraits professionnels",
@@ -220,7 +220,7 @@
     "getStarted": "Commencer à générer",
     "oneTimeFee": "Entraînement du modèle personnel dès",
     "oneTimeFeeAmount": "5,99 $",
-    "noSubscriptionShort": "Aucun abonnement. Vous ne payez que les images que vous créez."
+    "noSubscriptionShort": "Abonnement facultatif. Vous ne payez que les images que vous créez."
   },
   "download": {
     "title": "Commencez à créer aujourd’hui",
@@ -280,7 +280,7 @@
     },
     "pricing": {
       "question": "Combien cela coûte-t-il et y a-t-il des limites ?",
-      "answer": "L’entraînement de chaque modèle personnel coûte 5,99 $ en Standard ou 9,99 $ en Max, en un seul paiement par modèle. Les photos avec le modèle personnel coûtent 0,03 $. Les photos Studio coûtent 0,29 $ et les préréglages IA entre 0,09 et 0,29 $ par image. Aucun abonnement ni limite mensuelle de génération."
+      "answer": "L’entraînement de chaque modèle personnel coûte 5,99 $ en Standard ou 9,99 $ en Max, en un seul paiement par modèle. Les photos avec le modèle personnel coûtent 0,03 $. Les photos Studio coûtent 0,29 $ et les préréglages IA entre 0,09 et 0,29 $ par image. Le paiement à l’usage n’impose aucune limite mensuelle ; les abonnements Pro et Max facultatifs ajoutent des crédits récurrents et des fonctionnalités premium."
     },
     "imageQuality": {
       "question": "Qu’est-ce qui influence la qualité des images ?",
