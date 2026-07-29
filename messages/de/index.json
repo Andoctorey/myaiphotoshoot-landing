@@ -49,6 +49,7 @@
     "eyebrow": "Ein Foto. Ein neuer Look.",
     "heading": "AI-Masken entdecken",
     "description": "Lade ein Foto hoch und probiere in Sekunden Frisuren, Make-up, Outfits, Alterungseffekte und mehr aus.",
+    "creditCost": "{credits} Credits",
     "homeTitle": "Ein neuer Look mit nur einem Foto",
     "homeDescription": "Probiere mit AI-Masken Frisuren, Make-up, Outfits, Alterungseffekte und mehr anhand eines einzigen Fotos aus.",
     "pricePerImage": "{price} pro Bild",
@@ -85,8 +86,8 @@
   "hero": {
     "title": "KI-Headshot-Generator für",
     "titleHighlight": "realistische Profilfotos",
-    "description": "Laden Sie einige Selfies hoch und erstellen Sie realistische KI-Headshots, Profilbilder und Porträts für LinkedIn, Lebensläufe, Teams, Kreative und persönliche Marken.",
-    "microcopy": "Einmaliges Training ab $5.99 • persönliche Modellfotos je $0.03 • Abo optional"
+    "description": "Erstellen Sie realistische KI-Headshots und Porträts aus Selfies. Beginnen Sie mit einmaligen Credits oder schalten Sie mit Pro oder Max persönliches KI-Training und bis zu 4K frei.",
+    "microcopy": "Einmalige Credits für 1K • Pro schaltet 2K + Training frei • Max schaltet 4K frei"
   },
   "appShowcase": {
     "exploreStyles": "KI-Fotostile in My AI Photo Shoot entdecken",
@@ -94,12 +95,12 @@
     "trainModel": "Ihr persönliches KI-Modell in My AI Photo Shoot trainieren",
     "photosOfYou": "Personalisierte Fotos von Ihnen erstellen",
     "photoIdeas": "Neue Ideen für KI-Fotos entdecken",
-    "noSubscription": "Nutzungsbasierte Preise ohne Abo-Pflicht"
+    "noSubscription": "Mit einmaligen Credits erstellen oder mit Pro und Max mehr freischalten"
   },
   "homeUseCases": {
     "eyebrow": "Ein Modell, viele Looks",
     "title": "Fotos für Beruf, Dating und jeden Anlass",
-    "description": "Trainieren Sie Ihr persönliches KI-Modell einmal und erstellen Sie jederzeit professionelle Headshots, Datingfotos und kreative Porträts.",
+    "description": "Wählen Sie Pro oder Max, um Ihr persönliches KI-Modell zu trainieren, und erstellen Sie anschließend mit Credits professionelle Headshots, Datingfotos und kreative Porträts.",
     "imageAlt": "KI-Fotobeispiel für {title}",
     "exploreAll": "Alle Fotostile entdecken",
     "cards": {
@@ -110,18 +111,18 @@
   },
   "features": {
     "title": "Für bessere KI-Headshots entwickelt",
-    "description": "Einmal trainieren, realistische Fotos in vielen Stilen erstellen und die Kontrolle behalten.",
+    "description": "Beginnen Sie flexibel mit 1K oder trainieren Sie Ihre persönliche KI mit Pro oder Max für konsistente Fotos von Ihnen.",
     "advancedAI": {
       "title": "In jedem Bild wiedererkennbar",
-      "description": "Trainieren Sie das Modell einmal mit Ihren Selfies, damit Sie auf jedem Bild natürlich wiederzuerkennen sind."
+      "description": "Trainieren Sie mit Pro oder Max Ihre persönliche KI anhand Ihrer Selfies und bleiben Sie auf jedem persönlichen Modellbild wiedererkennbar."
     },
     "privacyFirst": {
       "title": "Ihre Fotos, Ihre Kontrolle",
       "description": "Wählen Sie öffentliche oder private Galerien und löschen Sie Bilder jederzeit dauerhaft."
     },
     "affordablePricing": {
-      "title": "Transparente Preise nach Verbrauch",
-      "description": "Kein Abo erforderlich und keine überraschenden Gebühren. Training ab $5.99, Fotos mit persönlichem KI-Modell für je $0.03, Studio-Fotos für $0.29 und KI-Presets für $0.09–$0.29."
+      "title": "Flexible Credits und Tarife",
+      "description": "Kaufen Sie einmalige Credits für flexible Erstellung in 1K oder wählen Sie Pro oder Max für wiederkehrende Credits, höhere Auflösung und persönliches KI-Training."
     },
     "thousandsOfStyles": {
       "title": "Headshots und mehr",
@@ -191,36 +192,79 @@
     }
   },
   "pricing": {
-    "title": "Einfache Preise nach Verbrauch",
-    "description": "Zahlen Sie nur, wenn Sie Bilder erstellen. Kein Monatsplan, keine Credit-Pakete und keine versteckten Gebühren.",
-    "payAsYouGo": "Zahlen nach Verbrauch",
-    "perfectFor": "Ideal für Kreative, Gründer, Marketingteams und alle, die jederzeit hochwertige KI-Bilder benötigen.",
-    "whatsIncluded": "Was enthalten ist",
-    "features": {
-      "training": "Training eines persönlichen KI-Modells",
-      "unlimited": "Kein monatliches Generierungslimit",
-      "custom": "Erweiterte Prompt-Anpassung",
-      "privacy": "Private und öffentliche Galerieoptionen",
-      "social": "Einfaches Teilen in sozialen Medien",
-      "download": "Downloads in hoher Auflösung",
-      "support": "Schneller Kundensupport",
-      "updates": "Laufende Verbesserungen der KI-Qualität"
+    "title": "Wählen Sie, wie Sie erstellen möchten",
+    "description": "Beginnen Sie mit einmaligen Credits für flexible Erstellung in 1K. Wählen Sie Pro für 2K und persönliches KI-Training oder Max für 4K und unser leistungsfähigstes Training.",
+    "referenceDisclosure": "Referenzangebote für {market} werden in {currency} angezeigt. Ihr endgültiger lokalisierter Preis, die Währung, enthaltene Credits und die Verfügbarkeit werden in der App oder im Store angezeigt.",
+    "creditsNeverExpire": "Credits verfallen nie",
+    "noTrial": "Keine kostenlose Testphase. Abonnements verlängern sich bis zur Kündigung.",
+    "billing": {
+      "cadences": {
+        "oneTime": "Einmalig",
+        "weekly": "Wöchentlich",
+        "monthly": "Monatlich",
+        "annual": "Jährlich"
+      },
+      "units": {
+        "oneTime": "einmalig",
+        "perWeek": "pro Woche",
+        "perMonth": "pro Monat",
+        "perYear": "pro Jahr"
+      },
+      "oneTimeCredits": "{credits} Credits enthalten",
+      "weeklyCredits": "{credits} Credits jede Woche",
+      "monthlyCredits": "{credits} Credits jeden Monat",
+      "annualSavings": "{percent}% sparen",
+      "annualTerms": "{total} werden einmal jährlich vollständig abgerechnet · {credits} Credits werden monatlich gutgeschrieben"
     },
-    "price": "$0.03",
-    "perPhoto": "pro Bild",
-    "personalPhotos": "Fotos mit persönlichem KI-Modell",
-    "personalDescription": "Trainieren Sie jedes KI-Modell einmalig ab $5.99.",
-    "studioPhotos": "Studio-Fotos und KI-Presets",
-    "studioDescription": "Studio-Fotos kosten $0.29. KI-Presets kosten zwischen $0.09 und $0.29.",
-    "studioPrice": "$0.09–$0.29",
-    "maskPhotos": "KI-Masken",
-    "maskDescription": "Verwandle ein vorhandenes Foto mit einem fertigen Look.",
-    "maskPrice": "$0.19",
-    "studioPerPhoto": "pro Bild",
-    "getStarted": "Generieren starten",
-    "oneTimeFee": "Training des persönlichen KI-Modells ab",
-    "oneTimeFeeAmount": "$5.99",
-    "noSubscriptionShort": "Abo optional. Sie zahlen nur für die Bilder, die Sie erstellen."
+    "plans": {
+      "payg": {
+        "name": "Einmalige Credits",
+        "eyebrow": "Ohne Abo starten",
+        "description": "Kaufen Sie Credits nur bei Bedarf und erstellen Sie mit geeigneten Pay-as-you-go-Modellen.",
+        "optionLabel": "Credit-Paket",
+        "cta": "Mit Credits starten",
+        "features": {
+          "resolution": "Bis zu {resolution} erstellen",
+          "flexible": "Nach eigenem Zeitplan aufladen"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "eyebrow": "Trainieren Sie Ihre persönliche KI",
+        "popular": "Am beliebtesten",
+        "description": "Wiederkehrende Credits, Erstellung in höherer Auflösung und persönliches Standard-KI-Training.",
+        "optionLabel": "Pro-Tarif",
+        "cta": "Pro wählen",
+        "features": {
+          "resolution": "Bis zu {resolution} erstellen",
+          "training": "Enthält {training}"
+        }
+      },
+      "max": {
+        "name": "Max",
+        "eyebrow": "In voller Qualität erstellen",
+        "description": "Mehr wiederkehrende Credits, unsere höchste Auflösung und persönliches Full-KI-Training.",
+        "optionLabel": "Max-Tarif",
+        "cta": "Max wählen",
+        "features": {
+          "resolution": "Bis zu {resolution} erstellen",
+          "training": "Enthält {training}"
+        }
+      }
+    },
+    "creditGuide": {
+      "title": "Was können Sie mit Credits erstellen?",
+      "description": "Ihr Tarif schaltet die Qualitätsstufe frei; Credits werden beim Training oder Erstellen verwendet.",
+      "creditAmount": "{credits} CR",
+      "items": {
+        "personalModelImage": "Bild mit persönlichem KI-Modell",
+        "standardImage": "Standardbild in 1K",
+        "proImage": "Pro-Bild in 2K",
+        "maxImage": "Max-Bild in 4K",
+        "standardTraining": "Persönliches Standard-KI-Training",
+        "fullTraining": "Persönliches Full-KI-Training"
+      }
+    }
   },
   "download": {
     "title": "Starten Sie heute",
@@ -272,7 +316,7 @@
     "description": "Klare Antworten zu Einrichtung, Kosten, Bildqualität, Datenschutz und unterstützten Geräten.",
     "howItWorks": {
       "question": "Wie funktioniert es?",
-      "answer": "Laden Sie 10–20 unterschiedliche Selfies hoch und trainieren Sie Ihr persönliches KI-Modell einmal. Danach können Sie neue Fotos von sich mit verschiedenen Outfits, Posen, Umgebungen und Stilen erstellen."
+      "answer": "Wählen Sie Pro oder Max, laden Sie 10–20 unterschiedliche Selfies hoch und trainieren Sie Ihr persönliches KI-Modell. Erstellen Sie anschließend mit Credits neue Fotos von sich mit verschiedenen Outfits, Posen, Umgebungen und Stilen."
     },
     "sourcePhotos": {
       "question": "Welche Fotos sollte ich hochladen?",
@@ -280,7 +324,11 @@
     },
     "pricing": {
       "question": "Was kostet es und gibt es Limits?",
-      "answer": "Das einmalige Training jedes persönlichen KI-Modells kostet $5.99 für Standard oder $9.99 für Max. Fotos mit dem persönlichen Modell kosten je $0.03. Studio-Fotos kosten $0.29 und KI-Presets $0.09–$0.29 pro Bild. Pay-as-you-go hat kein monatliches Generierungslimit; optionale Pro- und Max-Abos bieten wiederkehrende Credits und Premiumfunktionen."
+      "answer": "Die US-Referenzpakete enthalten 200 Credits für $5.99 oder 300 für $8.99. Pro beginnt bei $6.99 pro Woche, Max bei $29.99 pro Monat. Pro schaltet 2K und Standard-Training frei, Max 4K und Full-Training. Jahrestarife werden vollständig abgerechnet und schreiben Credits monatlich gut. Die endgültigen lokalisierten Angebote variieren je nach Land und Plattform, und Credits verfallen nie."
+    },
+    "subscriptions": {
+      "question": "Wie verwalte oder kündige ich ein Abonnement?",
+      "answer": "Apple-Abonnements verwalten Sie in Ihrem Apple Account, Google-Abonnements in Google Play und Web-Abonnements über die Abrechnungseinstellungen oder den Support. Die Kündigung wird am Ende des bezahlten Zeitraums wirksam. Nicht verwendete Credits und bereits trainierte persönliche KI-Modelle bleiben erhalten."
     },
     "imageQuality": {
       "question": "Was beeinflusst die Bildqualität?",
@@ -296,7 +344,7 @@
     },
     "whyNotChatGPT": {
       "question": "Was unterscheidet My AI Photo Shoot von allgemeinen KI-Bildtools?",
-      "answer": "My AI Photo Shoot basiert auf einem persönlichen Modell, das Sie einmal mit Ihren Selfies trainieren und anschließend immer wieder verwenden können. So bleiben Sie in vielen Headshot-, Porträt- und Profilbildstilen gut wiederzuerkennen und zahlen nur nach tatsächlicher Nutzung."
+      "answer": "My AI Photo Shoot basiert auf einem wiederverwendbaren Modell, das mit Ihren Selfies trainiert wird. So bleibt Ihr Aussehen über viele Headshot-, Porträt- und Profilbildstile hinweg leichter erkennbar – mit flexiblen Credits und klaren Qualitätsoptionen."
     }
   },
   "useCase": {
@@ -306,10 +354,11 @@
     "loading": "Wird geladen...",
     "notFound": "Anwendungsfall nicht gefunden.",
     "badges": {
-      "cheapest": "Günstige KI-Fotos",
-      "noSubscription": "Kein Abo erforderlich",
-      "poweredByFlux": "Powered by Flux"
+      "oneTimeCredits": "Einmalige Credits verfügbar",
+      "proAccess": "Pro schaltet 2K + Training frei",
+      "maxAccess": "Max schaltet 4K + Full-Training frei"
     },
+    "offerSummary": "Erstellen Sie mit einmaligen Credits in 1K oder schalten Sie mit Pro oder Max persönliches KI-Training und höhere Auflösung frei.",
     "galleryDisclaimer": "Alle gezeigten Beispiele wurden von unserer KI aus Nutzer-Selfies generiert.",
     "howItWorks": {
       "title": "So funktioniert es",
@@ -321,7 +370,7 @@
       "step2": {
         "title": "KI-Modell trainieren",
         "time": "(ca. 2 Minuten)",
-        "desc": "Wir trainieren ein persönliches Modell, damit neue Bilder wie Sie aussehen."
+        "desc": "Wählen Sie Pro- oder Max-Training, damit neue persönliche Modellbilder wie Sie aussehen."
       },
       "step3": {
         "title": "Generieren und Favoriten herunterladen",
@@ -329,8 +378,15 @@
         "desc": "Erstellen Sie verschiedene Looks und speichern Sie die Bilder, die Ihnen am besten gefallen."
       }
     },
+    "pricingCard": {
+      "title": "Wählen Sie den Zugang, der zu Ihrem Ziel passt",
+      "description": "Credits verfallen nie. Abonnements fügen wiederkehrende Credits hinzu und schalten leistungsfähigere Erstellungsmodi frei.",
+      "payg": "Einmalige Credits: Erstellung mit bis zu 1K",
+      "pro": "Pro: bis zu 2K plus persönliches Standard-KI-Training",
+      "max": "Max: bis zu 4K plus persönliches Full-KI-Training"
+    },
     "stickyCta": {
-      "label": "Training ab {oneTimeFee} • persönliche Modellfotos {price} {perPhoto}"
+      "label": "Mit Credits erstellen"
     },
     "benefits": {
       "title": "Vorteile"
@@ -338,25 +394,25 @@
   },
   "models": {
     "meta": {
-      "title": "KI-Fotomodelle und Preise",
-      "description": "Vergleichen Sie Modelle und Preise von My AI Photo Shoot für KI-Headshots, Bildgenerierung per Prompt, Fotobearbeitung, Poster und textlastige Designs."
+      "title": "KI-Modelle, Credit-Kosten und Tarifzugang",
+      "description": "Vergleichen Sie Credit-Kosten, Auflösung und den Zugang mit nutzungsbasierter Abrechnung, Pro oder Max für persönliche KI-Modelle, Bildgenerierung und Fotobearbeitung."
     },
     "breadcrumb": "Modelle",
     "eyebrow": "Unterstützte KI-Modelle",
-    "heading": "Wählen Sie das passende KI-Fotomodell, bevor Sie Bilder erstellen",
-    "description": "My AI Photo Shoot bietet ein trainiertes persönliches Modell für konsistente Fotos von Ihnen sowie Generierungs- und Bearbeitungsmodelle für schnelle Bilder, Poster, textlastige Designs und Fotobearbeitung.",
-    "screenshotAlt": "My AI Photo Shoot App mit Auswahl der KI-Modelle",
+    "heading": "KI-Modelle nach Credits, Auflösung und Zugang vergleichen",
+    "description": "Wählen Sie zwischen flexiblen 1K-Modellen, Pro-Modellen mit bis zu 2K und Max-Generierung mit bis zu 4K. Vor der Erstellung wird der Credit-Preis jedes Ergebnisses klar angezeigt.",
+    "creditUnit": "Kosten pro Ergebnis",
     "summary": {
-      "training": "Startpreis für das einmalige Training Ihres persönlichen Modells",
-      "personalPhoto": "pro Foto mit Ihrem persönlichen Modell",
-      "otherModels": "pro Foto für schnelle Generierung und Fotobearbeitung"
+      "training": "für persönliches KI-Training Standard / Full mit Pro / Max",
+      "personalPhoto": "pro Bild nach dem Training Ihres persönlichen Modells",
+      "otherModels": "Startkosten für 1K-Generierung und Bearbeitungen"
     },
     "chooser": {
       "title": "Welches Modell sollten Sie nutzen?",
       "description": "Beginnen Sie mit dem Bild, das Sie erstellen möchten. Die App kann ein Modell für Sie auswählen, und diese Übersicht zeigt, wofür jedes Modell am besten geeignet ist.",
       "personal": {
         "title": "Fotos von Ihnen",
-        "description": "Trainieren Sie einmal mit Ihren Selfies und erstellen Sie wiedererkennbare Headshots, Datingfotos, Porträts und Personal-Brand-Bilder."
+        "description": "Nutzen Sie Pro für Standard-Training oder Max für Full-Training und erstellen Sie anschließend wiedererkennbare Fotos für je 2 Credits. Trainierte Modelle bleiben nach der Kündigung erhalten."
       },
       "generate": {
         "title": "Neue Bilder aus Prompts",
@@ -368,16 +424,21 @@
       }
     },
     "table": {
-      "title": "Unterstützte Modelle und Preise",
-      "description": "Dies sind die Produktpreise von My AI Photo Shoot. Das zahlen Sie in der App, nicht die API-Kosten des Anbieters.",
-      "priceNote": "Das Training des persönlichen Modells beginnt bei {trainingPrice}.",
+      "title": "KI-Modelle, Credit-Kosten und Zugang",
+      "description": "Credit-Kosten werden pro generiertem Ergebnis berechnet. Ihr Tarif bestimmt, welche Auflösungen und Trainingsoptionen freigeschaltet sind.",
+      "priceNote": "Das Training eines neuen persönlichen Modells erfordert Pro oder Max. Trainierte Modelle und nicht verwendete Credits bleiben nach der Kündigung erhalten.",
       "columns": {
         "model": "Modell",
-        "type": "Typ",
         "bestFor": "Am besten für",
-        "price": "Preis",
-        "status": "Status"
+        "credits": "Credits",
+        "resolution": "Max. Auflösung",
+        "access": "Zugang"
       }
+    },
+    "access": {
+      "payg": "Nutzungsbasiert",
+      "pro": "Pro",
+      "max": "Max"
     },
     "groups": {
       "personal": "Persönliches KI-Modell",
@@ -410,17 +471,9 @@
       "smartEdits": "Smarte Objekt-, Outfit- und Szenenänderungen aus einem vorhandenen Bild.",
       "textEdits": "Bearbeitung von Bildern mit Typografie, Labels oder grafischem Layout."
     },
-    "pricing": {
-      "training": "Startpreis für einmaliges Training",
-      "personalPhoto": "pro Foto nach dem Training",
-      "photo": "pro Foto"
-    },
-    "status": {
-      "supported": "Unterstützt"
-    },
     "cta": {
       "title": "Bereit, mit dem passenden Modell zu erstellen?",
-      "description": "Öffnen Sie die App, wählen Sie einen Stil oder ein Preset, und die App hilft Ihnen, das richtige Modell für Ihr Bild auszuwählen.",
+      "description": "Öffnen Sie die App, wählen Sie einen Stil oder ein Preset und sehen Sie vor der Erstellung die benötigten Credits und den Tarif.",
       "primary": "Jetzt erstellen",
       "secondary": "Presets ansehen"
     }

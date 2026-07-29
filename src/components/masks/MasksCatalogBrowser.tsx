@@ -17,6 +17,7 @@ export type MasksCatalogLabels = {
   after: string;
   before: string;
   categoryNav: string;
+  creditCost: string;
   female: string;
   genderLabel: string;
   male: string;
@@ -32,6 +33,7 @@ export type MasksCatalogLabels = {
 type Props = {
   catalog: AiMasksCatalog;
   labels: MasksCatalogLabels;
+  locale: string;
 };
 
 const previewVariantId = (gender: PreviewGender) => (
@@ -50,7 +52,7 @@ function interpolate(label: string, key: string, value: string | number): string
   return label.replace(`{${key}}`, String(value));
 }
 
-export default function MasksCatalogBrowser({ catalog, labels }: Props) {
+export default function MasksCatalogBrowser({ catalog, labels, locale }: Props) {
   const [gender, setGender] = useState<PreviewGender>('male');
   const visibleCategories = useMemo(() => {
     const filtered = catalog.categories.filter((category) => (
@@ -190,6 +192,14 @@ export default function MasksCatalogBrowser({ catalog, labels }: Props) {
                       <h3 className="font-semibold text-gray-950 dark:text-white">
                         {mask.name}
                       </h3>
+                      <p className="mt-1 text-sm font-semibold text-purple-700 dark:text-purple-300">
+                        {interpolate(
+                          labels.creditCost,
+                          'credits',
+                          new Intl.NumberFormat(locale, { maximumFractionDigits: 0 })
+                            .format(mask.priceCredits),
+                        )}
+                      </p>
                     </div>
                   </article>
                 ))}

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { defaultLocale, locales } from '@/i18n/request';
+import { CREDIT_USD_REFERENCE_VALUE } from '@/lib/pricing';
 import { postPublicSupabaseRpc } from '@/lib/public-supabase';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { AiPreset, AiPresetFaq, AiPresetSeoSection } from '@/types/ai-preset';
@@ -262,23 +263,41 @@ function normalizeCost(value: unknown): number | null {
   return null;
 }
 
+function normalizeCreditCost(value: unknown): number | null {
+  const normalized = typeof value === 'string' && value.trim()
+    ? Number(value)
+    : value;
+  return typeof normalized === 'number'
+    && Number.isSafeInteger(normalized)
+    && normalized > 0
+    ? normalized
+    : null;
+}
+
+function deriveCreditCostFromUsd(costUsd: number | null): number | null {
+  if (costUsd === null || costUsd <= 0) return null;
+  return normalizeCreditCost(Math.ceil(costUsd / CREDIT_USD_REFERENCE_VALUE));
+}
+
 export function normalizeAiPreset(preset: AiPreset): AiPreset {
+  const cost = normalizeCost(preset.cost);
   return {
     ...preset,
-    cost: normalizeCost(preset.cost),
+    cost,
+    cost_credits: normalizeCreditCost(preset.cost_credits)
+      ?? deriveCreditCostFromUsd(cost),
     seo_sections: normalizeSeoSections(preset.seo_sections),
     faqs: normalizeFaqs(preset.faqs),
   };
 }
 
-export function formatPresetCostUsd(cost: number | null | undefined, locale: string): string | null {
-  if (cost === null || cost === undefined || !Number.isFinite(cost)) return null;
-  return new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(cost);
+export function formatPresetCreditCost(
+  credits: number | null | undefined,
+  locale: string,
+): string | null {
+  const normalized = normalizeCreditCost(credits);
+  if (normalized === null) return null;
+  return `${new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(normalized)} CR`;
 }
 
 export async function fetchAiPreset(slug: string, locale: string): Promise<AiPreset | undefined> {
@@ -328,7 +347,7 @@ export async function generateAiPresetMetadata(slug: string, locale: string): Pr
   const description = buildPresetDescription(preset);
   const title = preset.meta_title?.trim() || `${preset.name} AI Preset | My AI Photo Shoot`;
   const url = canonicalUrl(locale, `/presets/${slug}/`);
-  const imageUrl = preset.featured_graphics || 'https://myaiphotoshoot.com/og-image.png';
+  const imageUrl = preset.featured_graphics || 'https://myaiphotoshoot.com/og-image-v2.png';
   const imageAlt = preset.featured_graphics_alt?.trim() || preset.name;
 
   return {

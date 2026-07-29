@@ -49,6 +49,7 @@
     "eyebrow": "写真1枚で、新しいスタイルへ。",
     "heading": "AIマスクを探す",
     "description": "写真を1枚アップロードするだけで、髪型、メイク、服装、年齢変化などをすぐに試せます。",
+    "creditCost": "{credits}クレジット",
     "homeTitle": "写真1枚で新しいスタイルを試す",
     "homeDescription": "ワンタップのAIマスクで、髪型、メイク、服装、年齢変化などをプレビューできます。",
     "pricePerImage": "1枚 {price}",
@@ -85,8 +86,8 @@
   "hero": {
     "title": "AIヘッドショット生成ツールで、",
     "titleHighlight": "自然なプロフィール写真を作成",
-    "description": "数枚のセルフィーをアップロードするだけで、LinkedIn、履歴書、チーム、クリエイター、個人ブランドに使えるリアルなAIヘッドショット、プロフィール写真、ポートレートを作成できます。",
-    "microcopy": "モデル学習は$5.99から1回のみ • パーソナルモデル写真は1枚$0.03 • サブスクリプションは任意"
+    "description": "セルフィーからリアルなAIヘッドショットやポートレートを作成できます。1回払いのクレジットから始めるか、ProまたはMaxでパーソナルAI学習と最大4Kを利用できます。",
+    "microcopy": "1K向けの1回払いクレジット • Proで2K + 学習 • Maxで4K"
   },
   "appShowcase": {
     "exploreStyles": "My AI Photo ShootでAI写真スタイルを探す",
@@ -94,12 +95,12 @@
     "trainModel": "My AI Photo ShootでパーソナルAIモデルを学習",
     "photosOfYou": "自分のパーソナル写真を作成",
     "photoIdeas": "AI写真の新しいアイデアを探す",
-    "noSubscription": "必須サブスクリプションなしの従量課金"
+    "noSubscription": "1回払いクレジットで作成、またはProとMaxでさらに多くの機能を利用"
   },
   "homeUseCases": {
     "eyebrow": "1つのモデル、多彩なスタイル",
     "title": "仕事にも、出会いにも、あらゆる場面に合う写真を作成",
-    "description": "自分専用のAIモデルを一度学習すれば、必要なときにプロ用ヘッドショット、デート用写真、クリエイティブなポートレートを作成できます。",
+    "description": "ProまたはMaxでパーソナルAIモデルを学習し、クレジットを使って洗練されたプロ用ヘッドショット、デート用写真、クリエイティブなポートレートを作成できます。",
     "imageAlt": "{title}のAI写真例",
     "exploreAll": "すべての写真スタイルを見る",
     "cards": {
@@ -110,18 +111,18 @@
   },
   "features": {
     "title": "より自然なAIヘッドショットを",
-    "description": "一度学習するだけで、さまざまなスタイルのリアルな写真を自由に作成できます。",
+    "description": "柔軟な1K作成から始めるか、ProまたはMaxでパーソナルAIを学習し、本人らしさを保った写真を作成できます。",
     "advancedAI": {
       "title": "どの写真でも自然な本人らしさ",
-      "description": "セルフィーで一度学習すれば、どの画像でもあなたらしい自然な仕上がりを保てます。"
+      "description": "ProまたはMaxでセルフィーからパーソナルAIを学習し、どのパーソナルモデル画像でも本人らしさを保てます。"
     },
     "privacyFirst": {
       "title": "写真は自分で管理",
       "description": "公開・非公開を選び、不要な画像はいつでも完全に削除できます。"
     },
     "affordablePricing": {
-      "title": "わかりやすい従量課金",
-      "description": "サブスクリプションは必須ではなく、予期しない料金もありません。学習は$5.99から、パーソナルAIモデル写真は1枚$0.03、Studio写真は1枚$0.29、AIプリセットは1枚$0.09〜$0.29です。"
+      "title": "柔軟なクレジットとプラン",
+      "description": "1Kを柔軟に作成できる1回払いクレジットを購入するか、定期クレジット、高解像度、パーソナルAI学習を利用できるProまたはMaxを選べます。"
     },
     "thousandsOfStyles": {
       "title": "ヘッドショットだけではありません",
@@ -191,36 +192,79 @@
     }
   },
   "pricing": {
-    "title": "シンプルな従量課金",
-    "description": "作成したときだけお支払い。月額プラン、クレジットパック、隠れた料金はありません。",
-    "payAsYouGo": "従量課金",
-    "perfectFor": "クリエイター、起業家、マーケター、チーム、いつでも高品質なAI画像が必要な方に最適です。",
-    "whatsIncluded": "含まれるもの",
-    "features": {
-      "training": "パーソナルAIモデル学習",
-      "unlimited": "月間の生成上限なし",
-      "custom": "プロンプトを細かく調整",
-      "privacy": "非公開・公開ギャラリー設定",
-      "social": "簡単なSNS共有",
-      "download": "高解像度ダウンロード",
-      "support": "迅速なカスタマーサポート",
-      "updates": "AI品質の継続的な改善"
+    "title": "作成方法を選ぶ",
+    "description": "1Kを柔軟に作成できる1回払いクレジットから始めましょう。2KとパーソナルAI学習ならPro、4Kと最も高性能な学習ならMaxを選べます。",
+    "referenceDisclosure": "{market}の参考オファーを{currency}で表示しています。最終的な現地価格、通貨、付与クレジット、提供状況はアプリまたはストアに表示されます。",
+    "creditsNeverExpire": "クレジットに有効期限はありません",
+    "noTrial": "無料トライアルはありません。サブスクリプションは解約するまで更新されます。",
+    "billing": {
+      "cadences": {
+        "oneTime": "1回払い",
+        "weekly": "週間",
+        "monthly": "月間",
+        "annual": "年間"
+      },
+      "units": {
+        "oneTime": "1回払い",
+        "perWeek": "週あたり",
+        "perMonth": "月あたり",
+        "perYear": "年あたり"
+      },
+      "oneTimeCredits": "{credits}クレジット込み",
+      "weeklyCredits": "毎週{credits}クレジット",
+      "monthlyCredits": "毎月{credits}クレジット",
+      "annualSavings": "{percent}%お得",
+      "annualTerms": "{total}を年1回全額請求 · {credits}クレジットを毎月付与"
     },
-    "price": "$0.03",
-    "perPhoto": "1枚あたり",
-    "personalPhotos": "パーソナルAIモデル写真",
-    "personalDescription": "AIモデルごとに$5.99から1回だけ学習します。",
-    "studioPhotos": "Studio写真とAIプリセット",
-    "studioDescription": "Studio写真は1枚$0.29。AIプリセットは1枚$0.09〜$0.29です。",
-    "studioPrice": "$0.09〜$0.29",
-    "maskPhotos": "AIマスク",
-    "maskDescription": "用意されたスタイルで既存の写真1枚を変換できます。",
-    "maskPrice": "$0.19",
-    "studioPerPhoto": "1枚あたり",
-    "getStarted": "生成を始める",
-    "oneTimeFee": "パーソナルAIモデル学習の開始価格",
-    "oneTimeFeeAmount": "$5.99",
-    "noSubscriptionShort": "サブスクリプションは任意。作成した分だけお支払い。"
+    "plans": {
+      "payg": {
+        "name": "1回払いクレジット",
+        "eyebrow": "サブスクリプションなしで開始",
+        "description": "必要なときだけクレジットを購入し、対応する従量課金モデルで作成できます。",
+        "optionLabel": "クレジットパック",
+        "cta": "クレジットで始める",
+        "features": {
+          "resolution": "最大{resolution}で生成",
+          "flexible": "好きなタイミングで追加購入"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "eyebrow": "パーソナルAIを学習",
+        "popular": "一番人気",
+        "description": "定期クレジット、高解像度生成、StandardパーソナルAI学習。",
+        "optionLabel": "Proプラン",
+        "cta": "Proを選ぶ",
+        "features": {
+          "resolution": "最大{resolution}で生成",
+          "training": "{training}を含む"
+        }
+      },
+      "max": {
+        "name": "Max",
+        "eyebrow": "最高品質で作成",
+        "description": "より多くの定期クレジット、最高解像度、FullパーソナルAI学習。",
+        "optionLabel": "Maxプラン",
+        "cta": "Maxを選ぶ",
+        "features": {
+          "resolution": "最大{resolution}で生成",
+          "training": "{training}を含む"
+        }
+      }
+    },
+    "creditGuide": {
+      "title": "クレジットで何を作成できますか？",
+      "description": "プランによって品質レベルが解放され、学習や作成時にクレジットを使用します。",
+      "creditAmount": "{credits} CR",
+      "items": {
+        "personalModelImage": "パーソナルAIモデル画像",
+        "standardImage": "Standard 1K画像",
+        "proImage": "Pro 2K画像",
+        "maxImage": "Max 4K画像",
+        "standardTraining": "StandardパーソナルAI学習",
+        "fullTraining": "FullパーソナルAI学習"
+      }
+    }
   },
   "download": {
     "title": "今日から作成を開始",
@@ -272,7 +316,7 @@
     "description": "設定、料金、画像品質、プライバシー、対応デバイスについて分かりやすく説明します。",
     "howItWorks": {
       "question": "どのように使いますか？",
-      "answer": "異なる10～20枚のセルフィーをアップロードし、パーソナルAIモデルを一度学習します。その後、衣装、ポーズ、シーン、スタイルを変えた新しい写真を作成できます。"
+      "answer": "ProまたはMaxを選び、異なる10～20枚のセルフィーをアップロードしてパーソナルAIモデルを学習します。その後、クレジットを使って衣装、ポーズ、シーン、スタイルを変えた新しい写真を作成できます。"
     },
     "sourcePhotos": {
       "question": "どのような写真をアップロードすればよいですか？",
@@ -280,7 +324,11 @@
     },
     "pricing": {
       "question": "料金と生成上限を教えてください。",
-      "answer": "パーソナルAIモデルごとの学習は1回払いで、スタンダードが$5.99、マックスが$9.99です。パーソナルAIモデル写真は1枚$0.03です。Studio写真は1枚$0.29、AIプリセットは1枚$0.09〜$0.29です。従量課金には月間生成上限がなく、任意のProおよびMaxサブスクリプションでは定期クレジットとプレミアム機能を利用できます。"
+      "answer": "米国の参考パックは200クレジットが$5.99、300クレジットが$8.99です。Proは週$6.99から、Maxは月$29.99からです。Proでは2KとStandard学習、Maxでは4KとFull学習を利用できます。年間プランは全額を一括請求し、クレジットは毎月付与されます。最終的な現地オファーは国やプラットフォームによって異なり、クレジットに有効期限はありません。"
+    },
+    "subscriptions": {
+      "question": "サブスクリプションの管理や解約はどうすればよいですか？",
+      "answer": "AppleのサブスクリプションはApple Account、GoogleのサブスクリプションはGoogle Play、ウェブのサブスクリプションは請求設定またはサポートから管理できます。解約は支払い済み期間の終了時に有効になります。未使用のクレジットと、すでに学習済みのパーソナルAIモデルはそのまま残ります。"
     },
     "imageQuality": {
       "question": "画像品質に影響するものは何ですか？",
@@ -296,7 +344,7 @@
     },
     "whyNotChatGPT": {
       "question": "一般的なAI画像ツールとの違いは何ですか？",
-      "answer": "My AI Photo Shootは、セルフィーで学習した再利用可能なパーソナルモデルを使用します。多様なヘッドショット、ポートレート、プロフィール写真でも本人らしさを保ちやすく、料金は明確な従量制です。"
+      "answer": "My AI Photo Shootは、セルフィーで学習した再利用可能なモデルを中心に設計されています。柔軟なクレジットと明確な品質オプションにより、多様なヘッドショット、ポートレート、プロフィール写真でも本人らしさを保ちやすくなります。"
     }
   },
   "useCase": {
@@ -306,10 +354,11 @@
     "loading": "読み込み中...",
     "notFound": "活用例が見つかりません。",
     "badges": {
-      "cheapest": "低コストのAI写真",
-      "noSubscription": "サブスクリプションは必須ではありません",
-      "poweredByFlux": "Flux搭載"
+      "oneTimeCredits": "1回払いクレジットを利用可能",
+      "proAccess": "Proで2K + 学習",
+      "maxAccess": "Maxで4K + Full学習"
     },
+    "offerSummary": "1回払いクレジットで1Kを作成するか、ProまたはMaxでパーソナルAI学習と高解像度を利用できます。",
     "galleryDisclaimer": "表示されている例はすべて、ユーザーのセルフィーから当社AIが生成したものです。",
     "howItWorks": {
       "title": "使い方",
@@ -321,7 +370,7 @@
       "step2": {
         "title": "AIモデルを学習",
         "time": "(約2分)",
-        "desc": "パーソナルモデルを学習し、新しい画像があなたらしく見えるようにします。"
+        "desc": "ProまたはMaxの学習を選び、新しいパーソナルモデル画像があなたらしく見えるようにします。"
       },
       "step3": {
         "title": "生成してお気に入りをダウンロード",
@@ -329,8 +378,15 @@
         "desc": "さまざまなルックを作成し、気に入った画像を保存します。"
       }
     },
+    "pricingCard": {
+      "title": "目的に合ったアクセス方法を選択",
+      "description": "クレジットに有効期限はありません。サブスクリプションでは定期クレジットが追加され、より高性能な作成モードを利用できます。",
+      "payg": "1回払いクレジット：最大1Kで生成",
+      "pro": "Pro：最大2K + StandardパーソナルAI学習",
+      "max": "Max：最大4K + FullパーソナルAI学習"
+    },
     "stickyCta": {
-      "label": "学習は{oneTimeFee}から • パーソナルモデル写真は{price}（{perPhoto}）"
+      "label": "クレジットで作成を始める"
     },
     "benefits": {
       "title": "メリット"
@@ -338,25 +394,25 @@
   },
   "models": {
     "meta": {
-      "title": "AI写真モデルと料金",
-      "description": "AIヘッドショット、プロンプト画像生成、写真編集、ポスター、文字中心のデザイン向けに、My AI Photo Shootのモデルと料金を比較できます。"
+      "title": "AIモデル、クレジット消費量、プラン別アクセス",
+      "description": "パーソナルAIモデル、画像生成、写真編集について、クレジット消費量、解像度、従量課金・Pro・Maxのアクセスを比較できます。"
     },
     "breadcrumb": "モデル",
     "eyebrow": "対応AIモデル",
-    "heading": "作成前に適切なAI写真モデルを選ぶ",
-    "description": "My AI Photo Shootでは、自分らしい写真を安定して作るためのトレーニング済み個人モデルに加え、素早い画像、ポスター、文字中心のデザイン、写真編集向けの生成・編集モデルを使えます。",
-    "screenshotAlt": "AIモデル選択を表示しているMy AI Photo Shootアプリ",
+    "heading": "クレジット、解像度、アクセスでAIモデルを比較",
+    "description": "柔軟な1Kモデル、最大2KのProモデル、最大4KのMax生成から選べます。作成前に、各結果のクレジット消費量が明確に表示されます。",
+    "creditUnit": "結果1件あたりの消費",
     "summary": {
-      "training": "パーソナルモデルの1回限りの学習の開始価格",
-      "personalPhoto": "個人モデルで1枚あたり",
-      "otherModels": "高速生成と写真編集で1枚あたり"
+      "training": "Pro / MaxでのStandard / FullパーソナルAI学習",
+      "personalPhoto": "パーソナルモデル学習後の画像1枚あたり",
+      "otherModels": "1K生成・編集の最小消費"
     },
     "chooser": {
       "title": "どのモデルを使うべきですか？",
       "description": "作りたい画像から始めましょう。アプリがモデルを選ぶこともできます。このガイドでは、各モデルの得意分野を説明します。",
       "personal": {
         "title": "自分の写真",
-        "description": "自撮りで一度トレーニングすると、本人らしさを保ったヘッドショット、マッチング写真、ポートレート、個人ブランド画像を作れます。"
+        "description": "ProでStandard学習、またはMaxでFull学習を行い、その後は1枚2クレジットで本人らしい写真を作成できます。解約後も学習済みモデルは保持されます。"
       },
       "generate": {
         "title": "プロンプトから新しい画像",
@@ -368,16 +424,21 @@
       }
     },
     "table": {
-      "title": "対応モデルと料金",
-      "description": "表示されているのはMy AI Photo Shootの製品料金です。プロバイダーのAPIコストではなく、アプリ内で支払う金額です。",
-      "priceNote": "個人モデルの学習は{trainingPrice}からです。",
+      "title": "AIモデル、クレジット消費量、アクセス",
+      "description": "生成結果ごとにクレジットが消費されます。利用できる解像度と学習オプションはプランによって決まります。",
+      "priceNote": "新しいパーソナルモデルの学習にはProまたはMaxが必要です。解約後も学習済みモデルと未使用クレジットは保持されます。",
       "columns": {
         "model": "モデル",
-        "type": "種類",
         "bestFor": "最適な用途",
-        "price": "料金",
-        "status": "状態"
+        "credits": "クレジット",
+        "resolution": "最大解像度",
+        "access": "アクセス"
       }
+    },
+    "access": {
+      "payg": "従量課金",
+      "pro": "Pro",
+      "max": "Max"
     },
     "groups": {
       "personal": "個人用AIモデル",
@@ -410,17 +471,9 @@
       "smartEdits": "既存画像からオブジェクト、服装、シーンを賢く変更。",
       "textEdits": "タイポグラフィ、ラベル、グラフィックレイアウトを含む画像の編集。"
     },
-    "pricing": {
-      "training": "1回限りの学習の開始価格",
-      "personalPhoto": "トレーニング後1枚あたり",
-      "photo": "1枚あたり"
-    },
-    "status": {
-      "supported": "対応"
-    },
     "cta": {
       "title": "適切なモデルで作成しますか？",
-      "description": "アプリを開いてスタイルやプリセットを選ぶと、画像に合うモデル選びをアプリがサポートします。",
+      "description": "アプリを開いてスタイルやプリセットを選び、作成前に必要なクレジットとプランを確認できます。",
       "primary": "作成を始める",
       "secondary": "プリセットを見る"
     }

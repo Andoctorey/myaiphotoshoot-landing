@@ -18,6 +18,10 @@ export default async function FAQ({ locale }: { locale: string }) {
       answer: t('pricing.answer'),
     },
     {
+      question: t('subscriptions.question'),
+      answer: t('subscriptions.answer'),
+    },
+    {
       question: t('imageQuality.question'),
       answer: t('imageQuality.answer'),
     },

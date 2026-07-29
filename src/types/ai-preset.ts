@@ -9,6 +9,7 @@ export interface AiPreset {
   featured_graphics?: string | null;
   featured_graphics_alt?: string | null;
   cost?: number | null;
+  cost_credits?: number | null;
   meta_title?: string | null;
   meta_description?: string | null;
   seo_intro?: string | null;

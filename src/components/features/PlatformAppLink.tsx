@@ -8,9 +8,15 @@ type Props = {
   children: ReactNode;
   className?: string;
   ariaLabel?: string;
+  analyticsParams?: Record<string, unknown>;
 };
 
-export default function PlatformAppLink({ children, className, ariaLabel }: Props) {
+export default function PlatformAppLink({
+  children,
+  className,
+  ariaLabel,
+  analyticsParams,
+}: Props) {
   const appLink = usePlatformAppLink();
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -25,7 +31,7 @@ export default function PlatformAppLink({ children, className, ariaLabel }: Prop
     }
 
     event.preventDefault();
-    trackEventAndNavigate(appLink.event, appLink.url);
+    trackEventAndNavigate(appLink.event, appLink.url, analyticsParams);
   };
 
   return (

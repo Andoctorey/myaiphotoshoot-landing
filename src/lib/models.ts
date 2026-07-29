@@ -1,3 +1,9 @@
+import {
+  CREDIT_COSTS,
+  type CreditCost,
+  type PricingTierId,
+} from '@/lib/pricing';
+
 export type ModelGroup = 'personal' | 'generate' | 'edit';
 
 export type SupportedModel = {
@@ -6,17 +12,42 @@ export type SupportedModel = {
   group: ModelGroup;
   tierKey: string;
   bestForKey: string;
-  pricingKey: 'training' | 'personalPhoto' | 'photo';
-  priceUsd: number;
+  creditCost: number;
+  accessTier: PricingTierId;
+  maxResolution: '1K' | '2K' | '4K';
   providerModel?: string;
 };
 
-export const TRAINING_PRICE_USD = 5.99;
-export const PERSONAL_MODEL_PHOTO_PRICE_USD = 0.03;
-export const LOWEST_GENERAL_MODEL_PRICE_USD = 0.09;
+function creditCost(id: CreditCost['id']): CreditCost {
+  const cost = CREDIT_COSTS.find((item) => item.id === id);
+  if (!cost) {
+    throw new Error(`Missing credit cost for "${id}".`);
+  }
+  return cost;
+}
 
-// Mirrors the backend generation model catalog. When adding, removing, or
-// repricing models, update myaiphotoshoot-functions/supabase/functions/_shared/common/generation-models.ts too.
+function fixedCreditCost(id: CreditCost['id']): number {
+  const cost = creditCost(id);
+  if (cost.minCredits !== cost.maxCredits) {
+    throw new Error(`Expected a fixed credit cost for "${id}".`);
+  }
+  return cost.minCredits;
+}
+
+const PERSONAL_MODEL_IMAGE_CREDITS = fixedCreditCost('personalModelImage');
+const STANDARD_IMAGE_CREDITS = fixedCreditCost('standardImage');
+const PRO_IMAGE_CREDITS = creditCost('proImage');
+const PRO_IMAGE_MIN_CREDITS = PRO_IMAGE_CREDITS.minCredits;
+const PRO_IMAGE_MAX_CREDITS = PRO_IMAGE_CREDITS.maxCredits;
+const MAX_IMAGE_CREDITS = fixedCreditCost('maxImage');
+
+export const STANDARD_TRAINING_CREDITS = fixedCreditCost('standardTraining');
+export const FULL_TRAINING_CREDITS = fixedCreditCost('fullTraining');
+export const LOWEST_GENERATION_CREDITS = STANDARD_IMAGE_CREDITS;
+export const PERSONAL_MODEL_PHOTO_CREDITS = PERSONAL_MODEL_IMAGE_CREDITS;
+
+// Mirrors the public generation-model catalog and the plan entitlement mapping.
+// Keep this list aligned with the backend when models, costs, or access tiers change.
 export const supportedModels: SupportedModel[] = [
   {
     id: 'personal_ai_model',
@@ -24,8 +55,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'personal',
     tierKey: 'personal',
     bestForKey: 'personal',
-    pricingKey: 'personalPhoto',
-    priceUsd: PERSONAL_MODEL_PHOTO_PRICE_USD,
+    creditCost: PERSONAL_MODEL_IMAGE_CREDITS,
+    accessTier: 'pro',
+    maxResolution: '1K',
   },
   {
     id: 'flux_2_pro',
@@ -33,8 +65,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'generate',
     tierKey: 'bestValue',
     bestForKey: 'realistic',
-    pricingKey: 'photo',
-    priceUsd: 0.09,
+    creditCost: STANDARD_IMAGE_CREDITS,
+    accessTier: 'payg',
+    maxResolution: '1K',
     providerModel: 'black-forest-labs/flux-2-pro',
   },
   {
@@ -43,8 +76,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'generate',
     tierKey: 'highDetail',
     bestForKey: 'detail',
-    pricingKey: 'photo',
-    priceUsd: 0.19,
+    creditCost: PRO_IMAGE_MIN_CREDITS,
+    accessTier: 'payg',
+    maxResolution: '1K',
     providerModel: 'black-forest-labs/flux-2-max',
   },
   {
@@ -53,8 +87,20 @@ export const supportedModels: SupportedModel[] = [
     group: 'generate',
     tierKey: 'topQuality',
     bestForKey: 'quality',
-    pricingKey: 'photo',
-    priceUsd: 0.29,
+    creditCost: PRO_IMAGE_MAX_CREDITS,
+    accessTier: 'pro',
+    maxResolution: '2K',
+    providerModel: 'google/nano-banana-pro',
+  },
+  {
+    id: 'nano_banana_pro_4k',
+    name: 'Nano-Banana Pro 4K',
+    group: 'generate',
+    tierKey: 'topQuality',
+    bestForKey: 'quality',
+    creditCost: MAX_IMAGE_CREDITS,
+    accessTier: 'max',
+    maxResolution: '4K',
     providerModel: 'google/nano-banana-pro',
   },
   {
@@ -63,8 +109,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'generate',
     tierKey: 'precise',
     bestForKey: 'precise',
-    pricingKey: 'photo',
-    priceUsd: 0.09,
+    creditCost: STANDARD_IMAGE_CREDITS,
+    accessTier: 'payg',
+    maxResolution: '1K',
     providerModel: 'openai/gpt-image-2',
   },
   {
@@ -73,8 +120,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'generate',
     tierKey: 'creative',
     bestForKey: 'creative',
-    pricingKey: 'photo',
-    priceUsd: 0.09,
+    creditCost: STANDARD_IMAGE_CREDITS,
+    accessTier: 'payg',
+    maxResolution: '1K',
     providerModel: 'bytedance/seedream-4.5',
   },
   {
@@ -83,8 +131,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'generate',
     tierKey: 'textPosters',
     bestForKey: 'textPosters',
-    pricingKey: 'photo',
-    priceUsd: 0.09,
+    creditCost: STANDARD_IMAGE_CREDITS,
+    accessTier: 'payg',
+    maxResolution: '1K',
     providerModel: 'qwen/qwen-image-2',
   },
   {
@@ -93,8 +142,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'edit',
     tierKey: 'standardEdits',
     bestForKey: 'edits',
-    pricingKey: 'photo',
-    priceUsd: 0.09,
+    creditCost: STANDARD_IMAGE_CREDITS,
+    accessTier: 'payg',
+    maxResolution: '1K',
     providerModel: 'google/nano-banana-2-lite',
   },
   {
@@ -103,8 +153,9 @@ export const supportedModels: SupportedModel[] = [
     group: 'edit',
     tierKey: 'proEdits',
     bestForKey: 'proEdits',
-    pricingKey: 'photo',
-    priceUsd: 0.19,
+    creditCost: PRO_IMAGE_MIN_CREDITS,
+    accessTier: 'payg',
+    maxResolution: '1K',
     providerModel: 'black-forest-labs/flux-kontext-max',
   },
   {
@@ -113,17 +164,13 @@ export const supportedModels: SupportedModel[] = [
     group: 'edit',
     tierKey: 'smartEdits',
     bestForKey: 'smartEdits',
-    pricingKey: 'photo',
-    priceUsd: 0.19,
+    creditCost: PRO_IMAGE_MIN_CREDITS,
+    accessTier: 'pro',
+    maxResolution: '2K',
     providerModel: 'google/nano-banana-2',
   },
 ];
 
-export function formatModelPriceUsd(priceUsd: number, locale: string): string {
-  return new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(priceUsd);
+export function formatCreditCost(credits: number): string {
+  return `${credits} CR`;
 }

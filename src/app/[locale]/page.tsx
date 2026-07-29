@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .join(' ') || 'AI Headshot Generator - My AI Photo Shoot';
   const description = typeof m.hero?.description === 'string'
     ? m.hero.description
-    : 'Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $5.99 and images from $0.03, with no subscription required.';
+    : 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K generation with Pro or Max.';
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/og-image.png',
+          url: '/og-image-v2.png',
           width: 1200,
           height: 630,
           alt: title,
@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-image.png'],
+      images: ['/og-image-v2.png'],
     },
   };
 }

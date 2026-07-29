@@ -49,6 +49,7 @@
     "eyebrow": "One photo. A new look.",
     "heading": "Explore AI Masks",
     "description": "Upload one photo and try hairstyles, makeup, outfits, aging effects, and more in seconds.",
+    "creditCost": "{credits} CR",
     "homeTitle": "Try a new look in one photo",
     "homeDescription": "Try hairstyles, makeup, outfits, aging effects, and more from a single photo with AI Masks.",
     "pricePerImage": "{price} per image",
@@ -85,8 +86,8 @@
   "hero": {
     "title": "AI Headshot Generator for",
     "titleHighlight": "Realistic Profile Photos",
-    "description": "Upload a few selfies and create realistic AI headshots, profile pictures, and portraits for LinkedIn, resumes, teams, creators, and personal brands.",
-    "microcopy": "Train once from $5.99 • personal-model photos $0.03 each • subscription optional"
+    "description": "Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K with Pro or Max.",
+    "microcopy": "One-time credits for 1K • Pro unlocks 2K + training • Max unlocks 4K"
   },
   "appShowcase": {
     "exploreStyles": "Explore AI photo styles in My AI Photo Shoot",
@@ -94,12 +95,12 @@
     "trainModel": "Train your personal AI model in My AI Photo Shoot",
     "photosOfYou": "Create personalized photos of yourself",
     "photoIdeas": "Find reusable AI photo ideas",
-    "noSubscription": "Pay-as-you-go pricing without a required subscription"
+    "noSubscription": "Create with one-time credits or unlock more with Pro and Max"
   },
   "homeUseCases": {
     "eyebrow": "One model, many looks",
     "title": "Create photos for work, dating, and everything in between",
-    "description": "Train your personal AI model once, then create polished headshots, dating photos, and creative portraits whenever you need them.",
+    "description": "Choose Pro or Max to train your personal AI model, then use credits to create polished headshots, dating photos, and creative portraits.",
     "imageAlt": "AI photo example for {title}",
     "exploreAll": "Explore all photo styles",
     "cards": {
@@ -110,18 +111,18 @@
   },
   "features": {
     "title": "Built for better AI headshots",
-    "description": "Train once, create realistic photos in many styles, and stay in control.",
+    "description": "Start with flexible 1K creation, or train your personal AI with Pro or Max for consistent photos of you.",
     "advancedAI": {
       "title": "Consistent likeness",
-      "description": "Train from your selfies once and keep a recognizable look across every image."
+      "description": "With Pro or Max, train from your selfies and keep a recognizable look across every personal-model image."
     },
     "privacyFirst": {
       "title": "Your photos, your control",
       "description": "Choose public or private galleries and permanently delete images whenever you want."
     },
     "affordablePricing": {
-      "title": "Transparent Pay-As-You-Go Pricing",
-      "description": "No subscription required or surprise fees. Training starts at $5.99, personal AI model photos cost $0.03 each, Studio photos cost $0.29, and AI presets cost $0.09–$0.29."
+      "title": "Flexible Credits and Plans",
+      "description": "Buy one-time credits for flexible 1K creation, or choose Pro or Max for recurring credits, higher resolution, and personal AI training."
     },
     "thousandsOfStyles": {
       "title": "Headshots and more",
@@ -191,36 +192,79 @@
     }
   },
   "pricing": {
-    "title": "Simple Pay-As-You-Go Pricing",
-    "description": "Pay only when you create. No monthly plan, no bundled credits, and no hidden fees.",
-    "payAsYouGo": "Pay As You Go",
-    "perfectFor": "Ideal for creators, founders, marketers, teams, and anyone who needs polished AI images anytime.",
-    "whatsIncluded": "What You Get",
-    "features": {
-      "training": "Personal AI model training",
-      "unlimited": "No monthly generation limit",
-      "custom": "Advanced prompt customization",
-      "privacy": "Private and public gallery options",
-      "social": "Easy social sharing",
-      "download": "High-resolution downloads",
-      "support": "Responsive customer support",
-      "updates": "Ongoing AI quality improvements"
+    "title": "Choose how you want to create",
+    "description": "Start with one-time credits for flexible 1K creation. Choose Pro for 2K and personal AI training, or Max for 4K and our most capable training.",
+    "referenceDisclosure": "{market} reference offers shown in {currency}. Your final localized price, currency, included credits, and availability appear in the app or store.",
+    "creditsNeverExpire": "Credits never expire",
+    "noTrial": "No free trial. Subscriptions renew until canceled.",
+    "billing": {
+      "cadences": {
+        "oneTime": "One-time",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "annual": "Annual"
+      },
+      "units": {
+        "oneTime": "one-time",
+        "perWeek": "per week",
+        "perMonth": "per month",
+        "perYear": "per year"
+      },
+      "oneTimeCredits": "{credits} credits included",
+      "weeklyCredits": "{credits} credits every week",
+      "monthlyCredits": "{credits} credits every month",
+      "annualSavings": "Save {percent}%",
+      "annualTerms": "{total} billed in full once a year · {credits} credits added monthly"
     },
-    "price": "$0.03",
-    "perPhoto": "per image",
-    "personalPhotos": "Personal AI model photos",
-    "personalDescription": "Train each AI model once from $5.99.",
-    "studioPhotos": "Studio photos & AI presets",
-    "studioDescription": "Studio photos cost $0.29. AI preset prices range from $0.09 to $0.29.",
-    "studioPrice": "$0.09–$0.29",
-    "maskPhotos": "AI Masks",
-    "maskDescription": "Transform one existing photo with a ready-made look.",
-    "maskPrice": "$0.19",
-    "studioPerPhoto": "per image",
-    "getStarted": "Start Generating",
-    "oneTimeFee": "Personal AI model training from",
-    "oneTimeFeeAmount": "$5.99",
-    "noSubscriptionShort": "Subscription optional. Pay only for what you create."
+    "plans": {
+      "payg": {
+        "name": "One-time credits",
+        "eyebrow": "Start without a subscription",
+        "description": "Buy credits only when you need them and create with eligible pay-as-you-go models.",
+        "optionLabel": "Credit pack",
+        "cta": "Start with credits",
+        "features": {
+          "resolution": "Generate in up to {resolution}",
+          "flexible": "Top up on your schedule"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "eyebrow": "Train your personal AI",
+        "popular": "Most popular",
+        "description": "Recurring credits, higher-resolution generation, and Standard personal AI training.",
+        "optionLabel": "Pro plan",
+        "cta": "Choose Pro",
+        "features": {
+          "resolution": "Generate in up to {resolution}",
+          "training": "Includes {training}"
+        }
+      },
+      "max": {
+        "name": "Max",
+        "eyebrow": "Create at full quality",
+        "description": "More recurring credits, our highest resolution, and Full personal AI training.",
+        "optionLabel": "Max plan",
+        "cta": "Choose Max",
+        "features": {
+          "resolution": "Generate in up to {resolution}",
+          "training": "Includes {training}"
+        }
+      }
+    },
+    "creditGuide": {
+      "title": "What can you make with credits?",
+      "description": "Your plan unlocks the quality level; credits are used when you train or create.",
+      "creditAmount": "{credits} CR",
+      "items": {
+        "personalModelImage": "Personal AI model image",
+        "standardImage": "Standard 1K image",
+        "proImage": "Pro 2K image",
+        "maxImage": "Max 4K image",
+        "standardTraining": "Standard personal AI training",
+        "fullTraining": "Full personal AI training"
+      }
+    }
   },
   "download": {
     "title": "Start Creating Today",
@@ -272,7 +316,7 @@
     "description": "Clear answers about setup, cost, image quality, privacy, and supported devices.",
     "howItWorks": {
       "question": "How does it work?",
-      "answer": "Upload 10–20 varied selfies and train your personal AI model once. You can then create new photos of yourself in different outfits, poses, settings, and styles."
+      "answer": "Choose Pro or Max, upload 10–20 varied selfies, and train your personal AI model. Then use credits to create new photos of yourself in different outfits, poses, settings, and styles."
     },
     "sourcePhotos": {
       "question": "What photos should I upload?",
@@ -280,7 +324,11 @@
     },
     "pricing": {
       "question": "How much does it cost, and are there limits?",
-      "answer": "Personal AI model training costs $5.99 for Standard or $9.99 for Max, paid once per model. Personal AI model photos cost $0.03 each. Studio photos cost $0.29, and AI presets range from $0.09 to $0.29 per image. Pay-as-you-go has no monthly generation limit; optional Pro and Max subscriptions add recurring credits and premium features."
+      "answer": "US reference packs are 200 credits for $5.99 or 300 for $8.99. Pro starts at $6.99 per week; Max starts at $29.99 per month. Pro unlocks 2K and Standard training, while Max unlocks 4K and Full training. Annual plans are billed in full and add credits monthly. Final localized offers vary by country and platform, and credits never expire."
+    },
+    "subscriptions": {
+      "question": "How do I manage or cancel a subscription?",
+      "answer": "Manage Apple subscriptions in your Apple Account, Google subscriptions in Google Play, and web subscriptions from billing settings or support. Cancellation takes effect at the end of the paid period. You keep unused credits and personal AI models you already trained."
     },
     "imageQuality": {
       "question": "What affects image quality?",
@@ -296,7 +344,7 @@
     },
     "whyNotChatGPT": {
       "question": "How is this different from a general AI image tool?",
-      "answer": "My AI Photo Shoot is built around a reusable model trained on your selfies. That makes it easier to maintain a recognizable likeness across many headshots, portraits, and profile-photo styles with predictable pay-as-you-go pricing."
+      "answer": "My AI Photo Shoot is built around a reusable model trained on your selfies. That makes it easier to maintain a recognizable likeness across many headshots, portraits, and profile-photo styles, with flexible credits and clear quality options."
     }
   },
   "useCase": {
@@ -306,10 +354,11 @@
     "loading": "Loading...",
     "notFound": "Use case not found.",
     "badges": {
-      "cheapest": "Low-cost AI photos",
-      "noSubscription": "No subscription required",
-      "poweredByFlux": "Powered by Flux"
+      "oneTimeCredits": "One-time credits available",
+      "proAccess": "Pro unlocks 2K + training",
+      "maxAccess": "Max unlocks 4K + Full training"
     },
+    "offerSummary": "Create in 1K with one-time credits, or unlock personal AI training and higher resolution with Pro or Max.",
     "galleryDisclaimer": "All examples shown were generated by our AI from user selfies.",
     "howItWorks": {
       "title": "How It Works",
@@ -321,7 +370,7 @@
       "step2": {
         "title": "Train your AI model",
         "time": "(about 2 minutes)",
-        "desc": "We train a personal model so new images look like you."
+        "desc": "Choose Pro or Max training so new personal-model images look like you."
       },
       "step3": {
         "title": "Generate and download favorites",
@@ -329,8 +378,15 @@
         "desc": "Create different looks, then save the images you like best."
       }
     },
+    "pricingCard": {
+      "title": "Pick the access that fits your goal",
+      "description": "Credits never expire. Subscriptions add recurring credits and unlock more capable creation modes.",
+      "payg": "One-time credits: up to 1K generation",
+      "pro": "Pro: up to 2K plus Standard personal AI training",
+      "max": "Max: up to 4K plus Full personal AI training"
+    },
     "stickyCta": {
-      "label": "Train from {oneTimeFee} • personal-model photos {price} {perPhoto}"
+      "label": "Start creating with credits"
     },
     "benefits": {
       "title": "Benefits"
@@ -338,25 +394,25 @@
   },
   "models": {
     "meta": {
-      "title": "AI Photo Models and Pricing",
-      "description": "Compare My AI Photo Shoot models and pricing for AI headshots, prompt image generation, photo editing, posters, and text-heavy image designs."
+      "title": "AI Models, Credit Costs, and Plan Access",
+      "description": "Compare credit costs, resolution, and Pay as You Go, Pro, or Max access for personal AI models, image generation, and photo editing."
     },
     "breadcrumb": "Models",
     "eyebrow": "Supported AI models",
-    "heading": "Choose the right AI photo model before you create",
-    "description": "My AI Photo Shoot gives you a trained personal model for consistent photos of yourself, plus generation and editing models for quick images, posters, text-heavy designs, and photo edits.",
-    "screenshotAlt": "My AI Photo Shoot app showing the AI model chooser",
+    "heading": "Compare AI models by credits, resolution, and access",
+    "description": "Choose from flexible 1K models, Pro models up to 2K, and Max generation up to 4K. Every result has a clear credit cost before you create.",
+    "creditUnit": "Cost per result",
     "summary": {
-      "training": "starting price for one-time personal-model training",
-      "personalPhoto": "per photo with your personal model",
-      "otherModels": "per photo for quick generation and photo edits"
+      "training": "for Standard / Full personal AI training with Pro / Max",
+      "personalPhoto": "for each image after your personal model is trained",
+      "otherModels": "starting cost for 1K generation and edits"
     },
     "chooser": {
       "title": "Which model should you use?",
       "description": "Start with the image you want to make. The app can choose a model for you, and this guide explains what each model is best at.",
       "personal": {
         "title": "Photos of you",
-        "description": "Train once with your selfies, then create recognizable headshots, dating photos, portraits, and personal-brand images."
+        "description": "Use Pro for Standard training or Max for Full training, then create recognizable photos for 2 credits each. You keep trained models after canceling."
       },
       "generate": {
         "title": "New images from prompts",
@@ -368,16 +424,21 @@
       }
     },
     "table": {
-      "title": "Supported models and prices",
-      "description": "These are My AI Photo Shoot product prices. They are what you pay in the app, not provider API costs.",
-      "priceNote": "Personal model training starts at {trainingPrice}.",
+      "title": "AI models, credit costs, and access",
+      "description": "Credit cost is charged per generated result. Your plan determines which resolution and training options are unlocked.",
+      "priceNote": "Training a new personal model requires Pro or Max. Trained models and unused credits remain after cancellation.",
       "columns": {
         "model": "Model",
-        "type": "Type",
         "bestFor": "Best for",
-        "price": "Price",
-        "status": "Status"
+        "credits": "Credits",
+        "resolution": "Max resolution",
+        "access": "Access"
       }
+    },
+    "access": {
+      "payg": "Pay as you go",
+      "pro": "Pro",
+      "max": "Max"
     },
     "groups": {
       "personal": "Personal AI Model",
@@ -405,22 +466,14 @@
       "precise": "Prompts that need careful instruction following and clean object placement.",
       "creative": "Stylized concepts, expressive looks, and fast creative exploration.",
       "textPosters": "Images where readable text, signs, or poster-like layouts matter.",
-      "edits": "General photo edits with a strong balance of price and quality.",
+      "edits": "General photo edits with a strong balance of credit cost and quality.",
       "proEdits": "More demanding edits where detail and control are important.",
       "smartEdits": "Smart object, outfit, and scene changes from an existing image.",
       "textEdits": "Editing images that include typography, labels, or graphic layout."
     },
-    "pricing": {
-      "training": "starting one-time training price",
-      "personalPhoto": "per photo after training",
-      "photo": "per photo"
-    },
-    "status": {
-      "supported": "Supported"
-    },
     "cta": {
       "title": "Ready to create with the right model?",
-      "description": "Open the app, choose a style or preset, and the app will help you choose the right model for your image.",
+      "description": "Open the app, choose a style or preset, and see the required credits and plan before you create.",
       "primary": "Start creating",
       "secondary": "Browse presets"
     }

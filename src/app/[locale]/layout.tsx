@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     default: "AI Headshot Generator - My AI Photo Shoot",
     template: "%s | My AI Photo Shoot",
   },
-  description: "Create realistic AI headshots, profile pictures, and portraits from selfies. Training from $5.99 and images from $0.03, with no subscription required.",
+  description: "Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K generation with Pro or Max.",
   manifest: "/site.webmanifest",
   // The OpenGraph and Twitter metadata will be dynamically set based on the locale
 };

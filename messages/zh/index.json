@@ -49,6 +49,7 @@
     "eyebrow": "一张照片，焕然一新。",
     "heading": "探索 AI 面具",
     "description": "上传一张照片，几秒内即可尝试发型、妆容、穿搭、年龄变化等效果。",
+    "creditCost": "{credits} 积分",
     "homeTitle": "用一张照片尝试新造型",
     "homeDescription": "使用一键 AI 面具预览发型、妆容、穿搭、年龄变化等效果。",
     "pricePerImage": "每张 {price}",
@@ -85,8 +86,8 @@
   "hero": {
     "title": "AI 头像生成器：",
     "titleHighlight": "真实自然的个人资料照片",
-    "description": "上传几张自拍，即可生成适合 LinkedIn、简历、团队、创作者和个人品牌的真实感 AI 头像照、个人资料照片和肖像。",
-    "microcopy": "模型训练一次，$5.99 起 • 个人模型照片每张 $0.03 • 订阅可选"
+    "description": "根据自拍生成逼真的 AI 头像照和肖像。可先购买一次性积分，或选择 Pro 或 Max，解锁个人 AI 训练和最高 4K 画质。",
+    "microcopy": "一次性积分支持 1K • Pro 解锁 2K + 训练 • Max 解锁 4K"
   },
   "appShowcase": {
     "exploreStyles": "在 My AI Photo Shoot 中探索 AI 照片风格",
@@ -94,12 +95,12 @@
     "trainModel": "在 My AI Photo Shoot 中训练个人 AI 模型",
     "photosOfYou": "创建你的个性化照片",
     "photoIdeas": "发现更多 AI 照片创意",
-    "noSubscription": "无需强制订阅的按量付费价格"
+    "noSubscription": "使用一次性积分创作，或通过 Pro 和 Max 解锁更多功能"
   },
   "homeUseCases": {
     "eyebrow": "一个模型，多种风格",
     "title": "为工作、约会和每个重要场合创建照片",
-    "description": "只需训练一次个人 AI 模型，即可随时创建专业头像照、约会照片和创意肖像。",
+    "description": "选择 Pro 或 Max 训练你的个人 AI 模型，然后使用积分创建精致的专业头像照、约会照片和创意肖像。",
     "imageAlt": "{title} 的 AI 照片示例",
     "exploreAll": "查看所有照片风格",
     "cards": {
@@ -110,18 +111,18 @@
   },
   "features": {
     "title": "轻松打造更自然的 AI 头像",
-    "description": "只需训练一次，即可创作多种风格的真实照片，并始终掌控自己的内容。",
+    "description": "从灵活的 1K 创作开始，或使用 Pro 或 Max 训练个人 AI，持续生成保持本人相貌的照片。",
     "advancedAI": {
       "title": "每张照片都像你",
-      "description": "只需用自拍训练一次，即可在每张生成图片中自然保留你的面部特征。"
+      "description": "使用 Pro 或 Max，根据自拍训练个人 AI，并在每张个人模型图片中保持可识别的相貌。"
     },
     "privacyFirst": {
       "title": "你的照片，由你掌控",
       "description": "可选择公开或私密图库，并随时永久删除图片。"
     },
     "affordablePricing": {
-      "title": "透明按量付费",
-      "description": "无需强制订阅，没有隐藏费用。训练 $5.99 起，个人 AI 模型照片每张 $0.03，Studio 照片每张 $0.29，AI 预设每张 $0.09–$0.29。"
+      "title": "灵活的积分和套餐",
+      "description": "购买一次性积分，灵活创作 1K 图片；或选择 Pro 或 Max，获得定期积分、更高分辨率和个人 AI 训练。"
     },
     "thousandsOfStyles": {
       "title": "不止是头像照",
@@ -191,36 +192,79 @@
     }
   },
   "pricing": {
-    "title": "简单按量付费",
-    "description": "只在创作时付费。没有月费套餐、积分包或隐藏费用。",
-    "payAsYouGo": "按量付费",
-    "perfectFor": "适合创作者、创业者、营销人员、团队，以及任何随时需要高质量 AI 图片的人。",
-    "whatsIncluded": "包含内容",
-    "features": {
-      "training": "个人 AI 模型训练",
-      "unlimited": "无每月生成上限",
-      "custom": "高级提示词自定义",
-      "privacy": "私密和公开图库选项",
-      "social": "便捷社交分享",
-      "download": "高清下载",
-      "support": "快速响应的客户支持",
-      "updates": "持续 AI 质量改进"
+    "title": "选择适合你的创作方式",
+    "description": "先购买一次性积分，灵活创作 1K 图片。选择 Pro 可解锁 2K 和个人 AI 训练，选择 Max 可解锁 4K 和我们最强大的训练。",
+    "referenceDisclosure": "此处显示以 {currency} 计价的 {market} 参考方案。最终本地价格、币种、包含的积分和可用性以应用或商店显示为准。",
+    "creditsNeverExpire": "积分永不过期",
+    "noTrial": "无免费试用。订阅会自动续订，直至取消。",
+    "billing": {
+      "cadences": {
+        "oneTime": "一次性",
+        "weekly": "每周",
+        "monthly": "每月",
+        "annual": "每年"
+      },
+      "units": {
+        "oneTime": "一次性",
+        "perWeek": "每周",
+        "perMonth": "每月",
+        "perYear": "每年"
+      },
+      "oneTimeCredits": "包含 {credits} 积分",
+      "weeklyCredits": "每周获得 {credits} 积分",
+      "monthlyCredits": "每月获得 {credits} 积分",
+      "annualSavings": "节省 {percent}%",
+      "annualTerms": "每年一次性全额收取 {total} · 每月发放 {credits} 积分"
     },
-    "price": "$0.03",
-    "perPhoto": "每张图片",
-    "personalPhotos": "个人 AI 模型照片",
-    "personalDescription": "每个 AI 模型仅需训练一次，起价 $5.99。",
-    "studioPhotos": "Studio 照片与 AI 预设",
-    "studioDescription": "Studio 照片价格为 $0.29。AI 预设价格为 $0.09–$0.29。",
-    "studioPrice": "$0.09–$0.29",
-    "maskPhotos": "AI 面具",
-    "maskDescription": "使用现成造型变换一张现有照片。",
-    "maskPrice": "$0.19",
-    "studioPerPhoto": "每张图片",
-    "getStarted": "开始生成",
-    "oneTimeFee": "个人 AI 模型训练起价",
-    "oneTimeFeeAmount": "$5.99",
-    "noSubscriptionShort": "订阅可选，只为你创建的内容付费。"
+    "plans": {
+      "payg": {
+        "name": "一次性积分",
+        "eyebrow": "无需订阅即可开始",
+        "description": "只在需要时购买积分，并使用支持按量付费的模型创作。",
+        "optionLabel": "积分包",
+        "cta": "使用积分开始创作",
+        "features": {
+          "resolution": "最高可生成 {resolution}",
+          "flexible": "按自己的节奏充值"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "eyebrow": "训练你的个人 AI",
+        "popular": "最受欢迎",
+        "description": "定期积分、更高分辨率生成，以及 Standard 个人 AI 训练。",
+        "optionLabel": "Pro 套餐",
+        "cta": "选择 Pro",
+        "features": {
+          "resolution": "最高可生成 {resolution}",
+          "training": "包含 {training}"
+        }
+      },
+      "max": {
+        "name": "Max",
+        "eyebrow": "以完整画质创作",
+        "description": "更多定期积分、最高分辨率，以及 Full 个人 AI 训练。",
+        "optionLabel": "Max 套餐",
+        "cta": "选择 Max",
+        "features": {
+          "resolution": "最高可生成 {resolution}",
+          "training": "包含 {training}"
+        }
+      }
+    },
+    "creditGuide": {
+      "title": "积分可以创作什么？",
+      "description": "套餐决定可用的画质等级；训练或创作时会消耗积分。",
+      "creditAmount": "{credits} 积分",
+      "items": {
+        "personalModelImage": "个人 AI 模型图片",
+        "standardImage": "Standard 1K 图片",
+        "proImage": "Pro 2K 图片",
+        "maxImage": "Max 4K 图片",
+        "standardTraining": "Standard 个人 AI 训练",
+        "fullTraining": "Full 个人 AI 训练"
+      }
+    }
   },
   "download": {
     "title": "今天开始创作",
@@ -272,7 +316,7 @@
     "description": "了解设置、费用、图片质量、隐私和支持设备。",
     "howItWorks": {
       "question": "如何使用？",
-      "answer": "上传 10–20 张不同的自拍，只需训练一次个人 AI 模型。之后即可生成不同服装、姿势、场景和风格的新照片。"
+      "answer": "选择 Pro 或 Max，上传 10–20 张不同的自拍并训练你的个人 AI 模型。然后使用积分创建不同服装、姿势、场景和风格的新照片。"
     },
     "sourcePhotos": {
       "question": "应该上传什么样的照片？",
@@ -280,7 +324,11 @@
     },
     "pricing": {
       "question": "费用是多少？有生成限制吗？",
-      "answer": "每个个人 AI 模型的训练均为一次性收费：标准 $5.99，最高 $9.99。个人 AI 模型照片每张 $0.03。Studio 照片每张 $0.29，AI 预设每张 $0.09–$0.29。按量付费没有每月生成上限；可选的 Pro 和 Max 订阅提供定期积分和高级功能。"
+      "answer": "美国参考积分包为 200 积分 $5.99 或 300 积分 $8.99。Pro 每周 $6.99 起；Max 每月 $29.99 起。Pro 解锁 2K 和 Standard 训练，Max 解锁 4K 和 Full 训练。年度套餐一次性全额收费，并每月发放积分。最终本地方案因国家和平台而异，积分永不过期。"
+    },
+    "subscriptions": {
+      "question": "如何管理或取消订阅？",
+      "answer": "Apple 订阅请在 Apple 账户中管理，Google 订阅请在 Google Play 中管理，网页订阅请通过账单设置或联系支持管理。取消将在已付费周期结束时生效。未使用的积分和已训练的个人 AI 模型仍会保留。"
     },
     "imageQuality": {
       "question": "哪些因素会影响图片质量？",
@@ -296,7 +344,7 @@
     },
     "whyNotChatGPT": {
       "question": "它与通用 AI 图片工具有什么不同？",
-      "answer": "My AI Photo Shoot 会根据你的自拍训练专属模型。模型只需训练一次，之后即可反复使用，并在不同风格的头像、肖像和个人资料照片中自然保留你的面部特征，同时按实际生成量收费。"
+      "answer": "My AI Photo Shoot 围绕使用你的自拍训练的可重复使用模型而设计。这样更容易在多种头像照、肖像和个人资料照片风格中保持可识别的相貌，并提供灵活的积分和清晰的画质选项。"
     }
   },
   "useCase": {
@@ -306,10 +354,11 @@
     "loading": "加载中...",
     "notFound": "未找到使用场景。",
     "badges": {
-      "cheapest": "低成本 AI 照片",
-      "noSubscription": "无需强制订阅",
-      "poweredByFlux": "由 Flux 驱动"
+      "oneTimeCredits": "可购买一次性积分",
+      "proAccess": "Pro 解锁 2K + 训练",
+      "maxAccess": "Max 解锁 4K + Full 训练"
     },
+    "offerSummary": "使用一次性积分创作 1K 图片，或通过 Pro 或 Max 解锁个人 AI 训练和更高分辨率。",
     "galleryDisclaimer": "所有展示示例均由我们的 AI 根据用户自拍生成。",
     "howItWorks": {
       "title": "使用步骤",
@@ -321,7 +370,7 @@
       "step2": {
         "title": "训练你的 AI 模型",
         "time": "(约 2 分钟)",
-        "desc": "我们会训练个人模型，让新图片保持你的样貌。"
+        "desc": "选择 Pro 或 Max 训练，让新的个人模型图片保持你的样貌。"
       },
       "step3": {
         "title": "生成并下载喜欢的作品",
@@ -329,8 +378,15 @@
         "desc": "创建不同造型，然后保存最满意的图片。"
       }
     },
+    "pricingCard": {
+      "title": "选择适合你目标的方案",
+      "description": "积分永不过期。订阅会定期发放积分，并解锁更强大的创作模式。",
+      "payg": "一次性积分：最高 1K 生成",
+      "pro": "Pro：最高 2K，并包含 Standard 个人 AI 训练",
+      "max": "Max：最高 4K，并包含 Full 个人 AI 训练"
+    },
     "stickyCta": {
-      "label": "训练 {oneTimeFee} 起 • 个人模型照片{perPhoto} {price}"
+      "label": "使用积分开始创作"
     },
     "benefits": {
       "title": "优势"
@@ -338,25 +394,25 @@
   },
   "models": {
     "meta": {
-      "title": "AI 照片模型和价格",
-      "description": "比较 My AI Photo Shoot 的模型和价格，适用于 AI 头像、提示词图像生成、照片编辑、海报和文字密集型设计。"
+      "title": "AI 模型、积分费用和套餐权限",
+      "description": "比较个人 AI 模型、图像生成和照片编辑的积分费用、分辨率，以及按量付费、Pro 或 Max 权限。"
     },
     "breadcrumb": "模型",
     "eyebrow": "支持的 AI 模型",
-    "heading": "创建前先选择合适的 AI 照片模型",
-    "description": "My AI Photo Shoot 提供经过训练的个人模型，用于稳定生成你的照片，也提供生成和编辑模型，用于快速图片、海报、文字密集型设计和照片修改。",
-    "screenshotAlt": "My AI Photo Shoot 应用中的 AI 模型选择器",
+    "heading": "按积分、分辨率和权限比较 AI 模型",
+    "description": "从灵活的 1K 模型、最高 2K 的 Pro 模型和最高 4K 的 Max 生成模型中选择。每次创作前都会清楚显示结果所需的积分。",
+    "creditUnit": "每次生成的费用",
     "summary": {
-      "training": "个人模型一次性训练起价",
-      "personalPhoto": "使用个人模型每张照片",
-      "otherModels": "快速生成和照片编辑每张价格"
+      "training": "使用 Pro / Max 进行 Standard / Full 个人 AI 训练",
+      "personalPhoto": "个人模型训练完成后每张图片",
+      "otherModels": "1K 生成和编辑的起始费用"
     },
     "chooser": {
       "title": "应该使用哪个模型？",
       "description": "从你想创建的图片开始。应用可以帮你选择模型，本指南则会说明每个模型最适合的场景。",
       "personal": {
         "title": "你的个人照片",
-        "description": "用自拍训练一次，然后创建保持本人相似度的头像、约会照片、人像和个人品牌图片。"
+        "description": "使用 Pro 进行 Standard 训练或使用 Max 进行 Full 训练，然后每张只需 2 积分即可创建保持本人相似度的照片。取消订阅后，已训练的模型仍会保留。"
       },
       "generate": {
         "title": "从提示词生成新图",
@@ -368,16 +424,21 @@
       }
     },
     "table": {
-      "title": "支持的模型和价格",
-      "description": "这些是 My AI Photo Shoot 的产品价格，也就是你在应用中支付的价格，不是供应商 API 成本。",
-      "priceNote": "个人模型训练 {trainingPrice} 起。",
+      "title": "AI 模型、积分费用和权限",
+      "description": "每个生成结果都会收取积分。套餐决定可用的分辨率和训练选项。",
+      "priceNote": "训练新的个人模型需要 Pro 或 Max。取消订阅后，已训练的模型和未使用的积分仍会保留。",
       "columns": {
         "model": "模型",
-        "type": "类型",
         "bestFor": "最适合",
-        "price": "价格",
-        "status": "状态"
+        "credits": "积分",
+        "resolution": "最高分辨率",
+        "access": "权限"
       }
+    },
+    "access": {
+      "payg": "按量付费",
+      "pro": "Pro",
+      "max": "Max"
     },
     "groups": {
       "personal": "个人 AI 模型",
@@ -410,17 +471,9 @@
       "smartEdits": "基于现有图片进行物体、服装和场景智能修改。",
       "textEdits": "编辑包含字体、标签或图形版式的图片。"
     },
-    "pricing": {
-      "training": "一次性训练起价",
-      "personalPhoto": "训练后每张照片",
-      "photo": "每张照片"
-    },
-    "status": {
-      "supported": "支持"
-    },
     "cta": {
       "title": "准备使用合适的模型创建了吗？",
-      "description": "打开应用，选择风格或预设，应用会帮你为图片选择合适的模型。",
+      "description": "打开应用，选择风格或预设，并在创作前查看所需积分和套餐。",
       "primary": "开始创建",
       "secondary": "浏览预设"
     }

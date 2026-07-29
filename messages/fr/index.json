@@ -49,6 +49,7 @@
     "eyebrow": "Une photo. Un nouveau look.",
     "heading": "Découvrez les masques IA",
     "description": "Importez une photo et essayez en quelques secondes des coiffures, du maquillage, des tenues, des effets de vieillissement et bien plus encore.",
+    "creditCost": "{credits} crédits",
     "homeTitle": "Un nouveau look à partir d’une seule photo",
     "homeDescription": "Testez des coiffures, du maquillage, des tenues, des effets de vieillissement et plus encore avec les masques IA.",
     "pricePerImage": "{price} par image",
@@ -85,8 +86,8 @@
   "hero": {
     "title": "Générateur de photos professionnelles par IA pour",
     "titleHighlight": "des photos de profil réalistes",
-    "description": "Importez quelques selfies et créez des photos professionnelles, des photos de profil et des portraits créatifs réalistes pour LinkedIn, les CV, les équipes, les créateurs et les marques personnelles.",
-    "microcopy": "Entraînement unique dès 5,99 $ • photos avec modèle personnel à 0,03 $ • abonnement facultatif"
+    "description": "Créez des photos professionnelles et des portraits réalistes avec l’IA à partir de selfies. Commencez avec des crédits à achat unique ou débloquez l’entraînement d’IA personnel et une résolution allant jusqu’à 4K avec Pro ou Max.",
+    "microcopy": "Crédits à achat unique pour la 1K • Pro débloque la 2K + l’entraînement • Max débloque la 4K"
   },
   "appShowcase": {
     "exploreStyles": "Découvrez les styles de photos IA dans My AI Photo Shoot",
@@ -94,12 +95,12 @@
     "trainModel": "Entraînez votre modèle IA personnel dans My AI Photo Shoot",
     "photosOfYou": "Créez des photos personnalisées de vous",
     "photoIdeas": "Trouvez de nouvelles idées de photos IA",
-    "noSubscription": "Tarification à l’usage sans abonnement obligatoire"
+    "noSubscription": "Créez avec des crédits à achat unique ou débloquez davantage avec Pro et Max"
   },
   "homeUseCases": {
     "eyebrow": "Un modèle, de nombreux styles",
     "title": "Créez des photos pour le travail, les rencontres et toutes les occasions",
-    "description": "Entraînez une fois votre modèle IA personnel, puis créez à tout moment des portraits professionnels, des photos de rencontre et des portraits créatifs.",
+    "description": "Choisissez Pro ou Max pour entraîner votre modèle d’IA personnel, puis utilisez des crédits pour créer des portraits professionnels, des photos de rencontre et des portraits créatifs soignés.",
     "imageAlt": "Exemple de photo IA pour {title}",
     "exploreAll": "Découvrir tous les styles photo",
     "cards": {
@@ -110,18 +111,18 @@
   },
   "features": {
     "title": "Conçu pour créer de meilleurs portraits professionnels avec l’IA",
-    "description": "Entraînez une fois, créez des photos réalistes dans de nombreux styles et gardez le contrôle.",
+    "description": "Commencez par une création flexible en 1K, ou entraînez votre IA personnelle avec Pro ou Max pour obtenir des photos cohérentes de vous.",
     "advancedAI": {
       "title": "Une ressemblance fidèle sur chaque image",
-      "description": "Entraînez le modèle une fois avec vos selfies pour conserver des traits naturels et reconnaissables sur chaque image."
+      "description": "Avec Pro ou Max, entraînez votre IA personnelle à partir de vos selfies et conservez une apparence reconnaissable sur chaque image du modèle personnel."
     },
     "privacyFirst": {
       "title": "Vos photos, votre contrôle",
       "description": "Choisissez des galeries publiques ou privées et supprimez définitivement vos images à tout moment."
     },
     "affordablePricing": {
-      "title": "Tarifs transparents à l’usage",
-      "description": "Aucun abonnement obligatoire ni frais imprévus. L’entraînement commence à 5,99 $, les photos avec modèle personnel coûtent 0,03 $, les photos Studio 0,29 $ et les préréglages IA entre 0,09 et 0,29 $."
+      "title": "Crédits et forfaits flexibles",
+      "description": "Achetez des crédits à achat unique pour créer librement en 1K, ou choisissez Pro ou Max pour obtenir des crédits récurrents, une résolution supérieure et l’entraînement d’IA personnel."
     },
     "thousandsOfStyles": {
       "title": "Bien plus que des portraits professionnels",
@@ -191,36 +192,79 @@
     }
   },
   "pricing": {
-    "title": "Tarification simple à l’usage",
-    "description": "Vous ne payez que lorsque vous créez. Aucun forfait mensuel, aucun pack de crédits ni frais cachés.",
-    "payAsYouGo": "Paiement à l’usage",
-    "perfectFor": "Idéal pour les créateurs, les fondateurs, les professionnels du marketing, les équipes et toute personne qui a besoin d’images IA professionnelles à tout moment.",
-    "whatsIncluded": "Ce qui est inclus",
-    "features": {
-      "training": "Entraînement d’un modèle IA personnel",
-      "unlimited": "Aucune limite mensuelle de génération",
-      "custom": "Personnalisation avancée des prompts",
-      "privacy": "Options de galerie privée et publique",
-      "social": "Partage facile sur les réseaux sociaux",
-      "download": "Téléchargements haute résolution",
-      "support": "Service client réactif",
-      "updates": "Améliorations continues de la qualité IA"
+    "title": "Choisissez votre façon de créer",
+    "description": "Commencez avec des crédits à achat unique pour créer librement en 1K. Choisissez Pro pour la 2K et l’entraînement d’IA personnel, ou Max pour la 4K et notre entraînement le plus performant.",
+    "referenceDisclosure": "Les offres de référence pour {market} sont affichées en {currency}. Le prix final localisé, la devise, les crédits inclus et la disponibilité apparaissent dans l’application ou la boutique.",
+    "creditsNeverExpire": "Les crédits n’expirent jamais",
+    "noTrial": "Aucun essai gratuit. Les abonnements se renouvellent jusqu’à leur résiliation.",
+    "billing": {
+      "cadences": {
+        "oneTime": "Achat unique",
+        "weekly": "Hebdomadaire",
+        "monthly": "Mensuel",
+        "annual": "Annuel"
+      },
+      "units": {
+        "oneTime": "en une fois",
+        "perWeek": "par semaine",
+        "perMonth": "par mois",
+        "perYear": "par an"
+      },
+      "oneTimeCredits": "{credits} crédits inclus",
+      "weeklyCredits": "{credits} crédits chaque semaine",
+      "monthlyCredits": "{credits} crédits chaque mois",
+      "annualSavings": "Économisez {percent} %",
+      "annualTerms": "{total} facturé intégralement une fois par an · {credits} crédits ajoutés chaque mois"
     },
-    "price": "0,03 $",
-    "perPhoto": "par image",
-    "personalPhotos": "Photos avec votre modèle IA personnel",
-    "personalDescription": "Entraînez chaque modèle IA une seule fois, à partir de 5,99 $.",
-    "studioPhotos": "Photos Studio et préréglages IA",
-    "studioDescription": "Les photos Studio coûtent 0,29 $. Les préréglages IA coûtent entre 0,09 et 0,29 $.",
-    "studioPrice": "0,09–0,29 $",
-    "maskPhotos": "Masques IA",
-    "maskDescription": "Transformez une photo existante avec un look prêt à l’emploi.",
-    "maskPrice": "0,19 $",
-    "studioPerPhoto": "par image",
-    "getStarted": "Commencer à générer",
-    "oneTimeFee": "Entraînement du modèle personnel dès",
-    "oneTimeFeeAmount": "5,99 $",
-    "noSubscriptionShort": "Abonnement facultatif. Vous ne payez que les images que vous créez."
+    "plans": {
+      "payg": {
+        "name": "Crédits à achat unique",
+        "eyebrow": "Commencez sans abonnement",
+        "description": "Achetez des crédits uniquement lorsque vous en avez besoin et créez avec les modèles compatibles avec le paiement à l’usage.",
+        "optionLabel": "Pack de crédits",
+        "cta": "Commencer avec des crédits",
+        "features": {
+          "resolution": "Générez jusqu’à {resolution}",
+          "flexible": "Rechargez à votre rythme"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "eyebrow": "Entraînez votre IA personnelle",
+        "popular": "Le plus populaire",
+        "description": "Des crédits récurrents, une génération en plus haute résolution et l’entraînement d’IA personnel Standard.",
+        "optionLabel": "Forfait Pro",
+        "cta": "Choisir Pro",
+        "features": {
+          "resolution": "Générez jusqu’à {resolution}",
+          "training": "Inclut {training}"
+        }
+      },
+      "max": {
+        "name": "Max",
+        "eyebrow": "Créez en qualité maximale",
+        "description": "Davantage de crédits récurrents, notre résolution la plus élevée et l’entraînement d’IA personnel Full.",
+        "optionLabel": "Forfait Max",
+        "cta": "Choisir Max",
+        "features": {
+          "resolution": "Générez jusqu’à {resolution}",
+          "training": "Inclut {training}"
+        }
+      }
+    },
+    "creditGuide": {
+      "title": "Que pouvez-vous créer avec des crédits ?",
+      "description": "Votre forfait débloque le niveau de qualité ; les crédits sont utilisés lors de l’entraînement ou de la création.",
+      "creditAmount": "{credits} CR",
+      "items": {
+        "personalModelImage": "Image avec modèle d’IA personnel",
+        "standardImage": "Image Standard en 1K",
+        "proImage": "Image Pro en 2K",
+        "maxImage": "Image Max en 4K",
+        "standardTraining": "Entraînement d’IA personnel Standard",
+        "fullTraining": "Entraînement d’IA personnel Full"
+      }
+    }
   },
   "download": {
     "title": "Commencez à créer aujourd’hui",
@@ -272,7 +316,7 @@
     "description": "Des réponses claires sur la configuration, le prix, la qualité des images, la confidentialité et les appareils compatibles.",
     "howItWorks": {
       "question": "Comment cela fonctionne-t-il ?",
-      "answer": "Importez 10 à 20 selfies variés et entraînez une seule fois votre modèle IA personnel. Vous pourrez ensuite créer de nouvelles photos de vous avec différentes tenues, poses, scènes et styles."
+      "answer": "Choisissez Pro ou Max, importez 10 à 20 selfies variés et entraînez votre modèle d’IA personnel. Utilisez ensuite des crédits pour créer de nouvelles photos de vous avec différentes tenues, poses, scènes et styles."
     },
     "sourcePhotos": {
       "question": "Quelles photos dois-je importer ?",
@@ -280,7 +324,11 @@
     },
     "pricing": {
       "question": "Combien cela coûte-t-il et y a-t-il des limites ?",
-      "answer": "L’entraînement de chaque modèle personnel coûte 5,99 $ en Standard ou 9,99 $ en Max, en un seul paiement par modèle. Les photos avec le modèle personnel coûtent 0,03 $. Les photos Studio coûtent 0,29 $ et les préréglages IA entre 0,09 et 0,29 $ par image. Le paiement à l’usage n’impose aucune limite mensuelle ; les abonnements Pro et Max facultatifs ajoutent des crédits récurrents et des fonctionnalités premium."
+      "answer": "Les packs de référence aux États-Unis proposent 200 crédits pour 5,99 $ ou 300 pour 8,99 $. Pro commence à 6,99 $ par semaine et Max à 29,99 $ par mois. Pro débloque la 2K et l’entraînement Standard, tandis que Max débloque la 4K et l’entraînement Full. Les forfaits annuels sont facturés intégralement et ajoutent des crédits chaque mois. Les offres localisées finales varient selon le pays et la plateforme, et les crédits n’expirent jamais."
+    },
+    "subscriptions": {
+      "question": "Comment gérer ou résilier un abonnement ?",
+      "answer": "Gérez les abonnements Apple dans votre Apple Account, les abonnements Google dans Google Play et les abonnements web depuis les paramètres de facturation ou auprès de l’assistance. La résiliation prend effet à la fin de la période payée. Vous conservez les crédits non utilisés et les modèles d’IA personnels déjà entraînés."
     },
     "imageQuality": {
       "question": "Qu’est-ce qui influence la qualité des images ?",
@@ -296,7 +344,7 @@
     },
     "whyNotChatGPT": {
       "question": "En quoi est-ce différent d’un outil généraliste d’images IA ?",
-      "answer": "My AI Photo Shoot repose sur un modèle personnel que vous entraînez une fois avec vos selfies, puis réutilisez à volonté. Vous conservez ainsi plus facilement vos traits dans différents styles de portraits professionnels, de portraits créatifs et de photos de profil, avec une tarification claire à l’usage."
+      "answer": "My AI Photo Shoot s’appuie sur un modèle réutilisable entraîné avec vos selfies. Il devient ainsi plus facile de conserver une ressemblance reconnaissable dans de nombreux styles de photos professionnelles, de portraits et de photos de profil, avec des crédits flexibles et des options de qualité claires."
     }
   },
   "useCase": {
@@ -306,10 +354,11 @@
     "loading": "Chargement...",
     "notFound": "Cas d’usage introuvable.",
     "badges": {
-      "cheapest": "Photos IA à bas coût",
-      "noSubscription": "Aucun abonnement requis",
-      "poweredByFlux": "Propulsé par Flux"
+      "oneTimeCredits": "Crédits à achat unique disponibles",
+      "proAccess": "Pro débloque la 2K + l’entraînement",
+      "maxAccess": "Max débloque la 4K + l’entraînement Full"
     },
+    "offerSummary": "Créez en 1K avec des crédits à achat unique, ou débloquez l’entraînement d’IA personnel et une résolution supérieure avec Pro ou Max.",
     "galleryDisclaimer": "Tous les exemples affichés ont été générés par notre IA à partir de selfies d’utilisateurs.",
     "howItWorks": {
       "title": "Comment ça marche",
@@ -321,7 +370,7 @@
       "step2": {
         "title": "Entraînez votre modèle IA",
         "time": "(environ 2 minutes)",
-        "desc": "Nous entraînons un modèle personnel pour que les nouvelles images vous ressemblent."
+        "desc": "Choisissez l’entraînement Pro ou Max pour que les nouvelles images du modèle personnel vous ressemblent."
       },
       "step3": {
         "title": "Générez et téléchargez vos favoris",
@@ -329,8 +378,15 @@
         "desc": "Créez différents looks, puis enregistrez les images que vous préférez."
       }
     },
+    "pricingCard": {
+      "title": "Choisissez l’accès adapté à votre objectif",
+      "description": "Les crédits n’expirent jamais. Les abonnements ajoutent des crédits récurrents et débloquent des modes de création plus performants.",
+      "payg": "Crédits à achat unique : génération jusqu’à 1K",
+      "pro": "Pro : jusqu’à 2K avec entraînement d’IA personnel Standard",
+      "max": "Max : jusqu’à 4K avec entraînement d’IA personnel Full"
+    },
     "stickyCta": {
-      "label": "Entraînement dès {oneTimeFee} • photos avec modèle personnel à {price} {perPhoto}"
+      "label": "Commencer à créer avec des crédits"
     },
     "benefits": {
       "title": "Avantages"
@@ -338,25 +394,25 @@
   },
   "models": {
     "meta": {
-      "title": "Modèles photo IA et tarifs",
-      "description": "Comparez les modèles et tarifs de My AI Photo Shoot pour portraits professionnels IA, génération d’images, retouche photo, affiches et designs riches en texte."
+      "title": "Modèles IA, coûts en crédits et accès par forfait",
+      "description": "Comparez les coûts en crédits, la résolution et l’accès avec paiement à l’usage, Pro ou Max pour les modèles d’IA personnels, la génération d’images et la retouche photo."
     },
     "breadcrumb": "Modèles",
     "eyebrow": "Modèles IA compatibles",
-    "heading": "Choisissez le bon modèle photo IA avant de créer",
-    "description": "My AI Photo Shoot vous donne un modèle personnel entraîné pour créer des photos cohérentes de vous, ainsi que des modèles de génération et d’édition pour des images rapides, affiches, designs riches en texte et retouches photo.",
-    "screenshotAlt": "Application My AI Photo Shoot affichant le sélecteur de modèles IA",
+    "heading": "Comparez les modèles IA par crédits, résolution et accès",
+    "description": "Choisissez parmi des modèles 1K flexibles, des modèles Pro allant jusqu’à 2K et la génération Max allant jusqu’à 4K. Le coût en crédits de chaque résultat est clairement indiqué avant de créer.",
+    "creditUnit": "Coût par résultat",
     "summary": {
-      "training": "prix de départ de l’entraînement unique de votre modèle personnel",
-      "personalPhoto": "par photo avec votre modèle personnel",
-      "otherModels": "par photo pour génération rapide et retouches photo"
+      "training": "pour l’entraînement d’IA personnel Standard / Full avec Pro / Max",
+      "personalPhoto": "par image après l’entraînement de votre modèle personnel",
+      "otherModels": "coût initial de la génération et des retouches en 1K"
     },
     "chooser": {
       "title": "Quel modèle utiliser ?",
       "description": "Commencez par l’image que vous voulez créer. L’application peut choisir un modèle pour vous, et ce guide explique le rôle de chaque modèle.",
       "personal": {
         "title": "Photos de vous",
-        "description": "Entraînez une fois avec vos selfies, puis créez des portraits professionnels, photos de rencontre, portraits et images de marque personnelle reconnaissables."
+        "description": "Utilisez Pro pour l’entraînement Standard ou Max pour l’entraînement Full, puis créez des photos reconnaissables pour 2 crédits chacune. Vous conservez les modèles entraînés après la résiliation."
       },
       "generate": {
         "title": "Nouvelles images depuis des prompts",
@@ -368,16 +424,21 @@
       }
     },
     "table": {
-      "title": "Modèles compatibles et tarifs",
-      "description": "Ce sont les tarifs produit de My AI Photo Shoot. C’est ce que vous payez dans l’application, pas les coûts API des fournisseurs.",
-      "priceNote": "L’entraînement du modèle personnel commence à {trainingPrice}.",
+      "title": "Modèles IA, coûts en crédits et accès",
+      "description": "Le coût en crédits est facturé pour chaque résultat généré. Votre forfait détermine les options de résolution et d’entraînement débloquées.",
+      "priceNote": "L’entraînement d’un nouveau modèle personnel nécessite Pro ou Max. Les modèles entraînés et les crédits non utilisés restent disponibles après la résiliation.",
       "columns": {
         "model": "Modèle",
-        "type": "Type",
         "bestFor": "Idéal pour",
-        "price": "Prix",
-        "status": "Statut"
+        "credits": "Crédits",
+        "resolution": "Résolution max.",
+        "access": "Accès"
       }
+    },
+    "access": {
+      "payg": "Paiement à l’usage",
+      "pro": "Pro",
+      "max": "Max"
     },
     "groups": {
       "personal": "Modèle IA personnel",
@@ -410,17 +471,9 @@
       "smartEdits": "Changements intelligents d’objet, de tenue et de scène à partir d’une image existante.",
       "textEdits": "Édition d’images contenant typographie, libellés ou mise en page graphique."
     },
-    "pricing": {
-      "training": "prix de départ de l’entraînement unique",
-      "personalPhoto": "par photo après entraînement",
-      "photo": "par photo"
-    },
-    "status": {
-      "supported": "Compatible"
-    },
     "cta": {
       "title": "Prêt à créer avec le bon modèle ?",
-      "description": "Ouvrez l’application, choisissez un style ou un préréglage, et l’application vous aidera à choisir le modèle adapté à votre image.",
+      "description": "Ouvrez l’application, choisissez un style ou un préréglage et consultez les crédits et le forfait requis avant de créer.",
       "primary": "Commencer",
       "secondary": "Voir les préréglages"
     }

@@ -1,4 +1,5 @@
 import { defaultLocale } from '@/i18n/request';
+import { CREDIT_USD_REFERENCE_VALUE } from '@/lib/pricing';
 import { postPublicSupabaseRpc } from '@/lib/public-supabase';
 import type {
   AiMask,
@@ -29,7 +30,8 @@ type MaskRow = {
   name: string;
   featured_graphics: string;
   featured_graphics_variants?: unknown;
-  price_usd: number | string;
+  price_usd?: number | string | null;
+  price_credits?: number | string | null;
   avg_duration_seconds?: number | string | null;
   sort_order: number;
 };
@@ -58,6 +60,21 @@ function normalizeNumber(value: unknown): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function normalizePositiveInteger(value: unknown): number | null {
+  const normalized = normalizeNumber(value);
+  return normalized !== null
+    && Number.isSafeInteger(normalized)
+    && normalized > 0
+    ? normalized
+    : null;
+}
+
+function deriveCreditCostFromUsd(value: unknown): number | null {
+  const priceUsd = normalizeNumber(value);
+  if (priceUsd === null || priceUsd <= 0) return null;
+  return normalizePositiveInteger(Math.ceil(priceUsd / CREDIT_USD_REFERENCE_VALUE));
+}
+
 function isMaskCategoryRow(value: unknown): value is MaskCategoryRow {
   if (!isRecord(value)) return false;
   return typeof value.id === 'string'
@@ -76,7 +93,10 @@ function isMaskRow(value: unknown): value is MaskRow {
     && typeof value.slug === 'string'
     && typeof value.name === 'string'
     && typeof value.featured_graphics === 'string'
-    && normalizeNumber(value.price_usd) !== null
+    && (
+      normalizePositiveInteger(value.price_credits) !== null
+      || deriveCreditCostFromUsd(value.price_usd) !== null
+    )
     && typeof value.sort_order === 'number';
 }
 
@@ -104,6 +124,9 @@ function normalizeMask(row: MaskRow): AiMask {
     featuredGraphics: row.featured_graphics.trim(),
     featuredGraphicsVariants: normalizeImageVariants(row.featured_graphics_variants),
     priceUsd: normalizeNumber(row.price_usd) ?? 0,
+    priceCredits: normalizePositiveInteger(row.price_credits)
+      ?? deriveCreditCostFromUsd(row.price_usd)
+      ?? 0,
     avgDurationSeconds: normalizeNumber(row.avg_duration_seconds),
     sortOrder: row.sort_order,
   };
@@ -160,7 +183,7 @@ async function fetchMasksCatalogInternal(locale: string, strict: boolean): Promi
       || !mask.slug
       || !mask.name
       || !mask.featuredGraphics
-      || mask.priceUsd <= 0
+      || mask.priceCredits <= 0
       || !categoryIds.has(mask.categoryId)
     ));
 
@@ -199,13 +222,4 @@ export function fetchMasksCatalogStrict(locale: string = defaultLocale): Promise
 
 export function masksForCategory(catalog: AiMasksCatalog, categoryId: string): AiMask[] {
   return catalog.masks.filter((mask) => mask.categoryId === categoryId);
-}
-
-export function formatMaskPriceUsd(price: number, locale: string): string {
-  return new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(price);
 }

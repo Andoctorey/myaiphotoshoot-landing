@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { aiPresetsPagePath, fetchAiPresetsPage, formatPresetCostUsd, type AiPresetsPage } from '@/lib/ai-presets';
+import {
+  aiPresetsPagePath,
+  fetchAiPresetsPage,
+  formatPresetCreditCost,
+  type AiPresetsPage,
+} from '@/lib/ai-presets';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
 
@@ -83,7 +88,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
         ) : (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {presets.map((preset) => {
-              const formattedCost = formatPresetCostUsd(preset.cost, locale);
+              const formattedCost = formatPresetCreditCost(preset.cost_credits, locale);
               return (
                 <Link
                   key={preset.id}

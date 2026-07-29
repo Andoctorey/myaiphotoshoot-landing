@@ -1,10 +1,25 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { env } from '@/lib/env';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { locales } from '@/i18n/request';
 import type { UseCase } from '@/types/usecase';
 
 const USE_CASE_REVALIDATE_SECONDS = 3600;
+const MAX_USE_CASE_TITLE_LENGTH = 65;
+const MAX_USE_CASE_DESCRIPTION_LENGTH = 160;
+const SITE_TITLE_SUFFIX = ' | My AI Photo Shoot';
+const STALE_DOLLAR_PRICE_PATTERN_SOURCE = String.raw`(?:\$(?:2\.99|4\.99|5\.99|9\.99|0\.03|0\.09|0\.19|0\.29)(?!\d)|(?:2,99|4,99|5,99|9,99|0,03|0,09|0,19|0,29)\s*\$)`;
+const STALE_DOLLAR_PRICE_PATTERN = new RegExp(STALE_DOLLAR_PRICE_PATTERN_SOURCE, 'i');
+const STALE_PRICE_CLAIM_PATTERN = new RegExp(
+  String.raw`(?:\b(?:from|starting(?:\s+at)?|starts?\s+at|for|only|costs?|priced?\s+at)\s*)?${STALE_DOLLAR_PRICE_PATTERN_SOURCE}(?:\s*(?:each|per\s+(?:photo|image|model|generation)))?`,
+  'gi'
+);
+const NO_SUBSCRIPTION_REQUIRED_PATTERN = /(?:\b(?:with\s+)?no subscription required\b|\bsin suscripci[oó]n(?: obligatoria| requerida)?\b|\bkein(?:e|es)? abonnement erforderlich\b|\baucun abonnement (?:n['’]est )?requis\b|\bподписка не требуется\b|无需订阅|サブスクリプション不要|सदस्यता की आवश्यकता नहीं|لا يلزم اشتراك)/giu;
+const PRICE_BASED_TITLE_SUFFIX_PATTERN = new RegExp(
+  String.raw`\s*(?:[|–—-]\s*)?(?:(?:from|starting(?:\s+at)?|starts?\s+at|only)\s*)?${STALE_DOLLAR_PRICE_PATTERN_SOURCE}(?:\s*(?:each|per\s+(?:photo|image|model|generation)))?(?:\s*[|–—-]\s*My AI Photo Shoot)?\s*$`,
+  'i'
+);
 
 export interface UseCaseInventoryItem {
   slug: string;
@@ -106,33 +121,22 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
       robots: { index: false, follow: false },
     };
   }
+  const tUseCase = await getTranslations({ locale, namespace: 'useCase' });
 
-  const baseTitle = replaceLegacyTrainingPrice(String(uc.meta_title || uc.title || '').trim());
-  const siteSuffix = ' | My AI Photo Shoot';
-  const pricedSuffix = ' | From $5.99 - My AI Photo Shoot';
-  let title = baseTitle;
-  if (baseTitle) {
-    const pricedCandidate = `${baseTitle}${pricedSuffix}`;
-    const siteCandidate = `${baseTitle}${siteSuffix}`;
-    if (pricedCandidate.length <= 65) {
-      title = pricedCandidate;
-    } else if (siteCandidate.length <= 65) {
-      title = siteCandidate;
-    }
-  }
+  const baseTitle = normalizeUseCaseTitle(String(uc.meta_title || uc.title || ''));
+  const title = buildUseCaseTitle(baseTitle);
 
-  const baseDescription = replaceLegacyTrainingPrice(String(uc.meta_description || uc.title || '').trim());
-  const pricingSentence = ' Model training from $5.99, personal-model images $0.03 each. No subscription required.';
-  let description = baseDescription;
-  if (baseDescription) {
-    const alreadyHasPricing = /\$5\.99|5,99 \$|No subscription/i.test(baseDescription);
-    const withPricing = alreadyHasPricing ? baseDescription : `${baseDescription}${pricingSentence}`;
-    description = withPricing.length <= 160 ? withPricing : baseDescription;
-  }
+  const rawDescription = String(uc.meta_description || uc.title || '');
+  const normalizedDescription = normalizeUseCaseDescription(rawDescription)
+    || normalizeUseCaseTitle(String(uc.title || ''));
+  const description = appendPlanSummary(
+    normalizedDescription,
+    tUseCase('offerSummary')
+  );
 
   const url = canonicalUrl(locale, `/use-cases/${slug}/`);
   const imageUrl = (Array.isArray(uc.featured_image_urls) && uc.featured_image_urls[0])
-    || 'https://myaiphotoshoot.com/og-image.png';
+    || '/og-image-v2.png';
 
   return {
     title: { absolute: title || 'Use Case | My AI Photo Shoot' },
@@ -152,6 +156,88 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
   };
 }
 
-function replaceLegacyTrainingPrice(value: string): string {
-  return value.replaceAll('$2.99', '$5.99').replaceAll('2,99 $', '5,99 $');
+function normalizeUseCaseTitle(value: string): string {
+  return tidyMetaText(
+    value
+      .trim()
+      .replace(PRICE_BASED_TITLE_SUFFIX_PATTERN, '')
+      .replace(STALE_PRICE_CLAIM_PATTERN, '')
+      .replace(NO_SUBSCRIPTION_REQUIRED_PATTERN, '')
+  );
+}
+
+function normalizeUseCaseDescription(value: string): string {
+  const normalized = value.replace(/\s+/g, ' ').trim();
+  if (!normalized) return '';
+
+  const sentences = normalized
+    .match(/[^!?。！？]*?(?:[!?。！？]+|\.(?=\s|$)|$)/gu)
+    ?.map((sentence) => sentence.trim())
+    .filter(Boolean) || [];
+  const withoutStaleClaims = sentences
+    .filter((sentence) => !STALE_DOLLAR_PRICE_PATTERN.test(sentence))
+    .map((sentence) => sentence.replace(NO_SUBSCRIPTION_REQUIRED_PATTERN, ''))
+    .map(tidyMetaText)
+    .filter(Boolean);
+
+  return tidyMetaText(withoutStaleClaims.join(' '));
+}
+
+function appendPlanSummary(description: string, planSummary: string): string {
+  const base = tidyMetaText(description);
+  const summary = tidyMetaText(planSummary);
+  if (!summary) return base;
+  if (alreadyDescribesPlans(base)) return base;
+
+  const separator = !base
+    ? ''
+    : /[.!?。！？]$/u.test(base)
+      ? ' '
+      : '. ';
+  const candidate = `${base}${separator}${summary}`;
+  return candidate.length <= MAX_USE_CASE_DESCRIPTION_LENGTH ? candidate : base;
+}
+
+function alreadyDescribesPlans(value: string): boolean {
+  return /\bPro\b/i.test(value)
+    && /\bMax\b/i.test(value)
+    && /\b(?:1K|2K|4K)\b/i.test(value);
+}
+
+function buildUseCaseTitle(baseTitle: string): string {
+  const fallbackTitle = 'Use Case | My AI Photo Shoot';
+  if (!baseTitle) return fallbackTitle;
+
+  const alreadyBranded = /(?:\||[-–—])\s*My AI Photo Shoot$/i.test(baseTitle);
+  const brandedCandidate = alreadyBranded
+    ? baseTitle
+    : `${baseTitle}${SITE_TITLE_SUFFIX}`;
+  const preferredTitle = brandedCandidate.length <= MAX_USE_CASE_TITLE_LENGTH
+    ? brandedCandidate
+    : baseTitle;
+  return truncateAtWord(preferredTitle, MAX_USE_CASE_TITLE_LENGTH);
+}
+
+function truncateAtWord(value: string, maxLength: number): string {
+  if (value.length <= maxLength) return value;
+
+  const availableLength = maxLength - 1;
+  const candidate = value.slice(0, availableLength + 1);
+  const lastSpace = candidate.lastIndexOf(' ');
+  const cutoff = lastSpace >= Math.floor(availableLength * 0.6)
+    ? lastSpace
+    : availableLength;
+  return `${candidate.slice(0, cutoff).trimEnd()}…`;
+}
+
+function tidyMetaText(value: string): string {
+  const tidied = value
+    .replace(/\(\s*\)/g, '')
+    .replace(/\s+([,.;:!?。！？])/g, '$1')
+    .replace(/,\s*([.!?。！？])/g, '$1')
+    .replace(/\s*([|•·])\s*(?=$|[.!?。！？])/g, '')
+    .replace(/^[\s,;:|•·–—-]+|[\s,;:|•·–—-]+$/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  return /[\p{L}\p{N}]/u.test(tidied) ? tidied : '';
 }

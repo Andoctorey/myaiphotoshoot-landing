@@ -37,9 +37,9 @@ export default function HomeContent({
       <Hero locale={locale} />
       <AppShowcase locale={locale} />
       <Features locale={locale} />
+      <Pricing locale={locale} />
       <HomePresets locale={locale} />
       <HomeMasks locale={locale} />
-      <Pricing locale={locale} />
       <HomeUseCases initialUseCases={initialUseCases} locale={locale} />
       <UserGallery initialItems={initialGallery} initialRandomSession={initialGallerySession} />
       <HomeBlog initialPosts={initialBlog} locale={locale} />

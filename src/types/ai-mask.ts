@@ -19,6 +19,7 @@ export interface AiMask {
   featuredGraphics: string;
   featuredGraphicsVariants: Record<string, string>;
   priceUsd: number;
+  priceCredits: number;
   avgDurationSeconds: number | null;
   sortOrder: number;
 }

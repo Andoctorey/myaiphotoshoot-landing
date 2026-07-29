@@ -10,11 +10,6 @@ type Props = {
   description?: string | null;
   imageUrls?: string[];
   brandName?: string;
-  priceCurrency?: string;
-  perImageLowPrice?: string;
-  perImageHighPrice?: string;
-  trainingLowPrice?: string;
-  trainingHighPrice?: string;
   inLanguage?: string;
 };
 
@@ -24,53 +19,60 @@ export default function UseCaseProductJsonLd({
   description,
   imageUrls,
   brandName = 'My AI Photo Shoot',
-  priceCurrency = 'USD',
-  perImageLowPrice = '0.03',
-  perImageHighPrice = '0.29',
-  trainingLowPrice = '5.99',
-  trainingHighPrice = '9.99',
   inLanguage,
 }: Props) {
   const images = Array.isArray(imageUrls)
     ? imageUrls.filter(Boolean)
     : [];
-  const offerPolicies = buildDigitalOfferPolicies({
-    priceCurrency,
-    policyUrl: 'https://myaiphotoshoot.com/legal/',
-  });
+  const offerPolicies = buildDigitalOfferPolicies();
 
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    '@id': `${idUrl}#product`,
+    '@type': 'Service',
+    '@id': `${idUrl}#service`,
     name,
+    serviceType: 'AI photo generation',
     description: description || undefined,
     image: images.length ? images.slice(0, 10) : undefined,
     inLanguage: inLanguage || undefined,
     mainEntityOfPage: idUrl,
-    brand: { '@type': 'Organization', name: brandName },
-    offers: [
-      {
-        '@type': 'AggregateOffer',
-        name: 'Per-image generation',
-        priceCurrency,
-        lowPrice: perImageLowPrice,
-        highPrice: perImageHighPrice,
-        offerCount: '10',
-        url: 'https://app.myaiphotoshoot.com',
-        ...offerPolicies,
-      },
-      {
-        '@type': 'AggregateOffer',
-        name: 'One-time personal AI model training',
-        priceCurrency,
-        lowPrice: trainingLowPrice,
-        highPrice: trainingHighPrice,
-        offerCount: '2',
-        url: 'https://app.myaiphotoshoot.com',
-        ...offerPolicies,
-      },
-    ],
+    provider: { '@type': 'Organization', name: brandName },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Ways to create',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          name: 'One-time credits',
+          url: 'https://app.myaiphotoshoot.com',
+          itemOffered: {
+            '@type': 'Service',
+            name: '1K AI photo generation',
+          },
+          ...offerPolicies,
+        },
+        {
+          '@type': 'Offer',
+          name: 'Pro',
+          url: 'https://app.myaiphotoshoot.com',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Up to 2K generation and Standard personal AI training',
+          },
+          ...offerPolicies,
+        },
+        {
+          '@type': 'Offer',
+          name: 'Max',
+          url: 'https://app.myaiphotoshoot.com',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Up to 4K generation and Full personal AI training',
+          },
+          ...offerPolicies,
+        },
+      ],
+    },
   };
 
   return (

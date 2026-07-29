@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { buildPresetAppUrl, buildPresetDescription, buildPresetProvidedDescription, formatPresetCostUsd } from '@/lib/ai-presets';
+import {
+  buildPresetAppUrl,
+  buildPresetDescription,
+  buildPresetProvidedDescription,
+  formatPresetCreditCost,
+} from '@/lib/ai-presets';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
 import type { AiPreset } from '@/types/ai-preset';
@@ -28,7 +33,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
   const imageAlt = preset.featured_graphics_alt?.trim() || t('imageAlt', { name: preset.name });
   const introParagraphs = splitParagraphs(preset.seo_intro);
   const faqItems = preset.faqs || [];
-  const formattedCost = formatPresetCostUsd(preset.cost, locale);
+  const formattedCost = formatPresetCreditCost(preset.cost_credits, locale);
   const tryPresetLabel = formattedCost ? `${t('tryPreset')} · ${formattedCost}` : t('tryPreset');
 
   const jsonLdGraph: Array<Record<string, unknown>> = [
@@ -52,9 +57,6 @@ export default async function AiPresetPage({ locale, preset }: Props) {
       description,
       image: imageUrls.length ? imageUrls : undefined,
       url: appUrl,
-      offers: formattedCost
-        ? { '@type': 'Offer', price: preset.cost, priceCurrency: 'USD', url: appUrl }
-        : undefined,
     },
     {
       '@type': 'BreadcrumbList',

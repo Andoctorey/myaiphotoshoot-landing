@@ -3,7 +3,6 @@
 import React from 'react';
 import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 import { serializeJsonLd } from '@/lib/json-ld';
-import { canonicalUrl } from '@/lib/seo';
 
 type Props = {
   idUrl: string; // canonical page URL without hash
@@ -20,10 +19,7 @@ export default function SoftwareApplicationJsonLd({
   applicationCategory = 'Photo & Video',
   inLanguage,
 }: Props) {
-  const offerPolicies = buildDigitalOfferPolicies({
-    priceCurrency: 'USD',
-    policyUrl: canonicalUrl(inLanguage || 'en', '/legal/'),
-  });
+  const offerPolicies = buildDigitalOfferPolicies();
 
   const webApp = {
     '@type': 'WebApplication',
@@ -70,4 +66,3 @@ export default function SoftwareApplicationJsonLd({
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
   );
 }
-

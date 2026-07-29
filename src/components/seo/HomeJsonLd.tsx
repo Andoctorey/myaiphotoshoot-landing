@@ -6,18 +6,22 @@ import { canonicalUrl } from '@/lib/seo';
 export default async function HomeJsonLd({ locale }: { locale: string }) {
   const tHero = await getTranslations({ locale, namespace: 'hero' });
   const description = tHero('description');
-  const offerPolicies = buildDigitalOfferPolicies({
-    priceCurrency: 'USD',
-    policyUrl: canonicalUrl(locale, '/legal/'),
-  });
+  const offerPolicies = buildDigitalOfferPolicies();
+  const pricingUrl = `${canonicalUrl(locale, '/')}#pricing`;
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: 'AI Headshot Generator',
-    brand: { '@type': 'Brand', name: 'My AI Photo Shoot' },
+    '@type': 'Service',
+    '@id': `${canonicalUrl(locale, '/')}#service`,
+    name: 'My AI Photo Shoot AI photo service',
+    serviceType: 'AI headshot, portrait, and photo generation',
+    provider: {
+      '@type': 'Organization',
+      '@id': 'https://myaiphotoshoot.com/#organization',
+      name: 'My AI Photo Shoot',
+    },
     description,
     url: canonicalUrl(locale, '/'),
-    image: 'https://myaiphotoshoot.com/og-image.png',
+    image: 'https://myaiphotoshoot.com/og-image-v2.png',
     category: 'AI headshot and portrait software',
     inLanguage: locale,
     isRelatedTo: [
@@ -33,29 +37,45 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
         ]
       }
     ],
-    offers: [
-      {
-        '@type': 'AggregateOffer',
-        name: 'One-time personal AI model training',
-        lowPrice: '5.99',
-        highPrice: '9.99',
-        offerCount: '2',
-        priceCurrency: 'USD',
-        url: `${canonicalUrl(locale, '/')}#pricing`,
-        ...offerPolicies,
-      },
-      {
-        '@type': 'AggregateOffer',
-        name: 'Per-image generation',
-        lowPrice: '0.03',
-        highPrice: '0.29',
-        offerCount: '10',
-        priceCurrency: 'USD',
-        url: `${canonicalUrl(locale, '/')}#pricing`,
-        ...offerPolicies,
-      }
-    ],
-    aggregateRating: undefined
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Credits and subscription plans',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          name: 'One-time credits',
+          category: 'Pay as you go',
+          url: pricingUrl,
+          itemOffered: {
+            '@type': 'Service',
+            name: '1K AI photo generation with one-time credits',
+          },
+          ...offerPolicies,
+        },
+        {
+          '@type': 'Offer',
+          name: 'Pro',
+          category: 'Subscription',
+          url: pricingUrl,
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Up to 2K AI photo generation and Standard personal AI training',
+          },
+          ...offerPolicies,
+        },
+        {
+          '@type': 'Offer',
+          name: 'Max',
+          category: 'Subscription',
+          url: pricingUrl,
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Up to 4K AI photo generation and Full personal AI training',
+          },
+          ...offerPolicies,
+        },
+      ],
+    },
   };
 
   return (

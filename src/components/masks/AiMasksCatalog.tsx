@@ -23,6 +23,7 @@ export default async function AiMasksCatalog({ locale, catalog }: Props) {
     after: t('after'),
     before: t('before'),
     categoryNav: t('categoryNav'),
+    creditCost: t.raw('creditCost') as string,
     female: t('genderFemale'),
     genderLabel: t('genderLabel'),
     male: t('genderMale'),
@@ -57,12 +58,6 @@ export default async function AiMasksCatalog({ locale, catalog }: Props) {
               operatingSystem: 'Web, iOS, Android',
               image: mask.featuredGraphics,
               url: AI_MASKS_APP_URL,
-              offers: {
-                '@type': 'Offer',
-                price: mask.priceUsd,
-                priceCurrency: 'USD',
-                url: AI_MASKS_APP_URL,
-              },
             },
           })),
         },
@@ -131,7 +126,7 @@ export default async function AiMasksCatalog({ locale, catalog }: Props) {
           </a>
         </header>
 
-        <MasksCatalogBrowser catalog={catalog} labels={labels} />
+        <MasksCatalogBrowser catalog={catalog} labels={labels} locale={locale} />
       </div>
     </div>
   );

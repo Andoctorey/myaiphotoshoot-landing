@@ -21,9 +21,37 @@ interface Props {
   initialUseCase?: UseCase;
 }
 
+const RETIRED_PRICE_PATTERN = /(?:\$(?:2\.99|4\.99|5\.99|9\.99|0\.03|0\.09|0\.19|0\.29)(?!\d)|(?:2,99|4,99|5,99|9,99|0,03|0,09|0,19|0,29)\s*\$)/i;
+const RETIRED_NO_SUBSCRIPTION_PATTERN = /(?:\b(?:with\s+)?no subscription required\b|\bsin suscripci[oó]n(?: obligatoria| requerida)?\b|\bkein(?:e|es)? abonnement erforderlich\b|\baucun abonnement (?:n['’]est )?requis\b|\bподписка не требуется\b|无需订阅|サブスクリプション不要|सदस्यता की आवश्यकता नहीं|لا يلزم اشتراك)/giu;
+
+function cleanUseCaseCopy(value: string): string {
+  const sentences = value
+    .replace(/\s+/g, ' ')
+    .trim()
+    .match(/[^!?。！？]*?(?:[!?。！？]+|\.(?=\s|$)|$)/gu)
+    ?.map((sentence) => sentence.trim())
+    .filter(Boolean) || [];
+
+  return sentences
+    .filter((sentence) => !RETIRED_PRICE_PATTERN.test(sentence))
+    .map((sentence) => sentence.replace(RETIRED_NO_SUBSCRIPTION_PATTERN, '').trim())
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+([,.;:!?。！？])/g, '$1')
+    .trim();
+}
+
+function cleanUseCaseTitle(value: string): string {
+  return value
+    .replace(RETIRED_PRICE_PATTERN, '')
+    .replace(RETIRED_NO_SUBSCRIPTION_PATTERN, '')
+    .replace(/\s*([|•·–—-])\s*(?=$)/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
 export default function UseCasePageClient({ slug, locale, initialUseCase }: Props) {
   const { useCase, isLoading } = useUseCase({ slug, locale, fallbackData: initialUseCase });
-  const tPricing = useTranslations('pricing');
   const tUseCase = useTranslations('useCase');
   const tNav = useTranslations('navigation');
   const tDownload = useTranslations('download');
@@ -67,14 +95,29 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   }
 
   const t = useCase.translations?.[locale] || useCase.translations?.['en'];
-  const title = useCase.title || t?.title || useCase.slug || 'Use case';
+  const rawTitle = useCase.title || t?.title || useCase.slug || 'Use case';
+  const title = cleanUseCaseTitle(rawTitle) || useCase.slug || 'Use case';
   const sectionsRaw = useCase.sections || t?.sections || [];
-  const sections = (sectionsRaw || []).filter(s => s.heading !== 'How It Works');
+  const sections = (sectionsRaw || [])
+    .filter((section) => section.heading !== 'How It Works')
+    .map((section) => ({
+      ...section,
+      body: section.body.map(cleanUseCaseCopy).filter(Boolean),
+    }))
+    .filter((section) => section.body.length > 0);
   const galleryRaw = useCase.gallery_photos || [];
   const gallery = Array.from(new Map((galleryRaw || []).filter(g => g && g.url).map(g => [g.url, g])).values());
-  const faqs = useCase.faqs || t?.faqs || [];
-  const benefits = (useCase.benefits || t?.benefits || []).filter(Boolean);
-  const description = useCase.meta_description || t?.meta_description || '';
+  const faqs = (useCase.faqs || t?.faqs || [])
+    .map((faq) => ({
+      q: cleanUseCaseTitle(faq.q),
+      a: cleanUseCaseCopy(faq.a) || tUseCase('offerSummary'),
+    }))
+    .filter((faq) => faq.q && faq.a);
+  const benefits = (useCase.benefits || t?.benefits || [])
+    .map(cleanUseCaseCopy)
+    .filter(Boolean);
+  const description = cleanUseCaseCopy(useCase.meta_description || t?.meta_description || '')
+    || tUseCase('offerSummary');
   const sectionSpacing = "mt-12 md:mt-16";
 
   // HowTo JSON-LD steps derived from on-page "How It Works" block (short and consistent)
@@ -189,11 +232,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             {description && (
               <p className="mt-3 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">{description}</p>
             )}
-            {/* Inline pricing under description */}
+            {/* Credit and subscription options */}
             <div className="mt-3 text-base text-gray-900 dark:text-gray-100">
-              <span className="font-semibold">{tPricing('personalPhotos')}: {tPricing('price')} {tPricing('perPhoto')}</span>
-              <span className="mx-2 text-gray-400">·</span>
-              <span>{tPricing('oneTimeFee')} <strong>{tPricing('oneTimeFeeAmount')}</strong></span>
+              <span className="font-semibold">{tUseCase('offerSummary')}</span>
             </div>
             {/* Conversion highlights */}
             <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
@@ -201,19 +242,19 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
                   <path d="M7.5 2.25l.77 2.36c.17.53.63.9 1.18.95l2.49.19-1.92 1.43c-.45.33-.64.9-.48 1.44l.74 2.41-1.98-1.36a1.25 1.25 0 00-1.43 0L5.4 11.03l.74-2.41c.16-.54-.03-1.11-.48-1.44L3.74 5.75l2.49-.19c.55-.04 1.01-.42 1.18-.95L7.5 2.25z"/>
                 </svg>
-                {tUseCase('badges.cheapest')}
+                {tUseCase('badges.oneTimeCredits')}
               </span>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-green-200 dark:border-green-900/40 bg-green-50/70 dark:bg-green-900/20 text-green-800 dark:text-green-200">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
                   <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/>
                 </svg>
-                {tUseCase('badges.noSubscription')}
+                {tUseCase('badges.proAccess')}
               </span>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-purple-200 dark:border-purple-900/40 bg-purple-50/70 dark:bg-purple-900/20 text-purple-800 dark:text-purple-200">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
                   <path d="M11.48 3.5a.75.75 0 011.04-.02l6 5.5a.75.75 0 11-1.02 1.1L12.75 5.1v14.15a.75.75 0 11-1.5 0V5.1L6.5 10.08a.75.75 0 01-1.02-1.1l6-5.5z"/>
                 </svg>
-                {tUseCase('badges.poweredByFlux')}
+                {tUseCase('badges.maxAccess')}
               </span>
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
@@ -226,7 +267,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 onClick={(e) => {
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
-                  trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+                  trackEventAndNavigate(
+                    'webapp_cta_click',
+                    'https://app.myaiphotoshoot.com',
+                    { section: 'use_case', placement: 'hero', slug }
+                  );
                 }}
               >
                 <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70 w-full sm:w-auto">
@@ -246,7 +291,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   onClick={(e) => {
                     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                     e.preventDefault();
-                    trackEventAndNavigate('google_play_cta_click', 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug));
+                    trackEventAndNavigate(
+                      'google_play_cta_click',
+                      'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug),
+                      { section: 'use_case', placement: 'hero', slug }
+                    );
                   }}
                 >
                   <Image alt={tDownload('mobileApps.googlePlay')} src='/images/google-play-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
@@ -260,7 +309,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   onClick={(e) => {
                     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                     e.preventDefault();
-                    trackEventAndNavigate('app_store_cta_click', 'https://apps.apple.com/app/id6744860178');
+                    trackEventAndNavigate(
+                      'app_store_cta_click',
+                      'https://apps.apple.com/app/id6744860178',
+                      { section: 'use_case', placement: 'hero', slug }
+                    );
                   }}
                 >
                   <Image alt={tDownload('mobileApps.appStore')} src='/images/app-store-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
@@ -444,7 +497,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                     onClick={(e) => {
                       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                       e.preventDefault();
-                      trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+                      trackEventAndNavigate(
+                        'webapp_cta_click',
+                        'https://app.myaiphotoshoot.com',
+                        { section: 'use_case', placement: 'content_cta', slug }
+                      );
                     }}
                   >
                     <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">{tDownload('webApp.button')}</span>
@@ -515,22 +572,27 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </section>
       )}
 
-      {/* Pricing (moved to end, highlighted card) */}
-      <section className={sectionSpacing} aria-label={tPricing('title')}>
+      {/* Credit and subscription options */}
+      <section className={sectionSpacing} aria-label={tUseCase('pricingCard.title')}>
         <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 sm:p-7 flex items-start justify-between gap-6 flex-wrap">
           <div className="min-w-0">
-            <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-200">{tPricing('title')}</h3>
+            <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-200">{tUseCase('pricingCard.title')}</h3>
+            <p className="mt-2 text-gray-700 dark:text-gray-300">{tUseCase('pricingCard.description')}</p>
             <ul className="mt-2 space-y-1 text-gray-900 dark:text-gray-100">
-              <li>{tPricing('oneTimeFee')} <strong>{tPricing('oneTimeFeeAmount')}</strong></li>
-              <li>{tPricing('personalPhotos')}: <strong>{tPricing('price')}</strong> {tPricing('perPhoto')}</li>
-              <li>{tPricing('noSubscriptionShort')}</li>
+              <li>{tUseCase('pricingCard.payg')}</li>
+              <li>{tUseCase('pricingCard.pro')}</li>
+              <li>{tUseCase('pricingCard.max')}</li>
             </ul>
           </div>
           <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
             onClick={(e) => {
               if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
               e.preventDefault();
-              trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+              trackEventAndNavigate(
+                'webapp_cta_click',
+                'https://app.myaiphotoshoot.com',
+                { section: 'use_case', placement: 'pricing_card', slug }
+              );
             }}
           >
             <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">{tDownload('webApp.button')}</span>
@@ -549,7 +611,11 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           onClick={(e) => {
             if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
             e.preventDefault();
-            trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+            trackEventAndNavigate(
+              'webapp_cta_click',
+              'https://app.myaiphotoshoot.com',
+              { section: 'use_case', placement: 'sticky_mobile', slug }
+            );
           }}
         >
           <div className="rounded-full shadow-xl bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center py-3.5 px-7 font-semibold text-base tracking-tight ring-1 ring-purple-500/40">
@@ -557,7 +623,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden>
                 <path fillRule="evenodd" d="M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0zm8.03-3.28a.75.75 0 10-1.06 1.06L12.94 12l-1.47 1.47a.75.75 0 101.06 1.06L14.06 13.06a1.5 1.5 0 000-2.12L12.53 8.72z" clipRule="evenodd" />
               </svg>
-                <span>{tUseCase('stickyCta.label', { oneTimeFee: tPricing('oneTimeFeeAmount'), price: tPricing('price'), perPhoto: tPricing('perPhoto') })}</span>
+                <span>{tUseCase('stickyCta.label')}</span>
             </span>
           </div>
         </a>
