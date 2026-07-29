@@ -128,12 +128,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const url = `${BASE_URL}${localePath(locale, currentPath)}`;
     const imageUrl = typeof post.featured_image_url === 'string'
       ? post.featured_image_url
-      : 'https://myaiphotoshoot.com/og-image-v2.jpg';
+      : 'https://myaiphotoshoot.com/og-image-v2.jpg?v=3';
 
     // Infer MIME type from URL extension for better OG accuracy
     const inferMimeFromUrl = (url: string | null | undefined): string | null => {
       if (!url || typeof url !== 'string') return null;
-      const lower = url.toLowerCase();
+      const lower = url.toLowerCase().split(/[?#]/, 1)[0];
       if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'image/jpeg';
       if (lower.endsWith('.png')) return 'image/png';
       if (lower.endsWith('.webp')) return 'image/webp';

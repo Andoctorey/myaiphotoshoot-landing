@@ -21,7 +21,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "Générateur de portraits IA | My AI Photo Shoot",
-      "metaDescription": "Créez des portraits IA réalistes à partir de selfies. Achetez des crédits ou choisissez Pro ou Max pour entraîner votre modèle personnel et générer jusqu’en 4K."
+      "metaDescription": "Créez des portraits IA réalistes à partir de selfies. Achetez des crédits ou choisissez Pro ou Max pour entraîner votre modèle personnel et générer jusqu’en 4K.",
+      "shareTitle": "Des photos IA qui vous ressemblent vraiment",
+      "shareDescription": "Créez des photos IA réalistes depuis vos selfies. Testez des styles prêts à l’emploi ou entraînez votre modèle pour créer des photos qui vous ressemblent."
     },
     "useCases": {
       "title": "Usages de la photo IA",
@@ -412,7 +414,9 @@
   "models": {
     "meta": {
       "title": "Modèles IA, coûts en crédits et accès par forfait",
-      "description": "Comparez les coûts en crédits, la résolution et l’accès avec paiement à l’usage, Pro ou Max pour les modèles d’IA personnels, la génération d’images et la retouche photo."
+      "description": "Comparez les coûts en crédits, la résolution et l’accès avec paiement à l’usage, Pro ou Max pour les modèles d’IA personnels, la génération d’images et la retouche photo.",
+      "shareTitle": "Des modèles IA pour chaque photo",
+      "shareDescription": "Découvrez les modèles IA les mieux adaptés aux photos personnelles, aux images créées à partir de prompts et à la retouche de photos existantes."
     },
     "breadcrumb": "Modèles",
     "eyebrow": "Modèles IA compatibles",

@@ -21,7 +21,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "AIヘッドショット生成 | My AI Photo Shoot",
-      "metaDescription": "セルフィーからリアルなAIヘッドショットやポートレートを作成。1回払いのクレジット、またはPro・MaxでパーソナルAI学習と最大4Kを利用できます。"
+      "metaDescription": "セルフィーからリアルなAIヘッドショットやポートレートを作成。1回払いのクレジット、またはPro・MaxでパーソナルAI学習と最大4Kを利用できます。",
+      "shareTitle": "あなたらしさを保つAI写真",
+      "shareDescription": "セルフィーからリアルなAI写真を作成。用意されたスタイルを試すか、パーソナルAIモデルを学習して、どんなプロンプトもあなたらしい写真に変えられます。"
     },
     "useCases": {
       "title": "AI写真の活用例",
@@ -412,7 +414,9 @@
   "models": {
     "meta": {
       "title": "AIモデル、クレジット消費量、プラン別アクセス",
-      "description": "パーソナルAIモデル、画像生成、写真編集について、クレジット消費量、解像度、従量課金・Pro・Maxのアクセスを比較できます。"
+      "description": "パーソナルAIモデル、画像生成、写真編集について、クレジット消費量、解像度、従量課金・Pro・Maxのアクセスを比較できます。",
+      "shareTitle": "あらゆる写真に合うAIモデル",
+      "shareDescription": "自分の写真、プロンプトからの新規画像作成、既存写真の編集に最適なAIモデルを見つけましょう。"
     },
     "breadcrumb": "モデル",
     "eyebrow": "対応AIモデル",

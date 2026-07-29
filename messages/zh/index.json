@@ -21,7 +21,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "AI 头像生成器 | My AI Photo Shoot",
-      "metaDescription": "根据自拍生成逼真的 AI 头像照和肖像。购买一次性积分即可开始，或选择 Pro 或 Max，解锁个人 AI 训练和最高 4K 画质。"
+      "metaDescription": "根据自拍生成逼真的 AI 头像照和肖像。购买一次性积分即可开始，或选择 Pro 或 Max，解锁个人 AI 训练和最高 4K 画质。",
+      "shareTitle": "看起来依然像你的 AI 照片",
+      "shareDescription": "用自拍照创建逼真的 AI 照片。探索现成风格或训练个人 AI 模型，再将任意提示词变成依然像你的照片。"
     },
     "useCases": {
       "title": "AI 照片使用场景",
@@ -412,7 +414,9 @@
   "models": {
     "meta": {
       "title": "AI 模型、积分费用和套餐权限",
-      "description": "比较个人 AI 模型、图像生成和照片编辑的积分费用、分辨率，以及按量付费、Pro 或 Max 权限。"
+      "description": "比较个人 AI 模型、图像生成和照片编辑的积分费用、分辨率，以及按量付费、Pro 或 Max 权限。",
+      "shareTitle": "适合各种照片的 AI 模型",
+      "shareDescription": "了解哪些 AI 模型最适合个人照片、根据提示词创建新图像，以及编辑现有照片。"
     },
     "breadcrumb": "模型",
     "eyebrow": "支持的 AI 模型",

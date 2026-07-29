@@ -58,13 +58,13 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "AI Headshot Generator - Realistic Profile Photos From Selfies",
-    description: "Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K generation with Pro or Max.",
+    title: "AI Photos That Still Look Like You",
+    description: "Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.",
     url: "https://myaiphotoshoot.com",
     siteName: "My AI Photo Shoot",
     images: [
       {
-        url: "/og-image-v2.jpg",
+        url: "/og-image-v2.jpg?v=3",
         width: 1200,
         height: 630,
         alt: "My AI Photo Shoot AI headshot examples",
@@ -75,9 +75,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Headshot Generator - Realistic Profile Photos From Selfies",
-    description: "Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K generation with Pro or Max.",
-    images: [{ url: "/og-image-v2.jpg", alt: "My AI Photo Shoot AI headshot examples" }],
+    title: "AI Photos That Still Look Like You",
+    description: "Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.",
+    images: [{ url: "/og-image-v2.jpg?v=3", alt: "My AI Photo Shoot AI headshot examples" }],
   },
 };
 

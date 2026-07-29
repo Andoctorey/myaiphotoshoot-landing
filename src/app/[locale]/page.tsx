@@ -40,6 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       home?: {
         metaDescription?: string;
         metaTitle?: string;
+        shareDescription?: string;
+        shareTitle?: string;
       };
     };
   };
@@ -47,6 +49,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = m.pageCopy?.home?.metaTitle || 'AI Headshot Generator | My AI Photo Shoot';
   const description = m.pageCopy?.home?.metaDescription
     || 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K with Pro or Max.';
+  const shareTitle = m.pageCopy?.home?.shareTitle || 'AI Photos That Still Look Like You';
+  const shareDescription = m.pageCopy?.home?.shareDescription
+    || 'Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.';
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -63,18 +68,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     openGraph: {
-      // Keep richer OG title for social sharing
-      title,
-      description,
+      title: shareTitle,
+      description: shareDescription,
       url: canonicalUrl(locale, '/'),
       siteName: 'My AI Photo Shoot',
       type: 'website',
       images: [
         {
-          url: '/og-image-v2.jpg',
+          url: '/og-image-v2.jpg?v=3',
           width: 1200,
           height: 630,
-          alt: title,
+          alt: shareTitle,
         },
       ],
       locale: ogLocaleFromAppLocale(locale),
@@ -82,9 +86,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
-      images: [{ url: '/og-image-v2.jpg', alt: title }],
+      title: shareTitle,
+      description: shareDescription,
+      images: [{ url: '/og-image-v2.jpg?v=3', alt: shareTitle }],
     },
   };
 }

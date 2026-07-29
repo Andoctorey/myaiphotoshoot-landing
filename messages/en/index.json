@@ -21,7 +21,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "AI Headshot Generator | My AI Photo Shoot",
-      "metaDescription": "Create realistic AI headshots and portraits from selfies. Buy one-time credits, or choose Pro or Max for personal AI training and images up to 4K."
+      "metaDescription": "Create realistic AI headshots and portraits from selfies. Buy one-time credits, or choose Pro or Max for personal AI training and images up to 4K.",
+      "shareTitle": "AI Photos That Still Look Like You",
+      "shareDescription": "Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you."
     },
     "useCases": {
       "title": "AI Photo Use Cases",
@@ -412,7 +414,9 @@
   "models": {
     "meta": {
       "title": "AI Models, Credit Costs, and Plan Access",
-      "description": "Compare credit costs, resolution, and Pay as You Go, Pro, or Max access for personal AI models, image generation, and photo editing."
+      "description": "Compare credit costs, resolution, and Pay as You Go, Pro, or Max access for personal AI models, image generation, and photo editing.",
+      "shareTitle": "AI Models for Every Photo",
+      "shareDescription": "Explore which AI models work best for personal photos, new images from prompts, and edits to existing photos."
     },
     "breadcrumb": "Models",
     "eyebrow": "Supported AI models",

@@ -32,11 +32,23 @@ export default async function Home() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const messages = await loadMessages('en');
-  type HomePageCopy = { pageCopy?: { home?: { metaDescription?: string; metaTitle?: string } } };
+  type HomePageCopy = {
+    pageCopy?: {
+      home?: {
+        metaDescription?: string;
+        metaTitle?: string;
+        shareDescription?: string;
+        shareTitle?: string;
+      };
+    };
+  };
   const pageCopy = (messages as HomePageCopy).pageCopy?.home;
   const description = pageCopy?.metaDescription
     || 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K with Pro or Max.';
   const title = pageCopy?.metaTitle || 'AI Headshot Generator | My AI Photo Shoot';
+  const shareTitle = pageCopy?.shareTitle || 'AI Photos That Still Look Like You';
+  const shareDescription = pageCopy?.shareDescription
+    || 'Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.';
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -53,14 +65,13 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     openGraph: {
-      // Keep richer OG title for social sharing
-      title: 'AI Headshot Generator - Realistic Profile Photos From Selfies',
-      description,
+      title: shareTitle,
+      description: shareDescription,
       url: 'https://myaiphotoshoot.com/',
       siteName: 'My AI Photo Shoot',
       images: [
         {
-          url: '/og-image-v2.jpg',
+          url: '/og-image-v2.jpg?v=3',
           width: 1200,
           height: 630,
           alt: 'My AI Photo Shoot AI headshot examples',
@@ -72,9 +83,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'AI Headshot Generator - Realistic Profile Photos From Selfies',
-      description,
-      images: [{ url: '/og-image-v2.jpg', alt: 'My AI Photo Shoot AI headshot examples' }],
+      title: shareTitle,
+      description: shareDescription,
+      images: [{ url: '/og-image-v2.jpg?v=3', alt: 'My AI Photo Shoot AI headshot examples' }],
     },
   };
 }

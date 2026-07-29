@@ -8,6 +8,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations({ locale: defaultLocale, namespace: 'models.meta' });
   const title = t('title');
   const description = t('description');
+  const shareTitle = t('shareTitle');
+  const shareDescription = t('shareDescription');
 
   return {
     title: { absolute: `${title} | My AI Photo Shoot` },
@@ -25,14 +27,14 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     openGraph: {
-      title,
-      description,
+      title: shareTitle,
+      description: shareDescription,
       url: canonicalUrl(defaultLocale, '/models/'),
       siteName: 'My AI Photo Shoot',
       type: 'website',
       images: [
         {
-          url: '/og-image-v2.jpg',
+          url: '/og-image-v2.jpg?v=3',
           width: 1200,
           height: 630,
           alt: 'My AI Photo Shoot AI photo model examples',
@@ -43,9 +45,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
-      images: [{ url: '/og-image-v2.jpg', alt: title }],
+      title: shareTitle,
+      description: shareDescription,
+      images: [{ url: '/og-image-v2.jpg?v=3', alt: shareTitle }],
     },
   };
 }

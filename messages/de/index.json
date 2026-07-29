@@ -21,7 +21,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "KI-Headshot-Generator | My AI Photo Shoot",
-      "metaDescription": "Erstellen Sie realistische KI-Headshots und Porträts aus Selfies. Kaufen Sie Credits oder wählen Sie Pro oder Max für persönliches KI-Training und bis zu 4K."
+      "metaDescription": "Erstellen Sie realistische KI-Headshots und Porträts aus Selfies. Kaufen Sie Credits oder wählen Sie Pro oder Max für persönliches KI-Training und bis zu 4K.",
+      "shareTitle": "KI-Fotos, die immer noch wie Sie aussehen",
+      "shareDescription": "Erstellen Sie realistische KI-Fotos aus Selfies. Nutzen Sie fertige Stile oder trainieren Sie Ihr Modell für Fotos aus jedem Prompt, die wie Sie aussehen."
     },
     "useCases": {
       "title": "Anwendungsfälle für KI-Fotos",
@@ -412,7 +414,9 @@
   "models": {
     "meta": {
       "title": "KI-Modelle, Credit-Kosten und Tarifzugang",
-      "description": "Vergleichen Sie Credit-Kosten, Auflösung und den Zugang mit nutzungsbasierter Abrechnung, Pro oder Max für persönliche KI-Modelle, Bildgenerierung und Fotobearbeitung."
+      "description": "Vergleichen Sie Credit-Kosten, Auflösung und den Zugang mit nutzungsbasierter Abrechnung, Pro oder Max für persönliche KI-Modelle, Bildgenerierung und Fotobearbeitung.",
+      "shareTitle": "KI-Modelle für jedes Foto",
+      "shareDescription": "Entdecken Sie, welche KI-Modelle sich am besten für persönliche Fotos, neue Bilder aus Prompts und die Bearbeitung vorhandener Fotos eignen."
     },
     "breadcrumb": "Modelle",
     "eyebrow": "Unterstützte KI-Modelle",
