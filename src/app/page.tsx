@@ -31,8 +31,12 @@ export default async function Home() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const description = 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K generation with Pro or Max.';
-  const title = 'AI Headshot Generator - My AI Photo Shoot';
+  const messages = await loadMessages('en');
+  type HomePageCopy = { pageCopy?: { home?: { metaDescription?: string; metaTitle?: string } } };
+  const pageCopy = (messages as HomePageCopy).pageCopy?.home;
+  const description = pageCopy?.metaDescription
+    || 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K with Pro or Max.';
+  const title = pageCopy?.metaTitle || 'AI Headshot Generator | My AI Photo Shoot';
   return {
     title: { absolute: title }, // concise HTML title
     description,

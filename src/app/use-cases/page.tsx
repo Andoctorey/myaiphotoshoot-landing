@@ -4,21 +4,35 @@ import { defaultLocale, locales } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { loadMessages } from '@/lib/i18n-messages';
 
-type UseCasesI18n = { navigation?: { noUseCases?: string; useCases?: string } };
+type UseCasesI18n = {
+  navigation?: { noUseCases?: string };
+  pageCopy?: {
+    useCases?: {
+      intro?: string;
+      metaDescription?: string;
+      metaTitle?: string;
+      title?: string;
+    };
+  };
+};
 
 function getUseCasesLabels(messages: unknown) {
   const m = messages as UseCasesI18n;
   return {
-    title: typeof m.navigation?.useCases === 'string' ? m.navigation.useCases : 'Use Cases',
+    title: m.pageCopy?.useCases?.title || 'AI Photo Use Cases',
+    intro: m.pageCopy?.useCases?.intro
+      || 'Discover ways to create professional headshots, dating profile photos, social content, and creative portraits with AI.',
+    metaTitle: m.pageCopy?.useCases?.metaTitle || 'AI Photo Use Cases',
+    metaDescription: m.pageCopy?.useCases?.metaDescription
+      || 'Explore AI photo use cases for professional headshots, dating profiles, social media, marketing, and creative portraits.',
     emptyLabel: typeof m.navigation?.noUseCases === 'string' ? m.navigation.noUseCases : 'No use cases yet',
   };
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   const messages = await loadMessages(defaultLocale);
-  const { title: titleBase } = getUseCasesLabels(messages);
+  const { metaDescription: description, metaTitle: titleBase } = getUseCasesLabels(messages);
   const socialTitle = `${titleBase} | My AI Photo Shoot`;
-  const description = 'Explore AI photo generation use cases for headshots, dating profiles, social media, marketing, and personal projects.';
 
   return {
     title: titleBase,
@@ -56,5 +70,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function UseCasesPage() {
   const labels = getUseCasesLabels(await loadMessages(defaultLocale));
-  return <UseCasesIndex locale={defaultLocale} title={labels.title} emptyLabel={labels.emptyLabel} />;
+  return (
+    <UseCasesIndex
+      locale={defaultLocale}
+      title={labels.title}
+      intro={labels.intro}
+      emptyLabel={labels.emptyLabel}
+    />
+  );
 }

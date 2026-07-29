@@ -12,7 +12,23 @@
     "noUseCases": "Aucun cas d’usage pour le moment",
     "language": "Langue",
     "masks": "Masques",
-    "models": "Modèles"
+    "models": "Modèles",
+    "skipToContent": "Aller au contenu principal",
+    "mainNavigation": "Navigation principale",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "pageCopy": {
+    "home": {
+      "metaTitle": "Générateur de portraits IA | My AI Photo Shoot",
+      "metaDescription": "Créez des portraits IA réalistes à partir de selfies. Achetez des crédits ou choisissez Pro ou Max pour entraîner votre modèle personnel et générer jusqu’en 4K."
+    },
+    "useCases": {
+      "title": "Usages de la photo IA",
+      "intro": "Découvrez comment créer des portraits professionnels, des photos de profil, du contenu social et des portraits créatifs avec l’IA.",
+      "metaTitle": "Usages de la photo IA",
+      "metaDescription": "Explorez les usages de la photo IA pour les portraits professionnels, les profils de rencontre, les réseaux sociaux, le marketing et la création."
+    }
   },
   "presets": {
     "title": "Préréglages photo IA",

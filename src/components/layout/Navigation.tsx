@@ -75,6 +75,11 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        if (isLanguageMenuOpen) {
+          languageButtonRef.current?.focus();
+        } else if (isUseCasesMenuOpen) {
+          useCasesButtonRef.current?.focus();
+        }
         setIsLanguageMenuOpen(false);
         setIsUseCasesMenuOpen(false);
         setMobileMenuOpen(false);
@@ -83,7 +88,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isLanguageMenuOpen, isUseCasesMenuOpen]);
 
   // Add click outside listener to close language menu
   useEffect(() => {
@@ -172,13 +177,13 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
       data-scrolled={isScrolled}
       role="banner"
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label={t('mainNavigation')}>
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <a
               href={isHomePage ? "#" : homePath}
-              className="flex items-center"
-              aria-label="My AI Photo Shoot - Home"
+              className="flex items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+              aria-label={`My AI Photo Shoot — ${t('home')}`}
             >
               <div className="h-11 w-11 relative">
                 <picture>
@@ -196,12 +201,12 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
             </a>
           </div>
           <div className="hidden md:block">
-            <div className="ltr:ml-10 rtl:mr-10 flex items-center space-x-1 rtl:space-x-reverse lg:space-x-2" role="navigation">
+            <div className="ltr:ml-10 rtl:mr-10 flex items-center space-x-1 rtl:space-x-reverse lg:space-x-2">
               {navItemsBeforeUseCases.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 >
                   {item.name}
                 </a>
@@ -210,11 +215,12 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
               <div className="relative">
                 <button
                   ref={useCasesButtonRef}
+                  id="usecases-dropdown"
+                  type="button"
                   onClick={() => setIsUseCasesMenuOpen(!isUseCasesMenuOpen)}
                   aria-expanded={isUseCasesMenuOpen}
-                  aria-haspopup="listbox"
                   aria-controls="usecases-menu"
-                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 >
                   {t('useCases')}
                   <svg className="inline ltr:ml-1 rtl:mr-1 h-4 w-4 align-middle" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
@@ -224,27 +230,24 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                     ref={useCasesMenuRef}
                     id="usecases-menu"
                     className="absolute ltr:left-0 rtl:right-0 mt-2 w-80 max-h-96 overflow-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
-                    role="listbox"
-                    aria-label={t('useCases')}
                   >
-                    <div className="py-1" role="presentation">
-                      {useCases.length === 0 ? (
-                        <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300">{t('noUseCases')}</div>
-                      ) : (
-                        useCases.map((uc) => (
-                          <a
-                            key={uc.slug}
-                            href={localePath(locale, `/use-cases/${uc.slug}/`)}
-                            className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                            role="option"
-                            aria-selected="false"
-                            onClick={() => setIsUseCasesMenuOpen(false)}
-                          >
-                            {uc.title}
-                          </a>
-                        ))
-                      )}
-                    </div>
+                    {useCases.length === 0 ? (
+                      <p className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300">{t('noUseCases')}</p>
+                    ) : (
+                      <ul className="py-1" aria-labelledby="usecases-dropdown">
+                        {useCases.map((uc) => (
+                          <li key={uc.slug}>
+                            <a
+                              href={localePath(locale, `/use-cases/${uc.slug}/`)}
+                              className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:bg-purple-50 focus-visible:text-purple-700 dark:focus-visible:bg-purple-900/50 dark:focus-visible:text-purple-300"
+                              onClick={() => setIsUseCasesMenuOpen(false)}
+                            >
+                              {uc.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 )}
               </div>
@@ -252,7 +255,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 >
                   {item.name}
                 </a>
@@ -261,7 +264,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 href={appLink.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 onClick={(e) => {
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
@@ -278,11 +281,13 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
               <div className="relative">
                 <button
                   ref={languageButtonRef}
-                  className="flex items-center px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  id="language-dropdown"
+                  type="button"
+                  className="flex items-center px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                   onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
                   aria-expanded={isLanguageMenuOpen}
-                  aria-haspopup="listbox"
                   aria-controls="language-menu"
+                  aria-label={`${t('language')}: ${getLanguageDisplayName(locale)}`}
                 >
                   <span className="uppercase">{locale}</span>
                   <svg className="ltr:ml-1 rtl:mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -295,28 +300,26 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                     ref={languageMenuRef}
                     id="language-menu"
                     className="absolute ltr:right-0 rtl:left-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-50"
-                    role="listbox"
-                    aria-labelledby="language-dropdown"
                   >
-                    <div className="py-1" role="presentation">
+                    <ul className="py-1" aria-labelledby="language-dropdown">
                       {locales.map((l) => (
-                        <button
-                          key={l}
-                          onClick={() => handleLanguageChange(l)}
-                          className={`flex items-center justify-between w-full px-4 py-2 text-sm transition-colors duration-150 ${
-                            l === locale
-                              ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
-                              : 'text-gray-700 dark:text-gray-300'
-                          } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:bg-purple-50 dark:focus:bg-purple-900/50 focus:text-purple-700 dark:focus:text-purple-300`}
-                          role="option"
-                          aria-selected={l === locale}
-                          tabIndex={0}
-                        >
-                          <span className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
-                          <span className="ltr:ml-2 rtl:mr-2 text-xs text-gray-500 dark:text-gray-400 uppercase">{l}</span>
-                        </button>
+                        <li key={l}>
+                          <button
+                            type="button"
+                            onClick={() => handleLanguageChange(l)}
+                            className={`flex items-center justify-between w-full px-4 py-2 text-sm transition-colors duration-150 ${
+                              l === locale
+                                ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
+                                : 'text-gray-700 dark:text-gray-300'
+                            } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus-visible:bg-purple-50 focus-visible:text-purple-700 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-500 dark:focus-visible:bg-purple-900/50 dark:focus-visible:text-purple-300`}
+                            aria-current={l === locale ? 'true' : undefined}
+                          >
+                            <span lang={l} className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
+                            <span className="ltr:ml-2 rtl:mr-2 text-xs text-gray-500 dark:text-gray-400 uppercase">{l}</span>
+                          </button>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 )}
               </div>
@@ -327,7 +330,8 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
           <div className="md:hidden flex items-center gap-2">
             <ThemeToggle />
             <button
-              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
+              type="button"
+              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 ${
                 isScrolled
                   ? 'text-gray-900 hover:text-primary dark:text-gray-100 dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700'
                   : 'text-gray-900 hover:text-primary dark:text-white dark:hover:text-purple-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -335,10 +339,10 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={mobileMenuOpen ? t('closeMenu') : t('openMenu')}
             >
               <span className="sr-only">
-                {mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
+                {mobileMenuOpen ? t('closeMenu') : t('openMenu')}
               </span>
               {mobileMenuOpen ? (
                 <svg
@@ -370,14 +374,13 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div id="mobile-menu" className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md mt-2 shadow-lg dark:shadow-gray-900" role="menu">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md mt-2 shadow-lg dark:shadow-gray-900">
               {navItemsBeforeUseCases.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={handleNavLinkClick}
-                  role="menuitem"
                 >
                   {item.name}
                 </a>
@@ -386,7 +389,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
               <div className="mt-2">
                 <button
                   type="button"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={() => setIsMobileUseCasesOpen(!isMobileUseCasesOpen)}
                   aria-expanded={isMobileUseCasesOpen}
                   aria-controls="mobile-usecases-list"
@@ -399,19 +402,19 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                     {useCases.length === 0 ? (
                       <div className="px-3 py-2 text-gray-600 dark:text-gray-300 text-sm">{t('noUseCases')}</div>
                     ) : (
-                      <div className="max-h-64 overflow-auto">
+                      <ul className="max-h-64 overflow-auto" aria-label={t('useCases')}>
                         {useCases.map((uc) => (
-                          <a
-                            key={uc.slug}
-                            href={localePath(locale, `/use-cases/${uc.slug}/`)}
-                            className="block px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary text-sm"
-                            onClick={handleNavLinkClick}
-                            role="menuitem"
-                          >
-                            {uc.title}
-                          </a>
+                          <li key={uc.slug}>
+                            <a
+                              href={localePath(locale, `/use-cases/${uc.slug}/`)}
+                              className="block rounded-md px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                              onClick={handleNavLinkClick}
+                            >
+                              {uc.title}
+                            </a>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     )}
                   </div>
                 )}
@@ -420,9 +423,8 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={handleNavLinkClick}
-                  role="menuitem"
                 >
                   {item.name}
                 </a>
@@ -431,14 +433,13 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 href={appLink.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                 onClick={(e) => {
                   handleNavLinkClick();
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
                   trackEventAndNavigate(appLink.event, appLink.url);
                 }}
-                role="menuitem"
               >
                 {t('download')}
               </a>
@@ -447,7 +448,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
               <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" role="group" aria-label={t('language')}>
                 <button
                   type="button"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={() => setIsMobileLanguageOpen(!isMobileLanguageOpen)}
                   aria-expanded={isMobileLanguageOpen}
                   aria-controls="mobile-language-list"
@@ -456,23 +457,25 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                   <svg className={`h-5 w-5 transition-transform ${isMobileLanguageOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
                 </button>
                 {isMobileLanguageOpen && (
-                  <div id="mobile-language-list" className="mt-1 px-2 space-y-1">
+                  <ul id="mobile-language-list" className="mt-1 space-y-1 px-2">
                     {locales.map((l) => (
-                      <button
-                        key={l}
-                        onClick={() => handleLanguageChange(l)}
-                        className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 ${
-                          l === locale
-                            ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
-                            : 'text-gray-700 dark:text-gray-300'
-                        } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800`}
-                        aria-pressed={l === locale}
-                      >
-                        <span className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
-                        <span className="ltr:ml-2 rtl:mr-2 text-sm text-gray-500 dark:text-gray-400 uppercase">{l}</span>
-                      </button>
+                      <li key={l}>
+                        <button
+                          type="button"
+                          onClick={() => handleLanguageChange(l)}
+                          className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 ${
+                            l === locale
+                              ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
+                              : 'text-gray-700 dark:text-gray-300'
+                          } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800`}
+                          aria-current={l === locale ? 'true' : undefined}
+                        >
+                          <span lang={l} className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
+                          <span className="ltr:ml-2 rtl:mr-2 text-sm text-gray-500 dark:text-gray-400 uppercase">{l}</span>
+                        </button>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
               </div>
             </div>

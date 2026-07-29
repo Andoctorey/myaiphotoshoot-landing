@@ -101,6 +101,16 @@ test('all locales provide the pricing, use-case, model, and mask copy used by th
   const requiredPaths = [
     'hero.description',
     'hero.microcopy',
+    'navigation.skipToContent',
+    'navigation.mainNavigation',
+    'navigation.openMenu',
+    'navigation.closeMenu',
+    'pageCopy.home.metaTitle',
+    'pageCopy.home.metaDescription',
+    'pageCopy.useCases.title',
+    'pageCopy.useCases.intro',
+    'pageCopy.useCases.metaTitle',
+    'pageCopy.useCases.metaDescription',
     'pricing.referenceDisclosure',
     'pricing.creditsNeverExpire',
     'pricing.noTrial',
@@ -140,16 +150,49 @@ test('all locales provide the pricing, use-case, model, and mask copy used by th
   }
 });
 
-test('localized pricing and model schemas stay in lockstep with English', async () => {
+test('localized pricing, model, and page-copy schemas stay in lockstep with English', async () => {
   const english = JSON.parse(await readProjectFile('messages/en/index.json'));
 
   for (const locale of localeCodes.filter((code) => code !== 'en')) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
-    for (const namespace of ['pricing', 'models']) {
+    for (const namespace of ['pricing', 'models', 'pageCopy']) {
       assert.deepEqual(
         leafPaths(messages[namespace]),
         leafPaths(english[namespace]),
         `${locale}.${namespace} keys differ from English`,
+      );
+    }
+  }
+});
+
+test('localized page metadata stays concise and translated', async () => {
+  const english = JSON.parse(await readProjectFile('messages/en/index.json'));
+
+  for (const locale of localeCodes) {
+    const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    const { home, useCases } = messages.pageCopy;
+
+    assert.ok([...home.metaTitle].length <= 60, `${locale} home meta title is too long`);
+    assert.ok([...home.metaDescription].length <= 160, `${locale} home meta description is too long`);
+    assert.ok(
+      [...`${useCases.metaTitle} | My AI Photo Shoot`].length <= 60,
+      `${locale} use-cases meta title is too long`,
+    );
+    assert.ok(
+      [...useCases.metaDescription].length <= 160,
+      `${locale} use-cases meta description is too long`,
+    );
+
+    if (locale !== 'en') {
+      assert.notEqual(
+        home.metaDescription,
+        english.pageCopy.home.metaDescription,
+        `${locale} home meta description is still English`,
+      );
+      assert.notEqual(
+        useCases.metaDescription,
+        english.pageCopy.useCases.metaDescription,
+        `${locale} use-cases meta description is still English`,
       );
     }
   }

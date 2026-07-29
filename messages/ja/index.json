@@ -12,7 +12,23 @@
     "noUseCases": "活用例はまだありません",
     "language": "言語",
     "masks": "マスク",
-    "models": "モデル"
+    "models": "モデル",
+    "skipToContent": "メインコンテンツへ移動",
+    "mainNavigation": "メインナビゲーション",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる"
+  },
+  "pageCopy": {
+    "home": {
+      "metaTitle": "AIヘッドショット生成 | My AI Photo Shoot",
+      "metaDescription": "セルフィーからリアルなAIヘッドショットやポートレートを作成。1回払いのクレジット、またはPro・MaxでパーソナルAI学習と最大4Kを利用できます。"
+    },
+    "useCases": {
+      "title": "AI写真の活用例",
+      "intro": "AIでプロ用ヘッドショット、デートプロフィール、SNSコンテンツ、クリエイティブなポートレートを作る方法をご紹介します。",
+      "metaTitle": "AI写真の活用例",
+      "metaDescription": "プロ用ヘッドショット、デートプロフィール、SNS、マーケティング、クリエイティブポートレートでのAI写真活用例をご覧ください。"
+    }
   },
   "presets": {
     "title": "AI写真プリセット",

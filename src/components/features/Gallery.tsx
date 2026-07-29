@@ -11,6 +11,7 @@ const PAGE_SIZE = 20;
 const INITIAL_VISIBLE_COUNT = 20;
 const LOAD_MORE_COUNT = 20;
 const WEB_APP_URL = 'https://app.myaiphotoshoot.com';
+const MAX_PROMPT_SUMMARY_LENGTH = 60;
 
 type GallerySort = 'popular' | 'new' | 'random';
 
@@ -55,6 +56,13 @@ function buildGalleryItemAppHref(item: GalleryItem): string {
   }
 
   return `${WEB_APP_URL}/#generate/${item.id}`;
+}
+
+function summarizePrompt(prompt: string): string {
+  const normalizedPrompt = prompt.replace(/\s+/g, ' ').trim();
+  if (normalizedPrompt.length <= MAX_PROMPT_SUMMARY_LENGTH) return normalizedPrompt;
+
+  return `${normalizedPrompt.slice(0, MAX_PROMPT_SUMMARY_LENGTH - 1).trimEnd()}…`;
 }
 
 export default function Gallery({
@@ -214,21 +222,24 @@ export default function Gallery({
             </li>
           ))
         ) : (
-          displayedItems.map((item) => (
-            <li key={item.id}>
-              <PhotoCard
-                src={item.public_url}
-                alt={`${t('altPrefix')}: ${item.prompt.slice(0, 50)}${item.prompt.length > 50 ? '...' : ''}`}
-                mode="fill"
-                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                containerClassName="aspect-square rounded-sm cursor-pointer"
-                linkHref={buildGalleryItemAppHref(item)}
-                linkExternal
-                ariaLabel={`${t('promptAriaPrefix')}: ${item.prompt}`}
-                figCaptionSrOnly={`${t('captionPrefix')}. ${item.prompt}`}
-              />
-            </li>
-          ))
+          displayedItems.map((item) => {
+            const promptSummary = summarizePrompt(item.prompt);
+
+            return (
+              <li key={item.id}>
+                <PhotoCard
+                  src={item.public_url}
+                  alt={`${t('altPrefix')}: ${promptSummary}`}
+                  mode="fill"
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                  containerClassName="aspect-square rounded-sm cursor-pointer"
+                  linkHref={buildGalleryItemAppHref(item)}
+                  linkExternal
+                  ariaLabel={`${t('captionPrefix')}: ${promptSummary}`}
+                />
+              </li>
+            );
+          })
         )}
       </ul>
 

@@ -36,7 +36,7 @@ export default async function AppShowcase({ locale }: { locale: string }) {
             {showcaseScreenshots.map((screenshot) => (
               <PlatformAppLink
                 key={screenshot.src}
-                className="group block w-[68vw] max-w-[260px] shrink-0 snap-center overflow-hidden rounded-2xl border border-purple-200/70 bg-purple-950 shadow-lg shadow-purple-900/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-purple-700/50 lg:w-auto lg:max-w-none"
+                className="group block w-[68vw] max-w-[260px] shrink-0 snap-center overflow-hidden rounded-2xl border border-purple-200/70 bg-purple-950 shadow-lg shadow-purple-900/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-4 dark:border-purple-700/50 dark:focus-visible:ring-purple-400 dark:focus-visible:ring-offset-gray-900 lg:w-auto lg:max-w-none"
                 ariaLabel={t(screenshot.altKey)}
               >
                 <Image

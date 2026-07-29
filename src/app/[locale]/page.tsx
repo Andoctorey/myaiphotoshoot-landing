@@ -35,14 +35,18 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const messages = await loadMessages(locale);
-  type HomeI18n = { hero?: { description?: string; title?: string; titleHighlight?: string } };
+  type HomeI18n = {
+    pageCopy?: {
+      home?: {
+        metaDescription?: string;
+        metaTitle?: string;
+      };
+    };
+  };
   const m = messages as HomeI18n;
-  const title = [m.hero?.title, m.hero?.titleHighlight]
-    .filter((value): value is string => typeof value === 'string' && value.length > 0)
-    .join(' ') || 'AI Headshot Generator - My AI Photo Shoot';
-  const description = typeof m.hero?.description === 'string'
-    ? m.hero.description
-    : 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K generation with Pro or Max.';
+  const title = m.pageCopy?.home?.metaTitle || 'AI Headshot Generator | My AI Photo Shoot';
+  const description = m.pageCopy?.home?.metaDescription
+    || 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K with Pro or Max.';
   return {
     title: { absolute: title }, // concise HTML title
     description,

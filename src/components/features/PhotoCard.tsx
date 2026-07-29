@@ -20,7 +20,17 @@ interface PhotoCardProps {
   linkHref?: string;
   linkExternal?: boolean;
   ariaLabel?: string;
-  figCaptionSrOnly?: string;
+}
+
+const MAX_ACCESSIBLE_NAME_LENGTH = 100;
+const LINK_CLASS_NAME = 'group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900';
+
+function getAccessibleName(ariaLabel: string | undefined, alt: string): string | undefined {
+  const name = (ariaLabel || alt).replace(/\s+/g, ' ').trim();
+  if (!name) return undefined;
+  if (name.length <= MAX_ACCESSIBLE_NAME_LENGTH) return name;
+
+  return `${name.slice(0, MAX_ACCESSIBLE_NAME_LENGTH - 1).trimEnd()}…`;
 }
 
 export default function PhotoCard({
@@ -36,12 +46,12 @@ export default function PhotoCard({
   imgClassName = '',
   linkHref,
   linkExternal = false,
-  ariaLabel,
-  figCaptionSrOnly
+  ariaLabel
 }: PhotoCardProps) {
   const optimizedSrc = withDefaultCdnWidth(src) || src;
+  const accessibleName = getAccessibleName(ariaLabel, alt);
   const content = (
-    <div className={`relative overflow-hidden group ${containerClassName}`} aria-label={ariaLabel}>
+    <div className={`relative overflow-hidden group ${containerClassName}`}>
       {mode === 'fill' ? (
         <>
           <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800" />
@@ -65,15 +75,17 @@ export default function PhotoCard({
         />
       )}
       <PromptOverlay prompt={prompt} />
-      {figCaptionSrOnly && (
-        <figcaption className="sr-only">{figCaptionSrOnly}</figcaption>
-      )}
     </div>
   );
 
   if (linkHref) {
     return linkExternal ? (
-      <a href={linkHref} target="_blank" rel="noopener noreferrer" className="block"
+      <a
+        href={linkHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={LINK_CLASS_NAME}
+        aria-label={accessibleName}
         onClick={() => {
           const href = linkHref;
           if (!href) return;
@@ -89,7 +101,7 @@ export default function PhotoCard({
         {content}
       </a>
     ) : (
-      <Link href={linkHref} className="block">
+      <Link href={linkHref} className={LINK_CLASS_NAME} aria-label={accessibleName}>
         {content}
       </Link>
     );
@@ -97,4 +109,3 @@ export default function PhotoCard({
 
   return content;
 }
-

@@ -12,7 +12,23 @@
     "noUseCases": "Noch keine Anwendungsfälle",
     "language": "Sprache",
     "masks": "Masken",
-    "models": "Modelle"
+    "models": "Modelle",
+    "skipToContent": "Zum Hauptinhalt springen",
+    "mainNavigation": "Hauptnavigation",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen"
+  },
+  "pageCopy": {
+    "home": {
+      "metaTitle": "KI-Headshot-Generator | My AI Photo Shoot",
+      "metaDescription": "Erstellen Sie realistische KI-Headshots und Porträts aus Selfies. Kaufen Sie Credits oder wählen Sie Pro oder Max für persönliches KI-Training und bis zu 4K."
+    },
+    "useCases": {
+      "title": "Anwendungsfälle für KI-Fotos",
+      "intro": "Entdecken Sie, wie Sie professionelle Headshots, Dating-Profilfotos, Social-Media-Inhalte und kreative Porträts mit KI erstellen.",
+      "metaTitle": "Anwendungsfälle für KI-Fotos",
+      "metaDescription": "Entdecken Sie KI-Fotos für professionelle Headshots, Dating-Profile, Social Media, Marketing und kreative Porträts."
+    }
   },
   "presets": {
     "title": "KI-Fotopresets",

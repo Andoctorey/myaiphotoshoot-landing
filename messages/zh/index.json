@@ -12,7 +12,23 @@
     "noUseCases": "暂无使用场景",
     "language": "语言",
     "masks": "面具",
-    "models": "模型"
+    "models": "模型",
+    "skipToContent": "跳到主要内容",
+    "mainNavigation": "主导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单"
+  },
+  "pageCopy": {
+    "home": {
+      "metaTitle": "AI 头像生成器 | My AI Photo Shoot",
+      "metaDescription": "根据自拍生成逼真的 AI 头像照和肖像。购买一次性积分即可开始，或选择 Pro 或 Max，解锁个人 AI 训练和最高 4K 画质。"
+    },
+    "useCases": {
+      "title": "AI 照片使用场景",
+      "intro": "了解如何使用 AI 创建专业头像照、约会资料照片、社交内容和创意肖像。",
+      "metaTitle": "AI 照片使用场景",
+      "metaDescription": "探索 AI 照片在专业头像照、约会资料、社交媒体、营销和创意肖像中的应用。"
+    }
   },
   "presets": {
     "title": "AI 照片预设",

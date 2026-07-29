@@ -12,7 +12,23 @@
     "noUseCases": "No use cases yet",
     "language": "Language",
     "masks": "Masks",
-    "models": "Models"
+    "models": "Models",
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "pageCopy": {
+    "home": {
+      "metaTitle": "AI Headshot Generator | My AI Photo Shoot",
+      "metaDescription": "Create realistic AI headshots and portraits from selfies. Buy one-time credits, or choose Pro or Max for personal AI training and images up to 4K."
+    },
+    "useCases": {
+      "title": "AI Photo Use Cases",
+      "intro": "Discover ways to create professional headshots, dating profile photos, social content, and creative portraits with AI.",
+      "metaTitle": "AI Photo Use Cases",
+      "metaDescription": "Explore AI photo use cases for professional headshots, dating profiles, social media, marketing, and creative portraits."
+    }
   },
   "presets": {
     "title": "AI Photo Presets",

@@ -12,7 +12,23 @@
     "noUseCases": "Aún no hay casos de uso",
     "language": "Idioma",
     "masks": "Máscaras",
-    "models": "Modelos"
+    "models": "Modelos",
+    "skipToContent": "Ir al contenido principal",
+    "mainNavigation": "Navegación principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "pageCopy": {
+    "home": {
+      "metaTitle": "Generador de fotos profesionales con IA | My AI Photo Shoot",
+      "metaDescription": "Crea fotos profesionales y retratos realistas con IA a partir de selfies. Compra créditos o elige Pro o Max para entrenar tu IA y generar imágenes de hasta 4K."
+    },
+    "useCases": {
+      "title": "Casos de uso de fotos con IA",
+      "intro": "Descubre cómo crear fotos profesionales, perfiles de citas, contenido para redes y retratos creativos con IA.",
+      "metaTitle": "Casos de uso de fotos con IA",
+      "metaDescription": "Explora usos de fotos con IA para retratos profesionales, perfiles de citas, redes sociales, marketing y retratos creativos."
+    }
   },
   "presets": {
     "title": "Presets de fotos con IA",
