@@ -2,14 +2,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { fetchAiPresetsPage } from '@/lib/ai-presets';
+import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
+
+const HOME_PRESET_EXCLUSIONS = new Set(['minecraft-world', 'spider-man-trains']);
 
 export default async function HomePresets({ locale }: { locale: string }) {
   const [t, presetsPage] = await Promise.all([
     getTranslations({ locale, namespace: 'presets' }),
-    fetchAiPresetsPage(locale, 1, 3),
+    fetchAiPresetsPage(locale, 1, 6),
   ]);
-  const presets = presetsPage.presets.filter((preset) => preset.featured_graphics);
+  const presets = presetsPage.presets
+    .filter((preset) => preset.featured_graphics && !HOME_PRESET_EXCLUSIONS.has(preset.slug))
+    .slice(0, 3);
 
   if (presets.length === 0) return null;
 
@@ -48,7 +53,7 @@ export default async function HomePresets({ locale }: { locale: string }) {
                   className="group w-[68vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-900/10 transition duration-300 hover:-translate-y-1 hover:border-purple-200 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-purple-800 lg:w-auto lg:max-w-none"
                 >
                   <Image
-                    src={preset.featured_graphics!}
+                    src={withCdnWidth(preset.featured_graphics, 640) || preset.featured_graphics!}
                     alt={preset.featured_graphics_alt?.trim() || t('imageAlt', { name: preset.name })}
                     width={560}
                     height={560}

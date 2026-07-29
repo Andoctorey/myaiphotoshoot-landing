@@ -6,6 +6,7 @@ import {
   fetchMasksCatalog,
   masksForCategory,
 } from '@/lib/ai-masks';
+import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 import type { AiMask, AiMaskCategory } from '@/types/ai-mask';
 
@@ -76,7 +77,7 @@ export default async function HomeMasks({ locale }: { locale: string }) {
                   <div className="grid grid-cols-2">
                     <div className="relative">
                       <Image
-                        src={category.sourceImageUrl}
+                        src={withCdnWidth(category.sourceImageUrl, 420) || category.sourceImageUrl}
                         alt={t('sourceAlt', { category: category.name })}
                         width={420}
                         height={560}
@@ -89,7 +90,7 @@ export default async function HomeMasks({ locale }: { locale: string }) {
                     </div>
                     <div className="relative">
                       <Image
-                        src={mask.featuredGraphics}
+                        src={withCdnWidth(mask.featuredGraphics, 420) || mask.featuredGraphics}
                         alt={t('resultAlt', { name: mask.name })}
                         width={420}
                         height={560}

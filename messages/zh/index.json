@@ -87,7 +87,8 @@
     "title": "AI 头像生成器：",
     "titleHighlight": "真实自然的个人资料照片",
     "description": "根据自拍生成逼真的 AI 头像照和肖像。可先购买一次性积分，或选择 Pro 或 Max，解锁个人 AI 训练和最高 4K 画质。",
-    "microcopy": "一次性积分支持 1K • Pro 解锁 2K + 训练 • Max 解锁 4K"
+    "microcopy": "一次性积分支持 1K • Pro 解锁 2K + 训练 • Max 解锁 4K",
+    "visualAlt": "同一位女性的专业、休闲和杂志风 AI 肖像"
   },
   "appShowcase": {
     "exploreStyles": "在 My AI Photo Shoot 中探索 AI 照片风格",

@@ -347,7 +347,7 @@ export async function generateAiPresetMetadata(slug: string, locale: string): Pr
   const description = buildPresetDescription(preset);
   const title = preset.meta_title?.trim() || `${preset.name} AI Preset | My AI Photo Shoot`;
   const url = canonicalUrl(locale, `/presets/${slug}/`);
-  const imageUrl = preset.featured_graphics || 'https://myaiphotoshoot.com/og-image-v2.png';
+  const imageUrl = preset.featured_graphics || 'https://myaiphotoshoot.com/og-image-v2.jpg';
   const imageAlt = preset.featured_graphics_alt?.trim() || preset.name;
 
   return {
@@ -371,10 +371,10 @@ export async function generateAiPresetMetadata(slug: string, locale: string): Pr
       url,
       siteName: 'My AI Photo Shoot',
       type: 'website',
-      images: [{ url: imageUrl, width: 1200, height: 630, alt: imageAlt }],
+      images: [{ url: imageUrl, alt: imageAlt }],
       locale: ogLocaleFromAppLocale(locale),
       alternateLocale: ogAlternateLocales(locales, locale),
     },
-    twitter: { card: 'summary_large_image', title, description, images: [imageUrl] },
+    twitter: { card: 'summary_large_image', title, description, images: [{ url: imageUrl, alt: imageAlt }] },
   };
 }

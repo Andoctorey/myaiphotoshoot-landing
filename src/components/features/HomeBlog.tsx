@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import type { BlogListItem } from '@/types/blog';
-import { withDefaultCdnWidth } from '@/lib/image';
+import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 
 // Use stable order to avoid hydration mismatches between SSR/CSR
@@ -51,7 +51,7 @@ export default async function HomeBlog({
                   <div className="aspect-square bg-gray-200 dark:bg-gray-700">
                     {post.featured_image_url ? (
                       <Image
-                        src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
+                        src={withCdnWidth(post.featured_image_url, 800) || post.featured_image_url}
                         alt={t('imageAlt', { title: post.title })}
                         width={600}
                         height={600}

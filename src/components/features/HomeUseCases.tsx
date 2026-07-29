@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
+import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 
 interface Props {
@@ -60,7 +61,7 @@ export default async function HomeUseCases({ initialUseCases = [], locale = 'en'
                 <div className="h-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-purple-200 group-hover:shadow-xl group-hover:shadow-purple-900/10 dark:border-gray-700 dark:bg-gray-800 dark:group-hover:border-purple-700">
                   {Array.isArray(it.featured_image_urls) && it.featured_image_urls[it.imageIndex] && (
                     <Image
-                      src={it.featured_image_urls[it.imageIndex]}
+                      src={withCdnWidth(it.featured_image_urls[it.imageIndex], 800) || it.featured_image_urls[it.imageIndex]}
                       alt={tSection('imageAlt', { title: it.title })}
                       width={640}
                       height={480}

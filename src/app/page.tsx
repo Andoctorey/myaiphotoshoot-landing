@@ -56,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'My AI Photo Shoot',
       images: [
         {
-          url: '/og-image-v2.png',
+          url: '/og-image-v2.jpg',
           width: 1200,
           height: 630,
           alt: 'My AI Photo Shoot AI headshot examples',
@@ -70,7 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: 'AI Headshot Generator - Realistic Profile Photos From Selfies',
       description,
-      images: ['/og-image-v2.png'],
+      images: [{ url: '/og-image-v2.jpg', alt: 'My AI Photo Shoot AI headshot examples' }],
     },
   };
 }

@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const url = `${BASE_URL}${localePath(defaultLocale, `/blog/${slug}/`)}`;
     const imageUrl = typeof post.featured_image_url === 'string'
       ? post.featured_image_url
-      : 'https://myaiphotoshoot.com/og-image-v2.png';
+      : 'https://myaiphotoshoot.com/og-image-v2.jpg';
 
     // Infer MIME type from URL extension for better OG accuracy
     const inferMimeFromUrl = (url: string | null | undefined): string | null => {
@@ -148,8 +148,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         images: [
           {
             url: imageUrl,
-            width: 1200,
-            height: 630,
             alt: post.title,
             ...(ogImageType ? { type: ogImageType } : {}),
           },
@@ -167,7 +165,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         card: 'summary_large_image',
         title: socialTitle,
         description,
-        images: [imageUrl],
+        images: [{ url: imageUrl, alt: post.title }],
       },
       other: {
         'article:author': 'My AI Photo Shoot',

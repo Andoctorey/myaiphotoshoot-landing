@@ -10,7 +10,7 @@ import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';
 import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 import type { BlogPost } from '@/types/blog';
-import { withDefaultCdnWidth } from '@/lib/image';
+import { withCdnWidth } from '@/lib/image';
 import { serializeJsonLd } from '@/lib/json-ld';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
 import { canonicalUrl, localePath } from '@/lib/seo';
@@ -709,7 +709,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
                 {safeFeaturedImageUrl && (
                   <div className="absolute inset-0 w-full h-full rounded-lg overflow-hidden">
                     <Image
-                      src={withDefaultCdnWidth(safeFeaturedImageUrl) || safeFeaturedImageUrl}
+                      src={withCdnWidth(safeFeaturedImageUrl, 1200) || safeFeaturedImageUrl}
                       alt={featuredImageAlt}
                       width={800}
                       height={600}

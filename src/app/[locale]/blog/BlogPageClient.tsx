@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
-import { withDefaultCdnWidth } from '@/lib/image';
+import { withCdnWidth } from '@/lib/image';
 import { serializeJsonLd } from '@/lib/json-ld';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { useBlogPosts } from '@/hooks/useBlog';
@@ -125,7 +125,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                     <div className="aspect-square bg-gray-200 dark:bg-gray-700">
                       {post.featured_image_url ? (
                         <Image
-                          src={withDefaultCdnWidth(post.featured_image_url) || post.featured_image_url}
+                          src={withCdnWidth(post.featured_image_url, 800) || post.featured_image_url}
                           alt={t('imageAlt', { title: post.title })}
                           width={400}
                           height={400}

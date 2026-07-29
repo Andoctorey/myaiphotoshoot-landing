@@ -7,7 +7,7 @@ import FAQSchema from '@/components/blog/FAQSchema';
 import { useUseCase } from '@/hooks/useUseCase';
 import { useTranslations } from '@/lib/utils';
 import type { UseCase } from '@/types/usecase';
-import { withDefaultCdnWidth } from '@/lib/image';
+import { withCdnWidth } from '@/lib/image';
 import { serializeJsonLd } from '@/lib/json-ld';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
@@ -322,14 +322,12 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             </div>
           </div>
           {headerImageUrl && (
-            <div className="hidden sm:block shrink-0 w-48 md:w-60">
+            <div className="relative hidden aspect-square w-48 shrink-0 overflow-hidden rounded-xl sm:block md:w-60">
               <Image
-                src={headerImageUrl}
+                src={withCdnWidth(headerImageUrl, 480) || headerImageUrl}
                 alt={title}
-                width={0}
-                height={0}
+                fill
                 sizes="(min-width:768px) 240px, 192px"
-                style={{ width: '100%', height: 'auto' }}
                 className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm object-cover"
               />
             </div>
@@ -436,7 +434,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   className="order-1 md:order-none md:self-start relative aspect-square mx-auto w-56 md:w-64 lg:w-80"
                 >
                   <Image
-                    src={withDefaultCdnWidth(perSectionImage) || perSectionImage}
+                    src={withCdnWidth(perSectionImage, 640) || perSectionImage}
                     alt={`${s.heading} - ${title}`}
                     fill
                     sizes="(min-width:1024px) 320px, (min-width:768px) 256px, 224px"

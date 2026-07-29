@@ -9,11 +9,12 @@ type Props = {
   webAppLabel: string;
   googlePlayLabel: string;
   appStoreLabel: string;
+  className?: string;
 };
 
-export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStoreLabel }: Props) {
+export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStoreLabel, className = '' }: Props) {
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+    <div className={`flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap ${className}`}>
       <a
         href="https://app.myaiphotoshoot.com"
         target="_blank"

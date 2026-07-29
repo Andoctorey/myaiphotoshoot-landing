@@ -21,7 +21,7 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     },
     description,
     url: canonicalUrl(locale, '/'),
-    image: 'https://myaiphotoshoot.com/og-image-v2.png',
+    image: 'https://myaiphotoshoot.com/og-image-v2.jpg',
     category: 'AI headshot and portrait software',
     inLanguage: locale,
     isRelatedTo: [

@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/og-image-v2.png',
+          url: '/og-image-v2.jpg',
           width: 1200,
           height: 630,
           alt: 'My AI Photo Shoot AI photo model examples',
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: ['/og-image-v2.png'],
+      images: [{ url: '/og-image-v2.jpg', alt: title }],
     },
   };
 }

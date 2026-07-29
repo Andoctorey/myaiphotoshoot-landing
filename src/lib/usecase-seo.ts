@@ -136,7 +136,7 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
 
   const url = canonicalUrl(locale, `/use-cases/${slug}/`);
   const imageUrl = (Array.isArray(uc.featured_image_urls) && uc.featured_image_urls[0])
-    || '/og-image-v2.png';
+    || '/og-image-v2.jpg';
 
   return {
     title: { absolute: title || 'Use Case | My AI Photo Shoot' },
@@ -148,11 +148,16 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
       url,
       siteName: 'My AI Photo Shoot',
       type: 'website',
-      images: [{ url: imageUrl, width: 1200, height: 630, alt: uc.title || title }],
+      images: [{ url: imageUrl, alt: uc.title || title }],
       locale: ogLocaleFromAppLocale(locale),
       alternateLocale: ogAlternateLocales(locales, locale),
     },
-    twitter: { card: 'summary_large_image', title, description, images: [imageUrl] },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [{ url: imageUrl, alt: uc.title || title }],
+    },
   };
 }
 

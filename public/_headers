@@ -25,6 +25,10 @@
 # Cache images for 1 month
 /images/*
   Cache-Control: public, max-age=2592000
+/*.jpg
+  Cache-Control: public, max-age=2592000
+/*.png
+  Cache-Control: public, max-age=2592000
 
 # Cache SVGs
 /*.svg
