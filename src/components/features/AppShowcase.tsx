@@ -4,20 +4,16 @@ import PlatformAppLink from './PlatformAppLink';
 
 const showcaseScreenshots = [
   {
-    src: '/images/app-showcase/explore_ai_photo_styles.webp',
-    altKey: 'exploreStyles',
-  },
-  {
     src: '/images/app-showcase/create_realistic_ai_photos.webp',
     altKey: 'realisticPhotos',
   },
   {
-    src: '/images/app-showcase/train_your_ai_model.webp',
-    altKey: 'trainModel',
-  },
-  {
     src: '/images/app-showcase/create_photos_of_you.webp',
     altKey: 'photosOfYou',
+  },
+  {
+    src: '/images/app-showcase/explore_ai_photo_styles.webp',
+    altKey: 'exploreStyles',
   },
   {
     src: '/images/app-showcase/find_photo_ideas.webp',
@@ -32,7 +28,7 @@ export default async function AppShowcase({ locale }: { locale: string }) {
     <section className="overflow-hidden bg-white py-10 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="-mx-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
-          <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-5">
+          <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-4">
             {showcaseScreenshots.map((screenshot) => (
               <PlatformAppLink
                 key={screenshot.src}
@@ -42,10 +38,10 @@ export default async function AppShowcase({ locale }: { locale: string }) {
                 <Image
                   src={screenshot.src}
                   alt={t(screenshot.altKey)}
-                  width={642}
-                  height={1389}
+                  width={645}
+                  height={1398}
                   className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.015]"
-                  sizes="(max-width: 1023px) 68vw, 16vw"
+                  sizes="(max-width: 1023px) 68vw, (max-width: 1279px) 23vw, 292px"
                 />
               </PlatformAppLink>
             ))}
