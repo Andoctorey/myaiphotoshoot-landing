@@ -4,19 +4,19 @@ import PlatformAppLink from './PlatformAppLink';
 
 const showcaseScreenshots = [
   {
-    src: '/images/app-showcase/create_realistic_ai_photos.webp',
+    src: '/images/app-showcase/screenshot_1_20260801_123427.webp',
     altKey: 'realisticPhotos',
   },
   {
-    src: '/images/app-showcase/create_photos_of_you.webp',
+    src: '/images/app-showcase/screenshot_2_20260801_123427.webp',
     altKey: 'photosOfYou',
   },
   {
-    src: '/images/app-showcase/explore_ai_photo_styles.webp',
+    src: '/images/app-showcase/screenshot_3_20260801_123427.webp',
     altKey: 'exploreStyles',
   },
   {
-    src: '/images/app-showcase/find_photo_ideas.webp',
+    src: '/images/app-showcase/screenshot_4_20260801_123427.webp',
     altKey: 'photoIdeas',
   },
 ] as const;
