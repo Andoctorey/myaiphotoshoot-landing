@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import { trackEventAndNavigate } from '@/lib/analytics';
-
-const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1';
+import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_URL } from '@/lib/app-links';
+import { useAttributedUrl } from '@/hooks/usePlatformAppLink';
 
 type Props = {
   webAppLabel: string;
@@ -13,17 +13,21 @@ type Props = {
 };
 
 export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStoreLabel, className = '' }: Props) {
+  const webAppUrl = useAttributedUrl(WEB_APP_URL);
+  const playStoreUrl = useAttributedUrl(GOOGLE_PLAY_URL);
+  const appStoreUrl = useAttributedUrl(APP_STORE_URL);
+
   return (
     <div className={`flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap ${className}`}>
       <a
-        href="https://app.myaiphotoshoot.com"
+        href={webAppUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex h-12 w-[166px] items-center justify-center rounded-lg bg-gray-950 px-4 text-sm font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:bg-purple-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:bg-black dark:hover:bg-purple-700 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
-          trackEventAndNavigate('webapp_cta_click', 'https://app.myaiphotoshoot.com');
+          trackEventAndNavigate('webapp_cta_click', webAppUrl);
         }}
       >
         <svg className="h-5 w-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -34,14 +38,14 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
       </a>
 
       <a
-        href={PLAY_STORE_URL}
+        href={playStoreUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
-          trackEventAndNavigate('google_play_cta_click', PLAY_STORE_URL);
+          trackEventAndNavigate('google_play_cta_click', playStoreUrl);
         }}
       >
         <Image
@@ -54,14 +58,14 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
       </a>
 
       <a
-        href="https://apps.apple.com/app/id6744860178"
+        href={appStoreUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
-          trackEventAndNavigate('app_store_cta_click', 'https://apps.apple.com/app/id6744860178');
+          trackEventAndNavigate('app_store_cta_click', appStoreUrl);
         }}
       >
         <Image

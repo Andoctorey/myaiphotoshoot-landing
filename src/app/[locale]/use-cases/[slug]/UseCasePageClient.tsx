@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import PhotoCard from '@/components/features/PhotoCard';
 import FAQSchema from '@/components/blog/FAQSchema';
+import { useAttributedUrl } from '@/hooks/usePlatformAppLink';
 import { useUseCase } from '@/hooks/useUseCase';
 import { useTranslations } from '@/lib/utils';
 import type { UseCase } from '@/types/usecase';
@@ -12,6 +13,7 @@ import { serializeJsonLd } from '@/lib/json-ld';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 import HowToJsonLd from '@/components/seo/HowToJsonLd';
+import { APP_STORE_URL, GOOGLE_PLAY_APP_URL, WEB_APP_URL } from '@/lib/app-links';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { trackEventAndNavigate } from '@/lib/analytics';
 
@@ -56,6 +58,10 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const tNav = useTranslations('navigation');
   const tDownload = useTranslations('download');
   const tFAQ = useTranslations('faq');
+  const googlePlayUrl = `${GOOGLE_PLAY_APP_URL}&utm_source=usecase&utm_medium=cta&utm_campaign=${encodeURIComponent(slug)}`;
+  const attributedWebAppUrl = useAttributedUrl(WEB_APP_URL);
+  const attributedAppStoreUrl = useAttributedUrl(APP_STORE_URL);
+  const attributedGooglePlayUrl = useAttributedUrl(googlePlayUrl);
   // Hooks must be declared unconditionally at the top of the component
   const textRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [, setRowHeights] = useState<number[]>([]);
@@ -259,7 +265,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
               <a
-                href="https://app.myaiphotoshoot.com"
+                href={attributedWebAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transform hover:scale-105 transition duration-150 block w-full sm:w-auto"
@@ -269,7 +275,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   e.preventDefault();
                   trackEventAndNavigate(
                     'webapp_cta_click',
-                    'https://app.myaiphotoshoot.com',
+                    attributedWebAppUrl,
                     { section: 'use_case', placement: 'hero', slug }
                   );
                 }}
@@ -283,7 +289,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               </a>
               <div className="flex items-center flex-wrap gap-2 sm:gap-3">
                 <a
-                  href={'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug)}
+                  href={attributedGooglePlayUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transform hover:scale-105 transition duration-150"
@@ -293,7 +299,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                     e.preventDefault();
                     trackEventAndNavigate(
                       'google_play_cta_click',
-                      'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=usecase&medium=cta&campaign=' + encodeURIComponent(slug),
+                      attributedGooglePlayUrl,
                       { section: 'use_case', placement: 'hero', slug }
                     );
                   }}
@@ -301,7 +307,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   <Image alt={tDownload('mobileApps.googlePlay')} src='/images/google-play-badge.svg' width={202} height={56} className="h-12 sm:h-[56px] w-auto object-contain" />
                 </a>
                 <a
-                  href="https://apps.apple.com/app/id6744860178"
+                  href={attributedAppStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transform hover:scale-105 transition duration-150"
@@ -311,7 +317,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                     e.preventDefault();
                     trackEventAndNavigate(
                       'app_store_cta_click',
-                      'https://apps.apple.com/app/id6744860178',
+                      attributedAppStoreUrl,
                       { section: 'use_case', placement: 'hero', slug }
                     );
                   }}
@@ -376,7 +382,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                       height={220}
                       containerClassName="w-full h-full rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm bg-gray-200 dark:bg-gray-800"
                       imgClassName="w-full h-full object-contain"
-                      linkHref={g.id ? `https://app.myaiphotoshoot.com/#generate/${g.id}` : (g.url || undefined)}
+                      linkHref={g.id ? `${WEB_APP_URL}/#generate/${g.id}` : (g.url || undefined)}
                       linkExternal={Boolean(g.id || g.url)}
                     />
                   </div>
@@ -491,13 +497,13 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                   ) : s.heading === 'CTA' ? (
                     <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
                       <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
-                  <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
+                  <a href={attributedWebAppUrl} target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
                     onClick={(e) => {
                       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                       e.preventDefault();
                       trackEventAndNavigate(
                         'webapp_cta_click',
-                        'https://app.myaiphotoshoot.com',
+                        attributedWebAppUrl,
                         { section: 'use_case', placement: 'content_cta', slug }
                       );
                     }}
@@ -582,13 +588,13 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               <li>{tUseCase('pricingCard.max')}</li>
             </ul>
           </div>
-          <a href="https://app.myaiphotoshoot.com" target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
+          <a href={attributedWebAppUrl} target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
             onClick={(e) => {
               if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
               e.preventDefault();
               trackEventAndNavigate(
                 'webapp_cta_click',
-                'https://app.myaiphotoshoot.com',
+                attributedWebAppUrl,
                 { section: 'use_case', placement: 'pricing_card', slug }
               );
             }}
@@ -601,7 +607,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
       {/* Sticky mobile CTA */}
       <div className="sm:hidden fixed inset-x-0 px-4 z-40" style={{ bottom: 'max(env(safe-area-inset-bottom), 1rem)' }}>
         <a
-          href="https://app.myaiphotoshoot.com"
+          href={attributedWebAppUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={tDownload('webApp.button')}
@@ -611,7 +617,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             e.preventDefault();
             trackEventAndNavigate(
               'webapp_cta_click',
-              'https://app.myaiphotoshoot.com',
+              attributedWebAppUrl,
               { section: 'use_case', placement: 'sticky_mobile', slug }
             );
           }}

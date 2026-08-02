@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { captureCurrentAttribution } from '@/lib/analytics';
 
 const CONSENT_REGION = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB'];
 
@@ -11,6 +12,7 @@ interface GoogleAnalyticsProps {
 
 export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
   useEffect(() => {
+    captureCurrentAttribution();
     window.dataLayer = window.dataLayer || [];
     window.gtag = function gtag() {
       // Google tag requires the native arguments object rather than a rest-parameter array.
@@ -44,6 +46,9 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
       page_title: document.title,
       page_location: window.location.href,
     });
+    window.gtag('event', 'landing_view', {
+      page_path: `${window.location.pathname}${window.location.search}`,
+    });
 
     if (!document.getElementById('google-analytics-script')) {
       const script = document.createElement('script');
@@ -72,12 +77,15 @@ function GoogleAnalyticsPageViewTracker({ measurementId }: GoogleAnalyticsProps)
       return;
     }
 
+    captureCurrentAttribution();
     if (!window.gtag) return;
 
     const search = searchParams.toString();
+    const pagePath = `${pathname}${search ? `?${search}` : ''}`;
+    window.gtag('event', 'landing_view', { page_path: pagePath });
     window.gtag('config', measurementId, {
       page_title: document.title,
-      page_path: `${pathname}${search ? `?${search}` : ''}`,
+      page_path: pagePath,
       page_location: window.location.href,
     });
   }, [measurementId, pathname, searchParams]);

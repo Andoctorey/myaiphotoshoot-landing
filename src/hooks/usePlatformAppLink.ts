@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-const APP_STORE_URL = 'https://apps.apple.com/app/id6744860178';
-const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1';
-const WEB_APP_URL = 'https://app.myaiphotoshoot.com';
+import { withCurrentAttribution } from '@/lib/analytics';
+import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_URL } from '@/lib/app-links';
 
 type PlatformAppLink = {
   event: 'app_store_cta_click' | 'google_play_cta_click' | 'webapp_cta_click';
@@ -25,11 +23,32 @@ export function usePlatformAppLink(): PlatformAppLink {
       || (/macintosh/i.test(userAgent) && window.navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      setAppLink({ event: 'app_store_cta_click', url: APP_STORE_URL });
+      setAppLink({
+        event: 'app_store_cta_click',
+        url: withCurrentAttribution(APP_STORE_URL),
+      });
     } else if (/android/i.test(userAgent)) {
-      setAppLink({ event: 'google_play_cta_click', url: PLAY_STORE_URL });
+      setAppLink({
+        event: 'google_play_cta_click',
+        url: withCurrentAttribution(GOOGLE_PLAY_URL),
+      });
+    } else {
+      setAppLink({
+        ...WEB_APP_LINK,
+        url: withCurrentAttribution(WEB_APP_LINK.url),
+      });
     }
   }, []);
 
   return appLink;
+}
+
+export function useAttributedUrl(url: string): string {
+  const [attributedUrl, setAttributedUrl] = useState(url);
+
+  useEffect(() => {
+    setAttributedUrl(withCurrentAttribution(url));
+  }, [url]);
+
+  return attributedUrl;
 }
