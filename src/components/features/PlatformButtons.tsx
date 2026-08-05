@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { trackEventAndNavigate } from '@/lib/analytics';
-import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_URL } from '@/lib/app-links';
+import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_IDEAS_URL } from '@/lib/app-links';
 import { useAttributedUrl } from '@/hooks/usePlatformAppLink';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStoreLabel, className = '' }: Props) {
-  const webAppUrl = useAttributedUrl(WEB_APP_URL);
+  const webAppUrl = useAttributedUrl(WEB_APP_IDEAS_URL);
   const playStoreUrl = useAttributedUrl(GOOGLE_PLAY_URL);
   const appStoreUrl = useAttributedUrl(APP_STORE_URL);
 

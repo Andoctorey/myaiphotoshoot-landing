@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { withCurrentAttribution } from '@/lib/analytics';
-import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_URL } from '@/lib/app-links';
+import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_IDEAS_URL } from '@/lib/app-links';
 
 type PlatformAppLink = {
   event: 'app_store_cta_click' | 'google_play_cta_click' | 'webapp_cta_click';
@@ -11,7 +11,7 @@ type PlatformAppLink = {
 
 const WEB_APP_LINK: PlatformAppLink = {
   event: 'webapp_cta_click',
-  url: WEB_APP_URL,
+  url: WEB_APP_IDEAS_URL,
 };
 
 export function usePlatformAppLink(): PlatformAppLink {

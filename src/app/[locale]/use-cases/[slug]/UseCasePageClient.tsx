@@ -13,7 +13,7 @@ import { serializeJsonLd } from '@/lib/json-ld';
 import UseCaseProductJsonLd from '@/components/seo/UseCaseProductJsonLd';
 import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 import HowToJsonLd from '@/components/seo/HowToJsonLd';
-import { APP_STORE_URL, GOOGLE_PLAY_APP_URL, WEB_APP_URL } from '@/lib/app-links';
+import { APP_STORE_URL, GOOGLE_PLAY_APP_URL, WEB_APP_IDEAS_URL, WEB_APP_URL } from '@/lib/app-links';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { trackEventAndNavigate } from '@/lib/analytics';
 
@@ -59,7 +59,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const tDownload = useTranslations('download');
   const tFAQ = useTranslations('faq');
   const googlePlayUrl = `${GOOGLE_PLAY_APP_URL}&utm_source=usecase&utm_medium=cta&utm_campaign=${encodeURIComponent(slug)}`;
-  const attributedWebAppUrl = useAttributedUrl(WEB_APP_URL);
+  const attributedWebAppUrl = useAttributedUrl(WEB_APP_IDEAS_URL);
   const attributedAppStoreUrl = useAttributedUrl(APP_STORE_URL);
   const attributedGooglePlayUrl = useAttributedUrl(googlePlayUrl);
   // Hooks must be declared unconditionally at the top of the component
