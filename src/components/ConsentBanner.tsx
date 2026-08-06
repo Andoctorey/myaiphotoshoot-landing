@@ -98,7 +98,7 @@ export default function ConsentBanner() {
         ad_personalization: 'granted',
       });
     }
-    window.__grantTikTokConsent?.();
+    window.__grantTikTokConsent?.(true);
     setShow(false);
   };
 

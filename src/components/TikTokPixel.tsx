@@ -2,6 +2,8 @@ interface TikTokPixelProps {
   pixelId: string;
 }
 
+const DEFERRED_LOAD_DELAY_MS = 2_000;
+
 export default function TikTokPixel({ pixelId }: TikTokPixelProps) {
   return (
     <script
@@ -16,21 +18,57 @@ export default function TikTokPixel({ pixelId }: TikTokPixelProps) {
             n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;
             e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
 
-            w.__enableTikTokPixel=function(){
-              if(w.__tiktokTrackingEnabled)return;
-              if(!w.__tiktokPixelLoaded){
-                ttq.load('${pixelId}');
-                w.__tiktokPixelLoaded=true;
+            var delayedLoadTimer=null;
+            var delayedLoadListener=null;
+            var pendingPageView=false;
+
+            function hasTikTokClickId(){
+              try{return new URLSearchParams(w.location.search).has('ttclid')}catch(e){return false}
+            }
+            function cancelDelayedLoad(){
+              if(delayedLoadTimer!==null){w.clearTimeout(delayedLoadTimer);delayedLoadTimer=null}
+              if(delayedLoadListener!==null){w.removeEventListener('load',delayedLoadListener);delayedLoadListener=null}
+            }
+            function loadTikTokPixel(){
+              cancelDelayedLoad();
+              if(!w.__tiktokTrackingEnabled||w.__tiktokPixelLoaded)return;
+              ttq.load('${pixelId}');
+              w.__tiktokPixelLoaded=true;
+              if(pendingPageView){pendingPageView=false;ttq.page()}
+            }
+            function scheduleTikTokPixelLoad(){
+              if(w.__tiktokPixelLoaded||delayedLoadTimer!==null||delayedLoadListener!==null)return;
+              var startDelay=function(){
+                delayedLoadListener=null;
+                delayedLoadTimer=w.setTimeout(loadTikTokPixel,${DEFERRED_LOAD_DELAY_MS});
+              };
+              if(d.readyState==='complete')startDelay();
+              else{delayedLoadListener=startDelay;w.addEventListener('load',startDelay,{once:true})}
+            }
+
+            w.__queueTikTokPageView=function(){
+              if(!w.__tiktokTrackingEnabled)return;
+              if(w.__tiktokPixelLoaded)ttq.page();
+              else pendingPageView=true;
+            };
+            w.__enableTikTokPixel=function(loadImmediately){
+              if(w.__tiktokTrackingEnabled){
+                if(loadImmediately||hasTikTokClickId())loadTikTokPixel();
+                return;
               }
               w.__tiktokTrackingEnabled=true;
-              ttq.page();
+              w.__queueTikTokPageView();
+              if(loadImmediately||hasTikTokClickId())loadTikTokPixel();
+              else scheduleTikTokPixelLoad();
             };
-            w.__grantTikTokConsent=function(){
+            w.__grantTikTokConsent=function(loadImmediately){
               ttq.grantConsent();
-              w.__enableTikTokPixel();
+              w.__enableTikTokPixel(loadImmediately);
             };
             w.__revokeTikTokConsent=function(){
               w.__tiktokTrackingEnabled=false;
+              pendingPageView=false;
+              cancelDelayedLoad();
               ttq.revokeConsent();
             };
 
