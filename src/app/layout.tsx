@@ -1,5 +1,4 @@
 // noinspection HtmlRequiredTitleElement
-/* eslint-disable @next/next/google-font-preconnect */
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -122,11 +121,6 @@ export default function RootLayout({
         <meta property="al:ios:app_store_id" content="6744860178" />
         <meta property="al:ios:app_name" content="My AI Photo Shoot" />
         <link rel="alternate" type="application/rss+xml" title="My AI Photo Shoot Blog" href="/rss.xml" />
-        {/* Performance: preconnect/dns-prefetch for Google Fonts (defensive even with next/font) */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         {supabaseFunctionsOrigin && (
           <>
             <link rel="preconnect" href={supabaseFunctionsOrigin} crossOrigin="anonymous" />
