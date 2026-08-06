@@ -68,9 +68,9 @@ export default async function HomeBlog({
                     )}
                   </div>
                   <div className="p-6">
-                    <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                       {post.title}
-                    </h4>
+                    </h3>
                     {post.meta_description && (
                       <p className="text-gray-600 dark:text-gray-300">
                         {post.meta_description}

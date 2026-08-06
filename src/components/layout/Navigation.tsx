@@ -191,6 +191,8 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                   <img
                     src="/images/icon_192.png"
                     alt="My AI Photo Shoot logo"
+                    width={192}
+                    height={192}
                     className="h-full w-auto"
                   />
                 </picture>

@@ -39,6 +39,7 @@ export default async function Hero({ locale }: { locale: string }) {
                 width={682}
                 height={630}
                 priority
+                fetchPriority="high"
                 sizes="(max-width: 1023px) 92vw, 44vw"
                 className="h-auto w-full"
               />
