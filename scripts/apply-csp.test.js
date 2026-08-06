@@ -31,6 +31,8 @@ test('policy blocks arbitrary inline scripts and allows analytics endpoints', ()
   assert.match(policy, /https:\/\/analytics\.google\.com/);
   assert.match(policy, /https:\/\/\*\.googletagmanager\.com/);
   assert.match(policy, /https:\/\/www\.google\.com/);
+  assert.match(policy, /connect-src[^;]*https:\/\/analytics-ipv6\.tiktokw\.us/);
+  assert.doesNotMatch(policy, /https:\/\/\*\.tiktokw\.us/);
   assert.match(policy, /https:\/\/static\.cloudflareinsights\.com/);
   assert.match(policy, /https:\/\/cloudflareinsights\.com/);
 });

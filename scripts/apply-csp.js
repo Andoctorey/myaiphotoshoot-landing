@@ -34,7 +34,7 @@ function buildPolicy(apiOrigin, hashes) {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data: https://fonts.gstatic.com",
-    `connect-src 'self' ${apiOrigin} https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://www.google.com https://analytics.tiktok.com https://challenges.cloudflare.com https://cloudflareinsights.com`,
+    `connect-src 'self' ${apiOrigin} https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://www.google.com https://analytics.tiktok.com https://analytics-ipv6.tiktokw.us https://challenges.cloudflare.com https://cloudflareinsights.com`,
     "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://challenges.cloudflare.com",
     "worker-src 'self' blob:",
     "object-src 'none'",
