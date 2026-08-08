@@ -130,7 +130,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Root page
     {
       url: `${baseUrl}/`,
-      lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 1,
       alternates: {
@@ -140,7 +139,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Locale-specific home pages
     ...locales.filter(locale => locale !== 'en').map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/'),
-      lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
       alternates: {
@@ -150,7 +148,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Blog listing pages for all locales
     {
       url: buildLocalizedUrl(baseUrl, 'en', '/blog/'),
-      lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
       alternates: {
@@ -159,7 +156,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...locales.filter(locale => locale !== 'en').map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/blog/'),
-      lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
       alternates: {
@@ -169,7 +165,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Use-cases listing pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/use-cases/'),
-      lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
       alternates: {
@@ -179,7 +174,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // AI preset listing pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/presets/'),
-      lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
       alternates: {
@@ -189,7 +183,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // AI mask catalog pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/masks/'),
-      lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
       alternates: {
@@ -199,7 +192,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Supported AI model pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/models/'),
-      lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.75,
       alternates: {
@@ -209,7 +201,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Support pages for all locales
     ...locales.map(locale => ({
       url: buildLocalizedUrl(baseUrl, locale, '/support/'),
-      lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
       alternates: {
@@ -219,13 +210,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Legal and license pages are English-only documents.
     {
       url: buildLocalizedUrl(baseUrl, 'en', '/legal/'),
-      lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.4,
     },
     {
       url: buildLocalizedUrl(baseUrl, 'en', '/license/'),
-      lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.4,
     },
@@ -264,7 +253,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const locale of locales) {
         useCaseEntries.push({
           url: buildLocalizedUrl(baseUrl, locale, `/use-cases/${item.slug}/`),
-          lastModified: item.created_at ? new Date(item.created_at) : new Date(),
+          ...(item.created_at ? { lastModified: new Date(item.created_at) } : {}),
           changeFrequency: 'weekly',
           priority: 0.7,
           alternates: { languages },
@@ -281,7 +270,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const locale of locales) {
         aiPresetPaginatedEntries.push({
           url: buildLocalizedUrl(baseUrl, locale, path),
-          lastModified: new Date(),
           changeFrequency: 'daily',
           priority: 0.65,
           alternates: { languages },
@@ -296,7 +284,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const locale of locales) {
         aiPresetEntries.push({
           url: buildLocalizedUrl(baseUrl, locale, `/presets/${item.slug}/`),
-          lastModified: lastModified ? new Date(lastModified) : new Date(),
+          ...(lastModified ? { lastModified: new Date(lastModified) } : {}),
           changeFrequency: 'weekly',
           priority: 0.75,
           alternates: { languages },

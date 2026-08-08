@@ -19,14 +19,14 @@ type Props = {
 };
 
 const tierCardClasses: Record<PricingTierId, string> = {
-  payg: 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800',
-  pro: 'border-purple-400 bg-white shadow-xl shadow-purple-900/10 ring-1 ring-purple-300 dark:border-purple-500 dark:bg-gray-800 dark:ring-purple-700',
+  payg: 'border-purple-400 bg-white shadow-xl shadow-purple-900/10 ring-1 ring-purple-300 dark:border-purple-500 dark:bg-gray-800 dark:ring-purple-700',
+  pro: 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800',
   max: 'border-indigo-300 bg-gradient-to-b from-indigo-50 to-white dark:border-indigo-700 dark:from-indigo-950/40 dark:to-gray-800',
 };
 
 const tierButtonClasses: Record<PricingTierId, string> = {
-  payg: 'bg-gray-950 hover:bg-purple-700 dark:bg-white dark:text-gray-950 dark:hover:bg-purple-200',
-  pro: 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700',
+  payg: 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700',
+  pro: 'bg-gray-950 hover:bg-purple-700 dark:bg-white dark:text-gray-950 dark:hover:bg-purple-200',
   max: 'bg-indigo-700 hover:bg-indigo-800 dark:bg-indigo-500 dark:hover:bg-indigo-400',
 };
 
@@ -99,21 +99,12 @@ export default function PricingPlans({ locale }: Props) {
         {US_REFERENCE_PRICING.tiers.map((tier) => {
           const offer = selectedOffer(tier);
           const displayPrice = offer.priceUsd;
-          const isPro = tier.id === 'pro';
 
           return (
             <article
               key={tier.id}
-              className={`relative flex h-full flex-col overflow-hidden rounded-3xl border p-6 sm:p-7 ${
-                isPro ? 'pt-12 sm:pt-12' : ''
-              } ${tierCardClasses[tier.id]}`}
+              className={`flex h-full flex-col rounded-3xl border p-6 sm:p-7 ${tierCardClasses[tier.id]}`}
             >
-              {isPro ? (
-                <div className="absolute end-5 top-0 rounded-b-xl bg-purple-600 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-white">
-                  {t('plans.pro.popular')}
-                </div>
-              ) : null}
-
               <p className="text-sm font-semibold uppercase tracking-wide text-purple-700 dark:text-purple-300">
                 {t(`plans.${tier.id}.eyebrow`)}
               </p>

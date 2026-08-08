@@ -10,8 +10,8 @@ import ts from 'typescript';
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
 const localeCodes = ['en', 'zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar'];
-const englishShareTitle = 'AI Photos That Still Look Like You';
-const englishShareDescription = 'Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.';
+const englishShareTitle = 'Create and Transform AI Photos';
+const englishShareDescription = 'Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.';
 const commercialShareClaim = /(?:[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन)/iu;
 
 async function readProjectFile(relativePath) {
@@ -86,10 +86,10 @@ test('US reference pricing matches the release catalog', async () => {
   assert.deepEqual(
     CREDIT_COSTS.map(({ id, minCredits, maxCredits }) => [id, minCredits, maxCredits]),
     [
-      ['personalModelImage', 2, 2],
       ['standardImage', 3, 3],
       ['proImage', 7, 10],
       ['maxImage', 20, 20],
+      ['personalModelImage', 2, 2],
       ['standardTraining', 150, 150],
       ['fullTraining', 300, 300],
     ],
@@ -100,10 +100,12 @@ test('US reference pricing matches the release catalog', async () => {
   assert.equal('monthlyEquivalentUsd' in offers['max-annual'], false);
 });
 
-test('all locales provide the pricing, use-case, model, and mask copy used by the UI', async () => {
+test('all locales provide the repositioned copy used by the UI', async () => {
   const requiredPaths = [
     'hero.description',
     'hero.microcopy',
+    'features.optionalPersonalModel.title',
+    'features.optionalPersonalModel.description',
     'navigation.skipToContent',
     'navigation.mainNavigation',
     'navigation.openMenu',
@@ -128,9 +130,18 @@ test('all locales provide the pricing, use-case, model, and mask copy used by th
     'faq.pricing.answer',
     'faq.subscriptions.answer',
     'useCase.offerSummary',
+    'useCase.galleryDisclaimer',
+    'useCase.howItWorks.step1.title',
+    'useCase.howItWorks.step1.desc',
+    'useCase.howItWorks.step2.title',
+    'useCase.howItWorks.step2.desc',
+    'useCase.howItWorks.step3.title',
+    'useCase.howItWorks.step3.desc',
     'useCase.pricingCard.payg',
+    'useCase.pricingCard.description',
     'useCase.pricingCard.pro',
     'useCase.pricingCard.max',
+    'useCase.schema.serviceType',
     'useCase.stickyCta.label',
     'models.creditUnit',
     'models.meta.shareTitle',
@@ -157,12 +168,12 @@ test('all locales provide the pricing, use-case, model, and mask copy used by th
   }
 });
 
-test('localized pricing, model, and page-copy schemas stay in lockstep with English', async () => {
+test('localized changed namespaces stay in lockstep with English', async () => {
   const english = JSON.parse(await readProjectFile('messages/en/index.json'));
 
   for (const locale of localeCodes.filter((code) => code !== 'en')) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
-    for (const namespace of ['pricing', 'models', 'pageCopy']) {
+    for (const namespace of ['pricing', 'models', 'pageCopy', 'useCase', 'features']) {
       assert.deepEqual(
         leafPaths(messages[namespace]),
         leafPaths(english[namespace]),
@@ -170,6 +181,63 @@ test('localized pricing, model, and page-copy schemas stay in lockstep with Engl
       );
     }
   }
+});
+
+test('creation and editing stay ahead of optional personal-model training', async () => {
+  const [homeSource, modelsSource, useCaseSource] = await Promise.all([
+    readProjectFile('src/components/features/HomeContent.tsx'),
+    readProjectFile('src/components/models/ModelsPage.tsx'),
+    readProjectFile('src/app/[locale]/use-cases/[slug]/UseCasePageClient.tsx'),
+  ]);
+
+  const homeOrder = [
+    '<Hero locale={locale}',
+    '<AppShowcase locale={locale}',
+    '<Features locale={locale}',
+    '<HomePresets locale={locale}',
+    '<HomeMasks locale={locale}',
+    '<Pricing locale={locale}',
+  ].map((token) => homeSource.indexOf(token));
+  assert.equal(homeOrder.every((position) => position >= 0), true, 'homepage sections are missing');
+  assert.deepEqual(homeOrder, [...homeOrder].sort((a, b) => a - b));
+
+  assert.match(modelsSource, /const modelGroupOrder: ModelGroup\[\] = \['generate', 'edit', 'personal'\]/);
+  assert.match(modelsSource, /numberOfItems: orderedModels\.length/);
+  assert.ok(
+    modelsSource.indexOf("t('summary.otherModels')") < modelsSource.indexOf("t('summary.training')"),
+    'creation and editing summary must precede optional training',
+  );
+  assert.doesNotMatch(useCaseSource, /howItWorks\.step[123]\.time/);
+
+  for (const locale of localeCodes) {
+    const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    for (const step of ['step1', 'step2', 'step3']) {
+      assert.equal('time' in messages.useCase.howItWorks[step], false, `${locale} still has ${step} timing copy`);
+    }
+  }
+});
+
+test('English route aliases redirect and sitemap dates come from real content timestamps', async () => {
+  const [redirects, sitemapSource] = await Promise.all([
+    readProjectFile('public/_redirects'),
+    readProjectFile('src/app/sitemap.ts'),
+  ]);
+
+  for (const redirect of [
+    '/models /models/ 308',
+    '/en/models /models/ 308',
+    '/en/models/ /models/ 308',
+    '/masks /masks/ 308',
+    '/en/masks /masks/ 308',
+    '/en/masks/ /masks/ 308',
+  ]) {
+    assert.match(redirects, new RegExp(`^${redirect.replaceAll('/', '\\/')}$`, 'm'));
+  }
+  assert.doesNotMatch(sitemapSource, /lastModified:\s*new Date\(\)/);
+  assert.doesNotMatch(sitemapSource, /:\s*new Date\(\),/);
+  assert.match(sitemapSource, /lastModified:\s*new Date\(post\.created_at\)/);
+  assert.match(sitemapSource, /item\.created_at \? \{ lastModified: new Date\(item\.created_at\) \} : \{\}/);
+  assert.match(sitemapSource, /lastModified \? \{ lastModified: new Date\(lastModified\) \} : \{\}/);
 });
 
 test('localized page and social metadata stays concise, translated, and evergreen', async () => {
@@ -263,7 +331,6 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
 test('active copy and SEO do not revive the retired cash-per-image story', async () => {
   const targetedPaths = [
     'hero.microcopy',
-    'features.affordablePricing.description',
     'useCase.offerSummary',
     'useCase.stickyCta.label',
   ];
@@ -286,9 +353,19 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
     readProjectFile('src/components/seo/UseCaseProductJsonLd.tsx'),
     readProjectFile('src/lib/product-offer.ts'),
   ]);
+  const [homeStructuredData, useCaseStructuredData] = structuredDataSources;
   const structuredData = structuredDataSources.join('\n');
   assert.match(structuredData, /OfferCatalog/);
   assert.doesNotMatch(structuredData, /AggregateOffer|shippingDetails|MerchantReturnNotPermitted/);
+  assert.match(homeStructuredData, /namespace: 'pageCopy\.home'/);
+  assert.match(homeStructuredData, /namespace: 'pricing'/);
+  assert.match(homeStructuredData, /namespace: 'useCase\.schema'/);
+  assert.doesNotMatch(homeStructuredData, /serviceType: 'AI photo/);
+  assert.match(homeStructuredData, /serviceType: tSchema\('serviceType'\)/);
+  assert.match(useCaseStructuredData, /t\('schema\.serviceType'\)/);
+  for (const tier of ['payg', 'pro', 'max']) {
+    assert.match(useCaseStructuredData, new RegExp(`t\\('pricingCard\\.${tier}'\\)`));
+  }
 
   const metadataSources = await Promise.all([
     readProjectFile('src/app/layout.tsx'),
@@ -331,12 +408,12 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     readProjectFile('src/lib/ai-presets.ts'),
     readProjectFile('src/lib/usecase-seo.ts'),
   ]);
-  const genericCardReferences = genericCardSources.join('\n').match(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=3)?/g) || [];
+  const genericCardReferences = genericCardSources.join('\n').match(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=4)?/g) || [];
   assert.ok(genericCardReferences.length > 0);
   assert.equal(
-    genericCardReferences.every((reference) => reference.endsWith('?v=3')),
+    genericCardReferences.every((reference) => reference.endsWith('?v=4')),
     true,
-    'generic social-card references must use the v3 cache key',
+    'generic social-card references must use the v4 cache key',
   );
 });
 

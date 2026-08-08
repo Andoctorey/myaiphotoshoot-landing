@@ -4,7 +4,12 @@ import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 import { canonicalUrl } from '@/lib/seo';
 
 export default async function HomeJsonLd({ locale }: { locale: string }) {
-  const tHero = await getTranslations({ locale, namespace: 'hero' });
+  const [tHero, tHome, tPricing, tSchema] = await Promise.all([
+    getTranslations({ locale, namespace: 'hero' }),
+    getTranslations({ locale, namespace: 'pageCopy.home' }),
+    getTranslations({ locale, namespace: 'pricing' }),
+    getTranslations({ locale, namespace: 'useCase.schema' }),
+  ]);
   const description = tHero('description');
   const offerPolicies = buildDigitalOfferPolicies();
   const pricingUrl = `${canonicalUrl(locale, '/')}#pricing`;
@@ -12,8 +17,8 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     '@context': 'https://schema.org',
     '@type': 'Service',
     '@id': `${canonicalUrl(locale, '/')}#service`,
-    name: 'My AI Photo Shoot AI photo service',
-    serviceType: 'AI headshot, portrait, and photo generation',
+    name: `My AI Photo Shoot — ${tHome('shareTitle')}`,
+    serviceType: tSchema('serviceType'),
     provider: {
       '@type': 'Organization',
       '@id': 'https://myaiphotoshoot.com/#organization',
@@ -21,10 +26,15 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     },
     description,
     url: canonicalUrl(locale, '/'),
-    image: 'https://myaiphotoshoot.com/og-image-v2.jpg?v=3',
-    category: 'AI headshot and portrait software',
+    image: 'https://myaiphotoshoot.com/og-image-v2.jpg?v=4',
     inLanguage: locale,
     isRelatedTo: [
+      {
+        '@type': 'WebApplication',
+        name: 'My AI Photo Shoot',
+        applicationCategory: 'Photo & Video',
+        url: 'https://app.myaiphotoshoot.com',
+      },
       {
         '@type': 'MobileApplication',
         name: 'My AI Photo Shoot',
@@ -39,38 +49,35 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Credits and subscription plans',
+      name: tPricing('title'),
       itemListElement: [
         {
           '@type': 'Offer',
-          name: 'One-time credits',
-          category: 'Pay as you go',
+          name: tPricing('plans.payg.name'),
           url: pricingUrl,
           itemOffered: {
             '@type': 'Service',
-            name: '1K AI photo generation with one-time credits',
+            name: tPricing('plans.payg.description'),
           },
           ...offerPolicies,
         },
         {
           '@type': 'Offer',
-          name: 'Pro',
-          category: 'Subscription',
+          name: tPricing('plans.pro.name'),
           url: pricingUrl,
           itemOffered: {
             '@type': 'Service',
-            name: 'Up to 2K AI photo generation and Standard personal AI training',
+            name: tPricing('plans.pro.description'),
           },
           ...offerPolicies,
         },
         {
           '@type': 'Offer',
-          name: 'Max',
-          category: 'Subscription',
+          name: tPricing('plans.max.name'),
           url: pricingUrl,
           itemOffered: {
             '@type': 'Service',
-            name: 'Up to 4K AI photo generation and Full personal AI training',
+            name: tPricing('plans.max.description'),
           },
           ...offerPolicies,
         },

@@ -3,6 +3,7 @@
 import React from 'react';
 import { serializeJsonLd } from '@/lib/json-ld';
 import { buildDigitalOfferPolicies } from '@/lib/product-offer';
+import { useTranslations } from '@/lib/utils';
 
 type Props = {
   idUrl: string; // canonical page URL without hash
@@ -21,6 +22,7 @@ export default function UseCaseProductJsonLd({
   brandName = 'My AI Photo Shoot',
   inLanguage,
 }: Props) {
+  const t = useTranslations('useCase');
   const images = Array.isArray(imageUrls)
     ? imageUrls.filter(Boolean)
     : [];
@@ -31,7 +33,7 @@ export default function UseCaseProductJsonLd({
     '@type': 'Service',
     '@id': `${idUrl}#service`,
     name,
-    serviceType: 'AI photo generation',
+    serviceType: t('schema.serviceType'),
     description: description || undefined,
     image: images.length ? images.slice(0, 10) : undefined,
     inLanguage: inLanguage || undefined,
@@ -39,15 +41,15 @@ export default function UseCaseProductJsonLd({
     provider: { '@type': 'Organization', name: brandName },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Ways to create',
+      name: t('pricingCard.title'),
       itemListElement: [
         {
           '@type': 'Offer',
-          name: 'One-time credits',
+          name: t('badges.oneTimeCredits'),
           url: 'https://app.myaiphotoshoot.com',
           itemOffered: {
             '@type': 'Service',
-            name: '1K AI photo generation',
+            name: t('pricingCard.payg'),
           },
           ...offerPolicies,
         },
@@ -57,7 +59,7 @@ export default function UseCaseProductJsonLd({
           url: 'https://app.myaiphotoshoot.com',
           itemOffered: {
             '@type': 'Service',
-            name: 'Up to 2K generation and Standard personal AI training',
+            name: t('pricingCard.pro'),
           },
           ...offerPolicies,
         },
@@ -67,7 +69,7 @@ export default function UseCaseProductJsonLd({
           url: 'https://app.myaiphotoshoot.com',
           itemOffered: {
             '@type': 'Service',
-            name: 'Up to 4K generation and Full personal AI training',
+            name: t('pricingCard.max'),
           },
           ...offerPolicies,
         },

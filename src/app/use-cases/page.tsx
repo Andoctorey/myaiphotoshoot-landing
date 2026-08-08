@@ -57,13 +57,13 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       locale: ogLocaleFromAppLocale(defaultLocale),
       alternateLocale: ogAlternateLocales(locales, defaultLocale),
-      images: [{ url: '/og-image-v2.jpg?v=3', width: 1200, height: 630, alt: socialTitle }],
+      images: [{ url: '/og-image-v2.jpg?v=4', width: 1200, height: 630, alt: socialTitle }],
     },
     twitter: {
       card: 'summary_large_image',
       title: socialTitle,
       description,
-      images: [{ url: '/og-image-v2.jpg?v=3', alt: socialTitle }],
+      images: [{ url: '/og-image-v2.jpg?v=4', alt: socialTitle }],
     },
   };
 }

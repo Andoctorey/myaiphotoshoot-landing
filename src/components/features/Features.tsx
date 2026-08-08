@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import {
-  ShieldCheckIcon,
+  UserCircleIcon,
   SparklesIcon,
   PhotoIcon,
   DevicePhoneMobileIcon,
@@ -21,9 +21,9 @@ export default async function Features({ locale }: { locale: string }) {
       icon: PhotoIcon,
     },
     {
-      name: t('privacyFirst.title'),
-      description: t('privacyFirst.description'),
-      icon: ShieldCheckIcon,
+      name: t('optionalPersonalModel.title'),
+      description: t('optionalPersonalModel.description'),
+      icon: UserCircleIcon,
     },
     {
       name: t('multiplatform.title'),

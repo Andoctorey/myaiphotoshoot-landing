@@ -44,11 +44,6 @@ export const CREDIT_USD_REFERENCE_VALUE = 0.03;
 
 export const CREDIT_COSTS = [
   {
-    id: 'personalModelImage',
-    minCredits: 2,
-    maxCredits: 2,
-  },
-  {
     id: 'standardImage',
     minCredits: 3,
     maxCredits: 3,
@@ -62,6 +57,11 @@ export const CREDIT_COSTS = [
     id: 'maxImage',
     minCredits: 20,
     maxCredits: 20,
+  },
+  {
+    id: 'personalModelImage',
+    minCredits: 2,
+    maxCredits: 2,
   },
   {
     id: 'standardTraining',

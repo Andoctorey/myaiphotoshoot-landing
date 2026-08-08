@@ -406,21 +406,21 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
             <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">1</div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step1.title')} <span className="text-gray-500">{tUseCase('howItWorks.step1.time')}</span></h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step1.title')}</h3>
               <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step1.desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
             <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">2</div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step2.title')} <span className="text-gray-500">{tUseCase('howItWorks.step2.time')}</span></h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step2.title')}</h3>
               <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step2.desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
             <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">3</div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step3.title')} <span className="text-gray-500">{tUseCase('howItWorks.step3.time')}</span></h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step3.title')}</h3>
               <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step3.desc')}</p>
             </div>
           </div>

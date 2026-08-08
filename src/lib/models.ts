@@ -44,7 +44,6 @@ const MAX_IMAGE_CREDITS = fixedCreditCost('maxImage');
 export const STANDARD_TRAINING_CREDITS = fixedCreditCost('standardTraining');
 export const FULL_TRAINING_CREDITS = fixedCreditCost('fullTraining');
 export const LOWEST_GENERATION_CREDITS = STANDARD_IMAGE_CREDITS;
-export const PERSONAL_MODEL_PHOTO_CREDITS = PERSONAL_MODEL_IMAGE_CREDITS;
 
 // Mirrors the public generation-model catalog and the plan entitlement mapping.
 // Keep this list aligned with the backend when models, costs, or access tiers change.

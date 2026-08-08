@@ -46,12 +46,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   };
   const m = messages as HomeI18n;
-  const title = m.pageCopy?.home?.metaTitle || 'AI Headshot Generator | My AI Photo Shoot';
+  const title = m.pageCopy?.home?.metaTitle || 'AI Photo & Headshot Generator | My AI Photo Shoot';
   const description = m.pageCopy?.home?.metaDescription
-    || 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K with Pro or Max.';
-  const shareTitle = m.pageCopy?.home?.shareTitle || 'AI Photos That Still Look Like You';
+    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, Studio, or prompts. Pay as you go; personal model training is optional.';
+  const shareTitle = m.pageCopy?.home?.shareTitle || 'Create and Transform AI Photos';
   const shareDescription = m.pageCopy?.home?.shareDescription
-    || 'Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.';
+    || 'Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.';
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/og-image-v2.jpg?v=3',
+          url: '/og-image-v2.jpg?v=4',
           width: 1200,
           height: 630,
           alt: shareTitle,
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: shareTitle,
       description: shareDescription,
-      images: [{ url: '/og-image-v2.jpg?v=3', alt: shareTitle }],
+      images: [{ url: '/og-image-v2.jpg?v=4', alt: shareTitle }],
     },
   };
 }

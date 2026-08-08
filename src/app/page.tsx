@@ -44,11 +44,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
   const pageCopy = (messages as HomePageCopy).pageCopy?.home;
   const description = pageCopy?.metaDescription
-    || 'Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K with Pro or Max.';
-  const title = pageCopy?.metaTitle || 'AI Headshot Generator | My AI Photo Shoot';
-  const shareTitle = pageCopy?.shareTitle || 'AI Photos That Still Look Like You';
+    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, Studio, or prompts. Pay as you go; personal model training is optional.';
+  const title = pageCopy?.metaTitle || 'AI Photo & Headshot Generator | My AI Photo Shoot';
+  const shareTitle = pageCopy?.shareTitle || 'Create and Transform AI Photos';
   const shareDescription = pageCopy?.shareDescription
-    || 'Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.';
+    || 'Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.';
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -71,10 +71,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'My AI Photo Shoot',
       images: [
         {
-          url: '/og-image-v2.jpg?v=3',
+          url: '/og-image-v2.jpg?v=4',
           width: 1200,
           height: 630,
-          alt: 'My AI Photo Shoot AI headshot examples',
+          alt: 'My AI Photo Shoot AI photo creation and transformation examples',
         },
       ],
       locale: ogLocaleFromAppLocale('en'),
@@ -85,7 +85,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: shareTitle,
       description: shareDescription,
-      images: [{ url: '/og-image-v2.jpg?v=3', alt: 'My AI Photo Shoot AI headshot examples' }],
+      images: [{ url: '/og-image-v2.jpg?v=4', alt: 'My AI Photo Shoot AI photo creation and transformation examples' }],
     },
   };
 }

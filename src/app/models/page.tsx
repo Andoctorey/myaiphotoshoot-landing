@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/og-image-v2.jpg?v=3',
+          url: '/og-image-v2.jpg?v=4',
           width: 1200,
           height: 630,
           alt: 'My AI Photo Shoot AI photo model examples',
@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: shareTitle,
       description: shareDescription,
-      images: [{ url: '/og-image-v2.jpg?v=3', alt: shareTitle }],
+      images: [{ url: '/og-image-v2.jpg?v=4', alt: shareTitle }],
     },
   };
 }

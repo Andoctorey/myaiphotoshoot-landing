@@ -6,7 +6,6 @@ import {
   formatCreditCost,
   FULL_TRAINING_CREDITS,
   LOWEST_GENERATION_CREDITS,
-  PERSONAL_MODEL_PHOTO_CREDITS,
   STANDARD_TRAINING_CREDITS,
   supportedModels,
   type ModelGroup,
@@ -19,8 +18,7 @@ type Props = {
   locale: string;
 };
 
-const groupOrder: ModelGroup[] = ['personal', 'generate', 'edit'];
-const chooserGroups: ModelGroup[] = ['personal', 'generate', 'edit'];
+const modelGroupOrder: ModelGroup[] = ['generate', 'edit', 'personal'];
 
 function modelsByGroup(group: ModelGroup): SupportedModel[] {
   return supportedModels.filter((model) => model.group === group);
@@ -40,6 +38,7 @@ export default async function ModelsPage({ locale }: Props) {
   const t = await getTranslations({ locale, namespace: 'models' });
   const tNav = await getTranslations({ locale, namespace: 'navigation' });
   const pageUrl = canonicalUrl(locale, '/models/');
+  const orderedModels = modelGroupOrder.flatMap(modelsByGroup);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -68,8 +67,8 @@ export default async function ModelsPage({ locale }: Props) {
     },
     mainEntity: {
       '@type': 'ItemList',
-      numberOfItems: supportedModels.length,
-      itemListElement: supportedModels.map((model, index) => ({
+      numberOfItems: orderedModels.length,
+      itemListElement: orderedModels.map((model, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         item: {
@@ -122,20 +121,18 @@ export default async function ModelsPage({ locale }: Props) {
             <p className="mt-5 max-w-3xl text-lg leading-8 text-gray-700 dark:text-gray-300">
               {t('description')}
             </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
+                <div className="text-2xl font-bold">
+                  {formatCreditCost(LOWEST_GENERATION_CREDITS)}
+                </div>
+                <div className="mt-1 text-sm leading-5 text-gray-600 dark:text-gray-300">{t('summary.otherModels')}</div>
+              </div>
               <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
                 <div className="text-2xl font-bold">
                   {formatCreditCost(STANDARD_TRAINING_CREDITS)} / {formatCreditCost(FULL_TRAINING_CREDITS)}
                 </div>
                 <div className="mt-1 text-sm leading-5 text-gray-600 dark:text-gray-300">{t('summary.training')}</div>
-              </div>
-              <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
-                <div className="text-2xl font-bold">{formatCreditCost(PERSONAL_MODEL_PHOTO_CREDITS)}</div>
-                <div className="mt-1 text-sm leading-5 text-gray-600 dark:text-gray-300">{t('summary.personalPhoto')}</div>
-              </div>
-              <div className="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
-                <div className="text-2xl font-bold">{formatCreditCost(LOWEST_GENERATION_CREDITS)}</div>
-                <div className="mt-1 text-sm leading-5 text-gray-600 dark:text-gray-300">{t('summary.otherModels')}</div>
               </div>
             </div>
           </div>
@@ -151,7 +148,7 @@ export default async function ModelsPage({ locale }: Props) {
                 </span>
               </div>
               <div className="mt-5 space-y-5">
-                {groupOrder.map((group) => (
+                {modelGroupOrder.map((group) => (
                   <div key={group}>
                     <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                       {t(`groups.${group}`)}
@@ -192,7 +189,7 @@ export default async function ModelsPage({ locale }: Props) {
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            {chooserGroups.map((key) => (
+            {modelGroupOrder.map((key) => (
               <div
                 key={key}
                 className="rounded-2xl border border-gray-200 p-6 transition hover:-translate-y-0.5 hover:border-purple-300 hover:shadow-lg dark:border-gray-800 dark:hover:border-purple-700"
@@ -228,7 +225,7 @@ export default async function ModelsPage({ locale }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                  {groupOrder.flatMap((group) => modelsByGroup(group)).map((model) => (
+                  {orderedModels.map((model) => (
                     <tr key={model.id} id={model.id} className="scroll-mt-24 align-top">
                       <th scope="row" className="px-4 py-4 font-semibold text-gray-950 dark:text-white">
                         {model.name}

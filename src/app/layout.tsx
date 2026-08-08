@@ -26,10 +26,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://myaiphotoshoot.com"),
   title: {
-    default: "AI Headshot Generator - My AI Photo Shoot",
+    default: "AI Photo & Headshot Generator - My AI Photo Shoot",
     template: "%s | My AI Photo Shoot",
   },
-  description: "Create realistic AI headshots and portraits from selfies. Start with one-time credits, or unlock personal AI training and up to 4K generation with Pro or Max.",
+  description: "Create headshots, profile photos, portraits, and transformations with presets, AI Masks, Studio, or prompts. Pay as you go; personal model training is optional.",
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",
@@ -57,16 +57,16 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "AI Photos That Still Look Like You",
-    description: "Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.",
+    title: "Create and Transform AI Photos",
+    description: "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.",
     url: "https://myaiphotoshoot.com",
     siteName: "My AI Photo Shoot",
     images: [
       {
-        url: "/og-image-v2.jpg?v=3",
+        url: "/og-image-v2.jpg?v=4",
         width: 1200,
         height: 630,
-        alt: "My AI Photo Shoot AI headshot examples",
+        alt: "My AI Photo Shoot AI photo creation and transformation examples",
       },
     ],
     locale: "en_US",
@@ -74,9 +74,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Photos That Still Look Like You",
-    description: "Create realistic AI photos from selfies. Explore ready-made styles or train a personal AI model, then turn any prompt into photos that still look like you.",
-    images: [{ url: "/og-image-v2.jpg?v=3", alt: "My AI Photo Shoot AI headshot examples" }],
+    title: "Create and Transform AI Photos",
+    description: "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.",
+    images: [{ url: "/og-image-v2.jpg?v=4", alt: "My AI Photo Shoot AI photo creation and transformation examples" }],
   },
 };
 

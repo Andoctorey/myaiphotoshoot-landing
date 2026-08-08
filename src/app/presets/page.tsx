@@ -28,13 +28,13 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       locale: ogLocaleFromAppLocale(defaultLocale),
       alternateLocale: ogAlternateLocales(locales, defaultLocale),
-      images: [{ url: '/og-image-v2.jpg?v=3', width: 1200, height: 630, alt: AI_PRESETS_INDEX_TITLE }],
+      images: [{ url: '/og-image-v2.jpg?v=4', width: 1200, height: 630, alt: AI_PRESETS_INDEX_TITLE }],
     },
     twitter: {
       card: 'summary_large_image',
       title: AI_PRESETS_INDEX_TITLE,
       description: AI_PRESETS_INDEX_DESCRIPTION,
-      images: [{ url: '/og-image-v2.jpg?v=3', alt: AI_PRESETS_INDEX_TITLE }],
+      images: [{ url: '/og-image-v2.jpg?v=4', alt: AI_PRESETS_INDEX_TITLE }],
     },
   };
 }
