@@ -222,8 +222,8 @@ test('all locales provide the repositioned copy used by the UI', async () => {
   const requiredPaths = [
     'hero.description',
     'hero.microcopy',
-    'features.optionalPersonalModel.title',
-    'features.optionalPersonalModel.description',
+    'features.easyCustomization.title',
+    'features.easyCustomization.description',
     'navigation.skipToContent',
     'navigation.mainNavigation',
     'navigation.openMenu',

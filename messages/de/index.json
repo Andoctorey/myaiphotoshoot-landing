@@ -21,7 +21,7 @@
   "pageCopy": {
     "home": {
       "metaTitle": "KI-Foto- und Headshot-Generator | My AI Photo Shoot",
-      "metaDescription": "Erstellen Sie Headshots, Profilbilder, Porträts und Transformationen mit Presets, AI Masks, Studio oder Prompts. Nutzungsbasiert; persönliche Modelle optional.",
+      "metaDescription": "Erstellen Sie Headshots, Profilbilder und Porträts mit Presets, AI Masks oder eigenen Prompts in Studio. Zahlen Sie nach Bedarf mit einmaligen Credits.",
       "shareTitle": "KI-Fotos erstellen und transformieren",
       "shareDescription": "Erstellen und transformieren Sie KI-Fotos mit Presets, AI Masks, Studio und eigenen Prompts für Headshots, Profilbilder, Porträts und kreative Fotos."
     },
@@ -104,8 +104,8 @@
   "hero": {
     "title": "KI-Fotos erstellen und transformieren",
     "titleHighlight": "ganz nach Ihren Wünschen",
-    "description": "Beginnen Sie mit einem vorhandenen Foto oder Referenzbild. Wählen Sie ein Preset, wenden Sie AI Masks an oder nutzen Sie Studio und eigene Prompts, um Headshots, Profilbilder, Porträts, Transformationen und kreative Bilder zu erstellen.",
-    "microcopy": "Nutzungsbasiert mit einmaligen Credits • Training persönlicher Modelle ist optional • Web, iOS und Android",
+    "description": "Beginnen Sie mit einem Foto, einem Referenzbild oder einer Idee. Wählen Sie ein Preset, wenden Sie eine AI Mask an oder nutzen Sie Studio und eigene Prompts, um Headshots, Profilbilder, Porträts, Transformationen und kreative Bilder zu erstellen.",
+    "microcopy": "Zahlen Sie nach Bedarf mit einmaligen Credits • Credits verfallen nie • Web, iOS und Android",
     "visualAlt": "Dieselbe Frau in professionellen, legeren und redaktionellen KI-Porträts"
   },
   "appShowcase": {
@@ -118,7 +118,7 @@
   "homeUseCases": {
     "eyebrow": "Headshots, Profilbilder und kreative Fotos",
     "title": "Fotos für Beruf, Profile und kreative Projekte erstellen",
-    "description": "Beginnen Sie mit einem Foto oder Referenzbild und nutzen Sie Presets, AI Masks, Studio oder eigene Prompts für das gewünschte Ergebnis.",
+    "description": "Erstellen Sie professionelle Headshots, Dating-Profilbilder und kreative Porträts.",
     "imageAlt": "KI-Fotobeispiel für {title}",
     "exploreAll": "Alle Fotostile entdecken",
     "cards": {
@@ -129,26 +129,18 @@
   },
   "features": {
     "title": "Erstellen Sie Ihr Foto auf Ihre Weise",
-    "description": "Wählen Sie eine geführte Transformation oder nutzen Sie Studio für mehr Kontrolle. Trainieren Sie ein persönliches Modell nur, wenn Sie bei wiederholten Generierungen eine konsistente Identität wünschen.",
+    "description": "Wählen Sie eine geführte Transformation oder nutzen Sie Studio und eigene Prompts für mehr Kontrolle.",
     "advancedAI": {
-      "title": "Mit einem Foto oder Referenzbild starten",
-      "description": "Bearbeiten Sie ein vorhandenes Foto, wenden Sie AI Masks an oder verwenden Sie ein Preset als Ausgangspunkt."
-    },
-    "optionalPersonalModel": {
-      "title": "Persönliche Modelle sind optional",
-      "description": "Trainieren Sie mit Pro oder Max ein persönliches KI-Modell, wenn Sie bei wiederholten Generierungen eine konsistente Identität wünschen."
-    },
-    "affordablePricing": {
-      "title": "Einmalige Credits und Tarife",
-      "description": "Kaufen Sie einmalige Credits für geeignete nutzungsbasierte Modelle oder wählen Sie Pro oder Max für wiederkehrende Credits, höhere Auflösung und optionales Training persönlicher Modelle."
+      "title": "Wählen Sie Ihren Ausgangspunkt",
+      "description": "Bearbeiten Sie ein vorhandenes Foto, steuern Sie das Ergebnis mit einem Referenzbild oder erstellen Sie aus einem Prompt ein neues Bild."
     },
     "thousandsOfStyles": {
-      "title": "Presets, AI Masks und Studio",
-      "description": "Nutzen Sie fertige Presets, probieren Sie AI Masks aus oder beschreiben Sie in Studio Ihren Wunsch für Headshots, Profilbilder, Porträts und kreative Bilder."
+      "title": "Fertige Presets und AI Masks",
+      "description": "Wählen Sie ein Preset oder eine AI Mask für schnelle Transformationen, ohne einen Prompt schreiben zu müssen."
     },
     "easyCustomization": {
       "title": "Eigene Prompts in Studio",
-      "description": "Verwenden Sie ein Referenzfoto und beschreiben Sie die gewünschte Änderung oder erstellen Sie aus einem Prompt ein neues Bild."
+      "description": "Beschreiben Sie in Studio mit einem Referenzfoto eine genaue Änderung oder erstellen Sie ohne Referenz ein neues Bild."
     },
     "multiplatform": {
       "title": "Überall erstellen",
@@ -301,7 +293,7 @@
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Erstellen und transformieren Sie KI-Fotos mit Presets, AI Masks, Studio, eigenen Prompts und optionalen persönlichen Modellen.",
+    "description": "Erstellen und transformieren Sie KI-Fotos mit Presets, AI Masks, Studio und eigenen Prompts.",
     "links": "Schnelllinks",
     "legal": "Rechtliches",
     "twitter": "Twitter (X)",
@@ -333,7 +325,7 @@
     "description": "Klare Antworten zu Einrichtung, Kosten, Bildqualität, Datenschutz und unterstützten Geräten.",
     "howItWorks": {
       "question": "Wie funktioniert es?",
-      "answer": "Beginnen Sie mit einem vorhandenen Foto oder Referenzbild, wählen Sie ein Preset, nutzen Sie AI Masks oder öffnen Sie Studio und beschreiben Sie Ihren Wunsch. Die App zeigt vor der Erstellung die Credit-Kosten und die erforderliche Zugriffsstufe. Das Training persönlicher Modelle ist ein separater optionaler Ablauf."
+      "answer": "Beginnen Sie mit einem Foto, einem Referenzbild oder einer Idee. Wählen Sie ein Preset oder eine AI Mask – oder öffnen Sie Studio und beschreiben Sie Ihren Wunsch. Vor der Erstellung zeigt die App die Credit-Kosten und ob dafür ein bestimmter Tarif erforderlich ist."
     },
     "sourcePhotos": {
       "question": "Ist das Training eines persönlichen KI-Modells erforderlich?",
@@ -361,7 +353,7 @@
     },
     "whyNotChatGPT": {
       "question": "Was unterscheidet My AI Photo Shoot von allgemeinen KI-Bildtools?",
-      "answer": "My AI Photo Shoot kombiniert geführte Presets, AI Masks, Studio, eigene Prompts sowie spezialisierte Generierungs- und Bearbeitungsmodelle. Optionales Training eines persönlichen Modells sorgt bei wiederholten Generierungen für eine konsistente Identität."
+      "answer": "My AI Photo Shoot vereint geführte Presets, AI Masks, Studio, eigene Prompts sowie spezialisierte Generierungs- und Bearbeitungsmodelle in einem auf Fotos ausgerichteten Workflow."
     }
   },
   "useCase": {
@@ -381,7 +373,7 @@
       "title": "So funktioniert es",
       "step1": {
         "title": "Ausgangspunkt wählen",
-        "desc": "Beginnen Sie mit einem vorhandenen Foto oder Referenzbild oder öffnen Sie Studio mit einer Idee."
+        "desc": "Beginnen Sie mit einem Foto, einem Referenzbild oder einer Idee."
       },
       "step2": {
         "title": "Erstellungsweg wählen",

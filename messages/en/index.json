@@ -21,7 +21,7 @@
   "pageCopy": {
     "home": {
       "metaTitle": "AI Photo & Headshot Generator | My AI Photo Shoot",
-      "metaDescription": "Create headshots, profile photos, portraits, and transformations with presets, AI Masks, Studio, or prompts. Pay as you go; personal model training is optional.",
+      "metaDescription": "Create headshots, profile photos, portraits, and transformations with presets, AI Masks, or custom prompts in Studio. Pay as you go with one-time credits.",
       "shareTitle": "Create and Transform AI Photos",
       "shareDescription": "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos."
     },
@@ -104,8 +104,8 @@
   "hero": {
     "title": "Create and Transform",
     "titleHighlight": "AI Photos Your Way",
-    "description": "Start with an existing photo or reference. Choose a preset, apply an AI Mask, or use Studio and custom prompts to create headshots, profile photos, portraits, transformations, and creative images.",
-    "microcopy": "Pay as you go with one-time credits • Personal model training is optional • Web, iOS, and Android",
+    "description": "Start with a photo, reference, or idea. Choose a preset, apply an AI Mask, or use Studio and custom prompts to create headshots, profile photos, portraits, transformations, and creative images.",
+    "microcopy": "Pay as you go with one-time credits • Credits never expire • Web, iOS, and Android",
     "visualAlt": "The same woman shown in professional, casual, and editorial AI portraits"
   },
   "appShowcase": {
@@ -118,7 +118,7 @@
   "homeUseCases": {
     "eyebrow": "Headshots, profiles, and creative photos",
     "title": "Create photos for work, profiles, and creative projects",
-    "description": "Start from a photo or reference, then use presets, AI Masks, Studio, or custom prompts to create the result you want.",
+    "description": "Create professional headshots, dating profile photos, and creative portraits.",
     "imageAlt": "AI photo example for {title}",
     "exploreAll": "Explore all photo styles",
     "cards": {
@@ -129,26 +129,18 @@
   },
   "features": {
     "title": "Create your photo your way",
-    "description": "Choose a guided transformation or use Studio for more control. Train a personal AI model only when you want the same person to stay recognizable across repeated photos.",
+    "description": "Choose a guided transformation, or use Studio and custom prompts for more control.",
     "advancedAI": {
-      "title": "Start with a photo or reference",
-      "description": "Edit an existing photo, apply an AI Mask, or use a preset as your starting point."
-    },
-    "optionalPersonalModel": {
-      "title": "Personal models are optional",
-      "description": "With Pro or Max, optionally train a personal AI model to keep the same person recognizable across repeated photos."
-    },
-    "affordablePricing": {
-      "title": "One-time credits and plans",
-      "description": "Buy one-time credits for eligible pay-as-you-go models, or choose Pro or Max for recurring credits, higher resolution, and optional personal AI model training."
+      "title": "Choose your starting point",
+      "description": "Transform an existing photo, guide the result with a reference, or create a new image from a prompt."
     },
     "thousandsOfStyles": {
-      "title": "Presets, AI Masks, and Studio",
-      "description": "Use ready-made presets, try AI Masks, or describe what you want in Studio for headshots, profile photos, portraits, and creative images."
+      "title": "Ready-made presets and AI Masks",
+      "description": "Choose a preset or AI Mask for quick transformations without writing a prompt."
     },
     "easyCustomization": {
       "title": "Custom prompts in Studio",
-      "description": "Use a reference photo and describe the change you want, or create a new image from a prompt."
+      "description": "Use Studio to describe an exact change with a reference photo, or create a new image without one."
     },
     "multiplatform": {
       "title": "Create anywhere",
@@ -301,7 +293,7 @@
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Create and transform AI photos with presets, AI Masks, Studio, custom prompts, and optional personal models.",
+    "description": "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts.",
     "links": "Quick Links",
     "legal": "Legal",
     "twitter": "Twitter (X)",
@@ -333,7 +325,7 @@
     "description": "Clear answers about setup, cost, image quality, privacy, and supported devices.",
     "howItWorks": {
       "question": "How does it work?",
-      "answer": "Start with an existing photo or reference, choose a preset or AI Mask, or open Studio and describe what you want. The app shows the credit cost and any plan requirement before you create. Personal model training is a separate optional workflow."
+      "answer": "Start with a photo, reference, or idea. Choose a preset or AI Mask, or open Studio and describe what you want. Before you create, the app shows the credit cost and whether a plan is required."
     },
     "sourcePhotos": {
       "question": "Is personal AI model training required?",
@@ -361,7 +353,7 @@
     },
     "whyNotChatGPT": {
       "question": "How is this different from a general AI image tool?",
-      "answer": "My AI Photo Shoot combines guided presets, AI Masks, Studio, custom prompts, and specialized generation and editing models. Optional personal AI model training helps keep the same person recognizable across repeated photos."
+      "answer": "My AI Photo Shoot brings guided presets, AI Masks, Studio, custom prompts, and specialized generation and editing models into one focused photo workflow."
     }
   },
   "useCase": {
@@ -381,7 +373,7 @@
       "title": "How It Works",
       "step1": {
         "title": "Choose your starting point",
-        "desc": "Start with an existing photo or reference, or open Studio with an idea."
+        "desc": "Start with a photo, reference, or idea."
       },
       "step2": {
         "title": "Choose how to create",

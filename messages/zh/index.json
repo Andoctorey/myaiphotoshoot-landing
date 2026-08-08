@@ -21,7 +21,7 @@
   "pageCopy": {
     "home": {
       "metaTitle": "AI 照片与头像生成器 | My AI Photo Shoot",
-      "metaDescription": "使用预设、AI Masks、Studio 或自定义提示词，创建头像照、个人资料照片、肖像和变换效果。支持按需付费的模型可使用一次性积分，个人模型可选。",
+      "metaDescription": "使用预设、AI Masks 或 Studio 中的自定义提示词，创建头像照、个人资料照片、肖像和变换效果。使用一次性积分按需付费。",
       "shareTitle": "创建与变换 AI 照片",
       "shareDescription": "使用预设、AI Masks、Studio 和自定义提示词，创建和变换头像照、个人资料照片、肖像和创意照片。"
     },
@@ -104,8 +104,8 @@
   "hero": {
     "title": "创建与变换",
     "titleHighlight": "随心打造 AI 照片",
-    "description": "从现有照片或参考图开始。选择预设、应用 AI Masks，或使用 Studio 和自定义提示词，创建头像照、个人资料照片、肖像、变换效果和创意图片。",
-    "microcopy": "使用一次性积分按需付费 • 个人模型训练可选 • 支持网页、iOS 和 Android",
+    "description": "从照片、参考图或创意开始。选择预设、应用 AI Mask，或使用 Studio 和自定义提示词，创建头像照、个人资料照片、肖像、变换效果和创意图片。",
+    "microcopy": "使用一次性积分按需付费 • 积分永不过期 • 支持网页、iOS 和 Android",
     "visualAlt": "同一位女性的专业、休闲和杂志风 AI 肖像"
   },
   "appShowcase": {
@@ -118,7 +118,7 @@
   "homeUseCases": {
     "eyebrow": "头像照、个人资料照片与创意照片",
     "title": "为工作、个人资料和创意项目创建照片",
-    "description": "从照片或参考图开始，然后使用预设、AI Masks、Studio 或自定义提示词，创建你想要的效果。",
+    "description": "创建职业头像、交友资料照片和创意肖像。",
     "imageAlt": "{title} 的 AI 照片示例",
     "exploreAll": "查看所有照片风格",
     "cards": {
@@ -129,26 +129,18 @@
   },
   "features": {
     "title": "按你的方式创作照片",
-    "description": "选择引导式变换，或使用 Studio 获得更多控制。只有在你希望多次生成时保持身份一致，才需要训练个人模型。",
+    "description": "选择引导式变换，或使用 Studio 和自定义提示词获得更多控制。",
     "advancedAI": {
-      "title": "从照片或参考图开始",
-      "description": "编辑现有照片、应用 AI Masks，或使用预设作为起点。"
-    },
-    "optionalPersonalModel": {
-      "title": "个人模型完全可选",
-      "description": "如果希望多次生成时保持身份一致，可使用 Pro 或 Max 训练个人 AI 模型。"
-    },
-    "affordablePricing": {
-      "title": "一次性积分与套餐",
-      "description": "购买一次性积分，用于符合按需付费条件的模型；或选择 Pro 或 Max，获得定期积分、更高分辨率和可选的个人模型训练。"
+      "title": "选择创作起点",
+      "description": "变换现有照片、用参考图引导效果，或通过提示词创建新图片。"
     },
     "thousandsOfStyles": {
-      "title": "预设、AI Masks 与 Studio",
-      "description": "使用现成预设、试用 AI Masks，或在 Studio 中描述你的需求，创建头像照、个人资料照片、肖像和创意图片。"
+      "title": "现成预设和 AI Masks",
+      "description": "选择预设或 AI Mask，无需编写提示词即可快速完成变换。"
     },
     "easyCustomization": {
       "title": "Studio 中的自定义提示词",
-      "description": "使用参考照片并描述所需更改，或通过提示词创建新图片。"
+      "description": "在 Studio 中结合参考照片精确描述想要的修改，或不使用参考照片直接创建新图片。"
     },
     "multiplatform": {
       "title": "随时随地创作",
@@ -301,7 +293,7 @@
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "使用预设、AI Masks、Studio、自定义提示词和可选的个人模型，创建与变换 AI 照片。",
+    "description": "使用预设、AI Masks、Studio 和自定义提示词，创建与变换 AI 照片。",
     "links": "快捷链接",
     "legal": "法律条款",
     "twitter": "Twitter (X)",
@@ -333,7 +325,7 @@
     "description": "了解设置、费用、图片质量、隐私和支持设备。",
     "howItWorks": {
       "question": "如何使用？",
-      "answer": "从现有照片或参考图开始，选择预设或 AI Masks，或者打开 Studio 并描述你想要的效果。应用会在创建前显示所需积分和访问级别。个人模型训练是一个单独的可选流程。"
+      "answer": "从照片、参考图或创意开始。选择预设或 AI Mask，或者打开 Studio 描述你想要的效果。创建前，应用会显示所需积分以及是否需要特定套餐。"
     },
     "sourcePhotos": {
       "question": "必须训练个人 AI 模型吗？",
@@ -361,7 +353,7 @@
     },
     "whyNotChatGPT": {
       "question": "它与通用 AI 图片工具有什么不同？",
-      "answer": "My AI Photo Shoot 集合了引导式预设、AI Masks、Studio、自定义提示词，以及专门的生成和编辑模型。可选的个人模型训练可在多次生成中保持身份一致。"
+      "answer": "My AI Photo Shoot 将引导式预设、AI Masks、Studio、自定义提示词以及专门的生成和编辑模型整合到一个专注于照片创作的工作流中。"
     }
   },
   "useCase": {
@@ -381,7 +373,7 @@
       "title": "使用步骤",
       "step1": {
         "title": "选择起点",
-        "desc": "从现有照片或参考图开始，或带着创意打开 Studio。"
+        "desc": "从照片、参考图或创意开始。"
       },
       "step2": {
         "title": "选择创作方式",

@@ -21,7 +21,7 @@
   "pageCopy": {
     "home": {
       "metaTitle": "Générateur de photos et portraits IA | My AI Photo Shoot",
-      "metaDescription": "Créez des portraits pro, photos de profil et retouches avec des préréglages, AI Masks, Studio ou prompts. Paiement à l’usage ; modèles personnels facultatifs.",
+      "metaDescription": "Créez des portraits et photos de profil avec des préréglages, AI Masks ou des prompts personnalisés dans Studio. Payez à l’usage avec des crédits à l’unité.",
       "shareTitle": "Créez et transformez des photos avec l’IA",
       "shareDescription": "Créez et transformez des photos avec des préréglages, AI Masks, Studio et vos prompts : headshots, photos de profil, portraits et photos créatives."
     },
@@ -104,8 +104,8 @@
   "hero": {
     "title": "Créez et transformez",
     "titleHighlight": "vos photos IA à votre façon",
-    "description": "Partez d’une photo existante ou de référence. Choisissez un préréglage, appliquez un effet AI Masks ou utilisez Studio et des prompts personnalisés pour créer des portraits professionnels, des photos de profil, des transformations et des images créatives.",
-    "microcopy": "Paiement à l’usage avec des crédits à achat unique • Entraînement des modèles personnels facultatif • Web, iOS et Android",
+    "description": "Partez d’une photo, d’une image de référence ou d’une idée. Choisissez un préréglage, appliquez un AI Mask ou utilisez Studio et des prompts personnalisés pour créer des portraits professionnels, des photos de profil, des transformations et des images créatives.",
+    "microcopy": "Payez à l’usage avec des crédits à l’unité • Les crédits n’expirent jamais • Web, iOS et Android",
     "visualAlt": "La même femme dans des portraits IA professionnels, décontractés et de style éditorial"
   },
   "appShowcase": {
@@ -118,7 +118,7 @@
   "homeUseCases": {
     "eyebrow": "Portraits professionnels, profils et photos créatives",
     "title": "Créez des photos pour le travail, vos profils et vos projets créatifs",
-    "description": "Partez d’une photo ou d’une référence, puis utilisez des préréglages, AI Masks, Studio ou des prompts personnalisés pour créer le résultat souhaité.",
+    "description": "Créez des portraits professionnels, des photos de profil pour les rencontres et des portraits créatifs.",
     "imageAlt": "Exemple de photo IA pour {title}",
     "exploreAll": "Découvrir tous les styles photo",
     "cards": {
@@ -129,26 +129,18 @@
   },
   "features": {
     "title": "Créez votre photo à votre façon",
-    "description": "Choisissez une transformation guidée ou utilisez Studio pour plus de contrôle. Entraînez un modèle personnel uniquement pour conserver une identité cohérente sur des générations répétées.",
+    "description": "Choisissez une transformation guidée ou utilisez Studio et des prompts personnalisés pour plus de contrôle.",
     "advancedAI": {
-      "title": "Partez d’une photo ou d’une référence",
-      "description": "Modifiez une photo existante, appliquez un effet AI Masks ou utilisez un préréglage comme point de départ."
-    },
-    "optionalPersonalModel": {
-      "title": "Les modèles personnels sont facultatifs",
-      "description": "Avec Pro ou Max, entraînez un modèle IA personnel lorsque vous souhaitez conserver une identité cohérente sur des générations répétées."
-    },
-    "affordablePricing": {
-      "title": "Crédits à achat unique et forfaits",
-      "description": "Achetez des crédits à achat unique pour les modèles éligibles au paiement à l’usage, ou choisissez Pro ou Max pour des crédits récurrents, une résolution supérieure et l’entraînement facultatif d’un modèle personnel."
+      "title": "Choisissez votre point de départ",
+      "description": "Transformez une photo existante, guidez le résultat avec une référence ou créez une nouvelle image à partir d’un prompt."
     },
     "thousandsOfStyles": {
-      "title": "Préréglages, AI Masks et Studio",
-      "description": "Utilisez des préréglages prêts à l’emploi, essayez AI Masks ou décrivez votre idée dans Studio pour créer des portraits professionnels, des profils et des images créatives."
+      "title": "Préréglages prêts à l’emploi et AI Masks",
+      "description": "Choisissez un préréglage ou un AI Mask pour une transformation rapide, sans rédiger de prompt."
     },
     "easyCustomization": {
       "title": "Prompts personnalisés dans Studio",
-      "description": "Utilisez une photo de référence et décrivez la modification souhaitée, ou créez une nouvelle image à partir d’un prompt."
+      "description": "Utilisez Studio pour décrire une modification précise avec une photo de référence, ou créer une nouvelle image sans référence."
     },
     "multiplatform": {
       "title": "Créez où que vous soyez",
@@ -301,7 +293,7 @@
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Créez et transformez des photos IA avec des préréglages, AI Masks, Studio, des prompts personnalisés et des modèles personnels facultatifs.",
+    "description": "Créez et transformez des photos IA avec des préréglages, AI Masks, Studio et des prompts personnalisés.",
     "links": "Liens rapides",
     "legal": "Mentions légales",
     "twitter": "Twitter (X)",
@@ -333,7 +325,7 @@
     "description": "Des réponses claires sur la configuration, le prix, la qualité des images, la confidentialité et les appareils compatibles.",
     "howItWorks": {
       "question": "Comment cela fonctionne-t-il ?",
-      "answer": "Partez d’une photo existante ou de référence, choisissez un préréglage, utilisez AI Masks ou ouvrez Studio et décrivez votre idée. L’application affiche le coût en crédits et le niveau d’accès avant la création. L’entraînement d’un modèle personnel est un processus distinct et facultatif."
+      "answer": "Partez d’une photo, d’une image de référence ou d’une idée. Choisissez un préréglage ou un AI Mask, ou ouvrez Studio et décrivez ce que vous souhaitez. Avant la création, l’application affiche le coût en crédits et indique si un forfait est requis."
     },
     "sourcePhotos": {
       "question": "L’entraînement d’un modèle IA personnel est-il obligatoire ?",
@@ -361,7 +353,7 @@
     },
     "whyNotChatGPT": {
       "question": "En quoi est-ce différent d’un outil généraliste d’images IA ?",
-      "answer": "My AI Photo Shoot combine des préréglages guidés, AI Masks, Studio, des prompts personnalisés et des modèles spécialisés de génération et de retouche. L’entraînement facultatif d’un modèle personnel apporte une identité cohérente sur des générations répétées."
+      "answer": "My AI Photo Shoot réunit des préréglages guidés, AI Masks, Studio, des prompts personnalisés et des modèles spécialisés de génération et de retouche dans un même parcours dédié à la photo."
     }
   },
   "useCase": {
@@ -381,7 +373,7 @@
       "title": "Comment ça marche",
       "step1": {
         "title": "Choisissez votre point de départ",
-        "desc": "Partez d’une photo existante ou de référence, ou ouvrez Studio avec une idée."
+        "desc": "Partez d’une photo, d’une image de référence ou d’une idée."
       },
       "step2": {
         "title": "Choisissez comment créer",

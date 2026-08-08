@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const m = messages as HomeI18n;
   const title = m.pageCopy?.home?.metaTitle || 'AI Photo & Headshot Generator | My AI Photo Shoot';
   const description = m.pageCopy?.home?.metaDescription
-    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, Studio, or prompts. Pay as you go; personal model training is optional.';
+    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, or custom prompts in Studio. Pay as you go with one-time credits.';
   const shareTitle = m.pageCopy?.home?.shareTitle || 'Create and Transform AI Photos';
   const shareDescription = m.pageCopy?.home?.shareDescription
     || 'Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.';

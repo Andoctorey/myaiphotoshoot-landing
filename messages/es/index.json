@@ -21,7 +21,7 @@
   "pageCopy": {
     "home": {
       "metaTitle": "Generador de fotos y retratos con IA | My AI Photo Shoot",
-      "metaDescription": "Crea fotos profesionales, fotos de perfil, retratos y transformaciones con presets, AI Masks, Studio o prompts. Pago por uso; modelos personales opcionales.",
+      "metaDescription": "Crea fotos profesionales, fotos de perfil y retratos con presets, AI Masks o prompts personalizados en Studio. Paga por uso con créditos de pago único.",
       "shareTitle": "Crea y transforma fotos con IA",
       "shareDescription": "Crea y transforma fotos con presets, AI Masks, Studio y prompts personalizados para headshots, fotos de perfil, retratos y fotos creativas."
     },
@@ -104,8 +104,8 @@
   "hero": {
     "title": "Crea y transforma",
     "titleHighlight": "fotos con IA a tu manera",
-    "description": "Empieza con una foto existente o de referencia. Elige un preset, aplica un efecto de AI Masks o usa Studio y prompts personalizados para crear fotos profesionales, fotos de perfil, retratos, transformaciones e imágenes creativas.",
-    "microcopy": "Paga por uso con créditos de compra única • El entrenamiento de modelos personales es opcional • Web, iOS y Android",
+    "description": "Empieza con una foto, una referencia o una idea. Elige un preset, aplica una AI Mask o usa Studio y prompts personalizados para crear fotos profesionales, fotos de perfil, retratos, transformaciones e imágenes creativas.",
+    "microcopy": "Paga por uso con créditos de pago único • Los créditos nunca caducan • Web, iOS y Android",
     "visualAlt": "La misma mujer en retratos con IA profesionales, informales y de estilo editorial"
   },
   "appShowcase": {
@@ -118,7 +118,7 @@
   "homeUseCases": {
     "eyebrow": "Fotos profesionales, perfiles y fotos creativas",
     "title": "Crea fotos para el trabajo, tus perfiles y proyectos creativos",
-    "description": "Empieza con una foto o referencia y usa presets, AI Masks, Studio o prompts personalizados para crear el resultado que buscas.",
+    "description": "Crea fotos profesionales, fotos para perfiles de citas y retratos creativos.",
     "imageAlt": "Ejemplo de foto con IA para {title}",
     "exploreAll": "Explorar todos los estilos de foto",
     "cards": {
@@ -129,26 +129,18 @@
   },
   "features": {
     "title": "Crea tu foto a tu manera",
-    "description": "Elige una transformación guiada o usa Studio para tener más control. Entrena un modelo personal solo si buscas una identidad coherente en generaciones repetidas.",
+    "description": "Elige una transformación guiada o usa Studio y prompts personalizados para tener más control.",
     "advancedAI": {
-      "title": "Empieza con una foto o referencia",
-      "description": "Edita una foto existente, aplica un efecto de AI Masks o usa un preset como punto de partida."
-    },
-    "optionalPersonalModel": {
-      "title": "Los modelos personales son opcionales",
-      "description": "Con Pro o Max, entrena un modelo personal de IA cuando quieras mantener una identidad coherente en generaciones repetidas."
-    },
-    "affordablePricing": {
-      "title": "Créditos de compra única y planes",
-      "description": "Compra créditos de una sola vez para modelos compatibles con pago por uso, o elige Pro o Max para obtener créditos recurrentes, mayor resolución y entrenamiento opcional de modelos personales."
+      "title": "Elige cómo empezar",
+      "description": "Transforma una foto existente, guía el resultado con una referencia o crea una imagen nueva a partir de un prompt."
     },
     "thousandsOfStyles": {
-      "title": "Presets, AI Masks y Studio",
-      "description": "Usa presets listos para usar, prueba AI Masks o describe lo que quieres en Studio para crear fotos profesionales, perfiles, retratos e imágenes creativas."
+      "title": "Presets listos para usar y AI Masks",
+      "description": "Elige un preset o una AI Mask para obtener transformaciones rápidas sin escribir un prompt."
     },
     "easyCustomization": {
       "title": "Prompts personalizados en Studio",
-      "description": "Usa una foto de referencia y describe el cambio que quieres, o crea una imagen nueva a partir de un prompt."
+      "description": "Usa Studio para describir un cambio exacto con una foto de referencia o crear una imagen nueva sin ella."
     },
     "multiplatform": {
       "title": "Crea desde cualquier lugar",
@@ -301,7 +293,7 @@
   },
   "footer": {
     "title": "My AI Photo Shoot",
-    "description": "Crea y transforma fotos con IA mediante presets, AI Masks, Studio, prompts personalizados y modelos personales opcionales.",
+    "description": "Crea y transforma fotos con IA mediante presets, AI Masks, Studio y prompts personalizados.",
     "links": "Enlaces rápidos",
     "legal": "Legal",
     "twitter": "Twitter (X)",
@@ -333,7 +325,7 @@
     "description": "Respuestas claras sobre configuración, precio, calidad de imagen, privacidad y dispositivos compatibles.",
     "howItWorks": {
       "question": "¿Cómo funciona?",
-      "answer": "Empieza con una foto existente o de referencia, elige un preset, usa AI Masks o abre Studio y describe lo que quieres. La app muestra el coste en créditos y el nivel de acceso antes de crear. El entrenamiento de modelos personales es un proceso opcional independiente."
+      "answer": "Empieza con una foto, una referencia o una idea. Elige un preset o una AI Mask, o abre Studio y describe lo que quieres. Antes de crear, la app muestra el coste en créditos y si se requiere algún plan."
     },
     "sourcePhotos": {
       "question": "¿Es obligatorio entrenar un modelo personal de IA?",
@@ -361,7 +353,7 @@
     },
     "whyNotChatGPT": {
       "question": "¿En qué se diferencia de una herramienta general de imágenes con IA?",
-      "answer": "My AI Photo Shoot combina presets guiados, AI Masks, Studio, prompts personalizados y modelos especializados de generación y edición. El entrenamiento opcional de un modelo personal aporta coherencia de identidad en generaciones repetidas."
+      "answer": "My AI Photo Shoot reúne presets guiados, AI Masks, Studio, prompts personalizados y modelos especializados de generación y edición en un único flujo de trabajo para fotos."
     }
   },
   "useCase": {
@@ -381,7 +373,7 @@
       "title": "Cómo funciona",
       "step1": {
         "title": "Elige el punto de partida",
-        "desc": "Empieza con una foto o imagen de referencia existente, o abre Studio con una idea."
+        "desc": "Empieza con una foto, una referencia o una idea."
       },
       "step2": {
         "title": "Elige cómo crear",

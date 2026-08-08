@@ -89,7 +89,7 @@ test('server and client gallery paths use the same compact DTO mapper', async ()
   assert.doesNotMatch(galleryTypesSource, /^\s*prompt:\s*string/m);
 });
 
-test('the retired app showcase trainModel translation is absent from every locale', async () => {
+test('retired homepage translation keys are absent from every locale', async () => {
   const messagesRoot = path.join(projectRoot, 'messages');
   const locales = (await readdir(messagesRoot, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
@@ -104,6 +104,51 @@ test('the retired app showcase trainModel translation is absent from every local
       false,
       `${locale} still contains appShowcase.trainModel`,
     );
+    assert.equal(
+      Object.hasOwn(messages.features ?? {}, 'optionalPersonalModel'),
+      false,
+      `${locale} still contains features.optionalPersonalModel`,
+    );
+    assert.equal(
+      Object.hasOwn(messages.features ?? {}, 'affordablePricing'),
+      false,
+      `${locale} still contains unused features.affordablePricing`,
+    );
+  }
+});
+
+test('homepage positioning emphasizes core creation workflows', async () => {
+  const englishMessages = JSON.parse(await readProjectFile('messages/en/index.json'));
+  const positioningCopy = [
+    englishMessages.pageCopy.home.metaDescription,
+    englishMessages.hero.description,
+    englishMessages.hero.microcopy,
+    englishMessages.homeUseCases.description,
+    englishMessages.features.description,
+    englishMessages.footer.description,
+    englishMessages.faq.howItWorks.answer,
+    englishMessages.faq.whyNotChatGPT.answer,
+  ];
+
+  for (const value of positioningCopy) {
+    assert.equal(typeof value, 'string');
+  }
+  assert.doesNotMatch(positioningCopy.join(' '), /personal(?: AI)? models?|personal-model training/i);
+  assert.match(englishMessages.hero.description, /photo, reference, or idea/i);
+  assert.match(englishMessages.faq.howItWorks.answer, /photo, reference, or idea/i);
+
+  const [featuresSource, rootLayout, localeLayout, rootPage, localePage] = await Promise.all([
+    readProjectFile('src/components/features/Features.tsx'),
+    readProjectFile('src/app/layout.tsx'),
+    readProjectFile('src/app/[locale]/layout.tsx'),
+    readProjectFile('src/app/page.tsx'),
+    readProjectFile('src/app/[locale]/page.tsx'),
+  ]);
+  assert.match(featuresSource, /t\('easyCustomization\.title'\)/);
+  assert.match(featuresSource, /t\('easyCustomization\.description'\)/);
+  assert.doesNotMatch(featuresSource, /optionalPersonalModel/);
+  for (const source of [rootLayout, localeLayout, rootPage, localePage]) {
+    assert.doesNotMatch(source, /personal model training is optional/i);
   }
 });
 

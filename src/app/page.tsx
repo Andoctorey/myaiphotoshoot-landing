@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
   const pageCopy = (messages as HomePageCopy).pageCopy?.home;
   const description = pageCopy?.metaDescription
-    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, Studio, or prompts. Pay as you go; personal model training is optional.';
+    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, or custom prompts in Studio. Pay as you go with one-time credits.';
   const title = pageCopy?.metaTitle || 'AI Photo & Headshot Generator | My AI Photo Shoot';
   const shareTitle = pageCopy?.shareTitle || 'Create and Transform AI Photos';
   const shareDescription = pageCopy?.shareDescription
