@@ -1,9 +1,8 @@
-export interface GalleryItem {
+export interface HomepageGalleryItem {
   id: string;
-  created_at: string;
-  public_url: string;
-  prompt: string;
-  preset_id?: string | null;
+  publicUrl: string;
+  promptSummary: string;
+  presetId: string | null;
 }
 
 export interface GalleryRandomSession {

@@ -1,9 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { GalleryItem, GalleryRandomSession } from '@/types/gallery';
+import type { HomepageGalleryItem, GalleryRandomSession } from '@/types/gallery';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { env } from '@/lib/env';
+import { toHomepageGalleryItem } from '@/lib/homepage-gallery';
 import { useTranslations } from '@/lib/utils';
 import PhotoCard from '@/components/features/PhotoCard';
 
@@ -11,7 +12,6 @@ const PAGE_SIZE = 20;
 const INITIAL_VISIBLE_COUNT = 20;
 const LOAD_MORE_COUNT = 20;
 const WEB_APP_URL = 'https://app.myaiphotoshoot.com';
-const MAX_PROMPT_SUMMARY_LENGTH = 60;
 
 type GallerySort = 'popular' | 'new' | 'random';
 
@@ -19,7 +19,10 @@ const ImagePlaceholder = () => (
   <div className="relative aspect-square overflow-hidden rounded-sm bg-gray-200 animate-pulse dark:bg-gray-800" />
 );
 
-function mergeUniqueItems(currentItems: GalleryItem[], newItems: GalleryItem[]): GalleryItem[] {
+function mergeUniqueItems(
+  currentItems: HomepageGalleryItem[],
+  newItems: HomepageGalleryItem[],
+): HomepageGalleryItem[] {
   const existingIds = new Set(currentItems.map((item) => item.id));
   return [
     ...currentItems,
@@ -49,8 +52,8 @@ function buildGalleryUrl(page: number, sort: GallerySort, randomSession: Gallery
   return `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?${params.toString()}`;
 }
 
-function buildGalleryItemAppHref(item: GalleryItem): string {
-  const presetKey = item.preset_id?.trim();
+function buildGalleryItemAppHref(item: HomepageGalleryItem): string {
+  const presetKey = item.presetId?.trim();
   if (presetKey) {
     return `${WEB_APP_URL}/#preset/${encodeURIComponent(presetKey)}`;
   }
@@ -58,18 +61,11 @@ function buildGalleryItemAppHref(item: GalleryItem): string {
   return `${WEB_APP_URL}/#generate/${item.id}`;
 }
 
-function summarizePrompt(prompt: string): string {
-  const normalizedPrompt = prompt.replace(/\s+/g, ' ').trim();
-  if (normalizedPrompt.length <= MAX_PROMPT_SUMMARY_LENGTH) return normalizedPrompt;
-
-  return `${normalizedPrompt.slice(0, MAX_PROMPT_SUMMARY_LENGTH - 1).trimEnd()}…`;
-}
-
 export default function Gallery({
   initialItems = [],
   initialRandomSession,
 }: {
-  initialItems?: GalleryItem[];
+  initialItems?: HomepageGalleryItem[];
   initialRandomSession?: GalleryRandomSession;
 }) {
   const t = useTranslations('gallery');
@@ -77,7 +73,7 @@ export default function Gallery({
   const [randomSession, setRandomSession] = useState<GalleryRandomSession | null>(
     () => initialRandomSession ?? createRandomSession()
   );
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(initialItems);
+  const [galleryItems, setGalleryItems] = useState<HomepageGalleryItem[]>(initialItems);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [nextPage, setNextPage] = useState(initialItems.length > 0 ? 2 : 1);
   const [hasMore, setHasMore] = useState(initialItems.length === 0 || initialItems.length >= PAGE_SIZE);
@@ -104,8 +100,11 @@ export default function Gallery({
         throw new Error(`${response.status} ${response.statusText}`.trim());
       }
 
-      const data = await response.json();
-      const newItems = Array.isArray(data) ? (data as GalleryItem[]) : [];
+      const data: unknown = await response.json();
+      if (!Array.isArray(data)) {
+        throw new Error('Gallery response was not an array.');
+      }
+      const newItems = data.map(toHomepageGalleryItem);
 
       setGalleryItems((currentItems) => (
         mode === 'replace' ? newItems : mergeUniqueItems(currentItems, newItems)
@@ -223,19 +222,17 @@ export default function Gallery({
           ))
         ) : (
           displayedItems.map((item) => {
-            const promptSummary = summarizePrompt(item.prompt);
-
             return (
               <li key={item.id}>
                 <PhotoCard
-                  src={item.public_url}
-                  alt={`${t('altPrefix')}: ${promptSummary}`}
+                  src={item.publicUrl}
+                  alt={`${t('altPrefix')}: ${item.promptSummary}`}
                   mode="fill"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                   containerClassName="aspect-square rounded-sm cursor-pointer"
                   linkHref={buildGalleryItemAppHref(item)}
                   linkExternal
-                  ariaLabel={`${t('captionPrefix')}: ${promptSummary}`}
+                  ariaLabel={`${t('captionPrefix')}: ${item.promptSummary}`}
                 />
               </li>
             );

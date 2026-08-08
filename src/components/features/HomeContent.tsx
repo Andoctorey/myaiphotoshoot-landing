@@ -1,5 +1,5 @@
 import type { BlogListItem } from '@/types/blog';
-import type { GalleryItem, GalleryRandomSession } from '@/types/gallery';
+import type { HomepageGalleryItem, GalleryRandomSession } from '@/types/gallery';
 import AppShowcase from './AppShowcase';
 import FAQ from './FAQ';
 import Features from './Features';
@@ -19,7 +19,7 @@ type HomeUseCaseItem = {
 
 type Props = {
   locale: string;
-  initialGallery?: GalleryItem[];
+  initialGallery?: HomepageGalleryItem[];
   initialGallerySession: GalleryRandomSession;
   initialBlog?: BlogListItem[];
   initialUseCases?: HomeUseCaseItem[];

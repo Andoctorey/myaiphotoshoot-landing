@@ -1,0 +1,13 @@
+# My AI Photo Shoot
+
+> My AI Photo Shoot is an AI photo creation and editing app for portraits and photo transformations using presets, AI Masks, Studio, and custom prompts.
+
+## Pages
+
+- [Home](https://myaiphotoshoot.com/)
+- [Presets](https://myaiphotoshoot.com/presets/)
+- [Masks](https://myaiphotoshoot.com/masks/)
+- [Models](https://myaiphotoshoot.com/models/)
+- [Use Cases](https://myaiphotoshoot.com/use-cases/)
+- [Blog](https://myaiphotoshoot.com/blog/)
+- [Legal](https://myaiphotoshoot.com/legal/)

@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useTranslations, useLocale } from '@/lib/utils';
-import type { GalleryItem, GalleryRandomSession } from '@/types/gallery';
+import type { HomepageGalleryItem, GalleryRandomSession } from '@/types/gallery';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 // Create a proper loading component
@@ -24,7 +24,7 @@ export default function UserGallery({
   initialItems = [],
   initialRandomSession,
 }: {
-  initialItems?: GalleryItem[];
+  initialItems?: HomepageGalleryItem[];
   initialRandomSession?: GalleryRandomSession;
 }) {
   const t = useTranslations('gallery');

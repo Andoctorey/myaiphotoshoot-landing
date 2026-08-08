@@ -4,11 +4,12 @@ import {
   localizeBlogListItemSlugs,
   type BlogListEntry,
 } from '@/lib/blog-static-params';
-import type { GalleryItem, GalleryRandomSession } from '@/types/gallery';
+import { toHomepageGalleryItem } from '@/lib/homepage-gallery';
+import type { HomepageGalleryItem, GalleryRandomSession } from '@/types/gallery';
 import type { BlogListItem } from '@/types/blog';
 
 export type HomeData = {
-  initialGallery: GalleryItem[];
+  initialGallery: HomepageGalleryItem[];
   initialGallerySession: GalleryRandomSession;
   initialBlog: BlogListItem[];
   initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
@@ -57,7 +58,7 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
   });
 
   const [initialGallery, blogCards, initialUseCases, blogArchive] = await Promise.all([
-    loadHomeSection<GalleryItem[]>('gallery', locale, async () => {
+    loadHomeSection<HomepageGalleryItem[]>('gallery', locale, async () => {
       const response = await fetch(
         `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?${galleryParams.toString()}`,
         { next: { revalidate: 3600 } },
@@ -71,24 +72,11 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
       }
 
       return data.map((item, index) => {
-        if (!item || typeof item !== 'object') {
-          throw new Error(`Gallery response item ${index} was not an object.`);
+        try {
+          return toHomepageGalleryItem(item);
+        } catch (error) {
+          throw new Error(`Gallery response item ${index} was invalid.`, { cause: error });
         }
-        const record = item as Record<string, unknown>;
-        const id = typeof record.id === 'string' ? record.id.trim() : '';
-        const createdAt = typeof record.created_at === 'string' ? record.created_at.trim() : '';
-        const publicUrl = typeof record.public_url === 'string' ? record.public_url.trim() : '';
-        const prompt = typeof record.prompt === 'string' ? record.prompt.trim() : '';
-        if (!id || !createdAt || !publicUrl || !prompt) {
-          throw new Error(`Gallery response item ${index} had invalid required fields.`);
-        }
-        return {
-          id,
-          created_at: createdAt,
-          public_url: publicUrl,
-          prompt,
-          preset_id: typeof record.preset_id === 'string' ? record.preset_id : null,
-        };
       });
     }, []),
     loadHomeSection<BlogListItem[]>('blog cards', locale, async () => {
