@@ -200,11 +200,9 @@ test('the pricing proxy uses country first, locale fallback second, and never ca
 
   const originalFetch = globalThis.fetch;
   let requestedUrl = '';
-  let requestedCache;
   try {
-    globalThis.fetch = async (input, init) => {
+    globalThis.fetch = async (input) => {
       requestedUrl = String(input);
-      requestedCache = init?.cache;
       return Response.json({ country_code: 'TH' });
     };
     const pricingResponse = await onRequest({
@@ -218,7 +216,6 @@ test('the pricing proxy uses country first, locale fallback second, and never ca
     assert.equal(pricingResponse.status, 200);
     assert.equal(pricingResponse.headers.get('cache-control'), 'no-store, max-age=0');
     assert.equal(requestedUrl, 'https://api.example.test/functions/v1/stripe-pricing?country_code=TH');
-    assert.equal(requestedCache, 'no-store');
     assert.deepEqual(await pricingResponse.json(), { country_code: 'TH' });
 
     const originalConsoleError = console.error;

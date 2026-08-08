@@ -40,7 +40,6 @@ export async function onRequest(context) {
     pricingUrl.searchParams.set('country_code', countryCode);
 
     const upstream = await fetch(pricingUrl, {
-      cache: 'no-store',
       headers: { accept: 'application/json' },
     });
     if (!upstream.ok) {
