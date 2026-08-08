@@ -54,6 +54,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
     { name: t('pricing'), href: isHomePage ? '#pricing' : homeHash('#pricing') },
   ];
   const navItemsAfterUseCases = [
+    { name: t('studio'), href: localePath(locale, '/studio/') },
     { name: t('presets'), href: localePath(locale, '/presets/') },
     { name: t('masks'), href: localePath(locale, '/masks/') },
     { name: t('gallery'), href: isHomePage ? '#gallery' : homeHash('#gallery') },
@@ -376,7 +377,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div id="mobile-menu" className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md mt-2 shadow-lg dark:shadow-gray-900">
+            <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain touch-pan-y px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md mt-2 shadow-lg dark:shadow-gray-900">
               {navItemsBeforeUseCases.map((item) => (
                 <a
                   key={item.name}

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -18,7 +18,7 @@ async function readProjectFile(relativePath) {
   return readFile(path.join(projectRoot, relativePath), 'utf8');
 }
 
-async function loadTypeScriptModule(relativePath) {
+async function loadTypeScriptModule(relativePath, dependencies = {}) {
   const source = await readProjectFile(relativePath);
   const output = ts.transpileModule(source, {
     compilerOptions: {
@@ -29,12 +29,19 @@ async function loadTypeScriptModule(relativePath) {
   }).outputText;
   const module = { exports: {} };
   const evaluate = new Function('exports', 'module', 'require', output);
-  evaluate(module.exports, module, require);
+  const localRequire = (specifier) => dependencies[specifier] ?? require(specifier);
+  evaluate(module.exports, module, localRequire);
   return module.exports;
 }
 
 async function loadPricingModule() {
   return loadTypeScriptModule('src/lib/pricing.ts');
+}
+
+async function loadModelsModule(pricing) {
+  return loadTypeScriptModule('src/lib/models.ts', {
+    '@/lib/pricing': pricing,
+  });
 }
 
 function valueAtPath(object, dottedPath) {
@@ -48,6 +55,13 @@ function leafPaths(value, prefix = '') {
   return Object.entries(value)
     .flatMap(([key, nestedValue]) => leafPaths(nestedValue, prefix ? `${prefix}.${key}` : key))
     .sort();
+}
+
+function placeholders(value) {
+  return Array.from(
+    String(value).matchAll(/\{([A-Za-z][A-Za-z0-9_]*)(?=\s*[,}])/g),
+    (match) => match[1],
+  ).sort();
 }
 
 test('US reference pricing matches the release catalog', async () => {
@@ -102,6 +116,48 @@ test('US reference pricing matches the release catalog', async () => {
   assert.equal(Math.round((1 - offers['max-annual'].price / (offers['max-monthly'].price * 12)) * 100), 17);
   assert.equal('monthlyEquivalentUsd' in offers['pro-annual'], false);
   assert.equal('monthlyEquivalentUsd' in offers['max-annual'], false);
+});
+
+test('the Studio page derives quality bands from canonical pricing', async () => {
+  const pricing = await loadPricingModule();
+  const models = await loadModelsModule(pricing);
+  const costs = Object.fromEntries(pricing.CREDIT_COSTS.map((cost) => [cost.id, cost]));
+  const tiers = Object.fromEntries(
+    pricing.US_REFERENCE_PRICING.tiers.map((tier) => [tier.id, tier]),
+  );
+
+  assert.deepEqual(models.qualityBands, [
+    {
+      id: 'payg',
+      minCredits: costs.standardImage.minCredits,
+      maxCredits: costs.standardImage.maxCredits,
+      maxResolution: tiers.payg.maxResolution,
+    },
+    {
+      id: 'pro',
+      minCredits: costs.proImage.minCredits,
+      maxCredits: costs.proImage.maxCredits,
+      maxResolution: tiers.pro.maxResolution,
+    },
+    {
+      id: 'max',
+      minCredits: costs.maxImage.minCredits,
+      maxCredits: costs.maxImage.maxCredits,
+      maxResolution: tiers.max.maxResolution,
+    },
+  ]);
+  assert.deepEqual(models.personalModelCosts, {
+    imageCredits: costs.personalModelImage.minCredits,
+    standardTrainingCredits: costs.standardTraining.minCredits,
+    fullTrainingCredits: costs.fullTraining.minCredits,
+  });
+  assert.equal(models.formatCreditRange(3, 3, 'en'), '3');
+  assert.equal(models.formatCreditRange(7, 10, 'en'), '7–10');
+
+  const modelsSource = await readProjectFile('src/lib/models.ts');
+  assert.match(modelsSource, /CREDIT_COSTS/);
+  assert.match(modelsSource, /US_REFERENCE_PRICING/);
+  assert.doesNotMatch(modelsSource, /supportedModels|providerModel|providerUrl/);
 });
 
 test('regional pricing replaces the complete catalog atomically', async () => {
@@ -219,6 +275,7 @@ test('the pricing redirect uses country first, locale fallback second, and never
 });
 
 test('all locales provide the repositioned copy used by the UI', async () => {
+  const english = JSON.parse(await readProjectFile('messages/en/index.json'));
   const requiredPaths = [
     'hero.description',
     'hero.microcopy',
@@ -228,6 +285,8 @@ test('all locales provide the repositioned copy used by the UI', async () => {
     'navigation.mainNavigation',
     'navigation.openMenu',
     'navigation.closeMenu',
+    'navigation.studio',
+    'footer.studio',
     'pageCopy.home.metaTitle',
     'pageCopy.home.metaDescription',
     'pageCopy.home.shareTitle',
@@ -261,21 +320,18 @@ test('all locales provide the repositioned copy used by the UI', async () => {
     'useCase.pricingCard.max',
     'useCase.schema.serviceType',
     'useCase.stickyCta.label',
-    'models.creditUnit',
-    'models.meta.shareTitle',
-    'models.meta.shareDescription',
-    'models.table.columns.credits',
-    'models.table.columns.resolution',
-    'models.table.columns.access',
-    'models.access.payg',
-    'models.access.pro',
-    'models.access.max',
+    'studio.meta.imageAlt',
     'masks.creditCost',
   ];
+  const studioPaths = leafPaths(english.studio).map((dottedPath) => `studio.${dottedPath}`);
+  const allRequiredPaths = [...new Set([...requiredPaths, ...studioPaths])];
 
   for (const locale of localeCodes) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
-    for (const dottedPath of requiredPaths) {
+    assert.equal(Object.hasOwn(messages, 'models'), false, `${locale} still contains the retired models namespace`);
+    assert.equal(Object.hasOwn(messages.navigation, 'models'), false, `${locale} still contains navigation.models`);
+    assert.equal(Object.hasOwn(messages.footer, 'models'), false, `${locale} still contains footer.models`);
+    for (const dottedPath of allRequiredPaths) {
       const value = valueAtPath(messages, dottedPath);
       assert.equal(
         typeof value === 'string' && value.trim().length > 0,
@@ -291,20 +347,32 @@ test('localized changed namespaces stay in lockstep with English', async () => {
 
   for (const locale of localeCodes.filter((code) => code !== 'en')) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
-    for (const namespace of ['pricing', 'models', 'pageCopy', 'useCase', 'features']) {
+    for (const namespace of ['pricing', 'studio', 'pageCopy', 'useCase', 'features']) {
+      assert.equal(
+        Boolean(messages[namespace]) && typeof messages[namespace] === 'object',
+        true,
+        `${locale}.${namespace} is missing`,
+      );
       assert.deepEqual(
         leafPaths(messages[namespace]),
         leafPaths(english[namespace]),
         `${locale}.${namespace} keys differ from English`,
       );
     }
+    for (const dottedPath of leafPaths(english.studio)) {
+      assert.deepEqual(
+        placeholders(valueAtPath(messages.studio, dottedPath)),
+        placeholders(valueAtPath(english.studio, dottedPath)),
+        `${locale}.studio.${dottedPath} placeholders differ from English`,
+      );
+    }
   }
 });
 
 test('creation and editing stay ahead of optional personal-model training', async () => {
-  const [homeSource, modelsSource, useCaseSource] = await Promise.all([
+  const [homeSource, studioSource, useCaseSource] = await Promise.all([
     readProjectFile('src/components/features/HomeContent.tsx'),
-    readProjectFile('src/components/models/ModelsPage.tsx'),
+    readProjectFile('src/components/studio/StudioPage.tsx'),
     readProjectFile('src/app/[locale]/use-cases/[slug]/UseCasePageClient.tsx'),
   ]);
 
@@ -319,12 +387,18 @@ test('creation and editing stay ahead of optional personal-model training', asyn
   assert.equal(homeOrder.every((position) => position >= 0), true, 'homepage sections are missing');
   assert.deepEqual(homeOrder, [...homeOrder].sort((a, b) => a - b));
 
-  assert.match(modelsSource, /const modelGroupOrder: ModelGroup\[\] = \['generate', 'edit', 'personal'\]/);
-  assert.match(modelsSource, /numberOfItems: orderedModels\.length/);
-  assert.ok(
-    modelsSource.indexOf("t('summary.otherModels')") < modelsSource.indexOf("t('summary.training')"),
-    'creation and editing summary must precede optional training',
-  );
+  const studioOrder = [
+    "t('steps.eyebrow')",
+    "t('starts.eyebrow')",
+    "t('autoMode.eyebrow')",
+    "t('quality.eyebrow')",
+    "t('personal.eyebrow')",
+  ].map((token) => studioSource.indexOf(token));
+  assert.equal(studioOrder.every((position) => position >= 0), true, 'Studio sections are missing');
+  assert.deepEqual(studioOrder, [...studioOrder].sort((a, b) => a - b));
+  assert.match(studioSource, /qualityBands\.map\(\(band\) =>/);
+  assert.match(studioSource, /stepKeys\.map\(\(key, index\) =>/);
+  assert.match(studioSource, /sourceKeys\.map\(\(key, index\) =>/);
   assert.doesNotMatch(useCaseSource, /howItWorks\.step[123]\.time/);
 
   for (const locale of localeCodes) {
@@ -335,27 +409,111 @@ test('creation and editing stay ahead of optional personal-model training', asyn
   }
 });
 
-test('English route aliases redirect and sitemap dates come from real content timestamps', async () => {
+test('Studio explains Auto Mode and quality without reviving a provider picker or service catalog', async () => {
+  const [studioSource, platformButtonsSource] = await Promise.all([
+    readProjectFile('src/components/studio/StudioPage.tsx'),
+    readProjectFile('src/components/features/PlatformButtons.tsx'),
+  ]);
+
+  assert.match(studioSource, /const faqKeys = \['writing', 'autoMode', 'quality', 'personal', 'required'\] as const/);
+  assert.match(studioSource, /const faq = faqKeys\.map\(\(key\) => \(\{/);
+  assert.match(studioSource, /'@type': 'WebPage'/);
+  assert.match(studioSource, /'@type': 'Thing'/);
+  assert.match(studioSource, /mainEntity: faq\.map\(\(item\) => \(\{/);
+  assert.match(studioSource, /'@type': 'Question'/);
+  assert.match(studioSource, /'@type': 'Answer'/);
+  assert.match(studioSource, /\{faq\.map\(\(item\) => \(/);
+  assert.match(studioSource, /\{item\.question\}/);
+  assert.match(studioSource, /\{item\.answer\}/);
+  assert.match(studioSource, /t\('autoMode\.control'\)/);
+  assert.match(studioSource, /t\('quality\.visual\.faster'\)/);
+  assert.match(studioSource, /t\('quality\.visual\.higherQuality'\)/);
+  assert.equal((studioSource.match(/qualityBands\.map\(\(band\) =>/g) || []).length, 2);
+  assert.match(studioSource, /WEB_APP_STUDIO_URL/);
+  assert.match(studioSource, /section: 'studio'/);
+  assert.equal((studioSource.match(/<PlatformButtons/g) || []).length, 2);
+  assert.equal((studioSource.match(/webAppUrl=\{WEB_APP_STUDIO_URL\}/g) || []).length, 2);
+  assert.match(studioSource, /placement: 'hero_cta'/);
+  assert.match(studioSource, /placement: 'bottom_cta'/);
+  assert.doesNotMatch(studioSource, /PlatformAppLink/);
+  assert.doesNotMatch(studioSource, /min-h-screen[^"\n]*\bpt-24\b/);
+  assert.doesNotMatch(studioSource, /steps\.jumpLink|href="#how-studio-works"/);
+
+  assert.match(platformButtonsSource, /webAppUrl\?: string/);
+  assert.match(platformButtonsSource, /webAppUrl = WEB_APP_IDEAS_URL/);
+  assert.match(platformButtonsSource, /const attributedWebAppUrl = useAttributedUrl\(webAppUrl\)/);
+  assert.match(platformButtonsSource, /dark:bg-purple-700/);
+  assert.doesNotMatch(platformButtonsSource, /dark:bg-black/);
+  assert.equal((platformButtonsSource.match(/analyticsParams\);/g) || []).length, 3);
+
+  assert.doesNotMatch(
+    studioSource,
+    /supportedModels|providerModel|providerUrl|modelsByGroup|modelGroupOrder|orderedModels/,
+  );
+  assert.doesNotMatch(studioSource, /'@type': '(?:Service|ItemList|FAQPage)'/);
+});
+
+test('retired Models URLs redirect directly to localized Studio canonicals', async () => {
   const [redirects, sitemapSource] = await Promise.all([
     readProjectFile('public/_redirects'),
     readProjectFile('src/app/sitemap.ts'),
   ]);
 
+  const redirectLines = redirects.split(/\r?\n/);
   for (const redirect of [
-    '/models /models/ 308',
-    '/en/models /models/ 308',
-    '/en/models/ /models/ 308',
-    '/masks /masks/ 308',
-    '/en/masks /masks/ 308',
-    '/en/masks/ /masks/ 308',
+    '/models /studio/ 308',
+    '/models/ /studio/ 308',
+    '/en/models /studio/ 308',
+    '/en/models/ /studio/ 308',
+    '/studio /studio/ 308',
+    '/en/studio /studio/ 308',
+    '/en/studio/ /studio/ 308',
   ]) {
-    assert.match(redirects, new RegExp(`^${redirect.replaceAll('/', '\\/')}$`, 'm'));
+    assert.equal(redirectLines.includes(redirect), true, `missing redirect: ${redirect}`);
   }
+  for (const locale of localeCodes.filter((code) => code !== 'en')) {
+    for (const source of [`/${locale}/models`, `/${locale}/models/`]) {
+      const redirect = `${source} /${locale}/studio/ 308`;
+      assert.equal(redirectLines.includes(redirect), true, `missing redirect: ${redirect}`);
+    }
+  }
+  assert.match(sitemapSource, /buildLocalizedUrl\(baseUrl, locale, '\/studio\/'\)/);
+  assert.match(sitemapSource, /buildHreflangLanguages\(baseUrl, '\/studio\/', locales\)/);
+  assert.doesNotMatch(sitemapSource, /['"]\/models\/['"]/);
   assert.doesNotMatch(sitemapSource, /lastModified:\s*new Date\(\)/);
   assert.doesNotMatch(sitemapSource, /:\s*new Date\(\),/);
   assert.match(sitemapSource, /lastModified:\s*new Date\(post\.created_at\)/);
   assert.match(sitemapSource, /item\.created_at \? \{ lastModified: new Date\(item\.created_at\) \} : \{\}/);
   assert.match(sitemapSource, /lastModified \? \{ lastModified: new Date\(lastModified\) \} : \{\}/);
+});
+
+test('navigation, homepage links, footer, sitemap, and llms.txt point directly to Studio', async () => {
+  const [navigation, features, footer, pricing, sitemap, llmsText] = await Promise.all([
+    readProjectFile('src/components/layout/Navigation.tsx'),
+    readProjectFile('src/components/features/Features.tsx'),
+    readProjectFile('src/components/layout/Footer.tsx'),
+    readProjectFile('src/components/features/Pricing.tsx'),
+    readProjectFile('src/app/sitemap.ts'),
+    readProjectFile('public/llms.txt'),
+  ]);
+
+  assert.match(navigation, /t\('studio'\)/);
+  assert.match(navigation, /localePath\(locale, '\/studio\/'\)/);
+  assert.match(features, /tNav\('studio'\)/);
+  assert.match(features, /localePath\(locale, '\/studio\/'\)/);
+  assert.match(footer, /tNav\('studio'\)/);
+  assert.match(footer, /localePath\(locale, '\/studio\/'\)/);
+  assert.match(pricing, /tNav\('studio'\)/);
+  assert.match(pricing, /localePath\(locale, '\/studio\/'\)/);
+  assert.match(sitemap, /'\/studio\/'/);
+  assert.match(
+    llmsText,
+    /^- \[Studio – Custom AI Photo Creation\]\(https:\/\/myaiphotoshoot\.com\/studio\/\)$/m,
+  );
+
+  for (const [name, source] of Object.entries({ navigation, features, footer, pricing, sitemap, llmsText })) {
+    assert.doesNotMatch(source, /\/models\//, `${name} still links to /models/`);
+  }
 });
 
 test('localized page and social metadata stays concise, translated, and evergreen', async () => {
@@ -364,18 +522,29 @@ test('localized page and social metadata stays concise, translated, and evergree
   for (const locale of localeCodes) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
     const { home, useCases } = messages.pageCopy;
-    const modelMeta = messages.models.meta;
+    assert.equal(
+      Boolean(messages.studio?.meta) && typeof messages.studio.meta === 'object',
+      true,
+      `${locale}.studio.meta is missing`,
+    );
+    const studioMeta = messages.studio.meta;
 
     assert.ok([...home.metaTitle].length <= 60, `${locale} home meta title is too long`);
     assert.ok([...home.metaDescription].length <= 160, `${locale} home meta description is too long`);
     assert.ok([...home.shareTitle].length <= 60, `${locale} home share title is too long`);
     assert.ok([...home.shareDescription].length <= 160, `${locale} home share description is too long`);
-    assert.ok([...modelMeta.shareTitle].length <= 60, `${locale} model share title is too long`);
-    assert.ok([...modelMeta.shareDescription].length <= 160, `${locale} model share description is too long`);
+    assert.ok(
+      [...`${studioMeta.title} | My AI Photo Shoot`].length <= 60,
+      `${locale} rendered Studio meta title is too long`,
+    );
+    assert.ok([...studioMeta.description].length <= 160, `${locale} Studio meta description is too long`);
+    assert.ok([...studioMeta.shareTitle].length <= 60, `${locale} Studio share title is too long`);
+    assert.ok([...studioMeta.shareDescription].length <= 160, `${locale} Studio share description is too long`);
+    assert.ok([...studioMeta.imageAlt].length <= 160, `${locale} Studio image alt is too long`);
     assert.doesNotMatch(home.shareTitle, commercialShareClaim, `${locale} home share title is commercial`);
     assert.doesNotMatch(home.shareDescription, commercialShareClaim, `${locale} home share description is commercial`);
-    assert.doesNotMatch(modelMeta.shareTitle, commercialShareClaim, `${locale} model share title is commercial`);
-    assert.doesNotMatch(modelMeta.shareDescription, commercialShareClaim, `${locale} model share description is commercial`);
+    assert.doesNotMatch(studioMeta.shareTitle, commercialShareClaim, `${locale} Studio share title is commercial`);
+    assert.doesNotMatch(studioMeta.shareDescription, commercialShareClaim, `${locale} Studio share description is commercial`);
     assert.ok(
       [...`${useCases.metaTitle} | My AI Photo Shoot`].length <= 60,
       `${locale} use-cases meta title is too long`,
@@ -397,9 +566,19 @@ test('localized page and social metadata stays concise, translated, and evergree
         `${locale} home share description is still English`,
       );
       assert.notEqual(
-        modelMeta.shareDescription,
-        english.models.meta.shareDescription,
-        `${locale} model share description is still English`,
+        studioMeta.description,
+        english.studio.meta.description,
+        `${locale} Studio meta description is still English`,
+      );
+      assert.notEqual(
+        studioMeta.shareDescription,
+        english.studio.meta.shareDescription,
+        `${locale} Studio share description is still English`,
+      );
+      assert.notEqual(
+        studioMeta.imageAlt,
+        english.studio.meta.imageAlt,
+        `${locale} Studio image alt is still English`,
       );
       assert.notEqual(
         useCases.metaDescription,
@@ -418,15 +597,15 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
     rootLayout,
     rootHome,
     localizedHome,
-    rootModels,
-    localizedModels,
+    rootStudio,
+    localizedStudio,
     useCaseSeo,
   ] = await Promise.all([
     readProjectFile('src/app/layout.tsx'),
     readProjectFile('src/app/page.tsx'),
     readProjectFile('src/app/[locale]/page.tsx'),
-    readProjectFile('src/app/models/page.tsx'),
-    readProjectFile('src/app/[locale]/models/page.tsx'),
+    readProjectFile('src/app/studio/page.tsx'),
+    readProjectFile('src/app/[locale]/studio/page.tsx'),
     readProjectFile('src/lib/usecase-seo.ts'),
   ]);
 
@@ -436,14 +615,36 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
     assert.equal((source.match(/title: shareTitle/g) || []).length, 2);
     assert.equal((source.match(/description: shareDescription/g) || []).length, 2);
   }
-  for (const source of [rootModels, localizedModels]) {
+  for (const source of [rootStudio, localizedStudio]) {
     assert.equal((source.match(/title: shareTitle/g) || []).length, 2);
     assert.equal((source.match(/description: shareDescription/g) || []).length, 2);
+    assert.match(source, /namespace: 'studio\.meta'/);
+    assert.match(source, /buildAlternates\([^\n]+, '\/studio\/', locales\)/);
+    assert.match(source, /canonicalUrl\([^\n]+, '\/studio\/'\)/);
+    assert.match(source, /const imageAlt = t\('imageAlt'\)/);
+    assert.equal((source.match(/url: '\/og-image-v2\.jpg\?v=4'/g) || []).length, 2);
+    assert.equal((source.match(/alt: imageAlt/g) || []).length, 2);
+    assert.doesNotMatch(source, /og-models|\/models\//);
   }
 
   assert.match(useCaseSeo, /const description = appendPlanSummary\(/);
   assert.match(useCaseSeo, /const socialDescription = buildUseCaseSocialDescription\(/);
   assert.equal((useCaseSeo.match(/description: socialDescription/g) || []).length, 2);
+});
+
+test('the retired Models route and generated page component are absent', async () => {
+  for (const relativePath of [
+    'src/app/models/page.tsx',
+    'src/app/models/layout.tsx',
+    'src/app/[locale]/models/page.tsx',
+    'src/components/models/ModelsPage.tsx',
+  ]) {
+    await assert.rejects(
+      access(path.join(projectRoot, relativePath)),
+      (error) => error?.code === 'ENOENT',
+      `${relativePath} still exists`,
+    );
+  }
 });
 
 test('active copy and SEO do not revive the retired cash-per-image story', async () => {
@@ -513,8 +714,8 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     readProjectFile('src/app/layout.tsx'),
     readProjectFile('src/app/page.tsx'),
     readProjectFile('src/app/[locale]/page.tsx'),
-    readProjectFile('src/app/models/page.tsx'),
-    readProjectFile('src/app/[locale]/models/page.tsx'),
+    readProjectFile('src/app/studio/page.tsx'),
+    readProjectFile('src/app/[locale]/studio/page.tsx'),
     readProjectFile('src/app/presets/page.tsx'),
     readProjectFile('src/app/[locale]/presets/page.tsx'),
     readProjectFile('src/app/use-cases/page.tsx'),

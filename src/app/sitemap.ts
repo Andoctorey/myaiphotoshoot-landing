@@ -189,13 +189,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: buildHreflangLanguages(baseUrl, '/masks/', locales),
       },
     })),
-    // Supported AI model pages for all locales
+    // Studio pages for all locales
     ...locales.map(locale => ({
-      url: buildLocalizedUrl(baseUrl, locale, '/models/'),
+      url: buildLocalizedUrl(baseUrl, locale, '/studio/'),
       changeFrequency: 'weekly' as const,
       priority: 0.75,
       alternates: {
-        languages: buildHreflangLanguages(baseUrl, '/models/', locales),
+        languages: buildHreflangLanguages(baseUrl, '/studio/', locales),
       },
     })),
     // Support pages for all locales

@@ -9,25 +9,34 @@ type Props = {
   webAppLabel: string;
   googlePlayLabel: string;
   appStoreLabel: string;
+  webAppUrl?: string;
+  analyticsParams?: Record<string, unknown>;
   className?: string;
 };
 
-export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStoreLabel, className = '' }: Props) {
-  const webAppUrl = useAttributedUrl(WEB_APP_IDEAS_URL);
+export default function PlatformButtons({
+  webAppLabel,
+  googlePlayLabel,
+  appStoreLabel,
+  webAppUrl = WEB_APP_IDEAS_URL,
+  analyticsParams,
+  className = '',
+}: Props) {
+  const attributedWebAppUrl = useAttributedUrl(webAppUrl);
   const playStoreUrl = useAttributedUrl(GOOGLE_PLAY_URL);
   const appStoreUrl = useAttributedUrl(APP_STORE_URL);
 
   return (
     <div className={`flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap ${className}`}>
       <a
-        href={webAppUrl}
+        href={attributedWebAppUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-12 w-[166px] items-center justify-center rounded-lg bg-gray-950 px-4 text-sm font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:bg-purple-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:bg-black dark:hover:bg-purple-700 dark:focus-visible:ring-offset-gray-900"
+        className="inline-flex min-h-12 min-w-[166px] max-w-full items-center justify-center rounded-lg bg-gray-950 px-4 py-2 text-sm font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:bg-purple-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:bg-purple-700 dark:hover:bg-purple-600 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
-          trackEventAndNavigate('webapp_cta_click', webAppUrl);
+          trackEventAndNavigate('webapp_cta_click', attributedWebAppUrl, analyticsParams);
         }}
       >
         <svg className="h-5 w-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -45,7 +54,7 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
-          trackEventAndNavigate('google_play_cta_click', playStoreUrl);
+          trackEventAndNavigate('google_play_cta_click', playStoreUrl, analyticsParams);
         }}
       >
         <Image
@@ -65,7 +74,7 @@ export default function PlatformButtons({ webAppLabel, googlePlayLabel, appStore
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
-          trackEventAndNavigate('app_store_cta_click', appStoreUrl);
+          trackEventAndNavigate('app_store_cta_click', appStoreUrl, analyticsParams);
         }}
       >
         <Image

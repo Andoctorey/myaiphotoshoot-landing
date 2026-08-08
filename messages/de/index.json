@@ -12,11 +12,11 @@
     "noUseCases": "Noch keine Anwendungsfälle",
     "language": "Sprache",
     "masks": "Masken",
-    "models": "Modelle",
     "skipToContent": "Zum Hauptinhalt springen",
     "mainNavigation": "Hauptnavigation",
     "openMenu": "Menü öffnen",
-    "closeMenu": "Menü schließen"
+    "closeMenu": "Menü schließen",
+    "studio": "Studio"
   },
   "pageCopy": {
     "home": {
@@ -140,7 +140,7 @@
     },
     "easyCustomization": {
       "title": "Eigene Prompts in Studio",
-      "description": "Beschreiben Sie in Studio mit einem Referenzfoto eine genaue Änderung oder erstellen Sie ohne Referenz ein neues Bild."
+      "description": "Beginnen Sie mit einem normalen Foto oder einem optionalen persönlichen KI-Modell und beschreiben Sie dann das gewünschte Ergebnis."
     },
     "multiplatform": {
       "title": "Überall erstellen",
@@ -203,7 +203,7 @@
   },
   "pricing": {
     "title": "Mit nutzungsbasierten Credits starten",
-    "description": "Kaufen Sie Credits bei Bedarf und nutzen Sie geeignete 1K-Modelle zur Erstellung und Bearbeitung. Pro und Max bieten wiederkehrende Credits, höhere Auflösung und optionales persönliches KI-Training.",
+    "description": "Kaufen Sie Credits bei Bedarf und erstellen oder bearbeiten Sie Fotos in 1K. Pro und Max bieten außerdem wiederkehrende Credits, höhere Generierungsqualität und optionales persönliches KI-Training.",
     "referenceDisclosure": "Referenzangebote für {market} werden in {currency} angezeigt. Ihr endgültiger lokalisierter Preis, die Währung, enthaltene Credits und die Verfügbarkeit werden in der App oder im Store angezeigt.",
     "creditsNeverExpire": "Credits verfallen nie",
     "noTrial": "Keine kostenlose Testphase. Abonnements verlängern sich bis zur Kündigung.",
@@ -230,7 +230,7 @@
       "payg": {
         "name": "Einmalige Credits",
         "eyebrow": "Nutzungsbasiert",
-          "description": "Kaufen Sie Credits nur bei Bedarf und erstellen oder bearbeiten Sie Bilder mit geeigneten nutzungsbasierten 1K-Modellen.",
+        "description": "Kaufen Sie Credits nur bei Bedarf und erstellen oder bearbeiten Sie Bilder mit bis zu 1K.",
         "optionLabel": "Credit-Paket",
         "cta": "Mit Credits starten",
         "features": {
@@ -263,7 +263,7 @@
     },
     "creditGuide": {
       "title": "So werden Credits verwendet",
-      "description": "Credits werden beim Erstellen oder bei der Wahl eines optionalen persönlichen Modelltrainings verwendet. Ihr Tarif bestimmt die verfügbaren Modelle und Auflösungen.",
+      "description": "Credits werden beim Erstellen oder bei der Wahl eines optionalen persönlichen Modelltrainings verwendet. Ihre Zugangsstufe bestimmt die verfügbare Generierungsqualität und Auflösung.",
       "creditAmount": "{credits} CR",
       "items": {
         "personalModelImage": "Bild mit persönlichem KI-Modell",
@@ -300,7 +300,7 @@
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. Alle Rechte vorbehalten.",
     "opensInNewTab": "wird in einem neuen Tab geöffnet",
-    "models": "Modelle"
+    "studio": "Studio"
   },
   "supportPage": {
     "title": "Kundensupport",
@@ -329,11 +329,11 @@
     },
     "sourcePhotos": {
       "question": "Ist das Training eines persönlichen KI-Modells erforderlich?",
-      "answer": "Nein. Nutzen Sie Presets, AI Masks, Studio sowie unterstützte Generierungs- oder Bearbeitungsmodelle, ohne ein persönliches Modell zu trainieren. Trainieren Sie eines nur für eine konsistente Identität bei wiederholten Generierungen; dieser optionale Ablauf verwendet 10–20 unterschiedliche Selfies und erfordert Pro oder Max."
+      "answer": "Nein. Nutzen Sie Presets, AI Masks und Studio mit einem Foto oder einer Referenz, ohne ein persönliches Modell zu trainieren. Trainieren Sie eines nur, wenn dieselbe Person auf mehreren Fotos wiedererkennbar bleiben soll; dieser optionale Ablauf verwendet 10–20 unterschiedliche Selfies und erfordert Pro oder Max."
     },
     "pricing": {
       "question": "Was kostet es und gibt es Limits?",
-      "answer": "Einmalige Credits funktionieren mit geeigneten nutzungsbasierten Modellen. Die US-Referenzpakete enthalten 200 Credits für $5.99 oder 300 für $8.99. Pro beginnt bei $6.99 pro Woche und bietet 2K sowie optionales Standard-Training; Max beginnt bei $29.99 pro Monat und bietet 4K sowie optionales Full-Training. Jahrestarife werden vollständig abgerechnet und schreiben Credits monatlich gut. Die endgültigen lokalisierten Angebote variieren je nach Land und Plattform, und Credits verfallen nie."
+      "answer": "Einmalige Credits gelten für geeignete Erstellung und Bearbeitung in 1K. Die US-Referenzpakete enthalten 200 Credits für $5.99 oder 300 für $8.99. Pro beginnt bei $6.99 pro Woche und bietet 2K sowie optionales Standard-Training; Max beginnt bei $29.99 pro Monat und bietet 4K sowie optionales Full-Training. Jahrestarife werden vollständig abgerechnet und schreiben Credits monatlich gut. Die endgültigen lokalisierten Angebote variieren je nach Land und Plattform, und Credits verfallen nie."
     },
     "subscriptions": {
       "question": "Wie verwalte oder kündige ich ein Abonnement?",
@@ -341,7 +341,7 @@
     },
     "imageQuality": {
       "question": "Was beeinflusst die Bildqualität?",
-      "answer": "Die Ergebnisse hängen vom Ausgangs- oder Referenzfoto, dem gewählten Preset, der AI Mask oder dem Modell sowie vom Prompt ab. Verwenden Sie ein klares, gut beleuchtetes Foto, wenn der jeweilige Ablauf eines erfordert, und vergleichen Sie bei Bedarf mehrere Ergebnisse."
+      "answer": "Die Ergebnisse hängen vom Ausgangs- oder Referenzfoto, dem gewählten Preset oder der AI Mask, der gewählten Generierungsqualität sowie vom Prompt ab. Verwenden Sie ein klares, gut beleuchtetes Foto, wenn der jeweilige Ablauf eines erfordert, und vergleichen Sie bei Bedarf mehrere Ergebnisse."
     },
     "privacy": {
       "question": "Wie werden meine Fotos und Daten behandelt?",
@@ -353,7 +353,7 @@
     },
     "whyNotChatGPT": {
       "question": "Was unterscheidet My AI Photo Shoot von allgemeinen KI-Bildtools?",
-      "answer": "My AI Photo Shoot vereint geführte Presets, AI Masks, Studio, eigene Prompts sowie spezialisierte Generierungs- und Bearbeitungsmodelle in einem auf Fotos ausgerichteten Workflow."
+      "answer": "My AI Photo Shoot vereint geführte Presets, AI Masks, Studio, eigene Prompts sowie eine einfache Steuerung der Generierungsqualität in einem auf Fotos ausgerichteten Workflow."
     }
   },
   "useCase": {
@@ -377,7 +377,7 @@
       },
       "step2": {
         "title": "Erstellungsweg wählen",
-        "desc": "Nutzen Sie ein Preset, eine AI Mask, ein unterstütztes Generierungs- oder Bearbeitungsmodell oder beschreiben Sie in Studio das gewünschte Ergebnis."
+        "desc": "Nutzen Sie ein Preset oder eine AI Mask oder beschreiben Sie in Studio das gewünschte Ergebnis. Wählen Sie vor der Erstellung eine schnellere oder höherwertige Generierung."
       },
       "step3": {
         "title": "Prüfen und erstellen",
@@ -401,91 +401,187 @@
       "serviceType": "KI-Fotoerstellung, -transformation und -bearbeitung"
     }
   },
-  "models": {
+  "studio": {
     "meta": {
-      "title": "KI-Fotomodelle: Credit-Kosten und Zugang",
-      "description": "Vergleichen Sie nutzungsbasierte Modelle zum Erstellen und Bearbeiten von Fotos sowie optionale persönliche KI-Modelle für eine konsistente Identität.",
-      "shareTitle": "KI-Modelle zum Erstellen und Bearbeiten von Fotos",
-      "shareDescription": "Entdecken Sie Modelle für neue Bilder und die Bearbeitung vorhandener Fotos sowie optionale persönliche Modelle für eine konsistente Identität."
+      "title": "KI-Fotostudio für eigene Prompts",
+      "description": "Erstellen und bearbeiten Sie KI-Fotos in Studio mit Foto oder persönlichem KI-Modell, eigenen Prompts, automatischer Optimierung und klarer Qualitätswahl.",
+      "shareTitle": "Fotos im KI-Studio erstellen und bearbeiten",
+      "shareDescription": "Starten Sie mit einem Foto oder optionalen persönlichen KI-Modell, beschreiben Sie das Ergebnis und lassen Sie Auto Mode den Prompt vorbereiten.",
+      "imageAlt": "Mit Presets, AI Masks und Studio erstellte Beispiele von My AI Photo Shoot"
     },
-    "breadcrumb": "Modelle",
-    "eyebrow": "Unterstützte KI-Modelle",
-    "heading": "KI-Modelle zum Erstellen und Bearbeiten von Fotos vergleichen",
-    "description": "Beginnen Sie mit nutzungsbasierten Modellen für neue Bilder und Fotobearbeitung. Pro und Max bieten höhere Auflösung und optionales persönliches KI-Training.",
-    "creditUnit": "Kosten pro Ergebnis",
-    "summary": {
-      "training": "für optionales persönliches Standard- / Full-KI-Training mit Pro / Max",
-      "otherModels": "Startkosten für 1K-Generierung und Fotobearbeitung"
-    },
-    "chooser": {
-      "title": "Was möchten Sie erstellen?",
-      "description": "Beginnen Sie mit dem gewünschten Ergebnis. Nutzen Sie Generierung für neue Bilder, Bearbeitung für vorhandene Fotos oder ein optionales persönliches Modell für konsistente Identität bei wiederholten Generierungen.",
-      "personal": {
-        "title": "Konsistente Identität über mehrere Fotos hinweg",
-        "description": "Trainieren Sie optional mit Pro oder Max und erstellen Sie persönliche 1K-Modellfotos mit konsistenter Identität für je 2 Credits. Trainierte Modelle bleiben nach der Kündigung verfügbar."
-      },
-      "generate": {
-        "title": "Neue Bilder aus Prompts",
-        "description": "Nutzen Sie Generierungsmodelle für neue Szenen, kreative Stile, Poster, Produktkonzepte und schnelle visuelle Ideen."
-      },
-      "edit": {
-        "title": "Ein vorhandenes Foto ändern",
-        "description": "Nutzen Sie Bearbeitungsmodelle, um ein vorhandenes Foto anzupassen und erkennbare Teile des Originals zu bewahren oder Objekte, Outfits und Szenen zu ändern."
-      }
-    },
-    "table": {
-      "title": "KI-Modelle, Credit-Kosten und Zugang",
-      "description": "Credits werden pro Ergebnis berechnet. Ihr Tarif bestimmt die verfügbaren Modelle und die maximale Auflösung.",
-      "priceNote": "Das Training eines persönlichen Modells ist optional und erfordert Pro oder Max. Trainierte Modelle und nicht verwendete Credits bleiben nach der Kündigung erhalten.",
-      "columns": {
-        "model": "Modell",
-        "bestFor": "Am besten für",
-        "credits": "Credits",
-        "resolution": "Max. Auflösung",
-        "access": "Zugang"
-      }
+    "breadcrumb": "Studio",
+    "eyebrow": "Individuelle KI-Fotoerstellung",
+    "heading": "KI-Fotos mit Studio erstellen und bearbeiten",
+    "description": "Beginnen Sie mit einem normalen Foto oder einem optionalen persönlichen KI-Modell, beschreiben Sie das gewünschte Ergebnis und erstellen Sie es, ohne ein technisches Modell beim Namen auszuwählen.",
+    "directAnswer": {
+      "title": "Sie beschreiben das Ergebnis. Studio übernimmt die technische Einrichtung.",
+      "description": "Jede Studio-Anfrage nutzt Auto Mode im Hintergrund, um Ihren Prompt zu verstehen und zu optimieren. Bei einem normalen Foto analysiert er außerdem die Vorlage und verwendet die von Ihnen gewählte Generierungsqualität."
     },
     "access": {
       "payg": "Nutzungsbasiert",
       "pro": "Pro",
       "max": "Max"
     },
-    "groups": {
-      "personal": "Optionales persönliches KI-Modell",
-      "generate": "Bild erstellen",
-      "edit": "Fotobearbeitung"
+    "starts": {
+      "eyebrow": "Ausgangsmaterial wählen",
+      "title": "Zwei Möglichkeiten, in Studio zu beginnen",
+      "description": "Verwenden Sie ein normales Foto für eine direkte Bearbeitung oder wählen Sie ein optionales persönliches KI-Modell, wenn Sie mehrere Fotos derselben Person erstellen möchten.",
+      "photo": {
+        "title": "Normales Foto",
+        "description": "Wählen Sie ein hochgeladenes Foto oder eine Ihrer früheren Kreationen und beschreiben Sie die gewünschte Änderung. Auto Mode analysiert das Ausgangsfoto vor der Generierung.",
+        "choice": "Ideal für einmalige Bearbeitungen, Transformationen, neue Bildausschnitte und kreative Änderungen. Persönliches Training ist nicht erforderlich."
+      },
+      "personal": {
+        "title": "Persönliches KI-Modell",
+        "description": "Wählen Sie ein Modell, das mit 10–20 Ihrer Selfies trainiert wurde, und beschreiben Sie eine neue Szene, Kleidung, Pose oder einen Stil. Auto Mode optimiert den Prompt für den Ablauf mit der trainierten Person.",
+        "choice": "Ideal für viele neue Fotos, auf denen dieselbe Person wiedererkennbar bleiben soll. Die Generierungsqualität wird separat gehandhabt."
+      }
     },
-    "tiers": {
-      "personal": "Konsistente Identität",
-      "bestValue": "Ausgewogene Generierung",
-      "highDetail": "Hohe Details",
-      "topQuality": "Generierung in höherer Auflösung",
-      "precise": "Präzise",
-      "creative": "Kreativ",
-      "textPosters": "Text und Poster",
-      "standardEdits": "Standard",
-      "proEdits": "Pro",
-      "smartEdits": "Max",
-      "textEdits": "Textebenen"
+    "steps": {
+      "eyebrow": "So funktioniert Studio",
+      "title": "Vom Ausgangsmaterial und Prompt zum fertigen Foto",
+      "description": "Studio hält den Ablauf einfach und bereitet die technischen Anweisungen im Hintergrund vor.",
+      "source": {
+        "title": "Eine Quelle wählen",
+        "description": "Wählen Sie ein normales Foto, eine frühere Kreation oder ein optionales persönliches KI-Modell."
+      },
+      "describe": {
+        "title": "Ergebnis beschreiben",
+        "description": "Beschreiben Sie die Änderung oder neue Szene mit eigenen Worten. Sie können auch einen früheren Prompt erneut verwenden, ein Foto als Prompt nutzen oder sich mit einer Überraschungsidee inspirieren lassen."
+      },
+      "create": {
+        "title": "Kosten prüfen und erstellen",
+        "description": "Verwenden Sie für normale Fotos Ihre Einstellung zur Generierungsqualität. Prüfen Sie die angezeigten Credit-Kosten und eine mögliche Tarifanforderung; erstellen Sie anschließend das Ergebnis und laden Sie es herunter."
+      }
     },
-    "bestFor": {
-      "personal": "Wiederholte Generierungen mit konsistenter Identität nach optionalem Training.",
-      "realistic": "Realistische Porträts, Profilfotos und ausgewogene KI-Bilder für den Alltag.",
-      "detail": "Detailreichere Szenen, bei denen Schärfe und aufwendigere Komposition wichtig sind.",
-      "quality": "Generierung in höherer Auflösung für detaillierte Szenen und ausgearbeitete Kompositionen.",
-      "precise": "Prompts, die präzise Befolgung und saubere Objektplatzierung brauchen.",
-      "creative": "Stilisierte Konzepte, ausdrucksstarke Looks und schnelle kreative Erkundung.",
-      "textPosters": "Bilder, bei denen lesbarer Text, Schilder oder posterartige Layouts wichtig sind.",
-      "edits": "Allgemeine Fotobearbeitung mit gutem Verhältnis von Preis und Qualität.",
-      "proEdits": "Anspruchsvollere Bearbeitungen, bei denen Detail und Kontrolle wichtig sind.",
-      "smartEdits": "Smarte Objekt-, Outfit- und Szenenänderungen aus einem vorhandenen Bild.",
-      "textEdits": "Bearbeitung von Bildern mit Typografie, Labels oder grafischem Layout."
+    "autoMode": {
+      "eyebrow": "Automatische Prompt-Vorbereitung",
+      "title": "Sie müssen keinen perfekten Prompt schreiben",
+      "description": "Jede Studio-Kreation nutzt Auto Mode im Hintergrund. Er wandelt Ihre Anfrage in anbieterfertige Anweisungen um, während Ihre gewählte Quelle und Ihr Ziel maßgeblich bleiben.",
+      "photo": {
+        "title": "Mit einem normalen Foto",
+        "description": "Auto Mode analysiert das Ausgangsfoto, übersetzt bei Bedarf nicht englischsprachige Anweisungen, bestimmt, was geändert und beibehalten werden soll, und wählt ein unterstütztes Seitenverhältnis und Dateiformat."
+      },
+      "personal": {
+        "title": "Mit einem persönlichen KI-Modell",
+        "description": "Auto Mode übersetzt und optimiert Ihre Anfrage für den Generierungsablauf mit der trainierten Person. Er analysiert kein separates Ausgangsfoto und verwendet nicht die Qualitätsauswahl für normale Fotos."
+      },
+      "control": "Auto Mode bereitet die Anfrage vor; er wählt die Generierungsqualität nicht für Sie aus."
+    },
+    "quality": {
+      "eyebrow": "Generierungsqualität",
+      "title": "Qualität für Studio mit einem normalen Foto wählen",
+      "description": "Ihre Einstellung zur Generierungsqualität wird der entsprechenden Engine im Hintergrund zugeordnet. Wechseln Sie von schnellerer 1K-Erstellung zu höherwertiger Generierung in 2K und 4K; höhere Stufen verbrauchen mehr Credits und können Pro oder Max erfordern.",
+      "creditUnit": "CR / Foto",
+      "maxResolution": "Bis zu {resolution}",
+      "visual": {
+        "previewLabel": "Vorschau aus der App",
+        "title": "Generierungsqualität",
+        "creditLabel": "{credits} CR / Foto",
+        "faster": "Schneller",
+        "higherQuality": "Höhere Qualität"
+      },
+      "columns": {
+        "access": "Zugang",
+        "bestFor": "Am besten für",
+        "credits": "Referenz-Credits",
+        "resolution": "Maximale Auflösung"
+      },
+      "bands": {
+        "payg": {
+          "title": "Schnellere 1K-Erstellung",
+          "description": "Alltägliche Bearbeitungen in Studio, wenn Geschwindigkeit und ein geringerer Credit-Verbrauch am wichtigsten sind."
+        },
+        "pro": {
+          "title": "Höherwertige 2K-Erstellung",
+          "description": "Mehr Details für ausgearbeitete Porträts, Profilfotos und anspruchsvolle Bearbeitungen. Pro umfasst zwei 2K-Qualitätspositionen."
+        },
+        "max": {
+          "title": "Höchste 4K-Erstellungsqualität",
+          "description": "Die maximal verfügbare Auflösung für detaillierte Szenen und fertige Bilder, die von zusätzlicher Klarheit profitieren."
+        }
+      },
+      "note": "Dies sind die aktuellen Referenzkosten in Credits für die Generierung mit normalen Fotos. Die App zeigt vor der Erstellung die genauen Kosten und einen eventuell erforderlichen Tarif; Credits verfallen nie. Die Generierung mit einem persönlichen KI-Modell hat einen eigenen 1K-Preis."
+    },
+    "personal": {
+      "eyebrow": "Optionales Identitätstraining",
+      "title": "Wann ein persönliches KI-Modell in Studio sinnvoll ist",
+      "description": "Trainieren Sie eines, wenn Sie viele unterschiedliche Fotos derselben wiedererkennbaren Person erstellen möchten. Es ist optional: Studio funktioniert mit einem normalen Foto ohne persönliches Training.",
+      "steps": {
+        "upload": {
+          "title": "10–20 unterschiedliche Selfies hinzufügen",
+          "description": "Verwenden Sie klare Einzelfotos mit verschiedenen Winkeln, Gesichtsausdrücken und Lichtverhältnissen. Die App prüft vor dem Training, ob die Fotos geeignet sind."
+        },
+        "train": {
+          "title": "Standard- oder Max-Training wählen",
+          "description": "Standard-Training erfordert Pro. Max-Training erfordert Max und verwendet einen längeren Trainingsprozess."
+        },
+        "create": {
+          "title": "Das Modell in Studio verwenden",
+          "description": "Erstellen Sie neue 1K-Fotos zum angezeigten Preis für persönliche Modelle. Sie sind darauf ausgelegt, die trainierte Person über verschiedene Prompts hinweg wiedererkennbar zu halten."
+        }
+      },
+      "costs": {
+        "title": "Referenzkosten für persönliche Modelle",
+        "standard": {
+          "title": "Standard-Training · Pro",
+          "description": "Einmalig {credits} Credits für jedes persönliche KI-Modell."
+        },
+        "full": {
+          "title": "Max-Training · Max",
+          "description": "Einmalig {credits} Credits für jedes persönliche KI-Modell."
+        },
+        "photos": {
+          "title": "Fotos nach dem Training",
+          "description": "{credits} Credits pro 1K-Foto, das mit einem bestehenden persönlichen KI-Modell erstellt wird."
+        },
+        "note": "Die App zeigt vor dem Training oder Erstellen die genauen Kosten. Bestehende persönliche KI-Modelle und nicht verwendete Credits bleiben nach der Kündigung verfügbar."
+      }
+    },
+    "related": {
+      "eyebrow": "Geführte Alternativen",
+      "title": "Möchten Sie lieber mit einer fertigen Vorlage beginnen?",
+      "description": "Studio bietet Ihnen Kontrolle durch eigene Prompts. Presets und AI Masks führen Sie durch Transformationen, wenn Sie schneller starten möchten.",
+      "presets": {
+        "title": "Presets",
+        "description": "Wählen Sie eine Idee, fügen Sie ein Foto hinzu und erstellen Sie eine geführte Transformation, ohne einen Prompt von Grund auf zu schreiben.",
+        "link": "Presets ansehen"
+      },
+      "masks": {
+        "title": "AI Masks",
+        "description": "Wenden Sie gezielte Looks und Transformationen auf ein vorhandenes Foto an und vergleichen Sie das Ergebnis mit dem Original.",
+        "link": "AI Masks ansehen"
+      }
+    },
+    "faq": {
+      "eyebrow": "Kurze Antworten",
+      "title": "Fragen zu Studio",
+      "writing": {
+        "question": "Muss ich einen perfekten Prompt schreiben?",
+        "answer": "Nein. Beschreiben Sie das Ergebnis mit eigenen Worten. Auto Mode versteht und optimiert die Anfrage vor der Generierung."
+      },
+      "autoMode": {
+        "question": "Wählt Auto Mode die Generierungsqualität?",
+        "answer": "Nein. Auto Mode bereitet den Prompt vor. Bei einem normalen Foto wird Ihre Einstellung zur Generierungsqualität der entsprechenden Engine im Hintergrund zugeordnet."
+      },
+      "quality": {
+        "question": "Welche Generierungsqualität sollte ich wählen?",
+        "answer": "Beginnen Sie in Richtung Schneller, wenn Geschwindigkeit und ein geringerer Credit-Verbrauch am wichtigsten sind. Wechseln Sie zu Höhere Qualität, wenn Sie mehr Details oder eine Auflösung von 2K und 4K benötigen."
+      },
+      "personal": {
+        "question": "Kann ich Studio mit einem persönlichen KI-Modell verwenden?",
+        "answer": "Ja. Wählen Sie ein bestehendes persönliches KI-Modell und beschreiben Sie das gewünschte neue Foto. Dafür gelten ein separater 1K-Generierungsablauf und der eigene Credit-Preis für persönliche Modelle."
+      },
+      "required": {
+        "question": "Ist das Training eines persönlichen KI-Modells erforderlich?",
+        "answer": "Nein. Studio funktioniert mit einem normalen Foto ohne persönliches Training. Trainieren Sie nur dann ein Modell, wenn wiederholte Fotos derselben Person für Ihr Ziel nützlich sind."
+      }
     },
     "cta": {
-      "title": "Bereit, ein Foto zu erstellen oder zu transformieren?",
-      "description": "Öffnen Sie die App, wählen Sie ein Preset, nutzen Sie AI Masks oder folgen Sie einem Studio-Ablauf und sehen Sie vor der Erstellung die benötigten Credits und den erforderlichen Zugang.",
-      "primary": "Jetzt erstellen",
-      "secondary": "Presets ansehen"
+      "title": "Beschreiben Sie Ihr gewünschtes Foto",
+      "description": "Öffnen Sie Studio, wählen Sie eine Quelle und beschreiben Sie das Ergebnis mit eigenen Worten. Prüfen Sie vor der Erstellung die angezeigten Credit-Kosten.",
+      "primary": "Studio im Web öffnen",
+      "secondary": "Preise ansehen"
     }
   }
 }

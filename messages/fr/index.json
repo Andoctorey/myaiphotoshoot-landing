@@ -12,7 +12,7 @@
     "noUseCases": "Aucun cas d’usage pour le moment",
     "language": "Langue",
     "masks": "Masques",
-    "models": "Modèles",
+    "studio": "Studio",
     "skipToContent": "Aller au contenu principal",
     "mainNavigation": "Navigation principale",
     "openMenu": "Ouvrir le menu",
@@ -140,7 +140,7 @@
     },
     "easyCustomization": {
       "title": "Prompts personnalisés dans Studio",
-      "description": "Utilisez Studio pour décrire une modification précise avec une photo de référence, ou créer une nouvelle image sans référence."
+      "description": "Commencez avec une photo ordinaire ou un modèle d’IA personnel facultatif, puis décrivez le résultat souhaité."
     },
     "multiplatform": {
       "title": "Créez où que vous soyez",
@@ -203,7 +203,7 @@
   },
   "pricing": {
     "title": "Commencez avec des crédits à l’usage",
-    "description": "Achetez des crédits selon vos besoins et utilisez les modèles éligibles de création et de retouche en 1K. Pro et Max ajoutent des crédits récurrents, une résolution supérieure et l’entraînement facultatif d’un modèle personnel.",
+    "description": "Achetez des crédits selon vos besoins et créez ou retouchez en 1K. Pro et Max ajoutent des crédits récurrents, une qualité de génération supérieure et l’entraînement facultatif d’un modèle d’IA personnel.",
     "referenceDisclosure": "Les offres de référence pour {market} sont affichées en {currency}. Le prix final localisé, la devise, les crédits inclus et la disponibilité apparaissent dans l’application ou la boutique.",
     "creditsNeverExpire": "Les crédits n’expirent jamais",
     "noTrial": "Aucun essai gratuit. Les abonnements se renouvellent jusqu’à leur résiliation.",
@@ -230,7 +230,7 @@
       "payg": {
         "name": "Crédits à achat unique",
         "eyebrow": "Paiement à l’usage",
-          "description": "Achetez des crédits uniquement lorsque vous en avez besoin et créez ou retouchez des images avec les modèles 1K éligibles au paiement à l’usage.",
+        "description": "Achetez des crédits uniquement lorsque vous en avez besoin et créez ou retouchez des images jusqu’en 1K.",
         "optionLabel": "Pack de crédits",
         "cta": "Commencer avec des crédits",
         "features": {
@@ -263,7 +263,7 @@
     },
     "creditGuide": {
       "title": "Comment les crédits sont utilisés",
-      "description": "Les crédits sont utilisés lors de la création ou si vous choisissez l’entraînement facultatif d’un modèle personnel. Votre forfait détermine les modèles et résolutions disponibles.",
+      "description": "Les crédits sont utilisés lors de la création ou si vous choisissez l’entraînement facultatif d’un modèle personnel. Votre niveau d’accès détermine la qualité de génération et la résolution disponibles.",
       "creditAmount": "{credits} CR",
       "items": {
         "personalModelImage": "Image avec modèle d’IA personnel",
@@ -300,7 +300,7 @@
     "support": "Support",
     "copyright": "© 2025 My AI Photo Shoot. Tous droits réservés.",
     "opensInNewTab": "s’ouvre dans un nouvel onglet",
-    "models": "Modèles"
+    "studio": "Studio"
   },
   "supportPage": {
     "title": "Support client",
@@ -329,11 +329,11 @@
     },
     "sourcePhotos": {
       "question": "L’entraînement d’un modèle IA personnel est-il obligatoire ?",
-      "answer": "Non. Utilisez des préréglages, AI Masks, Studio et les modèles de génération ou de retouche compatibles sans entraîner de modèle personnel. Entraînez-en un uniquement pour conserver une identité cohérente sur des générations répétées ; ce processus facultatif utilise 10 à 20 selfies variés et nécessite Pro ou Max."
+      "answer": "Non. Utilisez les préréglages, AI Masks et Studio avec une photo ou une référence sans entraîner de modèle personnel. Entraînez-en un uniquement lorsque vous souhaitez que la même personne reste reconnaissable sur des photos répétées ; ce processus facultatif utilise 10 à 20 selfies variés et nécessite Pro ou Max."
     },
     "pricing": {
       "question": "Combien cela coûte-t-il et y a-t-il des limites ?",
-      "answer": "Les crédits à achat unique fonctionnent avec les modèles éligibles au paiement à l’usage. Les packs de référence aux États-Unis proposent 200 crédits pour 5,99 $ ou 300 pour 8,99 $. Pro commence à 6,99 $ par semaine, permet de générer jusqu’en 2K et propose l’entraînement Standard facultatif ; Max commence à 29,99 $ par mois, permet de générer jusqu’en 4K et propose l’entraînement Full facultatif. Les forfaits annuels sont facturés intégralement, puis les crédits sont ajoutés chaque mois. Les offres finales localisées varient selon le pays et la plateforme, et les crédits n’expirent jamais."
+      "answer": "Les crédits à achat unique fonctionnent pour la création et la retouche éligibles en 1K. Les packs de référence aux États-Unis proposent 200 crédits pour 5,99 $ ou 300 pour 8,99 $. Pro commence à 6,99 $ par semaine et ajoute le 2K ainsi que l’entraînement Standard facultatif ; Max commence à 29,99 $ par mois et ajoute le 4K ainsi que l’entraînement Full facultatif. Les forfaits annuels sont facturés intégralement, puis les crédits sont ajoutés chaque mois. Les offres finales localisées varient selon le pays et la plateforme, et les crédits n’expirent jamais."
     },
     "subscriptions": {
       "question": "Comment gérer ou résilier un abonnement ?",
@@ -341,7 +341,7 @@
     },
     "imageQuality": {
       "question": "Qu’est-ce qui influence la qualité des images ?",
-      "answer": "Les résultats dépendent de la photo source ou de référence, du préréglage, d’AI Masks ou du modèle choisi, ainsi que du prompt. Utilisez une photo nette et bien éclairée lorsqu’un processus en demande une, puis comparez plusieurs résultats si nécessaire."
+      "answer": "Les résultats dépendent de la photo source ou de référence, du préréglage ou de l’AI Mask choisi, de la qualité de génération et de votre prompt. Utilisez une photo nette et bien éclairée lorsqu’un processus en demande une, puis comparez plusieurs résultats si nécessaire."
     },
     "privacy": {
       "question": "Comment mes photos et mes données sont-elles gérées ?",
@@ -353,7 +353,7 @@
     },
     "whyNotChatGPT": {
       "question": "En quoi est-ce différent d’un outil généraliste d’images IA ?",
-      "answer": "My AI Photo Shoot réunit des préréglages guidés, AI Masks, Studio, des prompts personnalisés et des modèles spécialisés de génération et de retouche dans un même parcours dédié à la photo."
+      "answer": "My AI Photo Shoot réunit des préréglages guidés, AI Masks, Studio, des prompts personnalisés et un réglage simple de la qualité de génération dans un même parcours dédié à la photo."
     }
   },
   "useCase": {
@@ -377,7 +377,7 @@
       },
       "step2": {
         "title": "Choisissez comment créer",
-        "desc": "Utilisez un préréglage, un AI Mask, un modèle de génération ou de retouche compatible, ou décrivez dans Studio le résultat souhaité."
+        "desc": "Utilisez un préréglage ou un AI Mask, ou décrivez le résultat souhaité dans Studio. Choisissez une génération plus rapide ou de meilleure qualité avant de créer."
       },
       "step3": {
         "title": "Vérifiez et créez",
@@ -401,91 +401,187 @@
       "serviceType": "Création, transformation et retouche de photos par IA"
     }
   },
-  "models": {
+  "studio": {
     "meta": {
-      "title": "Modèles photo IA : crédits et accès",
-      "description": "Comparez les modèles à l’usage pour créer et retoucher des photos, ainsi que les modèles personnels facultatifs pour conserver une identité cohérente.",
-      "shareTitle": "Modèles d’IA pour créer et retoucher des photos",
-      "shareDescription": "Découvrez des modèles pour les nouvelles images et la retouche de photos existantes, ainsi que des modèles personnels facultatifs pour une identité cohérente."
+      "title": "Studio IA pour prompts personnalisés",
+      "description": "Créez et retouchez des photos IA dans Studio à partir d’une photo ou d’un modèle personnel, avec réglage automatique des prompts et choix de qualité.",
+      "shareTitle": "Créez et retouchez des photos dans le Studio IA",
+      "shareDescription": "Partez d’une photo ou d’un modèle d’IA personnel facultatif, décrivez le résultat et laissez Auto Mode préparer le prompt.",
+      "imageAlt": "Exemples My AI Photo Shoot créés avec des préréglages, AI Masks et Studio"
     },
-    "breadcrumb": "Modèles",
-    "eyebrow": "Modèles IA compatibles",
-    "heading": "Comparez les modèles d’IA pour créer et retoucher des photos",
-    "description": "Commencez avec des modèles à l’usage pour les nouvelles images et la retouche photo. Pro et Max ajoutent une résolution supérieure et l’entraînement personnel facultatif.",
-    "creditUnit": "Coût par résultat",
-    "summary": {
-      "training": "pour l’entraînement personnel facultatif Standard / Full avec Pro / Max",
-      "otherModels": "coût de départ pour la génération et la retouche photo en 1K"
-    },
-    "chooser": {
-      "title": "Que souhaitez-vous créer ?",
-      "description": "Partez du résultat souhaité. Utilisez la génération pour les nouvelles images, la retouche pour les photos existantes ou un modèle personnel facultatif pour conserver une identité cohérente.",
-      "personal": {
-        "title": "Une identité cohérente sur plusieurs photos",
-        "description": "Entraînez facultativement un modèle avec Pro ou Max, puis créez des photos personnelles 1K à identité cohérente pour 2 crédits chacune. Les modèles entraînés restent disponibles après résiliation."
-      },
-      "generate": {
-        "title": "Nouvelles images depuis des prompts",
-        "description": "Utilisez les modèles de génération pour de nouvelles scènes, des styles créatifs, des affiches, des concepts produit et des idées visuelles rapides."
-      },
-      "edit": {
-        "title": "Modifier une photo existante",
-        "description": "Utilisez les modèles de retouche pour ajuster une photo existante en conservant des éléments reconnaissables de l’original, ou pour modifier des objets, des tenues et des scènes."
-      }
-    },
-    "table": {
-      "title": "Modèles IA, coûts en crédits et accès",
-      "description": "Les crédits sont facturés par résultat. Votre forfait détermine les modèles et la résolution maximale disponibles.",
-      "priceNote": "L’entraînement d’un modèle personnel est facultatif et nécessite Pro ou Max. Les modèles entraînés et les crédits non utilisés restent disponibles après résiliation.",
-      "columns": {
-        "model": "Modèle",
-        "bestFor": "Idéal pour",
-        "credits": "Crédits",
-        "resolution": "Résolution max.",
-        "access": "Accès"
-      }
+    "breadcrumb": "Studio",
+    "eyebrow": "Création de photos IA personnalisées",
+    "heading": "Créez et retouchez des photos IA avec Studio",
+    "description": "Partez d’une photo classique ou d’un modèle d’IA personnel facultatif, décrivez le résultat souhaité et créez-le sans choisir le nom d’un modèle technique.",
+    "directAnswer": {
+      "title": "Vous décrivez le résultat. Studio gère la configuration technique.",
+      "description": "Chaque demande dans Studio utilise Auto Mode en arrière-plan pour interpréter et affiner votre prompt. Avec une photo classique, il analyse aussi la source et utilise la qualité de génération que vous avez choisie."
     },
     "access": {
       "payg": "Paiement à l’usage",
       "pro": "Pro",
       "max": "Max"
     },
-    "groups": {
-      "personal": "Modèle d’IA personnel facultatif",
-      "generate": "Créer une image",
-      "edit": "Retouche photo"
+    "starts": {
+      "eyebrow": "Choisissez votre source",
+      "title": "Deux façons de commencer dans Studio",
+      "description": "Utilisez une photo classique pour une retouche directe, ou choisissez un modèle d’IA personnel facultatif pour créer régulièrement des photos de la même personne.",
+      "photo": {
+        "title": "Photo classique",
+        "description": "Choisissez une photo importée ou l’une de vos créations précédentes, puis décrivez la modification souhaitée. Auto Mode analyse la source avant la génération.",
+        "choice": "Idéal pour les retouches ponctuelles, les transformations, le recadrage et les changements créatifs. Aucun entraînement personnel n’est nécessaire."
+      },
+      "personal": {
+        "title": "Modèle d’IA personnel",
+        "description": "Choisissez un modèle entraîné avec 10 à 20 de vos selfies, puis décrivez une nouvelle scène, tenue, pose ou un nouveau style. Auto Mode affine le prompt pour ce parcours.",
+        "choice": "Idéal pour créer de nombreuses nouvelles photos conçues pour garder la même personne reconnaissable. La qualité de génération est gérée séparément."
+      }
     },
-    "tiers": {
-      "personal": "Cohérence d’identité",
-      "bestValue": "Génération équilibrée",
-      "highDetail": "Très détaillé",
-      "topQuality": "Génération en plus haute résolution",
-      "precise": "Précis",
-      "creative": "Créatif",
-      "textPosters": "Texte et affiches",
-      "standardEdits": "Standard",
-      "proEdits": "Pro",
-      "smartEdits": "Max",
-      "textEdits": "Calques de texte"
+    "steps": {
+      "eyebrow": "Fonctionnement de Studio",
+      "title": "D’une source et d’un prompt à une photo finalisée",
+      "description": "Studio simplifie le parcours tout en préparant les instructions techniques en arrière-plan.",
+      "source": {
+        "title": "Choisissez une seule source",
+        "description": "Sélectionnez une photo classique, une création précédente ou un modèle d’IA personnel facultatif."
+      },
+      "describe": {
+        "title": "Décrivez le résultat",
+        "description": "Décrivez la modification ou la nouvelle scène avec vos propres mots. Vous pouvez aussi reprendre un ancien prompt, transformer une photo en prompt ou demander une idée surprise."
+      },
+      "create": {
+        "title": "Vérifiez le coût et créez",
+        "description": "Pour une photo classique, utilisez votre réglage de qualité de génération. Vérifiez le coût en crédits affiché et le forfait requis, puis créez et téléchargez le résultat."
+      }
     },
-    "bestFor": {
-      "personal": "Générations répétées avec une identité cohérente après l’entraînement facultatif.",
-      "realistic": "Portraits réalistes, photos de profil et images IA équilibrées pour un usage quotidien.",
-      "detail": "Scènes plus détaillées où la netteté et une composition riche comptent.",
-      "quality": "Génération en plus haute résolution pour des scènes détaillées et des compositions soignées.",
-      "precise": "Prompts nécessitant un suivi précis des instructions et un placement propre des objets.",
-      "creative": "Concepts stylisés, looks expressifs et exploration créative rapide.",
-      "textPosters": "Images où le texte lisible, les panneaux ou les mises en page d’affiche comptent.",
-      "edits": "Retouches photo générales avec un bon équilibre prix/qualité.",
-      "proEdits": "Retouches plus exigeantes où le détail et le contrôle sont importants.",
-      "smartEdits": "Changements intelligents d’objet, de tenue et de scène à partir d’une image existante.",
-      "textEdits": "Édition d’images contenant typographie, libellés ou mise en page graphique."
+    "autoMode": {
+      "eyebrow": "Préparation automatique du prompt",
+      "title": "Inutile de rédiger un prompt parfait",
+      "description": "Chaque création dans Studio utilise Auto Mode en arrière-plan. Il transforme votre demande en instructions prêtes pour le fournisseur tout en respectant la source et l’objectif choisis.",
+      "photo": {
+        "title": "Avec une photo classique",
+        "description": "Auto Mode analyse la source, traduit les instructions non anglaises si nécessaire, détermine ce qui doit changer ou rester et choisit un format de fichier et un rapport d’image compatibles."
+      },
+      "personal": {
+        "title": "Avec un modèle d’IA personnel",
+        "description": "Auto Mode traduit et affine votre demande pour le parcours de génération avec une personne entraînée. Il n’analyse pas de photo source distincte et n’applique pas le sélecteur de qualité des photos classiques."
+      },
+      "control": "Auto Mode prépare la demande ; il ne choisit pas la qualité de génération à votre place."
+    },
+    "quality": {
+      "eyebrow": "Qualité de génération",
+      "title": "Choisissez la qualité de Studio avec une photo classique",
+      "description": "Votre réglage de qualité de génération correspond au moteur utilisé en arrière-plan. Passez d’une création 1K plus rapide à une génération 2K et 4K de meilleure qualité ; les niveaux supérieurs consomment plus de crédits et peuvent nécessiter Pro ou Max.",
+      "creditUnit": "CR / photo",
+      "maxResolution": "Jusqu’à {resolution}",
+      "visual": {
+        "title": "Qualité de génération",
+        "creditLabel": "{credits} CR / photo",
+        "faster": "Plus rapide",
+        "higherQuality": "Meilleure qualité",
+        "previewLabel": "Aperçu de l’application"
+      },
+      "columns": {
+        "access": "Accès",
+        "bestFor": "Idéal pour",
+        "credits": "Crédits indicatifs",
+        "resolution": "Résolution maximale"
+      },
+      "bands": {
+        "payg": {
+          "title": "Création 1K plus rapide",
+          "description": "La création et la retouche photo au quotidien lorsque la vitesse et une consommation réduite de crédits comptent le plus."
+        },
+        "pro": {
+          "title": "Création 2K de meilleure qualité",
+          "description": "Plus de détails pour les portraits soignés, les photos de profil et les retouches exigeantes. Pro comprend deux niveaux de qualité 2K."
+        },
+        "max": {
+          "title": "Création 4K de qualité maximale",
+          "description": "La résolution maximale disponible pour les scènes détaillées et les images finales qui gagnent à être plus nettes."
+        }
+      },
+      "note": "Il s’agit des coûts indicatifs actuels pour la génération avec une photo classique. L’application affiche le coût exact et le forfait requis avant la création ; les crédits n’expirent jamais. La génération avec un modèle d’IA personnel suit son propre tarif 1K."
+    },
+    "personal": {
+      "eyebrow": "Entraînement facultatif de l’identité",
+      "title": "Quand un modèle d’IA personnel est utile dans Studio",
+      "description": "Entraînez-en un lorsque vous souhaitez créer de nombreuses photos différentes de la même personne reconnaissable. C’est facultatif : Studio fonctionne avec une photo classique sans entraînement personnel.",
+      "steps": {
+        "upload": {
+          "title": "Ajoutez 10 à 20 selfies variés",
+          "description": "Utilisez des photos nettes avec des angles, des expressions et des éclairages différents. L’application vérifie qu’elles conviennent avant l’entraînement."
+        },
+        "train": {
+          "title": "Choisissez l’entraînement Standard ou Max",
+          "description": "L’entraînement Standard nécessite Pro. L’entraînement Max nécessite Max et utilise un processus plus long."
+        },
+        "create": {
+          "title": "Utilisez le modèle dans Studio",
+          "description": "Créez de nouvelles photos 1K au tarif affiché du modèle personnel, afin de garder la personne entraînée reconnaissable avec différents prompts."
+        }
+      },
+      "costs": {
+        "title": "Coûts indicatifs d’un modèle personnel",
+        "standard": {
+          "title": "Entraînement Standard · Pro",
+          "description": "{credits} crédits, une seule fois pour chaque modèle d’IA personnel."
+        },
+        "full": {
+          "title": "Entraînement Max · Max",
+          "description": "{credits} crédits, une seule fois pour chaque modèle d’IA personnel."
+        },
+        "photos": {
+          "title": "Photos après l’entraînement",
+          "description": "{credits} crédits par photo 1K créée avec un modèle d’IA personnel existant."
+        },
+        "note": "L’application affiche le coût exact avant l’entraînement ou la création. Les modèles d’IA personnels existants et les crédits inutilisés restent disponibles après la résiliation."
+      }
+    },
+    "related": {
+      "eyebrow": "Alternatives guidées",
+      "title": "Vous préférez un point de départ prêt à l’emploi ?",
+      "description": "Studio vous donne le contrôle avec des prompts personnalisés. Les préréglages et AI Masks proposent des transformations guidées pour commencer plus rapidement.",
+      "presets": {
+        "title": "Préréglages",
+        "description": "Choisissez une idée, ajoutez une photo et réalisez une transformation guidée sans rédiger de prompt à partir de zéro.",
+        "link": "Voir les préréglages"
+      },
+      "masks": {
+        "title": "AI Masks",
+        "description": "Appliquez un style ou une transformation ciblée à une photo existante, puis comparez le résultat à l’original.",
+        "link": "Voir les AI Masks"
+      }
+    },
+    "faq": {
+      "eyebrow": "Réponses rapides",
+      "title": "Questions sur Studio",
+      "writing": {
+        "question": "Dois-je rédiger un prompt parfait ?",
+        "answer": "Non. Décrivez le résultat avec vos propres mots. Auto Mode interprète et affine la demande avant la génération."
+      },
+      "autoMode": {
+        "question": "Auto Mode choisit-il la qualité de génération ?",
+        "answer": "Non. Auto Mode prépare le prompt. Pour une photo classique, votre réglage de qualité de génération correspond au moteur utilisé en arrière-plan."
+      },
+      "quality": {
+        "question": "Quelle qualité de génération choisir ?",
+        "answer": "Commencez du côté « Plus rapide » lorsque la vitesse et une consommation réduite de crédits comptent le plus. Passez à « Meilleure qualité » si vous avez besoin de plus de détails ou d’une résolution 2K ou 4K."
+      },
+      "personal": {
+        "question": "Puis-je utiliser Studio avec un modèle d’IA personnel ?",
+        "answer": "Oui. Choisissez un modèle d’IA personnel existant et décrivez la nouvelle photo souhaitée. Ce parcours utilise une génération 1K distincte et le tarif du modèle personnel."
+      },
+      "required": {
+        "question": "L’entraînement d’un modèle d’IA personnel est-il obligatoire ?",
+        "answer": "Non. Studio fonctionne avec une photo classique sans entraînement personnel. Entraînez un modèle uniquement si créer régulièrement des photos de la même personne sert votre objectif."
+      }
     },
     "cta": {
-      "title": "Prêt à créer ou transformer une photo ?",
-      "description": "Ouvrez l’application, choisissez un préréglage, utilisez AI Masks ou suivez un processus Studio, puis consultez les crédits et l’accès requis avant de créer.",
-      "primary": "Commencer",
-      "secondary": "Voir les préréglages"
+      "title": "Décrivez la photo souhaitée",
+      "description": "Ouvrez Studio, choisissez une source et décrivez le résultat avec vos propres mots. Vérifiez le coût en crédits affiché avant de créer.",
+      "primary": "Ouvrir Studio sur le Web",
+      "secondary": "Voir les tarifs"
     }
   }
 }

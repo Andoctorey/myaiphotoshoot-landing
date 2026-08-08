@@ -1,5 +1,6 @@
 export const WEB_APP_URL = 'https://app.myaiphotoshoot.com';
 export const WEB_APP_IDEAS_URL = `${WEB_APP_URL}/#ideas`;
+export const WEB_APP_STUDIO_URL = `${WEB_APP_URL}/#generate`;
 export const APP_STORE_URL = 'https://apps.apple.com/app/id6744860178';
 export const GOOGLE_PLAY_APP_URL =
   'https://play.google.com/store/apps/details?id=com.myaiphotoshoot';

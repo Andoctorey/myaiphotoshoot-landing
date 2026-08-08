@@ -11,7 +11,7 @@ const canonicalPages = [
   ['Home', 'https://myaiphotoshoot.com/'],
   ['Presets', 'https://myaiphotoshoot.com/presets/'],
   ['Masks', 'https://myaiphotoshoot.com/masks/'],
-  ['Models', 'https://myaiphotoshoot.com/models/'],
+  ['Studio – Custom AI Photo Creation', 'https://myaiphotoshoot.com/studio/'],
   ['Use Cases', 'https://myaiphotoshoot.com/use-cases/'],
   ['Blog', 'https://myaiphotoshoot.com/blog/'],
   ['Legal', 'https://myaiphotoshoot.com/legal/'],

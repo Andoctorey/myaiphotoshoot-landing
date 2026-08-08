@@ -3,7 +3,7 @@ import SiteShell from '@/components/layout/SiteShell';
 import { defaultLocale } from '@/i18n/request';
 import { loadMessages } from '@/lib/i18n-messages';
 
-export default async function ModelsLayout({
+export default async function StudioLayout({
   children,
 }: {
   children: React.ReactNode;

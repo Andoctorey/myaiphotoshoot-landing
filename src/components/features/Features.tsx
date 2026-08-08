@@ -1,13 +1,18 @@
 import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
 import {
   AdjustmentsHorizontalIcon,
   SparklesIcon,
   PhotoIcon,
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
+import { localePath } from '@/lib/seo';
 
 export default async function Features({ locale }: { locale: string }) {
-  const t = await getTranslations({ locale, namespace: 'features' });
+  const [t, tNav] = await Promise.all([
+    getTranslations({ locale, namespace: 'features' }),
+    getTranslations({ locale, namespace: 'navigation' }),
+  ]);
 
   const features = [
     {
@@ -24,13 +29,21 @@ export default async function Features({ locale }: { locale: string }) {
       name: t('easyCustomization.title'),
       description: t('easyCustomization.description'),
       icon: AdjustmentsHorizontalIcon,
+      href: localePath(locale, '/studio/'),
+      linkLabel: tNav('studio'),
     },
     {
       name: t('multiplatform.title'),
       description: t('multiplatform.description'),
       icon: DevicePhoneMobileIcon,
     },
-  ];
+  ] satisfies Array<{
+    name: string;
+    description: string;
+    icon: typeof SparklesIcon;
+    href?: string;
+    linkLabel?: string;
+  }>;
 
   return (
     <section id="features" className="bg-white py-12 dark:bg-gray-900 md:py-16">
@@ -66,6 +79,14 @@ export default async function Features({ locale }: { locale: string }) {
                 <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-300">
                   {feature.description}
                 </p>
+                {feature.href && feature.linkLabel && (
+                  <Link
+                    href={feature.href}
+                    className="mt-3 inline-flex rounded-sm text-sm font-semibold text-purple-700 underline decoration-purple-300 underline-offset-4 hover:text-purple-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 dark:text-purple-300 dark:decoration-purple-700 dark:hover:text-purple-100"
+                  >
+                    {feature.linkLabel}
+                  </Link>
+                )}
               </div>
             </div>
           ))}
