@@ -1,5 +1,7 @@
 export type PricingTierId = 'payg' | 'pro' | 'max';
 export type PricingOfferId =
+  | 'payg-30'
+  | 'payg-100'
   | 'payg-200'
   | 'payg-300'
   | 'pro-weekly'
@@ -14,7 +16,7 @@ export type TrainingEntitlement = 'standard' | 'full' | null;
 export type PricingOffer = {
   id: PricingOfferId;
   cadence: BillingCadence;
-  priceUsd: number;
+  price: number;
   credits: number;
   creditGrantPeriod: CreditGrantPeriod;
   annualSavingsPercent?: number;
@@ -26,6 +28,16 @@ export type PricingTier = {
   maxResolution: '1K' | '2K' | '4K';
   training: TrainingEntitlement;
   offers: readonly PricingOffer[];
+};
+
+export type PricingCatalog = {
+  currency: string;
+  referenceMarket: string;
+  countryGroup: 'A' | 'B' | 'C';
+  adaptivePricing: boolean;
+  creditsNeverExpire: boolean;
+  trialAvailable: boolean;
+  tiers: readonly PricingTier[];
 };
 
 export type CreditCost = {
@@ -78,6 +90,8 @@ export const CREDIT_COSTS = [
 export const US_REFERENCE_PRICING = {
   currency: 'USD',
   referenceMarket: 'US',
+  countryGroup: 'A',
+  adaptivePricing: true,
   creditsNeverExpire: true,
   trialAvailable: false,
   tiers: [
@@ -90,14 +104,14 @@ export const US_REFERENCE_PRICING = {
         {
           id: 'payg-200',
           cadence: 'oneTime',
-          priceUsd: 5.99,
+          price: 5.99,
           credits: 200,
           creditGrantPeriod: 'oneTime',
         },
         {
           id: 'payg-300',
           cadence: 'oneTime',
-          priceUsd: 8.99,
+          price: 8.99,
           credits: 300,
           creditGrantPeriod: 'oneTime',
         },
@@ -112,7 +126,7 @@ export const US_REFERENCE_PRICING = {
         {
           id: 'pro-annual',
           cadence: 'annual',
-          priceUsd: 149.9,
+          price: 149.9,
           credits: 200,
           creditGrantPeriod: 'monthly',
           annualSavingsPercent: 17,
@@ -120,14 +134,14 @@ export const US_REFERENCE_PRICING = {
         {
           id: 'pro-monthly',
           cadence: 'monthly',
-          priceUsd: 14.99,
+          price: 14.99,
           credits: 200,
           creditGrantPeriod: 'monthly',
         },
         {
           id: 'pro-weekly',
           cadence: 'weekly',
-          priceUsd: 6.99,
+          price: 6.99,
           credits: 100,
           creditGrantPeriod: 'weekly',
         },
@@ -142,7 +156,7 @@ export const US_REFERENCE_PRICING = {
         {
           id: 'max-annual',
           cadence: 'annual',
-          priceUsd: 299.9,
+          price: 299.9,
           credits: 400,
           creditGrantPeriod: 'monthly',
           annualSavingsPercent: 17,
@@ -150,20 +164,27 @@ export const US_REFERENCE_PRICING = {
         {
           id: 'max-monthly',
           cadence: 'monthly',
-          priceUsd: 29.99,
+          price: 29.99,
           credits: 400,
           creditGrantPeriod: 'monthly',
         },
       ],
     },
-  ] satisfies readonly PricingTier[],
-} as const;
+  ],
+} as const satisfies PricingCatalog;
 
-export function formatUsd(amountUsd: number, locale: string = 'en'): string {
-  return new Intl.NumberFormat(locale, {
+export function formatCurrency(
+  amount: number,
+  currency: string,
+  locale: string = 'en',
+): string {
+  const options: Intl.NumberFormatOptions = {
     style: 'currency',
-    currency: US_REFERENCE_PRICING.currency,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amountUsd);
+    currency,
+  };
+  if (currency === 'THB' && Number.isInteger(amount)) {
+    options.minimumFractionDigits = 0;
+    options.maximumFractionDigits = 0;
+  }
+  return new Intl.NumberFormat(locale, options).format(amount);
 }

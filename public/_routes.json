@@ -3,6 +3,8 @@
   "include": [
     "/geo",
     "/geo/",
+    "/pricing",
+    "/pricing/",
     "/indexnow-key.txt",
     "/photo",
     "/photo/*",

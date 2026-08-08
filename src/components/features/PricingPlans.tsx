@@ -1,17 +1,20 @@
 'use client';
 
 import { CheckIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from '@/lib/utils';
 import {
   CREDIT_COSTS,
-  formatUsd,
+  formatCurrency,
   US_REFERENCE_PRICING,
   type CreditCost,
+  type PricingCatalog,
   type PricingOffer,
+  type PricingOfferId,
   type PricingTier,
   type PricingTierId,
 } from '@/lib/pricing';
+import { pricingCatalogFromApi } from '@/lib/regional-pricing';
 import PlatformAppLink from './PlatformAppLink';
 
 type Props = {
@@ -55,14 +58,40 @@ function offerCreditKey(offer: PricingOffer): string {
 
 export default function PricingPlans({ locale }: Props) {
   const t = useTranslations('pricing');
-  const [selectedOfferIds, setSelectedOfferIds] = useState<Record<PricingTierId, string>>(
-    () => Object.fromEntries(
-      US_REFERENCE_PRICING.tiers.map((tier) => [tier.id, tier.defaultOfferId]),
-    ) as Record<PricingTierId, string>,
-  );
+  const [pricing, setPricing] = useState<PricingCatalog>(US_REFERENCE_PRICING);
+  const [selectedOfferIds, setSelectedOfferIds] = useState<
+    Partial<Record<PricingTierId, PricingOfferId>>
+  >({});
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const params = new URLSearchParams({ locale });
+
+    fetch(`/pricing?${params.toString()}`, {
+      cache: 'no-store',
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Pricing request failed with ${response.status}`);
+        const nextPricing = pricingCatalogFromApi(await response.json());
+        if (!nextPricing) throw new Error('Pricing response was invalid');
+        setPricing(nextPricing);
+      })
+      .catch((error: unknown) => {
+        if (!(error instanceof DOMException && error.name === 'AbortError')) {
+          console.warn('Localized pricing unavailable; using US reference pricing.', error);
+        }
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [locale]);
 
   const selectedOffer = (tier: PricingTier): PricingOffer => (
-    tier.offers.find((offer) => offer.id === selectedOfferIds[tier.id]) || tier.offers[0]
+    tier.offers.find((offer) => offer.id === selectedOfferIds[tier.id])
+    || tier.offers.find((offer) => offer.id === tier.defaultOfferId)
+    || tier.offers[0]
   );
 
   const featureLabels = (tier: PricingTier): string[] => {
@@ -86,8 +115,8 @@ export default function PricingPlans({ locale }: Props) {
     <>
       <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-gray-600 dark:text-gray-300">
         <p>{t('referenceDisclosure', {
-          market: US_REFERENCE_PRICING.referenceMarket,
-          currency: US_REFERENCE_PRICING.currency,
+          market: pricing.referenceMarket,
+          currency: pricing.currency,
         })}</p>
         <span className="hidden h-4 w-px bg-gray-300 dark:bg-gray-700 sm:block" aria-hidden="true" />
         <p>{t('creditsNeverExpire')}</p>
@@ -96,9 +125,9 @@ export default function PricingPlans({ locale }: Props) {
       </div>
 
       <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-3">
-        {US_REFERENCE_PRICING.tiers.map((tier) => {
+        {pricing.tiers.map((tier) => {
           const offer = selectedOffer(tier);
-          const displayPrice = offer.priceUsd;
+          const displayPrice = offer.price;
 
           return (
             <article
@@ -119,7 +148,11 @@ export default function PricingPlans({ locale }: Props) {
                 <legend className="sr-only">{t(`plans.${tier.id}.optionLabel`)}</legend>
                 <div
                   className={`grid rounded-xl bg-gray-100 p-1 dark:bg-gray-900/70 ${
-                    tier.offers.length === 3 ? 'grid-cols-3' : 'grid-cols-2'
+                    tier.offers.length === 1
+                      ? 'grid-cols-1'
+                      : tier.offers.length === 3
+                        ? 'grid-cols-3'
+                        : 'grid-cols-2'
                   }`}
                 >
                   {tier.offers.map((candidate) => (
@@ -154,7 +187,7 @@ export default function PricingPlans({ locale }: Props) {
               >
                 <div className="flex flex-wrap items-end gap-x-2 gap-y-1">
                   <span className="text-4xl font-extrabold tracking-tight text-gray-950 dark:text-white">
-                    {formatUsd(displayPrice, locale)}
+                    {formatCurrency(displayPrice, pricing.currency, locale)}
                   </span>
                   <span className="pb-1 text-sm font-medium text-gray-500 dark:text-gray-300">
                     {t(offerUnitKey(offer))}
@@ -176,7 +209,7 @@ export default function PricingPlans({ locale }: Props) {
                 {offer.cadence === 'annual' ? (
                   <p className="mt-2 text-xs leading-5 text-gray-500 dark:text-gray-300">
                     {t('billing.annualTerms', {
-                      total: formatUsd(offer.priceUsd, locale),
+                      total: formatCurrency(offer.price, pricing.currency, locale),
                       credits: formatInteger(offer.credits, locale),
                     })}
                   </p>
@@ -201,9 +234,10 @@ export default function PricingPlans({ locale }: Props) {
                     pricing_plan: tier.id,
                     billing_cadence: offer.cadence,
                     offer_id: offer.id,
-                    reference_market: US_REFERENCE_PRICING.referenceMarket,
-                    reference_price_usd: offer.priceUsd,
-                    reference_currency: US_REFERENCE_PRICING.currency,
+                    pricing_market: pricing.referenceMarket,
+                    pricing_country_group: pricing.countryGroup,
+                    displayed_price: offer.price,
+                    displayed_currency: pricing.currency,
                     reference_credits: offer.credits,
                     credit_grant_period: offer.creditGrantPeriod,
                   }}

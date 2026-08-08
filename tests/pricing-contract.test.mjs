@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 import ts from 'typescript';
 
@@ -18,19 +18,23 @@ async function readProjectFile(relativePath) {
   return readFile(path.join(projectRoot, relativePath), 'utf8');
 }
 
-async function loadPricingModule() {
-  const source = await readProjectFile('src/lib/pricing.ts');
+async function loadTypeScriptModule(relativePath) {
+  const source = await readProjectFile(relativePath);
   const output = ts.transpileModule(source, {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2020,
     },
-    fileName: 'pricing.ts',
+    fileName: path.basename(relativePath),
   }).outputText;
   const module = { exports: {} };
   const evaluate = new Function('exports', 'module', 'require', output);
   evaluate(module.exports, module, require);
   return module.exports;
+}
+
+async function loadPricingModule() {
+  return loadTypeScriptModule('src/lib/pricing.ts');
 }
 
 function valueAtPath(object, dottedPath) {
@@ -60,7 +64,7 @@ test('US reference pricing matches the release catalog', async () => {
   assert.deepEqual(
     Object.fromEntries(Object.entries(offers).map(([id, offer]) => [
       id,
-      [offer.priceUsd, offer.credits, offer.creditGrantPeriod],
+      [offer.price, offer.credits, offer.creditGrantPeriod],
     ])),
     {
       'payg-200': [5.99, 200, 'oneTime'],
@@ -94,10 +98,152 @@ test('US reference pricing matches the release catalog', async () => {
       ['fullTraining', 300, 300],
     ],
   );
-  assert.equal(Math.round((1 - offers['pro-annual'].priceUsd / (offers['pro-monthly'].priceUsd * 12)) * 100), 17);
-  assert.equal(Math.round((1 - offers['max-annual'].priceUsd / (offers['max-monthly'].priceUsd * 12)) * 100), 17);
+  assert.equal(Math.round((1 - offers['pro-annual'].price / (offers['pro-monthly'].price * 12)) * 100), 17);
+  assert.equal(Math.round((1 - offers['max-annual'].price / (offers['max-monthly'].price * 12)) * 100), 17);
   assert.equal('monthlyEquivalentUsd' in offers['pro-annual'], false);
   assert.equal('monthlyEquivalentUsd' in offers['max-annual'], false);
+});
+
+test('regional pricing replaces the complete catalog atomically', async () => {
+  const { pricingCatalogFromApi } = await loadTypeScriptModule('src/lib/regional-pricing.ts');
+  const response = {
+    country_code: 'TH',
+    country_group: 'C',
+    adaptive_pricing: true,
+    packages: [
+      { product_id: 'package_30', included_credits: 30, value: 33, currency: 'THB' },
+      { product_id: 'package_100', included_credits: 100, value: 100, currency: 'THB' },
+    ],
+    plans: [
+      { product_id: 'pro', base_plan_id: 'weekly', included_credits: 40, value: 100, currency: 'THB' },
+      { product_id: 'pro', base_plan_id: 'monthly', included_credits: 75, value: 167, currency: 'THB' },
+      { product_id: 'pro', base_plan_id: 'annual', included_credits: 75, value: 1670, currency: 'THB' },
+      { product_id: 'max', base_plan_id: 'monthly', included_credits: 150, value: 334, currency: 'THB' },
+      { product_id: 'max', base_plan_id: 'annual', included_credits: 150, value: 3343, currency: 'THB' },
+    ],
+  };
+
+  const catalog = pricingCatalogFromApi(response);
+  assert.ok(catalog);
+  assert.equal(catalog.referenceMarket, 'TH');
+  assert.equal(catalog.countryGroup, 'C');
+  assert.equal(catalog.currency, 'THB');
+  assert.deepEqual(
+    catalog.tiers[0].offers.map((offer) => [offer.id, offer.price, offer.credits]),
+    [
+      ['payg-30', 33, 30],
+      ['payg-100', 100, 100],
+    ],
+  );
+  assert.equal(catalog.tiers[0].defaultOfferId, 'payg-30');
+  assert.deepEqual(
+    catalog.tiers[1].offers.map((offer) => offer.id),
+    ['pro-annual', 'pro-monthly', 'pro-weekly'],
+  );
+  assert.equal(catalog.tiers[1].offers[0].annualSavingsPercent, 17);
+
+  const indiaResponse = structuredClone(response);
+  indiaResponse.country_code = 'IN';
+  indiaResponse.country_group = 'B';
+  indiaResponse.packages = [
+    { product_id: 'package_100', included_credits: 100, value: 2.99, currency: 'USD' },
+    { product_id: 'package_200', included_credits: 200, value: 5.99, currency: 'USD' },
+  ];
+  indiaResponse.plans = [
+    { product_id: 'pro', base_plan_id: 'weekly', included_credits: 75, value: 4.99, currency: 'USD' },
+    { product_id: 'pro', base_plan_id: 'monthly', included_credits: 150, value: 9.99, currency: 'USD' },
+    { product_id: 'pro', base_plan_id: 'annual', included_credits: 150, value: 99.9, currency: 'USD' },
+    { product_id: 'max', base_plan_id: 'monthly', included_credits: 300, value: 19.99, currency: 'USD' },
+  ];
+  const indiaCatalog = pricingCatalogFromApi(indiaResponse);
+  assert.ok(indiaCatalog);
+  assert.equal(indiaCatalog.tiers[2].defaultOfferId, 'max-monthly');
+  assert.deepEqual(indiaCatalog.tiers[2].offers.map((offer) => offer.id), ['max-monthly']);
+
+  const mixedCurrencyResponse = structuredClone(response);
+  mixedCurrencyResponse.plans[0].currency = 'USD';
+  assert.equal(pricingCatalogFromApi(mixedCurrencyResponse), null);
+  assert.equal(pricingCatalogFromApi({ ...response, packages: [] }), null);
+
+  const additiveResponse = structuredClone(response);
+  additiveResponse.packages.push({
+    product_id: 'package_500',
+    included_credits: 500,
+    value: 500,
+    currency: 'THB',
+  });
+  additiveResponse.plans.push({
+    product_id: 'pro',
+    base_plan_id: 'quarterly',
+    included_credits: 75,
+    value: 500,
+    currency: 'THB',
+  });
+  assert.ok(pricingCatalogFromApi(additiveResponse));
+});
+
+test('the pricing proxy uses country first, locale fallback second, and never caches', async () => {
+  const proxyPath = path.join(projectRoot, 'functions/pricing.js');
+  const { onRequest, resolvePricingCountry } = await import(pathToFileURL(proxyPath).href);
+  assert.equal(resolvePricingCountry('th', 'en'), 'TH');
+  assert.equal(resolvePricingCountry('XX', 'hi'), 'IN');
+  assert.equal(resolvePricingCountry(undefined, 'zh-Hans'), 'CN');
+  assert.equal(resolvePricingCountry(undefined, 'unknown'), 'US');
+
+  const methodResponse = await onRequest({
+    request: new Request('https://myaiphotoshoot.com/pricing', { method: 'POST' }),
+    env: {},
+  });
+  assert.equal(methodResponse.status, 405);
+  assert.equal(methodResponse.headers.get('cache-control'), 'no-store, max-age=0');
+  assert.equal(methodResponse.headers.get('allow'), 'GET');
+
+  const originalFetch = globalThis.fetch;
+  let requestedUrl = '';
+  let requestedCache;
+  try {
+    globalThis.fetch = async (input, init) => {
+      requestedUrl = String(input);
+      requestedCache = init?.cache;
+      return Response.json({ country_code: 'TH' });
+    };
+    const pricingResponse = await onRequest({
+      request: {
+        method: 'GET',
+        url: 'https://myaiphotoshoot.com/pricing?locale=en',
+        cf: { country: 'th' },
+      },
+      env: { SUPABASE_FUNCTIONS_URL: 'https://api.example.test/functions/v1/' },
+    });
+    assert.equal(pricingResponse.status, 200);
+    assert.equal(pricingResponse.headers.get('cache-control'), 'no-store, max-age=0');
+    assert.equal(requestedUrl, 'https://api.example.test/functions/v1/stripe-pricing?country_code=TH');
+    assert.equal(requestedCache, 'no-store');
+    assert.deepEqual(await pricingResponse.json(), { country_code: 'TH' });
+
+    const originalConsoleError = console.error;
+    console.error = () => {};
+    try {
+      const invalidConfigResponse = await onRequest({
+        request: {
+          method: 'GET',
+          url: 'https://myaiphotoshoot.com/pricing?locale=en',
+          cf: { country: 'US' },
+        },
+        env: { SUPABASE_FUNCTIONS_URL: 'not-a-url' },
+      });
+      assert.equal(invalidConfigResponse.status, 502);
+      assert.equal(invalidConfigResponse.headers.get('cache-control'), 'no-store, max-age=0');
+    } finally {
+      console.error = originalConsoleError;
+    }
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+
+  const routes = JSON.parse(await readProjectFile('public/_routes.json'));
+  assert.equal(routes.include.includes('/pricing'), true);
+  assert.equal(routes.include.includes('/pricing/'), true);
 });
 
 test('all locales provide the repositioned copy used by the UI', async () => {
@@ -345,7 +491,8 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
   }
 
   const pricingUi = await readProjectFile('src/components/features/PricingPlans.tsx');
-  assert.match(pricingUi, /const displayPrice = offer\.priceUsd;/);
+  assert.match(pricingUi, /fetch\(`\/pricing\?\$\{params\.toString\(\)\}`/);
+  assert.match(pricingUi, /cache: 'no-store'/);
   assert.match(pricingUi, /billing\.units\.perYear/);
 
   const structuredDataSources = await Promise.all([
