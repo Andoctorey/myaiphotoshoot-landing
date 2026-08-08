@@ -1,4 +1,6 @@
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const test = require('node:test');
 
 const {
@@ -42,4 +44,10 @@ test('rejects non-HTTPS API URLs', () => {
     () => getApiOrigin('http://api.example.com/functions/v1'),
     /must use HTTPS/,
   );
+});
+
+test('static responses prevent post-build script injection', () => {
+  const headers = fs.readFileSync(path.join(__dirname, '../public/_headers'), 'utf8');
+
+  assert.match(headers, /\/\*\n  Cache-Control: [^\n]*\bno-transform\b/);
 });
