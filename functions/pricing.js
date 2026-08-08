@@ -24,38 +24,22 @@ export async function onRequest(context) {
     return json({ error: 'Method Not Allowed' }, 405, { allow: 'GET' });
   }
 
-  let countryCode = 'US';
-  try {
-    const requestUrl = new URL(request.url);
-    countryCode = resolvePricingCountry(
-      request?.cf?.country,
-      requestUrl.searchParams.get('locale'),
-    );
-    const functionsUrl = String(
-      context.env?.SUPABASE_FUNCTIONS_URL
-        || context.env?.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL
-        || DEFAULT_FUNCTIONS_URL,
-    ).replace(/\/+$/, '');
-    const pricingUrl = new URL(`${functionsUrl}/stripe-pricing`);
-    pricingUrl.searchParams.set('country_code', countryCode);
+  const requestUrl = new URL(request.url);
+  const countryCode = resolvePricingCountry(
+    request?.cf?.country,
+    requestUrl.searchParams.get('locale'),
+  );
+  const pricingUrl = new URL(`${DEFAULT_FUNCTIONS_URL}/stripe-pricing`);
+  pricingUrl.searchParams.set('country_code', countryCode);
 
-    const upstream = await fetch(pricingUrl, {
-      headers: { accept: 'application/json' },
-    });
-    if (!upstream.ok) {
-      throw new Error(`Pricing catalog returned ${upstream.status}`);
-    }
-    return new Response(await upstream.text(), {
-      status: 200,
-      headers: NO_STORE_HEADERS,
-    });
-  } catch (error) {
-    console.error('Pricing catalog proxy failed', {
-      countryCode,
-      message: error instanceof Error ? error.message : String(error),
-    });
-    return json({ error: 'Pricing unavailable' }, 502);
-  }
+  return new Response(null, {
+    status: 307,
+    headers: {
+      'cache-control': NO_STORE_HEADERS['cache-control'],
+      'location': pricingUrl.toString(),
+      'x-content-type-options': NO_STORE_HEADERS['x-content-type-options'],
+    },
+  });
 }
 
 export function resolvePricingCountry(country, locale) {

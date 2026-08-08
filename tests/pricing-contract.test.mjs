@@ -182,7 +182,7 @@ test('regional pricing replaces the complete catalog atomically', async () => {
   assert.ok(pricingCatalogFromApi(additiveResponse));
 });
 
-test('the pricing proxy uses country first, locale fallback second, and never caches', async () => {
+test('the pricing redirect uses country first, locale fallback second, and never caches', async () => {
   const proxyPath = path.join(projectRoot, 'functions/pricing.js');
   const { onRequest, resolvePricingCountry } = await import(pathToFileURL(proxyPath).href);
   assert.equal(resolvePricingCountry('th', 'en'), 'TH');
@@ -198,45 +198,20 @@ test('the pricing proxy uses country first, locale fallback second, and never ca
   assert.equal(methodResponse.headers.get('cache-control'), 'no-store, max-age=0');
   assert.equal(methodResponse.headers.get('allow'), 'GET');
 
-  const originalFetch = globalThis.fetch;
-  let requestedUrl = '';
-  try {
-    globalThis.fetch = async (input) => {
-      requestedUrl = String(input);
-      return Response.json({ country_code: 'TH' });
-    };
-    const pricingResponse = await onRequest({
-      request: {
-        method: 'GET',
-        url: 'https://myaiphotoshoot.com/pricing?locale=en',
-        cf: { country: 'th' },
-      },
-      env: { SUPABASE_FUNCTIONS_URL: 'https://api.example.test/functions/v1/' },
-    });
-    assert.equal(pricingResponse.status, 200);
-    assert.equal(pricingResponse.headers.get('cache-control'), 'no-store, max-age=0');
-    assert.equal(requestedUrl, 'https://api.example.test/functions/v1/stripe-pricing?country_code=TH');
-    assert.deepEqual(await pricingResponse.json(), { country_code: 'TH' });
-
-    const originalConsoleError = console.error;
-    console.error = () => {};
-    try {
-      const invalidConfigResponse = await onRequest({
-        request: {
-          method: 'GET',
-          url: 'https://myaiphotoshoot.com/pricing?locale=en',
-          cf: { country: 'US' },
-        },
-        env: { SUPABASE_FUNCTIONS_URL: 'not-a-url' },
-      });
-      assert.equal(invalidConfigResponse.status, 502);
-      assert.equal(invalidConfigResponse.headers.get('cache-control'), 'no-store, max-age=0');
-    } finally {
-      console.error = originalConsoleError;
-    }
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
+  const pricingResponse = await onRequest({
+    request: {
+      method: 'GET',
+      url: 'https://myaiphotoshoot.com/pricing?locale=en',
+      cf: { country: 'th' },
+    },
+    env: {},
+  });
+  assert.equal(pricingResponse.status, 307);
+  assert.equal(pricingResponse.headers.get('cache-control'), 'no-store, max-age=0');
+  assert.equal(
+    pricingResponse.headers.get('location'),
+    'https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/stripe-pricing?country_code=TH',
+  );
 
   const routes = JSON.parse(await readProjectFile('public/_routes.json'));
   assert.equal(routes.include.includes('/pricing'), true);
