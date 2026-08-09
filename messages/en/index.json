@@ -404,18 +404,18 @@
   "studio": {
     "meta": {
       "title": "AI Photo Studio for Custom Prompts",
-      "description": "Create and edit AI photos in Studio with a source photo or personal AI model, custom prompts, automatic prompt tuning, and clear quality choices.",
-      "shareTitle": "Create and Edit Photos in AI Studio",
-      "shareDescription": "Start with a photo or optional personal AI model, describe the result, and let Auto Mode prepare the prompt for generation.",
-      "imageAlt": "My AI Photo Shoot examples created with presets, AI Masks, and Studio"
+      "description": "Create and edit AI photos in Studio with a photo or personal AI model. Write a custom prompt, let Auto Mode refine it, and choose the generation quality.",
+      "shareTitle": "Create and Edit AI Photos with Studio",
+      "shareDescription": "Start with a photo or optional personal AI model, describe what you want, and let Auto Mode refine your prompt.",
+      "imageAlt": "Examples from My AI Photo Shoot created with Presets, AI Masks, and Studio"
     },
     "breadcrumb": "Studio",
     "eyebrow": "Custom AI photo creation",
     "heading": "Create and edit AI photos with Studio",
-    "description": "Start with a regular photo or an optional personal AI model, describe the result you want, and create it without choosing a technical model by name.",
+    "description": "Start with a photo or an optional personal AI model, then describe what you want. Use Studio to edit the original or create a new image.",
     "directAnswer": {
-      "title": "You describe the result. Studio handles the technical setup.",
-      "description": "Every Studio request uses behind-the-scenes Auto Mode to interpret and refine your prompt. With a regular photo, it also analyzes the source and uses your selected generation quality."
+      "title": "Describe what you want. Auto Mode refines the prompt.",
+      "description": "Auto Mode interprets and refines every Studio request. When you start with a photo, it also analyzes the image and uses the Generation quality selected in the app."
     },
     "access": {
       "payg": "Pay as you go",
@@ -423,59 +423,59 @@
       "max": "Max"
     },
     "starts": {
-      "eyebrow": "Choose your source",
-      "title": "Two ways to start in Studio",
-      "description": "Use one regular photo for a direct edit, or choose an optional personal AI model when you want repeated photos of the same person.",
+      "eyebrow": "Choose a starting point",
+      "title": "Start with a photo or personal AI model",
+      "description": "Use a photo for a direct edit, or choose an optional personal AI model to create multiple images of the same person.",
       "photo": {
-        "title": "Regular photo",
-        "description": "Choose an uploaded photo or one of your previous creations, then describe the change you want. Auto Mode analyzes the source before generation.",
-        "choice": "Best for one-off edits, transformations, reframing, and creative changes. No personal training is required."
+        "title": "Photo",
+        "description": "Choose a photo you have uploaded or one of your previous creations, then describe the change you want. Auto Mode analyzes the image before generation.",
+        "choice": "Best for one-off edits, transformations, reframing, and creative changes. No personal model needed."
       },
       "personal": {
         "title": "Personal AI model",
-        "description": "Choose a model trained from 10–20 of your selfies, then describe a new scene, outfit, pose, or style. Auto Mode refines the prompt for the trained-person workflow.",
-        "choice": "Best for creating many new photos designed to keep the same person recognizable. Generation quality is handled separately."
+        "description": "Choose a model trained on 10–20 of your selfies, then describe a new scene, outfit, pose, or style. Auto Mode refines your prompt for personal-model generation.",
+        "choice": "Best for creating many new photos while keeping the same person recognizable. Photos made with a personal model have their own workflow and credit price."
       }
     },
     "steps": {
       "eyebrow": "How Studio works",
-      "title": "From a source and prompt to a finished photo",
-      "description": "Studio keeps the workflow simple while preparing the technical instructions behind the scenes.",
+      "title": "Create a photo in three steps",
+      "description": "Choose a starting point, describe the result, then create and review your photo.",
       "source": {
-        "title": "Choose one source",
-        "description": "Select a regular photo, a previous creation, or an optional personal AI model."
+        "title": "Choose a starting point",
+        "description": "Select a photo, a previous creation, or an optional personal AI model."
       },
       "describe": {
         "title": "Describe the result",
-        "description": "Write the change or new scene in your own words. You can also revisit a previous prompt, use a photo as a prompt, or ask for a surprise idea."
+        "description": "Describe the change or new scene in your own words. You can also reuse a previous prompt, turn a photo into a prompt, or ask Studio to surprise you."
       },
       "create": {
-        "title": "Review the cost and create",
-        "description": "For regular photos, use your Generation quality setting. Review the shown credit cost and any plan requirement, then create and download the result."
+        "title": "Create and review",
+        "description": "When you start with a photo, Studio uses the Generation quality selected in the app. Create your photo, review the result, and download it when you are happy with it."
       }
     },
     "autoMode": {
-      "eyebrow": "Automatic prompt preparation",
-      "title": "You do not need to write a perfect prompt",
-      "description": "Every Studio creation uses behind-the-scenes Auto Mode. It turns your request into provider-ready instructions while keeping your chosen source and goal in control.",
+      "eyebrow": "Automatic prompt refinement",
+      "title": "Describe the result in your own words",
+      "description": "Auto Mode turns your request into clear generation instructions based on your starting point and goal.",
       "photo": {
-        "title": "With a regular photo",
-        "description": "Auto Mode analyzes the source, translates non-English instructions when needed, resolves what should change and remain, and selects a supported aspect ratio and file format."
+        "title": "When you start with a photo",
+        "description": "Auto Mode analyzes the image, translates instructions when needed, determines what to change and preserve, and selects a supported aspect ratio and file format."
       },
       "personal": {
-        "title": "With a personal AI model",
-        "description": "Auto Mode translates and refines your request for the trained-person generation path. It does not analyze a separate source photo or apply the regular-photo quality selector."
+        "title": "When you use a personal AI model",
+        "description": "Auto Mode translates and refines your request for personal-model generation. It does not analyze a separate photo, and the Generation quality setting used for photos does not apply."
       },
-      "control": "Auto Mode prepares the request; it does not choose generation quality for you."
+      "control": "Auto Mode refines the request. You still choose the Generation quality used for photo-based creation."
     },
     "quality": {
       "eyebrow": "Generation quality",
-      "title": "Choose quality for Studio with a regular photo",
-      "description": "Your Generation quality setting maps to the corresponding behind-the-scenes engine. Move from faster 1K creation toward higher-quality 2K and 4K generation; higher levels use more credits and may require Pro or Max.",
+      "title": "How Generation quality works with a photo",
+      "description": "When you start with a photo, Studio uses the Generation quality selected in the app. Choose faster 1K generation to save time and credits, or choose 2K or 4K for more detail. Higher levels may require Pro or Max.",
       "creditUnit": "CR / photo",
       "maxResolution": "Up to {resolution}",
       "visual": {
-        "previewLabel": "Preview from the app",
+        "previewLabel": "Preview of the in-app control",
         "title": "Generation quality",
         "creditLabel": "{credits} CR / photo",
         "faster": "Faster",
@@ -484,104 +484,104 @@
       "columns": {
         "access": "Access",
         "bestFor": "Best for",
-        "credits": "Reference credits",
+        "credits": "Credits per photo",
         "resolution": "Maximum resolution"
       },
       "bands": {
         "payg": {
-          "title": "Faster 1K creation",
-          "description": "Everyday Studio edits when speed and lower credit use matter most."
+          "title": "Faster 1K generation",
+          "description": "Quick edits and everyday creations when speed and lower credit use matter most."
         },
         "pro": {
-          "title": "Higher-quality 2K creation",
-          "description": "More detail for polished portraits, profile photos, and demanding edits. Pro includes two 2K quality positions."
+          "title": "Higher-quality 2K generation",
+          "description": "More detail for polished portraits, profile photos, and complex edits. Pro includes two 2K quality options."
         },
         "max": {
-          "title": "Highest-quality 4K creation",
-          "description": "Maximum available resolution for detailed scenes and finished images that benefit from extra clarity."
+          "title": "Highest-quality 4K generation",
+          "description": "The highest available resolution for detailed scenes and final images that benefit from extra clarity."
         }
       },
-      "note": "These are current reference credit costs for regular-photo generation. The app shows the exact cost and any required plan before you create; credits never expire. Personal AI model generation uses its own 1K price."
+      "note": "These reference credit costs apply when you generate from a photo. The Generation quality control in the app shows the cost and plan required for each option. Credits never expire. Personal AI model generation has its own credit price."
     },
     "personal": {
-      "eyebrow": "Optional identity training",
-      "title": "When a personal AI model is useful in Studio",
-      "description": "Train one when you want to create many different photos of the same recognizable person. It is optional; Studio works with a regular photo without personal training.",
+      "eyebrow": "Optional personal AI model",
+      "title": "When to train a personal AI model",
+      "description": "Train a personal AI model when you want to create many different photos of the same person while keeping them recognizable. Training is optional—you can use Studio with a photo instead.",
       "steps": {
         "upload": {
-          "title": "Add 10–20 varied selfies",
-          "description": "Use clear solo photos with different angles, expressions, and lighting. The app checks photo suitability before training."
+          "title": "Add 10–20 selfies",
+          "description": "Use clear solo photos with a few natural angles and expressions, and balanced lighting. The app checks that your photos are suitable before training."
         },
         "train": {
           "title": "Choose Standard or Max training",
-          "description": "Standard training requires Pro. Max training requires Max and uses a longer training process."
+          "description": "Standard training requires Pro. Max training requires Max and takes longer."
         },
         "create": {
           "title": "Use the model in Studio",
-          "description": "Create new 1K photos for the shown personal-model price, designed to help keep the trained person recognizable across prompts."
+          "description": "Create new photos at the listed personal-model credit price. The model helps keep the same person recognizable across different prompts."
         }
       },
       "costs": {
-        "title": "Personal-model reference costs",
+        "title": "Reference costs for a personal model",
         "standard": {
           "title": "Standard training · Pro",
-          "description": "{credits} credits once for each personal AI model."
+          "description": "{credits} credits per personal AI model, charged once."
         },
         "full": {
           "title": "Max training · Max",
-          "description": "{credits} credits once for each personal AI model."
+          "description": "{credits} credits per personal AI model, charged once."
         },
         "photos": {
-          "title": "Photos after training",
-          "description": "{credits} credits per 1K photo created with an existing personal AI model."
+          "title": "Photos with a trained model",
+          "description": "{credits} credits per photo using an existing personal AI model."
         },
-        "note": "The app shows the exact cost before training or creating. Existing personal AI models and unused credits remain available after cancellation."
+        "note": "The app shows the cost before training begins. If you cancel your subscription, your existing personal AI models and unused credits remain available."
       }
     },
     "related": {
-      "eyebrow": "Guided alternatives",
-      "title": "Prefer a ready-made starting point?",
-      "description": "Studio gives you custom-prompt control. Presets and AI Masks provide guided transformations when you want a quicker starting point.",
+      "eyebrow": "Ready-made options",
+      "title": "Want a faster starting point?",
+      "description": "Studio gives you more control with a custom prompt. For a quicker start, try a Preset or AI Mask.",
       "presets": {
         "title": "Presets",
-        "description": "Choose an idea, add one photo, and create a guided transformation without writing a prompt from scratch.",
+        "description": "Choose an idea, add a photo, and create a guided transformation without writing a prompt from scratch.",
         "link": "Browse presets"
       },
       "masks": {
         "title": "AI Masks",
-        "description": "Apply focused looks and transformations to an existing photo, then compare the result with the original.",
+        "description": "Apply a specific look or transformation to an existing photo, then compare it with the original.",
         "link": "Browse AI Masks"
       }
     },
     "faq": {
       "eyebrow": "Quick answers",
-      "title": "Studio questions",
+      "title": "Studio FAQ",
       "writing": {
         "question": "Do I need to write a perfect prompt?",
-        "answer": "No. Describe the result in your own words. Auto Mode interprets and refines the request before generation."
+        "answer": "No. Describe what you want in your own words. Auto Mode interprets your request and refines the prompt before generation."
       },
       "autoMode": {
-        "question": "Does Auto Mode choose generation quality?",
-        "answer": "No. Auto Mode prepares the prompt. For a regular photo, your Generation quality setting maps to the corresponding behind-the-scenes engine."
+        "question": "Does Auto Mode choose my Generation quality?",
+        "answer": "No. Auto Mode refines the prompt. When you start with a photo, Studio uses the Generation quality selected in the app."
       },
       "quality": {
         "question": "Which generation quality should I choose?",
-        "answer": "Start toward Faster when speed and lower credit use matter most. Move toward Higher quality when you need more detail or 2K and 4K resolution."
+        "answer": "Choose Faster when speed and lower credit use matter most. Move toward Higher quality for more detail or 2K and 4K output."
       },
       "personal": {
         "question": "Can I use Studio with a personal AI model?",
-        "answer": "Yes. Choose an existing personal AI model and describe the new photo you want. This uses a separate 1K generation path and personal-model credit price."
+        "answer": "Yes. Choose an existing personal AI model, then describe the new photo you want. Photos made with a personal model have their own workflow and credit price."
       },
       "required": {
-        "question": "Is personal AI model training required?",
-        "answer": "No. Studio works with a regular photo without personal training. Train a model only when repeated photos of the same person are useful for your goal."
+        "question": "Do I need to train a personal AI model?",
+        "answer": "No. You can use Studio with a photo. Train a personal model only when you want to create multiple photos of the same person."
       }
     },
     "cta": {
-      "title": "Describe the photo you want",
-      "description": "Open Studio, choose one source, and write the result in your own words. Review the shown credit cost before creating.",
+      "title": "Create the photo you have in mind",
+      "description": "Open Studio, choose a starting point, and describe what you want to create.",
       "primary": "Open Studio on the web",
-      "secondary": "See pricing"
+      "secondary": "View pricing"
     }
   }
 }

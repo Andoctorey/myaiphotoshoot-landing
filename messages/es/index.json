@@ -404,18 +404,18 @@
   "studio": {
     "meta": {
       "title": "Studio de fotos con IA y prompts",
-      "description": "Crea y edita fotos con IA en Studio con una foto o modelo personal, prompts personalizados, ajuste automático de prompts y opciones claras de calidad.",
-      "shareTitle": "Crea y edita fotos en el Studio de IA",
-      "shareDescription": "Empieza con una foto o un modelo personal opcional, describe el resultado y deja que Auto Mode prepare el prompt para la generación.",
-      "imageAlt": "Ejemplos de My AI Photo Shoot creados con presets, AI Masks y Studio"
+      "description": "Crea y edita fotos con IA en Studio a partir de una foto o un modelo personal. Escribe un prompt, deja que Auto Mode lo mejore y elige la calidad.",
+      "shareTitle": "Crea y edita fotos con IA en Studio",
+      "shareDescription": "Empieza con una foto o un modelo personal opcional, describe lo que buscas y deja que Auto Mode mejore el prompt.",
+      "imageAlt": "Ejemplos de fotos de My AI Photo Shoot creados con presets, AI Masks y Studio"
     },
     "breadcrumb": "Studio",
     "eyebrow": "Creación personalizada de fotos con IA",
     "heading": "Crea y edita fotos con IA en Studio",
-    "description": "Empieza con una foto normal o un modelo personal de IA opcional, describe el resultado que quieres y créalo sin elegir un modelo técnico por su nombre.",
+    "description": "Empieza con una foto o un modelo personal de IA opcional y describe lo que buscas. Usa Studio para editar la imagen original o crear una nueva.",
     "directAnswer": {
-      "title": "Tú describes el resultado. Studio se ocupa de la configuración técnica.",
-      "description": "Cada solicitud de Studio utiliza Auto Mode en segundo plano para interpretar y perfeccionar tu prompt. Con una foto normal, también analiza el origen y usa la calidad de generación que hayas elegido."
+      "title": "Describe lo que buscas. Auto Mode mejora el prompt.",
+      "description": "Auto Mode interpreta y mejora cada solicitud de Studio. Cuando empiezas con una foto, también analiza la imagen y usa la Calidad de generación elegida en la app."
     },
     "access": {
       "payg": "Pago por uso",
@@ -423,125 +423,125 @@
       "max": "Max"
     },
     "starts": {
-      "eyebrow": "Elige el origen",
-      "title": "Dos formas de empezar en Studio",
-      "description": "Usa una foto normal para una edición directa o elige un modelo personal de IA opcional cuando quieras crear varias fotos de la misma persona.",
+      "eyebrow": "Elige un punto de partida",
+      "title": "Empieza con una foto o un modelo personal de IA",
+      "description": "Usa una foto para editarla directamente o elige un modelo personal de IA opcional para crear varias imágenes de la misma persona.",
       "photo": {
-        "title": "Foto normal",
-        "description": "Elige una foto que hayas subido o una de tus creaciones anteriores y describe el cambio que quieres. Auto Mode analiza el origen antes de la generación.",
-        "choice": "Ideal para ediciones puntuales, transformaciones, reencuadres y cambios creativos. No requiere entrenamiento personal."
+        "title": "Foto",
+        "description": "Elige una foto que hayas subido o una de tus creaciones anteriores y describe el cambio que quieres. Auto Mode analiza la imagen antes de generar el resultado.",
+        "choice": "Ideal para ediciones puntuales, transformaciones, reencuadres y cambios creativos. No necesitas un modelo personal."
       },
       "personal": {
         "title": "Modelo personal de IA",
-        "description": "Elige un modelo entrenado con entre 10 y 20 selfies tuyas y describe una nueva escena, vestuario, pose o estilo. Auto Mode perfecciona el prompt para el flujo de la persona entrenada.",
-        "choice": "Ideal para crear muchas fotos nuevas pensadas para mantener reconocible a la misma persona. La calidad de generación se gestiona por separado."
+        "description": "Elige un modelo entrenado con entre 10 y 20 selfies tuyas y describe una nueva escena, vestuario, pose o estilo. Auto Mode mejora el prompt para generar con el modelo personal.",
+        "choice": "Ideal para crear muchas fotos nuevas manteniendo reconocible a la misma persona. Las fotos creadas con un modelo personal tienen su propio proceso y precio en créditos."
       }
     },
     "steps": {
       "eyebrow": "Cómo funciona Studio",
-      "title": "Del origen y el prompt a una foto terminada",
-      "description": "Studio mantiene un flujo sencillo mientras prepara las instrucciones técnicas en segundo plano.",
+      "title": "Crea una foto en tres pasos",
+      "description": "Elige un punto de partida, describe el resultado y, después, crea y revisa la foto.",
       "source": {
-        "title": "Elige un origen",
-        "description": "Selecciona una foto normal, una creación anterior o un modelo personal de IA opcional."
+        "title": "Elige un punto de partida",
+        "description": "Selecciona una foto, una creación anterior o un modelo personal de IA opcional."
       },
       "describe": {
         "title": "Describe el resultado",
-        "description": "Escribe con tus palabras el cambio o la nueva escena. También puedes reutilizar un prompt anterior, usar una foto como prompt o pedir una idea sorpresa."
+        "description": "Describe con tus palabras el cambio o la nueva escena. También puedes reutilizar un prompt anterior, convertir una foto en un prompt o pedirle a Studio que te sorprenda."
       },
       "create": {
-        "title": "Revisa el coste y crea",
-        "description": "Para fotos normales, usa tu ajuste de Calidad de generación. Revisa el coste en créditos y cualquier requisito de plan que se muestre; después crea y descarga el resultado."
+        "title": "Crea y revisa el resultado",
+        "description": "Cuando empiezas con una foto, Studio usa la Calidad de generación elegida en la app. Crea la foto, revisa el resultado y descárgala cuando estés satisfecho."
       }
     },
     "autoMode": {
-      "eyebrow": "Preparación automática del prompt",
-      "title": "No necesitas escribir un prompt perfecto",
-      "description": "Todas las creaciones de Studio usan Auto Mode en segundo plano. Convierte tu solicitud en instrucciones listas para el proveedor, respetando el origen y el objetivo que hayas elegido.",
+      "eyebrow": "Mejora automática del prompt",
+      "title": "Describe el resultado con tus palabras",
+      "description": "Auto Mode convierte tu solicitud en instrucciones claras de generación basadas en el punto de partida y el objetivo que hayas elegido.",
       "photo": {
-        "title": "Con una foto normal",
-        "description": "Auto Mode analiza el origen, traduce las instrucciones que no estén en inglés cuando hace falta, resuelve qué debe cambiar y qué debe mantenerse, y elige una relación de aspecto y un formato de archivo compatibles."
+        "title": "Cuando empiezas con una foto",
+        "description": "Auto Mode analiza la imagen, traduce las instrucciones cuando hace falta, decide qué debe cambiar y qué debe mantenerse, y elige una relación de aspecto y un formato de archivo compatibles."
       },
       "personal": {
-        "title": "Con un modelo personal de IA",
-        "description": "Auto Mode traduce y perfecciona tu solicitud para el flujo de generación de la persona entrenada. No analiza otra foto de origen ni aplica el selector de calidad de las fotos normales."
+        "title": "Cuando usas un modelo personal de IA",
+        "description": "Auto Mode traduce y mejora tu solicitud para generar con un modelo personal. No analiza otra foto y el ajuste de Calidad de generación utilizado con fotos no se aplica."
       },
-      "control": "Auto Mode prepara la solicitud; no elige la calidad de generación por ti."
+      "control": "Auto Mode mejora la solicitud. Tú sigues eligiendo la Calidad de generación utilizada con fotos."
     },
     "quality": {
       "eyebrow": "Calidad de generación",
-      "title": "Elige la calidad de Studio para una foto normal",
-      "description": "Tu ajuste de Calidad de generación corresponde al motor adecuado en segundo plano. Pasa de una creación más rápida en 1K a una generación de mayor calidad en 2K y 4K; los niveles superiores usan más créditos y pueden requerir Pro o Max.",
+      "title": "Cómo funciona la Calidad de generación con una foto",
+      "description": "Cuando empiezas con una foto, Studio usa la Calidad de generación elegida en la app. Elige 1K para ahorrar tiempo y créditos, o 2K o 4K para obtener más detalle. Los niveles superiores pueden requerir Pro o Max.",
       "creditUnit": "CR / foto",
       "maxResolution": "Hasta {resolution}",
       "visual": {
-        "previewLabel": "Vista previa de la app",
+        "previewLabel": "Vista previa del control de la app",
         "title": "Calidad de generación",
         "creditLabel": "{credits} CR / foto",
-        "faster": "Más rápida",
+        "faster": "Más rápido",
         "higherQuality": "Mayor calidad"
       },
       "columns": {
         "access": "Acceso",
         "bestFor": "Ideal para",
-        "credits": "Créditos orientativos",
+        "credits": "Créditos por foto",
         "resolution": "Resolución máxima"
       },
       "bands": {
         "payg": {
-          "title": "Creación más rápida en 1K",
-          "description": "Ediciones cotidianas en Studio cuando la velocidad y un menor uso de créditos son lo más importante."
+          "title": "Generación 1K más rápida",
+          "description": "Ediciones rápidas y creaciones cotidianas cuando la velocidad y un menor uso de créditos son lo más importante."
         },
         "pro": {
-          "title": "Creación de mayor calidad en 2K",
-          "description": "Más detalle para retratos cuidados, fotos de perfil y ediciones exigentes. Pro incluye dos posiciones de calidad en 2K."
+          "title": "Generación 2K de mayor calidad",
+          "description": "Más detalle para retratos cuidados, fotos de perfil y ediciones complejas. Pro incluye dos opciones de calidad en 2K."
         },
         "max": {
-          "title": "Creación de máxima calidad en 4K",
+          "title": "Generación 4K de máxima calidad",
           "description": "La máxima resolución disponible para escenas detalladas e imágenes finales que se benefician de una nitidez adicional."
         }
       },
-      "note": "Estos son los costes orientativos actuales en créditos para generar con fotos normales. La app muestra el coste exacto y cualquier plan requerido antes de crear; los créditos nunca caducan. La generación con un modelo personal de IA tiene su propio precio en 1K."
+      "note": "Estos costes orientativos en créditos se aplican al generar desde una foto. El control Calidad de generación de la app muestra el coste y el plan requerido para cada opción. Los créditos nunca caducan. Los modelos personales de IA tienen su propio precio en créditos."
     },
     "personal": {
-      "eyebrow": "Entrenamiento de identidad opcional",
-      "title": "Cuándo resulta útil un modelo personal de IA en Studio",
-      "description": "Entrena uno cuando quieras crear muchas fotos distintas de la misma persona reconocible. Es opcional: Studio funciona con una foto normal sin entrenamiento personal.",
+      "eyebrow": "Modelo personal de IA opcional",
+      "title": "Cuándo entrenar un modelo personal de IA",
+      "description": "Entrena un modelo personal de IA cuando quieras crear muchas fotos distintas de la misma persona manteniendo sus rasgos reconocibles. El entrenamiento es opcional: también puedes usar Studio con una foto.",
       "steps": {
         "upload": {
-          "title": "Añade entre 10 y 20 selfies variadas",
-          "description": "Usa fotos nítidas en las que aparezcas a solas, con distintos ángulos, expresiones e iluminación. La app comprueba si son adecuadas antes del entrenamiento."
+          "title": "Añade entre 10 y 20 selfies",
+          "description": "Usa fotos nítidas en las que aparezcas a solas, con algunos ángulos y expresiones naturales y una iluminación equilibrada. La app comprueba si son adecuadas antes del entrenamiento."
         },
         "train": {
-          "title": "Elige entrenamiento Standard o Max",
-          "description": "El entrenamiento Standard requiere Pro. El entrenamiento Max requiere Max y utiliza un proceso más largo."
+          "title": "Elige entrenamiento Estándar o Máx.",
+          "description": "El entrenamiento Estándar requiere Pro. El entrenamiento Máx. requiere Max y tarda más."
         },
         "create": {
           "title": "Usa el modelo en Studio",
-          "description": "Crea nuevas fotos en 1K por el precio mostrado para el modelo personal, pensadas para ayudar a mantener reconocible a la persona entrenada entre distintos prompts."
+          "description": "Crea nuevas fotos por el precio en créditos indicado para el modelo personal. El modelo ayuda a mantener reconocible a la misma persona entre distintos prompts."
         }
       },
       "costs": {
-        "title": "Costes orientativos del modelo personal",
+        "title": "Costes orientativos de un modelo personal",
         "standard": {
-          "title": "Entrenamiento Standard · Pro",
-          "description": "{credits} créditos una sola vez por cada modelo personal de IA."
+          "title": "Entrenamiento Estándar · Pro",
+          "description": "{credits} créditos por cada modelo personal de IA, en un único pago."
         },
         "full": {
-          "title": "Entrenamiento Max · Max",
-          "description": "{credits} créditos una sola vez por cada modelo personal de IA."
+          "title": "Entrenamiento Máx. · Max",
+          "description": "{credits} créditos por cada modelo personal de IA, en un único pago."
         },
         "photos": {
-          "title": "Fotos después del entrenamiento",
-          "description": "{credits} créditos por cada foto en 1K creada con un modelo personal de IA existente."
+          "title": "Fotos con un modelo entrenado",
+          "description": "{credits} créditos por cada foto creada con un modelo personal de IA existente."
         },
-        "note": "La app muestra el coste exacto antes de entrenar o crear. Los modelos personales de IA existentes y los créditos sin usar siguen disponibles después de cancelar."
+        "note": "La app muestra el coste antes de empezar el entrenamiento. Si cancelas la suscripción, tus modelos personales de IA y créditos sin usar siguen disponibles."
       }
     },
     "related": {
-      "eyebrow": "Alternativas guiadas",
-      "title": "¿Prefieres un punto de partida listo para usar?",
-      "description": "Studio te da el control mediante prompts personalizados. Los presets y las AI Masks ofrecen transformaciones guiadas cuando quieres empezar más rápido.",
+      "eyebrow": "Opciones listas para usar",
+      "title": "¿Quieres empezar más rápido?",
+      "description": "Studio te da más control mediante un prompt personalizado. Para empezar más rápido, prueba un preset o una AI Mask.",
       "presets": {
         "title": "Presets",
         "description": "Elige una idea, añade una foto y crea una transformación guiada sin escribir un prompt desde cero.",
@@ -549,37 +549,37 @@
       },
       "masks": {
         "title": "AI Masks",
-        "description": "Aplica estilos y transformaciones concretos a una foto existente y compara el resultado con el original.",
+        "description": "Aplica un estilo o una transformación concreta a una foto existente y compárala con el original.",
         "link": "Ver AI Masks"
       }
     },
     "faq": {
       "eyebrow": "Respuestas rápidas",
-      "title": "Preguntas sobre Studio",
+      "title": "Preguntas frecuentes sobre Studio",
       "writing": {
         "question": "¿Necesito escribir un prompt perfecto?",
-        "answer": "No. Describe el resultado con tus palabras. Auto Mode interpreta y perfecciona la solicitud antes de la generación."
+        "answer": "No. Describe lo que buscas con tus palabras. Auto Mode interpreta la solicitud y mejora el prompt antes de generar la imagen."
       },
       "autoMode": {
-        "question": "¿Auto Mode elige la calidad de generación?",
-        "answer": "No. Auto Mode prepara el prompt. Para una foto normal, tu ajuste de Calidad de generación corresponde al motor adecuado en segundo plano."
+        "question": "¿Auto Mode elige mi Calidad de generación?",
+        "answer": "No. Auto Mode mejora el prompt. Cuando empiezas con una foto, Studio usa la Calidad de generación elegida en la app."
       },
       "quality": {
         "question": "¿Qué calidad de generación debo elegir?",
-        "answer": "Empieza cerca de Más rápida si lo más importante es la velocidad y usar menos créditos. Avanza hacia Mayor calidad si necesitas más detalle o una resolución de 2K y 4K."
+        "answer": "Elige «Más rápido» si priorizas la velocidad y un menor uso de créditos. Avanza hacia «Mayor calidad» si necesitas más detalle o una salida en 2K o 4K."
       },
       "personal": {
         "question": "¿Puedo usar Studio con un modelo personal de IA?",
-        "answer": "Sí. Elige un modelo personal de IA existente y describe la nueva foto que quieres. Esto utiliza un flujo de generación en 1K y un precio en créditos propios del modelo personal."
+        "answer": "Sí. Elige un modelo personal de IA existente y describe la nueva foto que quieres. Las fotos creadas con un modelo personal tienen su propio proceso y precio en créditos."
       },
       "required": {
-        "question": "¿Es obligatorio entrenar un modelo personal de IA?",
-        "answer": "No. Studio funciona con una foto normal sin entrenamiento personal. Entrena un modelo solo cuando te resulte útil repetir fotos de la misma persona."
+        "question": "¿Necesito entrenar un modelo personal de IA?",
+        "answer": "No. Puedes usar Studio con una foto. Entrena un modelo personal solo cuando quieras crear varias fotos de la misma persona."
       }
     },
     "cta": {
-      "title": "Describe la foto que quieres",
-      "description": "Abre Studio, elige un origen y escribe el resultado con tus palabras. Revisa el coste en créditos que se muestra antes de crear.",
+      "title": "Crea la foto que tienes en mente",
+      "description": "Abre Studio, elige un punto de partida y describe lo que quieres crear.",
       "primary": "Abrir Studio en la web",
       "secondary": "Ver precios"
     }

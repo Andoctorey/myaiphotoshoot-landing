@@ -453,6 +453,37 @@ test('Studio explains Auto Mode and quality without reviving a provider picker o
   assert.doesNotMatch(studioSource, /'@type': '(?:Service|ItemList|FAQPage)'/);
 });
 
+test('Studio copy stays user-facing and avoids unsupported personal-model promises', async () => {
+  const staleInternalPhrases = [
+    /technical model by name/i,
+    /技术模型名称/,
+    /तकनीकी मॉडल का नाम/,
+    /modelo técnico por su nombre/i,
+    /technischen Modellnamen/i,
+    /技術的なモデル名/,
+    /технической модели по названию/i,
+    /nom de modèle technique/i,
+    /اسم نموذج تقني/,
+  ];
+
+  for (const locale of localeCodes) {
+    const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    const studioPaths = leafPaths(messages.studio);
+    const studioText = studioPaths.map((path) => valueAtPath(messages.studio, path)).join('\n');
+
+    for (const phrase of staleInternalPhrases) {
+      assert.doesNotMatch(studioText, phrase, `${locale} Studio copy contains internal model-picker language`);
+    }
+
+    for (const path of studioPaths) {
+      const value = valueAtPath(messages.studio, path);
+      if (/1K/.test(value)) {
+        assert.match(path, /^quality\./, `${locale}.studio.${path} makes an unsupported personal-model 1K claim`);
+      }
+    }
+  }
+});
+
 test('retired Models URLs redirect directly to localized Studio canonicals', async () => {
   const [redirects, sitemapSource] = await Promise.all([
     readProjectFile('public/_redirects'),

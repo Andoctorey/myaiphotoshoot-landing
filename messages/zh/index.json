@@ -404,18 +404,18 @@
   "studio": {
     "meta": {
       "title": "支持自定义提示词的 AI 照片 Studio",
-      "description": "在 Studio 中使用素材照片或个人 AI 模型、自定义提示词、自动提示词优化和清晰的质量选项，创建和编辑 AI 照片。",
-      "shareTitle": "在 AI Studio 中创建和编辑照片",
-      "shareDescription": "从照片或可选的个人 AI 模型开始，描述想要的效果，让 Auto Mode 为生成准备提示词。",
-      "imageAlt": "使用预设、AI Masks 和 Studio 创建的 My AI Photo Shoot 示例"
+      "description": "在 Studio 中使用照片或个人 AI 模型创建和编辑 AI 照片。写下自定义提示词，让 Auto Mode 帮你优化，再选择生成质量。",
+      "shareTitle": "使用 Studio 创建和编辑 AI 照片",
+      "shareDescription": "从照片或可选的个人 AI 模型开始，描述想要的效果，Auto Mode 会帮你优化提示词。",
+      "imageAlt": "使用预设、AI Masks 和 Studio 创建的 My AI Photo Shoot 照片示例"
     },
     "breadcrumb": "Studio",
     "eyebrow": "自定义 AI 照片创作",
     "heading": "使用 Studio 创建和编辑 AI 照片",
-    "description": "从普通照片或可选的个人 AI 模型开始，描述想要的效果，无需按名称选择技术模型即可进行创作。",
+    "description": "从照片或可选的个人 AI 模型开始，描述你想要的效果。使用 Studio 编辑原图或创建新图片。",
     "directAnswer": {
-      "title": "你只需描述效果，Studio 会处理技术设置。",
-      "description": "每个 Studio 请求都会在后台使用 Auto Mode 来理解并优化提示词。使用普通照片时，它还会分析素材，并采用你选择的生成质量。"
+      "title": "描述想要的效果，Auto Mode 会帮你优化提示词。",
+      "description": "Auto Mode 会理解并优化每个 Studio 请求。从照片开始时，它还会分析图片，并采用你在应用中选择的生成质量。"
     },
     "access": {
       "payg": "按量付费",
@@ -423,133 +423,133 @@
       "max": "Max"
     },
     "starts": {
-      "eyebrow": "选择素材",
-      "title": "在 Studio 中开始创作的两种方式",
-      "description": "使用一张普通照片进行直接编辑；如果想多次创建同一个人的照片，也可以选择可选的个人 AI 模型。",
+      "eyebrow": "选择创作起点",
+      "title": "从照片或个人 AI 模型开始",
+      "description": "使用照片进行直接编辑；如果想为同一个人创建多张图片，也可以选择可选的个人 AI 模型。",
       "photo": {
-        "title": "普通照片",
-        "description": "选择已上传的照片或之前的作品，然后描述想要的更改。Auto Mode 会在生成前分析素材。",
-        "choice": "最适合一次性编辑、变换、重新构图和创意修改，无需个人训练。"
+        "title": "照片",
+        "description": "选择你上传的照片或之前的作品，然后描述想要的更改。Auto Mode 会在生成前分析图片。",
+        "choice": "最适合一次性编辑、变换、重新构图和创意修改，无需个人模型。"
       },
       "personal": {
         "title": "个人 AI 模型",
-        "description": "选择用你的 10–20 张自拍训练的模型，然后描述新场景、服装、姿势或风格。Auto Mode 会针对已训练人物的流程优化提示词。",
-        "choice": "最适合创建许多新照片，并尽量让同一个人保持可识别。生成质量会单独处理。"
+        "description": "选择一个用你的 10–20 张自拍训练的模型，再描述新的场景、服装、姿势或风格。Auto Mode 会针对个人模型生成优化提示词。",
+        "choice": "适合创建大量同一人物的新照片，并尽量保持人物易于辨认。使用个人模型创建照片时，采用单独的流程和积分价格。"
       }
     },
     "steps": {
       "eyebrow": "Studio 的工作方式",
-      "title": "从素材和提示词到成品照片",
-      "description": "Studio 保持流程简单，同时在后台准备技术指令。",
+      "title": "三步创建照片",
+      "description": "选择创作起点，描述想要的效果，然后创建并查看照片。",
       "source": {
-        "title": "选择一种素材",
-        "description": "选择普通照片、之前的作品或可选的个人 AI 模型。"
+        "title": "选择创作起点",
+        "description": "选择照片、之前的作品或可选的个人 AI 模型。"
       },
       "describe": {
         "title": "描述想要的效果",
-        "description": "用自己的话写出更改或新场景。你也可以重新使用之前的提示词、将照片用作提示词，或获取一个惊喜创意。"
+        "description": "用自己的话描述更改或新场景。你也可以沿用之前的提示词、让系统根据照片生成提示词，或让 Studio 给你一个惊喜创意。"
       },
       "create": {
-        "title": "查看费用并创建",
-        "description": "使用普通照片时，请使用“生成质量”设置。查看显示的积分费用和任何套餐要求，然后创建并下载结果。"
+        "title": "创建并查看结果",
+        "description": "从照片开始时，Studio 会采用你在应用中选择的生成质量。创建照片、查看效果，并在满意后下载。"
       }
     },
     "autoMode": {
-      "eyebrow": "自动准备提示词",
-      "title": "无需写出完美的提示词",
-      "description": "每次 Studio 创作都会在后台使用 Auto Mode。它会把你的请求转化为可直接用于生成服务的指令，同时以你选择的素材和目标为准。",
+      "eyebrow": "自动优化提示词",
+      "title": "用自己的话描述想要的效果",
+      "description": "Auto Mode 会根据你选择的创作起点和目标，将请求整理成清晰的生成指令。",
       "photo": {
-        "title": "使用普通照片",
-        "description": "Auto Mode 会分析素材，按需翻译非英语指令，判断哪些内容应更改或保留，并选择支持的宽高比和文件格式。"
+        "title": "从照片开始",
+        "description": "Auto Mode 会分析图片，按需翻译指令，判断哪些内容应更改或保留，并选择支持的宽高比和文件格式。"
       },
       "personal": {
-        "title": "使用个人 AI 模型",
-        "description": "Auto Mode 会针对已训练人物的生成流程翻译并优化你的请求。它不会分析另一张素材照片，也不会使用普通照片的质量选择器。"
+        "title": "使用个人 AI 模型时",
+        "description": "Auto Mode 会针对个人模型生成翻译并优化你的请求。它不会分析另一张照片，而且用于照片创作的“生成质量”设置不适用。"
       },
-      "control": "Auto Mode 负责准备请求，不会替你选择生成质量。"
+      "control": "Auto Mode 会优化请求；使用照片创作时，生成质量仍由你选择。"
     },
     "quality": {
       "eyebrow": "生成质量",
-      "title": "为 Studio 中的普通照片选择质量",
-      "description": "“生成质量”设置会对应后台的相应引擎。可从更快的 1K 创建逐步提升到更高质量的 2K 和 4K 生成；较高级别会使用更多积分，并可能需要 Pro 或 Max。",
+      "title": "使用照片时，生成质量如何发挥作用",
+      "description": "从照片开始时，Studio 会采用你在应用中选择的“生成质量”。选择更快的 1K 可以节省时间和积分；选择 2K 或 4K 可以获得更多细节。更高等级可能需要 Pro 或 Max。",
       "creditUnit": "CR / 张",
       "maxResolution": "最高 {resolution}",
       "visual": {
-        "previewLabel": "应用内预览",
+        "previewLabel": "应用内控件预览",
         "title": "生成质量",
         "creditLabel": "{credits} CR / 张",
         "faster": "更快",
         "higherQuality": "更高质量"
       },
       "columns": {
-        "access": "访问级别",
+        "access": "使用权限",
         "bestFor": "最适合",
-        "credits": "参考积分",
+        "credits": "每张所需积分",
         "resolution": "最高分辨率"
       },
       "bands": {
         "payg": {
-          "title": "更快的 1K 创建",
-          "description": "适合日常 Studio 编辑，尤其是在速度和较低积分消耗最重要时。"
+          "title": "更快的 1K 生成",
+          "description": "适合快速编辑和日常创作，尤其是在速度和较低积分消耗最重要时。"
         },
         "pro": {
-          "title": "更高质量的 2K 创建",
-          "description": "为精致人像、头像和要求更高的编辑提供更多细节。Pro 包含两个 2K 质量档位。"
+          "title": "更高质量的 2K 生成",
+          "description": "为精致人像、头像和复杂编辑提供更多细节。Pro 包含两个 2K 质量选项。"
         },
         "max": {
-          "title": "最高质量的 4K 创建",
-          "description": "提供当前最高分辨率，适合需要额外清晰度的细节场景和成品图片。"
+          "title": "最高质量的 4K 生成",
+          "description": "提供最高可用分辨率，适合需要额外清晰度的细节场景和最终图片。"
         }
       },
-      "note": "以上是使用普通照片生成时的当前参考积分费用。创建前，应用会显示确切费用和所需套餐；积分永不过期。使用个人 AI 模型生成时采用单独的 1K 价格。"
+      "note": "以下参考积分适用于从照片生成。应用中的“生成质量”控件会显示每个选项的积分和套餐要求。积分永不过期。个人 AI 模型生成采用单独的积分价格。"
     },
     "personal": {
-      "eyebrow": "可选的身份训练",
-      "title": "个人 AI 模型在 Studio 中适用的场景",
-      "description": "当你想创建许多同一个可识别人物的不同照片时，可以训练个人 AI 模型。这是可选功能；使用普通照片时，Studio 无需个人训练即可工作。",
+      "eyebrow": "可选的个人 AI 模型",
+      "title": "什么时候适合训练个人 AI 模型",
+      "description": "如果你想为同一个人创建许多不同照片，并尽量保持人物易于辨认，可以训练个人 AI 模型。训练是可选的，你也可以直接使用照片进行创作。",
       "steps": {
         "upload": {
-          "title": "添加 10–20 张不同的自拍",
-          "description": "使用角度、表情和光线各不相同的清晰单人照片。应用会在训练前检查照片是否合适。"
+          "title": "添加 10–20 张自拍",
+          "description": "使用清晰的单人照片，包含几个自然角度和表情，并保持光线均匀。应用会在训练前检查照片是否合适。"
         },
         "train": {
-          "title": "选择 Standard 或 Max 训练",
-          "description": "Standard 训练需要 Pro。Max 训练需要 Max，并采用更长的训练流程。"
+          "title": "选择标准或最高版训练",
+          "description": "标准训练需要 Pro。最高版训练需要 Max，并且耗时更长。"
         },
         "create": {
           "title": "在 Studio 中使用模型",
-          "description": "按显示的个人模型价格创建新的 1K 照片，帮助已训练的人物在不同提示词中保持可识别。"
+          "description": "按列出的个人模型积分价格创建新照片。模型有助于在不同提示词中保持同一个人易于辨认。"
         }
       },
       "costs": {
         "title": "个人模型参考费用",
         "standard": {
-          "title": "Standard 训练 · Pro",
-          "description": "每个个人 AI 模型一次性消耗 {credits} 积分。"
+          "title": "标准训练 · Pro",
+          "description": "每个个人 AI 模型一次性收取 {credits} 积分。"
         },
         "full": {
-          "title": "Max 训练 · Max",
-          "description": "每个个人 AI 模型一次性消耗 {credits} 积分。"
+          "title": "最高版训练 · Max",
+          "description": "每个个人 AI 模型一次性收取 {credits} 积分。"
         },
         "photos": {
-          "title": "训练后的照片",
-          "description": "使用已有个人 AI 模型创建的每张 1K 照片消耗 {credits} 积分。"
+          "title": "使用已训练模型的照片",
+          "description": "使用已有个人 AI 模型创建照片时，每张消耗 {credits} 积分。"
         },
-        "note": "训练或创建前，应用会显示确切费用。取消订阅后，已有个人 AI 模型和未使用的积分仍可继续使用。"
+        "note": "开始训练前，应用会显示费用。取消订阅后，已有个人 AI 模型和未使用的积分仍可继续使用。"
       }
     },
     "related": {
-      "eyebrow": "引导式替代方案",
-      "title": "更喜欢现成的创作起点？",
-      "description": "Studio 让你通过自定义提示词掌控效果。如果想更快开始，预设和 AI Masks 可以提供引导式变换。",
+      "eyebrow": "现成的创作选项",
+      "title": "想更快开始创作？",
+      "description": "Studio 让你通过自定义提示词掌控更多细节。如果想更快开始，可以试试预设或 AI Mask。",
       "presets": {
         "title": "预设",
-        "description": "选择一个创意，添加一张照片，即可完成引导式变换，无需从头编写提示词。",
+        "description": "选择一个创意，添加照片，即可完成引导式变换，无需从头编写提示词。",
         "link": "浏览预设"
       },
       "masks": {
         "title": "AI Masks",
-        "description": "将特定风格和变换应用于现有照片，然后把结果与原图进行比较。",
+        "description": "将特定风格或变换应用于现有照片，然后与原图进行比较。",
         "link": "浏览 AI Masks"
       }
     },
@@ -558,30 +558,30 @@
       "title": "Studio 常见问题",
       "writing": {
         "question": "我需要写出完美的提示词吗？",
-        "answer": "不需要。用自己的话描述想要的效果，Auto Mode 会在生成前理解并优化请求。"
+        "answer": "不需要。用自己的话描述想要的效果，Auto Mode 会在生成前理解你的请求并优化提示词。"
       },
       "autoMode": {
-        "question": "Auto Mode 会选择生成质量吗？",
-        "answer": "不会。Auto Mode 负责准备提示词。使用普通照片时，你的“生成质量”设置会对应后台的相应引擎。"
+        "question": "Auto Mode 会替我选择生成质量吗？",
+        "answer": "不会。Auto Mode 会优化提示词。从照片开始时，Studio 会采用你在应用中选择的生成质量。"
       },
       "quality": {
         "question": "我应该选择哪种生成质量？",
-        "answer": "如果速度和较低积分消耗最重要，请从偏向“更快”的档位开始；如果需要更多细节或 2K、4K 分辨率，请向“更高质量”移动。"
+        "answer": "如果更看重速度和较低的积分消耗，请选择“更快”；如果需要更多细节或 2K、4K 输出，请向“更高质量”调整。"
       },
       "personal": {
         "question": "我可以在 Studio 中使用个人 AI 模型吗？",
-        "answer": "可以。选择已有的个人 AI 模型，然后描述想要的新照片。这会使用单独的 1K 生成流程和个人模型积分价格。"
+        "answer": "可以。选择已有的个人 AI 模型，然后描述想要的新照片。使用个人模型创建照片时，采用单独的流程和积分价格。"
       },
       "required": {
-        "question": "个人 AI 模型训练是必需的吗？",
-        "answer": "不是。使用普通照片时，Studio 无需个人训练即可工作。只有当多次创建同一个人的照片有助于实现目标时，才需要训练模型。"
+        "question": "我需要训练个人 AI 模型吗？",
+        "answer": "不需要。你可以直接使用照片在 Studio 中创作。只有当你想为同一个人创建多张照片时，才需要训练个人模型。"
       }
     },
     "cta": {
-      "title": "描述你想要的照片",
-      "description": "打开 Studio，选择一种素材，用自己的话写出想要的效果。创建前请查看显示的积分费用。",
-      "primary": "在网页端打开 Studio",
-      "secondary": "查看价格"
+      "title": "创建你心中想要的照片",
+      "description": "打开 Studio，选择创作起点，然后描述你想创建的内容。",
+      "primary": "在网页中打开 Studio",
+      "secondary": "查看定价"
     }
   }
 }
