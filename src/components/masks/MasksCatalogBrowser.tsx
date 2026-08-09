@@ -53,7 +53,7 @@ function interpolate(label: string, key: string, value: string | number): string
 }
 
 export default function MasksCatalogBrowser({ catalog, labels, locale }: Props) {
-  const [gender, setGender] = useState<PreviewGender>('male');
+  const [gender, setGender] = useState<PreviewGender>('female');
   const visibleCategories = useMemo(() => {
     const filtered = catalog.categories.filter((category) => (
       category.audienceGender === 'unisex' || category.audienceGender === gender
