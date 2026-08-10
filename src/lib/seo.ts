@@ -1,4 +1,32 @@
 export const BASE_URL = 'https://myaiphotoshoot.com';
+const META_DESCRIPTION_MAX_LENGTH = 160;
+const META_DESCRIPTION_MIN_BOUNDARY = 120;
+
+export function buildMetaDescription(value: unknown, fallback: string): string {
+  const source = typeof value === 'string' && value.trim() ? value : fallback;
+  const normalized = source.replace(/\s+/g, ' ').trim();
+  const characters = Array.from(normalized);
+  if (characters.length <= META_DESCRIPTION_MAX_LENGTH) return normalized;
+
+  const candidate = characters.slice(0, META_DESCRIPTION_MAX_LENGTH - 1).join('').trimEnd();
+  const sentenceBoundary = Math.max(
+    candidate.lastIndexOf('.'),
+    candidate.lastIndexOf('!'),
+    candidate.lastIndexOf('?'),
+    candidate.lastIndexOf('。'),
+    candidate.lastIndexOf('！'),
+    candidate.lastIndexOf('？'),
+  );
+  if (sentenceBoundary >= META_DESCRIPTION_MIN_BOUNDARY) {
+    return candidate.slice(0, sentenceBoundary + 1).trimEnd();
+  }
+
+  const wordBoundary = candidate.lastIndexOf(' ');
+  const concise = wordBoundary >= META_DESCRIPTION_MIN_BOUNDARY
+    ? candidate.slice(0, wordBoundary)
+    : candidate;
+  return `${concise.trimEnd()}…`;
+}
 
 /** Returns a locale-aware path for a given route path.
  * - path must start with '/'

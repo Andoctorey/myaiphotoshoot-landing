@@ -27,11 +27,11 @@ async function loadTypeScriptModule(relativePath, dependencies = {}) {
     },
     fileName: path.basename(relativePath),
   }).outputText;
-  const module = { exports: {} };
+  const loadedModule = { exports: {} };
   const evaluate = new Function('exports', 'module', 'require', output);
   const localRequire = (specifier) => dependencies[specifier] ?? require(specifier);
-  evaluate(module.exports, module, localRequire);
-  return module.exports;
+  evaluate(loadedModule.exports, loadedModule, localRequire);
+  return loadedModule.exports;
 }
 
 async function loadPricingModule() {
@@ -759,6 +759,21 @@ test('Service structured data excludes properties unsupported by the Service typ
     assert.match(source, /'@type': 'Service'/, `${name} is no longer Service structured data`);
     assert.doesNotMatch(source, /inLanguage:/, `${name} Service includes unsupported inLanguage`);
   }
+});
+
+test('blog metadata descriptions stay concise without cutting natural endings', async () => {
+  const { buildMetaDescription } = await loadTypeScriptModule('src/lib/seo.ts');
+  const sentence = 'Create polished AI portraits with practical pose, lighting, styling, composition, and expression guidance for consistently professional results.';
+  const longDescription = `${sentence} ${'Additional detail '.repeat(12)}`;
+
+  assert.equal(buildMetaDescription(longDescription, 'Fallback'), sentence);
+  assert.equal(buildMetaDescription('  Useful   summary  ', 'Fallback'), 'Useful summary');
+  assert.equal(buildMetaDescription(null, 'Fallback title'), 'Fallback title');
+
+  const cjkDescription = '写真'.repeat(100);
+  const conciseCjk = buildMetaDescription(cjkDescription, 'Fallback');
+  assert.equal(Array.from(conciseCjk).length, 160);
+  assert.equal(conciseCjk.endsWith('…'), true);
 });
 
 test('the social card is cache-busted, correctly sized, and replaces the stale alias', async () => {

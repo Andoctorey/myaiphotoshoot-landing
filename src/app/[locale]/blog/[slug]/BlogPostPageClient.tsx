@@ -13,7 +13,7 @@ import type { BlogPost } from '@/types/blog';
 import { withCdnWidth } from '@/lib/image';
 import { serializeJsonLd } from '@/lib/json-ld';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
-import { canonicalUrl, localePath } from '@/lib/seo';
+import { buildMetaDescription, canonicalUrl, localePath } from '@/lib/seo';
 import DOMPurify from 'isomorphic-dompurify';
 
 DOMPurify.addHook('uponSanitizeElement', (node, data) => {
@@ -100,6 +100,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
   const safeContent = typeof post?.content === 'string' ? post.content : '';
   const safeTitle = post?.title || t('imageFallback');
+  const articleDescription = buildMetaDescription(post?.meta_description, safeTitle);
   const featuredImageAlt = t('imageAlt', { title: safeTitle });
   const safeCreatedAt = typeof post?.created_at === 'string' ? post.created_at : '';
   const safeFeaturedImageUrl = typeof post?.featured_image_url === 'string' ? post.featured_image_url : undefined;
@@ -637,7 +638,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         <ArticleJsonLd
           locale={locale}
           title={safeTitle}
-          description={post.meta_description || safeTitle}
+          description={articleDescription}
           url={articleUrl}
           imageUrl={safeFeaturedImageUrl}
           datePublished={post.created_at}

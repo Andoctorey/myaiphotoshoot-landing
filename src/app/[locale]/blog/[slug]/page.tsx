@@ -13,7 +13,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { env } from '@/lib/env';
 import { defaultLocale, locales } from '@/i18n/request';
-import { BASE_URL, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import { BASE_URL, buildMetaDescription, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { BlogPost } from '@/types/blog';
 import {
   fetchAllPublishedBlogLocalizedParams,
@@ -112,7 +112,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     
     const title = post.title;
     const socialTitle = `${post.title} | My AI Photo Shoot`;
-    const description = post.meta_description || post.title;
+    const description = buildMetaDescription(post.meta_description, post.title);
     const articleTags = articleTagsFromPhotoTopics(post.photo_topics);
     const slugMap = getBlogSlugMapForRoute(blogInventory, locale, slug, locales);
     const canonicalSlugForLocale = slugMap[locale];
