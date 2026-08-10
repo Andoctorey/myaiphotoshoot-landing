@@ -52,10 +52,8 @@ export default async function AiMasksCatalog({ locale, catalog }: Props) {
             '@type': 'ListItem',
             position: index + 1,
             item: {
-              '@type': 'SoftwareApplication',
+              '@type': 'Thing',
               name: mask.name,
-              applicationCategory: 'Photo & Video',
-              operatingSystem: 'Web, iOS, Android',
               image: mask.featuredGraphics,
               url: AI_MASKS_APP_URL,
             },

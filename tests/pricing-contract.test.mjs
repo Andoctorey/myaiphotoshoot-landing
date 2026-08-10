@@ -286,6 +286,7 @@ test('all locales provide the repositioned copy used by the UI', async () => {
     'navigation.openMenu',
     'navigation.closeMenu',
     'navigation.studio',
+    'footer.imageLicense',
     'footer.studio',
     'pageCopy.home.metaTitle',
     'pageCopy.home.metaDescription',
@@ -545,6 +546,26 @@ test('navigation, homepage links, footer, sitemap, and llms.txt point directly t
   for (const [name, source] of Object.entries({ navigation, features, footer, pricing, sitemap, llmsText })) {
     assert.doesNotMatch(source, /\/models\//, `${name} still links to /models/`);
   }
+});
+
+test('footer links directly to the canonical English-only legal documents', async () => {
+  const footer = await readProjectFile('src/components/layout/Footer.tsx');
+
+  assert.match(footer, /href="\/legal\/"/);
+  assert.match(footer, /href="\/license\/"/);
+  assert.match(footer, /t\('legal'\)/);
+  assert.match(footer, /t\('imageLicense'\)/);
+  assert.doesNotMatch(footer, /localePath\(locale, '\/legal\/'\)/);
+  assert.doesNotMatch(footer, /localePath\(locale, '\/license\/'\)/);
+});
+
+test('mask catalog schema models masks as collection items rather than software apps', async () => {
+  const masksCatalog = await readProjectFile('src/components/masks/AiMasksCatalog.tsx');
+
+  assert.match(masksCatalog, /item:\s*\{\s*'@type': 'Thing'/);
+  assert.doesNotMatch(masksCatalog, /'@type': 'SoftwareApplication'/);
+  assert.doesNotMatch(masksCatalog, /applicationCategory:/);
+  assert.doesNotMatch(masksCatalog, /operatingSystem:/);
 });
 
 test('localized page and social metadata stays concise, translated, and evergreen', async () => {
