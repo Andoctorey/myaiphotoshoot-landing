@@ -762,17 +762,19 @@ test('Service structured data excludes properties unsupported by the Service typ
 });
 
 test('the social card is cache-busted, correctly sized, and replaces the stale alias', async () => {
-  const currentPath = path.join(projectRoot, 'public/og-image-v2.png');
+  const socialCardPath = path.join(projectRoot, 'public/og-image-v2.jpg');
+  const currentPngPath = path.join(projectRoot, 'public/og-image-v2.png');
   const legacyPath = path.join(projectRoot, 'public/og-image.png');
-  const [metadata, currentImage, legacyImage] = await Promise.all([
-    sharp(currentPath).metadata(),
-    readFile(currentPath),
+  const [socialCardMetadata, currentPng, legacyPng] = await Promise.all([
+    sharp(socialCardPath).metadata(),
+    readFile(currentPngPath),
     readFile(legacyPath),
   ]);
 
-  assert.equal(metadata.width, 1200);
-  assert.equal(metadata.height, 630);
-  assert.deepEqual(legacyImage, currentImage);
+  assert.equal(socialCardMetadata.width, 1200);
+  assert.equal(socialCardMetadata.height, 630);
+  assert.equal(socialCardMetadata.format, 'jpeg');
+  assert.deepEqual(legacyPng, currentPng);
 
   const genericCardSources = await Promise.all([
     readProjectFile('src/app/layout.tsx'),
@@ -799,6 +801,19 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     true,
     'generic social-card references must use the v4 cache key',
   );
+
+  const completeSocialMetadataSources = {
+    support: await readProjectFile('src/app/support/page.tsx'),
+    localizedSupport: await readProjectFile('src/app/[locale]/support/page.tsx'),
+    paginatedPresets: await readProjectFile('src/app/ai-presets/browse/[pageNumber]/page.tsx'),
+    localizedPaginatedPresets: await readProjectFile('src/app/[locale]/ai-presets/browse/[pageNumber]/page.tsx'),
+    legal: await readProjectFile('src/app/legal/page.tsx'),
+    license: await readProjectFile('src/app/license/page.tsx'),
+  };
+  for (const [name, source] of Object.entries(completeSocialMetadataSources)) {
+    const imageReferences = source.match(/\/og-image-v2\.jpg\?v=4/g) || [];
+    assert.equal(imageReferences.length, 2, `${name} must define Open Graph and Twitter images`);
+  }
 });
 
 test('legacy USD catalog fields round up to the canonical credit cost', async () => {
