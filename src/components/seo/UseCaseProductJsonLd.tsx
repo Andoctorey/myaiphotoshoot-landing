@@ -11,7 +11,6 @@ type Props = {
   description?: string | null;
   imageUrls?: string[];
   brandName?: string;
-  inLanguage?: string;
 };
 
 export default function UseCaseProductJsonLd({
@@ -20,7 +19,6 @@ export default function UseCaseProductJsonLd({
   description,
   imageUrls,
   brandName = 'My AI Photo Shoot',
-  inLanguage,
 }: Props) {
   const t = useTranslations('useCase');
   const images = Array.isArray(imageUrls)
@@ -36,7 +34,6 @@ export default function UseCaseProductJsonLd({
     serviceType: t('schema.serviceType'),
     description: description || undefined,
     image: images.length ? images.slice(0, 10) : undefined,
-    inLanguage: inLanguage || undefined,
     mainEntityOfPage: idUrl,
     provider: { '@type': 'Organization', name: brandName },
     hasOfferCatalog: {

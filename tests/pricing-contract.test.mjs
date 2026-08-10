@@ -749,6 +749,18 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
   assert.doesNotMatch(metadataSources.join('\n'), /\/og-image\.png/);
 });
 
+test('Service structured data excludes properties unsupported by the Service type', async () => {
+  const serviceSchemaSources = {
+    home: await readProjectFile('src/components/seo/HomeJsonLd.tsx'),
+    useCase: await readProjectFile('src/components/seo/UseCaseProductJsonLd.tsx'),
+  };
+
+  for (const [name, source] of Object.entries(serviceSchemaSources)) {
+    assert.match(source, /'@type': 'Service'/, `${name} is no longer Service structured data`);
+    assert.doesNotMatch(source, /inLanguage:/, `${name} Service includes unsupported inLanguage`);
+  }
+});
+
 test('the social card is cache-busted, correctly sized, and replaces the stale alias', async () => {
   const currentPath = path.join(projectRoot, 'public/og-image-v2.png');
   const legacyPath = path.join(projectRoot, 'public/og-image.png');

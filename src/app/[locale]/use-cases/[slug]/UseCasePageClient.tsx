@@ -188,13 +188,12 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
   return (
     <article className="max-w-5xl mx-auto px-4 pt-6 sm:pt-10 pb-36 sm:pb-14">
-      {/* Product JSON-LD for this use-case */}
+      {/* Service JSON-LD for this use case */}
       <UseCaseProductJsonLd
         idUrl={canonicalUrl(locale, `/use-cases/${slug}/`)}
         name={title}
         description={description}
         imageUrls={featured}
-        inLanguage={locale}
       />
       {/* Optional SoftwareApplication JSON-LD to capture Web/iOS/Android app availability */}
       <SoftwareApplicationJsonLd
