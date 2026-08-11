@@ -24,7 +24,7 @@ test('redirects localized English slug aliases to the translated canonical slug'
   globalThis.fetch = async (url) => {
     assert.equal(
       url,
-      'https://functions.example.test/functions/v1/blog-post?slug=vintage-photo-ideas&locale=de'
+      'https://functions.example.test/functions/v1/blog-post?slug=vintage-photo-ideas&locale=de&platform=web'
     );
     return Response.json({
       slug: 'vintage-photo-ideas',
@@ -65,7 +65,7 @@ test('redirects localized English slug aliases when route params are unavailable
   globalThis.fetch = async (url) => {
     assert.equal(
       url,
-      'https://functions.example.test/functions/v1/blog-post?slug=greek-hero-portraits&locale=ru'
+      'https://functions.example.test/functions/v1/blog-post?slug=greek-hero-portraits&locale=ru&platform=web'
     );
     return Response.json({
       slug: 'greek-hero-portraits',
@@ -104,13 +104,13 @@ test('redirects legacy localized slugs that no longer resolve directly', async (
   globalThis.fetch = async (url) => {
     requestedUrls.push(url);
 
-    if (url === 'https://functions.example.test/functions/v1/blog-post?slug=biyo-portraito-retouch-guide&locale=ja') {
+    if (url === 'https://functions.example.test/functions/v1/blog-post?slug=biyo-portraito-retouch-guide&locale=ja&platform=web') {
       return new Response('Not found', { status: 404 });
     }
 
     assert.equal(
       url,
-      'https://functions.example.test/functions/v1/blog-post?slug=beauty-portrait-retouching&locale=ja'
+      'https://functions.example.test/functions/v1/blog-post?slug=beauty-portrait-retouching&locale=ja&platform=web'
     );
     return Response.json({
       slug: 'beauty-portrait-retouching',
@@ -144,8 +144,8 @@ test('redirects legacy localized slugs that no longer resolve directly', async (
     'https://myaiphotoshoot.com/ja/blog/%E7%BE%8E%E5%AE%B9%E3%83%9D%E3%83%BC%E3%83%88%E3%83%AC%E3%83%BC%E3%83%88%E3%83%AC%E3%82%BF%E3%83%83%E3%83%81%E3%82%AC%E3%82%A4%E3%83%89/'
   );
   assert.deepEqual(requestedUrls, [
-    'https://functions.example.test/functions/v1/blog-post?slug=biyo-portraito-retouch-guide&locale=ja',
-    'https://functions.example.test/functions/v1/blog-post?slug=beauty-portrait-retouching&locale=ja',
+    'https://functions.example.test/functions/v1/blog-post?slug=biyo-portraito-retouch-guide&locale=ja&platform=web',
+    'https://functions.example.test/functions/v1/blog-post?slug=beauty-portrait-retouching&locale=ja&platform=web',
   ]);
   assert.equal(nextCalls, 0);
 });

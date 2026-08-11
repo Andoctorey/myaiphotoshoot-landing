@@ -110,7 +110,7 @@ export default async function BlogPage({ params }: Props) {
 
   try {
     const [postsResult, archiveResult] = await Promise.allSettled([
-      fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${locale}`, { next: { revalidate: 3600 } }),
+      fetch(`${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${locale}&platform=web`, { next: { revalidate: 3600 } }),
       fetchAllPublishedBlogPosts(
         buildFunctionsUrl,
         `Failed to fetch blog archive posts for locale ${locale}`,

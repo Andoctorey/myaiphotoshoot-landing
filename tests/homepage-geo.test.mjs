@@ -69,15 +69,17 @@ test('homepage gallery mapping keeps only a 60-character prompt summary', async 
   assert.equal(item.promptSummary.includes('private prompt suffix'), false);
 });
 
-test('server and client gallery paths use the same compact DTO mapper', async () => {
+test('gallery is loaded dynamically with the compact DTO mapper', async () => {
   const [homeDataSource, gallerySource, galleryTypesSource] = await Promise.all([
     readProjectFile('src/lib/homeData.ts'),
     readProjectFile('src/components/features/Gallery.tsx'),
     readProjectFile('src/types/gallery.ts'),
   ]);
 
-  assert.match(homeDataSource, /toHomepageGalleryItem\(item\)/);
+  assert.match(homeDataSource, /const initialGallery: HomepageGalleryItem\[\] = \[\]/);
+  assert.doesNotMatch(homeDataSource, /\/public-gallery\?/);
   assert.match(gallerySource, /data\.map\(toHomepageGalleryItem\)/);
+  assert.match(gallerySource, /platform: 'web'/);
   assert.match(gallerySource, /item\.promptSummary/);
   assert.doesNotMatch(gallerySource, /item\.prompt\b/);
   assert.match(gallerySource, /src=\{item\.publicUrl\}/);

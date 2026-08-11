@@ -73,7 +73,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     
     const [response, blogInventory] = await Promise.all([
       fetch(
-        buildFunctionsUrl('/blog-post', { slug, locale }),
+        buildFunctionsUrl('/blog-post', { slug, locale, platform: 'web' }),
         { next: { revalidate: 3600 } },
       ),
       fetchPublishedBlogInventory(
@@ -219,7 +219,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // Keep this in sync with metadata lookup so Unicode localized URLs don't build as noindex 404s.
   const slug = normalizeBlogRouteSlug(rawSlug);
   const res = await fetch(
-    buildFunctionsUrl('/blog-post', { slug, locale }),
+    buildFunctionsUrl('/blog-post', { slug, locale, platform: 'web' }),
     { next: { revalidate: 3600 } }
   );
   if (!res.ok) {

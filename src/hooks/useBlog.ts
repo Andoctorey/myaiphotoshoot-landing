@@ -28,6 +28,7 @@ export function useBlogPosts({
   const searchParams = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
+    platform: 'web',
   });
   
   if (locale) {
@@ -86,6 +87,7 @@ export function useBlogPost({
 }: UseBlogPostOptions) {
   // Build URL with query parameters
   const searchParams = new URLSearchParams();
+  searchParams.set('platform', 'web');
   
   if (slug) {
     searchParams.append('slug', slug);

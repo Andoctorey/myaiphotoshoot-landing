@@ -18,7 +18,7 @@ type UseCaseApiItem = {
 async function fetchUseCases(locale: string): Promise<UseCaseIndexItem[]> {
   try {
     const res = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=100&locale=${locale}`,
+      `${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=100&locale=${locale}&platform=web`,
       { next: { revalidate: 3600 } },
     );
     if (!res.ok) {

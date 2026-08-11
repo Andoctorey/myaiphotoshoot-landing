@@ -711,8 +711,17 @@
             the limited purpose of fulfilling that request; they return the resulting output to us.
             We ask for versioned, affirmative permission before an eligible photo is sent
             to these AI providers. A saved permission applies only while the disclosed providers,
-            purpose, training use, and retention terms remain unchanged, and it never authorizes a
-            background or unrelated upload.</p>
+            purpose, training use, and retention terms remain unchanged. That generation permission
+            does not authorize an unrelated background upload; public-photo review is separately
+            authorized by the public-sharing choice described below.</p>
+        <p>When you explicitly choose to make a generated photo public, we may send that public
+            photo and limited publication context, such as its prompt or share caption, to OpenAI as
+            a processor for automated content-safety classification, platform eligibility, and
+            enforcement of our public-content rules. This review may occur in the background while
+            the photo is marked public. Photos you keep private are not sent for this public-gallery
+            moderation. Making a photo private stops future public display and prevents new
+            moderation jobs from being queued, although a request that already started may complete
+            and provider processing remains subject to the retention terms below.</p>
         <p>Replicate states that, for predictions created through its API, input parameters, output
             values, output files, and logs are automatically removed after one hour by default.
             OpenAI states that API inputs and outputs are not used to train its models by default;

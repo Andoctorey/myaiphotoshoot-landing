@@ -96,7 +96,7 @@ export default async function BlogPage() {
   try {
     const [postsResult, archiveResult] = await Promise.allSettled([
       fetch(
-        `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${defaultLocale}`,
+        `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=12&locale=${defaultLocale}&platform=web`,
         { next: { revalidate: 3600 } }
       ),
       fetchAllPublishedBlogPosts(

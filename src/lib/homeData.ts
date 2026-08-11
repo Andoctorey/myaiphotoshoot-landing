@@ -4,7 +4,6 @@ import {
   localizeBlogListItemSlugs,
   type BlogListEntry,
 } from '@/lib/blog-static-params';
-import { toHomepageGalleryItem } from '@/lib/homepage-gallery';
 import type { HomepageGalleryItem, GalleryRandomSession } from '@/types/gallery';
 import type { BlogListItem } from '@/types/blog';
 
@@ -49,39 +48,14 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
     seed: crypto.randomUUID(),
     asOf: new Date().toISOString(),
   };
-  const galleryParams = new URLSearchParams({
-    page: '1',
-    limit: '20',
-    sort: 'random',
-    seed: initialGallerySession.seed,
-    asOf: initialGallerySession.asOf,
-  });
+  // The static export must not embed photos that can later become ineligible.
+  // Gallery.tsx loads the current platform-filtered page after hydration.
+  const initialGallery: HomepageGalleryItem[] = [];
 
-  const [initialGallery, blogCards, initialUseCases, blogArchive] = await Promise.all([
-    loadHomeSection<HomepageGalleryItem[]>('gallery', locale, async () => {
-      const response = await fetch(
-        `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?${galleryParams.toString()}`,
-        { next: { revalidate: 3600 } },
-      );
-      if (!response.ok) {
-        throw new Error(`Gallery request failed with status ${response.status}.`);
-      }
-      const data: unknown = await response.json();
-      if (!Array.isArray(data)) {
-        throw new Error('Gallery response was not an array.');
-      }
-
-      return data.map((item, index) => {
-        try {
-          return toHomepageGalleryItem(item);
-        } catch (error) {
-          throw new Error(`Gallery response item ${index} was invalid.`, { cause: error });
-        }
-      });
-    }, []),
+  const [blogCards, initialUseCases, blogArchive] = await Promise.all([
     loadHomeSection<BlogListItem[]>('blog cards', locale, async () => {
       const response = await fetch(
-        `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=6&locale=${locale}`,
+        `${env.SUPABASE_FUNCTIONS_URL}/blog-posts?page=1&limit=6&locale=${locale}&platform=web`,
         { next: { revalidate: 3600 } },
       );
       if (!response.ok) {
@@ -127,7 +101,7 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
     }, []),
     loadHomeSection<HomeData['initialUseCases']>('use cases', locale, async () => {
       const response = await fetch(
-        `${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}`,
+        `${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}&platform=web`,
         { next: { revalidate: 3600 } },
       );
       if (!response.ok) {

@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     const { slug } = await params;
 
     const response = await fetch(
-      buildFunctionsUrl('/blog-post', { slug, locale: defaultLocale }),
+      buildFunctionsUrl('/blog-post', { slug, locale: defaultLocale, platform: 'web' }),
       { next: { revalidate: 3600 } }
     );
 
@@ -193,7 +193,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
 
   const res = await fetch(
-    buildFunctionsUrl('/blog-post', { slug, locale: defaultLocale }),
+    buildFunctionsUrl('/blog-post', { slug, locale: defaultLocale, platform: 'web' }),
     { next: { revalidate: 3600 } }
   );
   if (!res.ok) {

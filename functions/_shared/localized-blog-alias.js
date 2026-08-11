@@ -88,7 +88,7 @@ export async function fetchCanonicalSlug({ env, locale, slug }) {
   const functionsUrl = env?.SUPABASE_FUNCTIONS_URL
     || env?.NEXT_PUBLIC_SUPABASE_FUNCTIONS_URL
     || DEFAULT_FUNCTIONS_URL;
-  const url = buildFunctionsUrl(functionsUrl, '/blog-post', { slug, locale });
+  const url = buildFunctionsUrl(functionsUrl, '/blog-post', { slug, locale, platform: 'web' });
   const response = await fetch(url, {
     cf: {
       cacheEverything: true,

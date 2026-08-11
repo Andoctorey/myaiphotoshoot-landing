@@ -42,6 +42,7 @@ function buildGalleryUrl(page: number, sort: GallerySort, randomSession: Gallery
     page: page.toString(),
     limit: PAGE_SIZE.toString(),
     sort,
+    platform: 'web',
   });
 
   if (sort === 'random' && randomSession) {

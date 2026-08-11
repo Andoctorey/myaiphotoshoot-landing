@@ -29,7 +29,7 @@ export interface UseCaseInventoryItem {
 }
 
 export function buildUseCaseUrl(slug: string, locale: string): string {
-  const searchParams = new URLSearchParams({ slug, locale });
+  const searchParams = new URLSearchParams({ slug, locale, platform: 'web' });
   return `${env.SUPABASE_FUNCTIONS_URL}/use-case?${searchParams.toString()}`;
 }
 

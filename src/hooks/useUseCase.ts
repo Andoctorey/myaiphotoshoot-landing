@@ -11,6 +11,7 @@ interface UseUseCaseOptions {
 
 export function useUseCase({ slug, locale, fallbackData }: UseUseCaseOptions) {
   const searchParams = new URLSearchParams();
+  searchParams.set('platform', 'web');
   if (slug) searchParams.append('slug', slug);
   if (locale) searchParams.append('locale', locale);
   const url = slug ? `${env.SUPABASE_FUNCTIONS_URL}/use-case?${searchParams.toString()}` : null;
@@ -40,5 +41,4 @@ export function useUseCase({ slug, locale, fallbackData }: UseUseCaseOptions) {
     mutate
   };
 }
-
 

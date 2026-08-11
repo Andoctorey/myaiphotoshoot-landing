@@ -8,7 +8,7 @@ export type NavigationUseCase = {
 export async function fetchNavigationUseCases(locale: string): Promise<NavigationUseCase[]> {
   try {
     const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}`,
+      `${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=12&locale=${locale}&platform=web`,
       { cache: 'force-cache' },
     );
     if (!response.ok) return [];

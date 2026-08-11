@@ -108,6 +108,7 @@ async function fetchPaginatedPublishedBlogPosts(
       page: String(page),
       limit: String(FALLBACK_PAGE_LIMIT),
       locale: defaultLocale,
+      platform: 'web',
     });
 
     const response = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
@@ -144,10 +145,12 @@ export async function fetchPublishedBlogInventory(
 ): Promise<BlogListEntry[]> {
   const url = buildFunctionsUrl('/blog-posts', {
     sitemap: '1',
+    platform: 'web',
   });
   const retryUrl = buildFunctionsUrl('/blog-posts', {
     sitemap: '1',
     inventory_retry: '1',
+    platform: 'web',
   });
   const inventoryUrls = [url, retryUrl];
   let lastError: unknown;

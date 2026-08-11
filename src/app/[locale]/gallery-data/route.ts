@@ -23,7 +23,7 @@ export function generateStaticParams() {
 export async function GET() {
   try {
     const response = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=24&sort=popular`,
+      `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=1&limit=24&sort=popular&platform=web`,
       withRevalidate()
     );
     
