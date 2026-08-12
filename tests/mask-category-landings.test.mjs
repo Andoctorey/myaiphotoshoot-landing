@@ -45,6 +45,7 @@ test('mask category metadata and sitemap use only published localized siblings',
 
 test('visible category content matches FAQ, breadcrumb, collection, and item-list schema', async () => {
   const component = await readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx');
+  assert.doesNotMatch(component, /<main\b/);
   assert.match(component, /landing\.introduction[\s\S]*split\(\/\\n\\s\*\\n\/u\)/);
   assert.match(component, /landing\.photoGuidance/);
   assert.match(component, /landing\.expectations/);

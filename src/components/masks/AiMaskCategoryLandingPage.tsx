@@ -95,7 +95,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd({ '@context': 'https://schema.org', '@graph': jsonLdGraph }) }}
@@ -211,6 +211,6 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
           </div>
         </section>
       </article>
-    </main>
+    </div>
   );
 }
