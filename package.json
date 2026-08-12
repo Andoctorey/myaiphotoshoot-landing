@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "npm run test:pricing && npm run test:geo && npm run test:security && npm run test:build-cache && node scripts/clear-next-fetch-cache.js && next build && node scripts/fix-html-lang.js && node scripts/apply-csp.js && npm run test:geo-export",
+    "build": "npm run test:pricing && npm run test:geo && npm run test:security && npm run test:masks && npm run test:build-cache && node scripts/clear-next-fetch-cache.js && next build && node scripts/fix-html-lang.js && node scripts/apply-csp.js && npm run test:geo-export",
     "start": "next start",
     "lint": "next lint",
     "test:indexnow": "node --test tests/submit-indexnow.test.mjs",
@@ -13,6 +13,7 @@
     "test:geo": "node --test tests/homepage-geo.test.mjs",
     "test:geo-export": "node --test tests/homepage-geo-export.test.mjs",
     "test:json-ld": "node --test src/lib/json-ld.test.mjs",
+    "test:masks": "node --test src/lib/ai-mask-landing-validation.test.mjs tests/mask-category-landings.test.mjs",
     "test:csp": "node --test scripts/apply-csp.test.js",
     "test:security": "npm run test:json-ld && npm run test:csp",
     "test:build-cache": "node --test scripts/clear-next-fetch-cache.test.js",

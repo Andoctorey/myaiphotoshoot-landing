@@ -86,6 +86,18 @@
     "yourPhoto": "Dein Foto",
     "readyTitle": "Bereit für einen neuen Look?",
     "readyDescription": "Öffne den Bereich „Masken“ in der App und lade zum Start ein klares Porträt hoch.",
+    "landing": {
+      "categoryGuide": "Ratgeber für AI-Masken-Kategorien",
+      "aboutTitle": "Über diese AI-Masken-Kategorie",
+      "photoGuidanceTitle": "Hinweise zum Foto",
+      "expectationsTitle": "Was Sie erwarten können",
+      "limitationsTitle": "Einschränkungen",
+      "masksTitle": "Verfügbare AI-Masken",
+      "masksDescription": "Entdecken Sie die aktuellen Masken dieser Kategorie. Bilder, Credit-Kosten und Verfügbarkeit stammen direkt aus dem veröffentlichten Katalog.",
+      "trainingQuestion": "Erfordern AI-Masken das Training eines persönlichen Modells?",
+      "trainingAnswer": "Nein. AI-Masken funktionieren mit einem einzigen Foto, daher müssen Sie kein persönliches AI-Modell trainieren.",
+      "faqTitle": "Häufig gestellte Fragen"
+    },
     "steps": {
       "photo": {
         "title": "Ein Foto auswählen",

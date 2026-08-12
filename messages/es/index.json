@@ -86,6 +86,18 @@
     "yourPhoto": "Tu foto",
     "readyTitle": "¿Listo para probar un look nuevo?",
     "readyDescription": "Abre Máscaras en la app y sube un retrato nítido para empezar.",
+    "landing": {
+      "categoryGuide": "Guías de categorías de máscaras con IA",
+      "aboutTitle": "Acerca de esta categoría de máscaras con IA",
+      "photoGuidanceTitle": "Consejos para la foto",
+      "expectationsTitle": "Qué puedes esperar",
+      "limitationsTitle": "Limitaciones",
+      "masksTitle": "Máscaras con IA disponibles",
+      "masksDescription": "Explora las máscaras actuales de esta categoría. Las imágenes, los costes en créditos y la disponibilidad proceden directamente del catálogo publicado.",
+      "trainingQuestion": "¿Las máscaras con IA requieren entrenar un modelo personal?",
+      "trainingAnswer": "No. Las máscaras con IA funcionan con una sola foto, así que no necesitas entrenar un modelo personal de IA.",
+      "faqTitle": "Preguntas frecuentes"
+    },
     "steps": {
       "photo": {
         "title": "Elige una foto",

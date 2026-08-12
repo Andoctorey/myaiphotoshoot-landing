@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import AiMasksCatalog from '@/components/masks/AiMasksCatalog';
 import { defaultLocale, locales } from '@/i18n/request';
 import { fetchMasksCatalogStrict } from '@/lib/ai-masks';
+import { fetchPublishedMaskCategoryLandings } from '@/lib/ai-mask-landings';
 import {
   buildAlternates,
   canonicalUrl,
@@ -49,6 +50,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function MasksPage() {
-  const catalog = await fetchMasksCatalogStrict(defaultLocale);
-  return <AiMasksCatalog locale={defaultLocale} catalog={catalog} />;
+  const [catalog, landings] = await Promise.all([
+    fetchMasksCatalogStrict(defaultLocale),
+    fetchPublishedMaskCategoryLandings(defaultLocale),
+  ]);
+  return (
+    <AiMasksCatalog
+      locale={defaultLocale}
+      catalog={catalog}
+      publishedCategoryIds={landings.map((landing) => landing.categoryId)}
+    />
+  );
 }

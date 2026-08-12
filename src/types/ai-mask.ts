@@ -28,3 +28,22 @@ export interface AiMasksCatalog {
   categories: AiMaskCategory[];
   masks: AiMask[];
 }
+
+export interface AiMaskCategoryLandingFaq {
+  q: string;
+  a: string;
+}
+
+export interface AiMaskCategoryLanding {
+  categoryId: string;
+  slug: string;
+  locale: string;
+  title: string;
+  description: string;
+  introduction: string;
+  photoGuidance: string[];
+  expectations: string[];
+  limitations: string[];
+  faqs: AiMaskCategoryLandingFaq[];
+  updatedAt: string;
+}

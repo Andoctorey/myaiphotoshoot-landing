@@ -4,6 +4,10 @@ import { env } from '@/lib/env'
 import { fetchPublishedBlogInventory, getBlogSlugForLocale, getBlogSlugMap } from '@/lib/blog-static-params'
 import { AI_PRESETS_PAGE_SIZE, aiPresetsPagePath, fetchAiPresetsStrict } from '@/lib/ai-presets'
 import { fetchUseCaseInventory } from '@/lib/usecase-seo'
+import {
+  buildPublishedMaskCategoryLanguages,
+  fetchPublishedMaskCategoryLandings,
+} from '@/lib/ai-mask-landings'
 
 /**
  * Sitemap generator
@@ -221,10 +225,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const [blogPosts, useCases, aiPresets] = await Promise.all([
+    const [blogPosts, useCases, aiPresets, maskCategoryLandings] = await Promise.all([
       getAllBlogPosts(),
       fetchUseCaseInventory(),
       getAllAiPresets(),
+      fetchPublishedMaskCategoryLandings(),
     ]);
     console.log(`Sitemap: Fetched ${useCases.length} total use-cases`);
     const aiPresetTotalPages = Math.ceil(aiPresets.length / AI_PRESETS_PAGE_SIZE);
@@ -264,6 +269,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const aiPresetEntries: MetadataRoute.Sitemap = [];
     const aiPresetPaginatedEntries: MetadataRoute.Sitemap = [];
+    const maskCategoryEntries: MetadataRoute.Sitemap = maskCategoryLandings.map((landing) => ({
+      url: buildLocalizedUrl(baseUrl, landing.locale, `/masks/${landing.slug}/`),
+      lastModified: new Date(landing.updatedAt),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+      alternates: {
+        languages: buildPublishedMaskCategoryLanguages(maskCategoryLandings, landing.categoryId),
+      },
+    }));
     for (let page = 2; page <= aiPresetTotalPages; page += 1) {
       const path = aiPresetsPagePath(page);
       const languages = buildHreflangLanguages(baseUrl, path, locales);
@@ -293,7 +307,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
     }
 
-    return [...staticPages, ...aiPresetPaginatedEntries, ...blogPostEntries, ...useCaseEntries, ...aiPresetEntries];
+    return [
+      ...staticPages,
+      ...aiPresetPaginatedEntries,
+      ...blogPostEntries,
+      ...useCaseEntries,
+      ...aiPresetEntries,
+      ...maskCategoryEntries,
+    ];
   } catch (error) {
     throw new Error('Failed to generate a complete sitemap.', { cause: error });
   }

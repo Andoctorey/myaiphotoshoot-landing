@@ -86,6 +86,18 @@
     "yourPhoto": "Votre photo",
     "readyTitle": "Prêt à essayer un nouveau look ?",
     "readyDescription": "Ouvrez la section Masques dans l’application et importez un portrait net pour commencer.",
+    "landing": {
+      "categoryGuide": "Guides des catégories de masques IA",
+      "aboutTitle": "À propos de cette catégorie de masques IA",
+      "photoGuidanceTitle": "Conseils pour la photo",
+      "expectationsTitle": "À quoi s’attendre",
+      "limitationsTitle": "Limites",
+      "masksTitle": "Masques IA disponibles",
+      "masksDescription": "Découvrez les masques actuels de cette catégorie. Les images, le coût en crédits et la disponibilité proviennent directement du catalogue publié.",
+      "trainingQuestion": "Les masques IA nécessitent-ils l’entraînement d’un modèle personnel ?",
+      "trainingAnswer": "Non. Les masques IA fonctionnent avec une seule photo, vous n’avez donc pas besoin d’entraîner un modèle IA personnel.",
+      "faqTitle": "Questions fréquentes"
+    },
     "steps": {
       "photo": {
         "title": "Choisissez une photo",

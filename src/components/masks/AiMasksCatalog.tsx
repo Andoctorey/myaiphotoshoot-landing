@@ -11,9 +11,10 @@ import type { AiMasksCatalog as Catalog } from '@/types/ai-mask';
 type Props = {
   locale: string;
   catalog: Catalog;
+  publishedCategoryIds?: readonly string[];
 };
 
-export default async function AiMasksCatalog({ locale, catalog }: Props) {
+export default async function AiMasksCatalog({ locale, catalog, publishedCategoryIds = [] }: Props) {
   const [t, tNav] = await Promise.all([
     getTranslations({ locale, namespace: 'masks' }),
     getTranslations({ locale, namespace: 'navigation' }),
@@ -22,6 +23,7 @@ export default async function AiMasksCatalog({ locale, catalog }: Props) {
   const labels: MasksCatalogLabels = {
     after: t('after'),
     before: t('before'),
+    categoryGuide: t('landing.categoryGuide'),
     categoryNav: t('categoryNav'),
     creditCost: t.raw('creditCost') as string,
     female: t('genderFemale'),
@@ -124,7 +126,12 @@ export default async function AiMasksCatalog({ locale, catalog }: Props) {
           </a>
         </header>
 
-        <MasksCatalogBrowser catalog={catalog} labels={labels} locale={locale} />
+        <MasksCatalogBrowser
+          catalog={catalog}
+          labels={labels}
+          locale={locale}
+          publishedCategoryIds={publishedCategoryIds}
+        />
       </div>
     </div>
   );

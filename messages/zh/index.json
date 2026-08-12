@@ -86,6 +86,18 @@
     "yourPhoto": "你的照片",
     "readyTitle": "准备尝试新造型了吗？",
     "readyDescription": "在应用中打开“面具”，上传一张清晰的人像照片即可开始。",
+    "landing": {
+      "categoryGuide": "AI 面具分类指南",
+      "aboutTitle": "关于此 AI 面具分类",
+      "photoGuidanceTitle": "照片建议",
+      "expectationsTitle": "效果预期",
+      "limitationsTitle": "局限性",
+      "masksTitle": "可用的 AI 面具",
+      "masksDescription": "浏览此分类中的现有面具。图片、积分费用和可用情况均直接来自已发布目录。",
+      "trainingQuestion": "AI 面具需要训练个人模型吗？",
+      "trainingAnswer": "不需要。AI 面具可直接使用一张照片，因此无需训练个人 AI 模型。",
+      "faqTitle": "常见问题"
+    },
     "steps": {
       "photo": {
         "title": "选择一张照片",

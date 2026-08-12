@@ -86,6 +86,18 @@
     "yourPhoto": "صورتك",
     "readyTitle": "هل أنت جاهز لتجربة إطلالة جديدة؟",
     "readyDescription": "افتح قسم الأقنعة في التطبيق، ثم حمّل صورة شخصية واضحة للبدء.",
+    "landing": {
+      "categoryGuide": "أدلة فئات أقنعة AI",
+      "aboutTitle": "حول فئة أقنعة AI هذه",
+      "photoGuidanceTitle": "إرشادات الصورة",
+      "expectationsTitle": "ما يمكن توقعه",
+      "limitationsTitle": "القيود",
+      "masksTitle": "أقنعة AI المتاحة",
+      "masksDescription": "تصفّح الأقنعة الحالية في هذه الفئة. تأتي الصور وتكاليف الأرصدة والتوفّر مباشرةً من الكتالوج المنشور.",
+      "trainingQuestion": "هل تتطلب أقنعة AI تدريب نموذج شخصي؟",
+      "trainingAnswer": "لا. تعمل أقنعة AI بصورة واحدة، لذلك لا تحتاج إلى تدريب نموذج AI شخصي.",
+      "faqTitle": "الأسئلة الشائعة"
+    },
     "steps": {
       "photo": {
         "title": "اختر صورة واحدة",

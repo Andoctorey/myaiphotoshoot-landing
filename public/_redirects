@@ -73,6 +73,7 @@
 /en/blog/* /blog/:splat 308
 /en/use-cases/* /use-cases/:splat 308
 /en/presets/* /presets/:splat 308
+/en/masks/* /masks/:splat 308
 /en/ai-presets/browse/* /ai-presets/browse/:splat 308
 
 # Gone: photo detail pages removed

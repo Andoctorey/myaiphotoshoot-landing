@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
 import { AI_MASKS_APP_URL } from '@/lib/app-links';
+import { localePath } from '@/lib/seo';
 import type {
   AiMask,
   AiMaskCategory,
@@ -16,6 +18,7 @@ type PreviewGender = Extract<MaskAudienceGender, 'female' | 'male'>;
 export type MasksCatalogLabels = {
   after: string;
   before: string;
+  categoryGuide: string;
   categoryNav: string;
   creditCost: string;
   female: string;
@@ -34,6 +37,7 @@ type Props = {
   catalog: AiMasksCatalog;
   labels: MasksCatalogLabels;
   locale: string;
+  publishedCategoryIds?: readonly string[];
 };
 
 const previewVariantId = (gender: PreviewGender) => (
@@ -52,8 +56,21 @@ function interpolate(label: string, key: string, value: string | number): string
   return label.replace(`{${key}}`, String(value));
 }
 
-export default function MasksCatalogBrowser({ catalog, labels, locale }: Props) {
+export default function MasksCatalogBrowser({
+  catalog,
+  labels,
+  locale,
+  publishedCategoryIds = [],
+}: Props) {
   const [gender, setGender] = useState<PreviewGender>('female');
+  const publishedCategoryIdSet = useMemo(
+    () => new Set(publishedCategoryIds),
+    [publishedCategoryIds],
+  );
+  const publishedCategories = useMemo(
+    () => catalog.categories.filter((category) => publishedCategoryIdSet.has(category.id)),
+    [catalog.categories, publishedCategoryIdSet],
+  );
   const visibleCategories = useMemo(() => {
     const filtered = catalog.categories.filter((category) => (
       category.audienceGender === 'unisex' || category.audienceGender === gender
@@ -63,6 +80,30 @@ export default function MasksCatalogBrowser({ catalog, labels, locale }: Props) 
 
   return (
     <>
+      {publishedCategories.length > 0 ? (
+        <nav
+          aria-label={labels.categoryGuide}
+          className="mb-6"
+        >
+          <p className="mb-3 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {labels.categoryGuide}
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {publishedCategories.map((category) => (
+              <Link
+                key={category.id}
+                href={localePath(locale, `/masks/${category.slug}/`)}
+                aria-label={`${labels.categoryGuide}: ${category.name}`}
+                className="inline-flex items-center gap-2 rounded-full bg-purple-50 px-4 py-2 text-sm font-semibold text-purple-800 ring-1 ring-purple-200 transition hover:bg-purple-100 hover:ring-purple-300 dark:bg-purple-950/40 dark:text-purple-200 dark:ring-purple-800 dark:hover:bg-purple-950/70"
+              >
+                <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
+                {category.name}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      ) : null}
+
       <nav
         aria-label={labels.categoryNav}
         className="sticky top-16 z-20 -mx-4 border-y border-gray-200 bg-gray-50/90 px-4 py-3 backdrop-blur-lg dark:border-gray-800 dark:bg-gray-950/90 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-2xl lg:border lg:px-4"
@@ -99,20 +140,24 @@ export default function MasksCatalogBrowser({ catalog, labels, locale }: Props) 
             })}
           </div>
 
-          <div className="h-7 w-px shrink-0 bg-gray-200 dark:bg-gray-800" aria-hidden="true" />
+          {catalog.categories.length > 1 ? (
+            <>
+              <div className="h-7 w-px shrink-0 bg-gray-200 dark:bg-gray-800" aria-hidden="true" />
 
-          <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto py-0.5">
-            {visibleCategories.map((category) => (
-              <a
-                key={category.id}
-                href={`#${category.slug}`}
-                className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-gray-200 transition hover:text-purple-700 hover:ring-purple-300 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:text-purple-300 dark:hover:ring-purple-700"
-              >
-                <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
-                {category.name}
-              </a>
-            ))}
-          </div>
+              <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto py-0.5">
+                {visibleCategories.map((category) => (
+                  <a
+                    key={category.id}
+                    href={`#${category.slug}`}
+                    className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-gray-200 transition hover:text-purple-700 hover:ring-purple-300 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:text-purple-300 dark:hover:ring-purple-700"
+                  >
+                    <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
+                    {category.name}
+                  </a>
+                ))}
+              </div>
+            </>
+          ) : null}
         </div>
       </nav>
 
