@@ -88,7 +88,10 @@
     "readyDescription": "افتح قسم الأقنعة في التطبيق، ثم حمّل صورة شخصية واضحة للبدء.",
     "landing": {
       "categoryGuide": "أدلة فئات أقنعة AI",
-      "aboutTitle": "حول فئة أقنعة AI هذه",
+      "aboutTitle": "حول هذه الإطلالات",
+      "highlightsTitle": "استكشف إطلالات {category}",
+      "highlightsDescription": "ابدأ بهذه الأقنعة، ثم تصفّح جميع الإطلالات المتاحة وعددها {count} أدناه.",
+      "viewAllMasks": "عرض جميع الأقنعة ({count})",
       "photoGuidanceTitle": "إرشادات الصورة",
       "expectationsTitle": "ما يمكن توقعه",
       "limitationsTitle": "القيود",

@@ -88,7 +88,10 @@
     "readyDescription": "在应用中打开“面具”，上传一张清晰的人像照片即可开始。",
     "landing": {
       "categoryGuide": "AI 面具分类指南",
-      "aboutTitle": "关于此 AI 面具分类",
+      "aboutTitle": "关于这些造型",
+      "highlightsTitle": "探索{category}造型",
+      "highlightsDescription": "先看看这些面具，再浏览下方全部 {count} 种可用造型。",
+      "viewAllMasks": "查看全部 {count} 个面具",
       "photoGuidanceTitle": "照片建议",
       "expectationsTitle": "效果预期",
       "limitationsTitle": "局限性",

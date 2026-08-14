@@ -88,7 +88,10 @@
     "readyDescription": "Ouvrez la section Masques dans l’application et importez un portrait net pour commencer.",
     "landing": {
       "categoryGuide": "Guides des catégories de masques IA",
-      "aboutTitle": "À propos de cette catégorie de masques IA",
+      "aboutTitle": "À propos de ces looks",
+      "highlightsTitle": "Découvrez les looks {category}",
+      "highlightsDescription": "Commencez par ces masques, puis découvrez les {count} looks disponibles plus bas.",
+      "viewAllMasks": "Voir les {count} masques",
       "photoGuidanceTitle": "Conseils pour la photo",
       "expectationsTitle": "À quoi s’attendre",
       "limitationsTitle": "Limites",

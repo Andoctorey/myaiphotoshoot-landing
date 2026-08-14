@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+import AiMaskCategoryHighlights from '@/components/masks/AiMaskCategoryHighlights';
 import MasksCatalogBrowser, {
   type MasksCatalogLabels,
 } from '@/components/masks/MasksCatalogBrowser';
@@ -143,6 +144,18 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             {t('tryMasks')}
           </a>
         </header>
+
+        <AiMaskCategoryHighlights
+          afterLabel={labels.after}
+          creditCostLabel={labels.creditCost}
+          description={t('landing.highlightsDescription', { count: masks.length })}
+          locale={locale}
+          masks={masks}
+          resultAltLabel={labels.resultAlt}
+          title={t('landing.highlightsTitle', { category: categoryName })}
+          tryMasksLabel={labels.tryMasks}
+          viewAllLabel={t('landing.viewAllMasks', { count: masks.length })}
+        />
 
         <section className="mt-12 max-w-4xl" aria-labelledby="mask-category-about">
           <h2 id="mask-category-about" className="text-2xl font-bold text-gray-950 dark:text-white">

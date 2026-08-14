@@ -88,7 +88,10 @@
     "readyDescription": "Откройте раздел «Маски» в приложении и загрузите чёткий портрет, чтобы начать.",
     "landing": {
       "categoryGuide": "Руководства по категориям AI-масок",
-      "aboutTitle": "Об этой категории AI-масок",
+      "aboutTitle": "Об этих образах",
+      "highlightsTitle": "Посмотрите варианты: {category}",
+      "highlightsDescription": "Начните с этих масок, а ниже посмотрите все доступные варианты — {count}.",
+      "viewAllMasks": "Посмотреть все маски ({count})",
       "photoGuidanceTitle": "Рекомендации к фото",
       "expectationsTitle": "Чего ожидать",
       "limitationsTitle": "Ограничения",

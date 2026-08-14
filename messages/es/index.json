@@ -88,7 +88,10 @@
     "readyDescription": "Abre Máscaras en la app y sube un retrato nítido para empezar.",
     "landing": {
       "categoryGuide": "Guías de categorías de máscaras con IA",
-      "aboutTitle": "Acerca de esta categoría de máscaras con IA",
+      "aboutTitle": "Sobre estos looks",
+      "highlightsTitle": "Explora looks de {category}",
+      "highlightsDescription": "Empieza con estas máscaras y después explora los {count} looks disponibles más abajo.",
+      "viewAllMasks": "Ver las {count} máscaras",
       "photoGuidanceTitle": "Consejos para la foto",
       "expectationsTitle": "Qué puedes esperar",
       "limitationsTitle": "Limitaciones",

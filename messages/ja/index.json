@@ -88,7 +88,10 @@
     "readyDescription": "アプリで「マスク」を開き、鮮明なポートレートを1枚アップロードして始めましょう。",
     "landing": {
       "categoryGuide": "AIマスクのカテゴリーガイド",
-      "aboutTitle": "このAIマスクカテゴリーについて",
+      "aboutTitle": "これらのスタイルについて",
+      "highlightsTitle": "{category}のスタイルを見る",
+      "highlightsDescription": "まずはこちらのマスクを試し、下で利用できる全{count}種類のスタイルをご覧ください。",
+      "viewAllMasks": "全{count}種類のマスクを見る",
       "photoGuidanceTitle": "写真のポイント",
       "expectationsTitle": "期待できること",
       "limitationsTitle": "制限事項",

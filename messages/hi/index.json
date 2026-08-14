@@ -88,7 +88,10 @@
     "readyDescription": "ऐप में मास्क खोलें और शुरू करने के लिए एक साफ पोर्ट्रेट अपलोड करें।",
     "landing": {
       "categoryGuide": "AI मास्क कैटेगरी गाइड",
-      "aboutTitle": "इस AI मास्क कैटेगरी के बारे में",
+      "aboutTitle": "इन लुक्स के बारे में",
+      "highlightsTitle": "{category} लुक देखें",
+      "highlightsDescription": "इन मास्क से शुरुआत करें, फिर नीचे उपलब्ध सभी {count} लुक देखें।",
+      "viewAllMasks": "सभी {count} मास्क देखें",
       "photoGuidanceTitle": "फोटो से जुड़ी सलाह",
       "expectationsTitle": "क्या उम्मीद करें",
       "limitationsTitle": "सीमाएं",
