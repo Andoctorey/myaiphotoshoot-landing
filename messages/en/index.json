@@ -89,8 +89,6 @@
     "landing": {
       "categoryGuide": "AI Mask category guides",
       "aboutTitle": "About these looks",
-      "highlightsTitle": "Explore {category} Looks",
-      "highlightsDescription": "Choose from all {count} masks below, then press and hold the large preview to compare before and after.",
       "holdToCompare": "Hold to compare",
       "photoGuidanceTitle": "Photo guidance",
       "expectationsTitle": "What to expect",

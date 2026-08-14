@@ -89,8 +89,6 @@
     "landing": {
       "categoryGuide": "Ratgeber für AI-Masken-Kategorien",
       "aboutTitle": "Über diese Looks",
-      "highlightsTitle": "{category}-Looks entdecken",
-      "highlightsDescription": "Wählen Sie unten aus allen {count} Masken und halten Sie die große Vorschau gedrückt, um Vorher und Nachher zu vergleichen.",
       "holdToCompare": "Zum Vergleichen halten",
       "photoGuidanceTitle": "Hinweise zum Foto",
       "expectationsTitle": "Was Sie erwarten können",

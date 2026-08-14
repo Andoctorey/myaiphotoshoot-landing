@@ -89,8 +89,6 @@
     "landing": {
       "categoryGuide": "أدلة فئات أقنعة AI",
       "aboutTitle": "حول هذه الإطلالات",
-      "highlightsTitle": "استكشف إطلالات {category}",
-      "highlightsDescription": "اختر من بين جميع الأقنعة أدناه وعددها {count}، ثم اضغط مطولاً على المعاينة الكبيرة للمقارنة بين قبل وبعد.",
       "holdToCompare": "اضغط مطولاً للمقارنة",
       "photoGuidanceTitle": "إرشادات الصورة",
       "expectationsTitle": "ما يمكن توقعه",

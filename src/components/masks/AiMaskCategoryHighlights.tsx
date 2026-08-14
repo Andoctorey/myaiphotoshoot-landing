@@ -11,14 +11,12 @@ type Props = {
   afterLabel: string;
   beforeLabel: string;
   category: AiMaskCategory;
-  description: string;
   femaleLabel: string;
   genderLabel: string;
   holdToCompareLabel: string;
   maleLabel: string;
   masks: readonly AiMask[];
   resultAltLabel: string;
-  title: string;
   tryMasksLabel: string;
 };
 
@@ -42,14 +40,12 @@ export default function AiMaskCategoryHighlights({
   afterLabel,
   beforeLabel,
   category,
-  description,
   femaleLabel,
   genderLabel,
   holdToCompareLabel,
   maleLabel,
   masks,
   resultAltLabel,
-  title,
   tryMasksLabel,
 }: Props) {
   const initialGender: PreviewGender = category.audienceGender === 'male' ? 'male' : 'female';
@@ -64,18 +60,9 @@ export default function AiMaskCategoryHighlights({
     : maskPreviewUrl(selectedMask, gender);
 
   return (
-    <section className="mt-12" aria-labelledby="mask-category-highlights">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2
-            id="mask-category-highlights"
-            className="text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl"
-          >
-            {title}
-          </h2>
-          <p className="mt-2 max-w-2xl text-gray-700 dark:text-gray-300">{description}</p>
-        </div>
-        {canSwitchGender ? (
+    <section className="mt-10" aria-label={category.name}>
+      {canSwitchGender ? (
+        <div className="flex justify-end">
           <div
             aria-label={genderLabel}
             className="flex h-11 w-[92px] shrink-0 items-center rounded-full border border-gray-300 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
@@ -109,10 +96,10 @@ export default function AiMaskCategoryHighlights({
               );
             })}
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
-      <div className="mt-6 flex justify-center">
+      <div className={`${canSwitchGender ? 'mt-4' : ''} flex justify-center`}>
         <button
           type="button"
           aria-label={`${holdToCompareLabel}: ${selectedMask.name}`}

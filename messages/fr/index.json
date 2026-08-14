@@ -89,8 +89,6 @@
     "landing": {
       "categoryGuide": "Guides des catégories de masques IA",
       "aboutTitle": "À propos de ces looks",
-      "highlightsTitle": "Découvrez les looks {category}",
-      "highlightsDescription": "Choisissez parmi les {count} masques ci-dessous, puis maintenez le grand aperçu pour comparer avant et après.",
       "holdToCompare": "Maintenez pour comparer",
       "photoGuidanceTitle": "Conseils pour la photo",
       "expectationsTitle": "À quoi s’attendre",

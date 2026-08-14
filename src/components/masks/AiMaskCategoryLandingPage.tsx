@@ -106,10 +106,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
         </nav>
 
         <header className="max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-wide text-purple-700 dark:text-purple-300">
-            {categoryName}
-          </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
+          <h1 className="text-4xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
             {landing.title}
           </h1>
           <p className="mt-5 text-lg leading-8 text-gray-700 dark:text-gray-300">{landing.description}</p>
@@ -120,14 +117,12 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             afterLabel={t('after')}
             beforeLabel={t('before')}
             category={category}
-            description={t('landing.highlightsDescription', { count: masks.length })}
             femaleLabel={t('genderFemale')}
             genderLabel={t('genderLabel')}
             holdToCompareLabel={t('landing.holdToCompare')}
             maleLabel={t('genderMale')}
             masks={masks}
             resultAltLabel={t.raw('resultAlt') as string}
-            title={t('landing.highlightsTitle', { category: categoryName })}
             tryMasksLabel={t('tryMasks')}
           />
         ) : null}

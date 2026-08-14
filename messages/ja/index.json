@@ -89,8 +89,6 @@
     "landing": {
       "categoryGuide": "AIマスクのカテゴリーガイド",
       "aboutTitle": "これらのスタイルについて",
-      "highlightsTitle": "{category}のスタイルを見る",
-      "highlightsDescription": "下の全{count}種類のマスクから選び、大きなプレビューを長押ししてビフォーとアフターを比較できます。",
       "holdToCompare": "長押しして比較",
       "photoGuidanceTitle": "写真のポイント",
       "expectationsTitle": "期待できること",

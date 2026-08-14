@@ -89,8 +89,6 @@
     "landing": {
       "categoryGuide": "AI 面具分类指南",
       "aboutTitle": "关于这些造型",
-      "highlightsTitle": "探索{category}造型",
-      "highlightsDescription": "从下方全部 {count} 个面具中选择，然后长按大图预览对比前后效果。",
       "holdToCompare": "长按比较",
       "photoGuidanceTitle": "照片建议",
       "expectationsTitle": "效果预期",
