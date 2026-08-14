@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import AiMaskCategoryHighlights from '@/components/masks/AiMaskCategoryHighlights';
 import { AI_MASKS_APP_URL } from '@/lib/app-links';
+import { buildMaskCategoryJsonLdGraph } from '@/lib/ai-mask-category-json-ld';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
 import type { AiMaskCategoryLanding, AiMasksCatalog } from '@/types/ai-mask';
@@ -12,6 +13,13 @@ type Props = {
   catalog: AiMasksCatalog;
 };
 
+function splitIntroduction(introduction: string): string[] {
+  return introduction
+    .split(/\n\s*\n/u)
+    .map((paragraph) => paragraph.replace(/\s*\n\s*/gu, ' ').trim())
+    .filter(Boolean);
+}
+
 export default async function AiMaskCategoryLandingPage({ locale, landing, catalog }: Props) {
   const [t, tNav] = await Promise.all([
     getTranslations({ locale, namespace: 'masks' }),
@@ -21,55 +29,21 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
   const masks = catalog.masks.filter((mask) => mask.categoryId === landing.categoryId);
   const pageUrl = canonicalUrl(locale, `/masks/${landing.slug}/`);
   const categoryName = category?.name || landing.title;
-  const introductionParagraphs = landing.introduction
-    .split(/\n\s*\n/u)
-    .map((paragraph) => paragraph.replace(/\s*\n\s*/gu, ' ').trim())
-    .filter(Boolean);
-  const jsonLdGraph: Array<Record<string, unknown>> = [
-    {
-      '@type': 'CollectionPage',
-      '@id': `${pageUrl}#webpage`,
-      url: pageUrl,
-      name: landing.title,
-      description: landing.description,
-      inLanguage: locale,
-      dateModified: landing.updatedAt,
-      mainEntity: {
-        '@type': 'ItemList',
-        numberOfItems: masks.length,
-        itemListElement: masks.map((mask, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          item: {
-            '@type': 'Thing',
-            '@id': `${pageUrl}#mask-${mask.slug}`,
-            name: mask.name,
-            image: mask.featuredGraphics,
-          },
-        })),
-      },
-    },
-    {
-      '@type': 'BreadcrumbList',
-      '@id': `${pageUrl}#breadcrumb`,
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: tNav('home'), item: canonicalUrl(locale, '/') },
-        { '@type': 'ListItem', position: 2, name: t('breadcrumb'), item: canonicalUrl(locale, '/masks/') },
-        { '@type': 'ListItem', position: 3, name: categoryName, item: pageUrl },
-      ],
-    },
+  const introductionParagraphs = splitIntroduction(landing.introduction);
+  const jsonLdGraph = buildMaskCategoryJsonLdGraph({
+    categoryName,
+    homeLabel: tNav('home'),
+    landing,
+    locale,
+    masks,
+    masksLabel: t('breadcrumb'),
+    pageUrl,
+  });
+  const guidanceSections = [
+    { heading: t('landing.photoGuidanceTitle'), items: landing.photoGuidance },
+    { heading: t('landing.expectationsTitle'), items: landing.expectations },
+    { heading: t('landing.limitationsTitle'), items: landing.limitations },
   ];
-  if (landing.faqs.length > 0) {
-    jsonLdGraph.push({
-      '@type': 'FAQPage',
-      '@id': `${pageUrl}#faq`,
-      mainEntity: landing.faqs.map((faq) => ({
-        '@type': 'Question',
-        name: faq.q,
-        acceptedAnswer: { '@type': 'Answer', text: faq.a },
-      })),
-    });
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
@@ -137,11 +111,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
         </section>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {([
-            [t('landing.photoGuidanceTitle'), landing.photoGuidance],
-            [t('landing.expectationsTitle'), landing.expectations],
-            [t('landing.limitationsTitle'), landing.limitations],
-          ] as const).map(([heading, items]) => (
+          {guidanceSections.map(({ heading, items }) => (
             <section key={heading} className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
               <h2 className="text-xl font-bold text-gray-950 dark:text-white">{heading}</h2>
               <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-6 text-gray-700 dark:text-gray-300">

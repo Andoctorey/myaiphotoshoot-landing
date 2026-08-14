@@ -1,11 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { AI_MASKS_APP_URL } from '@/lib/app-links';
+import { cn } from '@/lib/utils';
 import type { AiMask, AiMaskCategory, MaskAudienceGender } from '@/types/ai-mask';
 
 type PreviewGender = Extract<MaskAudienceGender, 'female' | 'male'>;
+
+const COMPARE_KEYS = new Set([' ', 'Enter']);
+const PREVIEW_VARIANT_BY_GENDER: Record<PreviewGender, 'white_female' | 'white_male'> = {
+  female: 'white_female',
+  male: 'white_male',
+};
 
 type Props = {
   afterLabel: string;
@@ -24,16 +31,12 @@ function interpolate(label: string, key: string, value: string | number): string
   return label.replace(`{${key}}`, String(value));
 }
 
-const previewVariantId = (gender: PreviewGender) => (
-  gender === 'male' ? 'white_male' : 'white_female'
-);
-
 function categoryPreviewUrl(category: AiMaskCategory, gender: PreviewGender): string {
-  return category.sourceImageVariants[previewVariantId(gender)] || category.sourceImageUrl;
+  return category.sourceImageVariants[PREVIEW_VARIANT_BY_GENDER[gender]] || category.sourceImageUrl;
 }
 
 function maskPreviewUrl(mask: AiMask, gender: PreviewGender): string {
-  return mask.featuredGraphicsVariants[previewVariantId(gender)] || mask.featuredGraphics;
+  return mask.featuredGraphicsVariants[PREVIEW_VARIANT_BY_GENDER[gender]] || mask.featuredGraphics;
 }
 
 export default function AiMaskCategoryHighlights({
@@ -58,6 +61,30 @@ export default function AiMaskCategoryHighlights({
   const selectedImageUrl = showBefore
     ? categoryPreviewUrl(category, gender)
     : maskPreviewUrl(selectedMask, gender);
+  const stopComparing = () => setShowBefore(false);
+  const selectGender = (nextGender: PreviewGender) => {
+    setGender(nextGender);
+    stopComparing();
+  };
+  const selectMask = (maskId: string) => {
+    setSelectedMaskId(maskId);
+    stopComparing();
+  };
+  const startPointerComparison = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setShowBefore(true);
+  };
+  const startKeyboardComparison = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (!COMPARE_KEYS.has(event.key)) return;
+    event.preventDefault();
+    setShowBefore(true);
+  };
+  const stopKeyboardComparison = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (!COMPARE_KEYS.has(event.key)) return;
+    event.preventDefault();
+    stopComparing();
+  };
 
   return (
     <section className="mt-10" aria-label={category.name}>
@@ -81,15 +108,13 @@ export default function AiMaskCategoryHighlights({
                   aria-checked={selected}
                   aria-label={choice.label}
                   title={choice.label}
-                  onClick={() => {
-                    setGender(choice.value);
-                    setShowBefore(false);
-                  }}
-                  className={`flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition ${
+                  onClick={() => selectGender(choice.value)}
+                  className={cn(
+                    'flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition',
                     selected
                       ? 'bg-purple-600 text-white shadow-sm'
-                      : 'text-gray-500 hover:bg-gray-100 hover:text-purple-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-purple-300'
-                  }`}
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-purple-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-purple-300',
+                  )}
                 >
                   <span aria-hidden="true">{choice.symbol}</span>
                 </button>
@@ -99,31 +124,19 @@ export default function AiMaskCategoryHighlights({
         </div>
       ) : null}
 
-      <div className={`${canSwitchGender ? 'mt-4' : ''} flex justify-center`}>
+      <div className={cn('flex justify-center', canSwitchGender && 'mt-4')}>
         <button
           type="button"
           aria-label={`${holdToCompareLabel}: ${selectedMask.name}`}
           aria-pressed={showBefore}
-          onPointerDown={(event) => {
-            if (event.pointerType === 'mouse' && event.button !== 0) return;
-            event.currentTarget.setPointerCapture(event.pointerId);
-            setShowBefore(true);
-          }}
-          onPointerUp={() => setShowBefore(false)}
-          onPointerCancel={() => setShowBefore(false)}
-          onPointerLeave={() => setShowBefore(false)}
-          onLostPointerCapture={() => setShowBefore(false)}
-          onKeyDown={(event) => {
-            if (event.key !== ' ' && event.key !== 'Enter') return;
-            event.preventDefault();
-            setShowBefore(true);
-          }}
-          onKeyUp={(event) => {
-            if (event.key !== ' ' && event.key !== 'Enter') return;
-            event.preventDefault();
-            setShowBefore(false);
-          }}
-          onBlur={() => setShowBefore(false)}
+          onPointerDown={startPointerComparison}
+          onPointerUp={stopComparing}
+          onPointerCancel={stopComparing}
+          onPointerLeave={stopComparing}
+          onLostPointerCapture={stopComparing}
+          onKeyDown={startKeyboardComparison}
+          onKeyUp={stopKeyboardComparison}
+          onBlur={stopComparing}
           onContextMenu={(event) => event.preventDefault()}
           onDragStart={(event) => event.preventDefault()}
           className="group relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[28px] bg-gray-200 shadow-xl ring-1 ring-black/10 transition hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:ring-white/10 dark:focus:ring-offset-gray-950"
@@ -162,15 +175,13 @@ export default function AiMaskCategoryHighlights({
               type="button"
               aria-label={mask.name}
               aria-pressed={selected}
-              onClick={() => {
-                setSelectedMaskId(mask.id);
-                setShowBefore(false);
-              }}
-              className={`group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:focus:ring-offset-gray-950 ${
+              onClick={() => selectMask(mask.id)}
+              className={cn(
+                'group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:focus:ring-offset-gray-950',
                 selected
                   ? 'border-2 border-gray-950 dark:border-white'
-                  : 'border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500'
-              }`}
+                  : 'border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500',
+              )}
             >
               <Image
                 src={maskPreviewUrl(mask, gender)}

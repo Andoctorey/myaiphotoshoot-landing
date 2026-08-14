@@ -44,19 +44,23 @@ test('mask category metadata and sitemap use only published localized siblings',
 });
 
 test('visible category content matches FAQ, breadcrumb, collection, and item-list schema', async () => {
-  const component = await readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx');
+  const [component, jsonLd] = await Promise.all([
+    readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
+    readProjectFile('src/lib/ai-mask-category-json-ld.ts'),
+  ]);
   assert.doesNotMatch(component, /<main\b/);
-  assert.match(component, /landing\.introduction[\s\S]*split\(\/\\n\\s\*\\n\/u\)/);
+  assert.match(component, /splitIntroduction\(landing\.introduction\)/);
+  assert.match(component, /function splitIntroduction[\s\S]*split\(\/\\n\\s\*\\n\/u\)/);
   assert.match(component, /landing\.photoGuidance/);
   assert.match(component, /landing\.expectations/);
   assert.match(component, /landing\.limitations/);
   assert.match(component, /landing\.faqs\.map/);
-  assert.match(component, /'@type': 'CollectionPage'/);
-  assert.match(component, /'@type': 'ItemList'/);
-  assert.match(component, /'@id': `\$\{pageUrl\}#mask-\$\{mask\.slug\}`/);
-  assert.match(component, /'@type': 'BreadcrumbList'/);
-  assert.match(component, /'@type': 'FAQPage'/);
-  assert.doesNotMatch(component, /HowTo/);
+  assert.match(jsonLd, /'@type': 'CollectionPage'/);
+  assert.match(jsonLd, /'@type': 'ItemList'/);
+  assert.match(jsonLd, /'@id': `\$\{pageUrl\}#mask-\$\{mask\.slug\}`/);
+  assert.match(jsonLd, /'@type': 'BreadcrumbList'/);
+  assert.match(jsonLd, /'@type': 'FAQPage'/);
+  assert.doesNotMatch(jsonLd, /HowTo/);
 });
 
 test('mask index links every published guide independently of the selected preview gender', async () => {
