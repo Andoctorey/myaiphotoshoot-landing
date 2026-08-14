@@ -14,6 +14,7 @@ type Props = {
   description: string;
   femaleLabel: string;
   genderLabel: string;
+  holdToCompareLabel: string;
   maleLabel: string;
   masks: readonly AiMask[];
   resultAltLabel: string;
@@ -44,6 +45,7 @@ export default function AiMaskCategoryHighlights({
   description,
   femaleLabel,
   genderLabel,
+  holdToCompareLabel,
   maleLabel,
   masks,
   resultAltLabel,
@@ -113,9 +115,30 @@ export default function AiMaskCategoryHighlights({
       <div className="mt-6 flex justify-center">
         <button
           type="button"
-          aria-label={`${showBefore ? afterLabel : beforeLabel}: ${selectedMask.name}`}
+          aria-label={`${holdToCompareLabel}: ${selectedMask.name}`}
           aria-pressed={showBefore}
-          onClick={() => setShowBefore((current) => !current)}
+          onPointerDown={(event) => {
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            event.currentTarget.setPointerCapture(event.pointerId);
+            setShowBefore(true);
+          }}
+          onPointerUp={() => setShowBefore(false)}
+          onPointerCancel={() => setShowBefore(false)}
+          onPointerLeave={() => setShowBefore(false)}
+          onLostPointerCapture={() => setShowBefore(false)}
+          onKeyDown={(event) => {
+            if (event.key !== ' ' && event.key !== 'Enter') return;
+            event.preventDefault();
+            setShowBefore(true);
+          }}
+          onKeyUp={(event) => {
+            if (event.key !== ' ' && event.key !== 'Enter') return;
+            event.preventDefault();
+            setShowBefore(false);
+          }}
+          onBlur={() => setShowBefore(false)}
+          onContextMenu={(event) => event.preventDefault()}
+          onDragStart={(event) => event.preventDefault()}
           className="group relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[28px] bg-gray-200 shadow-xl ring-1 ring-black/10 transition hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:ring-white/10 dark:focus:ring-offset-gray-950"
         >
           <Image
@@ -134,8 +157,11 @@ export default function AiMaskCategoryHighlights({
           <span className="absolute right-3 top-3 rounded-full bg-purple-600/90 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-sm">
             {showBefore ? beforeLabel : afterLabel}
           </span>
-          <div className="absolute inset-x-0 bottom-0 px-5 py-5 text-center">
+          <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-2 px-4 py-4 text-left">
             <span className="text-lg font-semibold text-white">{selectedMask.name}</span>
+            <span className="rounded-full bg-black/65 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-sm">
+              {holdToCompareLabel}
+            </span>
           </div>
         </button>
       </div>
