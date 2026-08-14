@@ -113,12 +113,6 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             {landing.title}
           </h1>
           <p className="mt-5 text-lg leading-8 text-gray-700 dark:text-gray-300">{landing.description}</p>
-          <a
-            href={AI_MASKS_APP_URL}
-            className="mt-7 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-700"
-          >
-            {t('tryMasks')}
-          </a>
         </header>
 
         {category ? (
