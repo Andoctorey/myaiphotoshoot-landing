@@ -52,9 +52,14 @@ export default function AiMaskCategoryHighlights({
 }: Props) {
   const initialGender: PreviewGender = category.audienceGender === 'male' ? 'male' : 'female';
   const [gender, setGender] = useState<PreviewGender>(initialGender);
-  const [beforeMaskId, setBeforeMaskId] = useState<string | null>(null);
+  const [selectedMaskId, setSelectedMaskId] = useState(() => masks[0]?.id || '');
+  const [showBefore, setShowBefore] = useState(false);
   const canSwitchGender = category.audienceGender === 'unisex';
-  if (masks.length === 0) return null;
+  const selectedMask = masks.find((mask) => mask.id === selectedMaskId) || masks[0];
+  if (!selectedMask) return null;
+  const selectedImageUrl = showBefore
+    ? categoryPreviewUrl(category, gender)
+    : maskPreviewUrl(selectedMask, gender);
 
   return (
     <section className="mt-12" aria-labelledby="mask-category-highlights">
@@ -89,7 +94,7 @@ export default function AiMaskCategoryHighlights({
                   title={choice.label}
                   onClick={() => {
                     setGender(choice.value);
-                    setBeforeMaskId(null);
+                    setShowBefore(false);
                   }}
                   className={`flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition ${
                     selected
@@ -105,37 +110,72 @@ export default function AiMaskCategoryHighlights({
         ) : null}
       </div>
 
+      <div className="mt-6 flex justify-center">
+        <button
+          type="button"
+          aria-label={`${showBefore ? afterLabel : beforeLabel}: ${selectedMask.name}`}
+          aria-pressed={showBefore}
+          onClick={() => setShowBefore((current) => !current)}
+          className="group relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[28px] bg-gray-200 shadow-xl ring-1 ring-black/10 transition hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:ring-white/10 dark:focus:ring-offset-gray-950"
+        >
+          <Image
+            key={selectedImageUrl}
+            src={selectedImageUrl}
+            alt={showBefore
+              ? `${beforeLabel}: ${category.name}`
+              : interpolate(resultAltLabel, 'name', selectedMask.name)}
+            width={840}
+            height={1050}
+            sizes="(max-width: 479px) calc(100vw - 32px), 420px"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/75" />
+          <span className="absolute right-3 top-3 rounded-full bg-purple-600/90 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-sm">
+            {showBefore ? beforeLabel : afterLabel}
+          </span>
+          <div className="absolute inset-x-0 bottom-0 px-5 py-5 text-center">
+            <span className="text-lg font-semibold text-white">{selectedMask.name}</span>
+          </div>
+        </button>
+      </div>
+
       <div className="-mx-4 mt-5 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
-        {masks.map((mask, index) => {
-          const showBefore = beforeMaskId === mask.id;
-          const imageUrl = showBefore
-            ? categoryPreviewUrl(category, gender)
-            : maskPreviewUrl(mask, gender);
+        {masks.map((mask) => {
+          const selected = selectedMask.id === mask.id;
           return (
             <button
               key={mask.id}
               type="button"
-              aria-label={`${showBefore ? afterLabel : beforeLabel}: ${mask.name}`}
-              aria-pressed={showBefore}
-              onClick={() => setBeforeMaskId(showBefore ? null : mask.id)}
-              className="group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl border border-gray-300 bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-gray-500 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-500 dark:focus:ring-offset-gray-950"
+              aria-label={mask.name}
+              aria-pressed={selected}
+              onClick={() => {
+                setSelectedMaskId(mask.id);
+                setShowBefore(false);
+              }}
+              className={`group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:focus:ring-offset-gray-950 ${
+                selected
+                  ? 'border-2 border-gray-950 dark:border-white'
+                  : 'border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500'
+              }`}
             >
               <Image
-                key={imageUrl}
-                src={imageUrl}
-                alt={showBefore
-                  ? `${beforeLabel}: ${category.name}`
-                  : interpolate(resultAltLabel, 'name', mask.name)}
+                src={maskPreviewUrl(mask, gender)}
+                alt={interpolate(resultAltLabel, 'name', mask.name)}
                 width={248}
                 height={304}
                 sizes="124px"
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                priority={index < 4}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />
-              <span className="absolute right-2 top-2 rounded-full bg-purple-600/90 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-                {showBefore ? beforeLabel : afterLabel}
-              </span>
+              {selected ? (
+                <span
+                  aria-hidden="true"
+                  className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-950 text-sm font-bold text-white shadow-sm dark:bg-white dark:text-gray-950"
+                >
+                  ✓
+                </span>
+              ) : null}
               <div className="absolute inset-x-0 bottom-0 px-2.5 py-2.5 text-center">
                 <span className="line-clamp-2 text-sm font-semibold leading-tight text-white">
                   {mask.name}

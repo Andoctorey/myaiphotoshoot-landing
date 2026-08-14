@@ -90,7 +90,7 @@
       "categoryGuide": "AIマスクのカテゴリーガイド",
       "aboutTitle": "これらのスタイルについて",
       "highlightsTitle": "{category}のスタイルを見る",
-      "highlightsDescription": "スワイプして全{count}種類のマスクを確認できます。プレビューをタップするとビフォーとアフターが切り替わります。",
+      "highlightsDescription": "下の全{count}種類のマスクから選び、大きなプレビューをタップしてビフォーとアフターを切り替えられます。",
       "photoGuidanceTitle": "写真のポイント",
       "expectationsTitle": "期待できること",
       "limitationsTitle": "制限事項",

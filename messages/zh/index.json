@@ -90,7 +90,7 @@
       "categoryGuide": "AI 面具分类指南",
       "aboutTitle": "关于这些造型",
       "highlightsTitle": "探索{category}造型",
-      "highlightsDescription": "滑动浏览全部 {count} 个面具。点击预览可切换前后效果。",
+      "highlightsDescription": "从下方全部 {count} 个面具中选择，然后点击大图预览切换前后效果。",
       "photoGuidanceTitle": "照片建议",
       "expectationsTitle": "效果预期",
       "limitationsTitle": "局限性",
