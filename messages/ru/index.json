@@ -89,7 +89,7 @@
     "landing": {
       "categoryGuide": "Руководства по категориям AI-масок",
       "aboutTitle": "Об этих образах",
-      "highlightsTitle": "Посмотрите варианты: {category}",
+      "highlightsTitle": "Образы из категории «{category}»",
       "highlightsDescription": "Выберите одну из всех масок ниже ({count}), затем удерживайте большое превью, чтобы сравнить фото до и после.",
       "holdToCompare": "Удерживайте для сравнения",
       "photoGuidanceTitle": "Рекомендации к фото",
