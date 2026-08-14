@@ -126,11 +126,9 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             afterLabel={t('after')}
             beforeLabel={t('before')}
             category={category}
-            creditCostLabel={t.raw('creditCost') as string}
             description={t('landing.highlightsDescription', { count: masks.length })}
             femaleLabel={t('genderFemale')}
             genderLabel={t('genderLabel')}
-            locale={locale}
             maleLabel={t('genderMale')}
             masks={masks}
             resultAltLabel={t.raw('resultAlt') as string}

@@ -11,11 +11,9 @@ type Props = {
   afterLabel: string;
   beforeLabel: string;
   category: AiMaskCategory;
-  creditCostLabel: string;
   description: string;
   femaleLabel: string;
   genderLabel: string;
-  locale: string;
   maleLabel: string;
   masks: readonly AiMask[];
   resultAltLabel: string;
@@ -43,11 +41,9 @@ export default function AiMaskCategoryHighlights({
   afterLabel,
   beforeLabel,
   category,
-  creditCostLabel,
   description,
   femaleLabel,
   genderLabel,
-  locale,
   maleLabel,
   masks,
   resultAltLabel,
@@ -137,14 +133,6 @@ export default function AiMaskCategoryHighlights({
                 priority={index < 4}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />
-              <span className="absolute left-2 top-2 rounded-full bg-black/65 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-                {interpolate(
-                  creditCostLabel,
-                  'credits',
-                  new Intl.NumberFormat(locale, { maximumFractionDigits: 0 })
-                    .format(mask.priceCredits),
-                )}
-              </span>
               <span className="absolute right-2 top-2 rounded-full bg-purple-600/90 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
                 {showBefore ? beforeLabel : afterLabel}
               </span>
