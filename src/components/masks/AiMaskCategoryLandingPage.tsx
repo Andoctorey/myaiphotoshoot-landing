@@ -1,9 +1,6 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import AiMaskCategoryHighlights from '@/components/masks/AiMaskCategoryHighlights';
-import MasksCatalogBrowser, {
-  type MasksCatalogLabels,
-} from '@/components/masks/MasksCatalogBrowser';
 import { AI_MASKS_APP_URL } from '@/lib/app-links';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
@@ -22,33 +19,12 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
   ]);
   const category = catalog.categories.find((item) => item.id === landing.categoryId);
   const masks = catalog.masks.filter((mask) => mask.categoryId === landing.categoryId);
-  const categoryCatalog: AiMasksCatalog = {
-    categories: category ? [category] : [],
-    masks,
-  };
   const pageUrl = canonicalUrl(locale, `/masks/${landing.slug}/`);
   const categoryName = category?.name || landing.title;
   const introductionParagraphs = landing.introduction
     .split(/\n\s*\n/u)
     .map((paragraph) => paragraph.replace(/\s*\n\s*/gu, ' ').trim())
     .filter(Boolean);
-  const labels: MasksCatalogLabels = {
-    after: t('after'),
-    before: t('before'),
-    categoryGuide: t('landing.categoryGuide'),
-    categoryNav: t('categoryNav'),
-    creditCost: t.raw('creditCost') as string,
-    female: t('genderFemale'),
-    genderLabel: t('genderLabel'),
-    male: t('genderMale'),
-    maskCount: t.raw('maskCount') as string,
-    readyDescription: t('readyDescription'),
-    readyTitle: t('readyTitle'),
-    resultAlt: t.raw('resultAlt') as string,
-    sourceAlt: t.raw('sourceAlt') as string,
-    tryMasks: t('tryMasks'),
-    yourPhoto: t('yourPhoto'),
-  };
   const jsonLdGraph: Array<Record<string, unknown>> = [
     {
       '@type': 'CollectionPage',
@@ -145,17 +121,23 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
           </a>
         </header>
 
-        <AiMaskCategoryHighlights
-          afterLabel={labels.after}
-          creditCostLabel={labels.creditCost}
-          description={t('landing.highlightsDescription', { count: masks.length })}
-          locale={locale}
-          masks={masks}
-          resultAltLabel={labels.resultAlt}
-          title={t('landing.highlightsTitle', { category: categoryName })}
-          tryMasksLabel={labels.tryMasks}
-          viewAllLabel={t('landing.viewAllMasks', { count: masks.length })}
-        />
+        {category ? (
+          <AiMaskCategoryHighlights
+            afterLabel={t('after')}
+            beforeLabel={t('before')}
+            category={category}
+            creditCostLabel={t.raw('creditCost') as string}
+            description={t('landing.highlightsDescription', { count: masks.length })}
+            femaleLabel={t('genderFemale')}
+            genderLabel={t('genderLabel')}
+            locale={locale}
+            maleLabel={t('genderMale')}
+            masks={masks}
+            resultAltLabel={t.raw('resultAlt') as string}
+            title={t('landing.highlightsTitle', { category: categoryName })}
+            tryMasksLabel={t('tryMasks')}
+          />
+        ) : null}
 
         <section className="mt-12 max-w-4xl" aria-labelledby="mask-category-about">
           <h2 id="mask-category-about" className="text-2xl font-bold text-gray-950 dark:text-white">
@@ -190,24 +172,6 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
           </p>
         </aside>
 
-        {category && masks.length > 0 ? (
-          <section className="mt-14" aria-labelledby="current-category-masks">
-            <h2 id="current-category-masks" className="text-3xl font-bold text-gray-950 dark:text-white">
-              {t('landing.masksTitle')}
-            </h2>
-            <p className="mt-3 max-w-3xl text-gray-700 dark:text-gray-300">
-              {t('landing.masksDescription')}
-            </p>
-            <div className="mt-8">
-              <MasksCatalogBrowser
-                catalog={categoryCatalog}
-                labels={labels}
-                locale={locale}
-              />
-            </div>
-          </section>
-        ) : null}
-
         <section className="mt-14 max-w-4xl" aria-labelledby="mask-category-faq">
           <h2 id="mask-category-faq" className="text-2xl font-bold text-gray-950 dark:text-white">
             {t('landing.faqTitle')}
@@ -222,6 +186,21 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
               </details>
             ))}
           </div>
+        </section>
+
+        <section className="mt-14 rounded-3xl bg-purple-100 px-6 py-9 text-center dark:bg-purple-950/40 sm:px-10">
+          <h2 className="text-2xl font-bold text-gray-950 dark:text-white">
+            {t('readyTitle')}
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-gray-600 dark:text-gray-300">
+            {t('readyDescription')}
+          </p>
+          <a
+            href={AI_MASKS_APP_URL}
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+          >
+            {t('tryMasks')}
+          </a>
         </section>
       </article>
     </div>

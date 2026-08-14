@@ -89,9 +89,8 @@
     "landing": {
       "categoryGuide": "AI Mask category guides",
       "aboutTitle": "About these looks",
-      "highlightsTitle": "Explore {category} looks",
-      "highlightsDescription": "Start with these masks, then browse all {count} available looks below.",
-      "viewAllMasks": "View all {count} masks",
+      "highlightsTitle": "Explore {category} Looks",
+      "highlightsDescription": "Swipe through all {count} masks. Tap a preview to switch between before and after.",
       "photoGuidanceTitle": "Photo guidance",
       "expectationsTitle": "What to expect",
       "limitationsTitle": "Limitations",
