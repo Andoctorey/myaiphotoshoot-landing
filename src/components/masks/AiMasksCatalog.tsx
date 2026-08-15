@@ -21,7 +21,6 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
   ]);
   const pageUrl = canonicalUrl(locale, '/masks/');
   const labels: MasksCatalogLabels = {
-    after: t('after'),
     availabilityWebAndroid: t('availabilityWebAndroid'),
     before: t('before'),
     categoryGuide: t('landing.categoryGuide'),
