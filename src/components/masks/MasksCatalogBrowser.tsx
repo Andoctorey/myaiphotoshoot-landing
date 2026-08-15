@@ -219,12 +219,11 @@ export default function MasksCatalogBrowser({
                       sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
                       className="aspect-[4/5] w-full object-cover"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/80" />
                     <span className="absolute left-2 top-2 rounded-full bg-black/65 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm">
                       {labels.before}
                     </span>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-950 dark:text-white">
+                    <h3 className="absolute inset-x-0 bottom-0 px-3 py-3 text-center text-sm font-semibold leading-tight text-white sm:text-base">
                       {labels.yourPhoto}
                     </h3>
                   </div>
@@ -245,9 +244,8 @@ export default function MasksCatalogBrowser({
                         className="aspect-[4/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                         loading="lazy"
                       />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-gray-950 dark:text-white">
+                      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />
+                      <h3 className="absolute inset-x-0 bottom-0 px-3 py-3 text-center text-sm font-semibold leading-tight text-white sm:text-base">
                         {mask.name}
                       </h3>
                     </div>
