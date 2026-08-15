@@ -111,7 +111,7 @@ export default function MasksCatalogBrowser({
 
       <section
         aria-labelledby="mask-preview-gender-label"
-        className="sticky top-16 z-20 -mx-4 border-y border-gray-200 bg-gray-50/90 px-4 py-3 backdrop-blur-lg dark:border-gray-800 dark:bg-gray-950/90 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-2xl lg:border lg:px-4"
+        className="flex items-center justify-center py-2"
       >
         <div className="flex items-center justify-center gap-3">
           <span id="mask-preview-gender-label" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -150,7 +150,7 @@ export default function MasksCatalogBrowser({
         </div>
       </section>
 
-      <div className="mt-8 space-y-4">
+      <div className="mt-3 space-y-4">
         {visibleCategories.map((category) => {
           const masks = catalog.masks.filter((mask) => mask.categoryId === category.id);
           return (
