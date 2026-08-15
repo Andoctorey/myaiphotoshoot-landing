@@ -19,7 +19,6 @@ export type MasksCatalogLabels = {
   availabilityWebAndroid: string;
   before: string;
   categoryGuide: string;
-  categoryNav: string;
   female: string;
   genderLabel: string;
   male: string;
@@ -110,69 +109,46 @@ export default function MasksCatalogBrowser({
         </nav>
       ) : null}
 
-      <nav
-        aria-label={labels.categoryNav}
+      <section
+        aria-labelledby="mask-preview-gender-label"
         className="sticky top-16 z-20 -mx-4 border-y border-gray-200 bg-gray-50/90 px-4 py-3 backdrop-blur-lg dark:border-gray-800 dark:bg-gray-950/90 sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-2xl lg:border lg:px-4"
       >
-        <div className="flex flex-col items-center gap-3">
-          <div className="flex items-center justify-center gap-3">
-            <span id="mask-preview-gender-label" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-              {labels.genderLabel}
-            </span>
-            <div
-              aria-labelledby="mask-preview-gender-label"
-              className="flex h-11 w-[92px] shrink-0 items-center rounded-full border border-gray-300 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
-              role="radiogroup"
-            >
-              {([
-                { value: 'male', symbol: '♂', label: labels.male },
-                { value: 'female', symbol: '♀', label: labels.female },
-              ] as const).map((choice) => {
-                const selected = gender === choice.value;
-                return (
-                  <button
-                    key={choice.value}
-                    type="button"
-                    role="radio"
-                    aria-checked={selected}
-                    aria-label={choice.label}
-                    title={choice.label}
-                    onClick={() => setGender(choice.value)}
-                    className={`flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition ${
-                      selected
-                        ? 'bg-purple-600 text-white shadow-sm'
-                        : 'text-gray-500 hover:bg-gray-100 hover:text-purple-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-purple-300'
-                    }`}
-                  >
-                    <span aria-hidden="true">{choice.symbol}</span>
-                  </button>
-                );
-              })}
-            </div>
+        <div className="flex items-center justify-center gap-3">
+          <span id="mask-preview-gender-label" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {labels.genderLabel}
+          </span>
+          <div
+            aria-labelledby="mask-preview-gender-label"
+            className="flex h-11 w-[92px] shrink-0 items-center rounded-full border border-gray-300 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+            role="radiogroup"
+          >
+            {([
+              { value: 'male', symbol: '♂', label: labels.male },
+              { value: 'female', symbol: '♀', label: labels.female },
+            ] as const).map((choice) => {
+              const selected = gender === choice.value;
+              return (
+                <button
+                  key={choice.value}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  aria-label={choice.label}
+                  title={choice.label}
+                  onClick={() => setGender(choice.value)}
+                  className={`flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition ${
+                    selected
+                      ? 'bg-purple-600 text-white shadow-sm'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-purple-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-purple-300'
+                  }`}
+                >
+                  <span aria-hidden="true">{choice.symbol}</span>
+                </button>
+              );
+            })}
           </div>
-
-          {catalog.categories.length > 1 ? (
-            <div className="w-full overflow-x-auto py-0.5">
-              <div className="mx-auto flex w-max gap-2 px-0.5">
-                {visibleCategories.map((category) => (
-                  <a
-                    key={category.id}
-                    href={`#${category.slug}`}
-                    onClick={() => {
-                      const categorySection = document.getElementById(category.slug);
-                      if (categorySection instanceof HTMLDetailsElement) categorySection.open = true;
-                    }}
-                    className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-gray-200 transition hover:text-purple-700 hover:ring-purple-300 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:text-purple-300 dark:hover:ring-purple-700"
-                  >
-                    <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
-                    {category.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-          ) : null}
         </div>
-      </nav>
+      </section>
 
       <div className="mt-8 space-y-4">
         {visibleCategories.map((category) => {

@@ -24,7 +24,6 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
     availabilityWebAndroid: t('availabilityWebAndroid'),
     before: t('before'),
     categoryGuide: t('landing.categoryGuide'),
-    categoryNav: t('categoryNav'),
     female: t('genderFemale'),
     genderLabel: t('genderLabel'),
     male: t('genderMale'),
