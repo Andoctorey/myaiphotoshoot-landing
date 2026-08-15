@@ -19,7 +19,6 @@ export type MasksCatalogLabels = {
   availabilityWebAndroid: string;
   before: string;
   categoryGuide: string;
-  categoryGuideLink: string;
   categoryNav: string;
   female: string;
   genderLabel: string;
@@ -172,7 +171,7 @@ export default function MasksCatalogBrowser({
         </div>
       </nav>
 
-      <div className="mt-12 space-y-16">
+      <div className="mt-8 space-y-4">
         {visibleCategories.map((category) => {
           const masks = catalog.masks.filter((mask) => mask.categoryId === category.id);
           return (
@@ -180,19 +179,19 @@ export default function MasksCatalogBrowser({
               key={category.id}
               id={category.slug}
               aria-labelledby={`${category.slug}-title`}
-              className="scroll-mt-36 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
+              className="group scroll-mt-36 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
             >
-              <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-4 px-5 py-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-500 [&::-webkit-details-marker]:hidden sm:px-6">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-500 [&::-webkit-details-marker]:hidden sm:px-6 sm:py-5">
                 <div className="flex items-center gap-3">
                   {category.iconPath ? (
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-                      <MaskCategoryIcon iconPath={category.iconPath} className="h-6 w-6" />
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 sm:h-11 sm:w-11">
+                      <MaskCategoryIcon iconPath={category.iconPath} className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
                   ) : null}
                   <div>
                     <h2
                       id={`${category.slug}-title`}
-                      className="text-3xl font-bold tracking-tight text-gray-950 dark:text-white"
+                      className="text-xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-2xl"
                     >
                       {category.name}
                     </h2>
@@ -208,19 +207,16 @@ export default function MasksCatalogBrowser({
                     </div>
                   </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-3">
-                  {publishedCategoryIdSet.has(category.id) ? (
-                    <Link
-                      href={localePath(locale, `/masks/${category.slug}/`)}
-                      onClick={(event) => event.stopPropagation()}
-                      className="inline-flex min-h-10 items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-purple-700 shadow-sm ring-1 ring-purple-200 transition hover:bg-purple-50 hover:ring-purple-300 dark:bg-gray-900 dark:text-purple-300 dark:ring-purple-900 dark:hover:bg-purple-950/30"
-                    >
-                      {interpolate(labels.categoryGuideLink, 'category', category.name)}
-                      <span aria-hidden="true" className="ms-1.5">→</span>
-                    </Link>
-                  ) : null}
-                  <span aria-hidden="true" className="text-xl text-gray-400">⌄</span>
-                </div>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="h-5 w-5 shrink-0 text-gray-400 transition-transform group-open:rotate-180"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
+                </svg>
               </summary>
 
               <div className="grid grid-cols-2 gap-4 border-t border-gray-100 p-5 dark:border-gray-800 sm:grid-cols-3 sm:p-6 lg:grid-cols-5">
@@ -247,7 +243,7 @@ export default function MasksCatalogBrowser({
                 {masks.map((mask) => (
                   <article
                     key={mask.id}
-                    className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
+                    className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
                   >
                     <div className="relative overflow-hidden">
                       <Image
@@ -256,7 +252,7 @@ export default function MasksCatalogBrowser({
                         width={560}
                         height={700}
                         sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
-                        className="aspect-[4/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                        className="aspect-[4/5] w-full object-cover"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />

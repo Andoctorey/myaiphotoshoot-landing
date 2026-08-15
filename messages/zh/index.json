@@ -89,7 +89,6 @@
     "readyDescription": "在应用中打开“面具”，上传一张清晰的人像照片即可开始。",
     "landing": {
       "categoryGuide": "AI 面具分类指南",
-      "categoryGuideLink": "{category}指南",
       "aboutTitle": "关于这些造型",
       "holdToCompare": "长按比较",
       "iosUnavailable": "根据 App Store 的要求，此类别无法在 iOS 应用中使用。您仍可在网页端和 Android 上使用。",

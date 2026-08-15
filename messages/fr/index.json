@@ -89,7 +89,6 @@
     "readyDescription": "Ouvrez la section Masques dans l’application et importez un portrait net pour commencer.",
     "landing": {
       "categoryGuide": "Guides des catégories de masques IA",
-      "categoryGuideLink": "Guide {category}",
       "aboutTitle": "À propos de ces looks",
       "holdToCompare": "Maintenez pour comparer",
       "iosUnavailable": "En raison des exigences de l’App Store, cette catégorie n’est pas disponible dans l’app iOS. Vous pouvez toujours l’utiliser sur le Web et sur Android.",

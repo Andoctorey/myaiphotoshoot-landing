@@ -89,7 +89,6 @@
     "readyDescription": "Öffne den Bereich „Masken“ in der App und lade zum Start ein klares Porträt hoch.",
     "landing": {
       "categoryGuide": "Ratgeber für AI-Masken-Kategorien",
-      "categoryGuideLink": "Ratgeber: {category}",
       "aboutTitle": "Über diese Looks",
       "holdToCompare": "Zum Vergleichen halten",
       "iosUnavailable": "Aufgrund der App-Store-Vorgaben ist diese Kategorie in der iOS-App nicht verfügbar. Im Web und auf Android kannst du sie weiterhin verwenden.",

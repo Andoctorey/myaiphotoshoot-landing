@@ -89,7 +89,6 @@
     "readyDescription": "Abre Máscaras en la app y sube un retrato nítido para empezar.",
     "landing": {
       "categoryGuide": "Guías de categorías de máscaras con IA",
-      "categoryGuideLink": "Guía de {category}",
       "aboutTitle": "Sobre estos looks",
       "holdToCompare": "Mantén pulsado para comparar",
       "iosUnavailable": "Debido a los requisitos de la App Store, esta categoría no está disponible en la app para iOS. Aún puedes usarla en la web y en Android.",

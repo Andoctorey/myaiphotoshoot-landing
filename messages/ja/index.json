@@ -89,7 +89,6 @@
     "readyDescription": "アプリで「マスク」を開き、鮮明なポートレートを1枚アップロードして始めましょう。",
     "landing": {
       "categoryGuide": "AIマスクのカテゴリーガイド",
-      "categoryGuideLink": "{category}ガイド",
       "aboutTitle": "これらのスタイルについて",
       "holdToCompare": "長押しして比較",
       "iosUnavailable": "App Storeの要件により、このカテゴリーはiOSアプリでは利用できません。Web版とAndroidでは引き続き利用できます。",
