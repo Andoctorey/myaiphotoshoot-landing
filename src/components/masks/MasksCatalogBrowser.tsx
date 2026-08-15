@@ -17,8 +17,10 @@ type PreviewGender = Extract<MaskAudienceGender, 'female' | 'male'>;
 
 export type MasksCatalogLabels = {
   after: string;
+  availabilityWebAndroid: string;
   before: string;
   categoryGuide: string;
+  categoryGuideLink: string;
   categoryNav: string;
   creditCost: string;
   female: string;
@@ -83,7 +85,7 @@ export default function MasksCatalogBrowser({
       {publishedCategories.length > 0 ? (
         <nav
           aria-label={labels.categoryGuide}
-          className="mb-6"
+          className="mb-8 rounded-2xl border border-purple-200 bg-purple-50/70 px-4 py-5 dark:border-purple-900 dark:bg-purple-950/20 sm:px-6"
         >
           <p className="mb-3 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
             {labels.categoryGuide}
@@ -171,7 +173,7 @@ export default function MasksCatalogBrowser({
               aria-labelledby={`${category.slug}-title`}
               className="scroll-mt-36"
             >
-              <div className="mb-6">
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   {category.iconPath ? (
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
@@ -185,11 +187,27 @@ export default function MasksCatalogBrowser({
                     >
                       {category.name}
                     </h2>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                      {interpolate(labels.maskCount, 'count', masks.length)}
-                    </p>
+                    <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                      <span>{interpolate(labels.maskCount, 'count', masks.length)}</span>
+                      {category.hiddenOnIos ? (
+                        <span
+                          className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-900 dark:bg-amber-950/50 dark:text-amber-200"
+                        >
+                          {labels.availabilityWebAndroid}
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
+                {publishedCategoryIdSet.has(category.id) ? (
+                  <Link
+                    href={localePath(locale, `/masks/${category.slug}/`)}
+                    className="inline-flex min-h-10 items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-purple-700 shadow-sm ring-1 ring-purple-200 transition hover:bg-purple-50 hover:ring-purple-300 dark:bg-gray-900 dark:text-purple-300 dark:ring-purple-900 dark:hover:bg-purple-950/30"
+                  >
+                    {interpolate(labels.categoryGuideLink, 'category', category.name)}
+                    <span aria-hidden="true" className="ms-1.5">→</span>
+                  </Link>
+                ) : null}
               </div>
 
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">

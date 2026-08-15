@@ -80,6 +80,7 @@
     "genderLabel": "Preview model gender",
     "genderMale": "Male",
     "genderFemale": "Female",
+    "availabilityWebAndroid": "Web + Android only",
     "howTitle": "How AI Masks work",
     "categoryNav": "Browse AI Mask categories",
     "maskCount": "{count} masks",
@@ -88,6 +89,7 @@
     "readyDescription": "Open Masks in the app and upload one clear portrait to get started.",
     "landing": {
       "categoryGuide": "AI Mask category guides",
+      "categoryGuideLink": "{category} guide",
       "aboutTitle": "About these looks",
       "holdToCompare": "Hold to compare",
       "iosUnavailable": "Due to App Store requirements, this category isn’t available in the iOS app. You can still use it on the web and Android.",

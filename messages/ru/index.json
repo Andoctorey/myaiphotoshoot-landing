@@ -80,6 +80,7 @@
     "genderLabel": "Пол модели",
     "genderMale": "Мужской",
     "genderFemale": "Женский",
+    "availabilityWebAndroid": "Только веб и Android",
     "howTitle": "Как работают AI-маски",
     "categoryNav": "Просмотр категорий AI-масок",
     "maskCount": "{count} масок",
@@ -88,6 +89,7 @@
     "readyDescription": "Откройте раздел «Маски» в приложении и загрузите чёткий портрет, чтобы начать.",
     "landing": {
       "categoryGuide": "Руководства по категориям AI-масок",
+      "categoryGuideLink": "Руководство: {category}",
       "aboutTitle": "Об этих образах",
       "holdToCompare": "Удерживайте для сравнения",
       "iosUnavailable": "Из-за требований App Store эта категория недоступна в приложении для iOS. Она по-прежнему доступна в веб-версии и на Android.",

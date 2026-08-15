@@ -22,8 +22,10 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
   const pageUrl = canonicalUrl(locale, '/masks/');
   const labels: MasksCatalogLabels = {
     after: t('after'),
+    availabilityWebAndroid: t('availabilityWebAndroid'),
     before: t('before'),
     categoryGuide: t('landing.categoryGuide'),
+    categoryGuideLink: t.raw('landing.categoryGuideLink') as string,
     categoryNav: t('categoryNav'),
     creditCost: t.raw('creditCost') as string,
     female: t('genderFemale'),

@@ -80,6 +80,7 @@
     "genderLabel": "جنس نموذج المعاينة",
     "genderMale": "ذكر",
     "genderFemale": "أنثى",
+    "availabilityWebAndroid": "الويب وAndroid فقط",
     "howTitle": "كيف تعمل أقنعة AI",
     "categoryNav": "تصفّح فئات أقنعة AI",
     "maskCount": "{count} أقنعة",
@@ -88,6 +89,7 @@
     "readyDescription": "افتح قسم الأقنعة في التطبيق، ثم حمّل صورة شخصية واضحة للبدء.",
     "landing": {
       "categoryGuide": "أدلة فئات أقنعة AI",
+      "categoryGuideLink": "دليل {category}",
       "aboutTitle": "حول هذه الإطلالات",
       "holdToCompare": "اضغط مطولاً للمقارنة",
       "iosUnavailable": "بسبب متطلبات App Store، لا تتوفر هذه الفئة في تطبيق iOS. لا يزال بإمكانك استخدامها على الويب وAndroid.",
