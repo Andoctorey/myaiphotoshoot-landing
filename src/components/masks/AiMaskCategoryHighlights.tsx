@@ -89,7 +89,10 @@ export default function AiMaskCategoryHighlights({
   return (
     <section className="mt-10" aria-label={category.name}>
       {canSwitchGender ? (
-        <div className="flex justify-end">
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+            {genderLabel}
+          </span>
           <div
             aria-label={genderLabel}
             className="flex h-11 w-[92px] shrink-0 items-center rounded-full border border-gray-300 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
@@ -166,48 +169,50 @@ export default function AiMaskCategoryHighlights({
         </button>
       </div>
 
-      <div className="-mx-4 mt-5 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
-        {masks.map((mask) => {
-          const selected = selectedMask.id === mask.id;
-          return (
-            <button
-              key={mask.id}
-              type="button"
-              aria-label={mask.name}
-              aria-pressed={selected}
-              onClick={() => selectMask(mask.id)}
-              className={cn(
-                'group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:focus:ring-offset-gray-950',
-                selected
-                  ? 'border-2 border-gray-950 dark:border-white'
-                  : 'border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500',
-              )}
-            >
-              <Image
-                src={maskPreviewUrl(mask, gender)}
-                alt={interpolate(resultAltLabel, 'name', mask.name)}
-                width={248}
-                height={304}
-                sizes="124px"
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />
-              {selected ? (
-                <span
-                  aria-hidden="true"
-                  className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-950 text-sm font-bold text-white shadow-sm dark:bg-white dark:text-gray-950"
-                >
-                  ✓
-                </span>
-              ) : null}
-              <div className="absolute inset-x-0 bottom-0 px-2.5 py-2.5 text-center">
-                <span className="line-clamp-2 text-sm font-semibold leading-tight text-white">
-                  {mask.name}
-                </span>
-              </div>
-            </button>
-          );
-        })}
+      <div className="-mx-4 mt-5 snap-x snap-mandatory overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
+        <div className="mx-auto flex w-max gap-2.5">
+          {masks.map((mask) => {
+            const selected = selectedMask.id === mask.id;
+            return (
+              <button
+                key={mask.id}
+                type="button"
+                aria-label={mask.name}
+                aria-pressed={selected}
+                onClick={() => selectMask(mask.id)}
+                className={cn(
+                  'group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:focus:ring-offset-gray-950',
+                  selected
+                    ? 'border-2 border-gray-950 dark:border-white'
+                    : 'border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500',
+                )}
+              >
+                <Image
+                  src={maskPreviewUrl(mask, gender)}
+                  alt={interpolate(resultAltLabel, 'name', mask.name)}
+                  width={248}
+                  height={304}
+                  sizes="124px"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />
+                {selected ? (
+                  <span
+                    aria-hidden="true"
+                    className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-950 text-sm font-bold text-white shadow-sm dark:bg-white dark:text-gray-950"
+                  >
+                    ✓
+                  </span>
+                ) : null}
+                <div className="absolute inset-x-0 bottom-0 px-2.5 py-2.5 text-center">
+                  <span className="line-clamp-2 text-sm font-semibold leading-tight text-white">
+                    {mask.name}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="mt-1 flex justify-center">
