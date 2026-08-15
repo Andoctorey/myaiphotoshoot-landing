@@ -210,12 +210,14 @@ export default function AiMaskCategoryHighlights({
         })}
       </div>
 
-      <a
-        href={AI_MASKS_APP_URL}
-        className="mt-1 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
-      >
-        {tryMasksLabel}
-      </a>
+      <div className="mt-1 flex justify-center">
+        <a
+          href={AI_MASKS_APP_URL}
+          className="inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+        >
+          {tryMasksLabel}
+        </a>
+      </div>
     </section>
   );
 }
