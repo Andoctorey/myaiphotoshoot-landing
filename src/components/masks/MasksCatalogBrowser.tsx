@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
 import { AI_MASKS_APP_URL } from '@/lib/app-links';
 import { localePath } from '@/lib/seo';
@@ -78,6 +78,13 @@ export default function MasksCatalogBrowser({
     return filtered.length > 0 ? filtered : catalog.categories;
   }, [catalog.categories, gender]);
 
+  useEffect(() => {
+    const categoryId = window.location.hash.slice(1);
+    if (!categoryId) return;
+    const categorySection = document.getElementById(categoryId);
+    if (categorySection instanceof HTMLDetailsElement) categorySection.open = true;
+  }, []);
+
   return (
     <>
       {publishedCategories.length > 0 ? (
@@ -149,6 +156,10 @@ export default function MasksCatalogBrowser({
                   <a
                     key={category.id}
                     href={`#${category.slug}`}
+                    onClick={() => {
+                      const categorySection = document.getElementById(category.slug);
+                      if (categorySection instanceof HTMLDetailsElement) categorySection.open = true;
+                    }}
                     className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-gray-200 transition hover:text-purple-700 hover:ring-purple-300 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:text-purple-300 dark:hover:ring-purple-700"
                   >
                     <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
@@ -165,13 +176,13 @@ export default function MasksCatalogBrowser({
         {visibleCategories.map((category) => {
           const masks = catalog.masks.filter((mask) => mask.categoryId === category.id);
           return (
-            <section
+            <details
               key={category.id}
               id={category.slug}
               aria-labelledby={`${category.slug}-title`}
-              className="scroll-mt-36"
+              className="scroll-mt-36 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
             >
-              <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+              <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-4 px-5 py-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-500 [&::-webkit-details-marker]:hidden sm:px-6">
                 <div className="flex items-center gap-3">
                   {category.iconPath ? (
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
@@ -197,18 +208,22 @@ export default function MasksCatalogBrowser({
                     </div>
                   </div>
                 </div>
-                {publishedCategoryIdSet.has(category.id) ? (
-                  <Link
-                    href={localePath(locale, `/masks/${category.slug}/`)}
-                    className="inline-flex min-h-10 items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-purple-700 shadow-sm ring-1 ring-purple-200 transition hover:bg-purple-50 hover:ring-purple-300 dark:bg-gray-900 dark:text-purple-300 dark:ring-purple-900 dark:hover:bg-purple-950/30"
-                  >
-                    {interpolate(labels.categoryGuideLink, 'category', category.name)}
-                    <span aria-hidden="true" className="ms-1.5">→</span>
-                  </Link>
-                ) : null}
-              </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  {publishedCategoryIdSet.has(category.id) ? (
+                    <Link
+                      href={localePath(locale, `/masks/${category.slug}/`)}
+                      onClick={(event) => event.stopPropagation()}
+                      className="inline-flex min-h-10 items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-purple-700 shadow-sm ring-1 ring-purple-200 transition hover:bg-purple-50 hover:ring-purple-300 dark:bg-gray-900 dark:text-purple-300 dark:ring-purple-900 dark:hover:bg-purple-950/30"
+                    >
+                      {interpolate(labels.categoryGuideLink, 'category', category.name)}
+                      <span aria-hidden="true" className="ms-1.5">→</span>
+                    </Link>
+                  ) : null}
+                  <span aria-hidden="true" className="text-xl text-gray-400">⌄</span>
+                </div>
+              </summary>
 
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              <div className="grid grid-cols-2 gap-4 border-t border-gray-100 p-5 dark:border-gray-800 sm:grid-cols-3 sm:p-6 lg:grid-cols-5">
                 <article className="overflow-hidden rounded-2xl border border-dashed border-purple-300 bg-purple-50 dark:border-purple-800 dark:bg-purple-950/20">
                   <div className="relative overflow-hidden">
                     <Image
@@ -252,7 +267,7 @@ export default function MasksCatalogBrowser({
                   </article>
                 ))}
               </div>
-            </section>
+            </details>
           );
         })}
       </div>
