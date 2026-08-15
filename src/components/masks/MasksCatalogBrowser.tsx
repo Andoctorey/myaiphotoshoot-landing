@@ -22,7 +22,6 @@ export type MasksCatalogLabels = {
   categoryGuide: string;
   categoryGuideLink: string;
   categoryNav: string;
-  creditCost: string;
   female: string;
   genderLabel: string;
   male: string;
@@ -255,14 +254,6 @@ export default function MasksCatalogBrowser({
                       <h3 className="font-semibold text-gray-950 dark:text-white">
                         {mask.name}
                       </h3>
-                      <p className="mt-1 text-sm font-semibold text-purple-700 dark:text-purple-300">
-                        {interpolate(
-                          labels.creditCost,
-                          'credits',
-                          new Intl.NumberFormat(locale, { maximumFractionDigits: 0 })
-                            .format(mask.priceCredits),
-                        )}
-                      </p>
                     </div>
                   </article>
                 ))}

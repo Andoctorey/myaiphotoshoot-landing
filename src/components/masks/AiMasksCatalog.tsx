@@ -27,7 +27,6 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
     categoryGuide: t('landing.categoryGuide'),
     categoryGuideLink: t.raw('landing.categoryGuideLink') as string,
     categoryNav: t('categoryNav'),
-    creditCost: t.raw('creditCost') as string,
     female: t('genderFemale'),
     genderLabel: t('genderLabel'),
     male: t('genderMale'),
