@@ -79,6 +79,7 @@ test('mask category chrome is translated in every supported locale', async () =>
   const keys = [
     'categoryGuide',
     'aboutTitle',
+    'iosUnavailable',
     'photoGuidanceTitle',
     'expectationsTitle',
     'limitationsTitle',
@@ -98,6 +99,20 @@ test('mask category chrome is translated in every supported locale', async () =>
       );
     }
   }
+});
+
+test('mask category pages disclose iOS availability from catalog data', async () => {
+  const [catalog, highlights, page] = await Promise.all([
+    readProjectFile('src/lib/ai-masks.ts'),
+    readProjectFile('src/components/masks/AiMaskCategoryHighlights.tsx'),
+    readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
+  ]);
+
+  assert.match(catalog, /hidden_on_ios/);
+  assert.match(catalog, /hiddenOnIos: row\.hidden_on_ios === true/);
+  assert.match(highlights, /category\.hiddenOnIos/);
+  assert.match(highlights, /iosUnavailableLabel/);
+  assert.match(page, /t\('landing\.iosUnavailable'\)/);
 });
 
 test('English-prefixed category aliases redirect to canonical root paths', async () => {

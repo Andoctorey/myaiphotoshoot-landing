@@ -20,6 +20,7 @@ type MaskCategoryRow = {
   source_image_url: string;
   source_image_variants?: unknown;
   audience_gender: MaskAudienceGender;
+  hidden_on_ios?: boolean;
   sort_order: number;
 };
 
@@ -83,6 +84,7 @@ function isMaskCategoryRow(value: unknown): value is MaskCategoryRow {
     && typeof value.source_image_url === 'string'
     && typeof value.audience_gender === 'string'
     && MASK_AUDIENCES.has(value.audience_gender as MaskAudienceGender)
+    && (value.hidden_on_ios === undefined || typeof value.hidden_on_ios === 'boolean')
     && typeof value.sort_order === 'number';
 }
 
@@ -111,6 +113,7 @@ function normalizeCategory(row: MaskCategoryRow): AiMaskCategory {
     sourceImageUrl: row.source_image_url.trim(),
     sourceImageVariants: normalizeImageVariants(row.source_image_variants),
     audienceGender: row.audience_gender,
+    hiddenOnIos: row.hidden_on_ios === true,
     sortOrder: row.sort_order,
   };
 }

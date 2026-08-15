@@ -21,6 +21,7 @@ type Props = {
   femaleLabel: string;
   genderLabel: string;
   holdToCompareLabel: string;
+  iosUnavailableLabel: string;
   maleLabel: string;
   masks: readonly AiMask[];
   resultAltLabel: string;
@@ -46,6 +47,7 @@ export default function AiMaskCategoryHighlights({
   femaleLabel,
   genderLabel,
   holdToCompareLabel,
+  iosUnavailableLabel,
   maleLabel,
   masks,
   resultAltLabel,
@@ -127,7 +129,16 @@ export default function AiMaskCategoryHighlights({
         </div>
       ) : null}
 
-      <div className={cn('flex justify-center', canSwitchGender && 'mt-4')}>
+      {category.hiddenOnIos ? (
+        <p
+          role="note"
+          className="mx-auto mt-4 max-w-xl rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm font-medium text-amber-900 dark:border-amber-900/70 dark:bg-amber-950/30 dark:text-amber-200"
+        >
+          {iosUnavailableLabel}
+        </p>
+      ) : null}
+
+      <div className={cn('flex justify-center', (canSwitchGender || category.hiddenOnIos) && 'mt-4')}>
         <button
           type="button"
           aria-label={`${holdToCompareLabel}: ${selectedMask.name}`}

@@ -8,6 +8,7 @@ export interface AiMaskCategory {
   sourceImageUrl: string;
   sourceImageVariants: Record<string, string>;
   audienceGender: MaskAudienceGender;
+  hiddenOnIos: boolean;
   sortOrder: number;
 }
 
