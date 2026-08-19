@@ -291,15 +291,6 @@ export function normalizeAiPreset(preset: AiPreset): AiPreset {
   };
 }
 
-export function formatPresetCreditCost(
-  credits: number | null | undefined,
-  locale: string,
-): string | null {
-  const normalized = normalizeCreditCost(credits);
-  if (normalized === null) return null;
-  return `${new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(normalized)} CR`;
-}
-
 export async function fetchAiPreset(slug: string, locale: string): Promise<AiPreset | undefined> {
   const presets = await fetchAiPresetsStrict(locale);
   const preset = presets.find((item) => item.slug === slug);

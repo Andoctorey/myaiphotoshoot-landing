@@ -5,7 +5,6 @@ import {
   buildPresetAppUrl,
   buildPresetDescription,
   buildPresetProvidedDescription,
-  formatPresetCreditCost,
 } from '@/lib/ai-presets';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
@@ -33,8 +32,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
   const imageAlt = preset.featured_graphics_alt?.trim() || t('imageAlt', { name: preset.name });
   const introParagraphs = splitParagraphs(preset.seo_intro);
   const faqItems = preset.faqs || [];
-  const formattedCost = formatPresetCreditCost(preset.cost_credits, locale);
-  const tryPresetLabel = formattedCost ? `${t('tryPreset')} · ${formattedCost}` : t('tryPreset');
+  const tryPresetLabel = t('tryPreset');
 
   const jsonLdGraph: Array<Record<string, unknown>> = [
     {

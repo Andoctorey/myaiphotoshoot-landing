@@ -559,6 +559,29 @@ test('footer links directly to the canonical English-only legal documents', asyn
   assert.doesNotMatch(footer, /localePath\(locale, '\/license\/'\)/);
 });
 
+test('preset pagination links every results page directly', async () => {
+  const presetsIndex = await readProjectFile('src/components/presets/AiPresetsIndex.tsx');
+
+  assert.match(
+    presetsIndex,
+    /Array\.from\(\{ length: presetsPage\.totalPages \}, \(_, index\) => index \+ 1\)/,
+  );
+  assert.match(presetsIndex, /href=\{localePath\(locale, aiPresetsPagePath\(pageNumber\)\)\}/);
+  assert.match(presetsIndex, /aria-current="page"/);
+});
+
+test('preset previews and detail CTAs omit credit prices', async () => {
+  const [presetsIndex, homePresets, presetPage] = await Promise.all([
+    readProjectFile('src/components/presets/AiPresetsIndex.tsx'),
+    readProjectFile('src/components/features/HomePresets.tsx'),
+    readProjectFile('src/components/presets/AiPresetPage.tsx'),
+  ]);
+
+  for (const presetSurface of [presetsIndex, homePresets, presetPage]) {
+    assert.doesNotMatch(presetSurface, /\bCR\b|formatPresetCreditCost|cost_credits/);
+  }
+});
+
 test('mask catalog schema models masks as collection items rather than software apps', async () => {
   const masksCatalog = await readProjectFile('src/components/masks/AiMasksCatalog.tsx');
 
