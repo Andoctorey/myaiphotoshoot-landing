@@ -93,7 +93,14 @@ export default function PhotoCard({
           const isAppStore = href.includes('apps.apple.com');
           const isPlayStore = href.includes('play.google.com/store/apps/details?id=com.myaiphotoshoot');
           if (isWebApp || isAppStore || isPlayStore) {
-            const action = isWebApp ? 'webapp_cta_click' : isAppStore ? 'app_store_cta_click' : 'google_play_cta_click';
+            let action = 'google_play_cta_click';
+            if (isWebApp) {
+              action = href.includes('#preset/')
+                ? 'preset_cta_click'
+                : 'webapp_cta_click';
+            } else if (isAppStore) {
+              action = 'app_store_cta_click';
+            }
             trackEvent(action, 'external_link', href);
           }
         }}
