@@ -181,3 +181,9 @@ test('llms.txt is concise factual text with exactly the canonical product links'
   const robotsSource = await readProjectFile('src/app/robots.ts');
   assert.doesNotMatch(robotsSource, /llms\.txt/i);
 });
+
+test('web app manifest uses the canonical product name', async () => {
+  const manifest = JSON.parse(await readProjectFile('public/site.webmanifest'));
+
+  assert.equal(manifest.name, 'My AI Photo Shoot');
+});
