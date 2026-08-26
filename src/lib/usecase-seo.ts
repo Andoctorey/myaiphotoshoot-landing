@@ -25,6 +25,7 @@ const PRICE_BASED_TITLE_SUFFIX_PATTERN = new RegExp(
 export interface UseCaseInventoryItem {
   slug: string;
   created_at?: string;
+  updated_at?: string;
   featured_image_urls?: string[] | null;
 }
 

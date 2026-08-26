@@ -514,9 +514,25 @@ test('retired Models URLs redirect directly to localized Studio canonicals', asy
   assert.doesNotMatch(sitemapSource, /['"]\/models\/['"]/);
   assert.doesNotMatch(sitemapSource, /lastModified:\s*new Date\(\)/);
   assert.doesNotMatch(sitemapSource, /:\s*new Date\(\),/);
-  assert.match(sitemapSource, /lastModified:\s*new Date\(post\.created_at\)/);
-  assert.match(sitemapSource, /item\.created_at \? \{ lastModified: new Date\(item\.created_at\) \} : \{\}/);
-  assert.match(sitemapSource, /lastModified \? \{ lastModified: new Date\(lastModified\) \} : \{\}/);
+});
+
+test('sitemap content entries prefer update timestamps with creation fallbacks', async () => {
+  const [sitemapSource, blogInventorySource, useCaseInventorySource] = await Promise.all([
+    readProjectFile('src/app/sitemap.ts'),
+    readProjectFile('src/lib/blog-static-params.ts'),
+    readProjectFile('src/lib/usecase-seo.ts'),
+  ]);
+
+  assert.match(blogInventorySource, /updated_at: updatedAt \|\| null,/);
+  assert.match(useCaseInventorySource, /updated_at\?: string;/);
+  assert.match(
+    sitemapSource,
+    /for \(const post of blogPosts\) \{[\s\S]{0,300}const lastModified = post\.updated_at \|\| post\.created_at;[\s\S]{0,500}lastModified: new Date\(lastModified\),/,
+  );
+  assert.match(
+    sitemapSource,
+    /for \(const item of useCases\) \{[\s\S]{0,300}const lastModified = item\.updated_at \|\| item\.created_at;[\s\S]{0,500}\.\.\.\(lastModified \? \{ lastModified: new Date\(lastModified\) \} : \{\}\),/,
+  );
 });
 
 test('navigation, homepage links, footer, sitemap, and llms.txt point directly to Studio', async () => {

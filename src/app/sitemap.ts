@@ -24,6 +24,7 @@ export const dynamic = 'force-static';
 interface SitemapBlogPost {
   slug: string
   created_at: string
+  updated_at?: string | null
   featured_image_url: string | null
   translations?: Record<string, { slug?: string | null }> | null
 }
@@ -115,6 +116,7 @@ async function getAllBlogPosts(): Promise<SitemapBlogPost[]> {
   return posts.map((post) => ({
     slug: post.slug,
     created_at: post.created_at,
+    updated_at: post.updated_at,
     featured_image_url: post.featured_image_url ?? null,
     translations: post.translations ?? null,
   }));
@@ -238,12 +240,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const post of blogPosts) {
       const slugMap = getBlogSlugMap(post, locales);
       const languages = buildBlogPostHreflangLanguages(baseUrl, slugMap);
+      const lastModified = post.updated_at || post.created_at;
       for (const locale of locales) {
         const localizedSlug = getBlogSlugForLocale(post, locale);
         if (!localizedSlug) continue;
         blogPostEntries.push({
           url: buildLocalizedUrl(baseUrl, locale, `/blog/${localizedSlug}/`),
-          lastModified: new Date(post.created_at),
+          lastModified: new Date(lastModified),
           changeFrequency: 'weekly',
           priority: 0.7,
           alternates: { languages },
@@ -255,10 +258,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const useCaseEntries: MetadataRoute.Sitemap = [];
     for (const item of useCases) {
       const languages = buildHreflangLanguages(baseUrl, `/use-cases/${item.slug}/`, locales);
+      const lastModified = item.updated_at || item.created_at;
       for (const locale of locales) {
         useCaseEntries.push({
           url: buildLocalizedUrl(baseUrl, locale, `/use-cases/${item.slug}/`),
-          ...(item.created_at ? { lastModified: new Date(item.created_at) } : {}),
+          ...(lastModified ? { lastModified: new Date(lastModified) } : {}),
           changeFrequency: 'weekly',
           priority: 0.7,
           alternates: { languages },

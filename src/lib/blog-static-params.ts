@@ -16,6 +16,7 @@ type BlogTranslation = {
 export type BlogListEntry = {
   slug: string;
   created_at: string;
+  updated_at?: string | null;
   featured_image_url?: string | null;
   title?: string | null;
   meta_description?: string | null;
@@ -70,12 +71,14 @@ const normalizeBlogPosts = (payload: unknown, context: string): BlogListEntry[] 
     const post = raw as Record<string, unknown>;
     const slug = typeof post.slug === 'string' ? post.slug.trim() : '';
     const createdAt = typeof post.created_at === 'string' ? post.created_at.trim() : '';
+    const updatedAt = typeof post.updated_at === 'string' ? post.updated_at.trim() : '';
     if (!slug || !createdAt) {
       throw new Error(`${context} returned a blog post without a valid slug or created_at value.`);
     }
     normalized.push({
       slug,
       created_at: createdAt,
+      updated_at: updatedAt || null,
       featured_image_url: typeof post.featured_image_url === 'string' ? post.featured_image_url : null,
       title: typeof post.title === 'string' ? post.title : null,
       meta_description: typeof post.meta_description === 'string' ? post.meta_description : null,
