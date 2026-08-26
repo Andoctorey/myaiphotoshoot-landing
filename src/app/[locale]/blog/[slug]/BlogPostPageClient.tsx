@@ -10,7 +10,7 @@ import FAQSchema, { extractFAQsFromContent } from '@/components/blog/FAQSchema';
 import { useBlogPost } from '@/hooks/useBlog';
 import { ClockIcon, CalendarIcon, UserIcon } from '@heroicons/react/24/outline';
 import type { BlogPost } from '@/types/blog';
-import { withCdnWidth } from '@/lib/image';
+import { addResponsiveCdnAttributesToBlogImages, withCdnWidth } from '@/lib/image';
 import { serializeJsonLd } from '@/lib/json-ld';
 import ArticleJsonLd from '@/components/seo/ArticleJsonLd';
 import { buildMetaDescription, canonicalUrl, localePath } from '@/lib/seo';
@@ -72,31 +72,6 @@ const formatDate = (dateString: string | null | undefined, locale: string) => {
 export default function BlogPostPageClient({ slug, locale, initialPost }: Props) {
   const t = useTranslations('blog');
   const { post, isLoading, isError } = useBlogPost({ slug, locale, fallbackData: initialPost });
-  // Ensure blog content images append ?width=420 similar to KMP logic
-  const addWidthParamToImages = (html: string): string => {
-    if (!html) return html;
-    return html.replace(/<img\s+([^>]*?)src=["']([^"']+)["']([^>]*)>/gi, (match, preAttrs, src, postAttrs) => {
-      try {
-        // Skip data URIs and non-http(s) relative paths
-        if (!/^https?:\/\//i.test(src)) {
-          return match;
-        }
-        // Skip supabase direct URLs
-        if (src.includes('supabase.co')) {
-          return match;
-        }
-        // Skip if width param already present
-        if (/([?&])width=\d+/i.test(src)) {
-          return match;
-        }
-        const separator = src.includes('?') ? '&' : '?';
-        const updatedSrc = `${src}${separator}width=420`;
-        return ['<img ', preAttrs, 'src="', updatedSrc, '"', postAttrs, '>'].join('');
-      } catch {
-        return match;
-      }
-    });
-  };
 
   const safeContent = typeof post?.content === 'string' ? post.content : '';
   const safeTitle = post?.title || t('imageFallback');
@@ -107,8 +82,8 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
   const processedContent = useMemo(() => {
     if (!safeContent) return '';
-    const withWidth = addWidthParamToImages(safeContent);
-    const updatedHtml = withWidth.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
+    const withResponsiveImages = addResponsiveCdnAttributesToBlogImages(safeContent);
+    const updatedHtml = withResponsiveImages.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
       if (/\salt=(["']).*?\1/i.test(attrs)) {
         return ['<img ', attrs, '>'].join('');
       }
@@ -125,7 +100,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
     // Also allow common elements that might be used in blogs.
     return DOMPurify.sanitize(updatedHtml, {
       ADD_TAGS: ['iframe'],
-      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
+      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'sizes', 'srcset']
     });
   }, [featuredImageAlt, safeContent]);
 
