@@ -41,18 +41,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/images/favicon.webp', type: 'image/webp' },
-      { url: '/images/favicon.png', type: 'image/png' },
-      { url: '/images/icon_16.webp', sizes: '16x16', type: 'image/webp' },
       { url: '/images/icon_16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/images/icon_32.webp', sizes: '32x32', type: 'image/webp' },
       { url: '/images/icon_32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/images/icon_120.png', sizes: '120x120', type: 'image/png' },
+      { url: '/images/favicon.png', sizes: '48x48', type: 'image/png' },
       { url: '/images/icon_192.png', sizes: '192x192', type: 'image/png' },
       { url: '/images/icon_512.png', sizes: '512x512', type: 'image/png' },
     ],
     // Use PNG as canonical Apple touch icon to avoid duplicates and ensure compatibility
     apple: [
+      { url: '/images/icon_120.png', sizes: '120x120', type: 'image/png' },
       { url: '/images/icon_180.png', sizes: '180x180', type: 'image/png' },
     ],
   },
