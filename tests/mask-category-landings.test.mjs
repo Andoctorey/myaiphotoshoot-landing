@@ -63,15 +63,21 @@ test('visible category content matches FAQ, breadcrumb, collection, and item-lis
   assert.doesNotMatch(jsonLd, /HowTo/);
 });
 
-test('mask index links every published guide independently of the selected preview gender', async () => {
+test('mask index links every published guide and labels outfit guides by gender', async () => {
   const [browser, categoryPage] = await Promise.all([
     readProjectFile('src/components/masks/MasksCatalogBrowser.tsx'),
     readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
   ]);
   assert.match(browser, /publishedCategories = useMemo/);
+  assert.match(browser, /OUTFIT_CATEGORY_SLUGS = new Set\(\['outfit', 'outfit-men'\]\)/);
+  assert.match(browser, /function categoryGuideName/);
+  assert.match(browser, /category\.audienceGender === 'female'.*labels\.female/);
+  assert.match(browser, /category\.audienceGender === 'male'.*labels\.male/);
   assert.match(browser, /publishedCategories\.map/);
+  assert.match(browser, /const guideName = categoryGuideName\(category, labels\)/);
   assert.match(browser, /href=\{localePath\(locale, `\/masks\/\$\{category\.slug\}\/`\)\}/);
   assert.doesNotMatch(categoryPage, /publishedCategoryIds=\{\[landing\.categoryId\]\}/);
+  assert.doesNotMatch(categoryPage, /categoryGuideName/);
 });
 
 test('mask category chrome is translated in every supported locale', async () => {

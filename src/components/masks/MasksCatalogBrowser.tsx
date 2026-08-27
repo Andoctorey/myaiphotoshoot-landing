@@ -14,6 +14,7 @@ import type {
 } from '@/types/ai-mask';
 
 type PreviewGender = Extract<MaskAudienceGender, 'female' | 'male'>;
+const OUTFIT_CATEGORY_SLUGS = new Set(['outfit', 'outfit-men']);
 
 export type MasksCatalogLabels = {
   availabilityWebAndroid: string;
@@ -48,6 +49,13 @@ function categoryPreviewUrl(category: AiMaskCategory, gender: PreviewGender): st
 
 function maskPreviewUrl(mask: AiMask, gender: PreviewGender): string {
   return mask.featuredGraphicsVariants[previewVariantId(gender)] || mask.featuredGraphics;
+}
+
+function categoryGuideName(category: AiMaskCategory, labels: MasksCatalogLabels): string {
+  if (!OUTFIT_CATEGORY_SLUGS.has(category.slug)) return category.name;
+  if (category.audienceGender === 'female') return `${category.name} (${labels.female})`;
+  if (category.audienceGender === 'male') return `${category.name} (${labels.male})`;
+  return category.name;
 }
 
 function interpolate(label: string, key: string, value: string | number): string {
@@ -94,17 +102,20 @@ export default function MasksCatalogBrowser({
             {labels.categoryGuide}
           </p>
           <div className="flex flex-wrap justify-center gap-2">
-            {publishedCategories.map((category) => (
-              <Link
-                key={category.id}
-                href={localePath(locale, `/masks/${category.slug}/`)}
-                aria-label={`${labels.categoryGuide}: ${category.name}`}
-                className="inline-flex items-center gap-2 rounded-full bg-purple-50 px-4 py-2 text-sm font-semibold text-purple-800 ring-1 ring-purple-200 transition hover:bg-purple-100 hover:ring-purple-300 dark:bg-purple-950/40 dark:text-purple-200 dark:ring-purple-800 dark:hover:bg-purple-950/70"
-              >
-                <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
-                {category.name}
-              </Link>
-            ))}
+            {publishedCategories.map((category) => {
+              const guideName = categoryGuideName(category, labels);
+              return (
+                <Link
+                  key={category.id}
+                  href={localePath(locale, `/masks/${category.slug}/`)}
+                  aria-label={`${labels.categoryGuide}: ${guideName}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-purple-50 px-4 py-2 text-sm font-semibold text-purple-800 ring-1 ring-purple-200 transition hover:bg-purple-100 hover:ring-purple-300 dark:bg-purple-950/40 dark:text-purple-200 dark:ring-purple-800 dark:hover:bg-purple-950/70"
+                >
+                  <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
+                  {guideName}
+                </Link>
+              );
+            })}
           </div>
         </nav>
       ) : null}
