@@ -6,6 +6,7 @@ import {
   fetchMasksCatalog,
   masksForCategory,
 } from '@/lib/ai-masks';
+import { buildMaskAppUrl } from '@/lib/app-links';
 import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 import type { AiMask, AiMaskCategory } from '@/types/ai-mask';
@@ -70,9 +71,13 @@ export default async function HomeMasks({ locale }: { locale: string }) {
           <div className="-mx-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
             <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-3">
               {comparisons.map(({ category, mask }) => (
-                <article
-                  key={category.id}
-                  className="w-[78vw] max-w-[330px] shrink-0 snap-center overflow-hidden rounded-2xl border border-purple-200/70 bg-white shadow-lg shadow-purple-900/10 dark:border-purple-800/60 dark:bg-gray-800 lg:w-auto"
+                <a
+                  key={mask.id}
+                  href={buildMaskAppUrl(mask.id)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={mask.name}
+                  className="w-[78vw] max-w-[330px] shrink-0 snap-center overflow-hidden rounded-2xl border border-purple-200/70 bg-white shadow-lg shadow-purple-900/10 transition hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:border-purple-800/60 dark:bg-gray-800 dark:focus:ring-offset-gray-950 lg:w-auto"
                 >
                   <div className="grid grid-cols-2">
                     <div className="relative">
@@ -111,7 +116,7 @@ export default async function HomeMasks({ locale }: { locale: string }) {
                       {mask.name}
                     </h3>
                   </div>
-                </article>
+                </a>
               ))}
             </div>
           </div>

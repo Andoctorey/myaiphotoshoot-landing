@@ -7,3 +7,7 @@ export const GOOGLE_PLAY_APP_URL =
 export const GOOGLE_PLAY_URL =
   `${GOOGLE_PLAY_APP_URL}&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1`;
 export const AI_MASKS_APP_URL = `${WEB_APP_URL}/#masks`;
+
+export function buildMaskAppUrl(maskId: string): string {
+  return `${AI_MASKS_APP_URL}/${encodeURIComponent(maskId)}`;
+}

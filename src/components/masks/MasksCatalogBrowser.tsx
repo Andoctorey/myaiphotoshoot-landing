@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
-import { AI_MASKS_APP_URL } from '@/lib/app-links';
+import { AI_MASKS_APP_URL, buildMaskAppUrl } from '@/lib/app-links';
 import { localePath } from '@/lib/seo';
 import type {
   AiMask,
@@ -231,9 +231,13 @@ export default function MasksCatalogBrowser({
                 </article>
 
                 {masks.map((mask) => (
-                  <article
+                  <a
                     key={mask.id}
-                    className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
+                    href={buildMaskAppUrl(mask.id)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={mask.name}
+                    className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950"
                   >
                     <div className="relative overflow-hidden">
                       <Image
@@ -250,7 +254,7 @@ export default function MasksCatalogBrowser({
                         {mask.name}
                       </h3>
                     </div>
-                  </article>
+                  </a>
                 ))}
               </div>
             </details>
@@ -267,6 +271,8 @@ export default function MasksCatalogBrowser({
         </p>
         <a
           href={AI_MASKS_APP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
         >
           {labels.tryMasks}

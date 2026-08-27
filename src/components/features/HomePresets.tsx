@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { fetchAiPresetsPage } from '@/lib/ai-presets';
+import { buildPresetAppUrl, fetchAiPresetsPage } from '@/lib/ai-presets';
 import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 
@@ -47,10 +47,13 @@ export default async function HomePresets({ locale }: { locale: string }) {
           <div className="-mx-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
             <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-3">
               {presets.map((preset) => (
-                <Link
+                <a
                   key={preset.id}
-                  href={localePath(locale, `/presets/${preset.slug}/`)}
-                  className="group w-[68vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-900/10 transition duration-300 hover:-translate-y-1 hover:border-purple-200 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-purple-800 lg:w-auto lg:max-w-none"
+                  href={buildPresetAppUrl(preset.slug)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={preset.name}
+                  className="group w-[68vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-900/10 transition duration-300 hover:-translate-y-1 hover:border-purple-200 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-purple-800 dark:focus:ring-offset-gray-950 lg:w-auto lg:max-w-none"
                 >
                   <Image
                     src={withCdnWidth(preset.featured_graphics, 640) || preset.featured_graphics!}
@@ -70,7 +73,7 @@ export default async function HomePresets({ locale }: { locale: string }) {
                       </p>
                     ) : null}
                   </div>
-                </Link>
+                </a>
               ))}
             </div>
           </div>

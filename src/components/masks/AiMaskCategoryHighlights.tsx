@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { AI_MASKS_APP_URL } from '@/lib/app-links';
+import { buildMaskAppUrl } from '@/lib/app-links';
 import { cn } from '@/lib/utils';
 import type { AiMask, AiMaskCategory, MaskAudienceGender } from '@/types/ai-mask';
 
@@ -228,7 +228,9 @@ export default function AiMaskCategoryHighlights({
 
       <div className="mt-1 flex justify-center">
         <a
-          href={AI_MASKS_APP_URL}
+          href={buildMaskAppUrl(selectedMask.id)}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
         >
           {tryMasksLabel}

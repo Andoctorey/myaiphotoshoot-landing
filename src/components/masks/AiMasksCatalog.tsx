@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import MasksCatalogBrowser, {
   type MasksCatalogLabels,
 } from '@/components/masks/MasksCatalogBrowser';
-import { AI_MASKS_APP_URL } from '@/lib/app-links';
+import { AI_MASKS_APP_URL, buildMaskAppUrl } from '@/lib/app-links';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
 import type { AiMasksCatalog as Catalog } from '@/types/ai-mask';
@@ -55,7 +55,7 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
               '@type': 'Thing',
               name: mask.name,
               image: mask.featuredGraphics,
-              url: AI_MASKS_APP_URL,
+              url: buildMaskAppUrl(mask.id),
             },
           })),
         },
@@ -118,6 +118,8 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
           </p>
           <a
             href={AI_MASKS_APP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-7 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           >
             {t('tryMasks')}

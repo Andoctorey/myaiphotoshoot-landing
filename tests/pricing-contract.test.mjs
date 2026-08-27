@@ -598,6 +598,19 @@ test('preset previews and detail CTAs omit credit prices', async () => {
   }
 });
 
+test('homepage preset cards open the selected preset in a new web-app tab', async () => {
+  const homePresets = await readProjectFile('src/components/features/HomePresets.tsx');
+  const presetCard = homePresets
+    .match(/<a\b[^>]*>/g)
+    ?.find((candidate) => candidate.includes('href={buildPresetAppUrl(preset.slug)}'));
+
+  assert.ok(presetCard, 'Missing homepage preset card link');
+  assert.match(presetCard, /target="_blank"/);
+  assert.match(presetCard, /rel="noopener noreferrer"/);
+  assert.match(presetCard, /aria-label=\{preset\.name\}/);
+  assert.match(homePresets, /href=\{localePath\(locale, '\/presets\/'\)\}/);
+});
+
 test('mask catalog schema models masks as collection items rather than software apps', async () => {
   const masksCatalog = await readProjectFile('src/components/masks/AiMasksCatalog.tsx');
 

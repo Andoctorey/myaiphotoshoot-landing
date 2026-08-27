@@ -7,6 +7,13 @@ import test from 'node:test';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readProjectFile = (file) => readFile(path.join(root, file), 'utf8');
 
+function assertNewTabAnchor(source, href) {
+  const anchor = source.match(/<a\b[^>]*>/g)?.find((candidate) => candidate.includes(href));
+  assert.ok(anchor, `Missing anchor with ${href}`);
+  assert.match(anchor, /target="_blank"/);
+  assert.match(anchor, /rel="noopener noreferrer"/);
+}
+
 test('mask category routes are published-only static exports that fail closed on catalog drift', async () => {
   const [englishRoute, localizedRoute] = await Promise.all([
     readProjectFile('src/app/masks/[slug]/page.tsx'),
@@ -78,6 +85,27 @@ test('mask index links every published guide and labels outfit guides by gender'
   assert.match(browser, /href=\{localePath\(locale, `\/masks\/\$\{category\.slug\}\/`\)\}/);
   assert.doesNotMatch(categoryPage, /publishedCategoryIds=\{\[landing\.categoryId\]\}/);
   assert.doesNotMatch(categoryPage, /categoryGuideName/);
+});
+
+test('mask cards and CTAs open the web app in a new tab', async () => {
+  const [appLinks, catalog, browser, highlights, categoryPage, homeMasks] = await Promise.all([
+    readProjectFile('src/lib/app-links.ts'),
+    readProjectFile('src/components/masks/AiMasksCatalog.tsx'),
+    readProjectFile('src/components/masks/MasksCatalogBrowser.tsx'),
+    readProjectFile('src/components/masks/AiMaskCategoryHighlights.tsx'),
+    readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
+    readProjectFile('src/components/features/HomeMasks.tsx'),
+  ]);
+
+  assert.match(appLinks, /function buildMaskAppUrl\(maskId: string\)/);
+  assert.match(appLinks, /`\$\{AI_MASKS_APP_URL\}\/\$\{encodeURIComponent\(maskId\)\}`/);
+  assert.match(catalog, /url: buildMaskAppUrl\(mask\.id\)/);
+  assertNewTabAnchor(browser, 'href={buildMaskAppUrl(mask.id)}');
+  assertNewTabAnchor(highlights, 'href={buildMaskAppUrl(selectedMask.id)}');
+  assertNewTabAnchor(homeMasks, 'href={buildMaskAppUrl(mask.id)}');
+  for (const source of [catalog, browser, categoryPage]) {
+    assertNewTabAnchor(source, 'href={AI_MASKS_APP_URL}');
+  }
 });
 
 test('mask category chrome is translated in every supported locale', async () => {
