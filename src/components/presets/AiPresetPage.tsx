@@ -95,13 +95,13 @@ export default async function AiPresetPage({ locale, preset }: Props) {
         <nav aria-label="Breadcrumb" className="mb-8 text-sm">
           <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
             <li>
-              <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">
+              <Link href={localePath(locale, '/')} className="hover:text-primary">
                 {tNav('home')}
               </Link>
             </li>
             <li className="text-gray-400">/</li>
             <li>
-              <Link href={localePath(locale, '/presets/')} className="hover:text-purple-600 dark:hover:text-purple-400">
+              <Link href={localePath(locale, '/presets/')} className="hover:text-primary">
                 {t('breadcrumb')}
               </Link>
             </li>
@@ -112,7 +112,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
 
         <header className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-wide text-purple-700 dark:text-purple-300">
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary">
               {t('quickPreset')}
             </p>
             <h1 className="mt-3 max-w-3xl text-4xl font-semibold leading-tight text-gray-950 dark:text-white sm:text-[2.75rem]">
@@ -126,7 +126,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
             <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
               <a
                 href={appUrl}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-purple-600 px-5 text-sm font-semibold text-white transition hover:bg-purple-700"
+                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -202,10 +202,10 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                 <details key={faq.q} className="group [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex cursor-pointer items-start justify-between gap-4 p-4">
                     <span className="font-semibold text-gray-950 dark:text-white">{faq.q}</span>
-                    <span className="mt-0.5 text-lg leading-none text-purple-600 group-open:hidden dark:text-purple-300" aria-hidden="true">
+                    <span className="mt-0.5 text-lg leading-none text-primary group-open:hidden" aria-hidden="true">
                       +
                     </span>
-                    <span className="mt-0.5 hidden text-lg leading-none text-purple-600 group-open:inline dark:text-purple-300" aria-hidden="true">
+                    <span className="mt-0.5 hidden text-lg leading-none text-primary group-open:inline" aria-hidden="true">
                       -
                     </span>
                   </summary>
@@ -219,7 +219,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <a
                   href={appUrl}
-                  className="inline-flex h-11 items-center justify-center rounded-md bg-purple-600 px-5 text-sm font-semibold text-white transition hover:bg-purple-700"
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

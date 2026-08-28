@@ -117,8 +117,8 @@ export default function AiMaskCategoryHighlights({
                   className={cn(
                     'flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition',
                     selected
-                      ? 'bg-purple-600 text-white shadow-sm'
-                      : 'text-gray-500 hover:bg-gray-100 hover:text-purple-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-purple-300',
+                      ? 'bg-primary text-on-primary shadow-sm'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-primary dark:text-gray-400 dark:hover:bg-gray-800',
                   )}
                 >
                   <span aria-hidden="true">{choice.symbol}</span>
@@ -153,7 +153,7 @@ export default function AiMaskCategoryHighlights({
           onBlur={stopComparing}
           onContextMenu={(event) => event.preventDefault()}
           onDragStart={(event) => event.preventDefault()}
-          className="group relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[28px] bg-gray-200 shadow-xl ring-1 ring-black/10 transition hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:ring-white/10 dark:focus:ring-offset-gray-950"
+          className="group relative aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[28px] bg-gray-200 shadow-xl ring-1 ring-black/10 transition hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:bg-gray-800 dark:ring-white/10 dark:focus:ring-offset-gray-950"
         >
           <Image
             key={selectedImageUrl}
@@ -168,7 +168,7 @@ export default function AiMaskCategoryHighlights({
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/75" />
-          <span className="absolute right-3 top-3 rounded-full bg-purple-600/90 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-sm">
+          <span className="absolute right-3 top-3 rounded-full bg-primary/90 px-3 py-1.5 text-xs font-semibold text-on-primary shadow-sm backdrop-blur-sm">
             {showBefore ? beforeLabel : afterLabel}
           </span>
           <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-2 px-4 py-4 text-left">
@@ -192,7 +192,7 @@ export default function AiMaskCategoryHighlights({
                 aria-pressed={selected}
                 onClick={() => selectMask(mask.id)}
                 className={cn(
-                  'group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:bg-gray-800 dark:focus:ring-offset-gray-950',
+                  'group relative h-[152px] w-[124px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-200 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:bg-gray-800 dark:focus:ring-offset-gray-950',
                   selected
                     ? 'border-2 border-gray-950 dark:border-white'
                     : 'border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500',
@@ -231,7 +231,7 @@ export default function AiMaskCategoryHighlights({
           href={buildMaskAppUrl(selectedMask.id)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+          className="inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
         >
           {tryMasksLabel}
         </a>

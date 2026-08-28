@@ -26,7 +26,7 @@ export default async function HomePresets({ locale }: { locale: string }) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.4fr)]">
           <div className="max-w-xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-purple-600 dark:text-purple-400">
+            <p className="text-sm font-semibold uppercase tracking-wide text-primary">
               {t('eyebrow')}
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
@@ -37,7 +37,7 @@ export default async function HomePresets({ locale }: { locale: string }) {
             </p>
             <Link
               href={localePath(locale, '/presets/')}
-              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-900/15 transition hover:-translate-y-0.5 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-on-primary shadow-lg shadow-brand-900/15 transition hover:-translate-y-0.5 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
             >
               {t('browsePresets')}
               <span aria-hidden="true">→</span>
@@ -53,7 +53,7 @@ export default async function HomePresets({ locale }: { locale: string }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={preset.name}
-                  className="group w-[68vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-900/10 transition duration-300 hover:-translate-y-1 hover:border-purple-200 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-purple-800 dark:focus:ring-offset-gray-950 lg:w-auto lg:max-w-none"
+                  className="group w-[68vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-900/10 transition duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950 lg:w-auto lg:max-w-none"
                 >
                   <Image
                     src={withCdnWidth(preset.featured_graphics, 640) || preset.featured_graphics!}
@@ -64,7 +64,7 @@ export default async function HomePresets({ locale }: { locale: string }) {
                     className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                   <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-950 transition-colors group-hover:text-purple-700 dark:text-white dark:group-hover:text-purple-300">
+                    <h3 className="text-lg font-semibold text-gray-950 transition-colors group-hover:text-primary dark:text-white">
                       {preset.name}
                     </h3>
                     {preset.subtitle ? (

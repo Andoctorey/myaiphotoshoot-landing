@@ -22,7 +22,7 @@ export default async function SiteShell({ locale, children }: Props) {
       <HtmlLang locale={locale} dir={dir} />
       <a
         href="#main-content"
-        className="fixed top-3 z-[60] -translate-y-24 rounded-md bg-white px-4 py-2 text-sm font-semibold text-purple-700 shadow-lg ring-2 ring-purple-600 transition-transform focus:translate-y-0 focus:outline-none ltr:left-3 rtl:right-3 dark:bg-gray-900 dark:text-purple-300 dark:ring-purple-400"
+        className="fixed top-3 z-[60] -translate-y-24 rounded-md bg-white px-4 py-2 text-sm font-semibold text-primary shadow-lg ring-2 ring-primary transition-transform focus:translate-y-0 focus:outline-none ltr:left-3 rtl:right-3 dark:bg-gray-900"
       >
         {t('skipToContent')}
       </a>

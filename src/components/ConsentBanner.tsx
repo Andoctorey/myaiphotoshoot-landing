@@ -134,7 +134,7 @@ export default function ConsentBanner() {
                 Reject optional
               </button>
               <button
-                className="px-4 py-2 rounded-md bg-purple-600 text-white hover:bg-purple-700"
+                className="px-4 py-2 rounded-md bg-primary text-on-primary hover:bg-primary/90"
                 onClick={acceptAll}
               >
                 Accept all

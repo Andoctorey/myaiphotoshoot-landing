@@ -60,7 +60,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
         <nav aria-label="Breadcrumb" className="mb-6 text-sm">
           <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
             <li>
-              <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">
+              <Link href={localePath(locale, '/')} className="hover:text-primary">
                 {tNav('home')}
               </Link>
             </li>
@@ -72,7 +72,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
         </nav>
 
         <div className="mx-auto mb-12 max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-purple-700 dark:text-purple-300">
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary">
             {t('eyebrow')}
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
@@ -113,7 +113,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
                   )}
                 </div>
                 <div className="p-5">
-                  <h2 className="text-xl font-semibold text-gray-950 transition-colors group-hover:text-purple-700 dark:text-white dark:group-hover:text-purple-300">
+                  <h2 className="text-xl font-semibold text-gray-950 transition-colors group-hover:text-primary dark:text-white">
                     {preset.name}
                   </h2>
                   {preset.subtitle && (
@@ -139,7 +139,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
               {previousPath ? (
                 <Link
                   href={localePath(locale, previousPath)}
-                  className="inline-flex h-10 items-center justify-center rounded-lg border border-gray-300 bg-white px-4 font-semibold text-gray-800 transition hover:border-purple-400 hover:text-purple-700 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-purple-500 dark:hover:text-purple-300"
+                  className="inline-flex h-10 items-center justify-center rounded-lg border border-gray-300 bg-white px-4 font-semibold text-gray-800 transition hover:border-primary hover:text-primary dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
                 >
                   {t('previousPage')}
                 </Link>
@@ -153,7 +153,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
                       key={pageNumber}
                       aria-current="page"
                       aria-label={pageLabel}
-                      className={`${pageNumberClassName} bg-purple-600 text-white`}
+                      className={`${pageNumberClassName} bg-primary text-on-primary`}
                     >
                       {pageNumber}
                     </span>
@@ -162,7 +162,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
                       key={pageNumber}
                       href={localePath(locale, aiPresetsPagePath(pageNumber))}
                       aria-label={pageLabel}
-                      className={`${pageNumberClassName} border border-gray-300 bg-white text-gray-800 transition hover:border-purple-400 hover:text-purple-700 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-purple-500 dark:hover:text-purple-300`}
+                      className={`${pageNumberClassName} border border-gray-300 bg-white text-gray-800 transition hover:border-primary hover:text-primary dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200`}
                     >
                       {pageNumber}
                     </Link>
@@ -172,7 +172,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
               {nextPath ? (
                 <Link
                   href={localePath(locale, nextPath)}
-                  className="inline-flex h-10 items-center justify-center rounded-lg bg-purple-600 px-4 font-semibold text-white transition hover:bg-purple-700"
+                  className="inline-flex h-10 items-center justify-center rounded-lg bg-primary px-4 font-semibold text-on-primary transition hover:bg-primary/90"
                 >
                   {t('nextPage')}
                 </Link>

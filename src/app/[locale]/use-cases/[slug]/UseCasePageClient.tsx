@@ -255,7 +255,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                 </svg>
                 {tUseCase('badges.proAccess')}
               </span>
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-purple-200 dark:border-purple-900/40 bg-purple-50/70 dark:bg-purple-900/20 text-purple-800 dark:text-purple-200">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-brand-200 dark:border-brand-900/40 bg-brand-50/70 dark:bg-brand-900/20 text-brand-800 dark:text-brand-200">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
                   <path d="M11.48 3.5a.75.75 0 011.04-.02l6 5.5a.75.75 0 11-1.02 1.1L12.75 5.1v14.15a.75.75 0 11-1.5 0V5.1L6.5 10.08a.75.75 0 01-1.02-1.1l6-5.5z"/>
                 </svg>
@@ -403,21 +403,21 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">{tUseCase('howItWorks.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
-            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">1</div>
+            <div className="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold shrink-0">1</div>
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step1.title')}</h3>
               <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step1.desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
-            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">2</div>
+            <div className="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold shrink-0">2</div>
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step2.title')}</h3>
               <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step2.desc')}</p>
             </div>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-5">
-            <div className="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">3</div>
+            <div className="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold shrink-0">3</div>
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white">{tUseCase('howItWorks.step3.title')}</h3>
               <p className="text-gray-700 dark:text-gray-300 mt-1">{tUseCase('howItWorks.step3.desc')}</p>
@@ -463,7 +463,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {s.body.map((p, i) => (
                         <li key={i} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-gray-800 dark:text-gray-200 flex items-start gap-3">
-                          <span className="mt-0.5 text-blue-600 dark:text-blue-400" aria-hidden>
+                          <span className="mt-0.5 text-primary" aria-hidden>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/></svg>
                           </span>
                           <span>{p}</span>
@@ -474,7 +474,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {s.body.map((p, i) => (
                         <div key={i} className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-                          <div className="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold shrink-0">{i + 1}</div>
+                          <div className="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center font-semibold shrink-0">{i + 1}</div>
                           <p className="text-gray-800 dark:text-gray-200">{p.replace(/^\d+\)\s*/, '')}</p>
                         </div>
                       ))}
@@ -494,8 +494,8 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
                       {s.body.map((p, i) => (<p key={i}>• {p}</p>))}
                     </div>
                   ) : s.heading === 'CTA' ? (
-                    <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 flex items-center justify-between gap-4">
-                      <p className="text-lg font-semibold text-purple-900 dark:text-purple-200">{s.body[0]}</p>
+                    <div className="rounded-2xl border border-brand-100 dark:border-brand-900/40 bg-brand-50/60 dark:bg-brand-900/20 p-6 flex items-center justify-between gap-4">
+                      <p className="text-lg font-semibold text-brand-900 dark:text-brand-200">{s.body[0]}</p>
                   <a href={attributedWebAppUrl} target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
                     onClick={(e) => {
                       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
@@ -577,9 +577,9 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
 
       {/* Credit and subscription options */}
       <section className={sectionSpacing} aria-label={tUseCase('pricingCard.title')}>
-        <div className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/20 p-6 sm:p-7 flex items-start justify-between gap-6 flex-wrap">
+        <div className="rounded-2xl border border-brand-100 dark:border-brand-900/40 bg-brand-50/60 dark:bg-brand-900/20 p-6 sm:p-7 flex items-start justify-between gap-6 flex-wrap">
           <div className="min-w-0">
-            <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-200">{tUseCase('pricingCard.title')}</h3>
+            <h3 className="text-lg font-semibold text-brand-900 dark:text-brand-200">{tUseCase('pricingCard.title')}</h3>
             <p className="mt-2 text-gray-700 dark:text-gray-300">{tUseCase('pricingCard.description')}</p>
             <ul className="mt-2 space-y-1 text-gray-900 dark:text-gray-100">
               <li>{tUseCase('pricingCard.payg')}</li>
@@ -621,7 +621,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             );
           }}
         >
-          <div className="rounded-full shadow-xl bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center py-3.5 px-7 font-semibold text-base tracking-tight ring-1 ring-purple-500/40">
+          <div className="rounded-full bg-black text-white shadow-xl flex items-center justify-center py-3.5 px-7 font-semibold text-base tracking-tight ring-1 ring-white/20 transition hover:opacity-90">
               <span className="inline-flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden>
                 <path fillRule="evenodd" d="M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0zm8.03-3.28a.75.75 0 10-1.06 1.06L12.94 12l-1.47 1.47a.75.75 0 101.06 1.06L14.06 13.06a1.5 1.5 0 000-2.12L12.53 8.72z" clipRule="evenodd" />

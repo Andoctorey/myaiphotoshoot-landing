@@ -39,11 +39,11 @@ class ErrorBoundary extends Component<Props, State> {
       }
       return (
         <div className="p-6 max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md flex flex-col items-center space-y-4 mt-10">
-          <h2 className="text-xl font-bold text-red-600 dark:text-red-400">We hit a temporary problem</h2>
+          <h2 className="text-xl font-bold text-error">We hit a temporary problem</h2>
           <p className="text-gray-700 dark:text-gray-300">Refresh the page or try again to continue.</p>
           <button
             onClick={() => this.setState({ hasError: false, error: null })}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="rounded bg-primary px-4 py-2 text-on-primary hover:opacity-90"
           >
             Try again
           </button>

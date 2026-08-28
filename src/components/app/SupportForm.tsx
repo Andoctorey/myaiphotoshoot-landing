@@ -100,7 +100,7 @@ export default function SupportForm() {
         
         <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md dark:shadow-gray-900 border border-gray-200 dark:border-gray-700">
           {/* Response time expectations */}
-          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 text-blue-700 dark:text-blue-300 px-4 py-3 rounded mb-6">
+          <div className="mb-6 rounded border border-brand-200 bg-primary-container px-4 py-3 text-on-primary-container dark:border-brand-700">
             <p className="text-sm flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ltr:mr-2 rtl:ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -114,7 +114,7 @@ export default function SupportForm() {
               <p>{t('form.success')}</p>
             </div>
           ) : submitStatus === 'error' ? (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
+            <div className="mb-6 rounded border border-error bg-error-container px-4 py-3 text-on-error-container">
               <p>{t('form.error')}</p>
             </div>
           ) : null}
@@ -127,8 +127,8 @@ export default function SupportForm() {
               <input
                 type="email"
                 id="email"
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-gray-700 ${
-                  validationErrors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 ${
+                  validationErrors.email ? 'border-error' : 'border-gray-300 dark:border-gray-600'
                 }`}
                 placeholder={t('form.emailPlaceholder')}
                 value={email}
@@ -136,7 +136,7 @@ export default function SupportForm() {
                 disabled={isSubmitting}
               />
               {validationErrors.email && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors.email}</p>
+                <p className="mt-1 text-sm text-error">{validationErrors.email}</p>
               )}
             </div>
             
@@ -147,8 +147,8 @@ export default function SupportForm() {
               <textarea
                 id="message"
                 rows={5}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-gray-700 ${
-                  validationErrors.message ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 ${
+                  validationErrors.message ? 'border-error' : 'border-gray-300 dark:border-gray-600'
                 }`}
                 placeholder={t('form.messagePlaceholder')}
                 value={message}
@@ -156,7 +156,7 @@ export default function SupportForm() {
                 disabled={isSubmitting}
               />
               {validationErrors.message && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{validationErrors.message}</p>
+                <p className="mt-1 text-sm text-error">{validationErrors.message}</p>
               )}
             </div>
             
@@ -185,7 +185,7 @@ export default function SupportForm() {
             
             <button
               type="submit"
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50"
+              className="w-full bg-primary hover:bg-primary/90 text-on-primary py-2 px-4 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
               disabled={isSubmitting || (!!env.TURNSTILE_SITE_KEY && !turnstileToken)}
             >
               {isSubmitting ? (

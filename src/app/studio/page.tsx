@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/og-image-v2.jpg?v=4',
+          url: '/og-image-v2.jpg?v=5',
           width: 1200,
           height: 630,
           alt: imageAlt,
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: shareTitle,
       description: shareDescription,
-      images: [{ url: '/og-image-v2.jpg?v=4', alt: imageAlt }],
+      images: [{ url: '/og-image-v2.jpg?v=5', alt: imageAlt }],
     },
   };
 }

@@ -58,7 +58,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             <li>
               <Link
                 href={localePath(locale, '/')}
-                className="hover:text-purple-600 dark:hover:text-purple-400"
+                className="hover:text-primary"
               >
                 {tNav('home')}
               </Link>
@@ -67,7 +67,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             <li>
               <Link
                 href={localePath(locale, '/masks/')}
-                className="hover:text-purple-600 dark:hover:text-purple-400"
+                className="hover:text-primary"
               >
                 {t('breadcrumb')}
               </Link>
@@ -122,7 +122,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
           ))}
         </div>
 
-        <aside className="mt-10 max-w-4xl rounded-2xl bg-purple-50 p-6 dark:bg-purple-950/30">
+        <aside className="mt-10 max-w-4xl rounded-2xl bg-brand-50 p-6 dark:bg-brand-950/30">
           <h2 className="text-lg font-bold text-gray-950 dark:text-white">
             {t('landing.trainingQuestion')}
           </h2>
@@ -147,7 +147,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
           </div>
         </section>
 
-        <section className="mt-14 rounded-3xl bg-purple-100 px-6 py-9 text-center dark:bg-purple-950/40 sm:px-10">
+        <section className="mt-14 rounded-3xl bg-brand-100 px-6 py-9 text-center dark:bg-brand-950/40 sm:px-10">
           <h2 className="text-2xl font-bold text-gray-950 dark:text-white">
             {t('readyTitle')}
           </h2>
@@ -158,7 +158,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             href={AI_MASKS_APP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           >
             {t('tryMasks')}
           </a>

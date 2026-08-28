@@ -45,12 +45,12 @@ export default async function HomeMasks({ locale }: { locale: string }) {
   return (
     <section
       id="masks"
-      className="overflow-hidden bg-gradient-to-b from-white via-purple-50/50 to-white py-12 dark:from-gray-900 dark:via-purple-950/20 dark:to-gray-900 md:py-16"
+      className="overflow-hidden bg-gradient-to-b from-white via-brand-50/50 to-white py-12 dark:from-gray-900 dark:via-brand-950/20 dark:to-gray-900 md:py-16"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.4fr)]">
           <div className="max-w-xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-purple-600 dark:text-purple-400">
+            <p className="text-sm font-semibold uppercase tracking-wide text-primary">
               {t('eyebrow')}
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
@@ -61,7 +61,7 @@ export default async function HomeMasks({ locale }: { locale: string }) {
             </p>
             <Link
               href={localePath(locale, '/masks/')}
-              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-900/15 transition hover:-translate-y-0.5 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-on-primary shadow-lg shadow-brand-900/15 transition hover:-translate-y-0.5 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             >
               {t('browseAll')}
               <span aria-hidden="true">→</span>
@@ -77,7 +77,7 @@ export default async function HomeMasks({ locale }: { locale: string }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={mask.name}
-                  className="w-[78vw] max-w-[330px] shrink-0 snap-center overflow-hidden rounded-2xl border border-purple-200/70 bg-white shadow-lg shadow-purple-900/10 transition hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:border-purple-800/60 dark:bg-gray-800 dark:focus:ring-offset-gray-950 lg:w-auto"
+                  className="w-[78vw] max-w-[330px] shrink-0 snap-center overflow-hidden rounded-2xl border border-brand-200/70 bg-white shadow-lg shadow-brand-900/10 transition hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-brand-800/60 dark:bg-gray-800 dark:focus:ring-offset-gray-950 lg:w-auto"
                 >
                   <div className="grid grid-cols-2">
                     <div className="relative">
@@ -102,13 +102,13 @@ export default async function HomeMasks({ locale }: { locale: string }) {
                         sizes="(max-width: 1023px) 39vw, 12vw"
                         className="aspect-[3/4] h-full w-full object-cover"
                       />
-                      <span className="absolute right-2 top-2 rounded-full bg-purple-600/90 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+                      <span className="absolute right-2 top-2 rounded-full bg-primary/90 px-2 py-1 text-[11px] font-semibold text-on-primary backdrop-blur-sm">
                         {t('after')}
                       </span>
                     </div>
                   </div>
                   <div className="p-4">
-                    <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-purple-600 dark:text-purple-300">
+                    <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-brand-600 dark:text-brand-300">
                       <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
                       {category.name}
                     </p>

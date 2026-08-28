@@ -39,7 +39,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
               {item.href ? (
                 <Link
                   href={item.href}
-                  className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-purple-600"
+                  className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary"
                 >
                   {item.label}
                 </Link>

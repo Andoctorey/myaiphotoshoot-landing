@@ -21,6 +21,10 @@ const inter = Inter({
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  ],
 };
 
 export const metadata: Metadata = {
@@ -60,7 +64,7 @@ export const metadata: Metadata = {
     siteName: "My AI Photo Shoot",
     images: [
       {
-        url: "/og-image-v2.jpg?v=4",
+        url: "/og-image-v2.jpg?v=5",
         width: 1200,
         height: 630,
         alt: "My AI Photo Shoot AI photo creation and transformation examples",
@@ -73,7 +77,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Create and Transform AI Photos",
     description: "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.",
-    images: [{ url: "/og-image-v2.jpg?v=4", alt: "My AI Photo Shoot AI photo creation and transformation examples" }],
+    images: [{ url: "/og-image-v2.jpg?v=5", alt: "My AI Photo Shoot AI photo creation and transformation examples" }],
   },
 };
 
@@ -95,7 +99,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <TikTokPixel pixelId={TIKTOK_PIXEL_ID} />
-        <meta name="theme-color" content="#000000" />
         <meta name="application-name" content="My AI Photo Shoot" />
         <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
         <meta name="mobile-web-app-capable" content="yes" />

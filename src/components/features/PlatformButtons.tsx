@@ -32,7 +32,7 @@ export default function PlatformButtons({
         href={attributedWebAppUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex min-h-12 min-w-[166px] max-w-full items-center justify-center rounded-lg bg-gray-950 px-4 py-2 text-sm font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:bg-purple-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:bg-purple-700 dark:hover:bg-purple-600 dark:focus-visible:ring-offset-gray-900"
+        className="inline-flex min-h-12 min-w-[166px] max-w-full items-center justify-center rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
@@ -50,7 +50,7 @@ export default function PlatformButtons({
         href={playStoreUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
@@ -70,7 +70,7 @@ export default function PlatformButtons({
         href={appStoreUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        className="inline-flex h-12 w-[180px] items-center justify-center rounded-lg transition duration-150 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();

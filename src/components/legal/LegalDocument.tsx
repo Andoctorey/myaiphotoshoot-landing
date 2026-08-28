@@ -23,36 +23,24 @@ export default function LegalDocument() {
           __html: `
             .legal-document {
               line-height: 1.6;
-              color: rgb(55 65 81);
-            }
-            .dark .legal-document {
-              color: rgb(209 213 219);
+              color: var(--on-surface-variant);
             }
             .legal-document a {
-              color: rgb(147 51 234);
+              color: var(--primary);
               text-decoration: underline;
-            }
-            .dark .legal-document a {
-              color: rgb(192 132 252);
             }
             .legal-document .page-title {
               margin: 0 0 1.5rem;
-              color: rgb(17 24 39);
+              color: var(--on-surface);
               font-size: clamp(2rem, 5vw, 3rem);
               font-weight: 700;
               line-height: 1.1;
               letter-spacing: -0.03em;
             }
-            .dark .legal-document .page-title,
-            .dark .legal-document h1,
-            .dark .legal-document h2,
-            .dark .legal-document h3 {
-              color: white;
-            }
             .legal-document h1,
             .legal-document h2,
             .legal-document h3 {
-              color: rgb(17 24 39);
+              color: var(--on-surface);
               font-weight: 700;
               line-height: 1.25;
               letter-spacing: -0.01em;

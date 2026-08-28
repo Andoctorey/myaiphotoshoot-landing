@@ -443,7 +443,9 @@ test('Studio explains Auto Mode and quality without reviving a provider picker o
   assert.match(platformButtonsSource, /webAppUrl\?: string/);
   assert.match(platformButtonsSource, /webAppUrl = WEB_APP_IDEAS_URL/);
   assert.match(platformButtonsSource, /const attributedWebAppUrl = useAttributedUrl\(webAppUrl\)/);
-  assert.match(platformButtonsSource, /dark:bg-purple-700/);
+  assert.match(platformButtonsSource, /bg-black/);
+  assert.match(platformButtonsSource, /text-white/);
+  assert.doesNotMatch(platformButtonsSource, /bg-primary|text-on-primary/);
   assert.doesNotMatch(platformButtonsSource, /dark:bg-black/);
   assert.equal((platformButtonsSource.match(/analyticsParams\);/g) || []).length, 3);
 
@@ -452,6 +454,37 @@ test('Studio explains Auto Mode and quality without reviving a provider picker o
     /supportedModels|providerModel|providerUrl|modelsByGroup|modelGroupOrder|orderedModels/,
   );
   assert.doesNotMatch(studioSource, /'@type': '(?:Service|ItemList|FAQPage)'/);
+});
+
+test('button-style web app links use a black background throughout the site', async () => {
+  const [
+    platformButtons,
+    pricingPlans,
+    footer,
+    maskHighlights,
+    maskLanding,
+    masksCatalog,
+    masksBrowser,
+    useCase,
+  ] = await Promise.all([
+    readProjectFile('src/components/features/PlatformButtons.tsx'),
+    readProjectFile('src/components/features/PricingPlans.tsx'),
+    readProjectFile('src/components/layout/Footer.tsx'),
+    readProjectFile('src/components/masks/AiMaskCategoryHighlights.tsx'),
+    readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
+    readProjectFile('src/components/masks/AiMasksCatalog.tsx'),
+    readProjectFile('src/components/masks/MasksCatalogBrowser.tsx'),
+    readProjectFile('src/app/[locale]/use-cases/[slug]/UseCasePageClient.tsx'),
+  ]);
+
+  assert.match(platformButtons, /href=\{attributedWebAppUrl\}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(pricingPlans, /<PlatformAppLink[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(footer, /href=\{appLink\.url\}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(maskHighlights, /href=\{buildMaskAppUrl\(selectedMask\.id\)\}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(maskLanding, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(masksCatalog, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(masksBrowser, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.equal((useCase.match(/href=\{attributedWebAppUrl\}[\s\S]{0,1000}?\bbg-black\b/g) || []).length, 4);
 });
 
 test('Studio copy stays user-facing and avoids unsupported personal-model promises', async () => {
@@ -726,7 +759,7 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
     assert.match(source, /buildAlternates\([^\n]+, '\/studio\/', locales\)/);
     assert.match(source, /canonicalUrl\([^\n]+, '\/studio\/'\)/);
     assert.match(source, /const imageAlt = t\('imageAlt'\)/);
-    assert.equal((source.match(/url: '\/og-image-v2\.jpg\?v=4'/g) || []).length, 2);
+    assert.equal((source.match(/url: '\/og-image-v2\.jpg\?v=5'/g) || []).length, 2);
     assert.equal((source.match(/alt: imageAlt/g) || []).length, 2);
     assert.doesNotMatch(source, /og-models|\/models\//);
   }
@@ -861,12 +894,12 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     readProjectFile('src/lib/ai-presets.ts'),
     readProjectFile('src/lib/usecase-seo.ts'),
   ]);
-  const genericCardReferences = genericCardSources.join('\n').match(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=4)?/g) || [];
+  const genericCardReferences = genericCardSources.join('\n').match(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=5)?/g) || [];
   assert.ok(genericCardReferences.length > 0);
   assert.equal(
-    genericCardReferences.every((reference) => reference.endsWith('?v=4')),
+    genericCardReferences.every((reference) => reference.endsWith('?v=5')),
     true,
-    'generic social-card references must use the v4 cache key',
+    'generic social-card references must use the v5 cache key',
   );
 
   const completeSocialMetadataSources = {
@@ -878,7 +911,7 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     license: await readProjectFile('src/app/license/page.tsx'),
   };
   for (const [name, source] of Object.entries(completeSocialMetadataSources)) {
-    const imageReferences = source.match(/\/og-image-v2\.jpg\?v=4/g) || [];
+    const imageReferences = source.match(/\/og-image-v2\.jpg\?v=5/g) || [];
     assert.equal(imageReferences.length, 2, `${name} must define Open Graph and Twitter images`);
   }
 });

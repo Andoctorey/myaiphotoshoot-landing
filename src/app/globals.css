@@ -3,18 +3,152 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  --brand-blue: #006d9c;
+  --brand-blue-bright: #63cdfa;
+
+  /* Mirrors the Material 3 ColorScheme roles in the Compose app. */
+  --primary: var(--brand-blue);
+  --on-primary: #ffffff;
+  --primary-container: #d2f0fc;
+  --on-primary-container: #003548;
+  --secondary: #454545;
+  --on-secondary: #ffffff;
+  --secondary-container: #e5e5e5;
+  --on-secondary-container: #1c1c1c;
+  --tertiary: #5e5e5e;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #dadada;
+  --on-tertiary-container: #1a1a1a;
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
   --background: #ffffff;
-  --foreground: #171717;
+  --on-background: #1a1a1a;
+  --surface: #ffffff;
+  --on-surface: #1a1a1a;
+  --surface-variant: #e4e4e4;
+  --on-surface-variant: #474747;
+  --outline: #777777;
+  --outline-variant: #c7c7c7;
+  --scrim: #000000;
+  --inverse-surface: #303030;
+  --inverse-on-surface: #f4f4f4;
+  --inverse-primary: var(--brand-blue-bright);
+  --surface-tint: var(--surface-dim);
+  --surface-dim: #dadada;
+  --surface-bright: #ffffff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f7f7f7;
+  --surface-container: #f1f1f1;
+  --surface-container-high: #eaeaea;
+  --surface-container-highest: #e2e2e2;
+  --tabs: #f1f1f1;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --primary: var(--brand-blue-bright);
+  --on-primary: #003548;
+  --primary-container: #004d68;
+  --on-primary-container: #c8eefd;
+  --secondary: #d0d0d0;
+  --on-secondary: #2a2a2a;
+  --secondary-container: #464646;
+  --on-secondary-container: #efefef;
+  --tertiary: #b8b8b8;
+  --on-tertiary: #222222;
+  --tertiary-container: #555555;
+  --on-tertiary-container: #f5f5f5;
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+  --background: #000000;
+  --on-background: #f5f5f5;
+  --surface: #000000;
+  --on-surface: #f5f5f5;
+  --surface-variant: #444444;
+  --on-surface-variant: #c7c7c7;
+  --outline: #919191;
+  --outline-variant: #444444;
+  --scrim: #000000;
+  --inverse-surface: #e5e5e5;
+  --inverse-on-surface: #262626;
+  --inverse-primary: var(--brand-blue);
+  --surface-tint: var(--surface-dim);
+  --surface-dim: #000000;
+  --surface-bright: #383838;
+  --surface-container-lowest: #000000;
+  --surface-container-low: #121212;
+  --surface-container: #1b1b1b;
+  --surface-container-high: #262626;
+  --surface-container-highest: #323232;
+  --tabs: #1b1b1b;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-on-background: var(--on-background);
+  --color-foreground: var(--on-background);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-surface-variant: var(--surface-variant);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-scrim: var(--scrim);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+  --color-inverse-primary: var(--inverse-primary);
+  --color-surface-tint: var(--surface-tint);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-tabs: var(--tabs);
+
+  /* Marketing gradients use a tonal ramp anchored to the Compose brand colors. */
+  --color-brand-50: #f2fafd;
+  --color-brand-100: #d2f0fc;
+  --color-brand-200: #a8e3f8;
+  --color-brand-300: #63cdfa;
+  --color-brand-400: #35b9e7;
+  --color-brand-500: #0088bb;
+  --color-brand-600: #006d9c;
+  --color-brand-700: #005a7f;
+  --color-brand-800: #004d68;
+  --color-brand-900: #003548;
+  --color-brand-950: #001f2b;
+  --color-gray-50: #f7f7f7;
+  --color-gray-100: #f1f1f1;
+  --color-gray-200: #e2e2e2;
+  --color-gray-300: #c7c7c7;
+  --color-gray-400: #919191;
+  --color-gray-500: #777777;
+  --color-gray-600: #474747;
+  --color-gray-700: #323232;
+  --color-gray-800: #1b1b1b;
+  --color-gray-900: #121212;
+  --color-gray-950: #000000;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -26,13 +160,13 @@
 @layer base {
   body {
     background: var(--background);
-    color: var(--foreground);
+    color: var(--on-background);
   }
 
   /* Dark mode placeholder text */
   .dark input::placeholder,
   .dark textarea::placeholder {
-    color: rgba(156, 163, 175, 0.8);
+    color: color-mix(in srgb, var(--on-surface-variant) 80%, transparent);
   }
 
   /* RTL-specific styles */

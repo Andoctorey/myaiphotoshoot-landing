@@ -64,11 +64,11 @@ export default async function Features({ locale }: { locale: string }) {
           {features.map((feature) => (
             <div
               key={feature.name}
-              className="relative p-5 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:border-purple-200 dark:hover:border-purple-700 transition-colors duration-300"
+              className="relative p-5 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 hover:border-primary/30 transition-colors duration-300"
             >
               <div className="absolute top-5 ltr:left-5 rtl:right-5">
                 <feature.icon
-                  className="h-7 w-7 text-purple-600 dark:text-purple-400"
+                  className="h-7 w-7 text-primary"
                   aria-hidden="true"
                 />
               </div>
@@ -82,7 +82,7 @@ export default async function Features({ locale }: { locale: string }) {
                 {feature.href && feature.linkLabel && (
                   <Link
                     href={feature.href}
-                    className="mt-3 inline-flex rounded-sm text-sm font-semibold text-purple-700 underline decoration-purple-300 underline-offset-4 hover:text-purple-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 dark:text-purple-300 dark:decoration-purple-700 dark:hover:text-purple-100"
+                    className="mt-3 inline-flex rounded-sm text-sm font-semibold text-primary underline decoration-brand-300 underline-offset-4 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:decoration-brand-700"
                   >
                     {feature.linkLabel}
                   </Link>

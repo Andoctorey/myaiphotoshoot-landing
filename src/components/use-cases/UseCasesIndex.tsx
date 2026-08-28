@@ -61,7 +61,7 @@ export default async function UseCasesIndex({ locale, title, intro, emptyLabel }
             <Link
               key={it.slug}
               href={localePath(locale, `/use-cases/${it.slug}/`)}
-              className="block rounded-xl group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-2"
+              className="block rounded-xl group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                 {Array.isArray(it.featured_image_urls) && it.featured_image_urls[0] && (

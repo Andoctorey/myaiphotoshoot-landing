@@ -174,7 +174,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
 
   return (
     <header
-      className="fixed left-0 right-0 top-0 z-50 bg-gradient-to-r from-white/70 via-purple-50/65 to-indigo-50/60 backdrop-blur-lg transition-all duration-300 dark:from-gray-950/70 dark:via-purple-950/65 dark:to-indigo-950/60 data-[scrolled=true]:from-white/85 data-[scrolled=true]:via-purple-50/80 data-[scrolled=true]:to-indigo-50/75 data-[scrolled=true]:shadow-sm data-[scrolled=true]:shadow-purple-900/10 data-[scrolled=true]:backdrop-blur-xl data-[scrolled=true]:dark:from-gray-950/85 data-[scrolled=true]:dark:via-purple-950/80 data-[scrolled=true]:dark:to-indigo-950/75"
+      className="fixed left-0 right-0 top-0 z-50 bg-gradient-to-r from-white/70 via-brand-50/65 to-brand-100/60 backdrop-blur-lg transition-all duration-300 dark:from-gray-950/70 dark:via-brand-950/65 dark:to-brand-900/60 data-[scrolled=true]:from-white/85 data-[scrolled=true]:via-brand-50/80 data-[scrolled=true]:to-brand-100/75 data-[scrolled=true]:shadow-sm data-[scrolled=true]:shadow-brand-900/10 data-[scrolled=true]:backdrop-blur-xl data-[scrolled=true]:dark:from-gray-950/85 data-[scrolled=true]:dark:via-brand-950/80 data-[scrolled=true]:dark:to-brand-900/75"
       data-scrolled={isScrolled}
       role="banner"
     >
@@ -183,7 +183,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
           <div className="flex-shrink-0">
             <a
               href={isHomePage ? "#" : homePath}
-              className="flex items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+              className="flex items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
               aria-label={`My AI Photo Shoot — ${t('home')}`}
             >
               <div className="h-11 w-11 relative">
@@ -209,7 +209,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 >
                   {item.name}
                 </a>
@@ -223,7 +223,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                   onClick={() => setIsUseCasesMenuOpen(!isUseCasesMenuOpen)}
                   aria-expanded={isUseCasesMenuOpen}
                   aria-controls="usecases-menu"
-                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 >
                   {t('useCases')}
                   <svg className="inline ltr:ml-1 rtl:mr-1 h-4 w-4 align-middle" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.085l3.71-3.854a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z" clipRule="evenodd" /></svg>
@@ -242,7 +242,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                           <li key={uc.slug}>
                             <a
                               href={localePath(locale, `/use-cases/${uc.slug}/`)}
-                              className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:bg-purple-50 focus-visible:text-purple-700 dark:focus-visible:bg-purple-900/50 dark:focus-visible:text-purple-300"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-container hover:text-on-primary-container focus:outline-none focus-visible:bg-primary-container focus-visible:text-on-primary-container dark:text-gray-300"
                               onClick={() => setIsUseCasesMenuOpen(false)}
                             >
                               {uc.title}
@@ -258,7 +258,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 <a
                   key={item.name}
                   href={item.href}
-                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                  className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 >
                   {item.name}
                 </a>
@@ -267,7 +267,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 href={appLink.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 onClick={(e) => {
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
@@ -286,7 +286,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                   ref={languageButtonRef}
                   id="language-dropdown"
                   type="button"
-                  className="flex items-center px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                  className="flex items-center px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap transition-colors duration-150 text-gray-900 dark:text-white hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                   onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
                   aria-expanded={isLanguageMenuOpen}
                   aria-controls="language-menu"
@@ -312,9 +312,9 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                             onClick={() => handleLanguageChange(l)}
                             className={`flex items-center justify-between w-full px-4 py-2 text-sm transition-colors duration-150 ${
                               l === locale
-                                ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
+                                ? 'bg-primary-container text-on-primary-container'
                                 : 'text-gray-700 dark:text-gray-300'
-                            } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus-visible:bg-purple-50 focus-visible:text-purple-700 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-500 dark:focus-visible:bg-purple-900/50 dark:focus-visible:text-purple-300`}
+                            } hover:bg-primary-container hover:text-on-primary-container focus:outline-none focus-visible:bg-primary-container focus-visible:text-on-primary-container focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary`}
                             aria-current={l === locale ? 'true' : undefined}
                           >
                             <span lang={l} className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>
@@ -334,10 +334,10 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
             <ThemeToggle />
             <button
               type="button"
-              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 ${
+              className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 ${
                 isScrolled
-                  ? 'text-gray-900 hover:text-primary dark:text-gray-100 dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-700'
-                  : 'text-gray-900 hover:text-primary dark:text-white dark:hover:text-purple-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'text-gray-900 hover:text-primary dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  : 'text-gray-900 hover:text-primary dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
@@ -382,7 +382,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                  className="block text-gray-900 dark:text-gray-100 hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={handleNavLinkClick}
                 >
                   {item.name}
@@ -392,7 +392,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
               <div className="mt-2">
                 <button
                   type="button"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={() => setIsMobileUseCasesOpen(!isMobileUseCasesOpen)}
                   aria-expanded={isMobileUseCasesOpen}
                   aria-controls="mobile-usecases-list"
@@ -410,7 +410,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                           <li key={uc.slug}>
                             <a
                               href={localePath(locale, `/use-cases/${uc.slug}/`)}
-                              className="block rounded-md px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                              className="block rounded-md px-3 py-2 text-gray-900 dark:text-gray-100 hover:text-primary text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                               onClick={handleNavLinkClick}
                             >
                               {uc.title}
@@ -426,7 +426,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                  className="block text-gray-900 dark:text-gray-100 hover:text-primary px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={handleNavLinkClick}
                 >
                   {item.name}
@@ -436,7 +436,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 href={appLink.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 mt-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                className="block px-3 py-2 mt-2 rounded-md text-base font-medium text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                 onClick={(e) => {
                   handleNavLinkClick();
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
@@ -451,7 +451,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
               <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" role="group" aria-label={t('language')}>
                 <button
                   type="button"
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-900 dark:text-gray-100 hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   onClick={() => setIsMobileLanguageOpen(!isMobileLanguageOpen)}
                   aria-expanded={isMobileLanguageOpen}
                   aria-controls="mobile-language-list"
@@ -468,9 +468,9 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                           onClick={() => handleLanguageChange(l)}
                           className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-150 ${
                             l === locale
-                              ? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
+                              ? 'bg-primary-container text-on-primary-container'
                               : 'text-gray-700 dark:text-gray-300'
-                          } hover:bg-purple-50 dark:hover:bg-purple-900/50 hover:text-purple-700 dark:hover:text-purple-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800`}
+                          } hover:bg-primary-container hover:text-on-primary-container focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800`}
                           aria-current={l === locale ? 'true' : undefined}
                         >
                           <span lang={l} className="flex-1 ltr:text-left rtl:text-right">{getLanguageDisplayName(l)}</span>

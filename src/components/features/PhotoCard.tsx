@@ -23,7 +23,7 @@ interface PhotoCardProps {
 }
 
 const MAX_ACCESSIBLE_NAME_LENGTH = 100;
-const LINK_CLASS_NAME = 'group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900';
+const LINK_CLASS_NAME = 'group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900';
 
 function getAccessibleName(ariaLabel: string | undefined, alt: string): string | undefined {
   const name = (ariaLabel || alt).replace(/\s+/g, ' ').trim();

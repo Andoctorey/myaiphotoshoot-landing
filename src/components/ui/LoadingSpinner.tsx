@@ -13,7 +13,7 @@ const spinnerVariants = cva(
         lg: 'h-12 w-12 border-4',
       },
       variant: {
-        primary: 'border-purple-600 border-t-transparent',
+        primary: 'border-brand-600 border-t-transparent',
         white: 'border-white border-t-transparent',
         gray: 'border-gray-300 dark:border-gray-600 border-t-transparent',
       },

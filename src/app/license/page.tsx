@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: ogLocaleFromAppLocale(defaultLocale),
     alternateLocale: ogAlternateLocales([defaultLocale], defaultLocale),
-    images: [{ url: '/og-image-v2.jpg?v=4', width: 1200, height: 630, alt: title }],
+    images: [{ url: '/og-image-v2.jpg?v=5', width: 1200, height: 630, alt: title }],
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
-    images: [{ url: '/og-image-v2.jpg?v=4', alt: title }],
+    images: [{ url: '/og-image-v2.jpg?v=5', alt: title }],
   },
 };
 
@@ -107,7 +107,7 @@ export default function LicensePage() {
                 any licensing concerns, please contact us at{' '}
                 <a
                   href="mailto:support@myaiphotoshoot.com"
-                  className="text-purple-600 dark:text-purple-400 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   support@myaiphotoshoot.com
                 </a>
@@ -122,7 +122,7 @@ export default function LicensePage() {
                 For complete terms of service and privacy policy, please visit our{' '}
                 <Link
                   href="/legal/"
-                  className="text-purple-600 dark:text-purple-400 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   legal page
                 </Link>.

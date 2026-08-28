@@ -60,7 +60,7 @@ export default async function HomeBlog({
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                      <div className="w-full h-full bg-gradient-to-br from-brand-600 to-brand-300 flex items-center justify-center">
                         <span className="text-white text-2xl font-bold">
                           {post.title.charAt(0).toUpperCase()}
                         </span>
@@ -68,7 +68,7 @@ export default async function HomeBlog({
                     )}
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-primary transition-colors">
                       {post.title}
                     </h3>
                     {post.meta_description && (
@@ -86,7 +86,7 @@ export default async function HomeBlog({
         <div className="text-center">
           <Link
             href={localePath(locale, '/blog/')}
-            className="inline-block px-6 py-3 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+            className="inline-block px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-primary/90 transition-colors"
           >
             {t('viewAll')}
           </Link>

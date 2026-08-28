@@ -96,7 +96,7 @@ export default function MasksCatalogBrowser({
       {publishedCategories.length > 0 ? (
         <nav
           aria-label={labels.categoryGuide}
-          className="mb-8 rounded-2xl border border-purple-200 bg-purple-50/70 px-4 py-5 dark:border-purple-900 dark:bg-purple-950/20 sm:px-6"
+          className="mb-8 rounded-2xl border border-brand-200 bg-brand-50/70 px-4 py-5 dark:border-brand-900 dark:bg-brand-950/20 sm:px-6"
         >
           <p className="mb-3 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
             {labels.categoryGuide}
@@ -109,7 +109,7 @@ export default function MasksCatalogBrowser({
                   key={category.id}
                   href={localePath(locale, `/masks/${category.slug}/`)}
                   aria-label={`${labels.categoryGuide}: ${guideName}`}
-                  className="inline-flex items-center gap-2 rounded-full bg-purple-50 px-4 py-2 text-sm font-semibold text-purple-800 ring-1 ring-purple-200 transition hover:bg-purple-100 hover:ring-purple-300 dark:bg-purple-950/40 dark:text-purple-200 dark:ring-purple-800 dark:hover:bg-purple-950/70"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary-container/50 px-4 py-2 text-sm font-semibold text-on-primary-container ring-1 ring-primary/20 transition hover:bg-primary-container hover:ring-primary/40"
                 >
                   <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
                   {guideName}
@@ -149,8 +149,8 @@ export default function MasksCatalogBrowser({
                   onClick={() => setGender(choice.value)}
                   className={`flex h-9 flex-1 items-center justify-center rounded-full text-xl font-semibold transition ${
                     selected
-                      ? 'bg-purple-600 text-white shadow-sm'
-                      : 'text-gray-500 hover:bg-gray-100 hover:text-purple-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-purple-300'
+                      ? 'bg-primary text-on-primary shadow-sm'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-primary dark:text-gray-400 dark:hover:bg-gray-800'
                   }`}
                 >
                   <span aria-hidden="true">{choice.symbol}</span>
@@ -171,10 +171,10 @@ export default function MasksCatalogBrowser({
               aria-labelledby={`${category.slug}-title`}
               className="group scroll-mt-36 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-purple-500 [&::-webkit-details-marker]:hidden sm:px-6 sm:py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary [&::-webkit-details-marker]:hidden sm:px-6 sm:py-5">
                 <div className="flex items-center gap-3">
                   {category.iconPath ? (
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 sm:h-11 sm:w-11">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-950 dark:text-brand-300 sm:h-11 sm:w-11">
                       <MaskCategoryIcon iconPath={category.iconPath} className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
                   ) : null}
@@ -210,7 +210,7 @@ export default function MasksCatalogBrowser({
               </summary>
 
               <div className="grid grid-cols-2 gap-4 border-t border-gray-100 p-5 dark:border-gray-800 sm:grid-cols-3 sm:p-6 lg:grid-cols-5">
-                <article className="overflow-hidden rounded-2xl border border-dashed border-purple-300 bg-purple-50 dark:border-purple-800 dark:bg-purple-950/20">
+                <article className="overflow-hidden rounded-2xl border border-dashed border-brand-300 bg-brand-50 dark:border-brand-800 dark:bg-brand-950/20">
                   <div className="relative overflow-hidden">
                     <Image
                       src={categoryPreviewUrl(category, gender)}
@@ -237,7 +237,7 @@ export default function MasksCatalogBrowser({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={mask.name}
-                    className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950"
+                    className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950"
                   >
                     <div className="relative overflow-hidden">
                       <Image
@@ -262,7 +262,7 @@ export default function MasksCatalogBrowser({
         })}
       </div>
 
-      <section className="mt-16 rounded-3xl bg-purple-100 px-6 py-9 text-center dark:bg-purple-950/40 sm:px-10">
+      <section className="mt-16 rounded-3xl bg-brand-100 px-6 py-9 text-center dark:bg-brand-950/40 sm:px-10">
         <h2 className="text-2xl font-bold text-gray-950 dark:text-white">
           {labels.readyTitle}
         </h2>
@@ -273,7 +273,7 @@ export default function MasksCatalogBrowser({
           href={AI_MASKS_APP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
         >
           {labels.tryMasks}
         </a>

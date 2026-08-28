@@ -22,7 +22,7 @@ export default async function Pricing({ locale }: { locale: string }) {
           <p className="mt-3 text-sm">
             <Link
               href={localePath(locale, '/studio/')}
-              className="font-semibold text-purple-700 underline decoration-purple-300 underline-offset-4 hover:text-purple-900 dark:text-purple-300 dark:decoration-purple-700 dark:hover:text-purple-100"
+              className="font-semibold text-primary underline decoration-brand-300 underline-offset-4 hover:text-primary/80 dark:decoration-brand-700"
             >
               {tNav('studio')}
             </Link>

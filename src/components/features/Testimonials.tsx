@@ -31,7 +31,7 @@ export default function UserGallery({
   const locale = useLocale();
 
   return (
-    <section className="bg-gradient-to-b from-white to-purple-50 py-12 dark:from-gray-900 dark:to-purple-950 md:py-16" id="gallery">
+    <section className="bg-gradient-to-b from-white to-brand-50 py-12 dark:from-gray-900 dark:to-brand-950 md:py-16" id="gallery">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Gallery Section */}
         <div>

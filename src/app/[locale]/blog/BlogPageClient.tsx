@@ -79,7 +79,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">{t('breadcrumb.home')}</Link>
+                <Link href={localePath(locale, '/')} className="hover:text-primary">{t('breadcrumb.home')}</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
@@ -100,14 +100,14 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           {/* Loading State */}
           {isLoading && (
             <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             </div>
           )}
 
           {/* Error State */}
           {isError && (
             <div className="text-center py-12">
-              <p className="text-red-600 dark:text-red-400 text-lg">
+              <p className="text-error text-lg">
                 {t('errorTitle')}. {t('errorDescription')}
               </p>
             </div>
@@ -136,7 +136,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSd2rFl9kNMNVvVJFrXqPqJmC9vEhSFrNbPNBOaQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKvNBOqQedcNQ4xUqJFNKv//Z"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-br from-brand-600 to-brand-300 flex items-center justify-center">
                           <span className="text-white text-2xl font-bold">
                             {post.title.charAt(0).toUpperCase()}
                           </span>
@@ -144,7 +144,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                       )}
                     </div>
                     <div className="p-6">
-                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-primary transition-colors">
                         {post.title}
                       </h2>
                       {post.meta_description && (
@@ -192,7 +192,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                     onClick={() => handlePageChange(page)}
                     className={`px-3 py-2 rounded-lg transition-colors ${
                       currentPage === page
-                        ? 'bg-purple-600 text-white'
+                        ? 'bg-primary text-on-primary'
                         : 'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
@@ -223,7 +223,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
                   <li key={post.slug}>
                     <Link
                       href={localePath(locale, `/blog/${post.slug}/`)}
-                      className="text-gray-700 underline-offset-4 hover:text-purple-700 hover:underline dark:text-gray-300 dark:hover:text-purple-300"
+                      className="text-gray-700 underline-offset-4 hover:text-primary hover:underline dark:text-gray-300"
                     >
                       {post.title}
                     </Link>

@@ -25,9 +25,9 @@ function accessBadgeClass(id: QualityBand['id']): string {
     return 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-200';
   }
   if (id === 'pro') {
-    return 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-200';
+    return 'bg-primary-container text-on-primary-container';
   }
-  return 'bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-200';
+  return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200';
 }
 
 export default async function StudioPage({ locale }: Props) {
@@ -107,14 +107,14 @@ export default async function StudioPage({ locale }: Props) {
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
-      <section className="relative overflow-hidden border-b border-purple-100 bg-gradient-to-br from-purple-50 via-white to-sky-50 dark:border-gray-800 dark:from-purple-950/40 dark:via-gray-950 dark:to-sky-950/30">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-purple-300/25 blur-3xl dark:bg-purple-700/15" />
+      <section className="relative overflow-hidden border-b border-brand-100 bg-gradient-to-br from-brand-50 via-white to-brand-100 dark:border-gray-800 dark:from-brand-950/40 dark:via-gray-950 dark:to-brand-900/30">
+        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brand-300/25 blur-3xl dark:bg-brand-700/15" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:px-8 lg:py-16">
           <div>
             <nav aria-label="Breadcrumb" className="mb-6 text-sm">
               <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
                 <li>
-                  <Link href={localePath(locale, '/')} className="hover:text-purple-700 dark:hover:text-purple-300">
+                  <Link href={localePath(locale, '/')} className="hover:text-primary">
                     {tNav('home')}
                   </Link>
                 </li>
@@ -124,7 +124,7 @@ export default async function StudioPage({ locale }: Props) {
                 </li>
               </ol>
             </nav>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700 dark:text-purple-300">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               {t('eyebrow')}
             </p>
             <h1 className="mt-3 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">
@@ -133,8 +133,8 @@ export default async function StudioPage({ locale }: Props) {
             <p className="mt-5 max-w-3xl text-lg leading-8 text-gray-700 dark:text-gray-300">
               {t('description')}
             </p>
-            <div className="mt-7 max-w-3xl rounded-2xl border border-purple-200 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-purple-900 dark:bg-gray-900/80">
-              <p className="font-semibold text-purple-800 dark:text-purple-200">{t('directAnswer.title')}</p>
+            <div className="mt-7 max-w-3xl rounded-2xl border border-brand-200 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-brand-900 dark:bg-gray-900/80">
+              <p className="font-semibold text-brand-800 dark:text-brand-200">{t('directAnswer.title')}</p>
               <p className="mt-2 leading-7 text-gray-700 dark:text-gray-300">{t('directAnswer.description')}</p>
             </div>
             <div className="mt-7">
@@ -154,28 +154,28 @@ export default async function StudioPage({ locale }: Props) {
               {t('quality.visual.previewLabel')}
             </p>
             <div
-              className="pointer-events-none select-none rounded-[24px] bg-[#EEE6F1] px-4 py-3 text-[#1D1A20] dark:bg-[#3B373F] dark:text-[#E7E0E8]"
+              className="pointer-events-none select-none rounded-[24px] bg-surface-container-highest px-4 py-3 text-on-surface"
               aria-hidden="true"
             >
               <div className="flex items-center justify-between gap-4">
                 <p className="min-w-0 flex-1 truncate text-base font-semibold leading-6 tracking-[0.0125em]">
                   {t('quality.visual.title')}
                 </p>
-                <span className="max-w-[140px] shrink-0 truncate text-end text-sm font-semibold leading-5 tracking-[0.007em] text-[#3A91E8]">
+                <span className="max-w-[140px] shrink-0 truncate text-end text-sm font-semibold leading-5 tracking-[0.007em] text-primary">
                   {t('quality.visual.creditLabel', { credits: qualityPreviewCredits })}
                 </span>
               </div>
               <div className="mt-1" dir="ltr">
                 <div className="relative mx-4 h-12">
-                  <span className="absolute -left-4 -right-4 top-1/2 h-6 -translate-y-1/2 rounded-full bg-[#1D1A20]/[0.12] dark:bg-[#E7E0E8]/[0.12]" />
-                  <span className="absolute -left-4 right-1/3 top-1/2 h-6 -translate-y-1/2 rounded-full bg-[#3A91E8]/[0.82]" />
-                  <span className="absolute left-0 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFF7FF]/[0.56] dark:bg-[#151218]/[0.56]" />
-                  <span className="absolute left-1/3 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFF7FF]/[0.56] dark:bg-[#151218]/[0.56]" />
-                  <span className="absolute left-2/3 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFF7FF]/[0.56] dark:bg-[#151218]/[0.56]" />
-                  <span className="absolute right-0 top-1/2 h-1 w-1 translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A454E]/[0.44] dark:bg-[#CCC4CF]/[0.44]" />
-                  <span className="absolute left-2/3 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#CCC4CF] bg-[#FFF7FF] shadow-[0_3px_6px_rgba(0,0,0,0.22)] dark:border-[#958E99] dark:bg-[#E7E0E8]" />
+                  <span className="absolute -left-4 -right-4 top-1/2 h-6 -translate-y-1/2 rounded-full bg-on-surface/12" />
+                  <span className="absolute -left-4 right-1/3 top-1/2 h-6 -translate-y-1/2 rounded-full bg-primary/82" />
+                  <span className="absolute left-0 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-surface/56" />
+                  <span className="absolute left-1/3 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-surface/56" />
+                  <span className="absolute left-2/3 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-surface/56" />
+                  <span className="absolute right-0 top-1/2 h-1 w-1 translate-x-1/2 -translate-y-1/2 rounded-full bg-on-surface-variant/44" />
+                  <span className="absolute left-2/3 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-outline-variant bg-surface shadow-[0_3px_6px_rgba(0,0,0,0.22)] dark:border-outline dark:bg-on-surface" />
                 </div>
-                <div className="flex justify-between gap-3 text-base font-normal leading-6 tracking-[0.03125em] text-[#4A454E] dark:text-[#CCC4CF]">
+                <div className="flex justify-between gap-3 text-base font-normal leading-6 tracking-[0.03125em] text-on-surface-variant">
                   <bdi dir="auto">{t('quality.visual.faster')}</bdi>
                   <bdi dir="auto">{t('quality.visual.higherQuality')}</bdi>
                 </div>
@@ -208,7 +208,7 @@ export default async function StudioPage({ locale }: Props) {
       <section id="how-studio-works" className="scroll-mt-24 bg-white py-12 dark:bg-gray-950 md:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700 dark:text-purple-300">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               {t('steps.eyebrow')}
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('steps.title')}</h2>
@@ -217,7 +217,7 @@ export default async function StudioPage({ locale }: Props) {
           <ol className="mt-8 grid gap-5 md:grid-cols-3">
             {stepKeys.map((key, index) => (
               <li key={key} className="rounded-2xl border border-gray-200 p-6 dark:border-gray-800">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-100 text-sm font-bold text-purple-800 dark:bg-purple-950 dark:text-purple-200">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-container text-sm font-bold text-on-primary-container">
                   {index + 1}
                 </span>
                 <h3 className="mt-4 text-xl font-semibold">{t(`steps.${key}.title`)}</h3>
@@ -231,7 +231,7 @@ export default async function StudioPage({ locale }: Props) {
       <section className="bg-gray-50 py-12 dark:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700 dark:text-purple-300">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               {t('starts.eyebrow')}
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('starts.title')}</h2>
@@ -240,7 +240,7 @@ export default async function StudioPage({ locale }: Props) {
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
             {sourceKeys.map((key, index) => (
               <article key={key} className="rounded-3xl border border-gray-200 bg-white p-7 dark:border-gray-800 dark:bg-gray-950">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-purple-100 font-bold text-purple-800 dark:bg-purple-950 dark:text-purple-200">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary-container font-bold text-on-primary-container">
                   {index + 1}
                 </span>
                 <h3 className="mt-5 text-2xl font-semibold">{t(`starts.${key}.title`)}</h3>
@@ -254,29 +254,29 @@ export default async function StudioPage({ locale }: Props) {
         </div>
       </section>
 
-      <section className="bg-purple-950 py-12 text-white md:py-16">
+      <section className="bg-brand-950 py-12 text-white md:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-200">{t('autoMode.eyebrow')}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-200">{t('autoMode.eyebrow')}</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('autoMode.title')}</h2>
-            <p className="mt-4 text-lg leading-8 text-purple-100">{t('autoMode.description')}</p>
+            <p className="mt-4 text-lg leading-8 text-brand-100">{t('autoMode.description')}</p>
           </div>
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
             {(['photo', 'personal'] as const).map((key) => (
               <article key={key} className="rounded-3xl border border-white/15 bg-white/10 p-7 backdrop-blur">
                 <h3 className="text-xl font-semibold">{t(`autoMode.${key}.title`)}</h3>
-                <p className="mt-3 leading-7 text-purple-100">{t(`autoMode.${key}.description`)}</p>
+                <p className="mt-3 leading-7 text-brand-100">{t(`autoMode.${key}.description`)}</p>
               </article>
             ))}
           </div>
-          <p className="mt-6 rounded-2xl bg-white px-5 py-4 font-semibold text-purple-950">{t('autoMode.control')}</p>
+          <p className="mt-6 rounded-2xl bg-white px-5 py-4 font-semibold text-brand-950">{t('autoMode.control')}</p>
         </div>
       </section>
 
       <section className="bg-gray-50 py-12 dark:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700 dark:text-purple-300">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               {t('quality.eyebrow')}
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('quality.title')}</h2>
@@ -324,12 +324,12 @@ export default async function StudioPage({ locale }: Props) {
         </div>
       </section>
 
-      <section className="bg-purple-950 py-12 text-white md:py-16">
+      <section className="bg-brand-950 py-12 text-white md:py-16">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_460px] lg:px-8">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-200">{t('personal.eyebrow')}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-200">{t('personal.eyebrow')}</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('personal.title')}</h2>
-            <p className="mt-4 max-w-2xl text-lg leading-8 text-purple-100">{t('personal.description')}</p>
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-brand-100">{t('personal.description')}</p>
             <ul className="mt-7 space-y-4">
               {(['upload', 'train', 'create'] as const).map((key, index) => (
                 <li key={key} className="flex gap-4">
@@ -338,7 +338,7 @@ export default async function StudioPage({ locale }: Props) {
                   </span>
                   <span>
                     <span className="block font-semibold">{t(`personal.steps.${key}.title`)}</span>
-                    <span className="mt-1 block leading-6 text-purple-100">{t(`personal.steps.${key}.description`)}</span>
+                    <span className="mt-1 block leading-6 text-brand-100">{t(`personal.steps.${key}.description`)}</span>
                   </span>
                 </li>
               ))}
@@ -349,24 +349,24 @@ export default async function StudioPage({ locale }: Props) {
             <div className="mt-5 space-y-3">
               <div className="rounded-2xl bg-black/15 p-4">
                 <p className="font-semibold">{t('personal.costs.standard.title')}</p>
-                <p className="mt-1 text-sm leading-6 text-purple-100">
+                <p className="mt-1 text-sm leading-6 text-brand-100">
                   {t('personal.costs.standard.description', { credits: personalModelCosts.standardTrainingCredits })}
                 </p>
               </div>
               <div className="rounded-2xl bg-black/15 p-4">
                 <p className="font-semibold">{t('personal.costs.full.title')}</p>
-                <p className="mt-1 text-sm leading-6 text-purple-100">
+                <p className="mt-1 text-sm leading-6 text-brand-100">
                   {t('personal.costs.full.description', { credits: personalModelCosts.fullTrainingCredits })}
                 </p>
               </div>
-              <div className="rounded-2xl bg-white p-4 text-purple-950">
+              <div className="rounded-2xl bg-white p-4 text-brand-950">
                 <p className="font-semibold">{t('personal.costs.photos.title')}</p>
-                <p className="mt-1 text-sm leading-6 text-purple-900">
+                <p className="mt-1 text-sm leading-6 text-brand-900">
                   {t('personal.costs.photos.description', { credits: personalModelCosts.imageCredits })}
                 </p>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-6 text-purple-100">{t('personal.costs.note')}</p>
+            <p className="mt-4 text-sm leading-6 text-brand-100">{t('personal.costs.note')}</p>
           </div>
         </div>
       </section>
@@ -374,7 +374,7 @@ export default async function StudioPage({ locale }: Props) {
       <section className="bg-white py-12 dark:bg-gray-950 md:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700 dark:text-purple-300">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               {t('related.eyebrow')}
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('related.title')}</h2>
@@ -387,7 +387,7 @@ export default async function StudioPage({ locale }: Props) {
                 <p className="mt-3 leading-7 text-gray-700 dark:text-gray-300">{t(`related.${key}.description`)}</p>
                 <Link
                   href={localePath(locale, key === 'presets' ? '/presets/' : '/masks/')}
-                  className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl border border-gray-300 px-5 py-2.5 font-semibold text-gray-900 transition hover:border-purple-400 hover:text-purple-700 dark:border-gray-700 dark:text-gray-100 dark:hover:border-purple-500 dark:hover:text-purple-300"
+                  className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl border border-gray-300 px-5 py-2.5 font-semibold text-gray-900 transition hover:border-primary hover:text-primary dark:border-gray-700 dark:text-gray-100"
                 >
                   {t(`related.${key}.link`)}
                 </Link>
@@ -400,7 +400,7 @@ export default async function StudioPage({ locale }: Props) {
       <section className="bg-gray-50 py-12 dark:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700 dark:text-purple-300">{t('faq.eyebrow')}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">{t('faq.eyebrow')}</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('faq.title')}</h2>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -430,7 +430,7 @@ export default async function StudioPage({ locale }: Props) {
             />
             <Link
               href={`${localePath(locale, '/')}#pricing`}
-              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl border border-gray-300 px-5 py-2.5 font-semibold text-gray-900 transition hover:border-purple-400 hover:text-purple-700 dark:border-gray-700 dark:text-gray-100 dark:hover:border-purple-500 dark:hover:text-purple-300"
+              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl border border-gray-300 px-5 py-2.5 font-semibold text-gray-900 transition hover:border-primary hover:text-primary dark:border-gray-700 dark:text-gray-100"
             >
               {t('cta.secondary')}
             </Link>

@@ -22,15 +22,9 @@ type Props = {
 };
 
 const tierCardClasses: Record<PricingTierId, string> = {
-  payg: 'border-purple-400 bg-white shadow-xl shadow-purple-900/10 ring-1 ring-purple-300 dark:border-purple-500 dark:bg-gray-800 dark:ring-purple-700',
+  payg: 'border-brand-400 bg-white shadow-xl shadow-brand-900/10 ring-1 ring-brand-300 dark:border-brand-500 dark:bg-gray-800 dark:ring-brand-700',
   pro: 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800',
-  max: 'border-indigo-300 bg-gradient-to-b from-indigo-50 to-white dark:border-indigo-700 dark:from-indigo-950/40 dark:to-gray-800',
-};
-
-const tierButtonClasses: Record<PricingTierId, string> = {
-  payg: 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700',
-  pro: 'bg-gray-950 hover:bg-purple-700 dark:bg-white dark:text-gray-950 dark:hover:bg-purple-200',
-  max: 'bg-indigo-700 hover:bg-indigo-800 dark:bg-indigo-500 dark:hover:bg-indigo-400',
+  max: 'border-brand-300 bg-gradient-to-b from-brand-50 to-white dark:border-brand-700 dark:from-brand-950/40 dark:to-gray-800',
 };
 
 function formatInteger(value: number, locale: string): string {
@@ -134,7 +128,7 @@ export default function PricingPlans({ locale }: Props) {
               key={tier.id}
               className={`flex h-full flex-col rounded-3xl border p-6 sm:p-7 ${tierCardClasses[tier.id]}`}
             >
-              <p className="text-sm font-semibold uppercase tracking-wide text-purple-700 dark:text-purple-300">
+              <p className="text-sm font-semibold uppercase tracking-wide text-primary">
                 {t(`plans.${tier.id}.eyebrow`)}
               </p>
               <h3 className="mt-2 text-2xl font-bold text-gray-950 dark:text-white">
@@ -168,7 +162,7 @@ export default function PricingPlans({ locale }: Props) {
                         }))}
                         className="peer sr-only"
                       />
-                      <span className="flex min-h-10 items-center justify-center rounded-lg px-2 py-2 text-center text-xs font-semibold text-gray-600 transition peer-checked:bg-white peer-checked:text-purple-700 peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-purple-500 peer-focus-visible:ring-offset-1 dark:text-gray-300 dark:peer-checked:bg-gray-700 dark:peer-checked:text-purple-200">
+                      <span className="flex min-h-10 items-center justify-center rounded-lg px-2 py-2 text-center text-xs font-semibold text-gray-600 transition peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1 dark:text-gray-300 dark:peer-checked:bg-gray-700">
                         {tier.id === 'payg'
                           ? t('creditGuide.creditAmount', {
                               credits: formatInteger(candidate.credits, locale),
@@ -227,7 +221,7 @@ export default function PricingPlans({ locale }: Props) {
 
               <div className="mt-auto pt-7">
                 <PlatformAppLink
-                  className={`flex min-h-12 w-full items-center justify-center rounded-xl px-5 py-3 text-center text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800 ${tierButtonClasses[tier.id]}`}
+                  className="flex min-h-12 w-full items-center justify-center rounded-xl bg-black px-5 py-3 text-center text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                   ariaLabel={t(`plans.${tier.id}.cta`)}
                   analyticsParams={{
                     event_source: 'homepage_pricing',
@@ -251,7 +245,7 @@ export default function PricingPlans({ locale }: Props) {
       </div>
 
       <aside
-        className="mt-8 rounded-3xl border border-purple-100 bg-gradient-to-br from-purple-50 via-white to-indigo-50 p-6 dark:border-purple-900/50 dark:from-purple-950/30 dark:via-gray-800 dark:to-indigo-950/30 sm:p-8"
+        className="mt-8 rounded-3xl border border-brand-100 bg-gradient-to-br from-brand-50 via-white to-brand-100 p-6 dark:border-brand-900/50 dark:from-brand-950/30 dark:via-gray-800 dark:to-brand-900/30 sm:p-8"
         aria-labelledby="credit-guide-title"
       >
         <div className="max-w-3xl">
@@ -272,7 +266,7 @@ export default function PricingPlans({ locale }: Props) {
               <dt className="text-sm font-medium text-gray-700 dark:text-gray-200">
                 {t(`creditGuide.items.${cost.id}`)}
               </dt>
-              <dd className="shrink-0 text-sm font-extrabold text-purple-700 dark:text-purple-300">
+              <dd className="shrink-0 text-sm font-extrabold text-primary">
                 {t('creditGuide.creditAmount', {
                   credits: formatCreditCost(cost, locale),
                 })}

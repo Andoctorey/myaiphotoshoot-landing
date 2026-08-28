@@ -165,11 +165,11 @@ export default function Gallery({
 
   if (error && galleryItems.length === 0) {
     return (
-      <div className="mt-12 rounded-lg bg-red-50 p-8 text-center dark:bg-red-900/20" role="alert" aria-live="polite">
-        <p className="text-red-600 dark:text-red-400">{error}</p>
+      <div className="mt-12 rounded-lg bg-error-container p-8 text-center" role="alert" aria-live="polite">
+        <p className="text-on-error-container">{error}</p>
         <button
           onClick={() => void fetchPage(1, 'replace', sort, randomSession)}
-          className="mt-4 rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          className="mt-4 rounded-lg bg-primary px-4 py-2 text-on-primary transition hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           aria-label={t('tryAgain')}
         >
           {t('tryAgain')}
@@ -187,7 +187,7 @@ export default function Gallery({
         role="group"
         aria-label={t('sortAriaLabel')}
       >
-        <div className="inline-flex rounded-lg bg-purple-100 p-1 dark:bg-purple-950">
+        <div className="inline-flex rounded-lg bg-primary-container p-1">
           {([
             ['popular', t('popularSort')],
             ['new', t('newestSort')],
@@ -199,10 +199,10 @@ export default function Gallery({
               onClick={() => selectSort(value)}
               disabled={isLoading}
               aria-pressed={sort === value}
-              className={`rounded-md px-4 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
+              className={`rounded-md px-4 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
                 sort === value
-                  ? 'bg-purple-600 text-white shadow-sm'
-                  : 'text-purple-800 hover:bg-purple-200 dark:text-purple-200 dark:hover:bg-purple-900'
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'text-on-primary-container hover:bg-primary/10'
               } disabled:cursor-wait disabled:opacity-60`}
             >
               {label}
@@ -242,8 +242,8 @@ export default function Gallery({
       </ul>
 
       {error && galleryItems.length > 0 && (
-        <div className="mt-4 rounded-lg bg-red-50 p-3 text-center dark:bg-red-900/20" role="alert" aria-live="polite">
-          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        <div className="mt-4 rounded-lg bg-error-container p-3 text-center" role="alert" aria-live="polite">
+          <p className="text-sm text-on-error-container">{error}</p>
         </div>
       )}
 
@@ -252,7 +252,7 @@ export default function Gallery({
           <button
             onClick={() => void loadMore()}
             disabled={isLoading}
-            className="rounded-lg bg-purple-600 px-6 py-2 text-white transition hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-purple-300 dark:focus:ring-offset-gray-900 dark:disabled:bg-purple-800"
+            className="rounded-lg bg-primary px-6 py-2 text-on-primary transition hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-gray-900"
             aria-label={isLoading ? t('loading') : t('loadMore')}
             aria-busy={isLoading}
           >

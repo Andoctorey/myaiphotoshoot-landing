@@ -120,14 +120,14 @@ export default function TableOfContents({ content, className = '', title = 'Tabl
                 : 'text-gray-600 dark:text-gray-400'
             } ${
               activeId === item.id
-                ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20'
-                : 'hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/10'
+                ? 'text-primary bg-brand-50 dark:bg-brand-900/20'
+                : 'hover:bg-primary-container/50 hover:text-primary'
             }`}
             style={{
               paddingLeft: `${(item.level - 1) * 16}px`,
             }}
           >
-            <span className="block py-1 border-l-2 border-transparent hover:border-purple-300 dark:hover:border-purple-600 pl-3 transition-all duration-200">
+            <span className="block border-l-2 border-transparent py-1 pl-3 transition-all duration-200 hover:border-primary/50">
               {item.text}
             </span>
           </button>

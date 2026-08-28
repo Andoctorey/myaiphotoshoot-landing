@@ -148,7 +148,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
       <div className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
             <p className="text-gray-600 dark:text-gray-300 mb-4">Loading blog post...</p>
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             </p>
             <Link
               href={localePath(locale, '/blog/')}
-              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200"
+              className="inline-flex items-center px-6 py-3 bg-primary text-on-primary font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-200"
             >
               {t('backToBlog')}
             </Link>
@@ -186,23 +186,14 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
     <>
       {/* Add admin-style CSS with !important to override conflicts */}
       <style jsx global>{`
-        /* CSS Variables for theme colors */
+        /* Article aliases keep rich content on the shared Material color roles. */
         :root {
-          --article-text: #242424;
-          --article-heading: #1a1a1a;
-          --article-link: #0066cc;
-          --article-accent: #0066cc;
-          --article-bg-special: #f8f9fa;
-          --article-text-muted: #4a5568;
-        }
-
-        html.dark {
-          --article-text: #e4e4e7;
-          --article-heading: #f4f4f5;
-          --article-link: #60a5fa;
-          --article-accent: #3b82f6;
-          --article-bg-special: #1e293b;
-          --article-text-muted: #cbd5e1;
+          --article-text: var(--on-surface);
+          --article-heading: var(--on-surface);
+          --article-link: var(--primary);
+          --article-accent: var(--primary);
+          --article-bg-special: var(--surface-container-low);
+          --article-text-muted: var(--on-surface-variant);
         }
 
         /* Base article styling */
@@ -308,19 +299,19 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-track {
-          background: #f1f5f9 !important;
+          background: var(--surface-container) !important;
           border-radius: 4px !important;
-          border: 1px solid #e2e8f0 !important;
+          border: 1px solid var(--outline-variant) !important;
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-thumb {
-          background: #94a3b8 !important;
+          background: var(--outline) !important;
           border-radius: 4px !important;
-          border: 1px solid #64748b !important;
+          border: 1px solid var(--outline-variant) !important;
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-thumb:hover {
-          background: #64748b !important;
+          background: var(--on-surface-variant) !important;
         }
 
         .medium-style-article .photo-row {
@@ -358,7 +349,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         .medium-style-article .photo-item figcaption {
           margin-top: 0.75rem !important;
           font-size: 14px !important;
-          color: #6b7280 !important;
+          color: var(--on-surface-variant) !important;
           font-style: italic !important;
           line-height: 1.4 !important;
           max-width: 400px !important;
@@ -373,14 +364,8 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
         .medium-style-article .gallery-cta p {
           margin: 0 !important;
           font-size: 14px !important;
-          color: #6b7280 !important;
+          color: var(--on-surface-variant) !important;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-        }
-
-        /* Dark mode for captions */
-        html.dark .medium-style-article .photo-item figcaption,
-        html.dark .medium-style-article .gallery-cta p {
-          color: #94a3b8 !important;
         }
 
         .medium-style-article blockquote {
@@ -475,42 +460,23 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
         /* Scrollbar styling */
         .medium-style-article .photo-gallery::-webkit-scrollbar-track {
-          background: #f1f5f9 !important;
-          border: 1px solid #e2e8f0 !important;
+          background: var(--surface-container) !important;
+          border: 1px solid var(--outline-variant) !important;
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-thumb {
-          background: #94a3b8 !important;
-          border: 1px solid #64748b !important;
+          background: var(--outline) !important;
+          border: 1px solid var(--outline-variant) !important;
         }
 
         .medium-style-article .photo-gallery::-webkit-scrollbar-thumb:hover {
-          background: #64748b !important;
-        }
-
-        html.dark .medium-style-article .photo-gallery::-webkit-scrollbar-track {
-          background: #1e293b !important;
-          border: 1px solid #334155 !important;
-        }
-
-        html.dark .medium-style-article .photo-gallery::-webkit-scrollbar-thumb {
-          background: #64748b !important;
-          border: 1px solid #94a3b8 !important;
-        }
-
-        html.dark .medium-style-article .photo-gallery::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8 !important;
-          border: 1px solid #cbd5e1 !important;
+          background: var(--on-surface-variant) !important;
         }
 
         /* Modern CSS scrollbar colors for better browser support */
         .medium-style-article .photo-gallery {
           scrollbar-width: thin !important;
-          scrollbar-color: #94a3b8 #f1f5f9 !important;
-        }
-
-        html.dark .medium-style-article .photo-gallery {
-          scrollbar-color: #64748b #1e293b !important;
+          scrollbar-color: var(--outline) var(--surface-container) !important;
         }
 
 
@@ -633,11 +599,11 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={localePath(locale, '/')} className="hover:text-purple-600 dark:hover:text-purple-400">{t('breadcrumb.home')}</Link>
+                <Link href={localePath(locale, '/')} className="hover:text-primary">{t('breadcrumb.home')}</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
-                <Link href={localePath(locale, '/blog/')} className="hover:text-purple-600 dark:hover:text-purple-400">{t('title')}</Link>
+                <Link href={localePath(locale, '/blog/')} className="hover:text-primary">{t('title')}</Link>
               </li>
               <li className="flex items-center min-w-0">
                 <span className="mx-2 text-gray-400 select-none">/</span>
@@ -797,7 +763,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
             </p>
             <Link
               href={localePath(locale, '/blog/')}
-              className="inline-flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors duration-200"
+              className="inline-flex items-center px-6 py-3 bg-primary text-on-primary font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-200"
             >
               {t('backToBlog')}
             </Link>

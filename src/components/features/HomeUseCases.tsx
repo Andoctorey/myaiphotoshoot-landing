@@ -37,11 +37,11 @@ export default async function HomeUseCases({ initialUseCases = [], locale = 'en'
   return (
     <section
       id="use-cases"
-      className="bg-gradient-to-b from-gray-50 via-white to-purple-50/40 py-12 dark:from-gray-950 dark:via-gray-900 dark:to-purple-950/20 md:py-16"
+      className="bg-gradient-to-b from-gray-50 via-white to-brand-50/40 py-12 dark:from-gray-950 dark:via-gray-900 dark:to-brand-950/20 md:py-16"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-4xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-purple-600 dark:text-purple-400">
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary">
             {tSection('eyebrow')}
           </p>
           <h2 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
@@ -58,7 +58,7 @@ export default async function HomeUseCases({ initialUseCases = [], locale = 'en'
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {orderedUseCases.map((it) => (
               <Link key={it.slug} href={localePath(locale, `/use-cases/${it.slug}/`)} className="block group">
-                <div className="h-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-purple-200 group-hover:shadow-xl group-hover:shadow-purple-900/10 dark:border-gray-700 dark:bg-gray-800 dark:group-hover:border-purple-700">
+                <div className="h-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/30 group-hover:shadow-xl group-hover:shadow-brand-900/10 dark:border-gray-700 dark:bg-gray-800">
                   {Array.isArray(it.featured_image_urls) && it.featured_image_urls[it.imageIndex] && (
                     <Image
                       src={withCdnWidth(it.featured_image_urls[it.imageIndex], 800) || it.featured_image_urls[it.imageIndex]}
@@ -70,7 +70,7 @@ export default async function HomeUseCases({ initialUseCases = [], locale = 'en'
                     />
                   )}
                   <div className="p-5">
-                    <h3 className="text-xl font-semibold text-gray-900 transition-colors group-hover:text-purple-700 dark:text-white dark:group-hover:text-purple-300">
+                    <h3 className="text-xl font-semibold text-gray-900 transition-colors group-hover:text-primary dark:text-white">
                       {it.title}
                     </h3>
                   </div>
@@ -83,7 +83,7 @@ export default async function HomeUseCases({ initialUseCases = [], locale = 'en'
         <div className="mt-10 text-center">
           <Link
             href={localePath(locale, '/use-cases/')}
-            className="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-6 py-2 text-white transition hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2 text-on-primary transition hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           >
             {tSection('exploreAll')}
             <span aria-hidden="true">→</span>

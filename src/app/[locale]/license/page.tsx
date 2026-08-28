@@ -116,7 +116,7 @@ export default async function LicensePage({ params }: Props) {
                 any licensing concerns, please contact us at{' '}
                 <a
                   href="mailto:support@myaiphotoshoot.com"
-                  className="text-purple-600 dark:text-purple-400 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   support@myaiphotoshoot.com
                 </a>
@@ -131,7 +131,7 @@ export default async function LicensePage({ params }: Props) {
                 For complete terms of service and privacy policy, please visit our{' '}
                 <Link
                   href={localePath(locale, '/legal/')}
-                  className="text-purple-600 dark:text-purple-400 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   legal page
                 </Link>.

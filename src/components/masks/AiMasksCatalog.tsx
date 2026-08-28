@@ -94,7 +94,7 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
             <li>
               <Link
                 href={localePath(locale, '/')}
-                className="hover:text-purple-600 dark:hover:text-purple-400"
+                className="hover:text-primary"
               >
                 {tNav('home')}
               </Link>
@@ -107,7 +107,7 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
         </nav>
 
         <header className="mx-auto mb-10 max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-purple-700 dark:text-purple-300">
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary">
             {t('eyebrow')}
           </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-5xl">
@@ -120,7 +120,7 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
             href={AI_MASKS_APP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-7 inline-flex min-h-11 items-center justify-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+            className="mt-7 inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           >
             {t('tryMasks')}
           </a>
