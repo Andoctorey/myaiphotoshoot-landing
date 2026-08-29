@@ -145,7 +145,7 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
 
   const url = canonicalUrl(locale, `/use-cases/${slug}/`);
   const imageUrl = (Array.isArray(uc.featured_image_urls) && uc.featured_image_urls[0])
-    || '/og-image-v2.jpg?v=5';
+    || '/og-image-v2.jpg?v=7';
 
   return {
     title: { absolute: title || 'Use Case | My AI Photo Shoot' },

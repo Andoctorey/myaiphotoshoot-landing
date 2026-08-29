@@ -62,13 +62,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'website',
       locale: ogLocaleFromAppLocale(locale),
       alternateLocale: ogAlternateLocales(locales, locale),
-      images: [{ url: '/og-image-v2.jpg?v=5', width: 1200, height: 630, alt: socialTitle }],
+      images: [{ url: '/og-image-v2.jpg?v=7', width: 1200, height: 630, alt: socialTitle }],
     },
     twitter: {
       card: 'summary_large_image',
       title: socialTitle,
       description,
-      images: [{ url: '/og-image-v2.jpg?v=5', alt: socialTitle }],
+      images: [{ url: '/og-image-v2.jpg?v=7', alt: socialTitle }],
     },
   };
 }

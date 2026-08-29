@@ -134,7 +134,7 @@ export async function generateMaskCategoryLandingMetadata(
       robots: { index: false, follow: false },
     };
   }
-  const imageUrl = firstMask.featuredGraphics || category.sourceImageUrl || '/og-image-v2.jpg?v=5';
+  const imageUrl = firstMask.featuredGraphics || category.sourceImageUrl || '/og-image-v2.jpg?v=7';
   const description = buildMetaDescription(landing.description, landing.introduction);
   const path = `/masks/${landing.slug}/`;
   const url = canonicalUrl(locale, path);

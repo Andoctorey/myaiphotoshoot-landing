@@ -26,7 +26,7 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     },
     description,
     url: canonicalUrl(locale, '/'),
-    image: 'https://myaiphotoshoot.com/og-image-v2.jpg?v=5',
+    image: 'https://myaiphotoshoot.com/og-image-v2.jpg?v=7',
     isRelatedTo: [
       {
         '@type': 'WebApplication',

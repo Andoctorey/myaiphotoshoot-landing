@@ -759,7 +759,7 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
     assert.match(source, /buildAlternates\([^\n]+, '\/studio\/', locales\)/);
     assert.match(source, /canonicalUrl\([^\n]+, '\/studio\/'\)/);
     assert.match(source, /const imageAlt = t\('imageAlt'\)/);
-    assert.equal((source.match(/url: '\/og-image-v2\.jpg\?v=5'/g) || []).length, 2);
+    assert.equal((source.match(/url: '\/og-image-v2\.jpg\?v=7'/g) || []).length, 2);
     assert.equal((source.match(/alt: imageAlt/g) || []).length, 2);
     assert.doesNotMatch(source, /og-models|\/models\//);
   }
@@ -894,12 +894,12 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     readProjectFile('src/lib/ai-presets.ts'),
     readProjectFile('src/lib/usecase-seo.ts'),
   ]);
-  const genericCardReferences = genericCardSources.join('\n').match(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=5)?/g) || [];
+  const genericCardReferences = genericCardSources.join('\n').match(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=7)?/g) || [];
   assert.ok(genericCardReferences.length > 0);
   assert.equal(
-    genericCardReferences.every((reference) => reference.endsWith('?v=5')),
+    genericCardReferences.every((reference) => reference.endsWith('?v=7')),
     true,
-    'generic social-card references must use the v5 cache key',
+    'generic social-card references must use the v7 cache key',
   );
 
   const completeSocialMetadataSources = {
@@ -911,7 +911,7 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     license: await readProjectFile('src/app/license/page.tsx'),
   };
   for (const [name, source] of Object.entries(completeSocialMetadataSources)) {
-    const imageReferences = source.match(/\/og-image-v2\.jpg\?v=5/g) || [];
+    const imageReferences = source.match(/\/og-image-v2\.jpg\?v=7/g) || [];
     assert.equal(imageReferences.length, 2, `${name} must define Open Graph and Twitter images`);
   }
 });

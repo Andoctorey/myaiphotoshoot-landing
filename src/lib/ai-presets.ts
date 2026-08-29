@@ -338,7 +338,7 @@ export async function generateAiPresetMetadata(slug: string, locale: string): Pr
   const description = buildPresetDescription(preset);
   const title = preset.meta_title?.trim() || `${preset.name} AI Preset | My AI Photo Shoot`;
   const url = canonicalUrl(locale, `/presets/${slug}/`);
-  const imageUrl = preset.featured_graphics || 'https://myaiphotoshoot.com/og-image-v2.jpg?v=5';
+  const imageUrl = preset.featured_graphics || 'https://myaiphotoshoot.com/og-image-v2.jpg?v=7';
   const imageAlt = preset.featured_graphics_alt?.trim() || preset.name;
 
   return {
