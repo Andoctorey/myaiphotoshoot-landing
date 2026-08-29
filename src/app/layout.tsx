@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     siteName: "My AI Photo Shoot",
     images: [
       {
-        url: "/og-image-v2.jpg?v=7",
+        url: "/og-image-v2.jpg?v=8",
         width: 1200,
         height: 630,
         alt: "My AI Photo Shoot AI photo creation and transformation examples",
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Create and Transform AI Photos",
     description: "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.",
-    images: [{ url: "/og-image-v2.jpg?v=7", alt: "My AI Photo Shoot AI photo creation and transformation examples" }],
+    images: [{ url: "/og-image-v2.jpg?v=8", alt: "My AI Photo Shoot AI photo creation and transformation examples" }],
   },
 };
 
