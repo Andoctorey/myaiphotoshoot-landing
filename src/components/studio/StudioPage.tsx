@@ -140,6 +140,8 @@ export default async function StudioPage({ locale }: Props) {
             <div className="mt-7">
               <PlatformButtons
                 webAppLabel={t('cta.primary')}
+                webAppEyebrow={tDownload('webApp.badgeEyebrow')}
+                webAppTitle={tDownload('webApp.badgeTitle')}
                 googlePlayLabel={tDownload('mobileApps.googlePlay')}
                 appStoreLabel={tDownload('mobileApps.appStore')}
                 webAppUrl={WEB_APP_STUDIO_URL}
@@ -423,6 +425,8 @@ export default async function StudioPage({ locale }: Props) {
           <div className="mt-8">
             <PlatformButtons
               webAppLabel={t('cta.primary')}
+              webAppEyebrow={tDownload('webApp.badgeEyebrow')}
+              webAppTitle={tDownload('webApp.badgeTitle')}
               googlePlayLabel={tDownload('mobileApps.googlePlay')}
               appStoreLabel={tDownload('mobileApps.appStore')}
               webAppUrl={WEB_APP_STUDIO_URL}

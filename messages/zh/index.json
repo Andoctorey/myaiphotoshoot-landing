@@ -20,10 +20,10 @@
   },
   "pageCopy": {
     "home": {
-      "metaTitle": "AI 照片与头像生成器 | My AI Photo Shoot",
-      "metaDescription": "使用预设、AI Masks 或 Studio 中的自定义提示词，创建头像照、个人资料照片、肖像和变换效果。使用一次性积分按需付费。",
-      "shareTitle": "创建与变换 AI 照片",
-      "shareDescription": "使用预设、AI Masks、Studio 和自定义提示词，创建和变换头像照、个人资料照片、肖像和创意照片。"
+      "metaTitle": "My AI Photoshoot：个性化 AI 照片生成器",
+      "metaDescription": "上传一张照片、输入描述或提供参考图，即可打造真实自然的 AI 写真，轻松生成职业照、个人头像、人像大片、虚拟形象和全新造型。",
+      "shareTitle": "一场 AI 写真，看见每一面的你。",
+      "shareDescription": "只需一张照片、一段描述或一张参考图，即可生成真实自然的职业照、个人头像、人像大片、虚拟形象和全新造型。"
     },
     "useCases": {
       "title": "AI 照片使用场景",
@@ -117,13 +117,13 @@
     }
   },
   "hero": {
-    "title": "创建与变换",
-    "titleHighlight": "随心打造 AI 照片",
-    "description": "从照片、参考图或创意开始。选择预设、应用 AI Mask，或使用 Studio 和自定义提示词，创建头像照、个人资料照片、肖像、变换效果和创意图片。",
-    "microcopy": "使用一次性积分按需付费 • 积分永不过期 • 支持网页、iOS 和 Android",
+    "title": "一场 AI 写真，",
+    "titleHighlight": "看见每一面的你。",
+    "description": "一张照片、一张参考图或一个想法，就能生成真实自然的职业照、个人头像、人像大片和全新造型。",
     "visualAlt": "同一位女性的专业、休闲和杂志风 AI 肖像"
   },
   "appShowcase": {
+    "label": "应用内体验",
     "exploreStyles": "在 My AI Photo Shoot 中为肖像试用 AI Masks",
     "realisticPhotos": "在 My AI Photo Shoot 中使用自定义提示词编辑现有照片",
     "photosOfYou": "在 Studio 中使用参考照片并描述所需更改",
@@ -132,15 +132,18 @@
     "noSubscription": "使用一次性积分创作，或通过 Pro 和 Max 解锁更多功能"
   },
   "homeUseCases": {
-    "eyebrow": "头像照、个人资料照片与创意照片",
-    "title": "为工作、个人资料和创意项目创建照片",
-    "description": "创建职业头像、交友资料照片和创意肖像。",
+    "eyebrow": "适合每个重要时刻",
+    "title": "每一面的你，都值得一张好照片",
+    "description": "无论是职场形象、交友资料，还是大胆尝试全新风格，都能找到适合你的表达。",
     "imageAlt": "{title} 的 AI 照片示例",
-    "exploreAll": "查看所有照片风格",
+    "exploreAll": "查看全部使用场景",
     "cards": {
-      "linkedin": "LinkedIn 和简历头像照",
-      "dating": "约会资料照片",
-      "portraits": "创意肖像"
+      "headshots": "AI 职业照",
+      "business": "商务形象照",
+      "linkedin": "LinkedIn 职业头像",
+      "dating": "交友资料照",
+      "profiles": "AI 个人头像",
+      "portraits": "AI 人像写真"
     }
   },
   "features": {
@@ -218,8 +221,8 @@
     }
   },
   "pricing": {
-    "title": "从按需付费积分开始",
-    "description": "需要时购买积分，即可以 1K 创建或编辑照片。Pro 和 Max 还提供定期积分、更高的生成质量，以及可选的个人 AI 训练。",
+    "title": "选择套餐",
+    "description": "比较功能、套餐内积分和计费选项。",
     "referenceDisclosure": "此处显示以 {currency} 计价的 {market} 参考方案。最终本地价格、币种、包含的积分和可用性以应用或商店显示为准。",
     "creditsNeverExpire": "积分永不过期",
     "noTrial": "无免费试用。订阅会自动续订，直至取消。",
@@ -245,13 +248,13 @@
     "plans": {
       "payg": {
         "name": "一次性积分",
-        "eyebrow": "按需付费",
+        "eyebrow": "按量付费",
         "description": "只在需要时购买积分，最高可用 1K 创建或编辑照片。",
         "optionLabel": "积分包",
         "cta": "使用积分开始创作",
         "features": {
-          "resolution": "最高可生成 {resolution}",
-          "flexible": "按自己的节奏充值"
+          "resolution": "生成最高 {resolution} 的照片",
+          "flexible": "一次付费"
         }
       },
       "pro": {
@@ -261,8 +264,8 @@
         "optionLabel": "Pro 套餐",
         "cta": "选择 Pro",
         "features": {
-          "resolution": "最高可生成 {resolution}",
-          "training": "解锁 {training} 的使用权限"
+          "resolution": "生成最高 {resolution} 的照片",
+          "training": "标准个人 AI 模型训练"
         }
       },
       "max": {
@@ -272,8 +275,8 @@
         "optionLabel": "Max 套餐",
         "cta": "选择 Max",
         "features": {
-          "resolution": "最高可生成 {resolution}",
-          "training": "解锁 {training} 的使用权限"
+          "resolution": "生成最高 {resolution} 的照片",
+          "training": "完整个人 AI 模型训练"
         }
       }
     },
@@ -298,7 +301,9 @@
     "webApp": {
       "title": "网页应用",
       "description": "无需安装。在任何现代浏览器中打开你的 AI 写真工作室。",
-      "button": "打开网页应用"
+      "button": "打开网页应用",
+      "badgeEyebrow": "在浏览器中打开",
+      "badgeTitle": "网页应用"
     },
     "mobileApps": {
       "title": "移动应用",

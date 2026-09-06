@@ -3,13 +3,14 @@ import "../globals.css";
 import { locales } from "@/i18n/request";
 import { NextIntlClientProvider } from 'next-intl';
 import SiteShell from '@/components/layout/SiteShell';
+import { HOME_METADATA_DEFAULTS } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: {
-    default: "AI Photo & Headshot Generator - My AI Photo Shoot",
+    default: HOME_METADATA_DEFAULTS.title,
     template: "%s | My AI Photo Shoot",
   },
-  description: "Create headshots, profile photos, portraits, and transformations with presets, AI Masks, or custom prompts in Studio. Pay as you go with one-time credits.",
+  description: HOME_METADATA_DEFAULTS.description,
   manifest: "/site.webmanifest",
   // The OpenGraph and Twitter metadata will be dynamically set based on the locale
 };

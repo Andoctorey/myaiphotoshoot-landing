@@ -91,7 +91,7 @@ test('gallery is loaded dynamically with the compact DTO mapper', async () => {
   assert.doesNotMatch(galleryTypesSource, /^\s*prompt:\s*string/m);
 });
 
-test('retired homepage translation keys are absent from every locale', async () => {
+test('homepage translations include active labels and omit retired copy', async () => {
   const messagesRoot = path.join(projectRoot, 'messages');
   const locales = (await readdir(messagesRoot, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
@@ -101,6 +101,11 @@ test('retired homepage translation keys are absent from every locale', async () 
   assert.ok(locales.length > 0, 'no locale message directories were found');
   for (const locale of locales) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    assert.equal(
+      typeof messages.appShowcase?.label === 'string' && messages.appShowcase.label.trim().length > 0,
+      true,
+      `${locale} is missing appShowcase.label`,
+    );
     assert.equal(
       Object.hasOwn(messages.appShowcase ?? {}, 'trainModel'),
       false,
@@ -116,7 +121,130 @@ test('retired homepage translation keys are absent from every locale', async () 
       false,
       `${locale} still contains unused features.affordablePricing`,
     );
+    assert.equal(
+      Object.hasOwn(messages.hero ?? {}, 'microcopy'),
+      false,
+      `${locale} still contains unused hero.microcopy`,
+    );
   }
+});
+
+test('homepage SEO copy and focused use-case links stay wired', async () => {
+  const englishMessages = JSON.parse(await readProjectFile('messages/en/index.json'));
+  const heroSource = await readProjectFile('src/components/features/Hero.tsx');
+  const homeUseCasesSource = await readProjectFile('src/components/features/HomeUseCases.tsx');
+  const useCaseLinks = [
+    ['headshots', 'ai-headshot-generator-for-linkedin-resumes-and-team-pages'],
+    ['business', 'ai-business-headshot-generator-professional-photos'],
+    ['linkedin', 'ai-linkedin-headshot-generator-professional-profiles'],
+    ['dating', 'ai-dating-profile-picture-generator'],
+    ['profiles', 'ai-profile-picture-generator-realistic-headshots-avatars'],
+    ['portraits', 'ai-portrait-generator-for-hyper-realistic-headshots-art'],
+  ];
+
+  assert.deepEqual(englishMessages.pageCopy.home, {
+    metaTitle: 'My AI Photoshoot: Personalized AI Photo Generator',
+    metaDescription: 'Create a realistic AI photoshoot from one photo, a prompt, or a reference image. Make headshots, profile pictures, portraits, avatars, and new looks.',
+    shareTitle: 'One AI Photoshoot. Every Version of You.',
+    shareDescription: 'Create realistic headshots, profile pictures, portraits, avatars, and new looks from one photo, a prompt, or a reference image.',
+  });
+  assert.equal(englishMessages.hero.title, 'One AI Photoshoot.');
+  assert.equal(englishMessages.hero.titleHighlight, 'Every Version of You.');
+  assert.equal(
+    englishMessages.hero.description,
+    'Turn a photo, reference, or idea into realistic headshots, profile pictures, portraits, and new looks.',
+  );
+
+  assert.doesNotMatch(heroSource, /useCases\.|USE_CASE_LINKS|<nav/);
+  for (const [key, slug] of useCaseLinks) {
+    assert.match(homeUseCasesSource, new RegExp(`cards\\.${key}`));
+    assert.match(homeUseCasesSource, new RegExp(`slug: '${slug}'`));
+  }
+  assert.match(homeUseCasesSource, /localePath\(locale, `\/use-cases\/\$\{it\.slug\}\/`\)/);
+  assert.match(homeUseCasesSource, /overflow-x-auto/);
+  assert.match(homeUseCasesSource, /snap-x snap-mandatory/);
+  assert.match(homeUseCasesSource, /w-\[78vw\][^"\n]*snap-center/);
+  assert.match(homeUseCasesSource, /lg:grid[^"\n]*lg:grid-cols-3/);
+
+  for (const locale of ['en', 'es', 'fr', 'de', 'ru', 'ja', 'zh', 'ar', 'hi']) {
+    const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    for (const [key] of useCaseLinks) {
+      assert.equal(
+        typeof messages.homeUseCases.cards[key],
+        'string',
+        `${locale} is missing homeUseCases.cards.${key}`,
+      );
+    }
+  }
+});
+
+test('promotional collections scroll on mobile while the public gallery stays dense', async () => {
+  const [blogSource, gallerySource] = await Promise.all([
+    readProjectFile('src/components/features/HomeBlog.tsx'),
+    readProjectFile('src/components/features/Gallery.tsx'),
+  ]);
+
+  assert.match(blogSource, /overflow-x-auto/);
+  assert.match(blogSource, /snap-x snap-mandatory/);
+  assert.match(blogSource, /w-\[78vw\][^"\n]*snap-center/);
+  assert.match(blogSource, /lg:grid[^"\n]*lg:grid-cols-3/);
+  assert.match(blogSource, /takeFirst\(sortByMostRecent\(initialPosts\), HOME_BLOG_COUNT\)/);
+  assert.doesNotMatch(blogSource, /index >= 3|hidden md:block|columns-[123]/);
+
+  assert.match(gallerySource, /grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4[^"\n]*lg:grid-cols-5/);
+  assert.doesNotMatch(gallerySource, /overflow-x-auto|snap-x|snap-mandatory/);
+});
+
+test('homepage collections keep their intentional item counts', async () => {
+  const [useCases, blog, presets, masks, showcase, gallery] = await Promise.all([
+    readProjectFile('src/components/features/HomeUseCases.tsx'),
+    readProjectFile('src/components/features/HomeBlog.tsx'),
+    readProjectFile('src/components/features/HomePresets.tsx'),
+    readProjectFile('src/components/features/HomeMasks.tsx'),
+    readProjectFile('src/components/features/AppShowcase.tsx'),
+    readProjectFile('src/components/features/Gallery.tsx'),
+  ]);
+
+  const featuredUseCases = useCases.slice(
+    useCases.indexOf('const featuredUseCases'),
+    useCases.indexOf('const orderedUseCases'),
+  );
+  assert.equal((featuredUseCases.match(/slug: '/g) || []).length, 6);
+  assert.match(blog, /const HOME_BLOG_COUNT = 6/);
+  assert.match(presets, /const HOME_PRESET_COUNT = 6/);
+  assert.match(presets, /const HOME_PRESET_FETCH_SIZE = 12/);
+  assert.match(presets, /\.slice\(0, HOME_PRESET_COUNT\)/);
+  const demandPriorityMasks = masks.slice(
+    masks.indexOf('const DEMAND_PRIORITY_MASKS'),
+    masks.indexOf('type MaskComparison'),
+  );
+  const maskSelections = [
+    ['aging', 'prime'],
+    ['expression', 'smile'],
+    ['hair', 'wolf-cut'],
+    ['body', 'abs'],
+    ['outfit', 'prom'],
+    ['outfit-men', 'cardigan'],
+  ];
+  assert.equal((demandPriorityMasks.match(/maskSlug:/g) || []).length, 6);
+  for (const [categorySlug, maskSlug] of maskSelections) {
+    assert.match(
+      demandPriorityMasks,
+      new RegExp(`categorySlug: '${categorySlug}', maskSlug: '${maskSlug}'`),
+    );
+  }
+  assert.match(
+    demandPriorityMasks,
+    /\{ categorySlug: 'outfit-men', maskSlug: 'cardigan' \},\s*\] as const;/,
+  );
+  assert.match(masks, /item\.slug === featured\.maskSlug/);
+  assert.match(masks, /\.slice\(0, DEMAND_PRIORITY_MASKS\.length\)/);
+  assert.equal((showcase.match(/src: '\/images\/app-showcase\//g) || []).length, 5);
+  assert.match(showcase, /<h2[\s\S]*id="app-showcase-heading"/);
+  assert.match(showcase, /\{t\('label'\)\}/);
+  assert.match(showcase, /text-sm font-semibold uppercase tracking-wide text-primary/);
+  assert.match(gallery, /const PAGE_SIZE = 20/);
+  assert.match(gallery, /const INITIAL_VISIBLE_COUNT = 20/);
 });
 
 test('homepage positioning emphasizes core creation workflows', async () => {
@@ -124,7 +252,6 @@ test('homepage positioning emphasizes core creation workflows', async () => {
   const positioningCopy = [
     englishMessages.pageCopy.home.metaDescription,
     englishMessages.hero.description,
-    englishMessages.hero.microcopy,
     englishMessages.homeUseCases.description,
     englishMessages.features.description,
     englishMessages.footer.description,
@@ -135,7 +262,10 @@ test('homepage positioning emphasizes core creation workflows', async () => {
   for (const value of positioningCopy) {
     assert.equal(typeof value, 'string');
   }
-  assert.doesNotMatch(positioningCopy.join(' '), /personal(?: AI)? models?|personal-model training/i);
+  assert.doesNotMatch(
+    positioningCopy.join(' '),
+    /personal(?: AI)? models?|personal-model training/i,
+  );
   assert.match(englishMessages.hero.description, /photo, reference, or idea/i);
   assert.match(englishMessages.faq.howItWorks.answer, /photo, reference, or idea/i);
 

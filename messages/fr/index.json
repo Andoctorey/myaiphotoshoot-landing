@@ -20,10 +20,10 @@
   },
   "pageCopy": {
     "home": {
-      "metaTitle": "Générateur de photos et portraits IA | My AI Photo Shoot",
-      "metaDescription": "Créez des portraits et photos de profil avec des préréglages, AI Masks ou des prompts personnalisés dans Studio. Payez à l’usage avec des crédits à l’unité.",
-      "shareTitle": "Créez et transformez des photos avec l’IA",
-      "shareDescription": "Créez et transformez des photos avec des préréglages, AI Masks, Studio et vos prompts : headshots, photos de profil, portraits et photos créatives."
+      "metaTitle": "My AI Photoshoot : générateur photo IA personnalisé",
+      "metaDescription": "Créez une séance photo IA réaliste à partir d’une photo, d’un prompt ou d’une référence : portraits pro, photos de profil, avatars et nouveaux looks.",
+      "shareTitle": "Une séance photo IA. Toutes vos facettes.",
+      "shareDescription": "Créez des portraits professionnels et créatifs, des photos de profil, avatars et nouveaux looks réalistes à partir d’une photo, d’un prompt ou d’une référence."
     },
     "useCases": {
       "title": "Usages de la photo IA",
@@ -117,13 +117,13 @@
     }
   },
   "hero": {
-    "title": "Créez et transformez",
-    "titleHighlight": "vos photos IA à votre façon",
-    "description": "Partez d’une photo, d’une image de référence ou d’une idée. Choisissez un préréglage, appliquez un AI Mask ou utilisez Studio et des prompts personnalisés pour créer des portraits professionnels, des photos de profil, des transformations et des images créatives.",
-    "microcopy": "Payez à l’usage avec des crédits à l’unité • Les crédits n’expirent jamais • Web, iOS et Android",
+    "title": "Une séance photo IA.",
+    "titleHighlight": "Toutes vos facettes.",
+    "description": "Créez des portraits réalistes, des photos de profil et de nouveaux looks à partir d’une photo, d’une référence ou d’une simple idée.",
     "visualAlt": "La même femme dans des portraits IA professionnels, décontractés et de style éditorial"
   },
   "appShowcase": {
+    "label": "Dans l’application",
     "exploreStyles": "Essayez un effet AI Masks sur un portrait dans My AI Photo Shoot",
     "realisticPhotos": "Modifiez une photo existante avec un prompt personnalisé dans My AI Photo Shoot",
     "photosOfYou": "Utilisez une photo de référence et décrivez la modification dans Studio",
@@ -132,15 +132,18 @@
     "noSubscription": "Créez avec des crédits à achat unique ou débloquez davantage avec Pro et Max"
   },
   "homeUseCases": {
-    "eyebrow": "Portraits professionnels, profils et photos créatives",
-    "title": "Créez des photos pour le travail, vos profils et vos projets créatifs",
-    "description": "Créez des portraits professionnels, des photos de profil pour les rencontres et des portraits créatifs.",
+    "eyebrow": "Pour chaque occasion",
+    "title": "Une photo pour chaque facette de vous",
+    "description": "Affichez une image professionnelle au travail, démarquez-vous sur les sites de rencontre ou explorez simplement un nouveau look.",
     "imageAlt": "Exemple de photo IA pour {title}",
-    "exploreAll": "Découvrir tous les styles photo",
+    "exploreAll": "Découvrir toutes les idées",
     "cards": {
-      "linkedin": "Portraits LinkedIn et CV",
-      "dating": "Photos de profil de rencontre",
-      "portraits": "Portraits créatifs"
+      "headshots": "Portraits professionnels IA",
+      "business": "Portraits d’entreprise",
+      "linkedin": "Photos pour LinkedIn",
+      "dating": "Photos de profil pour les rencontres",
+      "profiles": "Photos de profil IA",
+      "portraits": "Portraits IA"
     }
   },
   "features": {
@@ -218,8 +221,8 @@
     }
   },
   "pricing": {
-    "title": "Commencez avec des crédits à l’usage",
-    "description": "Achetez des crédits selon vos besoins et créez ou retouchez en 1K. Pro et Max ajoutent des crédits récurrents, une qualité de génération supérieure et l’entraînement facultatif d’un modèle d’IA personnel.",
+    "title": "Choisissez votre forfait",
+    "description": "Comparez les fonctionnalités, les crédits inclus et les options de facturation.",
     "referenceDisclosure": "Les offres de référence pour {market} sont affichées en {currency}. Le prix final localisé, la devise, les crédits inclus et la disponibilité apparaissent dans l’application ou la boutique.",
     "creditsNeverExpire": "Les crédits n’expirent jamais",
     "noTrial": "Aucun essai gratuit. Les abonnements se renouvellent jusqu’à leur résiliation.",
@@ -250,8 +253,8 @@
         "optionLabel": "Pack de crédits",
         "cta": "Commencer avec des crédits",
         "features": {
-          "resolution": "Générez jusqu’à {resolution}",
-          "flexible": "Rechargez à votre rythme"
+          "resolution": "Générez des photos jusqu’en {resolution}",
+          "flexible": "Payez une fois"
         }
       },
       "pro": {
@@ -261,8 +264,8 @@
         "optionLabel": "Forfait Pro",
         "cta": "Choisir Pro",
         "features": {
-          "resolution": "Générez jusqu’à {resolution}",
-          "training": "Débloque l’accès à {training}"
+          "resolution": "Générez des photos jusqu’en {resolution}",
+          "training": "Entraînement standard de votre modèle d’IA personnel"
         }
       },
       "max": {
@@ -272,8 +275,8 @@
         "optionLabel": "Forfait Max",
         "cta": "Choisir Max",
         "features": {
-          "resolution": "Générez jusqu’à {resolution}",
-          "training": "Débloque l’accès à {training}"
+          "resolution": "Générez des photos jusqu’en {resolution}",
+          "training": "Entraînement complet de votre modèle d’IA personnel"
         }
       }
     },
@@ -298,7 +301,9 @@
     "webApp": {
       "title": "Application web",
       "description": "Aucune installation requise. Ouvrez votre studio photo IA dans n’importe quel navigateur moderne.",
-      "button": "Ouvrir l’application web"
+      "button": "Ouvrir l’application web",
+      "badgeEyebrow": "Ouvrir",
+      "badgeTitle": "L’app web"
     },
     "mobileApps": {
       "title": "Applications mobiles",

@@ -23,6 +23,8 @@ export default async function Download({ locale }: { locale: string }) {
         >
           <PlatformButtons
             webAppLabel={t('webApp.button')}
+            webAppEyebrow={t('webApp.badgeEyebrow')}
+            webAppTitle={t('webApp.badgeTitle')}
             googlePlayLabel={t('mobileApps.googlePlay')}
             appStoreLabel={t('mobileApps.appStore')}
           />

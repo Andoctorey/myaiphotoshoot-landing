@@ -4,10 +4,8 @@ import { CheckIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useTranslations } from '@/lib/utils';
 import {
-  CREDIT_COSTS,
   formatCurrency,
   US_REFERENCE_PRICING,
-  type CreditCost,
   type PricingCatalog,
   type PricingOffer,
   type PricingOfferId,
@@ -21,20 +19,8 @@ type Props = {
   locale: string;
 };
 
-const tierCardClasses: Record<PricingTierId, string> = {
-  payg: 'border-brand-400 bg-white shadow-xl shadow-brand-900/10 ring-1 ring-brand-300 dark:border-brand-500 dark:bg-gray-800 dark:ring-brand-700',
-  pro: 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800',
-  max: 'border-brand-300 bg-gradient-to-b from-brand-50 to-white dark:border-brand-700 dark:from-brand-950/40 dark:to-gray-800',
-};
-
 function formatInteger(value: number, locale: string): string {
   return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(value);
-}
-
-function formatCreditCost(cost: CreditCost, locale: string): string {
-  const min = formatInteger(cost.minCredits, locale);
-  if (cost.minCredits === cost.maxCredits) return min;
-  return `${min}–${formatInteger(cost.maxCredits, locale)}`;
 }
 
 function offerUnitKey(offer: PricingOffer): string {
@@ -53,6 +39,7 @@ function offerCreditKey(offer: PricingOffer): string {
 export default function PricingPlans({ locale }: Props) {
   const t = useTranslations('pricing');
   const [pricing, setPricing] = useState<PricingCatalog>(US_REFERENCE_PRICING);
+  const [selectedTierId, setSelectedTierId] = useState<PricingTierId>('payg');
   const [selectedOfferIds, setSelectedOfferIds] = useState<
     Partial<Record<PricingTierId, PricingOfferId>>
   >({});
@@ -88,193 +75,153 @@ export default function PricingPlans({ locale }: Props) {
     || tier.offers[0]
   );
 
-  const featureLabels = (tier: PricingTier): string[] => {
-    const labels = [
-      t(`plans.${tier.id}.features.resolution`, { resolution: tier.maxResolution }),
-    ];
+  const activeTier = pricing.tiers.find((tier) => tier.id === selectedTierId) || pricing.tiers[0];
+  if (!activeTier) return null;
 
-    if (tier.training) {
-      labels.push(t(`plans.${tier.id}.features.training`, {
-        training: t(`creditGuide.items.${tier.training}Training`),
-      }));
-    } else {
-      labels.push(t('plans.payg.features.flexible'));
-    }
-
-    labels.push(t('creditsNeverExpire'));
-    return labels;
-  };
+  const offer = selectedOffer(activeTier);
+  const featureLabels = [
+    t(`plans.${activeTier.id}.features.resolution`, { resolution: activeTier.maxResolution }),
+    activeTier.training
+      ? t(`plans.${activeTier.id}.features.training`)
+      : t('plans.payg.features.flexible'),
+    t('creditsNeverExpire'),
+  ];
 
   return (
-    <>
-      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-gray-600 dark:text-gray-300">
+    <div className="mx-auto mt-7 max-w-3xl">
+      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-3 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-4">
+        <fieldset>
+          <legend className="sr-only">{t('title')}</legend>
+          <div className="grid grid-cols-3 gap-1 rounded-2xl bg-gray-200/70 p-1 dark:bg-gray-900/70">
+            {pricing.tiers.map((tier) => (
+              <label key={tier.id} className="relative cursor-pointer">
+                <input
+                  type="radio"
+                  name="pricing-tier"
+                  value={tier.id}
+                  checked={activeTier.id === tier.id}
+                  onChange={() => setSelectedTierId(tier.id)}
+                  className="peer sr-only"
+                />
+                <span className="flex min-h-11 items-center justify-center rounded-xl px-2 py-2 text-center text-sm font-bold text-gray-600 transition peer-checked:bg-primary peer-checked:text-on-primary peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1 dark:text-gray-300">
+                  {tier.id === 'payg' ? t('plans.payg.eyebrow') : t(`plans.${tier.id}.name`)}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <article className="mt-3 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-700 dark:bg-gray-900 sm:p-6">
+          <h3 className="text-xl font-bold text-gray-950 dark:text-white">
+            {t(`plans.${activeTier.id}.name`)}
+          </h3>
+
+          <fieldset className="mt-4">
+            <legend className="sr-only">{t(`plans.${activeTier.id}.optionLabel`)}</legend>
+            <div
+              className={`grid gap-2 ${
+                activeTier.offers.length === 1
+                  ? 'grid-cols-1'
+                  : activeTier.offers.length === 3
+                    ? 'grid-cols-3'
+                    : 'grid-cols-2'
+              }`}
+            >
+              {activeTier.offers.map((candidate) => (
+                <label key={candidate.id} className="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    name={`${activeTier.id}-offer`}
+                    value={candidate.id}
+                    checked={offer.id === candidate.id}
+                    onChange={() => setSelectedOfferIds((current) => ({
+                      ...current,
+                      [activeTier.id]: candidate.id,
+                    }))}
+                    className="peer sr-only"
+                  />
+                  <span className="flex min-h-20 flex-col items-center justify-center rounded-xl border border-gray-200 px-2 py-2 text-center transition peer-checked:border-primary peer-checked:bg-brand-50 peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1 dark:border-gray-700 dark:peer-checked:border-brand-500 dark:peer-checked:bg-brand-950/40">
+                    <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                      {activeTier.id === 'payg'
+                        ? t('creditGuide.creditAmount', {
+                            credits: formatInteger(candidate.credits, locale),
+                          })
+                        : t(`billing.cadences.${candidate.cadence}`)}
+                    </span>
+                    <span className="mt-1 text-base font-extrabold text-gray-950 dark:text-white">
+                      {formatCurrency(candidate.price, pricing.currency, locale)}
+                    </span>
+                    <span className="text-[11px] text-gray-500 dark:text-gray-400">
+                      {t(offerUnitKey(candidate))}
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="mt-4 flex flex-wrap items-center gap-2" aria-live="polite" aria-atomic="true">
+            <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+              {t(offerCreditKey(offer), {
+                credits: formatInteger(offer.credits, locale),
+              })}
+            </p>
+            {offer.annualSavingsPercent ? (
+              <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
+                {t('billing.annualSavings', { percent: offer.annualSavingsPercent })}
+              </span>
+            ) : null}
+          </div>
+
+          {offer.cadence === 'annual' ? (
+            <p className="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400">
+              {t('billing.annualTerms', {
+                total: formatCurrency(offer.price, pricing.currency, locale),
+                credits: formatInteger(offer.credits, locale),
+              })}
+            </p>
+          ) : null}
+
+          <ul className="mt-5 grid gap-2 sm:grid-cols-3">
+            {featureLabels.map((feature) => (
+              <li
+                key={feature}
+                className="flex items-start gap-2 rounded-xl bg-gray-50 px-3 py-2.5 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200"
+              >
+                <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" aria-hidden="true" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <PlatformAppLink
+            className="mt-5 flex min-h-12 w-full items-center justify-center rounded-xl bg-black px-5 py-3 text-center text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+            ariaLabel={t(`plans.${activeTier.id}.cta`)}
+            analyticsParams={{
+              event_source: 'homepage_pricing',
+              pricing_plan: activeTier.id,
+              billing_cadence: offer.cadence,
+              offer_id: offer.id,
+              pricing_market: pricing.referenceMarket,
+              pricing_country_group: pricing.countryGroup,
+              displayed_price: offer.price,
+              displayed_currency: pricing.currency,
+              reference_credits: offer.credits,
+              credit_grant_period: offer.creditGrantPeriod,
+            }}
+          >
+            {t(`plans.${activeTier.id}.cta`)}
+          </PlatformAppLink>
+        </article>
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-center text-xs text-gray-500 dark:text-gray-400">
         <p>{t('referenceDisclosure', {
           market: pricing.referenceMarket,
           currency: pricing.currency,
         })}</p>
-        <span className="hidden h-4 w-px bg-gray-300 dark:bg-gray-700 sm:block" aria-hidden="true" />
-        <p>{t('creditsNeverExpire')}</p>
-        <span className="hidden h-4 w-px bg-gray-300 dark:bg-gray-700 sm:block" aria-hidden="true" />
-        <p>{t('noTrial')}</p>
+        {activeTier.id !== 'payg' ? <p>{t('noTrial')}</p> : null}
       </div>
-
-      <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-3">
-        {pricing.tiers.map((tier) => {
-          const offer = selectedOffer(tier);
-          const displayPrice = offer.price;
-
-          return (
-            <article
-              key={tier.id}
-              className={`flex h-full flex-col rounded-3xl border p-6 sm:p-7 ${tierCardClasses[tier.id]}`}
-            >
-              <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-                {t(`plans.${tier.id}.eyebrow`)}
-              </p>
-              <h3 className="mt-2 text-2xl font-bold text-gray-950 dark:text-white">
-                {t(`plans.${tier.id}.name`)}
-              </h3>
-              <p className="mt-3 min-h-12 text-sm leading-6 text-gray-600 dark:text-gray-300">
-                {t(`plans.${tier.id}.description`)}
-              </p>
-
-              <fieldset className="mt-6">
-                <legend className="sr-only">{t(`plans.${tier.id}.optionLabel`)}</legend>
-                <div
-                  className={`grid rounded-xl bg-gray-100 p-1 dark:bg-gray-900/70 ${
-                    tier.offers.length === 1
-                      ? 'grid-cols-1'
-                      : tier.offers.length === 3
-                        ? 'grid-cols-3'
-                        : 'grid-cols-2'
-                  }`}
-                >
-                  {tier.offers.map((candidate) => (
-                    <label key={candidate.id} className="relative cursor-pointer">
-                      <input
-                        type="radio"
-                        name={`${tier.id}-offer`}
-                        value={candidate.id}
-                        checked={offer.id === candidate.id}
-                        onChange={() => setSelectedOfferIds((current) => ({
-                          ...current,
-                          [tier.id]: candidate.id,
-                        }))}
-                        className="peer sr-only"
-                      />
-                      <span className="flex min-h-10 items-center justify-center rounded-lg px-2 py-2 text-center text-xs font-semibold text-gray-600 transition peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-1 dark:text-gray-300 dark:peer-checked:bg-gray-700">
-                        {tier.id === 'payg'
-                          ? t('creditGuide.creditAmount', {
-                              credits: formatInteger(candidate.credits, locale),
-                            })
-                          : t(`billing.cadences.${candidate.cadence}`)}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-
-              <div
-                className="mt-6 border-b border-gray-200 pb-6 dark:border-gray-700"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                <div className="flex flex-wrap items-end gap-x-2 gap-y-1">
-                  <span className="text-4xl font-extrabold tracking-tight text-gray-950 dark:text-white">
-                    {formatCurrency(displayPrice, pricing.currency, locale)}
-                  </span>
-                  <span className="pb-1 text-sm font-medium text-gray-500 dark:text-gray-300">
-                    {t(offerUnitKey(offer))}
-                  </span>
-                </div>
-
-                {offer.annualSavingsPercent ? (
-                  <p className="mt-2 inline-flex rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
-                    {t('billing.annualSavings', { percent: offer.annualSavingsPercent })}
-                  </p>
-                ) : null}
-
-                <p className="mt-3 text-sm font-semibold text-gray-800 dark:text-gray-100">
-                  {t(offerCreditKey(offer), {
-                    credits: formatInteger(offer.credits, locale),
-                  })}
-                </p>
-
-                {offer.cadence === 'annual' ? (
-                  <p className="mt-2 text-xs leading-5 text-gray-500 dark:text-gray-300">
-                    {t('billing.annualTerms', {
-                      total: formatCurrency(offer.price, pricing.currency, locale),
-                      credits: formatInteger(offer.credits, locale),
-                    })}
-                  </p>
-                ) : null}
-              </div>
-
-              <ul className="mt-6 space-y-3">
-                {featureLabels(tier).map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-200">
-                    <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" aria-hidden="true" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-auto pt-7">
-                <PlatformAppLink
-                  className="flex min-h-12 w-full items-center justify-center rounded-xl bg-black px-5 py-3 text-center text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
-                  ariaLabel={t(`plans.${tier.id}.cta`)}
-                  analyticsParams={{
-                    event_source: 'homepage_pricing',
-                    pricing_plan: tier.id,
-                    billing_cadence: offer.cadence,
-                    offer_id: offer.id,
-                    pricing_market: pricing.referenceMarket,
-                    pricing_country_group: pricing.countryGroup,
-                    displayed_price: offer.price,
-                    displayed_currency: pricing.currency,
-                    reference_credits: offer.credits,
-                    credit_grant_period: offer.creditGrantPeriod,
-                  }}
-                >
-                  {t(`plans.${tier.id}.cta`)}
-                </PlatformAppLink>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-
-      <aside
-        className="mt-8 rounded-3xl border border-brand-100 bg-gradient-to-br from-brand-50 via-white to-brand-100 p-6 dark:border-brand-900/50 dark:from-brand-950/30 dark:via-gray-800 dark:to-brand-900/30 sm:p-8"
-        aria-labelledby="credit-guide-title"
-      >
-        <div className="max-w-3xl">
-          <h3 id="credit-guide-title" className="text-2xl font-bold text-gray-950 dark:text-white">
-            {t('creditGuide.title')}
-          </h3>
-          <p className="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
-            {t('creditGuide.description')}
-          </p>
-        </div>
-
-        <dl className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {CREDIT_COSTS.map((cost) => (
-            <div
-              key={cost.id}
-              className="flex items-center justify-between gap-4 rounded-2xl border border-white/80 bg-white/80 px-4 py-3 shadow-sm dark:border-gray-700 dark:bg-gray-900/70"
-            >
-              <dt className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                {t(`creditGuide.items.${cost.id}`)}
-              </dt>
-              <dd className="shrink-0 text-sm font-extrabold text-primary">
-                {t('creditGuide.creditAmount', {
-                  credits: formatCreditCost(cost, locale),
-                })}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </aside>
-    </>
+    </div>
   );
 }

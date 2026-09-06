@@ -11,7 +11,15 @@ import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 import type { AiMask, AiMaskCategory } from '@/types/ai-mask';
 
-const FEATURED_MASK_SLUGS = ['goatee', 'clean-girl', 'cyberpunk'];
+// Snapshot of the highest-demand published masks; ties favor category variety.
+const DEMAND_PRIORITY_MASKS = [
+  { categorySlug: 'aging', maskSlug: 'prime' },
+  { categorySlug: 'expression', maskSlug: 'smile' },
+  { categorySlug: 'hair', maskSlug: 'wolf-cut' },
+  { categorySlug: 'body', maskSlug: 'abs' },
+  { categorySlug: 'outfit', maskSlug: 'prom' },
+  { categorySlug: 'outfit-men', maskSlug: 'cardigan' },
+] as const;
 
 type MaskComparison = {
   category: AiMaskCategory;
@@ -23,10 +31,10 @@ export default async function HomeMasks({ locale }: { locale: string }) {
     getTranslations({ locale, namespace: 'masks' }),
     fetchMasksCatalog(locale),
   ]);
-  const preferred = FEATURED_MASK_SLUGS.flatMap((slug): MaskComparison[] => {
-    const mask = catalog.masks.find((item) => item.slug === slug);
-    const category = mask
-      ? catalog.categories.find((item) => item.id === mask.categoryId)
+  const preferred = DEMAND_PRIORITY_MASKS.flatMap((featured): MaskComparison[] => {
+    const category = catalog.categories.find((item) => item.slug === featured.categorySlug);
+    const mask = category
+      ? masksForCategory(catalog, category.id).find((item) => item.slug === featured.maskSlug)
       : undefined;
     return category && mask ? [{ category, mask }] : [];
   });
@@ -38,7 +46,7 @@ export default async function HomeMasks({ locale }: { locale: string }) {
     .filter((comparison, index, items) => (
       items.findIndex((item) => item.mask.id === comparison.mask.id) === index
     ))
-    .slice(0, 3);
+    .slice(0, DEMAND_PRIORITY_MASKS.length);
 
   if (comparisons.length === 0) return null;
 

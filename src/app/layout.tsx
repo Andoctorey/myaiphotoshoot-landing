@@ -12,6 +12,7 @@ import { GA_MEASUREMENT_ID, TIKTOK_PIXEL_ID } from "@/lib/analytics";
 import ConsentBanner from "@/components/ConsentBanner";
 import { env } from "@/lib/env";
 import { serializeJsonLd } from "@/lib/json-ld";
+import { BASE_URL, HOME_METADATA_DEFAULTS } from "@/lib/seo";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -28,12 +29,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://myaiphotoshoot.com"),
+  metadataBase: new URL(BASE_URL),
   title: {
-    default: "AI Photo & Headshot Generator - My AI Photo Shoot",
+    default: HOME_METADATA_DEFAULTS.title,
     template: "%s | My AI Photo Shoot",
   },
-  description: "Create headshots, profile photos, portraits, and transformations with presets, AI Masks, or custom prompts in Studio. Pay as you go with one-time credits.",
+  description: HOME_METADATA_DEFAULTS.description,
   authors: [{ name: "My AI Photo Shoot" }],
   creator: "My AI Photo Shoot",
   publisher: "My AI Photo Shoot",
@@ -58,16 +59,16 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Create and Transform AI Photos",
-    description: "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.",
-    url: "https://myaiphotoshoot.com",
+    title: HOME_METADATA_DEFAULTS.shareTitle,
+    description: HOME_METADATA_DEFAULTS.shareDescription,
+    url: BASE_URL,
     siteName: "My AI Photo Shoot",
     images: [
       {
         url: "/og-image-v2.jpg?v=8",
         width: 1200,
         height: 630,
-        alt: "My AI Photo Shoot AI photo creation and transformation examples",
+        alt: HOME_METADATA_DEFAULTS.socialImageAlt,
       },
     ],
     locale: "en_US",
@@ -75,9 +76,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Create and Transform AI Photos",
-    description: "Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.",
-    images: [{ url: "/og-image-v2.jpg?v=8", alt: "My AI Photo Shoot AI photo creation and transformation examples" }],
+    title: HOME_METADATA_DEFAULTS.shareTitle,
+    description: HOME_METADATA_DEFAULTS.shareDescription,
+    images: [{ url: "/og-image-v2.jpg?v=8", alt: HOME_METADATA_DEFAULTS.socialImageAlt }],
   },
 };
 

@@ -29,8 +29,17 @@ export default async function AppShowcase({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: 'appShowcase' });
 
   return (
-    <section className="overflow-hidden bg-white py-10 dark:bg-gray-900">
+    <section
+      className="overflow-hidden bg-white py-10 dark:bg-gray-900"
+      aria-labelledby="app-showcase-heading"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2
+          id="app-showcase-heading"
+          className="mb-5 text-sm font-semibold uppercase tracking-wide text-primary"
+        >
+          {t('label')}
+        </h2>
         <div className="-mx-4 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 xl:mx-0 xl:overflow-visible xl:px-0">
           <div className="flex w-max snap-x snap-mandatory gap-4 xl:grid xl:w-full xl:grid-cols-5">
             {showcaseScreenshots.map((screenshot) => (

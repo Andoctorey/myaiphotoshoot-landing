@@ -1,4 +1,11 @@
 export const BASE_URL = 'https://myaiphotoshoot.com';
+export const HOME_METADATA_DEFAULTS = {
+  title: 'My AI Photoshoot: Personalized AI Photo Generator',
+  description: 'Create a realistic AI photoshoot from one photo, a prompt, or a reference image. Make headshots, profile pictures, portraits, avatars, and new looks.',
+  shareTitle: 'One AI Photoshoot. Every Version of You.',
+  shareDescription: 'Create realistic headshots, profile pictures, portraits, avatars, and new looks from one photo, a prompt, or a reference image.',
+  socialImageAlt: 'Realistic headshots, profile pictures, portraits, avatars, and new looks made with My AI Photoshoot',
+} as const;
 const META_DESCRIPTION_MAX_LENGTH = 160;
 const META_DESCRIPTION_MIN_BOUNDARY = 120;
 

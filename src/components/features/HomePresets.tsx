@@ -6,15 +6,17 @@ import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 
 const HOME_PRESET_EXCLUSIONS = new Set(['minecraft-world', 'spider-man-trains']);
+const HOME_PRESET_COUNT = 6;
+const HOME_PRESET_FETCH_SIZE = 12;
 
 export default async function HomePresets({ locale }: { locale: string }) {
   const [t, presetsPage] = await Promise.all([
     getTranslations({ locale, namespace: 'presets' }),
-    fetchAiPresetsPage(locale, 1, 6),
+    fetchAiPresetsPage(locale, 1, HOME_PRESET_FETCH_SIZE),
   ]);
   const presets = presetsPage.presets
     .filter((preset) => preset.featured_graphics && !HOME_PRESET_EXCLUSIONS.has(preset.slug))
-    .slice(0, 3);
+    .slice(0, HOME_PRESET_COUNT);
 
   if (presets.length === 0) return null;
 

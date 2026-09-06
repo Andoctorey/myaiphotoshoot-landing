@@ -20,10 +20,10 @@
   },
   "pageCopy": {
     "home": {
-      "metaTitle": "Generador de fotos y retratos con IA | My AI Photo Shoot",
-      "metaDescription": "Crea fotos profesionales, fotos de perfil y retratos con presets, AI Masks o prompts personalizados en Studio. Paga por uso con créditos de pago único.",
-      "shareTitle": "Crea y transforma fotos con IA",
-      "shareDescription": "Crea y transforma fotos con presets, AI Masks, Studio y prompts personalizados para headshots, fotos de perfil, retratos y fotos creativas."
+      "metaTitle": "My AI Photoshoot: generador personalizado de fotos con IA",
+      "metaDescription": "Crea una sesión de fotos realista con IA a partir de una foto, un prompt o una referencia: fotos profesionales y de perfil, retratos, avatares y nuevos looks.",
+      "shareTitle": "Una sesión de fotos con IA. Todas tus facetas.",
+      "shareDescription": "Crea fotos realistas para el trabajo y tus perfiles, además de retratos, avatares y nuevos looks, a partir de una foto, un prompt o una referencia."
     },
     "useCases": {
       "title": "Casos de uso de fotos con IA",
@@ -117,13 +117,13 @@
     }
   },
   "hero": {
-    "title": "Crea y transforma",
-    "titleHighlight": "fotos con IA a tu manera",
-    "description": "Empieza con una foto, una referencia o una idea. Elige un preset, aplica una AI Mask o usa Studio y prompts personalizados para crear fotos profesionales, fotos de perfil, retratos, transformaciones e imágenes creativas.",
-    "microcopy": "Paga por uso con créditos de pago único • Los créditos nunca caducan • Web, iOS y Android",
+    "title": "Una sesión de fotos con IA.",
+    "titleHighlight": "Todas tus facetas.",
+    "description": "Convierte una foto, una referencia o una idea en fotos profesionales y de perfil, retratos y nuevos looks.",
     "visualAlt": "La misma mujer en retratos con IA profesionales, informales y de estilo editorial"
   },
   "appShowcase": {
+    "label": "Dentro de la app",
     "exploreStyles": "Prueba un efecto de AI Masks en un retrato con My AI Photo Shoot",
     "realisticPhotos": "Edita una foto existente con un prompt personalizado en My AI Photo Shoot",
     "photosOfYou": "Usa una foto de referencia y describe el cambio en Studio",
@@ -132,15 +132,18 @@
     "noSubscription": "Crea con créditos de compra única o desbloquea más con Pro y Max"
   },
   "homeUseCases": {
-    "eyebrow": "Fotos profesionales, perfiles y fotos creativas",
-    "title": "Crea fotos para el trabajo, tus perfiles y proyectos creativos",
-    "description": "Crea fotos profesionales, fotos para perfiles de citas y retratos creativos.",
+    "eyebrow": "Para cada momento",
+    "title": "Una foto para cada faceta de ti",
+    "description": "Preséntate con confianza en el trabajo, destaca en tus perfiles de citas o prueba un look totalmente nuevo.",
     "imageAlt": "Ejemplo de foto con IA para {title}",
-    "exploreAll": "Explorar todos los estilos de foto",
+    "exploreAll": "Descubrir todas las ideas",
     "cards": {
-      "linkedin": "Fotos para LinkedIn y currículums",
+      "headshots": "Retratos profesionales con IA",
+      "business": "Retratos corporativos",
+      "linkedin": "Fotos para LinkedIn",
       "dating": "Fotos para perfiles de citas",
-      "portraits": "Retratos creativos"
+      "profiles": "Fotos de perfil con IA",
+      "portraits": "Retratos con IA"
     }
   },
   "features": {
@@ -218,8 +221,8 @@
     }
   },
   "pricing": {
-    "title": "Empieza con créditos de pago por uso",
-    "description": "Compra créditos cuando los necesites y crea o edita en 1K. Pro y Max añaden créditos recurrentes, mayor calidad de generación y entrenamiento personal opcional.",
+    "title": "Elige tu plan",
+    "description": "Compara funciones, créditos incluidos y opciones de facturación.",
     "referenceDisclosure": "Se muestran las ofertas de referencia de {market} en {currency}. El precio final localizado, la moneda, los créditos incluidos y la disponibilidad aparecen en la aplicación o la tienda.",
     "creditsNeverExpire": "Los créditos nunca caducan",
     "noTrial": "No hay prueba gratuita. Las suscripciones se renuevan hasta que las canceles.",
@@ -250,8 +253,8 @@
         "optionLabel": "Paquete de créditos",
         "cta": "Empezar con créditos",
         "features": {
-          "resolution": "Genera con hasta {resolution}",
-          "flexible": "Recarga cuando quieras"
+          "resolution": "Genera fotos de hasta {resolution}",
+          "flexible": "Paga una vez"
         }
       },
       "pro": {
@@ -261,8 +264,8 @@
         "optionLabel": "Plan Pro",
         "cta": "Elegir Pro",
         "features": {
-          "resolution": "Genera con hasta {resolution}",
-          "training": "Desbloquea el acceso a {training}"
+          "resolution": "Genera fotos de hasta {resolution}",
+          "training": "Entrenamiento estándar de tu modelo de IA personal"
         }
       },
       "max": {
@@ -272,8 +275,8 @@
         "optionLabel": "Plan Max",
         "cta": "Elegir Max",
         "features": {
-          "resolution": "Genera con hasta {resolution}",
-          "training": "Desbloquea el acceso a {training}"
+          "resolution": "Genera fotos de hasta {resolution}",
+          "training": "Entrenamiento completo de tu modelo de IA personal"
         }
       }
     },
@@ -298,7 +301,9 @@
     "webApp": {
       "title": "App web",
       "description": "No requiere instalación. Abre tu estudio fotográfico con IA en cualquier navegador moderno.",
-      "button": "Abrir app web"
+      "button": "Abrir app web",
+      "badgeEyebrow": "Abrir en",
+      "badgeTitle": "App web"
     },
     "mobileApps": {
       "title": "Apps móviles",

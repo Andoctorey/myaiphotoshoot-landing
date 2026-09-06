@@ -20,10 +20,10 @@
   },
   "pageCopy": {
     "home": {
-      "metaTitle": "KI-Foto- und Headshot-Generator | My AI Photo Shoot",
-      "metaDescription": "Erstellen Sie Headshots, Profilbilder und Porträts mit Presets, AI Masks oder eigenen Prompts in Studio. Zahlen Sie nach Bedarf mit einmaligen Credits.",
-      "shareTitle": "KI-Fotos erstellen und transformieren",
-      "shareDescription": "Erstellen und transformieren Sie KI-Fotos mit Presets, AI Masks, Studio und eigenen Prompts für Headshots, Profilbilder, Porträts und kreative Fotos."
+      "metaTitle": "My AI Photoshoot: Personalisierter KI-Fotogenerator",
+      "metaDescription": "Erstellen Sie aus einem Foto, Prompt oder Referenzbild ein realistisches KI-Fotoshooting – für Headshots, Profilbilder, Porträts, Avatare und neue Looks.",
+      "shareTitle": "Ein KI-Fotoshooting. All Ihre Facetten.",
+      "shareDescription": "Erstellen Sie realistische Headshots, Profilbilder, Porträts, Avatare und neue Looks aus einem Foto, Prompt oder Referenzbild."
     },
     "useCases": {
       "title": "Anwendungsfälle für KI-Fotos",
@@ -117,13 +117,13 @@
     }
   },
   "hero": {
-    "title": "KI-Fotos erstellen und transformieren",
-    "titleHighlight": "ganz nach Ihren Wünschen",
-    "description": "Beginnen Sie mit einem Foto, einem Referenzbild oder einer Idee. Wählen Sie ein Preset, wenden Sie eine AI Mask an oder nutzen Sie Studio und eigene Prompts, um Headshots, Profilbilder, Porträts, Transformationen und kreative Bilder zu erstellen.",
-    "microcopy": "Zahlen Sie nach Bedarf mit einmaligen Credits • Credits verfallen nie • Web, iOS und Android",
+    "title": "Ein KI-Fotoshooting.",
+    "titleHighlight": "All Ihre Facetten.",
+    "description": "Verwandeln Sie ein Foto, Referenzbild oder eine Idee in realistische Headshots, Profilbilder, Porträts und neue Looks.",
     "visualAlt": "Dieselbe Frau in professionellen, legeren und redaktionellen KI-Porträts"
   },
   "appShowcase": {
+    "label": "In der App",
     "exploreStyles": "AI Masks an einem Porträt in My AI Photo Shoot ausprobieren",
     "realisticPhotos": "Ein vorhandenes Foto mit einem eigenen Prompt in My AI Photo Shoot bearbeiten",
     "photosOfYou": "Ein Referenzfoto verwenden und die Änderung in Studio beschreiben",
@@ -132,15 +132,18 @@
     "noSubscription": "Mit einmaligen Credits erstellen oder mit Pro und Max mehr freischalten"
   },
   "homeUseCases": {
-    "eyebrow": "Headshots, Profilbilder und kreative Fotos",
-    "title": "Fotos für Beruf, Profile und kreative Projekte erstellen",
-    "description": "Erstellen Sie professionelle Headshots, Dating-Profilbilder und kreative Porträts.",
+    "eyebrow": "Für jeden Anlass",
+    "title": "Ein Foto für jede Ihrer Facetten",
+    "description": "Zeigen Sie sich im Beruf souverän, heben Sie sich auf Dating-Profilen ab oder entdecken Sie einfach einen ganz neuen Look.",
     "imageAlt": "KI-Fotobeispiel für {title}",
-    "exploreAll": "Alle Fotostile entdecken",
+    "exploreAll": "Alle Möglichkeiten entdecken",
     "cards": {
-      "linkedin": "LinkedIn- und Bewerbungsfotos",
+      "headshots": "Professionelle KI-Headshots",
+      "business": "Business-Headshots",
+      "linkedin": "LinkedIn-Headshots",
       "dating": "Dating-Profilfotos",
-      "portraits": "Kreative Porträts"
+      "profiles": "KI-Profilbilder",
+      "portraits": "KI-Porträts"
     }
   },
   "features": {
@@ -218,8 +221,8 @@
     }
   },
   "pricing": {
-    "title": "Mit nutzungsbasierten Credits starten",
-    "description": "Kaufen Sie Credits bei Bedarf und erstellen oder bearbeiten Sie Fotos in 1K. Pro und Max bieten außerdem wiederkehrende Credits, höhere Generierungsqualität und optionales persönliches KI-Training.",
+    "title": "Wähle dein Abo",
+    "description": "Vergleiche Funktionen, enthaltene Credits und Abrechnungsoptionen.",
     "referenceDisclosure": "Referenzangebote für {market} werden in {currency} angezeigt. Ihr endgültiger lokalisierter Preis, die Währung, enthaltene Credits und die Verfügbarkeit werden in der App oder im Store angezeigt.",
     "creditsNeverExpire": "Credits verfallen nie",
     "noTrial": "Keine kostenlose Testphase. Abonnements verlängern sich bis zur Kündigung.",
@@ -245,13 +248,13 @@
     "plans": {
       "payg": {
         "name": "Einmalige Credits",
-        "eyebrow": "Nutzungsbasiert",
+        "eyebrow": "Nach Verbrauch zahlen",
         "description": "Kaufen Sie Credits nur bei Bedarf und erstellen oder bearbeiten Sie Bilder mit bis zu 1K.",
         "optionLabel": "Credit-Paket",
         "cta": "Mit Credits starten",
         "features": {
-          "resolution": "Bis zu {resolution} erstellen",
-          "flexible": "Nach eigenem Zeitplan aufladen"
+          "resolution": "Fotos mit bis zu {resolution} erstellen",
+          "flexible": "Einmal zahlen"
         }
       },
       "pro": {
@@ -261,8 +264,8 @@
         "optionLabel": "Pro-Tarif",
         "cta": "Pro wählen",
         "features": {
-          "resolution": "Bis zu {resolution} erstellen",
-          "training": "Schaltet den Zugang zu {training} frei"
+          "resolution": "Fotos mit bis zu {resolution} erstellen",
+          "training": "Standardtraining für dein persönliches KI-Modell"
         }
       },
       "max": {
@@ -272,8 +275,8 @@
         "optionLabel": "Max-Tarif",
         "cta": "Max wählen",
         "features": {
-          "resolution": "Bis zu {resolution} erstellen",
-          "training": "Schaltet den Zugang zu {training} frei"
+          "resolution": "Fotos mit bis zu {resolution} erstellen",
+          "training": "Vollständiges Training für dein persönliches KI-Modell"
         }
       }
     },
@@ -298,7 +301,9 @@
     "webApp": {
       "title": "Web-App",
       "description": "Keine Installation nötig. Öffnen Sie Ihr KI-Fotostudio in jedem modernen Browser.",
-      "button": "Web-App öffnen"
+      "button": "Web-App öffnen",
+      "badgeEyebrow": "Öffnen",
+      "badgeTitle": "Web-App"
     },
     "mobileApps": {
       "title": "Mobile Apps",

@@ -2,7 +2,12 @@ import HomeContent from '@/components/features/HomeContent';
 import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from 'next';
 import { locales } from '@/i18n/request';
-import { buildAlternates, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import {
+  buildAlternates,
+  HOME_METADATA_DEFAULTS,
+  ogAlternateLocales,
+  ogLocaleFromAppLocale,
+} from '@/lib/seo';
 import { fetchHomeData } from '@/lib/homeData';
 import HomeJsonLd from '@/components/seo/HomeJsonLd';
 import { loadMessages } from '@/lib/i18n-messages';
@@ -43,12 +48,10 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   };
   const pageCopy = (messages as HomePageCopy).pageCopy?.home;
-  const description = pageCopy?.metaDescription
-    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, or custom prompts in Studio. Pay as you go with one-time credits.';
-  const title = pageCopy?.metaTitle || 'AI Photo & Headshot Generator | My AI Photo Shoot';
-  const shareTitle = pageCopy?.shareTitle || 'Create and Transform AI Photos';
-  const shareDescription = pageCopy?.shareDescription
-    || 'Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.';
+  const description = pageCopy?.metaDescription || HOME_METADATA_DEFAULTS.description;
+  const title = pageCopy?.metaTitle || HOME_METADATA_DEFAULTS.title;
+  const shareTitle = pageCopy?.shareTitle || HOME_METADATA_DEFAULTS.shareTitle;
+  const shareDescription = pageCopy?.shareDescription || HOME_METADATA_DEFAULTS.shareDescription;
   return {
     title: { absolute: title }, // concise HTML title
     description,
@@ -74,7 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: '/og-image-v2.jpg?v=8',
           width: 1200,
           height: 630,
-          alt: 'My AI Photo Shoot AI photo creation and transformation examples',
+          alt: HOME_METADATA_DEFAULTS.socialImageAlt,
         },
       ],
       locale: ogLocaleFromAppLocale('en'),
@@ -85,7 +88,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: shareTitle,
       description: shareDescription,
-      images: [{ url: '/og-image-v2.jpg?v=8', alt: 'My AI Photo Shoot AI photo creation and transformation examples' }],
+      images: [{ url: '/og-image-v2.jpg?v=8', alt: HOME_METADATA_DEFAULTS.socialImageAlt }],
     },
   };
 }

@@ -7,6 +7,8 @@ import { useAttributedUrl } from '@/hooks/usePlatformAppLink';
 
 type Props = {
   webAppLabel: string;
+  webAppEyebrow: string;
+  webAppTitle: string;
   googlePlayLabel: string;
   appStoreLabel: string;
   webAppUrl?: string;
@@ -16,6 +18,8 @@ type Props = {
 
 export default function PlatformButtons({
   webAppLabel,
+  webAppEyebrow,
+  webAppTitle,
   googlePlayLabel,
   appStoreLabel,
   webAppUrl = WEB_APP_IDEAS_URL,
@@ -32,18 +36,22 @@ export default function PlatformButtons({
         href={attributedWebAppUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex min-h-12 min-w-[166px] max-w-full items-center justify-center rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white shadow-md transition duration-150 hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        aria-label={webAppLabel}
+        className="inline-flex h-12 w-[166px] shrink-0 items-center rounded-lg border border-[#a6a6a6] bg-black px-3 text-white transition duration-150 hover:-translate-y-0.5 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
           e.preventDefault();
           trackEventAndNavigate('webapp_cta_click', attributedWebAppUrl, analyticsParams);
         }}
       >
-        <svg className="h-5 w-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" strokeWidth={2} />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12h18M12 3c2.25 2.46 3.5 5.61 3.5 9S14.25 18.54 12 21M12 3C9.75 5.46 8.5 8.61 8.5 12s1.25 6.54 3.5 9" />
+        <svg className="h-8 w-8 shrink-0 ltr:mr-2.5 rtl:ml-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" strokeWidth={1.8} />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M2 12h20M12 2c2.5 2.73 3.9 6.23 3.9 10S14.5 19.27 12 22M12 2C9.5 4.73 8.1 8.23 8.1 12s1.4 7.27 3.9 10" />
         </svg>
-        {webAppLabel}
+        <span className="flex min-w-0 flex-1 flex-col items-start text-start leading-none">
+          <span className="whitespace-nowrap text-[clamp(8px,2.4vw,10px)] font-normal leading-none">{webAppEyebrow}</span>
+          <span className="mt-1 whitespace-nowrap text-[clamp(14px,4.5vw,18px)] font-medium leading-none tracking-[-0.025em]">{webAppTitle}</span>
+        </span>
       </a>
 
       <a

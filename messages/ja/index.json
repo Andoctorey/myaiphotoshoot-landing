@@ -20,10 +20,10 @@
   },
   "pageCopy": {
     "home": {
-      "metaTitle": "AI写真・ヘッドショット生成 | My AI Photo Shoot",
-      "metaDescription": "プリセット、AI Masks、またはStudioのカスタムプロンプトで、ヘッドショット、プロフィール写真、ポートレート、写真加工を作成。対象モデルは買い切りクレジットで都度利用できます。",
-      "shareTitle": "AI写真を作成・加工",
-      "shareDescription": "プリセット、AI Masks、Studio、カスタムプロンプトを使って、ヘッドショット、プロフィール写真、ポートレート、クリエイティブ写真を作成・加工できます。"
+      "metaTitle": "My AI Photoshoot：自分らしいAI写真を作る画像生成ツール",
+      "metaDescription": "1枚の写真、プロンプト、または参考画像から、リアルなAIフォトシュートを。ヘッドショット、プロフィール写真、ポートレート、アバター、新しいスタイルを自由に作れます。",
+      "shareTitle": "ひとつのAIフォトシュートで、まだ知らない自分へ。",
+      "shareDescription": "1枚の写真、プロンプト、または参考画像から、リアルなヘッドショット、プロフィール写真、ポートレート、アバター、新しいスタイルを作れます。"
     },
     "useCases": {
       "title": "AI写真の活用例",
@@ -117,13 +117,13 @@
     }
   },
   "hero": {
-    "title": "作成も加工も",
-    "titleHighlight": "思いのままのAI写真",
-    "description": "写真、参照画像、アイデアから始めましょう。プリセットやAI Maskを選ぶか、Studioとカスタムプロンプトを使って、ヘッドショットやプロフィール写真、ポートレート、写真加工、クリエイティブな画像を作成できます。",
-    "microcopy": "買い切りクレジットで都度払い • クレジットは無期限 • Web、iOS、Androidに対応",
+    "title": "ひとつのAIフォトシュートで、",
+    "titleHighlight": "まだ知らない自分へ。",
+    "description": "写真や参考画像、アイデアから、リアルなヘッドショット、プロフィール写真、ポートレート、新しいスタイルを。",
     "visualAlt": "同じ女性をプロフェッショナル、カジュアル、エディトリアル風のAIポートレートで表現"
   },
   "appShowcase": {
+    "label": "アプリの中身",
     "exploreStyles": "My AI Photo ShootでポートレートにAI Masksを試す",
     "realisticPhotos": "My AI Photo Shootでカスタムプロンプトを使って既存写真を編集",
     "photosOfYou": "Studioで参照写真を使い、変更内容を入力",
@@ -132,15 +132,18 @@
     "noSubscription": "1回払いクレジットで作成、またはProとMaxでさらに多くの機能を利用"
   },
   "homeUseCases": {
-    "eyebrow": "ヘッドショット、プロフィール、クリエイティブ写真",
-    "title": "仕事、プロフィール、クリエイティブなプロジェクト向けの写真を作成",
-    "description": "プロ向けヘッドショット、マッチングアプリ用写真、クリエイティブなポートレートを作成できます。",
+    "eyebrow": "どんなシーンにも",
+    "title": "どんな自分にも、ぴったりの一枚を",
+    "description": "仕事では好印象に、マッチングアプリではもっと魅力的に。気分を変えて、新しいスタイルにも挑戦できます。",
     "imageAlt": "{title}のAI写真例",
-    "exploreAll": "すべての写真スタイルを見る",
+    "exploreAll": "すべての活用アイデアを見る",
     "cards": {
-      "linkedin": "LinkedIn・履歴書用ヘッドショット",
-      "dating": "デートプロフィール写真",
-      "portraits": "クリエイティブポートレート"
+      "headshots": "AIヘッドショット",
+      "business": "ビジネス用プロフィール写真",
+      "linkedin": "LinkedIn用プロフィール写真",
+      "dating": "マッチングアプリ用写真",
+      "profiles": "AIプロフィール画像",
+      "portraits": "AIポートレート"
     }
   },
   "features": {
@@ -218,10 +221,10 @@
     }
   },
   "pricing": {
-    "title": "都度払いクレジットから始める",
-    "description": "必要なときにクレジットを購入し、1Kで写真を作成・編集できます。ProとMaxでは、定期クレジット、より高い生成品質、任意のパーソナルAI学習が利用できます。",
+    "title": "プランを選択",
+    "description": "機能、付与クレジット、お支払い周期を比較できます。",
     "referenceDisclosure": "{market}の参考オファーを{currency}で表示しています。最終的な現地価格、通貨、付与クレジット、提供状況はアプリまたはストアに表示されます。",
-    "creditsNeverExpire": "クレジットに有効期限はありません",
+    "creditsNeverExpire": "クレジットは無期限",
     "noTrial": "無料トライアルはありません。サブスクリプションは解約するまで更新されます。",
     "billing": {
       "cadences": {
@@ -245,13 +248,13 @@
     "plans": {
       "payg": {
         "name": "1回払いクレジット",
-        "eyebrow": "都度払い",
+        "eyebrow": "従量課金",
         "description": "必要なときだけクレジットを購入し、最大1Kで写真を作成・編集できます。",
         "optionLabel": "クレジットパック",
         "cta": "クレジットで始める",
         "features": {
-          "resolution": "最大{resolution}で生成",
-          "flexible": "好きなタイミングで追加購入"
+          "resolution": "最大{resolution}の写真を生成",
+          "flexible": "1回払い"
         }
       },
       "pro": {
@@ -261,8 +264,8 @@
         "optionLabel": "Proプラン",
         "cta": "Proを選ぶ",
         "features": {
-          "resolution": "最大{resolution}で生成",
-          "training": "{training}が利用可能"
+          "resolution": "最大{resolution}の写真を生成",
+          "training": "パーソナルAIモデルの標準トレーニング"
         }
       },
       "max": {
@@ -272,8 +275,8 @@
         "optionLabel": "Maxプラン",
         "cta": "Maxを選ぶ",
         "features": {
-          "resolution": "最大{resolution}で生成",
-          "training": "{training}が利用可能"
+          "resolution": "最大{resolution}の写真を生成",
+          "training": "パーソナルAIモデルのフルトレーニング"
         }
       }
     },
@@ -298,7 +301,9 @@
     "webApp": {
       "title": "Webアプリ",
       "description": "インストール不要。最新ブラウザでAIフォトスタジオを開けます。",
-      "button": "Webアプリを開く"
+      "button": "Webアプリを開く",
+      "badgeEyebrow": "ブラウザで開く",
+      "badgeTitle": "Webアプリ"
     },
     "mobileApps": {
       "title": "モバイルアプリ",

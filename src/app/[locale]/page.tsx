@@ -1,5 +1,11 @@
 import { locales } from '@/i18n/request';
-import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import {
+  buildAlternates,
+  canonicalUrl,
+  HOME_METADATA_DEFAULTS,
+  ogAlternateLocales,
+  ogLocaleFromAppLocale,
+} from '@/lib/seo';
 import HomeContent from '@/components/features/HomeContent';
 import type { Metadata } from 'next';
 import { fetchHomeData } from '@/lib/homeData';
@@ -46,12 +52,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   };
   const m = messages as HomeI18n;
-  const title = m.pageCopy?.home?.metaTitle || 'AI Photo & Headshot Generator | My AI Photo Shoot';
-  const description = m.pageCopy?.home?.metaDescription
-    || 'Create headshots, profile photos, portraits, and transformations with presets, AI Masks, or custom prompts in Studio. Pay as you go with one-time credits.';
-  const shareTitle = m.pageCopy?.home?.shareTitle || 'Create and Transform AI Photos';
-  const shareDescription = m.pageCopy?.home?.shareDescription
-    || 'Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.';
+  const title = m.pageCopy?.home?.metaTitle || HOME_METADATA_DEFAULTS.title;
+  const description = m.pageCopy?.home?.metaDescription || HOME_METADATA_DEFAULTS.description;
+  const shareTitle = m.pageCopy?.home?.shareTitle || HOME_METADATA_DEFAULTS.shareTitle;
+  const shareDescription = m.pageCopy?.home?.shareDescription || HOME_METADATA_DEFAULTS.shareDescription;
   return {
     title: { absolute: title }, // concise HTML title
     description,

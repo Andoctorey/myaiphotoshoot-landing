@@ -5,6 +5,7 @@ import PlatformButtons from './PlatformButtons';
 export default async function Hero({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: 'hero' });
   const tDownload = await getTranslations({ locale, namespace: 'download' });
+  const titleSeparator = locale === 'ja' || locale === 'zh' ? '' : ' ';
 
   return (
     <section className="bg-gradient-to-b from-brand-50 to-background pb-8 pt-10 dark:from-brand-950 dark:to-background sm:pt-14 md:pb-10 md:pt-16">
@@ -13,17 +14,16 @@ export default async function Hero({ locale }: { locale: string }) {
           <div className="text-center lg:text-start">
             <h1 className="mb-6 text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
               {t('title')}
-              <span className="text-primary"> {t('titleHighlight')}</span>
+              <span className="text-primary">{titleSeparator}{t('titleHighlight')}</span>
             </h1>
             <p className="mx-auto mb-4 max-w-3xl text-xl text-gray-600 dark:text-gray-300 md:text-2xl lg:mx-0">
               {t('description')}
             </p>
-            <p className="mx-auto max-w-4xl text-sm text-gray-500 dark:text-gray-400 md:text-base lg:mx-0">
-              {t('microcopy')}
-            </p>
             <div className="mx-auto mt-6 max-w-3xl lg:mx-0">
               <PlatformButtons
                 webAppLabel={tDownload('webApp.button')}
+                webAppEyebrow={tDownload('webApp.badgeEyebrow')}
+                webAppTitle={tDownload('webApp.badgeTitle')}
                 googlePlayLabel={tDownload('mobileApps.googlePlay')}
                 appStoreLabel={tDownload('mobileApps.appStore')}
                 className="lg:justify-start"

@@ -10,8 +10,8 @@ import ts from 'typescript';
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
 const localeCodes = ['en', 'zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar'];
-const englishShareTitle = 'Create and Transform AI Photos';
-const englishShareDescription = 'Create and transform AI photos with presets, AI Masks, Studio, and custom prompts for headshots, profile photos, portraits, and creative photos.';
+const englishShareTitle = 'One AI Photoshoot. Every Version of You.';
+const englishShareDescription = 'Create realistic headshots, profile pictures, portraits, avatars, and new looks from one photo, a prompt, or a reference image.';
 const commercialShareClaim = /(?:[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन)/iu;
 
 async function readProjectFile(relativePath) {
@@ -278,7 +278,6 @@ test('all locales provide the repositioned copy used by the UI', async () => {
   const english = JSON.parse(await readProjectFile('messages/en/index.json'));
   const requiredPaths = [
     'hero.description',
-    'hero.microcopy',
     'features.easyCustomization.title',
     'features.easyCustomization.description',
     'navigation.skipToContent',
@@ -445,6 +444,11 @@ test('Studio explains Auto Mode and quality without reviving a provider picker o
   assert.match(platformButtonsSource, /const attributedWebAppUrl = useAttributedUrl\(webAppUrl\)/);
   assert.match(platformButtonsSource, /bg-black/);
   assert.match(platformButtonsSource, /text-white/);
+  assert.match(platformButtonsSource, /h-12 w-\[166px\] shrink-0/);
+  assert.equal((platformButtonsSource.match(/h-12 w-\[180px\]/g) || []).length, 2);
+  assert.match(platformButtonsSource, /aria-label=\{webAppLabel\}/);
+  assert.match(platformButtonsSource, /\{webAppEyebrow\}/);
+  assert.match(platformButtonsSource, /\{webAppTitle\}/);
   assert.doesNotMatch(platformButtonsSource, /bg-primary|text-on-primary/);
   assert.doesNotMatch(platformButtonsSource, /dark:bg-black/);
   assert.equal((platformButtonsSource.match(/analyticsParams\);/g) || []).length, 3);
@@ -734,6 +738,7 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
     rootLayout,
     rootHome,
     localizedHome,
+    homeSeo,
     rootStudio,
     localizedStudio,
     useCaseSeo,
@@ -741,13 +746,19 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
     readProjectFile('src/app/layout.tsx'),
     readProjectFile('src/app/page.tsx'),
     readProjectFile('src/app/[locale]/page.tsx'),
+    readProjectFile('src/lib/seo.ts'),
     readProjectFile('src/app/studio/page.tsx'),
     readProjectFile('src/app/[locale]/studio/page.tsx'),
     readProjectFile('src/lib/usecase-seo.ts'),
   ]);
 
-  assert.equal((rootLayout.match(new RegExp(englishShareTitle, 'g')) || []).length, 2);
-  assert.equal((rootLayout.match(new RegExp(englishShareDescription.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length, 2);
+  assert.match(homeSeo, new RegExp(englishShareTitle));
+  assert.match(
+    homeSeo,
+    new RegExp(englishShareDescription.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+  );
+  assert.equal((rootLayout.match(/HOME_METADATA_DEFAULTS\.shareTitle/g) || []).length, 2);
+  assert.equal((rootLayout.match(/HOME_METADATA_DEFAULTS\.shareDescription/g) || []).length, 2);
   for (const source of [rootHome, localizedHome]) {
     assert.equal((source.match(/title: shareTitle/g) || []).length, 2);
     assert.equal((source.match(/description: shareDescription/g) || []).length, 2);
@@ -786,7 +797,6 @@ test('the retired Models route and generated page component are absent', async (
 
 test('active copy and SEO do not revive the retired cash-per-image story', async () => {
   const targetedPaths = [
-    'hero.microcopy',
     'useCase.offerSummary',
     'useCase.stickyCta.label',
   ];
@@ -832,6 +842,33 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
     readProjectFile('src/lib/usecase-seo.ts'),
   ]);
   assert.doesNotMatch(metadataSources.join('\n'), /\/og-image\.png/);
+});
+
+test('homepage pricing uses one compact plan selector', async () => {
+  const [pricingUi, english] = await Promise.all([
+    readProjectFile('src/components/features/PricingPlans.tsx'),
+    readProjectFile('messages/en/index.json').then(JSON.parse),
+  ]);
+
+  assert.match(pricingUi, /useState<PricingTierId>\('payg'\)/);
+  assert.match(pricingUi, /name="pricing-tier"/);
+  assert.match(pricingUi, /pricing\.tiers\.find\(\(tier\) => tier\.id === selectedTierId\)/);
+  assert.equal((pricingUi.match(/<article\b/g) || []).length, 1);
+  assert.doesNotMatch(pricingUi, /CREDIT_COSTS|creditGuide\.title/);
+
+  assert.equal(english.pricing.title, 'Choose Your Plan');
+  assert.equal(
+    english.pricing.description,
+    'Compare features, included credits, and billing options.',
+  );
+  assert.equal(
+    english.pricing.plans.pro.features.training,
+    'Standard personal AI model training',
+  );
+  assert.equal(
+    english.pricing.plans.max.features.training,
+    'Full personal AI model training',
+  );
 });
 
 test('Service structured data excludes properties unsupported by the Service type', async () => {
