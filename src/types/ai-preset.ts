@@ -1,4 +1,5 @@
-// Public subset of admin Preset plus public.list_ai_presets output.
+// Public subset of admin Preset plus public.list_ai_presets and
+// public.get_ai_preset_page output.
 // Keep in sync with myaiphotoshoot-admin/src/lib/presetService.ts and
 // myaiphotoshoot-functions migrations/RPCs that expose ai_presets to the landing site.
 export interface AiPreset {

@@ -60,6 +60,13 @@ async function postAiPresetsRpc(body: Record<string, unknown>): Promise<Response
   return postPublicSupabaseRpc('list_ai_presets', body, PRESET_REVALIDATE_SECONDS);
 }
 
+async function postAiPresetLookupRpc(slug: string, locale: string): Promise<Response> {
+  return postPublicSupabaseRpc('get_ai_preset_page', {
+    p_slug: slug,
+    p_locale: locale,
+  }, PRESET_REVALIDATE_SECONDS);
+}
+
 async function fetchAiPresetsPageInternal(
   locale: string,
   page: number,
@@ -292,9 +299,33 @@ export function normalizeAiPreset(preset: AiPreset): AiPreset {
 }
 
 export async function fetchAiPreset(slug: string, locale: string): Promise<AiPreset | undefined> {
-  const presets = await fetchAiPresetsStrict(locale);
-  const preset = presets.find((item) => item.slug === slug);
-  return preset ? normalizeAiPreset(preset) : undefined;
+  try {
+    const res = await postAiPresetLookupRpc(slug, locale);
+    if (!res.ok) {
+      throw new Error(`Preset lookup RPC returned ${res.status}.`);
+    }
+
+    const data: unknown = await res.json();
+    if (!Array.isArray(data) || data.length > 1) {
+      throw new Error('Preset lookup RPC response was not a valid preset array.');
+    }
+
+    const preset = data[0];
+    if (!preset) return undefined;
+    if (
+      !isAiPresetRow(preset)
+      || !preset.id.trim()
+      || preset.slug !== slug
+      || !preset.name.trim()
+    ) {
+      throw new Error('Preset lookup RPC response contained an invalid route record.');
+    }
+    return normalizeAiPreset(preset);
+  } catch (error) {
+    throw new Error(`Failed to fetch AI preset "${slug}" for locale "${locale}".`, {
+      cause: error,
+    });
+  }
 }
 
 export async function fetchAiPresetSlugs(): Promise<string[]> {

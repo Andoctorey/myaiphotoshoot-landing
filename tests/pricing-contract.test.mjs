@@ -648,6 +648,43 @@ test('homepage preset cards open the selected preset in a new web-app tab', asyn
   assert.match(homePresets, /href=\{localePath\(locale, '\/presets\/'\)\}/);
 });
 
+test('preset detail pages use the narrow lookup RPC and validate route identity', async () => {
+  const calls = [];
+  const aiPresets = await loadTypeScriptModule('src/lib/ai-presets.ts', {
+    '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'de'] },
+    '@/lib/pricing': { CREDIT_USD_REFERENCE_VALUE: 0.03 },
+    '@/lib/public-supabase': {
+      postPublicSupabaseRpc: async (...args) => {
+        calls.push(args);
+        if (args[1].p_slug === 'missing') {
+          return new Response('[]');
+        }
+        return new Response(JSON.stringify([{
+          id: 'preset-id',
+          slug: 'golden-hour',
+          name: 'Goldene Stunde',
+          cost_credits: 3,
+        }]));
+      },
+    },
+    '@/lib/seo': {},
+  });
+
+  const preset = await aiPresets.fetchAiPreset('golden-hour', 'de');
+
+  assert.equal(preset?.name, 'Goldene Stunde');
+  assert.equal(await aiPresets.fetchAiPreset('missing', 'de'), undefined);
+  await assert.rejects(
+    aiPresets.fetchAiPreset('wrong-slug', 'de'),
+    /Failed to fetch AI preset "wrong-slug" for locale "de"/,
+  );
+  assert.deepEqual(calls, [
+    ['get_ai_preset_page', { p_slug: 'golden-hour', p_locale: 'de' }, 3600],
+    ['get_ai_preset_page', { p_slug: 'missing', p_locale: 'de' }, 3600],
+    ['get_ai_preset_page', { p_slug: 'wrong-slug', p_locale: 'de' }, 3600],
+  ]);
+});
+
 test('mask catalog schema models masks as collection items rather than software apps', async () => {
   const masksCatalog = await readProjectFile('src/components/masks/AiMasksCatalog.tsx');
 
