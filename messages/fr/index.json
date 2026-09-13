@@ -325,6 +325,12 @@
     "studio": "Studio"
   },
   "supportPage": {
+    "deletion": {
+      "title": "Demander la suppression du compte",
+      "description": "Pour demander la suppression de votre compte My AI Photo Shoot et des données associées, saisissez ci-dessous l’adresse e-mail liée au compte. Dans votre message, demandez la suppression du compte et des données. L’application n’est pas nécessaire. Nous vous écrirons pour vérifier votre identité et confirmer la suppression.",
+      "data": "Nous supprimons les informations de votre compte, les photos importées et générées ainsi que les modèles d’IA entraînés. Nous pouvons conserver des justificatifs d’achat pour les litiges de facturation, la prévention de la fraude, la fiscalité et la comptabilité. Leur durée de conservation dépend des obligations légales applicables.",
+      "billing": "Vous pouvez faire cette demande dès maintenant, même avec un abonnement actif. La suppression du compte n’arrête pas la facturation. Annulez les abonnements Apple dans votre compte Apple et les abonnements Google Play dans Google Play. Pour un abonnement souscrit sur le site, demandez notre aide dans votre message ci-dessous."
+    },
     "title": "Support client",
     "description": "Une question ou besoin d’aide avec vos photos, paiements ou votre compte ? Envoyez-nous un message et nous répondrons sous 24 à 48 heures.",
     "form": {

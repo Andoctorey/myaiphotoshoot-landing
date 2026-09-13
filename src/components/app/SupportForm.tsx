@@ -96,8 +96,20 @@ export default function SupportForm() {
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div>
         <h1 className="text-4xl font-extrabold text-center mb-4">{t('title')}</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-12">{t('description')}</p>
-        
+        <p className="text-xl text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-4">{t('description')}</p>
+        <p className="mb-12 text-center text-sm">
+          <a href="#delete-account" className="text-primary underline underline-offset-2 hover:no-underline">{t('deletion.title')}</a>
+        </p>
+
+        <section id="delete-account" tabIndex={-1} className="hidden target:block max-w-xl mx-auto mb-6 scroll-mt-24 rounded-lg border border-gray-200 bg-white px-5 py-4 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+          <h2 className="text-base font-semibold text-gray-900 dark:text-white">{t('deletion.title')}</h2>
+          <div className="mt-4 space-y-3 text-sm leading-relaxed">
+            <p>{t('deletion.description')}</p>
+            <p>{t('deletion.data')}</p>
+            <p>{t('deletion.billing')}</p>
+          </div>
+        </section>
+
         <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md dark:shadow-gray-900 border border-gray-200 dark:border-gray-700">
           {/* Response time expectations */}
           <div className="mb-6 rounded border border-brand-200 bg-primary-container px-4 py-3 text-on-primary-container dark:border-brand-700">

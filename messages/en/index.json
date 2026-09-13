@@ -325,6 +325,12 @@
     "studio": "Studio"
   },
   "supportPage": {
+    "deletion": {
+      "title": "Request account deletion",
+      "description": "To request deletion of your My AI Photo Shoot account and associated data, enter the email linked to your account below. In the message, ask us to delete your account and data. You can do this without the app. We will email you to verify ownership and confirm completion.",
+      "data": "We delete your account information, uploaded and generated photos, and trained AI models. We may keep purchase records for billing disputes, fraud prevention, tax, and accounting. Their retention period depends on the applicable legal obligations.",
+      "billing": "You can request deletion now, even with an active subscription. Deleting your account does not cancel billing. Cancel Apple subscriptions in your Apple Account and Google Play subscriptions in Google Play. For website subscriptions, ask us to help cancel in your message below."
+    },
     "title": "Customer Support",
     "description": "Have a question or need help with your photos, payments, or account? Send us a message and we will respond within 24-48 hours.",
     "form": {

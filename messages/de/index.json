@@ -325,6 +325,12 @@
     "studio": "Studio"
   },
   "supportPage": {
+    "deletion": {
+      "title": "Kontolöschung beantragen",
+      "description": "Um die Löschung deines My AI Photo Shoot Kontos und der zugehörigen Daten zu beantragen, gib unten die mit deinem Konto verknüpfte E-Mail-Adresse ein. Bitte in der Nachricht um die Löschung deines Kontos und deiner Daten. Du brauchst dafür die App nicht. Wir melden uns per E-Mail zur Identitätsprüfung und bestätigen die Löschung.",
+      "data": "Wir löschen deine Kontodaten, hochgeladenen und erstellten Fotos sowie trainierten KI-Modelle. Kaufbelege können für Abrechnungsstreitigkeiten, Betrugsprävention, Steuern und Buchhaltung aufbewahrt werden. Die Aufbewahrungsdauer hängt von den geltenden gesetzlichen Pflichten ab.",
+      "billing": "Du kannst die Löschung auch mit einem aktiven Abo jetzt beantragen. Das Löschen des Kontos beendet die Abbuchungen nicht. Kündige Apple Abos in deinem Apple Account und Google Play Abos in Google Play. Wenn du ein Web Abo hast, bitte in deiner Nachricht unten um Hilfe bei der Kündigung."
+    },
     "title": "Kundensupport",
     "description": "Haben Sie eine Frage oder brauchen Sie Hilfe mit Fotos, Zahlungen oder Ihrem Konto? Schreiben Sie uns. Wir antworten innerhalb von 24-48 Stunden.",
     "form": {
