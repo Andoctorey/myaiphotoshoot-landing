@@ -108,6 +108,21 @@ test('mask cards and CTAs open the web app in a new tab', async () => {
   }
 });
 
+test('mask lists omit prices while the selected mask displays its backend credit price', async () => {
+  const [browser, highlights, homeMasks] = await Promise.all([
+    readProjectFile('src/components/masks/MasksCatalogBrowser.tsx'),
+    readProjectFile('src/components/masks/AiMaskCategoryHighlights.tsx'),
+    readProjectFile('src/components/features/HomeMasks.tsx'),
+  ]);
+
+  for (const maskList of [browser, homeMasks]) {
+    assert.doesNotMatch(maskList, /formatCredits|\bCR\b/);
+  }
+  assert.match(highlights, /formatCredits\(selectedMask\.priceCredits, locale\)/);
+  assert.doesNotMatch(highlights, /formatCredits\(mask\.priceCredits/);
+  assert.doesNotMatch(highlights, />\s*\d+\s+CR\s*</);
+});
+
 test('mask category chrome is translated in every supported locale', async () => {
   const locales = ['en', 'zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar'];
   const keys = [

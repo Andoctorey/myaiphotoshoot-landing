@@ -118,6 +118,13 @@ test('US reference pricing matches the release catalog', async () => {
   assert.equal('monthlyEquivalentUsd' in offers['max-annual'], false);
 });
 
+test('credit labels format backend amounts without currency conversion', async () => {
+  const { formatCredits } = await loadPricingModule();
+
+  assert.equal(formatCredits(7, 'en'), '7 CR');
+  assert.equal(formatCredits(1000, 'de'), '1.000 CR');
+});
+
 test('the Studio page derives quality bands from canonical pricing', async () => {
   const pricing = await loadPricingModule();
   const models = await loadModelsModule(pricing);
@@ -623,16 +630,18 @@ test('preset pagination links every results page directly', async () => {
   assert.match(presetsIndex, /aria-current="page"/);
 });
 
-test('preset previews and detail CTAs omit credit prices', async () => {
+test('preset lists omit prices while detail CTAs display backend credit prices', async () => {
   const [presetsIndex, homePresets, presetPage] = await Promise.all([
     readProjectFile('src/components/presets/AiPresetsIndex.tsx'),
     readProjectFile('src/components/features/HomePresets.tsx'),
     readProjectFile('src/components/presets/AiPresetPage.tsx'),
   ]);
 
-  for (const presetSurface of [presetsIndex, homePresets, presetPage]) {
-    assert.doesNotMatch(presetSurface, /\bCR\b|formatPresetCreditCost|cost_credits/);
+  for (const presetList of [presetsIndex, homePresets]) {
+    assert.doesNotMatch(presetList, /formatCredits|\bCR\b/);
   }
+  assert.match(presetPage, /formatCredits\(preset\.cost_credits, locale\)/);
+  assert.doesNotMatch(presetPage, />\s*\d+\s+CR\s*</);
 });
 
 test('homepage preset cards open the selected preset in a new web-app tab', async () => {
@@ -648,7 +657,7 @@ test('homepage preset cards open the selected preset in a new web-app tab', asyn
   assert.match(homePresets, /href=\{localePath\(locale, '\/presets\/'\)\}/);
 });
 
-test('preset detail pages use the narrow lookup RPC and validate route identity', async () => {
+test('preset detail pages combine narrow content and price RPCs and validate route identity', async () => {
   const calls = [];
   const aiPresets = await loadTypeScriptModule('src/lib/ai-presets.ts', {
     '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'de'] },
@@ -659,11 +668,12 @@ test('preset detail pages use the narrow lookup RPC and validate route identity'
         if (args[1].p_slug === 'missing') {
           return new Response('[]');
         }
+        const costCredits = args[0] === 'get_ai_preset' ? 3 : undefined;
         return new Response(JSON.stringify([{
           id: 'preset-id',
           slug: 'golden-hour',
           name: 'Goldene Stunde',
-          cost_credits: 3,
+          cost_credits: costCredits,
         }]));
       },
     },
@@ -673,6 +683,7 @@ test('preset detail pages use the narrow lookup RPC and validate route identity'
   const preset = await aiPresets.fetchAiPreset('golden-hour', 'de');
 
   assert.equal(preset?.name, 'Goldene Stunde');
+  assert.equal(preset?.cost_credits, 3);
   assert.equal(await aiPresets.fetchAiPreset('missing', 'de'), undefined);
   await assert.rejects(
     aiPresets.fetchAiPreset('wrong-slug', 'de'),
@@ -680,6 +691,7 @@ test('preset detail pages use the narrow lookup RPC and validate route identity'
   );
   assert.deepEqual(calls, [
     ['get_ai_preset_page', { p_slug: 'golden-hour', p_locale: 'de' }, 3600],
+    ['get_ai_preset', { p_identifier: 'golden-hour', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'missing', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'wrong-slug', p_locale: 'de' }, 3600],
   ]);

@@ -6,6 +6,7 @@ import {
   buildPresetDescription,
   buildPresetProvidedDescription,
 } from '@/lib/ai-presets';
+import { formatCredits } from '@/lib/pricing';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
 import type { AiPreset } from '@/types/ai-preset';
@@ -33,6 +34,9 @@ export default async function AiPresetPage({ locale, preset }: Props) {
   const introParagraphs = splitParagraphs(preset.seo_intro);
   const faqItems = preset.faqs || [];
   const tryPresetLabel = t('tryPreset');
+  const creditPrice = preset.cost_credits
+    ? formatCredits(preset.cost_credits, locale)
+    : null;
 
   const jsonLdGraph: Array<Record<string, unknown>> = [
     {
@@ -126,11 +130,17 @@ export default async function AiPresetPage({ locale, preset }: Props) {
             <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
               <a
                 href={appUrl}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 {tryPresetLabel}
+                {creditPrice ? (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span className="tabular-nums">{creditPrice}</span>
+                  </>
+                ) : null}
               </a>
             </div>
           </div>
@@ -219,11 +229,17 @@ export default async function AiPresetPage({ locale, preset }: Props) {
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <a
                   href={appUrl}
-                  className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {tryPresetLabel}
+                  {creditPrice ? (
+                    <>
+                      <span aria-hidden="true">·</span>
+                      <span className="tabular-nums">{creditPrice}</span>
+                    </>
+                  ) : null}
                 </a>
               </div>
             </div>

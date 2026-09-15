@@ -188,3 +188,7 @@ export function formatCurrency(
   }
   return new Intl.NumberFormat(locale, options).format(amount);
 }
+
+export function formatCredits(credits: number, locale: string = 'en'): string {
+  return `${new Intl.NumberFormat(locale).format(credits)} CR`;
+}

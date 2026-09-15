@@ -67,6 +67,41 @@ async function postAiPresetLookupRpc(slug: string, locale: string): Promise<Resp
   }, PRESET_REVALIDATE_SECONDS);
 }
 
+async function postAiPresetPriceLookupRpc(slug: string, locale: string): Promise<Response> {
+  return postPublicSupabaseRpc('get_ai_preset', {
+    p_identifier: slug,
+    p_locale: locale,
+  }, PRESET_REVALIDATE_SECONDS);
+}
+
+async function fetchAiPresetCreditCost(
+  slug: string,
+  locale: string,
+  expectedPreset: Pick<AiPreset, 'id' | 'slug'>,
+): Promise<number> {
+  const response = await postAiPresetPriceLookupRpc(slug, locale);
+  if (!response.ok) {
+    throw new Error(`Preset price lookup RPC returned ${response.status}.`);
+  }
+  const data: unknown = await response.json();
+  if (!Array.isArray(data) || data.length !== 1) {
+    throw new Error('Preset price lookup RPC response was not a single preset.');
+  }
+  const pricedPreset = data[0];
+  if (
+    !isAiPresetRow(pricedPreset)
+    || pricedPreset.id !== expectedPreset.id
+    || pricedPreset.slug !== expectedPreset.slug
+  ) {
+    throw new Error('Preset price lookup RPC returned a different preset.');
+  }
+  const costCredits = normalizeCreditCost(pricedPreset.cost_credits);
+  if (costCredits === null) {
+    throw new Error('Preset price lookup RPC response omitted cost_credits.');
+  }
+  return costCredits;
+}
+
 async function fetchAiPresetsPageInternal(
   locale: string,
   page: number,
@@ -320,7 +355,17 @@ export async function fetchAiPreset(slug: string, locale: string): Promise<AiPre
     ) {
       throw new Error('Preset lookup RPC response contained an invalid route record.');
     }
-    return normalizeAiPreset(preset);
+    const normalizedPreset = normalizeAiPreset(preset);
+    if (normalizedPreset.cost_credits != null) {
+      return normalizedPreset;
+    }
+
+    // The SEO detail RPC currently omits pricing, so resolve it through the app's
+    // preset lookup until the detail response exposes the same backend field.
+    return {
+      ...normalizedPreset,
+      cost_credits: await fetchAiPresetCreditCost(slug, locale, normalizedPreset),
+    };
   } catch (error) {
     throw new Error(`Failed to fetch AI preset "${slug}" for locale "${locale}".`, {
       cause: error,

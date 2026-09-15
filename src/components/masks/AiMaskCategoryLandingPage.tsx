@@ -95,6 +95,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             genderLabel={t('genderLabel')}
             holdToCompareLabel={t('landing.holdToCompare')}
             iosUnavailableLabel={t('landing.iosUnavailable')}
+            locale={locale}
             maleLabel={t('genderMale')}
             masks={masks}
             resultAltLabel={t.raw('resultAlt') as string}
