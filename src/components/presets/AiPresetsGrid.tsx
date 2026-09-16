@@ -1,0 +1,262 @@
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { aiPresetsPagePath, type AiPresetsPage } from '@/lib/ai-presets';
+import type { AiPreset } from '@/types/ai-preset';
+import { postPublicSupabaseRpc } from '@/lib/public-supabase';
+import { localePath } from '@/lib/seo';
+
+type Props = {
+  locale: string;
+  initialPage: AiPresetsPage;
+  title: string;
+  description: string;
+  emptyLabel: string;
+};
+
+type PresetSort = 'popular' | 'new';
+const PRESET_REVALIDATE_SECONDS = 3600;
+
+function updateSortUrl(locale: string, sort: PresetSort) {
+  const url = new URL(localePath(locale, '/presets/'), window.location.origin);
+  if (sort === 'new') url.searchParams.set('sort', sort);
+  window.history.replaceState(window.history.state, '', url);
+}
+
+async function fetchPresetPage(
+  locale: string,
+  pageSize: number,
+  offset: number,
+  sort: PresetSort,
+): Promise<{ presets: AiPreset[]; totalCount: number }> {
+  const response = await postPublicSupabaseRpc('list_ai_presets', {
+    p_locale: locale,
+    p_limit: pageSize,
+    p_offset: offset,
+    p_sort: sort,
+  }, PRESET_REVALIDATE_SECONDS);
+  if (!response.ok) throw new Error(`Preset listing returned ${response.status}.`);
+
+  const data: unknown = await response.json();
+  if (!Array.isArray(data)) throw new Error('Preset listing returned an invalid page.');
+  if (data.length === 0) return { presets: [], totalCount: offset };
+  if (data.some((preset) =>
+    !preset || typeof preset.id !== 'string' || typeof preset.slug !== 'string'
+    || typeof preset.name !== 'string' || !Number.isSafeInteger(preset.total_count)
+    || preset.total_count < offset + data.length
+  )) {
+    throw new Error('Preset listing returned an invalid page.');
+  }
+
+  return {
+    presets: data as AiPreset[],
+    totalCount: (data[0] as AiPreset).total_count!,
+  };
+}
+
+export default function AiPresetsGrid({
+  locale,
+  initialPage,
+  title,
+  description,
+  emptyLabel,
+}: Props) {
+  const t = useTranslations('presets');
+  const [presets, setPresets] = useState(initialPage.presets);
+  const [page, setPage] = useState(initialPage.page);
+  const [hasMore, setHasMore] = useState(initialPage.hasNextPage);
+  const [sort, setSort] = useState<PresetSort>('popular');
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const [sortError, setSortError] = useState(false);
+  const sentinel = useRef<HTMLDivElement>(null);
+  const inFlight = useRef(false);
+  const initialSortApplied = useRef(false);
+
+  const loadMore = useCallback(async () => {
+    if (inFlight.current || !hasMore) return;
+    inFlight.current = true;
+    setIsLoading(true);
+    setLoadError(false);
+    const nextPage = page + 1;
+    const offset = (nextPage - 1) * initialPage.pageSize;
+
+    try {
+      const result = await fetchPresetPage(locale, initialPage.pageSize, offset, sort);
+      const nextPresets = result.presets;
+      setPresets((current) => {
+        const knownIds = new Set(current.map((preset) => preset.id));
+        return [...current, ...nextPresets.filter((preset) => !knownIds.has(preset.id))];
+      });
+      setPage(nextPage);
+      setHasMore(offset + nextPresets.length < result.totalCount);
+    } catch (error) {
+      console.error('Failed to load more presets', { locale, page: nextPage, error });
+      setLoadError(true);
+    } finally {
+      inFlight.current = false;
+      setIsLoading(false);
+    }
+  }, [hasMore, initialPage.pageSize, locale, page, sort]);
+
+  const changeSort = useCallback(async (
+    nextSort: PresetSort,
+    targetPage: number = 1,
+    updateUrl: boolean = true,
+  ) => {
+    if (nextSort === sort || inFlight.current) return;
+    const previousSort = sort;
+    const offset = (targetPage - 1) * initialPage.pageSize;
+    inFlight.current = true;
+    setSort(nextSort);
+    setIsLoading(true);
+    setLoadError(false);
+    setSortError(false);
+
+    try {
+      const result = await fetchPresetPage(locale, initialPage.pageSize, offset, nextSort);
+      setPresets(result.presets);
+      setPage(targetPage);
+      setHasMore(offset + result.presets.length < result.totalCount);
+      if (updateUrl) updateSortUrl(locale, nextSort);
+    } catch (error) {
+      console.error('Failed to sort presets', { locale, sort: nextSort, error });
+      setSort(previousSort);
+      setSortError(true);
+    } finally {
+      inFlight.current = false;
+      setIsLoading(false);
+    }
+  }, [initialPage.pageSize, locale, sort]);
+
+  useEffect(() => {
+    if (initialSortApplied.current) return;
+    initialSortApplied.current = true;
+    if (new URLSearchParams(window.location.search).get('sort') === 'new') {
+      void changeSort('new', initialPage.page, false);
+    }
+  }, [changeSort, initialPage.page]);
+
+  useEffect(() => {
+    if (!hasMore || loadError || isLoading || !sentinel.current
+      || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) void loadMore();
+    }, { rootMargin: '400px' });
+    observer.observe(sentinel.current);
+    return () => observer.disconnect();
+  }, [hasMore, isLoading, loadError, loadMore]);
+
+  const eagerImageIds = new Set(
+    presets.filter((preset) => preset.featured_graphics).slice(0, 2).map((preset) => preset.id),
+  );
+  const nextPagePath = localePath(locale, aiPresetsPagePath(page + 1));
+  const nextPageHref = sort === 'new' ? `${nextPagePath}?sort=new` : nextPagePath;
+
+  return (
+    <>
+      <header className="mb-8">
+        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
+            {title}
+          </h1>
+          <div className="flex flex-col items-end gap-2">
+            <label>
+              <span className="sr-only">{t('sortLabel')}</span>
+              <select
+                value={sort}
+                onChange={(event) => void changeSort(event.target.value as PresetSort)}
+                disabled={isLoading}
+                className="min-h-11 cursor-pointer rounded-full border border-gray-300 bg-white px-4 py-2 text-base font-semibold text-gray-800 shadow-sm outline-none transition hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-wait disabled:opacity-60 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+              >
+                <option value="popular">{t('sortPopular')}</option>
+                <option value="new">{t('sortNewest')}</option>
+              </select>
+            </label>
+            {sortError ? (
+              <p role="alert" className="max-w-64 text-right text-sm text-red-600 dark:text-red-400">
+                {t('sortError')}
+              </p>
+            ) : null}
+          </div>
+        </div>
+        <p className="mt-3 max-w-3xl text-lg leading-7 text-gray-600 dark:text-gray-300 sm:text-xl sm:leading-8">
+          {description}
+        </p>
+      </header>
+
+      {presets.length === 0 ? (
+        <div className="rounded-lg border border-gray-200 bg-white p-8 text-center text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+          {emptyLabel}
+        </div>
+      ) : (
+        <div
+          aria-busy={isLoading}
+          className="grid grid-cols-2 gap-px min-[830px]:grid-cols-3 min-[1100px]:grid-cols-4"
+        >
+          {presets.map((preset) => (
+            <Link
+              key={preset.id}
+              href={localePath(locale, `/presets/${preset.slug}/`)}
+              className="group block min-w-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            >
+              <div className="relative isolate aspect-square overflow-hidden bg-gray-200 dark:bg-gray-800">
+                {preset.featured_graphics ? (
+                  <Image
+                    src={preset.featured_graphics}
+                    alt={preset.featured_graphics_alt?.trim() || t('imageAlt', { name: preset.name })}
+                    width={640}
+                    height={640}
+                    sizes="(min-width: 1280px) 304px, (min-width: 1100px) calc((100vw - 67px) / 4), (min-width: 830px) calc((100vw - 50px) / 3), calc((100vw - 33px) / 2)"
+                    className="h-full w-full object-cover"
+                    loading={eagerImageIds.has(preset.id) ? 'eager' : 'lazy'}
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-gray-900 text-4xl font-bold text-white dark:bg-gray-800">
+                    {preset.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-48% via-black/20 to-black/80"
+                />
+                <h2 className="absolute inset-x-0 bottom-0 line-clamp-2 p-2 text-base font-bold leading-tight text-white [overflow-wrap:anywhere]">
+                  {preset.name}
+                </h2>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {hasMore ? (
+        <div ref={sentinel} className="mt-8 flex flex-col items-center gap-3">
+          <p aria-live="polite" className="sr-only">
+            {isLoading ? t('loading') : ''}
+          </p>
+          {loadError ? (
+            <p role="alert" className="text-center text-sm text-gray-600 dark:text-gray-300">
+              {t('loadError')}
+            </p>
+          ) : null}
+          <Link
+            href={nextPageHref}
+            rel="next"
+            onClick={(event) => {
+              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.preventDefault();
+              void loadMore();
+            }}
+            aria-disabled={isLoading}
+            className="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-300 px-6 py-2 font-semibold text-gray-800 hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary aria-disabled:cursor-wait aria-disabled:opacity-50 dark:border-gray-700 dark:text-gray-200"
+          >
+            {isLoading ? t('loading') : t('loadMore')}
+          </Link>
+        </div>
+      ) : null}
+    </>
+  );
+}

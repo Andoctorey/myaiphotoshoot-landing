@@ -33,6 +33,13 @@
     }
   },
   "presets": {
+    "loadMore": "显示更多",
+    "loading": "加载中…",
+    "loadError": "无法加载更多预设，请重试。",
+    "sortLabel": "预设排序",
+    "sortPopular": "热门",
+    "sortNewest": "最新",
+    "sortError": "无法更改排序，请重试。",
     "title": "AI 照片预设",
     "breadcrumb": "AI 预设",
     "eyebrow": "快速 AI 预设",

@@ -33,6 +33,13 @@
     }
   },
   "presets": {
+    "loadMore": "Mehr anzeigen",
+    "loading": "Wird geladen…",
+    "loadError": "Weitere Presets konnten nicht geladen werden. Bitte versuche es erneut.",
+    "sortLabel": "Presets sortieren",
+    "sortPopular": "Beliebt",
+    "sortNewest": "Neueste",
+    "sortError": "Die Sortierung konnte nicht geändert werden. Bitte versuche es erneut.",
     "title": "KI-Fotopresets",
     "breadcrumb": "KI-Presets",
     "eyebrow": "Schnelle KI-Presets",

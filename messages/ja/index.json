@@ -33,6 +33,13 @@
     }
   },
   "presets": {
+    "loadMore": "もっと見る",
+    "loading": "読み込み中…",
+    "loadError": "プリセットを読み込めませんでした。もう一度お試しください。",
+    "sortLabel": "プリセットを並べ替え",
+    "sortPopular": "人気順",
+    "sortNewest": "新着順",
+    "sortError": "並べ替えを変更できませんでした。もう一度お試しください。",
     "title": "AI写真プリセット",
     "breadcrumb": "AIプリセット",
     "eyebrow": "クイックAIプリセット",

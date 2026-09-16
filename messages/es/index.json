@@ -33,6 +33,13 @@
     }
   },
   "presets": {
+    "loadMore": "Mostrar más",
+    "loading": "Cargando…",
+    "loadError": "No se pudieron cargar más presets. Inténtalo de nuevo.",
+    "sortLabel": "Ordenar presets",
+    "sortPopular": "Populares",
+    "sortNewest": "Más recientes",
+    "sortError": "No se pudo cambiar el orden. Inténtalo de nuevo.",
     "title": "Presets de fotos con IA",
     "breadcrumb": "Presets de IA",
     "eyebrow": "Presets rápidos de IA",

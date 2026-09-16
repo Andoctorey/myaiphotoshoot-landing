@@ -33,6 +33,13 @@
     }
   },
   "presets": {
+    "loadMore": "Afficher plus",
+    "loading": "Chargement…",
+    "loadError": "Impossible de charger plus de presets. Veuillez réessayer.",
+    "sortLabel": "Trier les presets",
+    "sortPopular": "Populaires",
+    "sortNewest": "Plus récents",
+    "sortError": "Impossible de modifier le tri. Veuillez réessayer.",
     "title": "Préréglages photo IA",
     "breadcrumb": "Préréglages IA",
     "eyebrow": "Préréglages IA rapides",

@@ -33,6 +33,13 @@
     }
   },
   "presets": {
+    "loadMore": "Show more",
+    "loading": "Loading…",
+    "loadError": "Could not load more presets. Please try again.",
+    "sortLabel": "Sort presets",
+    "sortPopular": "Popular",
+    "sortNewest": "Newest",
+    "sortError": "Could not change the sorting. Please try again.",
     "title": "AI Photo Presets",
     "breadcrumb": "AI Presets",
     "eyebrow": "Quick AI presets",
