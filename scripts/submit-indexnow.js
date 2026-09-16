@@ -88,11 +88,6 @@ async function submitIndexNow() {
 async function main() {
   console.log('Starting IndexNow submission flow...');
 
-  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
-  const waitTime = isGitHubActions ? 5000 : 10000;
-  console.log(`Waiting ${waitTime / 1000} seconds for deployment to settle...`);
-  await new Promise((resolve) => setTimeout(resolve, waitTime));
-
   const sitemapAccessible = await checkSitemapExists();
   if (!sitemapAccessible) {
     console.log('Continuing submission attempt even though sitemap precheck failed.');

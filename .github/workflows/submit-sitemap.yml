@@ -5,10 +5,19 @@ on:
     branches: [ main, master ]
   workflow_dispatch: # Allow manual triggering
 
+permissions:
+  contents: read
+  checks: read
+
+concurrency:
+  group: submit-search-engines-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   submit-search-engines:
     name: Submit Search Engine Updates
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     
     steps:
       - name: Checkout code
@@ -23,11 +32,45 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Wait for deployment
+      - name: Wait for Cloudflare Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MAX_WAIT_SECONDS: 1500
+          POLL_INTERVAL_SECONDS: 30
         run: |
-          echo "⏳ Waiting for deployment to complete..."
-          echo "This allows time for Cloudflare Pages to build and deploy the site"
-          sleep 240
+          echo "⏳ Waiting for Cloudflare Pages to deploy ${GITHUB_SHA}..."
+          deadline=$(( $(date +%s) + MAX_WAIT_SECONDS ))
+
+          while [ "$(date +%s)" -lt "$deadline" ]; do
+            if check_run=$(curl --fail --silent --show-error \
+              --header "Accept: application/vnd.github+json" \
+              --header "Authorization: Bearer ${GH_TOKEN}" \
+              --header "X-GitHub-Api-Version: 2026-03-10" \
+              "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/check-runs?check_name=Cloudflare%20Pages&filter=latest&per_page=10" \
+              | jq -ce '[.check_runs[] | select(.app.slug == "cloudflare-workers-and-pages")] | max_by(.id)'); then
+              status=$(echo "$check_run" | jq -r '.status')
+              conclusion=$(echo "$check_run" | jq -r '.conclusion // "pending"')
+              echo "Cloudflare Pages status: ${status} (${conclusion})"
+
+              if [ "$status" = "completed" ]; then
+                if [ "$conclusion" = "success" ]; then
+                  echo "✅ Cloudflare Pages deployed ${GITHUB_SHA}."
+                  exit 0
+                fi
+
+                echo "::error title=Cloudflare Pages deployment failed::Deployment completed with conclusion '${conclusion}'."
+                exit 1
+              fi
+            else
+              echo "Cloudflare Pages check is not available yet."
+            fi
+
+            echo "Retrying in ${POLL_INTERVAL_SECONDS}s..."
+            sleep "$POLL_INTERVAL_SECONDS"
+          done
+
+          echo "::error title=Cloudflare Pages deployment timed out::Deployment did not complete within ${MAX_WAIT_SECONDS} seconds."
+          exit 1
           
       - name: Submit sitemap to Google Search Console
         run: |
@@ -72,7 +115,7 @@ jobs:
           SEARCH_SUBMISSION_TOKEN: ${{ secrets.SEARCH_SUBMISSION_TOKEN }}
         
       - name: Success notification
-        if: success()
+        if: steps.submit-indexnow.outcome == 'success'
         run: |
           echo "✅ Required search engine submissions completed successfully!"
           echo "📈 Your new content should be indexed faster by Google"

@@ -103,13 +103,6 @@ async function main() {
   console.log('🚀 Auto-sitemap submission started...');
   console.log('ℹ️ Using Cloudflare Pages Function for submission');
   
-  // In GitHub Actions, we already wait 130 seconds, so reduce this wait
-  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
-  const waitTime = isGitHubActions ? 5000 : 10000;
-  
-  console.log(`⏳ Waiting ${waitTime/1000} seconds for deployment to settle...`);
-  await new Promise(resolve => setTimeout(resolve, waitTime));
-  
   // Check if sitemap is accessible before attempting submission
   console.log('🔍 Verifying sitemap accessibility...');
   const sitemapAccessible = await checkSitemapExists();
