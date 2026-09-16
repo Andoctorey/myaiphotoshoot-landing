@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import AiPresetsIndex from '@/components/presets/AiPresetsIndex';
 import { defaultLocale, locales } from '@/i18n/request';
@@ -10,6 +11,7 @@ import {
   fetchAiPresetSlugs,
   fetchAiPresetsPageStrict,
 } from '@/lib/ai-presets';
+import { loadMessages } from '@/lib/i18n-messages';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 
 interface PageProps {
@@ -78,5 +80,11 @@ export default async function PresetsPaginatedPage({ params }: PageProps) {
   if (!parsedPage) notFound();
   const pageData = await fetchAiPresetsPageStrict(defaultLocale, parsedPage);
   if (parsedPage > pageData.totalPages || pageData.presets.length === 0) notFound();
-  return <AiPresetsIndex locale={defaultLocale} page={parsedPage} pageData={pageData} />;
+  const messages = await loadMessages(defaultLocale);
+
+  return (
+    <NextIntlClientProvider locale={defaultLocale} messages={messages}>
+      <AiPresetsIndex locale={defaultLocale} page={parsedPage} pageData={pageData} />
+    </NextIntlClientProvider>
+  );
 }

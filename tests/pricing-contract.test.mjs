@@ -619,15 +619,16 @@ test('footer links directly to the canonical English-only legal documents', asyn
   assert.doesNotMatch(footer, /localePath\(locale, '\/license\/'\)/);
 });
 
-test('preset pagination links every results page directly', async () => {
-  const presetsIndex = await readProjectFile('src/components/presets/AiPresetsIndex.tsx');
+test('preset infinite loading keeps a crawlable next-page fallback', async () => {
+  const [presetsGrid, defaultPaginatedRoute] = await Promise.all([
+    readProjectFile('src/components/presets/AiPresetsGrid.tsx'),
+    readProjectFile('src/app/ai-presets/browse/[pageNumber]/page.tsx'),
+  ]);
 
-  assert.match(
-    presetsIndex,
-    /Array\.from\(\{ length: presetsPage\.totalPages \}, \(_, index\) => index \+ 1\)/,
-  );
-  assert.match(presetsIndex, /href=\{localePath\(locale, aiPresetsPagePath\(pageNumber\)\)\}/);
-  assert.match(presetsIndex, /aria-current="page"/);
+  assert.match(presetsGrid, /aiPresetsPagePath\(page \+ 1\)/);
+  assert.match(presetsGrid, /href=\{nextPageHref\}/);
+  assert.match(presetsGrid, /rel="next"/);
+  assert.match(defaultPaginatedRoute, /<NextIntlClientProvider locale=\{defaultLocale\} messages=\{messages\}>/);
 });
 
 test('preset lists omit prices while detail CTAs display backend credit prices', async () => {
