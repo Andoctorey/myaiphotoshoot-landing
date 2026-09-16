@@ -3,8 +3,8 @@ import { defaultLocale } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import LegalDocument from '@/components/legal/LegalDocument';
 
-const title = 'Legal - Terms of Service and Privacy Policy - My AI Photo Shoot';
-const description = 'Terms of Service and Privacy Policy for My AI Photo Shoot';
+const title = 'Legal - Terms of Service and Privacy Policy - My AI Photoshoot';
+const description = 'Terms of Service and Privacy Policy for My AI Photoshoot';
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: canonicalUrl(defaultLocale, '/legal/'),
-    siteName: 'My AI Photo Shoot',
+    siteName: 'My AI Photoshoot',
     type: 'website',
     locale: ogLocaleFromAppLocale(defaultLocale),
     alternateLocale: ogAlternateLocales([defaultLocale], defaultLocale),

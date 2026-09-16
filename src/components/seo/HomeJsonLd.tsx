@@ -17,12 +17,12 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     '@context': 'https://schema.org',
     '@type': 'Service',
     '@id': `${canonicalUrl(locale, '/')}#service`,
-    name: `My AI Photo Shoot — ${tHome('shareTitle')}`,
+    name: `My AI Photoshoot — ${tHome('shareTitle')}`,
     serviceType: tSchema('serviceType'),
     provider: {
       '@type': 'Organization',
       '@id': 'https://myaiphotoshoot.com/#organization',
-      name: 'My AI Photo Shoot',
+      name: 'My AI Photoshoot',
     },
     description,
     url: canonicalUrl(locale, '/'),
@@ -30,13 +30,13 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     isRelatedTo: [
       {
         '@type': 'WebApplication',
-        name: 'My AI Photo Shoot',
+        name: 'My AI Photoshoot',
         applicationCategory: 'Photo & Video',
         url: 'https://app.myaiphotoshoot.com',
       },
       {
         '@type': 'MobileApplication',
-        name: 'My AI Photo Shoot',
+        name: 'My AI Photoshoot',
         operatingSystem: 'iOS, Android',
         applicationCategory: 'Photo & Video',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },

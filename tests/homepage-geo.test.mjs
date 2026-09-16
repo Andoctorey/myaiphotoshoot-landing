@@ -287,7 +287,7 @@ test('homepage positioning emphasizes core creation workflows', async () => {
 test('llms.txt is concise factual text with exactly the canonical product links', async () => {
   const llmsText = await readProjectFile('public/llms.txt');
 
-  assert.match(llmsText, /^# My AI Photo Shoot\n\n> [^\n]+\n\n## Pages\n/m);
+  assert.match(llmsText, /^# My AI Photoshoot\n\n> [^\n]+\n\n## Pages\n/m);
   assert.ok(Buffer.byteLength(llmsText, 'utf8') < 1_000, 'llms.txt is not concise');
 
   const pages = Array.from(
@@ -315,5 +315,5 @@ test('llms.txt is concise factual text with exactly the canonical product links'
 test('web app manifest uses the canonical product name', async () => {
   const manifest = JSON.parse(await readProjectFile('public/site.webmanifest'));
 
-  assert.equal(manifest.name, 'My AI Photo Shoot');
+  assert.equal(manifest.name, 'My AI Photoshoot');
 });

@@ -37,7 +37,7 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
             url: pageUrl,
             isPartOf: {
               '@type': 'WebSite',
-              name: 'My AI Photo Shoot',
+              name: 'My AI Photoshoot',
               url: 'https://myaiphotoshoot.com',
             },
             hasPart: presets.slice(0, 24).map((preset) => ({

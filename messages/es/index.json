@@ -131,11 +131,11 @@
   },
   "appShowcase": {
     "label": "Dentro de la app",
-    "exploreStyles": "Prueba un efecto de AI Masks en un retrato con My AI Photo Shoot",
-    "realisticPhotos": "Edita una foto existente con un prompt personalizado en My AI Photo Shoot",
+    "exploreStyles": "Prueba un efecto de AI Masks en un retrato con My AI Photoshoot",
+    "realisticPhotos": "Edita una foto existente con un prompt personalizado en My AI Photoshoot",
     "photosOfYou": "Usa una foto de referencia y describe el cambio en Studio",
-    "photoIdeas": "Explora presets listos para usar en My AI Photo Shoot",
-    "appearanceOptions": "Transforma el rostro, el cabello, el cuerpo, el estilo o la piel con My AI Photo Shoot",
+    "photoIdeas": "Explora presets listos para usar en My AI Photoshoot",
+    "appearanceOptions": "Transforma el rostro, el cabello, el cuerpo, el estilo o la piel con My AI Photoshoot",
     "noSubscription": "Crea con créditos de compra única o desbloquea más con Pro y Max"
   },
   "homeUseCases": {
@@ -170,7 +170,7 @@
     },
     "multiplatform": {
       "title": "Crea desde cualquier lugar",
-      "description": "Abre My AI Photo Shoot en la web, iOS o Android."
+      "description": "Abre My AI Photoshoot en la web, iOS o Android."
     }
   },
   "gallery": {
@@ -212,7 +212,7 @@
       "home": "Inicio"
     },
     "author": {
-      "bio": "My AI Photo Shoot ayuda a creadores, empresas y personas a convertir selfies en retratos e imágenes realistas con IA para usos creativos y profesionales cotidianos."
+      "bio": "My AI Photoshoot ayuda a creadores, empresas y personas a convertir selfies en retratos e imágenes realistas con IA para usos creativos y profesionales cotidianos."
     },
     "relatedPosts": {
       "title": "Artículos relacionados",
@@ -320,21 +320,21 @@
     }
   },
   "footer": {
-    "title": "My AI Photo Shoot",
+    "title": "My AI Photoshoot",
     "description": "Crea y transforma fotos con IA mediante presets, AI Masks, Studio y prompts personalizados.",
     "links": "Enlaces rápidos",
     "legal": "Legal",
     "imageLicense": "Licencia de imágenes",
     "twitter": "Twitter (X)",
     "support": "Soporte",
-    "copyright": "© 2025 My AI Photo Shoot. Todos los derechos reservados.",
+    "copyright": "© 2025 My AI Photoshoot. Todos los derechos reservados.",
     "opensInNewTab": "se abre en una pestaña nueva",
     "studio": "Studio"
   },
   "supportPage": {
     "deletion": {
       "title": "Solicitar la eliminación de la cuenta",
-      "description": "Para solicitar la eliminación de tu cuenta de My AI Photo Shoot y sus datos, escribe abajo el correo vinculado a tu cuenta. En el mensaje, pide que eliminemos tu cuenta y tus datos. Puedes hacerlo sin la app. Te escribiremos para verificar tu identidad y confirmar cuando termine el proceso.",
+      "description": "Para solicitar la eliminación de tu cuenta de My AI Photoshoot y sus datos, escribe abajo el correo vinculado a tu cuenta. En el mensaje, pide que eliminemos tu cuenta y tus datos. Puedes hacerlo sin la app. Te escribiremos para verificar tu identidad y confirmar cuando termine el proceso.",
       "data": "Eliminamos los datos de tu cuenta, las fotos subidas y generadas y los modelos de IA entrenados. Podemos conservar registros de compras para resolver disputas de facturación, prevenir fraudes y cumplir obligaciones fiscales y contables. El plazo de conservación depende de las obligaciones legales aplicables.",
       "billing": "Puedes solicitar la eliminación ahora, incluso si tienes una suscripción activa. Eliminar la cuenta no cancela los cobros. Cancela las suscripciones de Apple en tu cuenta de Apple y las de Google Play en Google Play. Si te suscribiste en la web, pide ayuda para cancelarla en tu mensaje."
     },
@@ -383,12 +383,12 @@
       "answer": "Tú decides si las fotos generadas son públicas o privadas. Permanecen en tu cuenta hasta que las elimines, y puedes borrar de forma permanente imágenes individuales o toda tu biblioteca. No vendemos tus datos personales."
     },
     "platforms": {
-      "question": "¿Dónde puedo usar My AI Photo Shoot?",
+      "question": "¿Dónde puedo usar My AI Photoshoot?",
       "answer": "Úsalo desde un navegador web o en las apps para iOS y Android."
     },
     "whyNotChatGPT": {
       "question": "¿En qué se diferencia de una herramienta general de imágenes con IA?",
-      "answer": "My AI Photo Shoot reúne presets guiados, AI Masks, Studio, prompts personalizados y un control sencillo de la calidad de generación en un único flujo de trabajo para fotos."
+      "answer": "My AI Photoshoot reúne presets guiados, AI Masks, Studio, prompts personalizados y un control sencillo de la calidad de generación en un único flujo de trabajo para fotos."
     }
   },
   "useCase": {
@@ -403,7 +403,7 @@
       "maxAccess": "Max: hasta 4K + acceso al entrenamiento Full opcional"
     },
     "offerSummary": "Crea en 1K con créditos de compra única o usa Pro o Max para obtener resoluciones más altas y acceder al entrenamiento opcional de un modelo de IA personal.",
-    "galleryDisclaimer": "Los ejemplos mostrados se crearon con My AI Photo Shoot.",
+    "galleryDisclaimer": "Los ejemplos mostrados se crearon con My AI Photoshoot.",
     "howItWorks": {
       "title": "Cómo funciona",
       "step1": {
@@ -442,7 +442,7 @@
       "description": "Crea y edita fotos con IA en Studio a partir de una foto o un modelo personal. Escribe un prompt, deja que Auto Mode lo mejore y elige la calidad.",
       "shareTitle": "Crea y edita fotos con IA en Studio",
       "shareDescription": "Empieza con una foto o un modelo personal opcional, describe lo que buscas y deja que Auto Mode mejore el prompt.",
-      "imageAlt": "Ejemplos de fotos de My AI Photo Shoot creados con presets, AI Masks y Studio"
+      "imageAlt": "Ejemplos de fotos de My AI Photoshoot creados con presets, AI Masks y Studio"
     },
     "breadcrumb": "Studio",
     "eyebrow": "Creación personalizada de fotos con IA",

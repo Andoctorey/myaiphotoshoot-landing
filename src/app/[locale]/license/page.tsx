@@ -3,7 +3,7 @@ import { defaultLocale } from '@/i18n/request';
 import { canonicalUrl, localePath, ogLocaleFromAppLocale } from '@/lib/seo';
 import Link from 'next/link';
 
-const title = 'Image License & Usage Rights - My AI Photo Shoot';
+const title = 'Image License & Usage Rights - My AI Photoshoot';
 const description = 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.';
 
 type Props = {
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: canonicalUrl(defaultLocale, '/license/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(locale),
     },
@@ -101,7 +101,7 @@ export default async function LicensePage({ params }: Props) {
               </h2>
               <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                 <p className="text-gray-700 dark:text-gray-300">
-                  © 2025 My AI Photo Shoot. Platform and technology rights reserved.<br/>
+                  © 2025 My AI Photoshoot. Platform and technology rights reserved.<br/>
                   Generated images remain the property of their creators.
                 </p>
               </div>

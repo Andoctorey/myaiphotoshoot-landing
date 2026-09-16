@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description: AI_PRESETS_INDEX_DESCRIPTION,
       url: canonicalUrl(defaultLocale, path),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(defaultLocale),
       alternateLocale: ogAlternateLocales(locales, defaultLocale),

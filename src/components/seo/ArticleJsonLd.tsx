@@ -22,7 +22,7 @@ export default function ArticleJsonLd({
   imageUrl,
   datePublished,
   dateModified,
-  authorName = 'My AI Photo Shoot',
+  authorName = 'My AI Photoshoot',
 }: Props) {
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -36,7 +36,7 @@ export default function ArticleJsonLd({
     author: [{ '@type': 'Organization', name: authorName, url: 'https://myaiphotoshoot.com' }],
     publisher: {
       '@type': 'Organization',
-      name: 'My AI Photo Shoot',
+      name: 'My AI Photoshoot',
       url: 'https://myaiphotoshoot.com',
       logo: {
         '@type': 'ImageObject',

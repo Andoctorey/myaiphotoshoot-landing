@@ -131,11 +131,11 @@
   },
   "appShowcase": {
     "label": "アプリの中身",
-    "exploreStyles": "My AI Photo ShootでポートレートにAI Masksを試す",
-    "realisticPhotos": "My AI Photo Shootでカスタムプロンプトを使って既存写真を編集",
+    "exploreStyles": "My AI PhotoshootでポートレートにAI Masksを試す",
+    "realisticPhotos": "My AI Photoshootでカスタムプロンプトを使って既存写真を編集",
     "photosOfYou": "Studioで参照写真を使い、変更内容を入力",
-    "photoIdeas": "My AI Photo Shootで用意されたプリセットを見る",
-    "appearanceOptions": "My AI Photo Shootで顔、髪、体型、スタイル、肌を変える",
+    "photoIdeas": "My AI Photoshootで用意されたプリセットを見る",
+    "appearanceOptions": "My AI Photoshootで顔、髪、体型、スタイル、肌を変える",
     "noSubscription": "1回払いクレジットで作成、またはProとMaxでさらに多くの機能を利用"
   },
   "homeUseCases": {
@@ -170,7 +170,7 @@
     },
     "multiplatform": {
       "title": "どこからでも作成",
-      "description": "Web、iOS、AndroidでMy AI Photo Shootを利用できます。"
+      "description": "Web、iOS、AndroidでMy AI Photoshootを利用できます。"
     }
   },
   "gallery": {
@@ -212,7 +212,7 @@
       "home": "ホーム"
     },
     "author": {
-      "bio": "My AI Photo Shootは、クリエイター、企業、個人がセルフィーから日常のクリエイティブ用途や仕事に使えるリアルなAIポートレートや画像を作成できるよう支援します。"
+      "bio": "My AI Photoshootは、クリエイター、企業、個人がセルフィーから日常のクリエイティブ用途や仕事に使えるリアルなAIポートレートや画像を作成できるよう支援します。"
     },
     "relatedPosts": {
       "title": "関連記事",
@@ -320,21 +320,21 @@
     }
   },
   "footer": {
-    "title": "My AI Photo Shoot",
+    "title": "My AI Photoshoot",
     "description": "プリセット、AI Masks、Studio、カスタムプロンプトでAI写真を作成・加工できます。",
     "links": "クイックリンク",
     "legal": "法的情報",
     "imageLicense": "画像ライセンス",
     "twitter": "Twitter (X)",
     "support": "サポート",
-    "copyright": "© 2025 My AI Photo Shoot. 無断転載を禁じます。",
+    "copyright": "© 2025 My AI Photoshoot. 無断転載を禁じます。",
     "opensInNewTab": "新しいタブで開きます",
     "studio": "Studio"
   },
   "supportPage": {
     "deletion": {
       "title": "アカウント削除をリクエスト",
-      "description": "My AI Photo Shoot のアカウントと関連データの削除を依頼するには、下のフォームにアカウント登録時のメールアドレスを入力し、メッセージ欄にアカウントとデータの削除希望をご記入ください。アプリは不要です。メールで本人確認を行い、削除完了をご連絡します。",
+      "description": "My AI Photoshoot のアカウントと関連データの削除を依頼するには、下のフォームにアカウント登録時のメールアドレスを入力し、メッセージ欄にアカウントとデータの削除希望をご記入ください。アプリは不要です。メールで本人確認を行い、削除完了をご連絡します。",
       "data": "アカウント情報、アップロードおよび生成された写真、学習済みの AI モデルを削除します。請求上の紛争、詐欺防止、税務、会計のために購入記録を保持する場合があります。保持期間は適用される法的義務によって異なります。",
       "billing": "有効なサブスクリプションがあっても、今すぐ削除をリクエストできます。アカウントの削除だけでは請求は停止しません。Apple のサブスクリプションは Apple アカウントで、Google Play のサブスクリプションは Google Play で解約してください。ウェブで契約した場合は、下のメッセージ欄で解約のサポートを依頼してください。"
     },
@@ -388,7 +388,7 @@
     },
     "whyNotChatGPT": {
       "question": "一般的なAI画像ツールとの違いは何ですか？",
-      "answer": "My AI Photo Shootは、ガイド付きプリセット、AI Masks、Studio、カスタムプロンプト、分かりやすい生成品質コントロールを、写真作成に特化した1つのワークフローにまとめています。"
+      "answer": "My AI Photoshootは、ガイド付きプリセット、AI Masks、Studio、カスタムプロンプト、分かりやすい生成品質コントロールを、写真作成に特化した1つのワークフローにまとめています。"
     }
   },
   "useCase": {
@@ -403,7 +403,7 @@
       "maxAccess": "Max：最大4K + 任意のFull学習機能を利用可能"
     },
     "offerSummary": "1回払いクレジットで1K画像を作成できます。高解像度と任意のパーソナルAIモデル学習を利用する場合は、ProまたはMaxをお使いください。",
-    "galleryDisclaimer": "表示されている例は、My AI Photo Shootで作成されたものです。",
+    "galleryDisclaimer": "表示されている例は、My AI Photoshootで作成されたものです。",
     "howItWorks": {
       "title": "使い方",
       "step1": {
@@ -442,7 +442,7 @@
       "description": "写真またはパーソナルAIモデルからStudioでAI写真を作成・編集。プロンプトを入力し、Auto Modeで調整して、生成品質を選べます。",
       "shareTitle": "StudioでAI写真を作成・編集",
       "shareDescription": "写真または任意のパーソナルAIモデルから始め、希望する仕上がりを説明すると、Auto Modeがプロンプトを調整します。",
-      "imageAlt": "プリセット、AI Masks、Studioで作成したMy AI Photo Shootの写真サンプル"
+      "imageAlt": "プリセット、AI Masks、Studioで作成したMy AI Photoshootの写真サンプル"
     },
     "breadcrumb": "Studio",
     "eyebrow": "AI写真を自由に作成",

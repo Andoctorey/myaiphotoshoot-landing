@@ -11,7 +11,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'presets' });
-  const title = `${t('title')} | My AI Photo Shoot`;
+  const title = `${t('title')} | My AI Photoshoot`;
   const description = t('description');
 
   return {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: canonicalUrl(locale, '/presets/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(locale),
       alternateLocale: ogAlternateLocales(locales, locale),

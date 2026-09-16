@@ -8,7 +8,7 @@ import { HOME_METADATA_DEFAULTS } from '@/lib/seo';
 export const metadata: Metadata = {
   title: {
     default: HOME_METADATA_DEFAULTS.title,
-    template: "%s | My AI Photo Shoot",
+    template: "%s | My AI Photoshoot",
   },
   description: HOME_METADATA_DEFAULTS.description,
   manifest: "/site.webmanifest",

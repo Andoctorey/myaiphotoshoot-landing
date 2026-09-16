@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: shareTitle,
       description: shareDescription,
       url: canonicalUrl(locale, '/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       images: [
         {

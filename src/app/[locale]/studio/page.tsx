@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const imageAlt = t('imageAlt');
 
   return {
-    title: { absolute: `${title} | My AI Photo Shoot` },
+    title: { absolute: `${title} | My AI Photoshoot` },
     description,
     alternates: buildAlternates(locale, '/studio/', locales),
     robots: {
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: shareTitle,
       description: shareDescription,
       url: canonicalUrl(locale, '/studio/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       images: [
         {

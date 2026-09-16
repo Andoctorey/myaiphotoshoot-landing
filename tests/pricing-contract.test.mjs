@@ -724,7 +724,7 @@ test('localized page and social metadata stays concise, translated, and evergree
     assert.ok([...home.shareTitle].length <= 60, `${locale} home share title is too long`);
     assert.ok([...home.shareDescription].length <= 160, `${locale} home share description is too long`);
     assert.ok(
-      [...`${studioMeta.title} | My AI Photo Shoot`].length <= 60,
+      [...`${studioMeta.title} | My AI Photoshoot`].length <= 60,
       `${locale} rendered Studio meta title is too long`,
     );
     assert.ok([...studioMeta.description].length <= 160, `${locale} Studio meta description is too long`);
@@ -736,7 +736,7 @@ test('localized page and social metadata stays concise, translated, and evergree
     assert.doesNotMatch(studioMeta.shareTitle, commercialShareClaim, `${locale} Studio share title is commercial`);
     assert.doesNotMatch(studioMeta.shareDescription, commercialShareClaim, `${locale} Studio share description is commercial`);
     assert.ok(
-      [...`${useCases.metaTitle} | My AI Photo Shoot`].length <= 60,
+      [...`${useCases.metaTitle} | My AI Photoshoot`].length <= 60,
       `${locale} use-cases meta title is too long`,
     );
     assert.ok(

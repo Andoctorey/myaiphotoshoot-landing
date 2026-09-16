@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { defaultLocale } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 
-const title = 'Image License & Usage Rights - My AI Photo Shoot';
+const title = 'Image License & Usage Rights - My AI Photoshoot';
 const description = 'Learn about licensing and usage rights for AI-generated images created with MyAIPhotoShoot.';
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: canonicalUrl(defaultLocale, '/license/'),
-    siteName: 'My AI Photo Shoot',
+    siteName: 'My AI Photoshoot',
     type: 'website',
     locale: ogLocaleFromAppLocale(defaultLocale),
     alternateLocale: ogAlternateLocales([defaultLocale], defaultLocale),
@@ -92,7 +92,7 @@ export default function LicensePage() {
               </h2>
               <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                 <p className="text-gray-700 dark:text-gray-300">
-                  © 2025 My AI Photo Shoot. Platform and technology rights reserved.<br/>
+                  © 2025 My AI Photoshoot. Platform and technology rights reserved.<br/>
                   Generated images remain the property of their creators.
                 </p>
               </div>

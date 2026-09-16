@@ -8,7 +8,7 @@ import type { UseCase } from '@/types/usecase';
 const USE_CASE_REVALIDATE_SECONDS = 3600;
 const MAX_USE_CASE_TITLE_LENGTH = 65;
 const MAX_USE_CASE_DESCRIPTION_LENGTH = 160;
-const SITE_TITLE_SUFFIX = ' | My AI Photo Shoot';
+const SITE_TITLE_SUFFIX = ' | My AI Photoshoot';
 const STALE_DOLLAR_PRICE_PATTERN_SOURCE = String.raw`(?:\$(?:2\.99|4\.99|5\.99|9\.99|0\.03|0\.09|0\.19|0\.29)(?!\d)|(?:2,99|4,99|5,99|9,99|0,03|0,09|0,19|0,29)\s*\$)`;
 const STALE_DOLLAR_PRICE_PATTERN = new RegExp(STALE_DOLLAR_PRICE_PATTERN_SOURCE, 'i');
 const STALE_PRICE_CLAIM_PATTERN = new RegExp(
@@ -18,7 +18,7 @@ const STALE_PRICE_CLAIM_PATTERN = new RegExp(
 const NO_SUBSCRIPTION_REQUIRED_PATTERN = /(?:\b(?:with\s+)?no subscription required\b|\bsin suscripci[oó]n(?: obligatoria| requerida)?\b|\bkein(?:e|es)? abonnement erforderlich\b|\baucun abonnement (?:n['’]est )?requis\b|\bподписка не требуется\b|无需订阅|サブスクリプション不要|सदस्यता की आवश्यकता नहीं|لا يلزم اشتراك)/giu;
 const SOCIAL_COMMERCIAL_CLAIM_PATTERN = /(?:[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन)/iu;
 const PRICE_BASED_TITLE_SUFFIX_PATTERN = new RegExp(
-  String.raw`\s*(?:[|–—-]\s*)?(?:(?:from|starting(?:\s+at)?|starts?\s+at|only)\s*)?${STALE_DOLLAR_PRICE_PATTERN_SOURCE}(?:\s*(?:each|per\s+(?:photo|image|model|generation)))?(?:\s*[|–—-]\s*My AI Photo Shoot)?\s*$`,
+  String.raw`\s*(?:[|–—-]\s*)?(?:(?:from|starting(?:\s+at)?|starts?\s+at|only)\s*)?${STALE_DOLLAR_PRICE_PATTERN_SOURCE}(?:\s*(?:each|per\s+(?:photo|image|model|generation)))?(?:\s*[|–—-]\s*My AI Photoshoot)?\s*$`,
   'i'
 );
 
@@ -119,7 +119,7 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
   if (!uc) {
     return {
       title: 'AI Photo Use Case',
-      description: 'AI portrait examples and use cases from My AI Photo Shoot.',
+      description: 'AI portrait examples and use cases from My AI Photoshoot.',
       robots: { index: false, follow: false },
     };
   }
@@ -148,14 +148,14 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
     || '/og-image-v2.jpg?v=8';
 
   return {
-    title: { absolute: title || 'Use Case | My AI Photo Shoot' },
+    title: { absolute: title || 'Use Case | My AI Photoshoot' },
     description,
     alternates: buildAlternates(locale, `/use-cases/${slug}/`, locales),
     openGraph: {
       title,
       description: socialDescription,
       url,
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       images: [{ url: imageUrl, alt: uc.title || title }],
       locale: ogLocaleFromAppLocale(locale),
@@ -235,10 +235,10 @@ function alreadyDescribesPlans(value: string): boolean {
 }
 
 function buildUseCaseTitle(baseTitle: string): string {
-  const fallbackTitle = 'Use Case | My AI Photo Shoot';
+  const fallbackTitle = 'Use Case | My AI Photoshoot';
   if (!baseTitle) return fallbackTitle;
 
-  const alreadyBranded = /(?:\||[-–—])\s*My AI Photo Shoot$/i.test(baseTitle);
+  const alreadyBranded = /(?:\||[-–—])\s*My AI Photoshoot$/i.test(baseTitle);
   const brandedCandidate = alreadyBranded
     ? baseTitle
     : `${baseTitle}${SITE_TITLE_SUFFIX}`;

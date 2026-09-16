@@ -1,6 +1,6 @@
-# My AI Photo Shoot
+# My AI Photoshoot
 
-> My AI Photo Shoot is an AI photo creation and editing app for portraits and photo transformations using presets, AI Masks, Studio, and custom prompts.
+> My AI Photoshoot is an AI photo creation and editing app for portraits and photo transformations using presets, AI Masks, Studio, and custom prompts.
 
 ## Pages
 

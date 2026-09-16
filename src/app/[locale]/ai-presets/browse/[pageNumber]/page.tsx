@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const shouldIndex = parsedPage <= pageData.totalPages && pageData.presets.length > 0;
   const t = await getTranslations({ locale, namespace: 'presets' });
   const path = aiPresetsPagePath(parsedPage);
-  const title = `${t('title')} - ${t('paginationPageTitle', { page: parsedPage })} | My AI Photo Shoot`;
+  const title = `${t('title')} - ${t('paginationPageTitle', { page: parsedPage })} | My AI Photoshoot`;
   const description = t('description');
 
   return {
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: canonicalUrl(locale, path),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(locale),
       alternateLocale: ogAlternateLocales(locales, locale),

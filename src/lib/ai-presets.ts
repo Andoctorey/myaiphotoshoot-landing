@@ -8,7 +8,7 @@ import type { AiPreset, AiPresetFaq, AiPresetSeoSection } from '@/types/ai-prese
 const PRESET_REVALIDATE_SECONDS = 3600;
 export const AI_PRESETS_PAGE_SIZE = 12;
 const AI_PRESETS_MAX_PAGE_SIZE = 100;
-export const AI_PRESETS_INDEX_TITLE = 'AI Photo Presets | My AI Photo Shoot';
+export const AI_PRESETS_INDEX_TITLE = 'AI Photo Presets | My AI Photoshoot';
 export const AI_PRESETS_INDEX_DESCRIPTION =
   'Browse quick AI photo presets for fun looks and shareable photo transformations.';
 
@@ -406,13 +406,13 @@ export async function generateAiPresetMetadata(slug: string, locale: string): Pr
   if (!preset) {
     return {
       title: 'AI Photo Preset',
-      description: 'Explore quick AI photo presets from My AI Photo Shoot.',
+      description: 'Explore quick AI photo presets from My AI Photoshoot.',
       robots: { index: false, follow: true },
     };
   }
 
   const description = buildPresetDescription(preset);
-  const title = preset.meta_title?.trim() || `${preset.name} AI Preset | My AI Photo Shoot`;
+  const title = preset.meta_title?.trim() || `${preset.name} AI Preset | My AI Photoshoot`;
   const url = canonicalUrl(locale, `/presets/${slug}/`);
   const imageUrl = preset.featured_graphics || 'https://myaiphotoshoot.com/og-image-v2.jpg?v=8';
   const imageAlt = preset.featured_graphics_alt?.trim() || preset.name;
@@ -436,7 +436,7 @@ export async function generateAiPresetMetadata(slug: string, locale: string): Pr
       title,
       description,
       url,
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       images: [{ url: imageUrl, alt: imageAlt }],
       locale: ogLocaleFromAppLocale(locale),

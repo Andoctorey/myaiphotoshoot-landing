@@ -32,7 +32,7 @@ export default function SoftwareApplicationJsonLd({
 
   const iosApp = {
     '@type': 'MobileApplication',
-    name: 'My AI Photo Shoot',
+    name: 'My AI Photoshoot',
     operatingSystem: 'iOS',
     applicationCategory,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },
@@ -42,7 +42,7 @@ export default function SoftwareApplicationJsonLd({
 
   const androidApp = {
     '@type': 'MobileApplication',
-    name: 'My AI Photo Shoot',
+    name: 'My AI Photoshoot',
     operatingSystem: 'Android',
     applicationCategory,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', ...offerPolicies },

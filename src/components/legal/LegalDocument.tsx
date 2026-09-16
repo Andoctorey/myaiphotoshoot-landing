@@ -12,7 +12,7 @@ function getLegalArticleHtml(): string {
 
   return match[0]
     .replaceAll('http://myaiphotoshoot.com/', 'https://myaiphotoshoot.com/')
-    .replaceAll('My Ai Photo Shoot', 'My AI Photo Shoot');
+    .replaceAll(/My A[Ii] Photo Shoot/g, 'My AI Photoshoot');
 }
 
 export default function LegalDocument() {

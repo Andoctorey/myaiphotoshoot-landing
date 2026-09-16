@@ -1,6 +1,6 @@
-# My AI Photo Shoot Landing Page
+# My AI Photoshoot Landing Page
 
-A modern, SEO-optimized landing page for My AI Photo Shoot - an AI-powered photo transformation app.
+A modern, SEO-optimized landing page for My AI Photoshoot - an AI-powered photo transformation app.
 
 This landing page showcases AI-generated photos with social media sharing capabilities.
 
@@ -12,7 +12,7 @@ This landing page showcases AI-generated photos with social media sharing capabi
 
 ## Download the App
 
-Get My AI Photo Shoot on your mobile device:
+Get My AI Photoshoot on your mobile device:
 
 **App Store:** https://apps.apple.com/app/id6744860178  
 **Google Play:** https://play.google.com/store/apps/details?id=com.myaiphotoshoot

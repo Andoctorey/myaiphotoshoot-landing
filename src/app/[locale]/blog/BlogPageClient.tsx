@@ -60,7 +60,7 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
             url: canonicalUrl(locale, '/blog/'),
             isPartOf: {
               '@type': 'WebSite',
-              name: 'My AI Photo Shoot',
+              name: 'My AI Photoshoot',
               url: 'https://myaiphotoshoot.com'
             },
             hasPart: posts.slice(0, 12).map((p) => ({

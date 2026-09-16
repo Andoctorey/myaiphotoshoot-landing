@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     getTranslations({ locale: defaultLocale, namespace: 'masks' }),
     fetchMasksCatalogStrict(defaultLocale),
   ]);
-  const title = `${t('title')} | My AI Photo Shoot`;
+  const title = `${t('title')} | My AI Photoshoot`;
   const description = t('description');
   const imageUrl = catalog.masks[0]?.featuredGraphics;
 
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url: canonicalUrl(defaultLocale, '/masks/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       images: imageUrl ? [{ url: imageUrl, alt: t('resultAlt', { name: catalog.masks[0].name }) }] : undefined,
       locale: ogLocaleFromAppLocale(defaultLocale),

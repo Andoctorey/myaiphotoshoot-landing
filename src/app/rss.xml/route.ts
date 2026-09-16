@@ -87,7 +87,7 @@ export async function GET() {
     const rss = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
   <channel>
-    <title>My AI Photo Shoot Blog</title>
+    <title>My AI Photoshoot Blog</title>
     <link>${site}</link>
     <description>Latest articles about AI photography and digital art creation.</description>
     <language>en</language>

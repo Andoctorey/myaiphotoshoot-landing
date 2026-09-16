@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? m.supportPage.description as string
     : 'Get help with photos, payments, or your account. We respond within 24-48 hours.';
   const supportTitle = typeof m.supportPage?.title === 'string' ? m.supportPage.title as string : 'Customer Support';
-  const socialTitle = `${supportTitle} | My AI Photo Shoot`;
+  const socialTitle = `${supportTitle} | My AI Photoshoot`;
   return {
     title: supportTitle,
     description,

@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: AI_PRESETS_INDEX_TITLE,
       description: AI_PRESETS_INDEX_DESCRIPTION,
       url: canonicalUrl(defaultLocale, '/presets/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(defaultLocale),
       alternateLocale: ogAlternateLocales(locales, defaultLocale),

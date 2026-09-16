@@ -71,7 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: shareTitle,
       description: shareDescription,
       url: 'https://myaiphotoshoot.com/',
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       images: [
         {
           url: '/og-image-v2.jpg?v=8',

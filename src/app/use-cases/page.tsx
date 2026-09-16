@@ -32,7 +32,7 @@ function getUseCasesLabels(messages: unknown) {
 export async function generateMetadata(): Promise<Metadata> {
   const messages = await loadMessages(defaultLocale);
   const { metaDescription: description, metaTitle: titleBase } = getUseCasesLabels(messages);
-  const socialTitle = `${titleBase} | My AI Photo Shoot`;
+  const socialTitle = `${titleBase} | My AI Photoshoot`;
 
   return {
     title: titleBase,
@@ -53,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: socialTitle,
       description,
       url: canonicalUrl(defaultLocale, '/use-cases/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(defaultLocale),
       alternateLocale: ogAlternateLocales(locales, defaultLocale),

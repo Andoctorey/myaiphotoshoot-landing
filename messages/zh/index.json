@@ -131,11 +131,11 @@
   },
   "appShowcase": {
     "label": "应用内体验",
-    "exploreStyles": "在 My AI Photo Shoot 中为肖像试用 AI Masks",
-    "realisticPhotos": "在 My AI Photo Shoot 中使用自定义提示词编辑现有照片",
+    "exploreStyles": "在 My AI Photoshoot 中为肖像试用 AI Masks",
+    "realisticPhotos": "在 My AI Photoshoot 中使用自定义提示词编辑现有照片",
     "photosOfYou": "在 Studio 中使用参考照片并描述所需更改",
-    "photoIdeas": "在 My AI Photo Shoot 中浏览现成预设",
-    "appearanceOptions": "在 My AI Photo Shoot 中改变面部、发型、身材、风格或皮肤",
+    "photoIdeas": "在 My AI Photoshoot 中浏览现成预设",
+    "appearanceOptions": "在 My AI Photoshoot 中改变面部、发型、身材、风格或皮肤",
     "noSubscription": "使用一次性积分创作，或通过 Pro 和 Max 解锁更多功能"
   },
   "homeUseCases": {
@@ -170,7 +170,7 @@
     },
     "multiplatform": {
       "title": "随时随地创作",
-      "description": "在网页、iOS 或 Android 上打开 My AI Photo Shoot。"
+      "description": "在网页、iOS 或 Android 上打开 My AI Photoshoot。"
     }
   },
   "gallery": {
@@ -212,7 +212,7 @@
       "home": "首页"
     },
     "author": {
-      "bio": "My AI Photo Shoot 帮助创作者、企业和个人把自拍转化为适合日常创作与专业用途的真实感 AI 肖像和图像。"
+      "bio": "My AI Photoshoot 帮助创作者、企业和个人把自拍转化为适合日常创作与专业用途的真实感 AI 肖像和图像。"
     },
     "relatedPosts": {
       "title": "相关文章",
@@ -320,21 +320,21 @@
     }
   },
   "footer": {
-    "title": "My AI Photo Shoot",
+    "title": "My AI Photoshoot",
     "description": "使用预设、AI Masks、Studio 和自定义提示词，创建与变换 AI 照片。",
     "links": "快捷链接",
     "legal": "法律条款",
     "imageLicense": "图片许可",
     "twitter": "Twitter (X)",
     "support": "支持",
-    "copyright": "© 2025 My AI Photo Shoot. 版权所有。",
+    "copyright": "© 2025 My AI Photoshoot. 版权所有。",
     "opensInNewTab": "在新标签页中打开",
     "studio": "Studio"
   },
   "supportPage": {
     "deletion": {
       "title": "申请删除账号",
-      "description": "如需删除 My AI Photo Shoot 账号及相关数据，请在下方填写与账号关联的邮箱，并在留言中说明要删除账号和数据。无需打开应用。我们会通过邮件核实身份，并在删除完成后通知您。",
+      "description": "如需删除 My AI Photoshoot 账号及相关数据，请在下方填写与账号关联的邮箱，并在留言中说明要删除账号和数据。无需打开应用。我们会通过邮件核实身份，并在删除完成后通知您。",
       "data": "我们会删除您的账号信息、上传和生成的照片以及训练过的 AI 模型。为处理账单争议、防止欺诈以及履行税务和会计义务，我们可能保留购买记录。保留期限取决于适用的法律义务。",
       "billing": "即使有有效订阅，您也可以现在申请删除。删除账号不会取消订阅扣费。请在 Apple 账户或 Google Play 中取消相应订阅；如果是网站订阅，请在下方留言说明，以便我们协助取消。"
     },
@@ -383,12 +383,12 @@
       "answer": "你可以选择将生成照片设为公开或私密。照片会保留在账户中直到你删除，也可以永久删除单张图片或整个图库。我们不会出售你的个人数据。"
     },
     "platforms": {
-      "question": "可以在哪里使用 My AI Photo Shoot？",
+      "question": "可以在哪里使用 My AI Photoshoot？",
       "answer": "你可以通过网页浏览器或 iOS、Android 应用使用。"
     },
     "whyNotChatGPT": {
       "question": "它与通用 AI 图片工具有什么不同？",
-      "answer": "My AI Photo Shoot 将引导式预设、AI Masks、Studio、自定义提示词和简单的生成质量控制整合到一个专注于照片创作的工作流中。"
+      "answer": "My AI Photoshoot 将引导式预设、AI Masks、Studio、自定义提示词和简单的生成质量控制整合到一个专注于照片创作的工作流中。"
     }
   },
   "useCase": {
@@ -403,7 +403,7 @@
       "maxAccess": "Max：最高 4K + 可选 Full 训练权限"
     },
     "offerSummary": "使用一次性积分创建 1K 图片，或使用 Pro 或 Max 获得更高分辨率及可选个人 AI 模型训练权限。",
-    "galleryDisclaimer": "展示的示例均使用 My AI Photo Shoot 创建。",
+    "galleryDisclaimer": "展示的示例均使用 My AI Photoshoot 创建。",
     "howItWorks": {
       "title": "使用步骤",
       "step1": {
@@ -442,7 +442,7 @@
       "description": "在 Studio 中使用照片或个人 AI 模型创建和编辑 AI 照片。写下自定义提示词，让 Auto Mode 帮你优化，再选择生成质量。",
       "shareTitle": "使用 Studio 创建和编辑 AI 照片",
       "shareDescription": "从照片或可选的个人 AI 模型开始，描述想要的效果，Auto Mode 会帮你优化提示词。",
-      "imageAlt": "使用预设、AI Masks 和 Studio 创建的 My AI Photo Shoot 照片示例"
+      "imageAlt": "使用预设、AI Masks 和 Studio 创建的 My AI Photoshoot 照片示例"
     },
     "breadcrumb": "Studio",
     "eyebrow": "自定义 AI 照片创作",

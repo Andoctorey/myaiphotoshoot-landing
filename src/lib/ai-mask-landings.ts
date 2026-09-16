@@ -119,7 +119,7 @@ export async function generateMaskCategoryLandingMetadata(
   if (!landing) {
     return {
       title: 'AI Mask Category',
-      description: 'Explore AI Masks from My AI Photo Shoot.',
+      description: 'Explore AI Masks from My AI Photoshoot.',
       robots: { index: false, follow: false },
     };
   }
@@ -163,7 +163,7 @@ export async function generateMaskCategoryLandingMetadata(
       title: landing.title,
       description,
       url,
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       images: [{ url: imageUrl, alt: firstMask.name || category.name || landing.title }],
       locale: ogLocaleFromAppLocale(locale),

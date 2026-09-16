@@ -184,14 +184,14 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
             <a
               href={isHomePage ? "#" : homePath}
               className="flex items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
-              aria-label={`My AI Photo Shoot — ${t('home')}`}
+              aria-label={`My AI Photoshoot — ${t('home')}`}
             >
               <div className="h-11 w-11 relative">
                 <picture>
                   <source srcSet="/images/icon_192.webp" type="image/webp" />
                   <img
                     src="/images/icon_192.png"
-                    alt="My AI Photo Shoot logo"
+                    alt="My AI Photoshoot logo"
                     width={192}
                     height={192}
                     className="h-full w-auto"
@@ -199,7 +199,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 </picture>
               </div>
               <span className="ltr:ml-2 rtl:mr-2 text-lg font-medium text-gray-900 dark:text-white hidden lg:block whitespace-nowrap">
-                My AI Photo Shoot
+                My AI Photoshoot
               </span>
             </a>
           </div>

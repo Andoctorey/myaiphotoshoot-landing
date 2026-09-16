@@ -5,8 +5,8 @@ import LegalDocument from '@/components/legal/LegalDocument';
 
 type Props = { params: Promise<{ locale: string }> };
 
-const title = 'Legal - Terms of Service and Privacy Policy - My AI Photo Shoot';
-const description = 'Terms of Service and Privacy Policy for My AI Photo Shoot';
+const title = 'Legal - Terms of Service and Privacy Policy - My AI Photoshoot';
+const description = 'Terms of Service and Privacy Policy for My AI Photoshoot';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: canonicalUrl(defaultLocale, '/legal/'),
-      siteName: 'My AI Photo Shoot',
+      siteName: 'My AI Photoshoot',
       type: 'website',
       locale: ogLocaleFromAppLocale(locale),
     },

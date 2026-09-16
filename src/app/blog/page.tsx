@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ? m.blog.title as string
       : 'AI Photo Blog';
     const title = blogTitle;
-    const socialTitle = `${blogTitle} | My AI Photo Shoot`;
+    const socialTitle = `${blogTitle} | My AI Photoshoot`;
     const description = typeof m.blog?.description === 'string'
       ? m.blog.description as string
       : 'Practical tips, tutorials, and ideas for better AI portraits, prompts, and digital image workflows.';
@@ -66,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title: socialTitle,
         description,
         url,
-        siteName: 'My AI Photo Shoot',
+        siteName: 'My AI Photoshoot',
         type: 'website',
         locale: ogLocaleFromAppLocale(defaultLocale),
         alternateLocale: ogAlternateLocales(locales, defaultLocale),

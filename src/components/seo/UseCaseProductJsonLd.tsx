@@ -18,7 +18,7 @@ export default function UseCaseProductJsonLd({
   name,
   description,
   imageUrls,
-  brandName = 'My AI Photo Shoot',
+  brandName = 'My AI Photoshoot',
 }: Props) {
   const t = useTranslations('useCase');
   const images = Array.isArray(imageUrls)

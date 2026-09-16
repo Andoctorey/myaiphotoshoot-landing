@@ -639,7 +639,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
                 <div className="flex items-center gap-2">
                   <UserIcon className="w-4 h-4" />
-                  <span>My AI Photo Shoot</span>
+                  <span>My AI Photoshoot</span>
                 </div>
               </div>
 

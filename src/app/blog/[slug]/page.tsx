@@ -89,7 +89,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
 
     const title = post.title;
-    const socialTitle = `${post.title} | My AI Photo Shoot`;
+    const socialTitle = `${post.title} | My AI Photoshoot`;
     const description = buildMetaDescription(post.meta_description, post.title);
     const articleTags = articleTagsFromPhotoTopics(post.photo_topics);
     const slugMap = getBlogSlugMap(post, locales);
@@ -121,9 +121,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     return {
       title,
       description,
-      authors: [{ name: 'My AI Photo Shoot', url: 'https://myaiphotoshoot.com' }],
-      creator: 'My AI Photo Shoot',
-      publisher: 'My AI Photo Shoot',
+      authors: [{ name: 'My AI Photoshoot', url: 'https://myaiphotoshoot.com' }],
+      creator: 'My AI Photoshoot',
+      publisher: 'My AI Photoshoot',
       category: 'AI Photography',
       robots: {
         index: true,
@@ -144,7 +144,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         title: socialTitle,
         description,
         url,
-        siteName: 'My AI Photo Shoot',
+        siteName: 'My AI Photoshoot',
         images: [
           {
             url: imageUrl,
@@ -159,7 +159,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         modifiedTime: post.updated_at,
         section: 'AI Photography',
         tags: articleTags,
-        authors: ['My AI Photo Shoot'],
+        authors: ['My AI Photoshoot'],
       },
       twitter: {
         card: 'summary_large_image',
@@ -168,7 +168,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         images: [{ url: imageUrl, alt: post.title }],
       },
       other: {
-        'article:author': 'My AI Photo Shoot',
+        'article:author': 'My AI Photoshoot',
         'article:section': 'AI Photography',
         'og:image:alt': post.title,
         'twitter:image:alt': post.title,

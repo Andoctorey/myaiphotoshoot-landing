@@ -32,12 +32,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
     default: HOME_METADATA_DEFAULTS.title,
-    template: "%s | My AI Photo Shoot",
+    template: "%s | My AI Photoshoot",
   },
   description: HOME_METADATA_DEFAULTS.description,
-  authors: [{ name: "My AI Photo Shoot" }],
-  creator: "My AI Photo Shoot",
-  publisher: "My AI Photo Shoot",
+  authors: [{ name: "My AI Photoshoot" }],
+  creator: "My AI Photoshoot",
+  publisher: "My AI Photoshoot",
   manifest: "/site.webmanifest",
   formatDetection: {
     email: false,
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: HOME_METADATA_DEFAULTS.shareTitle,
     description: HOME_METADATA_DEFAULTS.shareDescription,
     url: BASE_URL,
-    siteName: "My AI Photo Shoot",
+    siteName: "My AI Photoshoot",
     images: [
       {
         url: "/og-image-v2.jpg?v=8",
@@ -100,8 +100,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <TikTokPixel pixelId={TIKTOK_PIXEL_ID} />
-        <meta name="application-name" content="My AI Photo Shoot" />
-        <meta name="apple-mobile-web-app-title" content="My AI Photo Shoot" />
+        <meta name="application-name" content="My AI Photoshoot" />
+        <meta name="apple-mobile-web-app-title" content="My AI Photoshoot" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         {/* iOS Smart App Banner */}
@@ -118,10 +118,10 @@ export default function RootLayout({
         <meta property="al:web:url" content="https://myaiphotoshoot.com/" />
         <meta property="al:web:should_fallback" content="true" />
         <meta property="al:android:package" content="com.myaiphotoshoot" />
-        <meta property="al:android:app_name" content="My AI Photo Shoot" />
+        <meta property="al:android:app_name" content="My AI Photoshoot" />
         <meta property="al:ios:app_store_id" content="6744860178" />
-        <meta property="al:ios:app_name" content="My AI Photo Shoot" />
-        <link rel="alternate" type="application/rss+xml" title="My AI Photo Shoot Blog" href="/rss.xml" />
+        <meta property="al:ios:app_name" content="My AI Photoshoot" />
+        <link rel="alternate" type="application/rss+xml" title="My AI Photoshoot Blog" href="/rss.xml" />
         {supabaseFunctionsOrigin && (
           <>
             <link rel="preconnect" href={supabaseFunctionsOrigin} crossOrigin="anonymous" />
@@ -135,7 +135,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               '@id': 'https://myaiphotoshoot.com/#organization',
-              name: 'My AI Photo Shoot',
+              name: 'My AI Photoshoot',
               url: 'https://myaiphotoshoot.com',
               logo: {
                 '@type': 'ImageObject',
@@ -168,11 +168,11 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               '@id': 'https://myaiphotoshoot.com/#website',
-              name: 'My AI Photo Shoot',
+              name: 'My AI Photoshoot',
               url: 'https://myaiphotoshoot.com',
               publisher: {
                 '@type': 'Organization',
-                name: 'My AI Photo Shoot',
+                name: 'My AI Photoshoot',
                 url: 'https://myaiphotoshoot.com',
                 '@id': 'https://myaiphotoshoot.com/#organization'
               }
