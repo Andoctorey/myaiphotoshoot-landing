@@ -622,6 +622,24 @@ test('blog static generation uses compact revision-aware Cloudflare build cachin
   assert.equal(blogStaticParams.resolveBlogRoute(inventory, 'ja', 'missing', ['en', 'ja']), null);
 });
 
+test('preset static generation uses validated revision-aware build snapshots', async () => {
+  const [presetSource, cacheSource, cacheClearTest] = await Promise.all([
+    readProjectFile('src/lib/ai-presets.ts'),
+    readProjectFile('src/lib/ai-preset-build-cache.ts'),
+    readProjectFile('scripts/clear-next-fetch-cache.test.js'),
+  ]);
+
+  assert.match(cacheSource, /\.next', 'cache', 'ai-preset-content'/);
+  assert.match(cacheSource, /snapshotRevision\(value\.presets\) === value\.revision/);
+  assert.match(cacheSource, /age >= 0 && age <= CACHE_MAX_AGE_MS/);
+  assert.match(cacheSource, /rename\(temporaryPath, filePath\)/);
+  assert.match(presetSource, /for \(const locale of snapshotLocales\)/);
+  assert.match(presetSource, /AI preset route inventory for locale/);
+  assert.match(presetSource, /storeAiPresetBuildSnapshot\(locale, presets\)/);
+  assert.match(presetSource, /readAiPresetBuildSnapshot\(locale\)/);
+  assert.match(cacheClearTest, /ai-preset-content/);
+});
+
 test('navigation, homepage links, footer, sitemap, and llms.txt point directly to Studio', async () => {
   const [navigation, features, footer, pricing, sitemap, llmsText] = await Promise.all([
     readProjectFile('src/components/layout/Navigation.tsx'),
@@ -705,6 +723,15 @@ test('preset detail pages normally receive content and pricing from one RPC and 
   const calls = [];
   const aiPresets = await loadTypeScriptModule('src/lib/ai-presets.ts', {
     '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'de'] },
+    '@/lib/ai-preset-build-cache': {
+      AI_PRESET_REVALIDATE_SECONDS: 3600,
+      readAiPresetBuildSnapshot: async () => null,
+      storeAiPresetBuildSnapshot: async () => 'written',
+    },
+    '@/lib/ai-presets-shared': {
+      AI_PRESETS_PAGE_SIZE: 12,
+      aiPresetsPagePath: (page) => page <= 1 ? '/presets/' : `/ai-presets/browse/${page}/`,
+    },
     '@/lib/pricing': { CREDIT_USD_REFERENCE_VALUE: 0.03 },
     '@/lib/public-supabase': {
       postPublicSupabaseRpc: async (...args) => {

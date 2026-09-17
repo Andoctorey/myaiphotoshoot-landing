@@ -8,7 +8,7 @@ import {
   AI_PRESETS_INDEX_DESCRIPTION,
   AI_PRESETS_INDEX_TITLE,
   aiPresetsPagePath,
-  fetchAiPresetSlugs,
+  fetchAiPresetCount,
   fetchAiPresetsPageStrict,
 } from '@/lib/ai-presets';
 import { loadMessages } from '@/lib/i18n-messages';
@@ -68,8 +68,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const slugs = await fetchAiPresetSlugs();
-  const totalPages = Math.ceil(slugs.length / AI_PRESETS_PAGE_SIZE);
+  const totalPages = Math.ceil(await fetchAiPresetCount() / AI_PRESETS_PAGE_SIZE);
   return Array.from({ length: totalPages - 1 }, (_, index) => ({
     pageNumber: String(index + 2),
   }));

@@ -15,12 +15,15 @@ test('clears only the restored Next.js fetch cache', (t) => {
   const fetchCachePath = path.join(projectRoot, '.next', 'cache', 'fetch-cache');
   const webpackCachePath = path.join(projectRoot, '.next', 'cache', 'webpack');
   const blogContentCachePath = path.join(projectRoot, '.next', 'cache', 'blog-content');
+  const aiPresetContentCachePath = path.join(projectRoot, '.next', 'cache', 'ai-preset-content');
   fs.mkdirSync(fetchCachePath, { recursive: true });
   fs.mkdirSync(webpackCachePath, { recursive: true });
   fs.mkdirSync(blogContentCachePath, { recursive: true });
+  fs.mkdirSync(aiPresetContentCachePath, { recursive: true });
   fs.writeFileSync(path.join(fetchCachePath, 'stale-response.json'), '{}');
   fs.writeFileSync(path.join(webpackCachePath, 'compiler.pack'), 'keep');
   fs.writeFileSync(path.join(blogContentCachePath, 'article.json'), 'keep');
+  fs.writeFileSync(path.join(aiPresetContentCachePath, 'presets.json'), 'keep');
 
   const result = clearNextFetchCache(projectRoot);
 
@@ -28,6 +31,7 @@ test('clears only the restored Next.js fetch cache', (t) => {
   assert.equal(fs.existsSync(fetchCachePath), false);
   assert.equal(fs.existsSync(path.join(webpackCachePath, 'compiler.pack')), true);
   assert.equal(fs.existsSync(path.join(blogContentCachePath, 'article.json')), true);
+  assert.equal(fs.existsSync(path.join(aiPresetContentCachePath, 'presets.json')), true);
 });
 
 test('succeeds when the fetch cache was not restored', (t) => {

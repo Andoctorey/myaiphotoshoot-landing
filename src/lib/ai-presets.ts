@@ -1,12 +1,21 @@
 import type { Metadata } from 'next';
 import { defaultLocale, locales } from '@/i18n/request';
+import {
+  AI_PRESET_REVALIDATE_SECONDS,
+  readAiPresetBuildSnapshot,
+  storeAiPresetBuildSnapshot,
+} from '@/lib/ai-preset-build-cache';
+import {
+  AI_PRESETS_PAGE_SIZE,
+  type AiPresetsPage,
+} from '@/lib/ai-presets-shared';
 import { CREDIT_USD_REFERENCE_VALUE } from '@/lib/pricing';
 import { postPublicSupabaseRpc } from '@/lib/public-supabase';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import type { AiPreset, AiPresetFaq, AiPresetSeoSection } from '@/types/ai-preset';
 
-const PRESET_REVALIDATE_SECONDS = 3600;
-export const AI_PRESETS_PAGE_SIZE = 12;
+export { AI_PRESETS_PAGE_SIZE, aiPresetsPagePath } from '@/lib/ai-presets-shared';
+export type { AiPresetsPage } from '@/lib/ai-presets-shared';
 const AI_PRESETS_MAX_PAGE_SIZE = 100;
 export const AI_PRESETS_INDEX_TITLE = 'AI Photo Presets | My AI Photoshoot';
 export const AI_PRESETS_INDEX_DESCRIPTION =
@@ -14,16 +23,6 @@ export const AI_PRESETS_INDEX_DESCRIPTION =
 
 export function buildPresetAppUrl(slug: string): string {
   return `https://app.myaiphotoshoot.com/#preset/${encodeURIComponent(slug)}`;
-}
-
-export interface AiPresetsPage {
-  presets: AiPreset[];
-  totalCount: number;
-  page: number;
-  pageSize: number;
-  totalPages: number;
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
 }
 
 function emptyAiPresetsPage(page: number, pageSize: number): AiPresetsPage {
@@ -50,28 +49,53 @@ function normalizePositiveInteger(value: number, fallback: number): number {
   return Number.isInteger(value) && value > 0 ? value : fallback;
 }
 
-export function aiPresetsPagePath(page: number): string {
-  return page <= 1 ? '/presets/' : `/ai-presets/browse/${page}/`;
+async function readAiPresetsPageFromBuildSnapshot(
+  locale: string,
+  page: number,
+  pageSize: number,
+): Promise<AiPresetsPage | null> {
+  if (process.env.NODE_ENV !== 'production') return null;
+
+  const presets = await readAiPresetBuildSnapshot(locale);
+  if (!presets) return null;
+
+  const normalizedPage = normalizePositiveInteger(page, 1);
+  const normalizedPageSize = Math.min(
+    normalizePositiveInteger(pageSize, AI_PRESETS_PAGE_SIZE),
+    AI_PRESETS_MAX_PAGE_SIZE,
+  );
+  const totalCount = presets.length;
+  const totalPages = Math.max(1, Math.ceil(totalCount / normalizedPageSize));
+  const offset = (normalizedPage - 1) * normalizedPageSize;
+  return {
+    presets: presets.slice(offset, offset + normalizedPageSize),
+    totalCount,
+    page: normalizedPage,
+    pageSize: normalizedPageSize,
+    totalPages,
+    hasPreviousPage: normalizedPage > 1,
+    hasNextPage: normalizedPage < totalPages,
+  };
 }
 
 async function postAiPresetsRpc(body: Record<string, unknown>): Promise<Response> {
   // public.list_ai_presets is defined in myaiphotoshoot-functions migrations; update
   // src/types/ai-preset.ts and admin/src/lib/presetService.ts when its output changes.
-  return postPublicSupabaseRpc('list_ai_presets', body, PRESET_REVALIDATE_SECONDS);
+  return postPublicSupabaseRpc('list_ai_presets', body, AI_PRESET_REVALIDATE_SECONDS);
 }
 
 async function postAiPresetLookupRpc(slug: string, locale: string): Promise<Response> {
   return postPublicSupabaseRpc('get_ai_preset_page', {
     p_slug: slug,
     p_locale: locale,
-  }, PRESET_REVALIDATE_SECONDS);
+  }, AI_PRESET_REVALIDATE_SECONDS);
 }
 
 async function postAiPresetPriceLookupRpc(slug: string, locale: string): Promise<Response> {
   return postPublicSupabaseRpc('get_ai_preset', {
     p_identifier: slug,
     p_locale: locale,
-  }, PRESET_REVALIDATE_SECONDS);
+  }, AI_PRESET_REVALIDATE_SECONDS);
 }
 
 async function fetchAiPresetCreditCost(
@@ -213,6 +237,8 @@ export async function fetchAiPresetsPage(
   page: number = 1,
   pageSize: number = AI_PRESETS_PAGE_SIZE,
 ): Promise<AiPresetsPage> {
+  const cached = await readAiPresetsPageFromBuildSnapshot(locale, page, pageSize);
+  if (cached) return cached;
   return fetchAiPresetsPageInternal(locale, page, pageSize, false);
 }
 
@@ -221,6 +247,8 @@ export async function fetchAiPresetsPageStrict(
   page: number = 1,
   pageSize: number = AI_PRESETS_PAGE_SIZE,
 ): Promise<AiPresetsPage> {
+  const cached = await readAiPresetsPageFromBuildSnapshot(locale, page, pageSize);
+  if (cached) return cached;
   return fetchAiPresetsPageInternal(locale, page, pageSize, true);
 }
 
@@ -252,10 +280,18 @@ async function fetchAiPresetsInternal(locale: string, strict: boolean): Promise<
 }
 
 export async function fetchAiPresets(locale: string = defaultLocale): Promise<AiPreset[]> {
+  if (process.env.NODE_ENV === 'production') {
+    const cached = await readAiPresetBuildSnapshot(locale);
+    if (cached) return cached;
+  }
   return fetchAiPresetsInternal(locale, false);
 }
 
 export async function fetchAiPresetsStrict(locale: string = defaultLocale): Promise<AiPreset[]> {
+  if (process.env.NODE_ENV === 'production') {
+    const cached = await readAiPresetBuildSnapshot(locale);
+    if (cached) return cached;
+  }
   return fetchAiPresetsInternal(locale, true);
 }
 
@@ -333,7 +369,64 @@ export function normalizeAiPreset(preset: AiPreset): AiPreset {
   };
 }
 
+const pendingBuildSnapshots = new Map<string, Promise<Map<string, AiPreset[]>>>();
+
+async function prepareAiPresetBuildSnapshots(
+  requestedLocales: readonly string[],
+): Promise<Map<string, AiPreset[]>> {
+  const snapshotLocales = Array.from(new Set(requestedLocales));
+  const requestKey = snapshotLocales.slice().sort().join(',');
+  const pending = pendingBuildSnapshots.get(requestKey);
+  if (pending) return pending;
+
+  const request = (async () => {
+    const entries: Array<readonly [string, AiPreset[]]> = [];
+    for (const locale of snapshotLocales) {
+      entries.push([locale, await fetchAiPresetsInternal(locale, true)] as const);
+    }
+    const snapshots = new Map(entries);
+    const defaultPresets = snapshots.get(defaultLocale);
+    if (!defaultPresets) {
+      throw new Error(`AI preset build snapshot omitted the default locale "${defaultLocale}".`);
+    }
+
+    const defaultSlugs = new Set(defaultPresets.map((preset) => preset.slug));
+    for (const [locale, presets] of entries) {
+      const localeSlugs = new Set(presets.map((preset) => preset.slug));
+      if (
+        localeSlugs.size !== defaultSlugs.size
+        || Array.from(defaultSlugs).some((slug) => !localeSlugs.has(slug))
+      ) {
+        throw new Error(`AI preset route inventory for locale "${locale}" does not match English.`);
+      }
+    }
+
+    const cacheResults = await Promise.all(entries.map(([locale, presets]) => (
+      storeAiPresetBuildSnapshot(locale, presets)
+    )));
+    const reusedCount = cacheResults.filter((result) => result === 'reused').length;
+    console.log(
+      `Prepared AI preset build snapshots for ${entries.length} locales `
+        + `(${reusedCount} reused, ${entries.length - reusedCount} refreshed).`,
+    );
+    return snapshots;
+  })();
+
+  pendingBuildSnapshots.set(requestKey, request);
+  void request.catch(() => {
+    pendingBuildSnapshots.delete(requestKey);
+  });
+  return request;
+}
+
 export async function fetchAiPreset(slug: string, locale: string): Promise<AiPreset | undefined> {
+  if (process.env.NODE_ENV === 'production') {
+    const snapshot = await readAiPresetBuildSnapshot(locale);
+    if (snapshot) {
+      return snapshot.find((preset) => preset.slug === slug);
+    }
+  }
+
   try {
     const res = await postAiPresetLookupRpc(slug, locale);
     if (!res.ok) {
@@ -372,8 +465,16 @@ export async function fetchAiPreset(slug: string, locale: string): Promise<AiPre
   }
 }
 
-export async function fetchAiPresetSlugs(): Promise<string[]> {
-  const presets = await fetchAiPresetsStrict(defaultLocale);
+export async function fetchAiPresetCount(): Promise<number> {
+  return (await fetchAiPresetsPageStrict(defaultLocale, 1, 1)).totalCount;
+}
+
+export async function fetchAiPresetSlugs(
+  snapshotLocales: readonly string[] = locales,
+): Promise<string[]> {
+  const presets = process.env.NODE_ENV === 'production'
+    ? (await prepareAiPresetBuildSnapshots(snapshotLocales)).get(defaultLocale) ?? []
+    : await fetchAiPresetsStrict(defaultLocale);
   const slugs = presets.map((preset) => preset.slug.trim());
   const uniqueSlugs = Array.from(new Set(slugs));
   if (uniqueSlugs.length !== presets.length) {

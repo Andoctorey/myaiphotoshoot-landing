@@ -6,7 +6,7 @@ import { locales } from '@/i18n/request';
 import {
   AI_PRESETS_PAGE_SIZE,
   aiPresetsPagePath,
-  fetchAiPresetSlugs,
+  fetchAiPresetCount,
   fetchAiPresetsPageStrict,
 } from '@/lib/ai-presets';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
@@ -68,8 +68,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const slugs = await fetchAiPresetSlugs();
-  const totalPages = Math.ceil(slugs.length / AI_PRESETS_PAGE_SIZE);
+  const totalPages = Math.ceil(await fetchAiPresetCount() / AI_PRESETS_PAGE_SIZE);
   const pageNumbers = Array.from(
     { length: totalPages - 1 },
     (_, index) => String(index + 2),
