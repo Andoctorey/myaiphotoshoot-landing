@@ -1,5 +1,74 @@
 /en / 308
 /en/ / 308
+
+# Search Console blog 404s with verified canonical replacements
+# Renamed final-girl article
+/ja/blog/fainaru-garu-horaa-shouzou /ja/blog/fainaru-garu-no-horaa-shouzouga/ 308
+/ja/blog/fainaru-garu-horaa-shouzou/ /ja/blog/fainaru-garu-no-horaa-shouzouga/ 308
+/fr/blog/portraits-de-dernieres-survivantes-de-films-d-horreur /fr/blog/portraits-de-dernieres-survivantes-de-l-horreur/ 308
+/fr/blog/portraits-de-dernieres-survivantes-de-films-d-horreur/ /fr/blog/portraits-de-dernieres-survivantes-de-l-horreur/ 308
+/de/blog/horrorportraets-der-letzten-ueberlebenden /de/blog/horror-portraets-der-letzten-maedchen/ 308
+/de/blog/horrorportraets-der-letzten-ueberlebenden/ /de/blog/horror-portraets-der-letzten-maedchen/ 308
+
+# Renamed boudoir article
+/ar/blog/afkar-budwar /ar/blog/afkar-taswir-budwar/ 308
+/ar/blog/afkar-budwar/ /ar/blog/afkar-taswir-budwar/ 308
+/de/blog/boudoir-ideen /de/blog/boudoir-foto-ideen/ 308
+/de/blog/boudoir-ideen/ /de/blog/boudoir-foto-ideen/ 308
+/ar/blog/boudoir-ideas /ar/blog/afkar-taswir-budwar/ 308
+/ar/blog/boudoir-ideas/ /ar/blog/afkar-taswir-budwar/ 308
+/ru/blog/idei-buduarnoi-semki /ru/blog/idei-dlya-buduarnoy-fotosessii/ 308
+/ru/blog/idei-buduarnoi-semki/ /ru/blog/idei-dlya-buduarnoy-fotosessii/ 308
+/es/blog/ideas-de-boudoir /es/blog/ideas-para-fotos-boudoir/ 308
+/es/blog/ideas-de-boudoir/ /es/blog/ideas-para-fotos-boudoir/ 308
+/hi/blog/budoir-aidiyaz /hi/blog/antarang-tasveeron-ke-vichar/ 308
+/hi/blog/budoir-aidiyaz/ /hi/blog/antarang-tasveeron-ke-vichar/ 308
+/ja/blog/budoa-aidia /ja/blog/budowaru-shashin-aidea/ 308
+/ja/blog/budoa-aidia/ /ja/blog/budowaru-shashin-aidea/ 308
+/blog/boudoir-ideas /blog/boudoir-photo-ideas/ 308
+/blog/boudoir-ideas/ /blog/boudoir-photo-ideas/ 308
+/de/blog/boudoir-ideas /de/blog/boudoir-foto-ideen/ 308
+/de/blog/boudoir-ideas/ /de/blog/boudoir-foto-ideen/ 308
+/zh/blog/sifang-xiezhen-linggan /zh/blog/si-fang-zhao-chuang-yi/ 308
+/zh/blog/sifang-xiezhen-linggan/ /zh/blog/si-fang-zhao-chuang-yi/ 308
+/ru/blog/boudoir-ideas /ru/blog/idei-dlya-buduarnoy-fotosessii/ 308
+/ru/blog/boudoir-ideas/ /ru/blog/idei-dlya-buduarnoy-fotosessii/ 308
+/hi/blog/boudoir-ideas /hi/blog/antarang-tasveeron-ke-vichar/ 308
+/hi/blog/boudoir-ideas/ /hi/blog/antarang-tasveeron-ke-vichar/ 308
+/es/blog/boudoir-ideas /es/blog/ideas-para-fotos-boudoir/ 308
+/es/blog/boudoir-ideas/ /es/blog/ideas-para-fotos-boudoir/ 308
+/ja/blog/boudoir-ideas /ja/blog/budowaru-shashin-aidea/ 308
+/ja/blog/boudoir-ideas/ /ja/blog/budowaru-shashin-aidea/ 308
+/zh/blog/boudoir-ideas /zh/blog/si-fang-zhao-chuang-yi/ 308
+/zh/blog/boudoir-ideas/ /zh/blog/si-fang-zhao-chuang-yi/ 308
+/fr/blog/boudoir-ideas /fr/blog/idees-photo-boudoir/ 308
+/fr/blog/boudoir-ideas/ /fr/blog/idees-photo-boudoir/ 308
+
+# Localized slugs previously emitted under the English blog root
+/blog/jiaoao-yue-xiaoxiang-chuangyi /zh/blog/jiaoao-yue-xiaoxiang-chuangyi/ 308
+/blog/jiaoao-yue-xiaoxiang-chuangyi/ /zh/blog/jiaoao-yue-xiaoxiang-chuangyi/ 308
+/blog/retratos-de-vacaciones-en-la-riviera /es/blog/retratos-de-vacaciones-en-la-riviera/ 308
+/blog/retratos-de-vacaciones-en-la-riviera/ /es/blog/retratos-de-vacaciones-en-la-riviera/ 308
+/blog/%D0%BF%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%D1%8B-%D0%B1%D0%BE%D0%BB%D0%B5%D0%BB%D1%8C%D1%89%D0%B8%D0%BA%D0%BE%D0%B2-%D1%87%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-%D0%BC%D0%B8%D1%80%D0%B0 /ru/blog/%D0%BF%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%D1%8B-%D0%B1%D0%BE%D0%BB%D0%B5%D0%BB%D1%8C%D1%89%D0%B8%D0%BA%D0%BE%D0%B2-%D1%87%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-%D0%BC%D0%B8%D1%80%D0%B0/ 308
+/blog/%D0%BF%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%D1%8B-%D0%B1%D0%BE%D0%BB%D0%B5%D0%BB%D1%8C%D1%89%D0%B8%D0%BA%D0%BE%D0%B2-%D1%87%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-%D0%BC%D0%B8%D1%80%D0%B0/ /ru/blog/%D0%BF%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82%D1%8B-%D0%B1%D0%BE%D0%BB%D0%B5%D0%BB%D1%8C%D1%89%D0%B8%D0%BA%D0%BE%D0%B2-%D1%87%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82%D0%B0-%D0%BC%D0%B8%D1%80%D0%B0/ 308
+/blog/idees-boudoir /fr/blog/idees-photo-boudoir/ 308
+/blog/idees-boudoir/ /fr/blog/idees-photo-boudoir/ 308
+/blog/%D8%B5%D9%88%D8%B1-%D9%85%D9%82%D8%A7%D8%AA%D9%84%D9%8A-ufc /ar/blog/%D8%B5%D9%88%D8%B1-%D9%85%D9%82%D8%A7%D8%AA%D9%84%D9%8A-ufc/ 308
+/blog/%D8%B5%D9%88%D8%B1-%D9%85%D9%82%D8%A7%D8%AA%D9%84%D9%8A-ufc/ /ar/blog/%D8%B5%D9%88%D8%B1-%D9%85%D9%82%D8%A7%D8%AA%D9%84%D9%8A-ufc/ 308
+/blog/portrait-de-remise-de-diplome-esthetique /fr/blog/portrait-de-remise-de-diplome-esthetique/ 308
+/blog/portrait-de-remise-de-diplome-esthetique/ /fr/blog/portrait-de-remise-de-diplome-esthetique/ 308
+/blog/otpusknye-portrety-na-riviere /ru/blog/otpusknye-portrety-na-riviere/ 308
+/blog/otpusknye-portrety-na-riviere/ /ru/blog/otpusknye-portrety-na-riviere/ 308
+/blog/niu-zai-zhao-pian-chuang-yi /zh/blog/niu-zai-zhao-pian-chuang-yi/ 308
+/blog/niu-zai-zhao-pian-chuang-yi/ /zh/blog/niu-zai-zhao-pian-chuang-yi/ 308
+/blog/ao-yun-hui-yun-dong-yuan-zhao-pian /zh/blog/ao-yun-hui-yun-dong-yuan-zhao-pian/ 308
+/blog/ao-yun-hui-yun-dong-yuan-zhao-pian/ /zh/blog/ao-yun-hui-yun-dong-yuan-zhao-pian/ 308
+/blog/yueqiu-jidi-zhaopian /zh/blog/yueqiu-jidi-zhaopian/ 308
+/blog/yueqiu-jidi-zhaopian/ /zh/blog/yueqiu-jidi-zhaopian/ 308
+/blog/shengri-zhaopian /zh/blog/shengri-zhaopian/ 308
+/blog/shengri-zhaopian/ /zh/blog/shengri-zhaopian/ 308
+# End Search Console blog 404 redirects
+
 /blog /blog/ 308
 /en/blog /blog/ 308
 /en/blog/ /blog/ 308
