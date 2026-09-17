@@ -14,13 +14,11 @@ import { notFound } from 'next/navigation';
 import { env } from '@/lib/env';
 import { defaultLocale, locales } from '@/i18n/request';
 import { BASE_URL, buildMetaDescription, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
-import type { BlogPost } from '@/types/blog';
 import {
   fetchAllPublishedBlogLocalizedParams,
-  fetchPublishedBlogInventory,
-  getBlogSlugMapForRoute,
   normalizeBlogRouteSlug,
 } from '@/lib/blog-static-params';
+import { fetchLandingBlogPost } from '@/lib/blog-post-build-cache';
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const base = new URL(env.SUPABASE_FUNCTIONS_URL);
@@ -71,19 +69,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     // Next static export can pass Unicode slugs percent-encoded; decode before API lookup.
     const slug = normalizeBlogRouteSlug(rawSlug);
     
-    const [response, blogInventory] = await Promise.all([
-      fetch(
-        buildFunctionsUrl('/blog-post', { slug, locale, platform: 'web' }),
-        { next: { revalidate: 3600 } },
-      ),
-      fetchPublishedBlogInventory(
-        buildFunctionsUrl,
-        `Failed to fetch blog route inventory for metadata locale ${locale}`,
-      ),
-    ]);
+    const { status, post, slugMap } = await fetchLandingBlogPost(
+      buildFunctionsUrl,
+      locale,
+      slug,
+      locales,
+      `Failed to fetch metadata for "${locale}/blog/${slug}"`,
+    );
     
-    if (!response.ok) {
-      if (response.status === 404) {
+    if (!post) {
+      if (status === 404) {
         return {
           title: 'Blog Post Not Found',
           description: 'This AI photo guide is unavailable or has been moved.',
@@ -94,27 +89,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         };
       }
 
-      throw new Error(`Failed to fetch /blog-post metadata for "${locale}/blog/${slug}" (status ${response.status}).`);
-    }
-    
-    const post = await response.json();
-    
-    if (!post) {
-      return {
-        title: 'Blog Post Not Found',
-        description: 'This AI photo guide is unavailable or has been moved.',
-        robots: {
-          index: false,
-          follow: false,
-        },
-      };
+      throw new Error(`Failed to fetch /blog-post metadata for "${locale}/blog/${slug}" (status ${status}).`);
     }
     
     const title = post.title;
     const socialTitle = `${post.title} | My AI Photoshoot`;
     const description = buildMetaDescription(post.meta_description, post.title);
     const articleTags = articleTagsFromPhotoTopics(post.photo_topics);
-    const slugMap = getBlogSlugMapForRoute(blogInventory, locale, slug, locales);
     const canonicalSlugForLocale = slugMap[locale];
     const isCanonicalSlug = slugsMatch(slug, canonicalSlugForLocale);
     const currentPath = `/blog/${canonicalSlugForLocale}/`;
@@ -218,22 +199,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug: rawSlug, locale } = await params;
   // Keep this in sync with metadata lookup so Unicode localized URLs don't build as noindex 404s.
   const slug = normalizeBlogRouteSlug(rawSlug);
-  const res = await fetch(
-    buildFunctionsUrl('/blog-post', { slug, locale, platform: 'web' }),
-    { next: { revalidate: 3600 } }
+  const { status, post: initialPost } = await fetchLandingBlogPost(
+    buildFunctionsUrl,
+    locale,
+    slug,
+    locales,
+    `Failed to fetch blog page "${locale}/blog/${slug}"`,
   );
-  if (!res.ok) {
-    if (res.status === 404) {
+  if (!initialPost) {
+    if (status === 404) {
       notFound();
     }
-    throw new Error(`Failed to fetch /blog-post for "${locale}/blog/${slug}" (status ${res.status}).`);
+    throw new Error(`Failed to fetch /blog-post for "${locale}/blog/${slug}" (status ${status}).`);
   }
-  const initialPost: unknown | null = await res.json();
 
-  const content = (initialPost as BlogPost | null)?.content;
-  if (!initialPost || typeof content !== 'string' || !content) {
+  if (typeof initialPost.content !== 'string' || !initialPost.content) {
     notFound();
   }
 
-  return <BlogPostPageClient slug={slug} locale={locale} initialPost={(initialPost as BlogPost) || undefined} />;
+  return <BlogPostPageClient slug={slug} locale={locale} initialPost={initialPost} />;
 }

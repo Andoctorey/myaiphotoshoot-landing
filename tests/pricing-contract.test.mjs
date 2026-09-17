@@ -579,6 +579,49 @@ test('sitemap content entries prefer update timestamps with creation fallbacks',
   );
 });
 
+test('blog static generation uses compact revision-aware Cloudflare build caching', async () => {
+  const [
+    inventorySource,
+    cacheSource,
+    defaultPostPage,
+    localizedPostPage,
+    blogHook,
+    blogStaticParams,
+  ] = await Promise.all([
+    readProjectFile('src/lib/blog-static-params.ts'),
+    readProjectFile('src/lib/blog-post-build-cache.ts'),
+    readProjectFile('src/app/blog/[slug]/page.tsx'),
+    readProjectFile('src/app/[locale]/blog/[slug]/page.tsx'),
+    readProjectFile('src/hooks/useBlog.ts'),
+    loadTypeScriptModule('src/lib/blog-static-params.ts', {
+      '@/i18n/request': { defaultLocale: 'en' },
+    }),
+  ]);
+
+  assert.match(inventorySource, /sitemap: '1',[\s\S]{0,120}view: 'landing-static'/);
+  assert.match(cacheSource, /\.next', 'cache', 'blog-content'/);
+  assert.match(cacheSource, /cached\.revision !== revision/);
+  assert.match(cacheSource, /inventoryPost\.updated_at \|\| inventoryPost\.created_at/);
+  assert.match(cacheSource, /view: 'landing-static'/);
+  assert.match(defaultPostPage, /fetchLandingBlogPost\(/);
+  assert.match(localizedPostPage, /fetchLandingBlogPost\(/);
+  assert.match(blogHook, /searchParams\.set\('view', 'landing-static'\)/);
+
+  const inventory = [{
+    slug: 'portrait-ideas',
+    created_at: '2026-01-01T00:00:00.000Z',
+    translations: { ja: { slug: 'ポートレート案' } },
+  }];
+  assert.deepEqual(
+    blogStaticParams.resolveBlogRoute(inventory, 'ja', encodeURIComponent('ポートレート案'), ['en', 'ja']),
+    {
+      post: inventory[0],
+      slugMap: { en: 'portrait-ideas', ja: 'ポートレート案' },
+    },
+  );
+  assert.equal(blogStaticParams.resolveBlogRoute(inventory, 'ja', 'missing', ['en', 'ja']), null);
+});
+
 test('navigation, homepage links, footer, sitemap, and llms.txt point directly to Studio', async () => {
   const [navigation, features, footer, pricing, sitemap, llmsText] = await Promise.all([
     readProjectFile('src/components/layout/Navigation.tsx'),
@@ -658,7 +701,7 @@ test('homepage preset cards open the selected preset in a new web-app tab', asyn
   assert.match(homePresets, /href=\{localePath\(locale, '\/presets\/'\)\}/);
 });
 
-test('preset detail pages combine narrow content and price RPCs and validate route identity', async () => {
+test('preset detail pages normally receive content and pricing from one RPC and validate route identity', async () => {
   const calls = [];
   const aiPresets = await loadTypeScriptModule('src/lib/ai-presets.ts', {
     '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'de'] },
@@ -669,12 +712,20 @@ test('preset detail pages combine narrow content and price RPCs and validate rou
         if (args[1].p_slug === 'missing') {
           return new Response('[]');
         }
-        const costCredits = args[0] === 'get_ai_preset' ? 3 : undefined;
+        if (args[0] === 'get_ai_preset') {
+          return new Response(JSON.stringify([{
+            id: 'preset-id',
+            slug: args[1].p_identifier,
+            name: 'Legacy preset',
+            cost_credits: 3,
+          }]));
+        }
+        const requestedSlug = args[1].p_slug;
         return new Response(JSON.stringify([{
           id: 'preset-id',
-          slug: 'golden-hour',
+          slug: requestedSlug === 'wrong-slug' ? 'golden-hour' : requestedSlug,
           name: 'Goldene Stunde',
-          cost_credits: costCredits,
+          cost_credits: requestedSlug === 'legacy-preset' ? undefined : 3,
         }]));
       },
     },
@@ -685,6 +736,7 @@ test('preset detail pages combine narrow content and price RPCs and validate rou
 
   assert.equal(preset?.name, 'Goldene Stunde');
   assert.equal(preset?.cost_credits, 3);
+  assert.equal((await aiPresets.fetchAiPreset('legacy-preset', 'de'))?.cost_credits, 3);
   assert.equal(await aiPresets.fetchAiPreset('missing', 'de'), undefined);
   await assert.rejects(
     aiPresets.fetchAiPreset('wrong-slug', 'de'),
@@ -692,7 +744,8 @@ test('preset detail pages combine narrow content and price RPCs and validate rou
   );
   assert.deepEqual(calls, [
     ['get_ai_preset_page', { p_slug: 'golden-hour', p_locale: 'de' }, 3600],
-    ['get_ai_preset', { p_identifier: 'golden-hour', p_locale: 'de' }, 3600],
+    ['get_ai_preset_page', { p_slug: 'legacy-preset', p_locale: 'de' }, 3600],
+    ['get_ai_preset', { p_identifier: 'legacy-preset', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'missing', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'wrong-slug', p_locale: 'de' }, 3600],
   ]);

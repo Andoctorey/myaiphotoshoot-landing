@@ -88,6 +88,7 @@ export function useBlogPost({
   // Build URL with query parameters
   const searchParams = new URLSearchParams();
   searchParams.set('platform', 'web');
+  searchParams.set('view', 'landing-static');
   
   if (slug) {
     searchParams.append('slug', slug);

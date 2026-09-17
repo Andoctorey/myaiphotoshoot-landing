@@ -1,9 +1,9 @@
 import { defaultLocale } from '@/i18n/request';
 import type { BlogListItem } from '@/types/blog';
 
-type BuildFunctionsUrl = (path: string, params?: Record<string, string>) => string;
+export type BuildFunctionsUrl = (path: string, params?: Record<string, string>) => string;
 
-const REVALIDATE_SECONDS = 3600;
+export const BLOG_REVALIDATE_SECONDS = 3600;
 const FALLBACK_PAGE_LIMIT = 5;
 const MAX_PAGES = 200;
 
@@ -21,6 +21,11 @@ export type BlogListEntry = {
   title?: string | null;
   meta_description?: string | null;
   translations?: Record<string, BlogTranslation> | null;
+};
+
+export type BlogRouteData = {
+  post: BlogListEntry;
+  slugMap: Record<string, string>;
 };
 
 type BlogPostsPage = {
@@ -114,7 +119,7 @@ async function fetchPaginatedPublishedBlogPosts(
       platform: 'web',
     });
 
-    const response = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS } });
+    const response = await fetch(url, { next: { revalidate: BLOG_REVALIDATE_SECONDS } });
     if (!response.ok) {
       throw new Error(`${context} failed to fetch ${url} (status ${response.status}).`);
     }
@@ -149,18 +154,20 @@ export async function fetchPublishedBlogInventory(
   const url = buildFunctionsUrl('/blog-posts', {
     sitemap: '1',
     platform: 'web',
+    view: 'landing-static',
   });
   const retryUrl = buildFunctionsUrl('/blog-posts', {
     sitemap: '1',
     inventory_retry: '1',
     platform: 'web',
+    view: 'landing-static',
   });
   const inventoryUrls = [url, retryUrl];
   let lastError: unknown;
 
   for (const inventoryUrl of inventoryUrls) {
     try {
-      const response = await fetch(inventoryUrl, { next: { revalidate: REVALIDATE_SECONDS } });
+      const response = await fetch(inventoryUrl, { next: { revalidate: BLOG_REVALIDATE_SECONDS } });
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}.`);
       }
@@ -237,26 +244,43 @@ export function getBlogSlugMapForRoute(
   routeSlug: string,
   supportedLocales: readonly string[],
 ): Record<string, string> {
+  const routeData = resolveBlogRoute(posts, routeLocale, routeSlug, supportedLocales);
+  if (!routeData) {
+    throw new Error(
+      `Expected one blog inventory match for locale "${routeLocale}" and slug "${routeSlug}", found 0.`,
+    );
+  }
+  return routeData.slugMap;
+}
+
+export function resolveBlogRoute(
+  posts: BlogListEntry[],
+  routeLocale: string,
+  routeSlug: string,
+  supportedLocales: readonly string[],
+): BlogRouteData | null {
   const normalizedRouteSlug = normalizeBlogRouteSlug(routeSlug);
   const matches = posts.filter((post) => {
     const localizedSlug = getBlogSlugForLocale(post, routeLocale);
     return localizedSlug !== null && normalizeBlogRouteSlug(localizedSlug) === normalizedRouteSlug;
   });
 
-  if (matches.length !== 1) {
+  if (matches.length === 0) return null;
+  if (matches.length > 1) {
     throw new Error(
       `Expected one blog inventory match for locale "${routeLocale}" and slug "${routeSlug}", found ${matches.length}.`,
     );
   }
 
-  const slugMap = getBlogSlugMap(matches[0], supportedLocales);
+  const post = matches[0];
+  const slugMap = getBlogSlugMap(post, supportedLocales);
   if (!slugMap[defaultLocale] || !slugMap[routeLocale]) {
     throw new Error(
       `Blog inventory match for locale "${routeLocale}" and slug "${routeSlug}" had an incomplete slug map.`,
     );
   }
 
-  return slugMap;
+  return { post, slugMap };
 }
 
 export function localizeBlogListItemSlugs<T extends { slug?: string | null }>(

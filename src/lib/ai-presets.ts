@@ -360,8 +360,7 @@ export async function fetchAiPreset(slug: string, locale: string): Promise<AiPre
       return normalizedPreset;
     }
 
-    // The SEO detail RPC currently omits pricing, so resolve it through the app's
-    // preset lookup until the detail response exposes the same backend field.
+    // Keep the legacy lookup for partially deployed or rolled-back environments.
     return {
       ...normalizedPreset,
       cost_credits: await fetchAiPresetCreditCost(slug, locale, normalizedPreset),

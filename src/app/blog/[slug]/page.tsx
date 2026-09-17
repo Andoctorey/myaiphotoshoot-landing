@@ -9,8 +9,8 @@ import { notFound } from 'next/navigation';
 import { env } from '@/lib/env';
 import { locales, defaultLocale } from '@/i18n/request';
 import { BASE_URL, buildMetaDescription, localePath, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
-import type { BlogPost } from '@/types/blog';
-import { fetchAllPublishedBlogSlugs, getBlogSlugMap } from '@/lib/blog-static-params';
+import { fetchAllPublishedBlogSlugs } from '@/lib/blog-static-params';
+import { fetchLandingBlogPost } from '@/lib/blog-post-build-cache';
 
 const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
   const base = new URL(env.SUPABASE_FUNCTIONS_URL);
@@ -55,13 +55,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   try {
     const { slug } = await params;
 
-    const response = await fetch(
-      buildFunctionsUrl('/blog-post', { slug, locale: defaultLocale, platform: 'web' }),
-      { next: { revalidate: 3600 } }
+    const { status, post, slugMap } = await fetchLandingBlogPost(
+      buildFunctionsUrl,
+      defaultLocale,
+      slug,
+      locales,
+      `Failed to fetch metadata for "blog/${slug}"`,
     );
 
-    if (!response.ok) {
-      if (response.status === 404) {
+    if (!post) {
+      if (status === 404) {
         return {
           title: 'Blog Post Not Found',
           description: 'This AI photo guide is unavailable or has been moved.',
@@ -72,28 +75,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         };
       }
 
-      throw new Error(`Failed to fetch /blog-post metadata for "${slug}" (status ${response.status}).`);
-    }
-
-    const post = await response.json();
-
-    if (!post) {
-      return {
-        title: 'Blog Post Not Found',
-        description: 'This AI photo guide is unavailable or has been moved.',
-        robots: {
-          index: false,
-          follow: false,
-        },
-      };
+      throw new Error(`Failed to fetch /blog-post metadata for "${slug}" (status ${status}).`);
     }
 
     const title = post.title;
     const socialTitle = `${post.title} | My AI Photoshoot`;
     const description = buildMetaDescription(post.meta_description, post.title);
     const articleTags = articleTagsFromPhotoTopics(post.photo_topics);
-    const slugMap = getBlogSlugMap(post, locales);
-    slugMap[defaultLocale] = slug;
     const languages = Object.fromEntries(
       Object.entries(slugMap).map(([language, localizedSlug]) => [
         language,
@@ -192,20 +180,21 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
 
-  const res = await fetch(
-    buildFunctionsUrl('/blog-post', { slug, locale: defaultLocale, platform: 'web' }),
-    { next: { revalidate: 3600 } }
+  const { status, post: initialPost } = await fetchLandingBlogPost(
+    buildFunctionsUrl,
+    defaultLocale,
+    slug,
+    locales,
+    `Failed to fetch blog page "blog/${slug}"`,
   );
-  if (!res.ok) {
-    if (res.status === 404) {
+  if (!initialPost) {
+    if (status === 404) {
       notFound();
     }
-    throw new Error(`Failed to fetch /blog-post for "${slug}" (status ${res.status}).`);
+    throw new Error(`Failed to fetch /blog-post for "${slug}" (status ${status}).`);
   }
-  const initialPost: unknown | null = await res.json();
 
-  const content = (initialPost as BlogPost | null)?.content;
-  if (!initialPost || typeof content !== 'string' || !content) {
+  if (typeof initialPost.content !== 'string' || !initialPost.content) {
     notFound();
   }
 
@@ -213,7 +202,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <BlogPostPageClient
       slug={slug}
       locale={defaultLocale}
-      initialPost={(initialPost as BlogPost) || undefined}
+      initialPost={initialPost}
     />
   );
 }
