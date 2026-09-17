@@ -1,10 +1,12 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 
 const {
   applyCsp,
+  applyCspToFiles,
   buildPolicy,
   getApiOrigin,
   scriptHashes,
@@ -50,4 +52,35 @@ test('static responses prevent post-build script injection', () => {
   const headers = fs.readFileSync(path.join(__dirname, '../public/_headers'), 'utf8');
 
   assert.match(headers, /\/\*\n  Cache-Control: [^\n]*\bno-transform\b/);
+});
+
+test('processes exported HTML across workers and reports aggregate progress', async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'apply-csp-test-'));
+  const filePaths = Array.from({ length: 6 }, (_value, index) => {
+    const filePath = path.join(tempDir, `page-${index}.html`);
+    fs.writeFileSync(
+      filePath,
+      `<html><head><script>shared()</script></head><body><script>page(${index})</script></body></html>`,
+    );
+    return filePath;
+  });
+  const progress = [];
+
+  try {
+    const result = await applyCspToFiles(filePaths, 'https://api.example.com', {
+      workerCount: 2,
+      onProgress: (completed, total) => progress.push([completed, total]),
+    });
+
+    assert.deepEqual(result, { fileCount: 6, hashCount: 12 });
+    assert.deepEqual(progress.at(-1), [6, 6]);
+    for (const filePath of filePaths) {
+      assert.match(
+        fs.readFileSync(filePath, 'utf8'),
+        /<meta http-equiv="Content-Security-Policy"/,
+      );
+    }
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 });
