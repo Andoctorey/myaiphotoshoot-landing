@@ -176,6 +176,7 @@
   "gallery": {
     "title": "Öffentliche Galerie",
     "description": "Aktuelle KI-Fotos, die Nutzer geteilt haben, mit regelmäßig neuen Beispielen.",
+    "exploreMore": "Weitere Fotos entdecken",
     "loadMore": "Mehr anzeigen",
     "loading": "Wird geladen...",
     "error": "Galeriebilder konnten nicht geladen werden. Bitte versuchen Sie es später erneut.",

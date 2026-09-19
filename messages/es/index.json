@@ -176,6 +176,7 @@
   "gallery": {
     "title": "Galería pública",
     "description": "Fotos recientes con IA compartidas por usuarios, con ejemplos nuevos añadidos regularmente.",
+    "exploreMore": "Explorar más fotos",
     "loadMore": "Mostrar más",
     "loading": "Cargando...",
     "error": "No se pudieron cargar las imágenes de la galería. Inténtalo de nuevo más tarde.",

@@ -2,16 +2,15 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { HomepageGalleryItem, GalleryRandomSession } from '@/types/gallery';
-import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { env } from '@/lib/env';
 import { toHomepageGalleryItem } from '@/lib/homepage-gallery';
-import { useTranslations } from '@/lib/utils';
+import { useLocale, useTranslations } from '@/lib/utils';
 import PhotoCard from '@/components/features/PhotoCard';
 
 const PAGE_SIZE = 20;
 const INITIAL_VISIBLE_COUNT = 20;
 const LOAD_MORE_COUNT = 20;
-const WEB_APP_URL = 'https://app.myaiphotoshoot.com';
+const HOME_PREVIEW_COUNT = 10;
 
 type GallerySort = 'popular' | 'new' | 'random';
 
@@ -37,10 +36,15 @@ function createRandomSession(): GalleryRandomSession {
   };
 }
 
-function buildGalleryUrl(page: number, sort: GallerySort, randomSession: GalleryRandomSession | null): string {
+function buildGalleryUrl(
+  page: number,
+  sort: GallerySort,
+  randomSession: GalleryRandomSession | null,
+  limit: number,
+): string {
   const params = new URLSearchParams({
     page: page.toString(),
-    limit: PAGE_SIZE.toString(),
+    limit: limit.toString(),
     sort,
     platform: 'web',
   });
@@ -53,35 +57,35 @@ function buildGalleryUrl(page: number, sort: GallerySort, randomSession: Gallery
   return `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?${params.toString()}`;
 }
 
-function buildGalleryItemAppHref(item: HomepageGalleryItem): string {
-  const presetKey = item.presetId?.trim();
-  if (presetKey) {
-    return `${WEB_APP_URL}/#preset/${encodeURIComponent(presetKey)}`;
-  }
-
-  return `${WEB_APP_URL}/#generate/${item.id}`;
+function buildGalleryItemAppHref(item: HomepageGalleryItem, locale: string): string {
+  return `/photo/${encodeURIComponent(item.id)}/?lang=${encodeURIComponent(locale)}`;
 }
 
 export default function Gallery({
   initialItems = [],
   initialRandomSession,
+  preview = false,
 }: {
   initialItems?: HomepageGalleryItem[];
   initialRandomSession?: GalleryRandomSession;
+  preview?: boolean;
 }) {
   const t = useTranslations('gallery');
-  const [sort, setSort] = useState<GallerySort>('random');
+  const locale = useLocale();
+  const [sort, setSort] = useState<GallerySort>(preview ? 'random' : 'popular');
   const [randomSession, setRandomSession] = useState<GalleryRandomSession | null>(
-    () => initialRandomSession ?? createRandomSession()
+    () => preview ? initialRandomSession ?? createRandomSession() : null
   );
   const [galleryItems, setGalleryItems] = useState<HomepageGalleryItem[]>(initialItems);
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
+  const pageSize = preview ? HOME_PREVIEW_COUNT : PAGE_SIZE;
+  const [visibleCount, setVisibleCount] = useState(preview ? HOME_PREVIEW_COUNT : INITIAL_VISIBLE_COUNT);
   const [nextPage, setNextPage] = useState(initialItems.length > 0 ? 2 : 1);
   const [hasMore, setHasMore] = useState(initialItems.length === 0 || initialItems.length >= PAGE_SIZE);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const initialFetchAttemptedRef = useRef(false);
   const isLoadingRef = useRef(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const fetchPage = useCallback(async (
     pageNumber: number,
@@ -96,7 +100,7 @@ export default function Gallery({
     setError(null);
 
     try {
-      const response = await fetch(buildGalleryUrl(pageNumber, requestedSort, requestedRandomSession));
+      const response = await fetch(buildGalleryUrl(pageNumber, requestedSort, requestedRandomSession, pageSize));
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`.trim());
       }
@@ -110,7 +114,7 @@ export default function Gallery({
       setGalleryItems((currentItems) => (
         mode === 'replace' ? newItems : mergeUniqueItems(currentItems, newItems)
       ));
-      setHasMore(newItems.length >= PAGE_SIZE);
+      setHasMore(newItems.length >= pageSize);
       setNextPage(pageNumber + 1);
     } catch (fetchError) {
       console.error('Error fetching gallery items:', fetchError);
@@ -119,7 +123,7 @@ export default function Gallery({
       isLoadingRef.current = false;
       setIsLoading(false);
     }
-  }, [t]);
+  }, [pageSize, t]);
 
   useEffect(() => {
     if (
@@ -134,7 +138,7 @@ export default function Gallery({
     }
   }, [error, fetchPage, galleryItems.length, initialItems.length, isLoading, randomSession, sort]);
 
-  const loadMore = async () => {
+  const loadMore = useCallback(async () => {
     const nextVisibleCount = visibleCount + LOAD_MORE_COUNT;
 
     if (galleryItems.length < nextVisibleCount && hasMore) {
@@ -142,7 +146,18 @@ export default function Gallery({
     }
 
     setVisibleCount(nextVisibleCount);
-  };
+  }, [fetchPage, galleryItems.length, hasMore, nextPage, randomSession, sort, visibleCount]);
+
+  useEffect(() => {
+    if (preview || !hasMore || isLoading || error || !sentinelRef.current
+      || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) void loadMore();
+    }, { rootMargin: '400px' });
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [error, hasMore, isLoading, loadMore, preview]);
 
   const selectSort = (nextSort: GallerySort) => {
     if (nextSort === sort && nextSort !== 'random') return;
@@ -179,67 +194,88 @@ export default function Gallery({
   }
 
   return (
-    <div className="mt-6" aria-labelledby="gallery-heading">
-      <h2 id="gallery-heading" className="sr-only">{t('seoHeading')}</h2>
+    <div className={preview ? 'mt-6' : ''} aria-label={t('seoHeading')}>
 
-      <div
-        className="mb-4 flex justify-center"
-        role="group"
-        aria-label={t('sortAriaLabel')}
-      >
-        <div className="inline-flex rounded-lg bg-primary-container p-1">
-          {([
-            ['popular', t('popularSort')],
-            ['new', t('newestSort')],
-            ['random', t('randomSort')],
-          ] as const).map(([value, label]) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => selectSort(value)}
-              disabled={isLoading}
-              aria-pressed={sort === value}
-              className={`rounded-md px-4 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
-                sort === value
-                  ? 'bg-primary text-on-primary shadow-sm'
-                  : 'text-on-primary-container hover:bg-primary/10'
-              } disabled:cursor-wait disabled:opacity-60`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
+      {!preview && (
+        <header className="mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
+              {t('title')}
+            </h1>
+            <label>
+              <span className="sr-only">{t('sortAriaLabel')}</span>
+              <select
+                value={sort}
+                onChange={(event) => selectSort(event.target.value as GallerySort)}
+                disabled={isLoading}
+                className="min-h-11 cursor-pointer rounded-full border border-gray-300 bg-white px-4 py-2 text-base font-semibold text-gray-800 shadow-sm outline-none transition hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-wait disabled:opacity-60 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+              >
+                <option value="popular">{t('popularSort')}</option>
+                <option value="new">{t('newestSort')}</option>
+                <option value="random">{t('randomSort')}</option>
+              </select>
+            </label>
+          </div>
+          <p className="mt-3 max-w-3xl text-lg leading-7 text-gray-600 dark:text-gray-300 sm:text-xl sm:leading-8">
+            {t('description')}
+          </p>
+        </header>
+      )}
 
-      <ul
-        className="grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4 md:gap-2 lg:grid-cols-5"
-        aria-label={t('ariaLabel')}
-      >
-        {galleryItems.length === 0 ? (
-          Array.from({ length: 10 }).map((_, index) => (
-            <li key={`placeholder-${index}`}>
-              <ImagePlaceholder />
-            </li>
-          ))
-        ) : (
-          displayedItems.map((item) => {
-            return (
-              <li key={item.id}>
-                <PhotoCard
-                  src={item.publicUrl}
-                  alt={`${t('altPrefix')}: ${item.promptSummary}`}
-                  mode="fill"
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                  containerClassName="aspect-square rounded-sm cursor-pointer"
-                  linkHref={buildGalleryItemAppHref(item)}
-                  linkExternal
-                  ariaLabel={`${t('captionPrefix')}: ${item.promptSummary}`}
-                />
+      <div className={preview ? '-mx-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0 lg:pb-0' : ''}>
+        <ul
+          className={preview
+            ? 'flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-5'
+            : 'grid grid-cols-2 gap-px min-[830px]:grid-cols-3 min-[1100px]:grid-cols-4'}
+          aria-label={t('ariaLabel')}
+        >
+          {galleryItems.length === 0 ? (
+            Array.from({ length: preview ? HOME_PREVIEW_COUNT : 10 }).map((_, index) => (
+              <li
+                key={`placeholder-${index}`}
+                className={preview ? 'w-[68vw] max-w-[280px] shrink-0 snap-center lg:w-auto lg:max-w-none' : undefined}
+              >
+                <ImagePlaceholder />
               </li>
-            );
-          })
-        )}
-      </ul>
+            ))
+          ) : (
+            displayedItems.map((item) => {
+              return (
+                <li
+                  key={item.id}
+                  className={preview ? 'w-[68vw] max-w-[280px] shrink-0 snap-center lg:w-auto lg:max-w-none' : undefined}
+                >
+                  <figure className="relative isolate overflow-hidden bg-gray-200 dark:bg-gray-800">
+                    <PhotoCard
+                      src={item.publicUrl}
+                      alt={`${t('altPrefix')}: ${item.promptSummary}`}
+                      mode="fill"
+                      sizes={preview
+                        ? '(max-width: 1023px) 68vw, 20vw'
+                        : '(min-width: 1280px) 304px, (min-width: 1100px) calc((100vw - 67px) / 4), (min-width: 830px) calc((100vw - 50px) / 3), calc((100vw - 33px) / 2)'}
+                      containerClassName={preview ? 'aspect-square rounded-sm cursor-pointer' : 'aspect-square cursor-pointer'}
+                      linkHref={buildGalleryItemAppHref(item, locale)}
+                      linkDocument
+                      ariaLabel={`${t('captionPrefix')}: ${item.promptSummary}`}
+                    />
+                    {!preview && (
+                      <>
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-48% via-black/20 to-black/80"
+                        />
+                        <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 line-clamp-2 p-2 text-sm font-semibold leading-tight text-white [overflow-wrap:anywhere] sm:text-base">
+                          {item.promptSummary}
+                        </figcaption>
+                      </>
+                    )}
+                  </figure>
+                </li>
+              );
+            })
+          )}
+        </ul>
+      </div>
 
       {error && galleryItems.length > 0 && (
         <div className="mt-4 rounded-lg bg-error-container p-3 text-center" role="alert" aria-live="polite">
@@ -247,21 +283,19 @@ export default function Gallery({
         </div>
       )}
 
-      {canLoadMore && (
-        <div className="mt-8 flex justify-center">
+      {!preview && galleryItems.length > 0 && canLoadMore && (
+        <div ref={sentinelRef} className="mt-8 flex flex-col items-center gap-3">
+          <p aria-live="polite" className="sr-only">
+            {isLoading ? t('loading') : ''}
+          </p>
           <button
             onClick={() => void loadMore()}
             disabled={isLoading}
-            className="rounded-lg bg-primary px-6 py-2 text-on-primary transition hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-gray-900"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-300 px-6 py-2 font-semibold text-gray-800 hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary disabled:cursor-wait disabled:opacity-50 dark:border-gray-700 dark:text-gray-200"
             aria-label={isLoading ? t('loading') : t('loadMore')}
             aria-busy={isLoading}
           >
-            {isLoading ? (
-              <span className="flex items-center gap-2">
-                <ButtonSpinner />
-                {t('loading')}
-              </span>
-            ) : t('loadMore')}
+            {isLoading ? t('loading') : t('loadMore')}
           </button>
         </div>
       )}

@@ -176,6 +176,7 @@
   "gallery": {
     "title": "公开图库",
     "description": "用户分享的近期 AI 照片，并会定期新增示例。",
+    "exploreMore": "探索更多照片",
     "loadMore": "查看更多",
     "loading": "加载中...",
     "error": "无法加载图库图片。请稍后重试。",

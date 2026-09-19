@@ -19,6 +19,7 @@ interface PhotoCardProps {
   imgClassName?: string;
   linkHref?: string;
   linkExternal?: boolean;
+  linkDocument?: boolean;
   ariaLabel?: string;
 }
 
@@ -46,6 +47,7 @@ export default function PhotoCard({
   imgClassName = '',
   linkHref,
   linkExternal = false,
+  linkDocument = false,
   ariaLabel
 }: PhotoCardProps) {
   const optimizedSrc = withDefaultCdnWidth(src) || src;
@@ -79,6 +81,14 @@ export default function PhotoCard({
   );
 
   if (linkHref) {
+    if (linkDocument) {
+      return (
+        <a href={linkHref} className={LINK_CLASS_NAME} aria-label={accessibleName}>
+          {content}
+        </a>
+      );
+    }
+
     return linkExternal ? (
       <a
         href={linkHref}

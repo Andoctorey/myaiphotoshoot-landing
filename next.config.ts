@@ -45,8 +45,14 @@ const nextConfig: NextConfig = {
     // Increase parallel workers based on memory
     memoryBasedWorkersCount: true,
   },
-  
-  // Removed rewrites section as it's not compatible with static export
+
+  // Cloudflare serves /photo/:id through a Pages Function in production.
+  // This rewrite gives next dev an equivalent client-rendered page locally.
+  ...(isDev ? {
+    async rewrites() {
+      return [{ source: '/photo/:id', destination: '/photo?id=:id' }];
+    },
+  } : {}),
 };
 
 export default withNextIntl(nextConfig);

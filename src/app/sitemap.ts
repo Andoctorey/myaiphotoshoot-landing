@@ -151,6 +151,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: buildHreflangLanguages(baseUrl, '/', locales),
       },
     })),
+    // Public gallery pages for all locales
+    ...locales.map(locale => ({
+      url: buildLocalizedUrl(baseUrl, locale, '/gallery/'),
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+      alternates: {
+        languages: buildHreflangLanguages(baseUrl, '/gallery/', locales),
+      },
+    })),
     // Blog listing pages for all locales
     {
       url: buildLocalizedUrl(baseUrl, 'en', '/blog/'),

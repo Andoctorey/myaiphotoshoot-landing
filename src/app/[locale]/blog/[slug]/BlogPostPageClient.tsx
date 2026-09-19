@@ -57,6 +57,8 @@ const calculateReadingTime = (content: string): number => {
   return Math.ceil(wordCount / wordsPerMinute);
 };
 
+const WEB_APP_GENERATION_LINK = /https:\/\/app\.myaiphotoshoot\.com\/#generate\/([0-9a-f-]{36})/gi;
+
 // Utility function to format date
 const formatDate = (dateString: string | null | undefined, locale: string) => {
   if (!dateString) return '';
@@ -83,7 +85,11 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
   const processedContent = useMemo(() => {
     if (!safeContent) return '';
     const withResponsiveImages = addResponsiveCdnAttributesToBlogImages(safeContent);
-    const updatedHtml = withResponsiveImages.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
+    const withLandingPhotoLinks = withResponsiveImages.replace(
+      WEB_APP_GENERATION_LINK,
+      (_, photoId: string) => `/photo/${photoId}/?lang=${encodeURIComponent(locale)}`,
+    );
+    const updatedHtml = withLandingPhotoLinks.replace(/<img\s+([^>]*?)>/gi, (match, attrs) => {
       if (/\salt=(["']).*?\1/i.test(attrs)) {
         return ['<img ', attrs, '>'].join('');
       }
@@ -102,7 +108,7 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
       ADD_TAGS: ['iframe'],
       ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'sizes', 'srcset']
     });
-  }, [featuredImageAlt, safeContent]);
+  }, [featuredImageAlt, locale, safeContent]);
 
 
   // Extract FAQs from content for schema markup

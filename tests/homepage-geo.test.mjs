@@ -34,6 +34,12 @@ async function loadHomepageGalleryModule() {
   return import(moduleUrl);
 }
 
+async function loadPhotoPageFunction() {
+  const source = await readProjectFile('functions/photo/[[path]].js');
+  const moduleUrl = `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
+  return import(moduleUrl);
+}
+
 test('homepage gallery mapping keeps only a 60-character prompt summary', async () => {
   const { summarizeGalleryPrompt, toHomepageGalleryItem } = await loadHomepageGalleryModule();
   const fullPrompt = [
@@ -83,12 +89,79 @@ test('gallery is loaded dynamically with the compact DTO mapper', async () => {
   assert.match(gallerySource, /item\.promptSummary/);
   assert.doesNotMatch(gallerySource, /item\.prompt\b/);
   assert.match(gallerySource, /src=\{item\.publicUrl\}/);
-  assert.match(gallerySource, /linkHref=\{buildGalleryItemAppHref\(item\)\}/);
+  assert.match(gallerySource, /linkHref=\{buildGalleryItemAppHref\(item, locale\)\}/);
+  assert.match(gallerySource, /\?lang=\$\{encodeURIComponent\(locale\)\}/);
+  assert.match(gallerySource, /useState<GallerySort>\(preview \? 'random' : 'popular'\)/);
   assert.match(gallerySource, /alt=\{`\$\{t\('altPrefix'\)\}: \$\{item\.promptSummary\}`\}/);
   assert.match(gallerySource, /ariaLabel=\{`\$\{t\('captionPrefix'\)\}: \$\{item\.promptSummary\}`\}/);
+  assert.match(gallerySource, /<figcaption[^>]*>[\s\S]*\{item\.promptSummary\}[\s\S]*<\/figcaption>/);
   assert.match(galleryTypesSource, /interface HomepageGalleryItem/);
   assert.match(galleryTypesSource, /promptSummary:\s*string/);
   assert.doesNotMatch(galleryTypesSource, /^\s*prompt:\s*string/m);
+});
+
+test('public photo pages request web-visible generations and keep successful pages noindex', async () => {
+  const [functionSource, localPageSource, localLayoutSource] = await Promise.all([
+    readProjectFile('functions/photo/[[path]].js'),
+    readProjectFile('src/app/photo/page.tsx'),
+    readProjectFile('src/app/photo/layout.tsx'),
+  ]);
+
+  for (const source of [functionSource, localPageSource]) {
+    assert.match(source, /new URLSearchParams\(\{ id, platform: 'web' \}\)/);
+  }
+  assert.match(functionSource, /'x-robots-tag': 'noindex, follow'/);
+  assert.match(functionSource, /'content-security-policy': CONTENT_SECURITY_POLICY/);
+  assert.doesNotMatch(functionSource, /stale-while-revalidate/);
+  assert.match(functionSource, /context\.request\.method !== 'GET'/);
+  assert.match(localLayoutSource, /index: false/);
+  assert.match(localLayoutSource, /follow: true/);
+});
+
+test('public photo function serves only visible photos over GET or HEAD', async () => {
+  const { onRequest } = await loadPhotoPageFunction();
+  const originalFetch = globalThis.fetch;
+  const photoId = '07999059-f2f3-41fa-8826-5e45d572ee7e';
+  const requestContext = (method = 'GET') => ({
+    request: new Request(`https://myaiphotoshoot.com/photo/${photoId}/?lang=en`, { method }),
+    params: { path: [photoId] },
+    env: {},
+  });
+
+  try {
+    let requestedGenerationUrl;
+    globalThis.fetch = async (input) => {
+      requestedGenerationUrl = new URL(input);
+      return Response.json({
+        id: photoId,
+        public_url: 'https://cdn.myaiphotoshoot.com/photo.webp',
+        prompt: 'Portrait & studio',
+      });
+    };
+
+    const response = await onRequest(requestContext());
+    const html = await response.text();
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get('x-robots-tag'), 'noindex, follow');
+    assert.equal(response.headers.get('cache-control'), 'public, max-age=0, s-maxage=3600');
+    assert.equal(requestedGenerationUrl.searchParams.get('platform'), 'web');
+    assert.match(html, /Portrait &amp; studio/);
+
+    const headResponse = await onRequest(requestContext('HEAD'));
+    assert.equal(headResponse.status, 200);
+    assert.equal(await headResponse.text(), '');
+
+    const postResponse = await onRequest(requestContext('POST'));
+    assert.equal(postResponse.status, 405);
+    assert.equal(postResponse.headers.get('allow'), 'GET, HEAD');
+
+    globalThis.fetch = async () => new Response('not found', { status: 404 });
+    const privateResponse = await onRequest(requestContext());
+    assert.equal(privateResponse.status, 404);
+    assert.equal(privateResponse.headers.get('x-robots-tag'), 'noindex, nofollow');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test('homepage translations include active labels and omit retired copy', async () => {
@@ -178,10 +251,11 @@ test('homepage SEO copy and focused use-case links stay wired', async () => {
   }
 });
 
-test('promotional collections scroll on mobile while the public gallery stays dense', async () => {
-  const [blogSource, gallerySource] = await Promise.all([
+test('homepage collections scroll on mobile while the full public gallery matches the presets layout', async () => {
+  const [blogSource, gallerySource, gallerySectionSource] = await Promise.all([
     readProjectFile('src/components/features/HomeBlog.tsx'),
     readProjectFile('src/components/features/Gallery.tsx'),
+    readProjectFile('src/components/features/Testimonials.tsx'),
   ]);
 
   assert.match(blogSource, /overflow-x-auto/);
@@ -191,8 +265,15 @@ test('promotional collections scroll on mobile while the public gallery stays de
   assert.match(blogSource, /takeFirst\(sortByMostRecent\(initialPosts\), HOME_BLOG_COUNT\)/);
   assert.doesNotMatch(blogSource, /index >= 3|hidden md:block|columns-[123]/);
 
-  assert.match(gallerySource, /grid grid-cols-2 gap-1 sm:grid-cols-3 md:grid-cols-4[^"\n]*lg:grid-cols-5/);
-  assert.doesNotMatch(gallerySource, /overflow-x-auto|snap-x|snap-mandatory/);
+  assert.match(gallerySource, /overflow-x-auto/);
+  assert.match(gallerySource, /snap-x snap-mandatory/);
+  assert.match(gallerySource, /w-\[68vw\][^"\n]*shrink-0 snap-center[^"\n]*lg:w-auto/);
+  assert.match(gallerySource, /lg:grid[^"\n]*lg:grid-cols-5/);
+  assert.match(gallerySource, /grid grid-cols-2 gap-px min-\[830px\]:grid-cols-3 min-\[1100px\]:grid-cols-4/);
+  assert.match(gallerySource, /new IntersectionObserver/);
+  assert.match(gallerySource, /rounded-full border border-gray-300/);
+  assert.match(gallerySectionSource, /aria-label="Breadcrumb"/);
+  assert.match(gallerySectionSource, /min-h-screen bg-gray-50 dark:bg-gray-950/);
 });
 
 test('homepage collections keep their intentional item counts', async () => {

@@ -16,6 +16,9 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://myaiphotoshoot.com/sitemap.xml',
+    sitemap: [
+      'https://myaiphotoshoot.com/sitemap.xml',
+      'https://myaiphotoshoot.com/image-sitemap.xml',
+    ],
   }
-} 
+}

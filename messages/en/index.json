@@ -176,6 +176,7 @@
   "gallery": {
     "title": "Public Gallery",
     "description": "Recent AI photos shared by users, with fresh examples added regularly.",
+    "exploreMore": "Explore more photos",
     "loadMore": "Show More",
     "loading": "Loading...",
     "error": "Could not load gallery images. Please try again later.",

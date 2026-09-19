@@ -57,7 +57,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
     { name: t('studio'), href: localePath(locale, '/studio/') },
     { name: t('presets'), href: localePath(locale, '/presets/') },
     { name: t('masks'), href: localePath(locale, '/masks/') },
-    { name: t('gallery'), href: isHomePage ? '#gallery' : homeHash('#gallery') },
+    { name: t('gallery'), href: isHomePage ? '#gallery' : localePath(locale, '/gallery/') },
     { name: t('blog'), href: isHomePage ? '#home-blog' : homeHash('#home-blog') },
     { name: t('faq'), href: isHomePage ? '#faq' : homeHash('#faq') },
   ];
