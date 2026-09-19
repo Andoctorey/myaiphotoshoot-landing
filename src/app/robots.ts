@@ -4,7 +4,7 @@ import { MetadataRoute } from 'next'
  * Robots.txt generator
  * 
  * CLOUDFLARE PAGES NOTE:
- * This generates a robots.txt file dynamically on Cloudflare Pages.
+ * This generates robots.txt during the static Cloudflare Pages build.
  */
 
 export const revalidate = 3600; // 1 hour revalidation

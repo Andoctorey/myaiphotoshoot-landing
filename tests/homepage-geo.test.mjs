@@ -34,12 +34,6 @@ async function loadHomepageGalleryModule() {
   return import(moduleUrl);
 }
 
-async function loadPhotoPageFunction() {
-  const source = await readProjectFile('functions/photo/[[path]].js');
-  const moduleUrl = `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
-  return import(moduleUrl);
-}
-
 test('homepage gallery mapping keeps only a 60-character prompt summary', async () => {
   const { summarizeGalleryPrompt, toHomepageGalleryItem } = await loadHomepageGalleryModule();
   const fullPrompt = [
@@ -100,68 +94,22 @@ test('gallery is loaded dynamically with the compact DTO mapper', async () => {
   assert.doesNotMatch(galleryTypesSource, /^\s*prompt:\s*string/m);
 });
 
-test('public photo pages request web-visible generations and keep successful pages noindex', async () => {
-  const [functionSource, localPageSource, localLayoutSource] = await Promise.all([
-    readProjectFile('functions/photo/[[path]].js'),
+test('public photo routes use the static client shell and remain noindex', async () => {
+  const [localPageSource, localLayoutSource, redirects, routesSource] = await Promise.all([
     readProjectFile('src/app/photo/page.tsx'),
     readProjectFile('src/app/photo/layout.tsx'),
+    readProjectFile('public/_redirects'),
+    readProjectFile('public/_routes.json'),
   ]);
 
-  for (const source of [functionSource, localPageSource]) {
-    assert.match(source, /new URLSearchParams\(\{ id, platform: 'web' \}\)/);
-  }
-  assert.match(functionSource, /'x-robots-tag': 'noindex, follow'/);
-  assert.match(functionSource, /'content-security-policy': CONTENT_SECURITY_POLICY/);
-  assert.doesNotMatch(functionSource, /stale-while-revalidate/);
-  assert.match(functionSource, /context\.request\.method !== 'GET'/);
+  assert.match(localPageSource, /new URLSearchParams\(\{ id, platform: 'web' \}\)/);
   assert.match(localLayoutSource, /index: false/);
   assert.match(localLayoutSource, /follow: true/);
-});
+  assert.match(redirects, /^\/photo\/\* \/photo\/index\.html 200$/m);
 
-test('public photo function serves only visible photos over GET or HEAD', async () => {
-  const { onRequest } = await loadPhotoPageFunction();
-  const originalFetch = globalThis.fetch;
-  const photoId = '07999059-f2f3-41fa-8826-5e45d572ee7e';
-  const requestContext = (method = 'GET') => ({
-    request: new Request(`https://myaiphotoshoot.com/photo/${photoId}/?lang=en`, { method }),
-    params: { path: [photoId] },
-    env: {},
-  });
-
-  try {
-    let requestedGenerationUrl;
-    globalThis.fetch = async (input) => {
-      requestedGenerationUrl = new URL(input);
-      return Response.json({
-        id: photoId,
-        public_url: 'https://cdn.myaiphotoshoot.com/photo.webp',
-        prompt: 'Portrait & studio',
-      });
-    };
-
-    const response = await onRequest(requestContext());
-    const html = await response.text();
-    assert.equal(response.status, 200);
-    assert.equal(response.headers.get('x-robots-tag'), 'noindex, follow');
-    assert.equal(response.headers.get('cache-control'), 'public, max-age=0, s-maxage=3600');
-    assert.equal(requestedGenerationUrl.searchParams.get('platform'), 'web');
-    assert.match(html, /Portrait &amp; studio/);
-
-    const headResponse = await onRequest(requestContext('HEAD'));
-    assert.equal(headResponse.status, 200);
-    assert.equal(await headResponse.text(), '');
-
-    const postResponse = await onRequest(requestContext('POST'));
-    assert.equal(postResponse.status, 405);
-    assert.equal(postResponse.headers.get('allow'), 'GET, HEAD');
-
-    globalThis.fetch = async () => new Response('not found', { status: 404 });
-    const privateResponse = await onRequest(requestContext());
-    assert.equal(privateResponse.status, 404);
-    assert.equal(privateResponse.headers.get('x-robots-tag'), 'noindex, nofollow');
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
+  const routes = JSON.parse(routesSource);
+  assert.equal(routes.include.includes('/photo'), false);
+  assert.equal(routes.include.includes('/photo/*'), false);
 });
 
 test('homepage translations include active labels and omit retired copy', async () => {

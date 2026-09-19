@@ -1,35 +1,23 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { afterEach, test } from 'node:test';
+import { access, mkdtemp, readFile, rm } from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { test } from 'node:test';
+import {
+  buildImageSitemap,
+  generateImageSitemap,
+} from '../scripts/generate-image-sitemap.mjs';
 
-const functionSource = await readFile(
-  new URL('../functions/image-sitemap.xml.js', import.meta.url),
-  'utf8',
-);
-const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSource).toString('base64')}`;
-const { onRequest } = await import(functionModuleUrl);
-
-const originalFetch = globalThis.fetch;
-const originalCaches = globalThis.caches;
-const originalConsoleError = console.error;
-
-afterEach(() => {
-  globalThis.fetch = originalFetch;
-  console.error = originalConsoleError;
-  if (originalCaches === undefined) {
-    delete globalThis.caches;
-  } else {
-    globalThis.caches = originalCaches;
-  }
-});
-
-function request(method = 'GET') {
-  return new Request('https://myaiphotoshoot.com/image-sitemap.xml', { method });
+async function temporaryOutput(t) {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'image-sitemap-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  return path.join(directory, 'image-sitemap.xml');
 }
 
-test('returns up to 1,000 unique popular gallery images as XML', async () => {
+test('writes up to 1,000 unique popular gallery images as XML', async (t) => {
+  const outputPath = await temporaryOutput(t);
   const requestedPages = [];
-  globalThis.fetch = async (input) => {
+  const fetchImpl = async (input) => {
     const url = new URL(input);
     const page = Number(url.searchParams.get('page'));
     requestedPages.push(page);
@@ -42,105 +30,71 @@ test('returns up to 1,000 unique popular gallery images as XML', async () => {
     })));
   };
 
-  const response = await onRequest({ request: request(), env: {} });
-  const xml = await response.text();
+  const result = await generateImageSitemap({ fetchImpl, outputPath });
+  const xml = await readFile(outputPath, 'utf8');
 
-  assert.equal(response.status, 200);
-  assert.equal(response.headers.get('content-type'), 'application/xml; charset=utf-8');
-  assert.match(response.headers.get('cache-control'), /s-maxage=86400/);
+  assert.equal(result.imageCount, 1000);
   assert.deepEqual(requestedPages.sort((a, b) => a - b), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   assert.equal((xml.match(/<image:image>/g) ?? []).length, 1000);
   assert.match(xml, /<loc>https:\/\/myaiphotoshoot\.com\/gallery\/<\/loc>/);
   assert.match(xml, /photo-1-0\.webp\?width=420/);
 });
 
-test('escapes image URLs and removes duplicates or invalid URLs', async () => {
-  globalThis.fetch = async (input) => {
-    const page = Number(new URL(input).searchParams.get('page'));
-    return Response.json(page === 1 ? [
-      { public_url: 'https://cdn.myaiphotoshoot.com/photo.webp?width=100&quality=80' },
-      { public_url: 'https://cdn.myaiphotoshoot.com/photo.webp?width=100&quality=80' },
-      { public_url: 'https://example.supabase.co/storage/v1/object/public/photo.webp' },
-      { public_url: 'http://cdn.myaiphotoshoot.com/insecure.webp' },
-      { public_url: '' },
-    ] : []);
-  };
+test('escapes image URLs and removes duplicates or invalid URLs', () => {
+  const { imageCount, xml } = buildImageSitemap([[
+    { public_url: 'https://cdn.myaiphotoshoot.com/photo.webp?width=100&quality=80' },
+    { public_url: 'https://cdn.myaiphotoshoot.com/photo.webp?width=100&quality=80' },
+    { public_url: 'https://example.supabase.co/storage/v1/object/public/photo.webp' },
+    { public_url: 'http://cdn.myaiphotoshoot.com/insecure.webp' },
+    { public_url: '' },
+  ]]);
 
-  const response = await onRequest({ request: request(), env: {} });
-  const xml = await response.text();
-
-  assert.equal(response.status, 200);
-  assert.equal((xml.match(/<image:image>/g) ?? []).length, 2);
+  assert.equal(imageCount, 2);
   assert.match(xml, /width=100&amp;quality=80/);
   assert.match(xml, /example\.supabase\.co\/storage\/v1\/object\/public\/photo\.webp/);
   assert.doesNotMatch(xml, /example\.supabase\.co[^<]*width=420/);
 });
 
-test('does not publish a partial sitemap when an upstream page fails', async () => {
-  console.error = () => {};
-  globalThis.fetch = async (input) => {
+test('does not publish a partial sitemap when an upstream page fails', async (t) => {
+  const outputPath = await temporaryOutput(t);
+  const fetchImpl = async (input) => {
     const page = Number(new URL(input).searchParams.get('page'));
     return page === 4
       ? new Response('failure', { status: 503 })
       : Response.json([]);
   };
 
-  const response = await onRequest({ request: request(), env: {} });
-
-  assert.equal(response.status, 502);
-  assert.equal(response.headers.get('cache-control'), 'no-store');
+  await assert.rejects(
+    generateImageSitemap({ fetchImpl, outputPath }),
+    /public-gallery page 4 returned 503/,
+  );
+  await assert.rejects(access(outputPath), { code: 'ENOENT' });
 });
 
-test('supports HEAD and rejects other methods', async () => {
-  globalThis.fetch = async () => Response.json([
-    { public_url: 'https://cdn.myaiphotoshoot.com/photo.webp' },
-  ]);
-
-  const headResponse = await onRequest({ request: request('HEAD'), env: {} });
-  assert.equal(headResponse.status, 200);
-  assert.equal(await headResponse.text(), '');
-
-  const postResponse = await onRequest({ request: request('POST'), env: {} });
-  assert.equal(postResponse.status, 405);
-  assert.equal(postResponse.headers.get('allow'), 'GET, HEAD');
-});
-
-test('reuses the Cloudflare cache instead of refetching gallery pages', async () => {
-  const cacheEntries = new Map();
-  globalThis.caches = {
-    default: {
-      async match(cacheKey) {
-        return cacheEntries.get(cacheKey.url)?.clone();
-      },
-      async put(cacheKey, response) {
-        cacheEntries.set(cacheKey.url, response.clone());
-      },
-    },
-  };
-
-  let fetchCalls = 0;
-  globalThis.fetch = async () => {
-    fetchCalls += 1;
-    return Response.json([
-      { public_url: `https://cdn.myaiphotoshoot.com/photo-${fetchCalls}.webp` },
-    ]);
-  };
-
-  const firstResponse = await onRequest({ request: request(), env: {} });
-  const secondResponse = await onRequest({ request: request(), env: {} });
-
-  assert.equal(firstResponse.status, 200);
-  assert.equal(secondResponse.status, 200);
-  assert.equal(fetchCalls, 10);
-  assert.equal(await secondResponse.text(), await firstResponse.text());
-});
-
-test('deployment routes and robots.txt advertise the image sitemap', async () => {
-  const [routes, robotsSource] = await Promise.all([
+test('deployment serves the photo shell and image sitemap as static files', async () => {
+  const [routesSource, redirects, headers, robotsSource, packageSource] = await Promise.all([
     readFile(new URL('../public/_routes.json', import.meta.url), 'utf8'),
+    readFile(new URL('../public/_redirects', import.meta.url), 'utf8'),
+    readFile(new URL('../public/_headers', import.meta.url), 'utf8'),
     readFile(new URL('../src/app/robots.ts', import.meta.url), 'utf8'),
+    readFile(new URL('../package.json', import.meta.url), 'utf8'),
   ]);
+  const routes = JSON.parse(routesSource);
+  const packageJson = JSON.parse(packageSource);
 
-  assert.ok(JSON.parse(routes).include.includes('/image-sitemap.xml'));
+  assert.equal(routes.include.includes('/image-sitemap.xml'), false);
+  assert.equal(routes.include.includes('/photo/*'), false);
+  assert.match(redirects, /^\/photo\/\* \/photo\/index\.html 200$/m);
+  assert.match(headers, /^\/image-sitemap\.xml[\s\S]*?s-maxage=86400/m);
   assert.match(robotsSource, /https:\/\/myaiphotoshoot\.com\/image-sitemap\.xml/);
+  assert.match(packageJson.scripts.build, /node scripts\/generate-image-sitemap\.mjs/);
+
+  await assert.rejects(
+    access(new URL('../functions/image-sitemap.xml.js', import.meta.url)),
+    { code: 'ENOENT' },
+  );
+  await assert.rejects(
+    access(new URL('../functions/photo/[[path]].js', import.meta.url)),
+    { code: 'ENOENT' },
+  );
 });

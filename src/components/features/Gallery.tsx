@@ -264,8 +264,10 @@ export default function Gallery({
                           aria-hidden="true"
                           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-48% via-black/20 to-black/80"
                         />
-                        <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 line-clamp-2 p-2 text-sm font-semibold leading-tight text-white [overflow-wrap:anywhere] sm:text-base">
-                          {item.promptSummary}
+                        <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 p-2 text-sm font-semibold leading-tight text-white sm:text-base">
+                          <span className="line-clamp-2 [overflow-wrap:anywhere]">
+                            {item.promptSummary}
+                          </span>
                         </figcaption>
                       </>
                     )}

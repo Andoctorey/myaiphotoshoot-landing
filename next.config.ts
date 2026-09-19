@@ -46,8 +46,8 @@ const nextConfig: NextConfig = {
     memoryBasedWorkersCount: true,
   },
 
-  // Cloudflare serves /photo/:id through a Pages Function in production.
-  // This rewrite gives next dev an equivalent client-rendered page locally.
+  // Cloudflare rewrites /photo/:id to the exported client shell in production.
+  // This gives next dev the same client-rendered behavior.
   ...(isDev ? {
     async rewrites() {
       return [{ source: '/photo/:id', destination: '/photo?id=:id' }];

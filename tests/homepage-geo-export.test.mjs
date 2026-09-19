@@ -111,3 +111,43 @@ test('the production export copies llms.txt without adding robots directives', a
   const robots = await readFile(path.join(outputRoot, 'robots.txt'), 'utf8');
   assert.doesNotMatch(robots, /llms\.txt/i);
 });
+
+test('the production export keeps photo pages noindex and publishes the image sitemap', async () => {
+  const [
+    photoHtml,
+    imageSitemap,
+    regularSitemap,
+    robots,
+    redirects,
+    routesSource,
+    headers,
+  ] = await Promise.all([
+    readFile(path.join(outputRoot, 'photo', 'index.html'), 'utf8'),
+    readFile(path.join(outputRoot, 'image-sitemap.xml'), 'utf8'),
+    readFile(path.join(outputRoot, 'sitemap.xml'), 'utf8'),
+    readFile(path.join(outputRoot, 'robots.txt'), 'utf8'),
+    readFile(path.join(outputRoot, '_redirects'), 'utf8'),
+    readFile(path.join(outputRoot, '_routes.json'), 'utf8'),
+    readFile(path.join(outputRoot, '_headers'), 'utf8'),
+  ]);
+  const routes = JSON.parse(routesSource);
+  const imageCount = (imageSitemap.match(/<image:image>/g) ?? []).length;
+
+  assert.match(photoHtml, /<meta name="robots" content="noindex, follow"\/>/);
+  assert.match(redirects, /^\/photo\/\* \/photo\/index\.html 200$/m);
+  assert.equal(routes.include.includes('/photo'), false);
+  assert.equal(routes.include.includes('/photo/*'), false);
+  assert.equal(routes.include.includes('/image-sitemap.xml'), false);
+
+  assert.match(
+    imageSitemap,
+    /^<\?xml version="1\.0" encoding="UTF-8"\?>\n<urlset [^>]*xmlns:image="http:\/\/www\.google\.com\/schemas\/sitemap-image\/1\.1"/,
+  );
+  assert.match(imageSitemap, /<loc>https:\/\/myaiphotoshoot\.com\/gallery\/<\/loc>/);
+  assert.ok(imageCount > 0 && imageCount <= 1000, `invalid image sitemap count: ${imageCount}`);
+  assert.doesNotMatch(regularSitemap, /<loc>https:\/\/myaiphotoshoot\.com\/photo\//);
+  assert.match(robots, /^Sitemap: https:\/\/myaiphotoshoot\.com\/image-sitemap\.xml$/m);
+  assert.doesNotMatch(robots, /^Disallow: \/photo/m);
+  assert.match(headers, /^\/image-sitemap\.xml[\s\S]*?Content-Type: application\/xml; charset=utf-8/m);
+  assert.doesNotMatch(headers, /^\/photo(?:\/\*)?$/m);
+});

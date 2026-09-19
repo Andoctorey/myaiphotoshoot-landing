@@ -147,6 +147,5 @@
 /en/masks/* /masks/:splat 308
 /en/ai-presets/browse/* /ai-presets/browse/:splat 308
 
-# Gone: photo detail pages removed
-#
-# Handled by Cloudflare Pages Function: functions/photo/[[path]].js
+# Serve every public photo URL through the statically exported client shell.
+/photo/* /photo/index.html 200
