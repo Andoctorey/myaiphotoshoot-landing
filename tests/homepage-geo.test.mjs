@@ -105,7 +105,7 @@ test('public photo routes use the static client shell and remain noindex', async
   assert.match(localPageSource, /new URLSearchParams\(\{ id, platform: 'web' \}\)/);
   assert.match(localLayoutSource, /index: false/);
   assert.match(localLayoutSource, /follow: true/);
-  assert.match(redirects, /^\/photo\/\* \/photo\/index\.html 200$/m);
+  assert.match(redirects, /^\/photo\/\* \/photo\/ 200$/m);
 
   const routes = JSON.parse(routesSource);
   assert.equal(routes.include.includes('/photo'), false);

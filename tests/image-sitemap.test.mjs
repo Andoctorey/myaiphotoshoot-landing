@@ -84,7 +84,7 @@ test('deployment serves the photo shell and image sitemap as static files', asyn
 
   assert.equal(routes.include.includes('/image-sitemap.xml'), false);
   assert.equal(routes.include.includes('/photo/*'), false);
-  assert.match(redirects, /^\/photo\/\* \/photo\/index\.html 200$/m);
+  assert.match(redirects, /^\/photo\/\* \/photo\/ 200$/m);
   assert.match(headers, /^\/image-sitemap\.xml[\s\S]*?s-maxage=86400/m);
   assert.match(robotsSource, /https:\/\/myaiphotoshoot\.com\/image-sitemap\.xml/);
   assert.match(packageJson.scripts.build, /node scripts\/generate-image-sitemap\.mjs/);

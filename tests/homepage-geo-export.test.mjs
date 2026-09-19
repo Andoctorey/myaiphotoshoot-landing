@@ -134,7 +134,7 @@ test('the production export keeps photo pages noindex and publishes the image si
   const imageCount = (imageSitemap.match(/<image:image>/g) ?? []).length;
 
   assert.match(photoHtml, /<meta name="robots" content="noindex, follow"\/>/);
-  assert.match(redirects, /^\/photo\/\* \/photo\/index\.html 200$/m);
+  assert.match(redirects, /^\/photo\/\* \/photo\/ 200$/m);
   assert.equal(routes.include.includes('/photo'), false);
   assert.equal(routes.include.includes('/photo/*'), false);
   assert.equal(routes.include.includes('/image-sitemap.xml'), false);
