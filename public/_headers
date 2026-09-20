@@ -49,6 +49,12 @@
 /*/gallery-data
   X-Robots-Tag: noindex, follow
 
+# Static deployment snapshot used for preset sorting and pagination
+/preset-catalog/*
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, s-maxage=3600, max-age=300, stale-while-revalidate=60
+  X-Robots-Tag: noindex, follow
+
 # Prevent indexing of Next.js static export route payloads
 /index.txt
   X-Robots-Tag: noindex, nofollow

@@ -62,12 +62,14 @@ function snapshotRevision(presets: AiPreset[]): string {
       subtitle: preset.subtitle ?? null,
       featured_graphics: preset.featured_graphics ?? null,
       featured_graphics_alt: preset.featured_graphics_alt ?? null,
+      volume: preset.volume ?? null,
       cost_credits: preset.cost_credits ?? null,
       meta_title: preset.meta_title ?? null,
       meta_description: preset.meta_description ?? null,
       seo_intro: preset.seo_intro ?? null,
       seo_sections: preset.seo_sections ?? null,
       faqs: preset.faqs ?? null,
+      created_at: preset.created_at ?? null,
       revision: presetRevision(preset),
     }))
     .sort((left, right) => left.slug.localeCompare(right.slug));

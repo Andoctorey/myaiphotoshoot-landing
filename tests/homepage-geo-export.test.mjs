@@ -151,3 +151,57 @@ test('the production export keeps photo pages noindex and publishes the image si
   assert.match(headers, /^\/image-sitemap\.xml[\s\S]*?Content-Type: application\/xml; charset=utf-8/m);
   assert.doesNotMatch(headers, /^\/photo(?:\/\*)?$/m);
 });
+
+test('every exported preset catalog entry has a matching static detail page', async () => {
+  const localeCodes = (await readdir(path.join(projectRoot, 'messages'), { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
+  const expectedKeys = [
+    'created_at',
+    'featured_graphics',
+    'featured_graphics_alt',
+    'id',
+    'name',
+    'slug',
+  ];
+
+  for (const locale of localeCodes) {
+    const catalogPath = path.join(outputRoot, 'preset-catalog', locale);
+    const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+    assert.ok(catalog.length > 0, `${locale} preset catalog is empty`);
+    const catalogSlugs = catalog.map((preset) => preset.slug).sort();
+    const localizedPresetsRoot = path.join(outputRoot, locale, 'presets');
+    const exportedSlugs = (await readdir(localizedPresetsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+    assert.deepEqual(exportedSlugs, catalogSlugs, `${locale} preset inventory drifted`);
+
+    for (const preset of catalog) {
+      assert.deepEqual(Object.keys(preset).sort(), expectedKeys);
+      const localizedDetailPath = path.join(
+        outputRoot,
+        locale,
+        'presets',
+        preset.slug,
+        'index.html',
+      );
+      await readFile(localizedDetailPath, 'utf8');
+      if (locale === 'en') {
+        await readFile(path.join(outputRoot, 'presets', preset.slug, 'index.html'), 'utf8');
+      }
+    }
+
+    if (locale === 'en') {
+      const rootExportedSlugs = (await readdir(path.join(outputRoot, 'presets'), { withFileTypes: true }))
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => entry.name)
+        .sort();
+      assert.deepEqual(rootExportedSlugs, catalogSlugs, 'root English preset inventory drifted');
+    }
+  }
+
+  const headers = await readFile(path.join(outputRoot, '_headers'), 'utf8');
+  assert.match(headers, /^\/preset-catalog\/\*[\s\S]*?X-Robots-Tag: noindex, follow/m);
+});

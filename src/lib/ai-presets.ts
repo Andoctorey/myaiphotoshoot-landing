@@ -9,6 +9,7 @@ import {
   AI_PRESETS_PAGE_SIZE,
   type AiPresetsPage,
 } from '@/lib/ai-presets-shared';
+import type { AiPresetCatalogEntry } from '@/lib/ai-preset-catalog';
 import { CREDIT_USD_REFERENCE_VALUE } from '@/lib/pricing';
 import { postPublicSupabaseRpc } from '@/lib/public-supabase';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
@@ -481,6 +482,28 @@ export async function fetchAiPresetSlugs(
     throw new Error('AI preset route inventory contained duplicate slugs.');
   }
   return uniqueSlugs;
+}
+
+export async function fetchAiPresetCatalog(locale: string): Promise<AiPresetCatalogEntry[]> {
+  const presets = (await prepareAiPresetBuildSnapshots(locales)).get(locale);
+  if (!presets) {
+    throw new Error(`AI preset build snapshot omitted locale "${locale}".`);
+  }
+
+  return presets.map((preset) => {
+    const createdAt = preset.created_at?.trim();
+    if (!createdAt || !Number.isFinite(Date.parse(createdAt))) {
+      throw new Error(`AI preset "${preset.slug}" has no valid creation date.`);
+    }
+    return {
+      id: preset.id,
+      slug: preset.slug,
+      name: preset.name,
+      featured_graphics: preset.featured_graphics ?? null,
+      featured_graphics_alt: preset.featured_graphics_alt ?? null,
+      created_at: createdAt,
+    };
+  });
 }
 
 export function buildPresetProvidedDescription(preset: Pick<AiPreset, 'subtitle' | 'meta_description'>): string | null {

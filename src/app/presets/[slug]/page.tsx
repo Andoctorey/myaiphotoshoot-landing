@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const slugs = await fetchAiPresetSlugs([defaultLocale]);
+  const slugs = await fetchAiPresetSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 

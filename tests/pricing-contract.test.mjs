@@ -631,6 +631,8 @@ test('preset static generation uses validated revision-aware build snapshots', a
 
   assert.match(cacheSource, /\.next', 'cache', 'ai-preset-content'/);
   assert.match(cacheSource, /snapshotRevision\(value\.presets\) === value\.revision/);
+  assert.match(cacheSource, /volume: preset\.volume \?\? null/);
+  assert.match(cacheSource, /created_at: preset\.created_at \?\? null/);
   assert.match(cacheSource, /age >= 0 && age <= CACHE_MAX_AGE_MS/);
   assert.match(cacheSource, /rename\(temporaryPath, filePath\)/);
   assert.match(presetSource, /for \(const locale of snapshotLocales\)/);
@@ -690,6 +692,66 @@ test('preset infinite loading keeps a crawlable next-page fallback', async () =>
   assert.match(presetsGrid, /href=\{nextPageHref\}/);
   assert.match(presetsGrid, /rel="next"/);
   assert.match(defaultPaginatedRoute, /<NextIntlClientProvider locale=\{defaultLocale\} messages=\{messages\}>/);
+});
+
+test('preset sorting and pagination use the static deployment catalog', async () => {
+  const [presetsGrid, catalogRoute, headers] = await Promise.all([
+    readProjectFile('src/components/presets/AiPresetsGrid.tsx'),
+    readProjectFile('src/app/preset-catalog/[locale]/route.ts'),
+    readProjectFile('public/_headers'),
+  ]);
+
+  assert.match(presetsGrid, /fetch\(aiPresetCatalogPath\(locale\)\)/);
+  assert.match(presetsGrid, /sortAiPresetCatalog\(catalog, sort\)/);
+  assert.doesNotMatch(presetsGrid, /postPublicSupabaseRpc|list_ai_presets/);
+  assert.match(catalogRoute, /fetchAiPresetCatalog\(locale\)/);
+  assert.match(catalogRoute, /locales\.map\(\(locale\) => \(\{ locale \}\)\)/);
+  assert.match(headers, /^\/preset-catalog\/\*[\s\S]*?X-Robots-Tag: noindex, follow/m);
+});
+
+test('preset catalog validation preserves popular order and sorts newest deterministically', async () => {
+  const catalogModule = await loadTypeScriptModule('src/lib/ai-preset-catalog.ts');
+  const catalog = [
+    {
+      id: '00000000-0000-0000-0000-000000000001',
+      slug: 'popular-first',
+      name: 'Popular first',
+      featured_graphics: null,
+      featured_graphics_alt: null,
+      created_at: '2026-01-01T00:00:00.000Z',
+    },
+    {
+      id: '00000000-0000-0000-0000-000000000002',
+      slug: 'newest',
+      name: 'Newest',
+      featured_graphics: 'https://cdn.myaiphotoshoot.com/newest.jpg',
+      featured_graphics_alt: 'Newest preset',
+      created_at: '2026-02-01T00:00:00.000Z',
+    },
+    {
+      id: '00000000-0000-0000-0000-000000000003',
+      slug: 'newest-tie-breaker',
+      name: 'Newest tie breaker',
+      featured_graphics: null,
+      featured_graphics_alt: null,
+      created_at: '2026-02-01T00:00:00.000Z',
+    },
+  ];
+
+  assert.deepEqual(catalogModule.parseAiPresetCatalog(catalog), catalog);
+  assert.deepEqual(
+    catalogModule.sortAiPresetCatalog(catalog, 'popular').map((preset) => preset.slug),
+    ['popular-first', 'newest', 'newest-tie-breaker'],
+  );
+  assert.deepEqual(
+    catalogModule.sortAiPresetCatalog(catalog, 'new').map((preset) => preset.slug),
+    ['newest-tie-breaker', 'newest', 'popular-first'],
+  );
+  assert.equal(catalogModule.aiPresetCatalogPath('en'), '/preset-catalog/en');
+  assert.throws(
+    () => catalogModule.parseAiPresetCatalog([...catalog, catalog[0]]),
+    /duplicate routes/,
+  );
 });
 
 test('preset lists omit prices while detail CTAs display backend credit prices', async () => {

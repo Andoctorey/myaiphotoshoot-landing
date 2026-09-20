@@ -4,9 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import {
+  aiPresetCatalogPath,
+  parseAiPresetCatalog,
+  sortAiPresetCatalog,
+  type AiPresetCatalogEntry,
+  type AiPresetCatalogSort,
+} from '@/lib/ai-preset-catalog';
 import { aiPresetsPagePath, type AiPresetsPage } from '@/lib/ai-presets-shared';
 import type { AiPreset } from '@/types/ai-preset';
-import { postPublicSupabaseRpc } from '@/lib/public-supabase';
 import { localePath } from '@/lib/seo';
 
 type Props = {
@@ -17,8 +23,7 @@ type Props = {
   emptyLabel: string;
 };
 
-type PresetSort = 'popular' | 'new';
-const PRESET_REVALIDATE_SECONDS = 3600;
+type PresetSort = AiPresetCatalogSort;
 
 function updateSortUrl(locale: string, sort: PresetSort) {
   const url = new URL(localePath(locale, '/presets/'), window.location.origin);
@@ -26,34 +31,22 @@ function updateSortUrl(locale: string, sort: PresetSort) {
   window.history.replaceState(window.history.state, '', url);
 }
 
-async function fetchPresetPage(
-  locale: string,
+async function fetchPresetCatalog(locale: string): Promise<AiPresetCatalogEntry[]> {
+  const response = await fetch(aiPresetCatalogPath(locale));
+  if (!response.ok) throw new Error(`Preset catalog returned ${response.status}.`);
+  return parseAiPresetCatalog(await response.json());
+}
+
+function catalogPage(
+  catalog: readonly AiPresetCatalogEntry[],
   pageSize: number,
   offset: number,
   sort: PresetSort,
-): Promise<{ presets: AiPreset[]; totalCount: number }> {
-  const response = await postPublicSupabaseRpc('list_ai_presets', {
-    p_locale: locale,
-    p_limit: pageSize,
-    p_offset: offset,
-    p_sort: sort,
-  }, PRESET_REVALIDATE_SECONDS);
-  if (!response.ok) throw new Error(`Preset listing returned ${response.status}.`);
-
-  const data: unknown = await response.json();
-  if (!Array.isArray(data)) throw new Error('Preset listing returned an invalid page.');
-  if (data.length === 0) return { presets: [], totalCount: offset };
-  if (data.some((preset) =>
-    !preset || typeof preset.id !== 'string' || typeof preset.slug !== 'string'
-    || typeof preset.name !== 'string' || !Number.isSafeInteger(preset.total_count)
-    || preset.total_count < offset + data.length
-  )) {
-    throw new Error('Preset listing returned an invalid page.');
-  }
-
+): { presets: AiPreset[]; totalCount: number } {
+  const sorted = sortAiPresetCatalog(catalog, sort);
   return {
-    presets: data as AiPreset[],
-    totalCount: (data[0] as AiPreset).total_count!,
+    presets: sorted.slice(offset, offset + pageSize),
+    totalCount: sorted.length,
   };
 }
 
@@ -75,6 +68,17 @@ export default function AiPresetsGrid({
   const sentinel = useRef<HTMLDivElement>(null);
   const inFlight = useRef(false);
   const initialSortApplied = useRef(false);
+  const catalogRequest = useRef<Promise<AiPresetCatalogEntry[]> | null>(null);
+
+  const loadCatalog = useCallback(() => {
+    if (catalogRequest.current) return catalogRequest.current;
+    const request = fetchPresetCatalog(locale);
+    catalogRequest.current = request;
+    void request.catch(() => {
+      if (catalogRequest.current === request) catalogRequest.current = null;
+    });
+    return request;
+  }, [locale]);
 
   const loadMore = useCallback(async () => {
     if (inFlight.current || !hasMore) return;
@@ -85,7 +89,12 @@ export default function AiPresetsGrid({
     const offset = (nextPage - 1) * initialPage.pageSize;
 
     try {
-      const result = await fetchPresetPage(locale, initialPage.pageSize, offset, sort);
+      const result = catalogPage(
+        await loadCatalog(),
+        initialPage.pageSize,
+        offset,
+        sort,
+      );
       const nextPresets = result.presets;
       setPresets((current) => {
         const knownIds = new Set(current.map((preset) => preset.id));
@@ -100,7 +109,7 @@ export default function AiPresetsGrid({
       inFlight.current = false;
       setIsLoading(false);
     }
-  }, [hasMore, initialPage.pageSize, locale, page, sort]);
+  }, [hasMore, initialPage.pageSize, loadCatalog, locale, page, sort]);
 
   const changeSort = useCallback(async (
     nextSort: PresetSort,
@@ -117,7 +126,12 @@ export default function AiPresetsGrid({
     setSortError(false);
 
     try {
-      const result = await fetchPresetPage(locale, initialPage.pageSize, offset, nextSort);
+      const result = catalogPage(
+        await loadCatalog(),
+        initialPage.pageSize,
+        offset,
+        nextSort,
+      );
       setPresets(result.presets);
       setPage(targetPage);
       setHasMore(offset + result.presets.length < result.totalCount);
@@ -130,7 +144,7 @@ export default function AiPresetsGrid({
       inFlight.current = false;
       setIsLoading(false);
     }
-  }, [initialPage.pageSize, locale, sort]);
+  }, [initialPage.pageSize, loadCatalog, locale, sort]);
 
   useEffect(() => {
     if (initialSortApplied.current) return;

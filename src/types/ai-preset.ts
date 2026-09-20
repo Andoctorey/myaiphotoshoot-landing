@@ -16,6 +16,7 @@ export interface AiPreset {
   seo_intro?: string | null;
   seo_sections?: AiPresetSeoSection[] | null;
   faqs?: AiPresetFaq[] | null;
+  volume?: number | null;
   created_at?: string | null;
   updated_at?: string | null;
   total_count?: number | null;
