@@ -92,10 +92,15 @@ async function postAiPresetLookupRpc(slug: string, locale: string): Promise<Resp
   }, AI_PRESET_REVALIDATE_SECONDS);
 }
 
-async function postAiPresetPriceLookupRpc(slug: string, locale: string): Promise<Response> {
+async function postAiPresetPriceLookupRpc(
+  slug: string,
+  locale: string,
+  includeInputPhotoCapability = true,
+): Promise<Response> {
   return postPublicSupabaseRpc('get_ai_preset', {
     p_identifier: slug,
     p_locale: locale,
+    ...(includeInputPhotoCapability ? { p_max_input_photos: 14 } : {}),
   }, AI_PRESET_REVALIDATE_SECONDS);
 }
 
@@ -104,7 +109,10 @@ async function fetchAiPresetCreditCost(
   locale: string,
   expectedPreset: Pick<AiPreset, 'id' | 'slug'>,
 ): Promise<number> {
-  const response = await postAiPresetPriceLookupRpc(slug, locale);
+  let response = await postAiPresetPriceLookupRpc(slug, locale);
+  if (!response.ok) {
+    response = await postAiPresetPriceLookupRpc(slug, locale, false);
+  }
   if (!response.ok) {
     throw new Error(`Preset price lookup RPC returned ${response.status}.`);
   }
@@ -142,6 +150,7 @@ async function fetchAiPresetsPageInternal(
       p_locale: locale,
       p_limit: normalizedPageSize,
       p_offset: offset,
+      p_max_input_photos: 14,
     });
     const paginatedStatus = res.status;
     let usedLegacyRpc = false;
@@ -365,6 +374,10 @@ export function normalizeAiPreset(preset: AiPreset): AiPreset {
     cost,
     cost_credits: normalizeCreditCost(preset.cost_credits)
       ?? deriveCreditCostFromUsd(cost),
+    required_input_photos: normalizePositiveInteger(
+      typeof preset.required_input_photos === 'number' ? preset.required_input_photos : 1,
+      1,
+    ),
     seo_sections: normalizeSeoSections(preset.seo_sections),
     faqs: normalizeFaqs(preset.faqs),
   };

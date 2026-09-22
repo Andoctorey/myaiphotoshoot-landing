@@ -802,6 +802,9 @@ test('preset detail pages normally receive content and pricing from one RPC and 
           return new Response('[]');
         }
         if (args[0] === 'get_ai_preset') {
+          if (args[1].p_max_input_photos) {
+            return new Response('Missing RPC signature', { status: 404 });
+          }
           return new Response(JSON.stringify([{
             id: 'preset-id',
             slug: args[1].p_identifier,
@@ -834,6 +837,11 @@ test('preset detail pages normally receive content and pricing from one RPC and 
   assert.deepEqual(calls, [
     ['get_ai_preset_page', { p_slug: 'golden-hour', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'legacy-preset', p_locale: 'de' }, 3600],
+    ['get_ai_preset', {
+      p_identifier: 'legacy-preset',
+      p_locale: 'de',
+      p_max_input_photos: 14,
+    }, 3600],
     ['get_ai_preset', { p_identifier: 'legacy-preset', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'missing', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'wrong-slug', p_locale: 'de' }, 3600],
