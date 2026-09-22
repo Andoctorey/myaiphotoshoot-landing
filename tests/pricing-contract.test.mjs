@@ -755,17 +755,22 @@ test('preset catalog validation preserves popular order and sorts newest determi
 });
 
 test('preset lists omit prices while detail CTAs display backend credit prices', async () => {
-  const [presetsIndex, homePresets, presetPage] = await Promise.all([
+  const [presetsIndex, homePresets, presetPage, presetExperiment] = await Promise.all([
     readProjectFile('src/components/presets/AiPresetsIndex.tsx'),
     readProjectFile('src/components/features/HomePresets.tsx'),
     readProjectFile('src/components/presets/AiPresetPage.tsx'),
+    readProjectFile('src/components/presets/PresetExperiment.tsx'),
   ]);
 
   for (const presetList of [presetsIndex, homePresets]) {
     assert.doesNotMatch(presetList, /formatCredits|\bCR\b/);
   }
-  assert.match(presetPage, /formatCredits\(preset\.cost_credits, locale\)/);
+  assert.match(presetPage, /credits=\{preset\.cost_credits \?\? null\} locale=\{locale\}/);
+  assert.equal(presetPage.match(/<PresetExperimentPrice\s*\/>/g)?.length, 2);
+  assert.match(presetExperiment, /credits: assignment\?\.cost_credits \?\? credits/);
+  assert.match(presetExperiment, /formatCredits\(context\.credits, context\.locale\)/);
   assert.doesNotMatch(presetPage, />\s*\d+\s+CR\s*</);
+  assert.doesNotMatch(presetExperiment, />\s*\d+\s+CR\s*</);
 });
 
 test('homepage preset cards open the selected preset in a new web-app tab', async () => {
