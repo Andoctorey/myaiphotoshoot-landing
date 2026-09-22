@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { PresetExperimentProvider, PresetExperimentImage, PresetExperimentLink } from './PresetExperiment';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { buildPresetAppUrl, buildPresetDescription } from '@/lib/ai-presets';
@@ -90,6 +90,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
   };
 
   return (
+    <PresetExperimentProvider key={preset.id} presetId={preset.id} appUrl={appUrl} image={preset.featured_graphics || ''} alt={imageAlt}>
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
 
@@ -126,7 +127,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
               ) : null}
             </div>
 
-            <a
+            <PresetExperimentLink
               href={appUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -134,9 +135,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
               className="relative block min-h-0 w-full flex-1 rounded-[28px] outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary"
             >
               {preset.featured_graphics ? (
-                <Image
-                  src={preset.featured_graphics}
-                  alt={imageAlt}
+                <PresetExperimentImage
                   width={960}
                   height={720}
                   sizes="(min-width: 816px) 768px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
@@ -148,9 +147,9 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                   {preset.name.charAt(0).toUpperCase()}
                 </div>
               )}
-            </a>
+            </PresetExperimentLink>
 
-            <a
+            <PresetExperimentLink
               href={appUrl}
               className="inline-flex min-h-14 w-full max-w-[420px] shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-on-primary transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
               target="_blank"
@@ -163,7 +162,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                   <span className="tabular-nums">{creditPrice}</span>
                 </>
               ) : null}
-            </a>
+            </PresetExperimentLink>
           </header>
         </div>
 
@@ -226,7 +225,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                   <p className="text-lg font-semibold text-gray-950 dark:text-white">{t('readyTitle')}</p>
                   <p className="mt-2 text-sm leading-6 text-gray-700 dark:text-gray-300">{t('readyDescription')}</p>
                   <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                    <a
+                    <PresetExperimentLink
                       href={appUrl}
                       className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
                       target="_blank"
@@ -239,7 +238,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                           <span className="tabular-nums">{creditPrice}</span>
                         </>
                       ) : null}
-                    </a>
+                    </PresetExperimentLink>
                   </div>
                 </div>
               </section>
@@ -248,5 +247,6 @@ export default async function AiPresetPage({ locale, preset }: Props) {
         ) : null}
       </article>
     </div>
+    </PresetExperimentProvider>
   );
 }

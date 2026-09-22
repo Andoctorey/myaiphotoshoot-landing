@@ -11,6 +11,7 @@
     "test:image-sitemap": "node --test tests/image-sitemap.test.mjs",
     "test:localized-blog": "node --test tests/localized-blog-alias.test.mjs",
     "test:pricing": "node --test tests/pricing-contract.test.mjs",
+    "test:presets": "node --test tests/preset-test.test.mjs",
     "test:geo": "node --test tests/homepage-geo.test.mjs",
     "test:geo-export": "node --test tests/homepage-geo-export.test.mjs",
     "test:json-ld": "node --test src/lib/json-ld.test.mjs",

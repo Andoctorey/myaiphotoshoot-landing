@@ -1,6 +1,8 @@
 {
   "version": 1,
   "include": [
+    "/preset-test",
+    "/preset-test/",
     "/geo",
     "/geo/",
     "/pricing",

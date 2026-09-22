@@ -90,6 +90,7 @@ export default function ConsentBanner() {
 
   const acceptAll = () => {
     try { localStorage.setItem('consent_choice', 'accepted'); } catch {}
+    window.dispatchEvent(new Event('consent-choice-changed'));
     if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
       (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.('consent', 'update', {
         analytics_storage: 'granted',
@@ -104,6 +105,7 @@ export default function ConsentBanner() {
 
   const rejectAll = () => {
     try { localStorage.setItem('consent_choice', 'rejected'); } catch {}
+    window.dispatchEvent(new Event('consent-choice-changed'));
     if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
       (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.('consent', 'update', {
         analytics_storage: 'denied',
