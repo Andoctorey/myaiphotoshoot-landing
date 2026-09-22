@@ -1,8 +1,7 @@
-import { PresetExperimentProvider, PresetExperimentImage, PresetExperimentLink } from './PresetExperiment';
+import { PresetExperimentProvider, PresetExperimentImage, PresetExperimentLink, PresetExperimentPrice } from './PresetExperiment';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { buildPresetAppUrl, buildPresetDescription } from '@/lib/ai-presets';
-import { formatCredits } from '@/lib/pricing';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
 import type { AiPreset } from '@/types/ai-preset';
@@ -32,9 +31,6 @@ export default async function AiPresetPage({ locale, preset }: Props) {
   const faqItems = preset.faqs ?? [];
   const hasDetails = introParagraphs.length > 0 || seoSections.length > 0 || faqItems.length > 0;
   const tryPresetLabel = t('tryPreset');
-  const creditPrice = preset.cost_credits
-    ? formatCredits(preset.cost_credits, locale)
-    : null;
 
   const jsonLdGraph: Array<Record<string, unknown>> = [
     {
@@ -90,7 +86,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
   };
 
   return (
-    <PresetExperimentProvider key={preset.id} presetId={preset.id} appUrl={appUrl} image={preset.featured_graphics || ''} alt={imageAlt}>
+    <PresetExperimentProvider key={preset.id} presetId={preset.id} appUrl={appUrl} image={preset.featured_graphics || ''} alt={imageAlt} credits={preset.cost_credits ?? null} locale={locale}>
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
 
@@ -156,12 +152,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
               rel="noopener noreferrer"
             >
               {tryPresetLabel}
-              {creditPrice ? (
-                <>
-                  <span aria-hidden="true">·</span>
-                  <span className="tabular-nums">{creditPrice}</span>
-                </>
-              ) : null}
+              <PresetExperimentPrice />
             </PresetExperimentLink>
           </header>
         </div>
@@ -232,12 +223,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                       rel="noopener noreferrer"
                     >
                       {tryPresetLabel}
-                      {creditPrice ? (
-                        <>
-                          <span aria-hidden="true">·</span>
-                          <span className="tabular-nums">{creditPrice}</span>
-                        </>
-                      ) : null}
+                      <PresetExperimentPrice />
                     </PresetExperimentLink>
                   </div>
                 </div>

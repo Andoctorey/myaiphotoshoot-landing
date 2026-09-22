@@ -2,9 +2,10 @@
 
 import { createContext, useContext, useEffect, useState, type AnchorHTMLAttributes, type ReactNode } from 'react';
 import Image, { type ImageProps } from 'next/image';
+import { formatCredits } from '@/lib/pricing';
 
-type Assignment = { assignment_id: string; featured_graphics: string; featured_graphics_alt: string };
-type ExperimentContext = { appUrl: string; image: string; alt: string; pending: boolean; trackClick: () => void };
+type Assignment = { assignment_id: string; featured_graphics: string; featured_graphics_alt: string; cost_credits?: number };
+type ExperimentContext = { appUrl: string; image: string; alt: string; credits: number | null; locale: string; pending: boolean; trackClick: () => void };
 const Context = createContext<ExperimentContext | null>(null);
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -25,8 +26,8 @@ async function recordEvent(assignmentId: string, event: 'exposure' | 'click') {
   } catch (error) { console.warn('Preset experiment event was not recorded', { event, error }); }
 }
 
-export function PresetExperimentProvider({ presetId, appUrl, image, alt, children }: {
-  presetId: string; appUrl: string; image: string; alt: string; children: ReactNode;
+export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits, locale, children }: {
+  presetId: string; appUrl: string; image: string; alt: string; credits: number | null; locale: string; children: ReactNode;
 }) {
   const [assignment, setAssignment] = useState<Assignment | null>(null);
   const [pending, setPending] = useState(false);
@@ -54,6 +55,7 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, childre
         const value = await response.json() as Assignment | null;
         if (!value) return;
         if (!UUID.test(value.assignment_id) || new URL(value.featured_graphics).protocol !== 'https:') throw new Error('Invalid test preview');
+        if (value.cost_credits !== undefined && (!Number.isSafeInteger(value.cost_credits) || value.cost_credits <= 0)) throw new Error('Invalid test price');
         // Image loading must not select which assigned visitors enter the experiment.
         if (!cancelled && !current.signal.aborted) setAssignment(value);
       } catch (error) {
@@ -77,6 +79,8 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, childre
     appUrl: assignment ? `${appUrl}~${assignment.assignment_id}` : appUrl,
     image: assignment?.featured_graphics || image,
     alt: assignment?.featured_graphics_alt || alt,
+    credits: assignment?.cost_credits ?? credits,
+    locale,
     pending,
     trackClick: () => { if (assignment) void recordEvent(assignment.assignment_id, 'click'); },
   }}>{children}</Context.Provider>;
@@ -101,4 +105,9 @@ export function PresetExperimentLink(props: AnchorHTMLAttributes<HTMLAnchorEleme
 export function PresetExperimentImage(props: Omit<ImageProps, 'src' | 'alt'>) {
   const context = useContext(Context);
   return context ? <Image {...props} src={context.image} alt={context.alt} /> : null;
+}
+
+export function PresetExperimentPrice() {
+  const context = useContext(Context);
+  return context?.credits ? <><span aria-hidden="true">·</span><span className="tabular-nums">{formatCredits(context.credits, context.locale)}</span></> : null;
 }
