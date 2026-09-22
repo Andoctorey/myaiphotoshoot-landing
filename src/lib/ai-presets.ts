@@ -374,8 +374,12 @@ export function normalizeAiPreset(preset: AiPreset): AiPreset {
     cost,
     cost_credits: normalizeCreditCost(preset.cost_credits)
       ?? deriveCreditCostFromUsd(cost),
-    required_input_photos: normalizePositiveInteger(
-      typeof preset.required_input_photos === 'number' ? preset.required_input_photos : 1,
+    min_input_photos: normalizePositiveInteger(
+      typeof preset.min_input_photos === 'number' ? preset.min_input_photos : 1,
+      1,
+    ),
+    max_input_photos: normalizePositiveInteger(
+      typeof preset.max_input_photos === 'number' ? preset.max_input_photos : 1,
       1,
     ),
     seo_sections: normalizeSeoSections(preset.seo_sections),
