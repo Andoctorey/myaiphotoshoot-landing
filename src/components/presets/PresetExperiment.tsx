@@ -5,7 +5,7 @@ import Image, { type ImageProps } from 'next/image';
 import { formatCredits } from '@/lib/pricing';
 
 type Assignment = { assignment_id: string; featured_graphics: string; featured_graphics_alt: string; cost_credits?: number };
-type ExperimentContext = { appUrl: string; image: string; alt: string; credits: number | null; locale: string; pending: boolean; trackClick: () => void };
+type ExperimentContext = { appUrl: string; image: string; alt: string; credits: number | null; locale: string; pending: boolean; resolved: boolean; trackClick: () => void };
 const Context = createContext<ExperimentContext | null>(null);
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -31,6 +31,7 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
 }) {
   const [assignment, setAssignment] = useState<Assignment | null>(null);
   const [pending, setPending] = useState(false);
+  const [resolved, setResolved] = useState(false);
   useEffect(() => {
     let cancelled = false;
     let controller: AbortController | undefined;
@@ -40,8 +41,10 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
       controller = current;
       const choice = readPresetExperimentConsent();
       setAssignment(null);
+      setResolved(false);
       if (choice === 'rejected') {
         setPending(false);
+        setResolved(true);
         void fetch('/preset-test', { method: 'DELETE' }).catch((error) => console.warn('Unable to clear preset test cookie', error));
         return;
       }
@@ -62,7 +65,10 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
         if (!cancelled && !current.signal.aborted) console.warn('Using the original preset preview', error);
       } finally {
         window.clearTimeout(timeout);
-        if (!cancelled && controller === current) setPending(false);
+        if (!cancelled && controller === current) {
+          setPending(false);
+          setResolved(true);
+        }
       }
     };
     void assign();
@@ -82,6 +88,7 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
     credits: assignment?.cost_credits ?? credits,
     locale,
     pending,
+    resolved,
     trackClick: () => { if (assignment) void recordEvent(assignment.assignment_id, 'click'); },
   }}>{children}</Context.Provider>;
 }
@@ -104,10 +111,44 @@ export function PresetExperimentLink(props: AnchorHTMLAttributes<HTMLAnchorEleme
 
 export function PresetExperimentImage(props: Omit<ImageProps, 'src' | 'alt'>) {
   const context = useContext(Context);
-  return context ? <Image {...props} src={context.image} alt={context.alt} /> : null;
+  return context ? <AssignedPresetImage key={context.image} {...props} src={context.image} alt={context.alt} resolved={context.resolved} /> : null;
+}
+
+function AssignedPresetImage({ resolved, ...props }: ImageProps & { resolved: boolean }) {
+  const [loaded, setLoaded] = useState(false);
+  const visible = resolved && loaded;
+  return (
+    <>
+      {!visible && (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 960 720"
+          width="960"
+          height="720"
+          className={`${props.className || ''} preset-experiment-image-placeholder text-gray-200 dark:text-gray-800`}
+        >
+          <rect width="960" height="720" fill="currentColor" />
+        </svg>
+      )}
+      <Image
+        {...props}
+        className={`${props.className || ''} preset-experiment-image${visible ? '' : ' invisible'}`}
+        onLoad={(event) => {
+          setLoaded(true);
+          props.onLoad?.(event);
+        }}
+      />
+    </>
+  );
 }
 
 export function PresetExperimentPrice() {
   const context = useContext(Context);
-  return context?.credits ? <><span aria-hidden="true">·</span><span className="tabular-nums">{formatCredits(context.credits, context.locale)}</span></> : null;
+  if (!context?.credits) return null;
+  return (
+    <span className={`preset-experiment-price inline-flex gap-2${context.resolved ? '' : ' invisible'}`}>
+      <span aria-hidden="true">·</span>
+      <span className="tabular-nums">{formatCredits(context.credits, context.locale)}</span>
+    </span>
+  );
 }

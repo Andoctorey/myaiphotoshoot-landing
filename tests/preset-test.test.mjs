@@ -187,6 +187,7 @@ test('only runtime endpoints invoke Pages Functions; canonical preset URLs stay 
   assert.equal(page.match(/<PresetExperimentLink\b/g)?.length, 3);
   assert.match(page, /<PresetExperimentImage\b/);
   assert.equal(page.match(/<PresetExperimentPrice\b/g)?.length, 2);
+  assert.match(page, /<noscript>\s*<style>/);
 });
 
 async function loadClientModule(react = React) {
@@ -197,7 +198,7 @@ async function loadClientModule(react = React) {
   const pricing = { exports: {} };
   const pricingSource = await readFile(new URL('../src/lib/pricing.ts', import.meta.url), 'utf8');
   new Function('module', 'exports', ts.transpileModule(pricingSource, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(pricing, pricing.exports);
-  const image = ({ src, alt, width, height }) => React.createElement('img', { src, alt, width, height });
+  const image = ({ src, alt, width, height, className }) => React.createElement('img', { src, alt, width, height, className });
   new Function('require', 'module', 'exports', outputText)((name) => name === 'next/image' ? { default: image } : name === 'react' ? react : name === '@/lib/pricing' ? pricing.exports : require(name), compiled, compiled.exports);
   return compiled.exports;
 }
@@ -225,6 +226,9 @@ test('static rendering retains the original image, alt text and canonical app li
   assert.match(markup, /href="https:\/\/app.example\/#preset\/portrait"/);
   assert.match(markup, /src="https:\/\/example.com\/main.jpg"/);
   assert.match(markup, /alt="Original preview"/);
+  assert.match(markup, /preset-experiment-image-placeholder/);
+  assert.match(markup, /preset-experiment-image invisible/);
+  assert.match(markup, /preset-experiment-price inline-flex gap-2 invisible/);
   assert.match(markup, /9 CR/);
   assert.doesNotMatch(markup, /~[a-f\d-]{36}/);
 });
@@ -232,7 +236,7 @@ test('static rendering retains the original image, alt text and canonical app li
 // Exercise the provider's effects without a browser or an additional DOM dependency.
 async function clientHarness(t) {
   const states = [], effects = [], scheduled = [];
-  let stateIndex = 0, effectIndex = 0, context;
+  let stateIndex = 0, effectIndex = 0, context, imageKey, imageStateIndex;
   const client = await loadClientModule({
     ...React,
     useState(initial) {
@@ -274,6 +278,15 @@ async function clientHarness(t) {
       while (scheduled.length) scheduled.shift()();
       return context;
     },
+    image() {
+      const element = client.PresetExperimentImage({ width: 960, height: 720 });
+      if (imageKey !== element.key) {
+        imageKey = element.key;
+        imageStateIndex = states.length;
+      }
+      stateIndex = imageStateIndex;
+      return element.type(element.props);
+    },
     link: () => client.PresetExperimentLink({ children: 'Open app' }),
     price: () => renderToStaticMarkup(client.PresetExperimentPrice()),
     expire: () => { for (const callback of timers.values()) callback(); },
@@ -294,6 +307,10 @@ test('assignment and app links activate without waiting for image loading', asyn
   });
   const client = await clientHarness(t);
   assert.equal(client.render().pending, false, 'initial static fallback remains usable without JavaScript');
+  assert.equal(client.render().resolved, false, 'the original preview remains covered until assignment resolves');
+  const initialImage = client.image().props.children[1];
+  assert.match(initialImage.props.className, /invisible/);
+  initialImage.props.onLoad({});
   assert.equal(client.render().pending, true);
   const pendingLink = client.link();
   assert.equal(pendingLink.props.href, undefined, 'a pending assignment cannot open the unassigned app URL');
@@ -305,9 +322,17 @@ test('assignment and app links activate without waiting for image loading', asyn
   await settle();
   const context = client.render();
   assert.equal(context.pending, false);
+  assert.equal(context.resolved, true);
   assert.equal(context.image, assignment.featured_graphics);
   assert.equal(context.alt, assignment.featured_graphics_alt);
   assert.equal(context.credits, 19);
+  const loadingImage = client.image().props.children[1];
+  assert.equal(loadingImage.props.src, assignment.featured_graphics);
+  assert.match(loadingImage.props.className, /invisible/, 'a loaded main image cannot appear while B loads');
+  loadingImage.props.onLoad({});
+  assert.doesNotMatch(client.image().props.children[1].props.className, /invisible/);
+  initialImage.props.onLoad({});
+  assert.doesNotMatch(client.image().props.children[1].props.className, /invisible/, 'a late A load cannot hide B');
   assert.match(client.price(), /19 CR/);
   const link = client.link();
   assert.equal(link.props.href, `https://app.example/#preset/portrait~${assignment.assignment_id}`);
@@ -330,6 +355,7 @@ test('no experiment, backend failure and timeouts restore usable canonical links
     if (scenario === 'timeout') client.expire();
     await settle();
     assert.equal(client.render().pending, false);
+    assert.equal(client.render().resolved, true);
     assert.match(client.price(), /9 CR/);
     assert.equal(client.link().props.href, 'https://app.example/#preset/portrait');
   });

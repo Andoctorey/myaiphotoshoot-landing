@@ -89,6 +89,13 @@ export default async function AiPresetPage({ locale, preset }: Props) {
     <PresetExperimentProvider key={preset.id} presetId={preset.id} appUrl={appUrl} image={preset.featured_graphics || ''} alt={imageAlt} credits={preset.cost_credits ?? null} locale={locale}>
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+      <noscript>
+        <style>{`
+          .preset-experiment-image { visibility: visible !important; }
+          .preset-experiment-image-placeholder { display: none !important; }
+          .preset-experiment-price { visibility: visible !important; }
+        `}</style>
+      </noscript>
 
       <article className="mx-auto max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
         {/* SiteShell reserves 4rem for the fixed navigation above this viewport-sized hero. */}
