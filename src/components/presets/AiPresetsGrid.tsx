@@ -16,12 +16,10 @@ import type { AiPreset } from '@/types/ai-preset';
 import { localePath } from '@/lib/seo';
 import {
   clearPresetAssignments,
-  isPresetAssignmentResolved,
-  markPresetAssignmentsChecked,
   readPresetAssignment,
   readPresetExperimentConsent,
-  rememberPresetAssignments,
-} from './PresetExperiment';
+  resolvePresetAssignments,
+} from '@/lib/preset-assignments';
 
 type Props = {
   locale: string;
@@ -61,25 +59,12 @@ function catalogPage(
 async function assignedPreviews(presets: AiPreset[]): Promise<AiPreset[]> {
   const consent = readPresetExperimentConsent();
   if (consent === 'rejected') return presets;
-  const missing = presets.filter((preset) => !isPresetAssignmentResolved(preset.id));
-  if (missing.length) {
-    try {
-      const params = new URLSearchParams({
-        presetIds: missing.map((preset) => preset.id).join(','), consent,
-      });
-      const response = await fetch(`/preset-test?${params}`, { cache: 'no-store' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const values = await response.json() as Record<string, {
-        assignment_id: string; featured_graphics: string; featured_graphics_alt: string; cost_credits?: number;
-      }> | null;
-      if (readPresetExperimentConsent() === 'rejected') return presets;
-      if (!values) return presets;
-      markPresetAssignmentsChecked(missing.map((preset) => preset.id));
-      rememberPresetAssignments(values);
-    } catch (error) {
-      console.warn('Using original preset grid previews', error);
-    }
+  try {
+    await resolvePresetAssignments(presets.map((preset) => preset.id));
+  } catch (error) {
+    console.warn('Using original preset grid previews', error);
   }
+  if (readPresetExperimentConsent() === 'rejected') return presets;
   return presets.map((preset) => {
     const assignment = readPresetAssignment(preset.id);
     return assignment ? {

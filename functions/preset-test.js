@@ -15,6 +15,30 @@ function json(body, status = 200, extra = {}) {
   return new Response(JSON.stringify(body), { status, headers: { ...HEADERS, ...extra } });
 }
 
+async function readEventBody(request) {
+  const maxBytes = 2048;
+  if (Number(request.headers.get('content-length')) > maxBytes) return null;
+  if (!request.body) return '';
+  const reader = request.body.getReader();
+  const decoder = new TextDecoder();
+  let bytes = 0;
+  let text = '';
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) return text + decoder.decode();
+      bytes += value.byteLength;
+      if (bytes > maxBytes) {
+        await reader.cancel();
+        return null;
+      }
+      text += decoder.decode(value, { stream: true });
+    }
+  } finally {
+    reader.releaseLock();
+  }
+}
+
 async function rpc(env, name, body) {
   const base = (env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_URL).replace(/\/$/, '');
   const key = env.SUPABASE_SERVICE_ROLE_KEY;
@@ -29,7 +53,7 @@ async function rpc(env, name, body) {
   return text ? JSON.parse(text) : null;
 }
 
-async function rateLimit(request, env) {
+async function rateLimitSubject(request, env) {
   const ip = request.headers.get('cf-connecting-ip');
   if (!ip || !env.SUPABASE_SERVICE_ROLE_KEY) throw new Error('Preset experiment rate limiting is not configured');
   // Store a keyed digest, never the visitor's IP, in the shared rate-limit table.
@@ -37,7 +61,13 @@ async function rateLimit(request, env) {
   const key = await crypto.subtle.importKey('raw', encoder.encode(env.SUPABASE_SERVICE_ROLE_KEY), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const digest = await crypto.subtle.sign('HMAC', key, encoder.encode(`preset-test:${ip}`));
   const subject = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-  const result = await rpc(env, 'consume_global_rate_limit', { p_subject: `preset-test:${subject}`, p_limit: 60, p_window_seconds: 60 });
+  return `preset-test:${subject}`;
+}
+
+async function rateLimit(request, env) {
+  const result = await rpc(env, 'consume_global_rate_limit', {
+    p_subject: await rateLimitSubject(request, env), p_limit: 60, p_window_seconds: 60,
+  });
   if (typeof result?.allowed !== 'boolean') throw new Error('Invalid preset experiment rate-limit response');
   return result;
 }
@@ -60,12 +90,14 @@ export async function assignPresetTests(request, env, presetIds) {
   if (!Array.isArray(presetIds) || presetIds.length > 50 || presetIds.some(id => !UUID.test(id))) {
     throw new Error('Invalid preset assignment batch');
   }
-  const limit = await rateLimit(request, env);
-  if (!limit.allowed) return { assignments: null, retryAfter: limit.retry_after_seconds || 60 };
   const visitorId = presetTestCookie(request) || crypto.randomUUID();
-  const assignments = await rpc(env, 'assign_ai_preset_tests', {
-    p_preset_ids: [...new Set(presetIds)], p_visitor_id: visitorId,
+  const result = await rpc(env, 'assign_ai_preset_tests_rate_limited', {
+    p_preset_ids: [...new Set(presetIds.map(id => id.toLowerCase()))], p_visitor_id: visitorId,
+    p_subject: await rateLimitSubject(request, env),
   });
+  if (typeof result?.allowed !== 'boolean') throw new Error('Invalid preset experiment rate-limit response');
+  if (!result.allowed) return { assignments: null, retryAfter: result.retry_after_seconds || 60 };
+  const assignments = result.assignments;
   if (!assignments || typeof assignments !== 'object' || Array.isArray(assignments)) throw new Error('Invalid preset assignment response');
   return { assignments, visitorId: Object.keys(assignments).length ? visitorId : null };
 }
@@ -85,8 +117,8 @@ export async function onRequest({ request, env = {} }) {
     const savedVisitor = presetTestCookie(request);
     let event;
     if (request.method === 'POST') {
-      const text = await request.text();
-      if (text.length > 2048) return json({ error: 'Request too large' }, 413);
+      const text = await readEventBody(request);
+      if (text === null) return json({ error: 'Request too large' }, 413);
       let body;
       try { body = JSON.parse(text); } catch { return json({ error: 'Invalid JSON' }, 400); }
       if (!UUID.test(body?.assignmentId || '') || !['exposure', 'click'].includes(body?.event)) return json({ error: 'Invalid event' }, 400);
@@ -96,24 +128,21 @@ export async function onRequest({ request, env = {} }) {
     const presetId = url.searchParams.get('presetId');
     const presetIds = url.searchParams.get('presetIds')?.split(',');
     if (!event && !presetIds && !UUID.test(presetId || '')) return json({ error: 'Invalid preset' }, 400);
-    if (!event && presetIds) {
-      if (presetIds.length > 50 || presetIds.some(id => !UUID.test(id))) return json({ error: 'Invalid presets' }, 400);
-      const batch = await assignPresetTests(request, env, presetIds);
+    if (!event) {
+      if (presetIds && (presetIds.length > 50 || presetIds.some(id => !UUID.test(id)))) return json({ error: 'Invalid presets' }, 400);
+      const batch = await assignPresetTests(request, env, presetIds || [presetId]);
       if (!batch.assignments) return json({ error: 'Too many requests' }, 429, { 'retry-after': String(batch.retryAfter) });
-      return json(batch.assignments, 200, batch.visitorId ? { 'set-cookie': presetTestVisitorCookie(batch.visitorId) } : {});
+      const preview = presetIds ? batch.assignments : (batch.assignments[presetId.toLowerCase()] ?? null);
+      return json(preview, 200, {
+        'x-preset-test-resolved': '1',
+        ...(batch.visitorId ? { 'set-cookie': presetTestVisitorCookie(batch.visitorId) } : {}),
+      });
     }
     const limit = await rateLimit(request, env);
     if (!limit.allowed) return json({ error: 'Too many requests' }, 429, { 'retry-after': String(limit.retry_after_seconds || 60) });
-    if (event) {
-      const recorded = await rpc(env, 'record_ai_preset_test_visitor_event', { p_assignment_id: event.assignmentId, p_visitor_id: savedVisitor, p_event: event.event });
-      if (!recorded) return json({ error: 'Assignment unavailable' }, 403);
-      return json({ ok: true });
-    }
-    const visitorId = savedVisitor || crypto.randomUUID();
-    const assignment = await rpc(env, 'assign_ai_preset_test', { p_preset_id: presetId, p_visitor_id: visitorId });
-    return json(assignment, 200, assignment ? {
-      'set-cookie': presetTestVisitorCookie(visitorId),
-    } : {});
+    const recorded = await rpc(env, 'record_ai_preset_test_visitor_event', { p_assignment_id: event.assignmentId, p_visitor_id: savedVisitor, p_event: event.event });
+    if (!recorded) return json({ error: 'Assignment unavailable' }, 403);
+    return json({ ok: true });
   } catch (error) {
     console.error('Preset experiment request failed', { method: request.method, error: error instanceof Error ? error.message : 'Unknown error' });
     return json({ error: 'Preset testing is temporarily unavailable' }, 503);

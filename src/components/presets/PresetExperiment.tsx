@@ -3,58 +3,16 @@
 import { createContext, useContext, useEffect, useState, type AnchorHTMLAttributes, type ReactNode } from 'react';
 import Image, { type ImageProps } from 'next/image';
 import { formatCredits } from '@/lib/pricing';
+import {
+  clearPresetAssignments,
+  readPresetAssignment,
+  readPresetExperimentConsent,
+  resolvePresetAssignments,
+  type PresetAssignment,
+} from '@/lib/preset-assignments';
 
-type Assignment = { assignment_id: string; featured_graphics: string; featured_graphics_alt: string; cost_credits?: number };
 type ExperimentContext = { appUrl: string; image: string; alt: string; credits: number | null; locale: string; pending: boolean; resolved: boolean; trackClick: () => void };
 const Context = createContext<ExperimentContext | null>(null);
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const assignments = new Map<string, Assignment | null>();
-let bootstrapRead = false;
-
-export function rememberPresetAssignments(values: Record<string, Assignment | null>) {
-  for (const [id, value] of Object.entries(values)) {
-    if (UUID.test(id) && value === null) { assignments.set(id, null); continue; }
-    try {
-      if (value && UUID.test(id) && UUID.test(value.assignment_id) &&
-          new URL(value.featured_graphics).protocol === 'https:') assignments.set(id, value);
-    } catch { /* Ignore invalid previews. */ }
-  }
-}
-
-export function readPresetAssignment(presetId: string): Assignment | null {
-  if (!bootstrapRead && typeof document !== 'undefined') {
-    bootstrapRead = true;
-    const bootstrap = document.getElementById('preset-test-bootstrap');
-    const data = (bootstrap as HTMLTemplateElement | null)?.content?.textContent || bootstrap?.textContent;
-    if (data) {
-      try { rememberPresetAssignments(JSON.parse(data)); }
-      catch (error) { console.warn('Invalid preset preview bootstrap', error); }
-    }
-  }
-  return assignments.get(presetId) || null;
-}
-
-export function isPresetAssignmentResolved(presetId: string): boolean {
-  readPresetAssignment(presetId);
-  return assignments.has(presetId);
-}
-
-export function markPresetAssignmentsChecked(ids: string[]) {
-  for (const id of ids) if (UUID.test(id) && !assignments.has(id)) assignments.set(id, null);
-}
-
-export function clearPresetAssignments() {
-  assignments.clear();
-  if (typeof document !== 'undefined') {
-    document.getElementById('preset-test-preview-style')?.remove();
-    document.getElementById('preset-test-bootstrap')?.remove();
-  }
-}
-
-export function readPresetExperimentConsent(): string {
-  // Without readable consent storage, a prior opt-out cannot be ruled out.
-  try { return localStorage.getItem('consent_choice') || ''; } catch { return 'rejected'; }
-}
 
 async function recordEvent(assignmentId: string, event: 'exposure' | 'click') {
   const consent = readPresetExperimentConsent();
@@ -71,16 +29,14 @@ async function recordEvent(assignmentId: string, event: 'exposure' | 'click') {
 export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits, locale, children }: {
   presetId: string; appUrl: string; image: string; alt: string; credits: number | null; locale: string; children: ReactNode;
 }) {
-  const [assignment, setAssignment] = useState<Assignment | null>(null);
+  const [assignment, setAssignment] = useState<PresetAssignment | null>(null);
   const [pending, setPending] = useState(false);
   const [resolved, setResolved] = useState(false);
   useEffect(() => {
     let cancelled = false;
-    let controller: AbortController | undefined;
+    let requestRevision = 0;
     const assign = async () => {
-      controller?.abort();
-      const current = new AbortController();
-      controller = current;
+      const current = ++requestRevision;
       const choice = readPresetExperimentConsent();
       setAssignment(null);
       setResolved(false);
@@ -99,26 +55,16 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
         return;
       }
       setPending(true);
-      const timeout = window.setTimeout(() => current.abort(), 5000);
       try {
-        const response = await fetch(`/preset-test?presetId=${encodeURIComponent(presetId)}&consent=${encodeURIComponent(choice)}`, {
-          cache: 'no-store', signal: current.signal,
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const value = await response.json() as Assignment | null;
-        if (!value) return;
-        if (!UUID.test(value.assignment_id) || new URL(value.featured_graphics).protocol !== 'https:') throw new Error('Invalid test preview');
-        if (value.cost_credits !== undefined && (!Number.isSafeInteger(value.cost_credits) || value.cost_credits <= 0)) throw new Error('Invalid test price');
+        await resolvePresetAssignments([presetId]);
         // Image loading must not select which assigned visitors enter the experiment.
-        if (!cancelled && !current.signal.aborted) {
-          rememberPresetAssignments({ [presetId]: value });
-          setAssignment(value);
+        if (!cancelled && requestRevision === current) {
+          setAssignment(readPresetAssignment(presetId));
         }
       } catch (error) {
-        if (!cancelled && !current.signal.aborted) console.warn('Using the original preset preview', error);
+        if (!cancelled && requestRevision === current) console.warn('Using the original preset preview', error);
       } finally {
-        window.clearTimeout(timeout);
-        if (!cancelled && controller === current) {
+        if (!cancelled && requestRevision === current) {
           setPending(false);
           setResolved(true);
         }
@@ -129,7 +75,7 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
     const onStorage = (event: StorageEvent) => { if (event.key === 'consent_choice' || event.key === null) onConsent(); };
     window.addEventListener('consent-choice-changed', onConsent);
     window.addEventListener('storage', onStorage);
-    return () => { cancelled = true; controller?.abort(); window.removeEventListener('consent-choice-changed', onConsent); window.removeEventListener('storage', onStorage); };
+    return () => { cancelled = true; window.removeEventListener('consent-choice-changed', onConsent); window.removeEventListener('storage', onStorage); };
   }, [presetId]);
 
   useEffect(() => { if (assignment) void recordEvent(assignment.assignment_id, 'exposure'); }, [assignment]);

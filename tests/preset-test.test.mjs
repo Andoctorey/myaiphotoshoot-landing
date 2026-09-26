@@ -33,6 +33,11 @@ function mockBackend(t, handler) {
       assert.equal(body.p_window_seconds, 60);
       return Response.json({ allowed: true, retry_after_seconds: 0 });
     }
+    if (url.endsWith('/assign_ai_preset_tests_rate_limited')) {
+      assert.match(JSON.parse(init.body).p_subject, /^preset-test:[a-f\d]{64}$/);
+      const response = await handler(url, init);
+      return Response.json({ allowed: true, retry_after_seconds: 0, assignments: await response.json() });
+    }
     return handler(url, init);
   });
 }
@@ -46,13 +51,13 @@ test('experiment consent matches the existing EEA/UK choice and fails closed for
 
 test('first assignment sets a private secure visitor cookie and never caches the preview', async (t) => {
   let visitor;
-  mockBackend(t, async (url, init) => {
-    assert.equal(url, 'https://backend.example/rest/v1/rpc/assign_ai_preset_test');
+  const backend = mockBackend(t, async (url, init) => {
+    assert.equal(url, 'https://backend.example/rest/v1/rpc/assign_ai_preset_tests_rate_limited');
     const body = JSON.parse(init.body);
-    assert.equal(body.p_preset_id, presetId);
+    assert.deepEqual(body.p_preset_ids, [presetId]);
     visitor = body.p_visitor_id;
     assert.match(visitor, /^[a-f\d-]{36}$/i);
-    return Response.json(assignment);
+    return Response.json({ [presetId]: assignment });
   });
   const response = await onRequest({ request: request() });
   assert.deepEqual(await response.json(), assignment);
@@ -60,22 +65,24 @@ test('first assignment sets a private secure visitor cookie and never caches the
   assert.match(response.headers.get('set-cookie'), /HttpOnly; Secure; SameSite=Lax/);
   assert.match(response.headers.get('cache-control'), /private, no-store/);
   assert.equal(response.headers.get('x-robots-tag'), 'noindex');
+  assert.equal(backend.mock.callCount(), 1, 'rate limiting and assignment use one round trip');
 });
 
 test('repeat visits reuse the browser ID across preset experiments', async (t) => {
   mockBackend(t, async (_url, init) => {
     assert.equal(JSON.parse(init.body).p_visitor_id, visitorId);
-    return Response.json(assignment);
+    return Response.json({ [presetId]: assignment });
   });
   const response = await onRequest({ request: request(undefined, { headers: { cookie: `other=1; preset_test_visitor=${visitorId}` } }) });
   assert.equal(response.status, 200);
 });
 
 test('one batch assignment request covers a preset grid page', async (t) => {
-  mockBackend(t, async (url, init) => {
-    assert.match(url, /\/assign_ai_preset_tests$/);
-    assert.deepEqual(JSON.parse(init.body), {
-      p_preset_ids: [presetId], p_visitor_id: visitorId,
+  const backend = mockBackend(t, async (url, init) => {
+    assert.match(url, /\/assign_ai_preset_tests_rate_limited$/);
+    const body = JSON.parse(init.body);
+    assert.deepEqual(body, {
+      p_preset_ids: [presetId], p_visitor_id: visitorId, p_subject: body.p_subject,
     });
     return Response.json({ [presetId]: assignment });
   });
@@ -84,13 +91,37 @@ test('one batch assignment request covers a preset grid page', async (t) => {
   }) });
   assert.deepEqual(await response.json(), { [presetId]: assignment });
   assert.match(response.headers.get('set-cookie'), new RegExp(`preset_test_visitor=${visitorId}`));
+  assert.equal(backend.mock.callCount(), 1);
 });
 
 test('no running test leaves the page canonical without setting a tracking cookie', async (t) => {
-  mockBackend(t, async () => Response.json(null));
+  mockBackend(t, async () => Response.json({}));
   const response = await onRequest({ request: request() });
   assert.equal(await response.json(), null);
   assert.equal(response.headers.get('set-cookie'), null);
+  assert.equal(response.headers.get('x-preset-test-resolved'), '1');
+});
+
+test('single preset lookup preserves assignments when the UUID uses uppercase letters', async (t) => {
+  mockBackend(t, async (_url, init) => {
+    assert.deepEqual(JSON.parse(init.body).p_preset_ids, [presetId]);
+    return Response.json({ [presetId]: assignment });
+  });
+  const response = await onRequest({ request: request(`?presetId=${presetId.toUpperCase()}`) });
+  assert.deepEqual(await response.json(), assignment);
+});
+
+test('invalid combined RPC results cannot be cached as a confirmed no-test result', async (t) => {
+  t.mock.method(console, 'error', () => {});
+  for (const assignments of [null, [], 'invalid']) {
+    const fetch = t.mock.method(globalThis, 'fetch', async () => Response.json({ allowed: true, assignments }));
+    const response = await onRequest({ request: request() });
+    assert.equal(response.status, 503);
+    assert.equal(response.headers.get('x-preset-test-resolved'), null);
+    assert.equal(response.headers.get('set-cookie'), null);
+    assert.equal(fetch.mock.callCount(), 1);
+    fetch.mock.restore();
+  }
 });
 
 test('opt out and unresolved consent clear the cookie without contacting Supabase', async (t) => {
@@ -100,6 +131,7 @@ test('opt out and unresolved consent clear the cookie without contacting Supabas
     const response = await onRequest({ request: req });
     assert.equal(await response.json(), null);
     assert.match(response.headers.get('set-cookie'), /Max-Age=0/);
+    assert.equal(response.headers.get('x-preset-test-resolved'), null);
   }
   assert.equal(fetch.mock.callCount(), 0);
 });
@@ -127,6 +159,54 @@ test('events cannot be submitted with only a copied assignment ID', async (t) =>
   assert.equal(fetch.mock.callCount(), 0);
 });
 
+test('oversized chunked event bodies stop reading at the byte limit', async (t) => {
+  const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected network'); });
+  let reads = 0, cancelled = false;
+  const body = new ReadableStream({
+    pull(controller) { reads++; controller.enqueue(new Uint8Array(1024)); },
+    cancel() { cancelled = true; },
+  }, { highWaterMark: 0 });
+  const response = await onRequest({ request: request('', { method: 'POST', body, duplex: 'half' }) });
+  assert.equal(response.status, 413);
+  assert.equal(reads, 3);
+  assert.equal(cancelled, true);
+  assert.equal(fetch.mock.callCount(), 0);
+});
+
+test('oversized content length is rejected without reading the event body', async (t) => {
+  const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected network'); });
+  let reads = 0;
+  const body = new ReadableStream({ pull() { reads++; } }, { highWaterMark: 0 });
+  const response = await onRequest({ request: request('', {
+    method: 'POST', headers: { 'content-length': '2049' }, body, duplex: 'half',
+  }) });
+  assert.equal(response.status, 413);
+  assert.equal(reads, 0);
+  assert.equal(fetch.mock.callCount(), 0);
+});
+
+test('event limit counts UTF-8 bytes and accepts exactly 2048 bytes across chunks', async (t) => {
+  const backend = mockBackend(t, async () => Response.json(true));
+  const event = JSON.stringify({ assignmentId: assignment.assignment_id, event: 'click', padding: 'é' });
+  const bytes = new TextEncoder().encode(event.padEnd(2048 - 1));
+  assert.equal(bytes.byteLength, 2048);
+  let offset = 0;
+  const body = new ReadableStream({
+    pull(controller) {
+      if (offset === bytes.length) { controller.close(); return; }
+      controller.enqueue(bytes.slice(offset, ++offset));
+    },
+  });
+  const response = await onRequest({ request: request('', {
+    method: 'POST', headers: { cookie: `preset_test_visitor=${visitorId}` }, body, duplex: 'half',
+  }) });
+  assert.equal(response.status, 200);
+  assert.equal(backend.mock.callCount(), 2);
+  const oversized = await onRequest({ request: request('', { method: 'POST', body: 'é'.repeat(1025) }) });
+  assert.equal(oversized.status, 413);
+  assert.equal(backend.mock.callCount(), 2);
+});
+
 test('a cookie belonging to a different visitor cannot record an event', async (t) => {
   mockBackend(t, async () => Response.json(false));
   const response = await onRequest({ request: request('', { method: 'POST', headers: { cookie: `preset_test_visitor=${visitorId}` }, body: JSON.stringify({ assignmentId: assignment.assignment_id, event: 'click' }) }) });
@@ -136,19 +216,21 @@ test('a cookie belonging to a different visitor cannot record an event', async (
 test('rate-limited requests never assign a visitor or write an event', async (t) => {
   const subjects = [];
   t.mock.method(globalThis, 'fetch', async (url, init) => {
-    assert.match(url, /\/consume_global_rate_limit$/);
+    assert.match(url, /\/(consume_global_rate_limit|assign_ai_preset_tests_rate_limited)$/);
     subjects.push(JSON.parse(init.body).p_subject);
     return Response.json({ allowed: false, retry_after_seconds: 17 });
   });
-  for (const req of [request(), request('', { method: 'POST', headers: { cookie: `preset_test_visitor=${visitorId}` }, body: JSON.stringify({ assignmentId: assignment.assignment_id, event: 'click' }) })]) {
+  for (const req of [request(), request(`?presetIds=${presetId}`), request('', { method: 'POST', headers: { cookie: `preset_test_visitor=${visitorId}` }, body: JSON.stringify({ assignmentId: assignment.assignment_id, event: 'click' }) })]) {
     const response = await onRequest({ request: req });
     assert.equal(response.status, 429);
     assert.equal(response.headers.get('retry-after'), '17');
     assert.match(response.headers.get('cache-control'), /no-store/);
     assert.equal(response.headers.get('set-cookie'), null);
+    assert.equal(response.headers.get('x-preset-test-resolved'), null);
   }
-  assert.equal(subjects.length, 2);
-  assert.equal(subjects[0], subjects[1], 'GET and POST share an IP budget regardless of cookie');
+  assert.equal(subjects.length, 3);
+  assert.equal(subjects[0], subjects[1], 'single and batch lookups share an IP budget');
+  assert.equal(subjects[0], subjects[2], 'GET and POST share an IP budget regardless of cookie');
   assert.doesNotMatch(subjects[0], /192\.0\.2\.1/);
 });
 
@@ -166,7 +248,7 @@ test('missing server credentials or trusted IP fail closed without anonymous fal
 test('an invalid rate-limit response fails closed before experiment writes', async (t) => {
   t.mock.method(console, 'error', () => {});
   t.mock.method(globalThis, 'fetch', async (url) => {
-    assert.match(url, /\/consume_global_rate_limit$/);
+    assert.match(url, /\/assign_ai_preset_tests_rate_limited$/);
     return Response.json(null);
   });
   assert.equal((await onRequest({ request: request() })).status, 503);
@@ -209,10 +291,10 @@ test('preset pages use middleware while SEO identity stays in the static page', 
   assert.match(page, /data-preset-test-id=\{preset.id\}/);
 });
 
-test('a preset page gets a first-paint preview without changing canonical metadata', async (t) => {
+test('a preset page gets a first-paint preview in one backend call without changing canonical metadata', async (t) => {
   const { onRequest: middleware } = await import('../functions/_middleware.js');
-  mockBackend(t, async (url, init) => {
-    assert.match(url, /\/assign_ai_preset_tests$/);
+  const backend = mockBackend(t, async (url, init) => {
+    assert.match(url, /\/assign_ai_preset_tests_rate_limited$/);
     assert.deepEqual(JSON.parse(init.body).p_preset_ids, [presetId]);
     return Response.json({ [presetId]: assignment });
   });
@@ -228,6 +310,7 @@ test('a preset page gets a first-paint preview without changing canonical metada
   assert.match(result, /rel="canonical" href="https:\/\/example.com\/presets\/example\/"/);
   assert.match(response.headers.get('set-cookie'), /preset_test_visitor=/);
   assert.match(response.headers.get('cache-control'), /private, no-store/);
+  assert.equal(backend.mock.callCount(), 1);
 });
 
 test('EEA preset pages without consent remain unchanged', async (t) => {
@@ -245,7 +328,7 @@ test('EEA preset pages without consent remain unchanged', async (t) => {
 test('accepted consent allows the edge to assign an EEA visitor', async (t) => {
   const { onRequest: middleware } = await import('../functions/_middleware.js');
   mockBackend(t, async (url) => {
-    assert.match(url, /\/assign_ai_preset_tests$/);
+    assert.match(url, /\/assign_ai_preset_tests_rate_limited$/);
     return Response.json({ [presetId]: assignment });
   });
   const html = `<html><head></head><body data-preset-test-id="${presetId}"></body></html>`;
@@ -274,12 +357,15 @@ async function loadClientModule(react = React) {
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } });
   const require = createRequire(import.meta.url);
   const compiled = { exports: {} };
+  const assignments = { exports: {} };
+  const assignmentSource = await readFile(new URL('../src/lib/preset-assignments.ts', import.meta.url), 'utf8');
+  new Function('module', 'exports', ts.transpileModule(assignmentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText)(assignments, assignments.exports);
   const pricing = { exports: {} };
   const pricingSource = await readFile(new URL('../src/lib/pricing.ts', import.meta.url), 'utf8');
   new Function('module', 'exports', ts.transpileModule(pricingSource, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(pricing, pricing.exports);
   const image = ({ src, alt, width, height, className }) => React.createElement('img', { src, alt, width, height, className });
-  new Function('require', 'module', 'exports', outputText)((name) => name === 'next/image' ? { default: image } : name === 'react' ? react : name === '@/lib/pricing' ? pricing.exports : require(name), compiled, compiled.exports);
-  return compiled.exports;
+  new Function('require', 'module', 'exports', outputText)((name) => name === 'next/image' ? { default: image } : name === 'react' ? react : name === '@/lib/pricing' ? pricing.exports : name === '@/lib/preset-assignments' ? assignments.exports : require(name), compiled, compiled.exports);
+  return { ...compiled.exports, ...assignments.exports };
 }
 
 test('unavailable consent storage never silently opts visitors into experiments', async (t) => {
@@ -364,6 +450,10 @@ async function clientHarness(t) {
     });
   }
   return {
+    resolveAssignments: client.resolvePresetAssignments,
+    readAssignment: client.readPresetAssignment,
+    clearAssignments: client.clearPresetAssignments,
+    dispose: () => { for (const effect of effects) effect.cleanup?.(); },
     render() {
       stateIndex = effectIndex = 0;
       context = client.PresetExperimentProvider({ presetId, appUrl: 'https://app.example/#preset/portrait', image: 'https://example.com/main.jpg', alt: 'Main preview', credits: 9, locale: 'en', children: null }).props.value;
@@ -386,6 +476,149 @@ async function clientHarness(t) {
   };
 }
 const settle = () => new Promise(resolve => setImmediate(resolve));
+
+test('cached previews and confirmed no-test results bypass an unrelated pending request', async (t) => {
+  let finish;
+  const cachedEmptyId = 'dddddddd-dddd-4ddd-8ddd-dddddddddddd';
+  const fetch = t.mock.method(globalThis, 'fetch', (url) => {
+    if (url.includes('presetIds=')) return Promise.resolve(Response.json({ [presetId]: assignment }));
+    return new Promise(resolve => { finish = resolve; });
+  });
+  const client = await clientHarness(t);
+  await client.resolveAssignments([presetId, cachedEmptyId]);
+  const pending = client.resolveAssignments([visitorId]);
+  let cachedResolved = false;
+  const cached = client.resolveAssignments([presetId, cachedEmptyId]).then(() => { cachedResolved = true; });
+  await settle();
+  assert.equal(cachedResolved, true, 'cached results must not wait for another network response');
+  assert.equal(fetch.mock.callCount(), 2);
+  finish(Response.json(assignment));
+  await Promise.all([pending, cached]);
+});
+
+test('confirmed no-test responses are reused until assignments are cleared', async (t) => {
+  const fetch = t.mock.method(globalThis, 'fetch', async () => Response.json(null, {
+    headers: { 'x-preset-test-resolved': '1' },
+  }));
+  const client = await clientHarness(t);
+  await client.resolveAssignments([presetId]);
+  await client.resolveAssignments([presetId]);
+  assert.equal(fetch.mock.callCount(), 1);
+  client.clearAssignments();
+  await client.resolveAssignments([presetId]);
+  assert.equal(fetch.mock.callCount(), 2);
+});
+
+test('unresolved consent and legacy null responses remain retryable', async (t) => {
+  const fetch = t.mock.method(globalThis, 'fetch', async () => Response.json(null));
+  const client = await clientHarness(t);
+  client.consent('');
+  await client.resolveAssignments([presetId]);
+  client.consent('accepted');
+  await client.resolveAssignments([presetId]);
+  await client.resolveAssignments([presetId]);
+  assert.equal(fetch.mock.callCount(), 3);
+});
+
+test('failed assignment lookups are not cached as no test', async (t) => {
+  let fail = true;
+  const fetch = t.mock.method(globalThis, 'fetch', async () => fail
+    ? new Response(null, { status: 503 }) : Response.json(assignment));
+  const client = await clientHarness(t);
+  await assert.rejects(client.resolveAssignments([presetId]), /HTTP 503/);
+  fail = false;
+  await client.resolveAssignments([presetId]);
+  assert.deepEqual(client.readAssignment(presetId), assignment);
+  assert.equal(fetch.mock.callCount(), 2);
+});
+
+test('simultaneous no-test lookups reuse the confirmed negative result', async (t) => {
+  let finish;
+  const fetch = t.mock.method(globalThis, 'fetch', () => new Promise(resolve => { finish = resolve; }));
+  const client = await clientHarness(t);
+  const first = client.resolveAssignments([presetId]);
+  const second = client.resolveAssignments([presetId]);
+  finish(Response.json(null, { headers: { 'x-preset-test-resolved': '1' } }));
+  await Promise.all([first, second]);
+  assert.equal(fetch.mock.callCount(), 1);
+});
+
+test('a delayed no-test response cannot overwrite a fresh assignment after consent changes', async (t) => {
+  const requests = [];
+  const fetch = t.mock.method(globalThis, 'fetch', (_url, init) => new Promise(resolve => {
+    requests.push({ resolve, signal: init.signal });
+  }));
+  const client = await clientHarness(t);
+  const oldRequest = client.resolveAssignments([presetId]);
+  client.consent('rejected');
+  client.clearAssignments();
+  assert.equal(requests[0].signal.aborted, true);
+
+  client.consent('accepted');
+  const newRequest = client.resolveAssignments([presetId]);
+  requests[1].resolve(Response.json(assignment));
+  await newRequest;
+  requests[0].resolve(Response.json(null, { headers: { 'x-preset-test-resolved': '1' } }));
+  await oldRequest;
+  await client.resolveAssignments([presetId]);
+  assert.deepEqual(client.readAssignment(presetId), assignment);
+  assert.equal(fetch.mock.callCount(), 2);
+});
+
+test('grid and detail share a pending assignment request across navigation', async (t) => {
+  let finish, signal;
+  const calls = [];
+  t.mock.method(globalThis, 'fetch', (url, init) => {
+    if (init.method === 'POST') return Promise.resolve(Response.json({ ok: true }));
+    calls.push(url);
+    signal = init.signal;
+    return new Promise(resolve => { finish = resolve; });
+  });
+  const client = await clientHarness(t);
+  const batch = client.resolveAssignments([presetId, visitorId]);
+  client.render();
+  assert.equal(calls.length, 1);
+  finish(Response.json({ [presetId]: assignment }));
+  await batch;
+  await settle();
+  assert.equal(calls.length, 1);
+  assert.equal(client.render().image, assignment.featured_graphics);
+  assert.match(client.render().appUrl, new RegExp(`~${assignment.assignment_id}$`));
+  assert.equal(signal.aborted, false);
+});
+
+test('different preset requests wait for the first response to establish the visitor cookie', async (t) => {
+  const requests = [];
+  t.mock.method(globalThis, 'fetch', (url, init) => new Promise(resolve => { requests.push({ url, signal: init.signal, resolve }); }));
+  const client = await clientHarness(t);
+  const first = client.resolveAssignments([presetId]);
+  const second = client.resolveAssignments([visitorId]);
+  assert.equal(requests.length, 1);
+  requests[0].resolve(Response.json(assignment));
+  await first;
+  await settle();
+  assert.equal(requests.length, 2);
+  assert.match(requests[1].url, new RegExp(visitorId));
+  requests[1].resolve(Response.json(assignment));
+  await second;
+});
+
+test('unmounting the detail page does not abort assignment needed by the grid', async (t) => {
+  let finish, signal;
+  const fetch = t.mock.method(globalThis, 'fetch', (_url, init) => {
+    signal = init.signal;
+    return new Promise(resolve => { finish = resolve; });
+  });
+  const client = await clientHarness(t);
+  client.render();
+  const grid = client.resolveAssignments([presetId]);
+  client.dispose();
+  assert.equal(signal.aborted, false);
+  finish(Response.json(assignment));
+  await grid;
+  assert.equal(fetch.mock.callCount(), 1);
+  assert.deepEqual(client.readAssignment(presetId), assignment);
+});
 
 test('assignment and app links activate without waiting for image loading', async (t) => {
   let resolveAssignment;
