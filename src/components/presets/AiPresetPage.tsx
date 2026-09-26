@@ -132,8 +132,6 @@ export default async function AiPresetPage({ locale, preset }: Props) {
 
             <PresetExperimentLink
               href={appUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               aria-label={tryPresetLabel}
               className="relative block min-h-0 w-full flex-1 rounded-[28px] outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary"
             >
@@ -154,8 +152,6 @@ export default async function AiPresetPage({ locale, preset }: Props) {
             <PresetExperimentLink
               href={appUrl}
               className="inline-flex min-h-14 w-full max-w-[420px] shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-on-primary transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               {tryPresetLabel}
               <PresetExperimentPrice />
@@ -225,8 +221,6 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                     <PresetExperimentLink
                       href={appUrl}
                       className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       {tryPresetLabel}
                       <PresetExperimentPrice />

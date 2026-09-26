@@ -52,8 +52,6 @@ export default async function HomePresets({ locale }: { locale: string }) {
                 <a
                   key={preset.id}
                   href={buildPresetAppUrl(preset.slug)}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   aria-label={preset.name}
                   className="group w-[68vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-900/10 transition duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950 lg:w-auto lg:max-w-none"
                 >
