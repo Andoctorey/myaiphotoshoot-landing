@@ -14,6 +14,14 @@ import {
 import { aiPresetsPagePath, type AiPresetsPage } from '@/lib/ai-presets-shared';
 import type { AiPreset } from '@/types/ai-preset';
 import { localePath } from '@/lib/seo';
+import {
+  clearPresetAssignments,
+  isPresetAssignmentResolved,
+  markPresetAssignmentsChecked,
+  readPresetAssignment,
+  readPresetExperimentConsent,
+  rememberPresetAssignments,
+} from './PresetExperiment';
 
 type Props = {
   locale: string;
@@ -50,6 +58,39 @@ function catalogPage(
   };
 }
 
+async function assignedPreviews(presets: AiPreset[]): Promise<AiPreset[]> {
+  const consent = readPresetExperimentConsent();
+  if (consent === 'rejected') return presets;
+  const missing = presets.filter((preset) => !isPresetAssignmentResolved(preset.id));
+  if (missing.length) {
+    try {
+      const params = new URLSearchParams({
+        presetIds: missing.map((preset) => preset.id).join(','), consent,
+      });
+      const response = await fetch(`/preset-test?${params}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const values = await response.json() as Record<string, {
+        assignment_id: string; featured_graphics: string; featured_graphics_alt: string; cost_credits?: number;
+      }> | null;
+      if (readPresetExperimentConsent() === 'rejected') return presets;
+      if (!values) return presets;
+      markPresetAssignmentsChecked(missing.map((preset) => preset.id));
+      rememberPresetAssignments(values);
+    } catch (error) {
+      console.warn('Using original preset grid previews', error);
+    }
+  }
+  return presets.map((preset) => {
+    const assignment = readPresetAssignment(preset.id);
+    return assignment ? {
+      ...preset,
+      featured_graphics: assignment.featured_graphics,
+      featured_graphics_alt: assignment.featured_graphics_alt,
+      cost_credits: assignment.cost_credits ?? preset.cost_credits,
+    } : preset;
+  });
+}
+
 export default function AiPresetsGrid({
   locale,
   initialPage,
@@ -59,6 +100,7 @@ export default function AiPresetsGrid({
 }: Props) {
   const t = useTranslations('presets');
   const [presets, setPresets] = useState(initialPage.presets);
+  const basePresets = useRef(new Map(initialPage.presets.map((preset) => [preset.id, preset])));
   const [page, setPage] = useState(initialPage.page);
   const [hasMore, setHasMore] = useState(initialPage.hasNextPage);
   const [sort, setSort] = useState<PresetSort>('popular');
@@ -95,7 +137,8 @@ export default function AiPresetsGrid({
         offset,
         sort,
       );
-      const nextPresets = result.presets;
+      for (const preset of result.presets) basePresets.current.set(preset.id, preset);
+      const nextPresets = await assignedPreviews(result.presets);
       setPresets((current) => {
         const knownIds = new Set(current.map((preset) => preset.id));
         return [...current, ...nextPresets.filter((preset) => !knownIds.has(preset.id))];
@@ -132,7 +175,8 @@ export default function AiPresetsGrid({
         offset,
         nextSort,
       );
-      setPresets(result.presets);
+      for (const preset of result.presets) basePresets.current.set(preset.id, preset);
+      setPresets(await assignedPreviews(result.presets));
       setPage(targetPage);
       setHasMore(offset + result.presets.length < result.totalCount);
       if (updateUrl) updateSortUrl(locale, nextSort);
@@ -153,6 +197,32 @@ export default function AiPresetsGrid({
       void changeSort('new', initialPage.page, false);
     }
   }, [changeSort, initialPage.page]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void assignedPreviews(initialPage.presets).then((resolved) => {
+      if (cancelled) return;
+      const byId = new Map(resolved.map((preset) => [preset.id, preset]));
+      setPresets((current) => current.map((preset) => byId.get(preset.id) || preset));
+    });
+    return () => { cancelled = true; };
+  }, [initialPage.presets]);
+
+  useEffect(() => {
+    const onConsent = () => {
+      const originals = presets.map((preset) => basePresets.current.get(preset.id) || preset);
+      if (readPresetExperimentConsent() === 'rejected') {
+        clearPresetAssignments();
+        setPresets(originals);
+        void fetch('/preset-test', { method: 'DELETE' }).catch((error) =>
+          console.warn('Unable to clear preset test cookie', error));
+      } else {
+        void assignedPreviews(originals).then(setPresets);
+      }
+    };
+    window.addEventListener('consent-choice-changed', onConsent);
+    return () => window.removeEventListener('consent-choice-changed', onConsent);
+  }, [presets]);
 
   useEffect(() => {
     if (!hasMore || loadError || isLoading || !sentinel.current
@@ -214,10 +284,11 @@ export default function AiPresetsGrid({
           {presets.map((preset) => (
             <Link
               key={preset.id}
+              data-preset-test-id={preset.id}
               href={localePath(locale, `/presets/${preset.slug}/`)}
               className="group block min-w-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
-              <div className="relative isolate aspect-square overflow-hidden bg-gray-200 dark:bg-gray-800">
+              <div className="preset-test-card-media relative isolate aspect-square overflow-hidden bg-gray-200 dark:bg-gray-800">
                 {preset.featured_graphics ? (
                   <Image
                     src={preset.featured_graphics}
@@ -225,7 +296,7 @@ export default function AiPresetsGrid({
                     width={640}
                     height={640}
                     sizes="(min-width: 1280px) 304px, (min-width: 1100px) calc((100vw - 67px) / 4), (min-width: 830px) calc((100vw - 50px) / 3), calc((100vw - 33px) / 2)"
-                    className="h-full w-full object-cover"
+                    className="preset-test-card-image h-full w-full object-cover"
                     loading={eagerImageIds.has(preset.id) ? 'eager' : 'lazy'}
                   />
                 ) : (

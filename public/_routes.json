@@ -3,6 +3,10 @@
   "include": [
     "/preset-test",
     "/preset-test/",
+    "/presets",
+    "/presets/*",
+    "/*/presets",
+    "/*/presets/*",
     "/geo",
     "/geo/",
     "/pricing",

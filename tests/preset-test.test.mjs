@@ -71,6 +71,21 @@ test('repeat visits reuse the browser ID across preset experiments', async (t) =
   assert.equal(response.status, 200);
 });
 
+test('one batch assignment request covers a preset grid page', async (t) => {
+  mockBackend(t, async (url, init) => {
+    assert.match(url, /\/assign_ai_preset_tests$/);
+    assert.deepEqual(JSON.parse(init.body), {
+      p_preset_ids: [presetId], p_visitor_id: visitorId,
+    });
+    return Response.json({ [presetId]: assignment });
+  });
+  const response = await onRequest({ request: request(`?presetIds=${presetId}&consent=accepted`, {
+    headers: { cookie: `preset_test_visitor=${visitorId}` },
+  }) });
+  assert.deepEqual(await response.json(), { [presetId]: assignment });
+  assert.match(response.headers.get('set-cookie'), new RegExp(`preset_test_visitor=${visitorId}`));
+});
+
 test('no running test leaves the page canonical without setting a tracking cookie', async (t) => {
   mockBackend(t, async () => Response.json(null));
   const response = await onRequest({ request: request() });
@@ -80,7 +95,8 @@ test('no running test leaves the page canonical without setting a tracking cooki
 
 test('opt out and unresolved consent clear the cookie without contacting Supabase', async (t) => {
   const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected network'); });
-  for (const req of [request('?consent=rejected'), request(undefined, {}, 'DE'), request('', { method: 'DELETE' })]) {
+  for (const req of [request('?consent=rejected'), request(undefined, {}, 'DE'), request('', { method: 'DELETE' }),
+    request('?consent=accepted', { headers: { cookie: 'preset_test_consent=rejected' } })]) {
     const response = await onRequest({ request: req });
     assert.equal(await response.json(), null);
     assert.match(response.headers.get('set-cookie'), /Max-Age=0/);
@@ -178,16 +194,79 @@ test('backend failure is non-cacheable and does not expose internal errors', asy
   assert.doesNotMatch(await response.text(), /private details/);
 });
 
-test('only runtime endpoints invoke Pages Functions; canonical preset URLs stay static', async () => {
+test('preset pages use middleware while SEO identity stays in the static page', async () => {
   const routes = JSON.parse(await readFile(new URL('../public/_routes.json', import.meta.url), 'utf8'));
   assert.ok(routes.include.includes('/preset-test'));
   assert.ok(routes.include.includes('/preset-test/'));
-  assert.ok(!routes.include.some(path => path.startsWith('/presets') || path === '/*'));
+  assert.ok(routes.include.includes('/presets/*'));
+  assert.ok(routes.include.includes('/*/presets/*'));
+  assert.ok(!routes.include.includes('/*'));
   const page = await readFile(new URL('../src/components/presets/AiPresetPage.tsx', import.meta.url), 'utf8');
   assert.equal(page.match(/<PresetExperimentLink\b/g)?.length, 3);
   assert.match(page, /<PresetExperimentImage\b/);
   assert.equal(page.match(/<PresetExperimentPrice\b/g)?.length, 2);
   assert.match(page, /<noscript>\s*<style>/);
+  assert.match(page, /data-preset-test-id=\{preset.id\}/);
+});
+
+test('a preset page gets a first-paint preview without changing canonical metadata', async (t) => {
+  const { onRequest: middleware } = await import('../functions/_middleware.js');
+  mockBackend(t, async (url, init) => {
+    assert.match(url, /\/assign_ai_preset_tests$/);
+    assert.deepEqual(JSON.parse(init.body).p_preset_ids, [presetId]);
+    return Response.json({ [presetId]: assignment });
+  });
+  const html = `<html><head><link rel="canonical" href="https://example.com/presets/example/"></head><body><div data-preset-test-id="${presetId}"><svg class="preset-experiment-image-placeholder"></svg></div></body></html>`;
+  const response = await middleware({
+    request: request('', { headers: { cookie: `preset_test_visitor=${visitorId}` } }, 'US'), env,
+    next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),
+  });
+  const result = await response.text();
+  assert.match(result, /preset-test-preview-style/);
+  assert.match(result, /preset-test-bootstrap/);
+  assert.match(result, /background-image:url\("https:\/\/example.com\/b.jpg"\)/);
+  assert.match(result, /rel="canonical" href="https:\/\/example.com\/presets\/example\/"/);
+  assert.match(response.headers.get('set-cookie'), /preset_test_visitor=/);
+  assert.match(response.headers.get('cache-control'), /private, no-store/);
+});
+
+test('EEA preset pages without consent remain unchanged', async (t) => {
+  const { onRequest: middleware } = await import('../functions/_middleware.js');
+  const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected network'); });
+  const html = `<html><head></head><body data-preset-test-id="${presetId}"></body></html>`;
+  const response = await middleware({
+    request: request('', {}, 'DE'), env,
+    next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),
+  });
+  assert.equal(await response.text(), html);
+  assert.equal(fetch.mock.callCount(), 0);
+});
+
+test('accepted consent allows the edge to assign an EEA visitor', async (t) => {
+  const { onRequest: middleware } = await import('../functions/_middleware.js');
+  mockBackend(t, async (url) => {
+    assert.match(url, /\/assign_ai_preset_tests$/);
+    return Response.json({ [presetId]: assignment });
+  });
+  const html = `<html><head></head><body data-preset-test-id="${presetId}"></body></html>`;
+  const response = await middleware({
+    request: request('', { headers: { cookie: 'preset_test_consent=accepted' } }, 'DE'), env,
+    next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),
+  });
+  assert.match(await response.text(), /preset-test-bootstrap/);
+  assert.match(response.headers.get('set-cookie'), /preset_test_visitor=/);
+});
+
+test('the edge does not assign a first request that might belong to a legacy opt-out', async (t) => {
+  const { onRequest: middleware } = await import('../functions/_middleware.js');
+  const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected network'); });
+  const html = `<html><head></head><body data-preset-test-id="${presetId}"></body></html>`;
+  const response = await middleware({
+    request: request('', {}, 'US'), env,
+    next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),
+  });
+  assert.equal(await response.text(), html);
+  assert.equal(fetch.mock.callCount(), 0);
 });
 
 async function loadClientModule(react = React) {
@@ -216,6 +295,19 @@ test('unavailable consent storage never silently opts visitors into experiments'
     Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: { getItem: () => choice } });
     assert.equal(readPresetExperimentConsent(), choice || '');
   }
+});
+
+test('client reads the edge preview from template content', async (t) => {
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  Object.defineProperty(globalThis, 'document', { configurable: true, value: {
+    getElementById: () => ({ content: { textContent: JSON.stringify({ [presetId]: assignment }) } }),
+  } });
+  t.after(() => {
+    if (previous) Object.defineProperty(globalThis, 'document', previous);
+    else delete globalThis.document;
+  });
+  const { readPresetAssignment } = await loadClientModule();
+  assert.deepEqual(readPresetAssignment(presetId), assignment);
 });
 
 test('static rendering retains the original image, alt text and canonical app link', async () => {

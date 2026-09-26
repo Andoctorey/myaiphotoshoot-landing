@@ -8,6 +8,10 @@ const EEA_COUNTRIES = new Set([
   'ES', 'SE', 'IS', 'LI', 'NO', 'GB',
 ]);
 
+function rememberPresetTestConsent(choice: 'accepted' | 'rejected') {
+  document.cookie = `preset_test_consent=${choice}; Path=/; SameSite=Lax; Secure; Max-Age=7776000`;
+}
+
 export default function ConsentBanner() {
   const [show, setShow] = useState(false);
   const [isEEA, setIsEEA] = useState(false);
@@ -17,7 +21,10 @@ export default function ConsentBanner() {
     try {
       stored = localStorage.getItem('consent_choice');
     } catch {}
-    if (stored === 'accepted' || stored === 'rejected') return;
+    if (stored === 'accepted' || stored === 'rejected') {
+      rememberPresetTestConsent(stored);
+      return;
+    }
 
     let cancelled = false;
 
@@ -90,6 +97,7 @@ export default function ConsentBanner() {
 
   const acceptAll = () => {
     try { localStorage.setItem('consent_choice', 'accepted'); } catch {}
+    rememberPresetTestConsent('accepted');
     window.dispatchEvent(new Event('consent-choice-changed'));
     if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
       (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.('consent', 'update', {
@@ -105,6 +113,7 @@ export default function ConsentBanner() {
 
   const rejectAll = () => {
     try { localStorage.setItem('consent_choice', 'rejected'); } catch {}
+    rememberPresetTestConsent('rejected');
     window.dispatchEvent(new Event('consent-choice-changed'));
     if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
       (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.('consent', 'update', {

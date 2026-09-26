@@ -87,7 +87,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
 
   return (
     <PresetExperimentProvider key={preset.id} presetId={preset.id} appUrl={appUrl} image={preset.featured_graphics || ''} alt={imageAlt} credits={preset.cost_credits ?? null} locale={locale}>
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div data-preset-test-id={preset.id} className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
       <noscript>
         <style>{`
@@ -142,7 +142,6 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                   width={960}
                   height={720}
                   sizes="(min-width: 816px) 768px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
-                  priority
                   className="absolute inset-0 m-auto block h-auto max-h-full w-auto max-w-full rounded-[28px]"
                 />
               ) : (

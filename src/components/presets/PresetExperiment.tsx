@@ -8,6 +8,48 @@ type Assignment = { assignment_id: string; featured_graphics: string; featured_g
 type ExperimentContext = { appUrl: string; image: string; alt: string; credits: number | null; locale: string; pending: boolean; resolved: boolean; trackClick: () => void };
 const Context = createContext<ExperimentContext | null>(null);
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const assignments = new Map<string, Assignment | null>();
+let bootstrapRead = false;
+
+export function rememberPresetAssignments(values: Record<string, Assignment | null>) {
+  for (const [id, value] of Object.entries(values)) {
+    if (UUID.test(id) && value === null) { assignments.set(id, null); continue; }
+    try {
+      if (value && UUID.test(id) && UUID.test(value.assignment_id) &&
+          new URL(value.featured_graphics).protocol === 'https:') assignments.set(id, value);
+    } catch { /* Ignore invalid previews. */ }
+  }
+}
+
+export function readPresetAssignment(presetId: string): Assignment | null {
+  if (!bootstrapRead && typeof document !== 'undefined') {
+    bootstrapRead = true;
+    const bootstrap = document.getElementById('preset-test-bootstrap');
+    const data = (bootstrap as HTMLTemplateElement | null)?.content?.textContent || bootstrap?.textContent;
+    if (data) {
+      try { rememberPresetAssignments(JSON.parse(data)); }
+      catch (error) { console.warn('Invalid preset preview bootstrap', error); }
+    }
+  }
+  return assignments.get(presetId) || null;
+}
+
+export function isPresetAssignmentResolved(presetId: string): boolean {
+  readPresetAssignment(presetId);
+  return assignments.has(presetId);
+}
+
+export function markPresetAssignmentsChecked(ids: string[]) {
+  for (const id of ids) if (UUID.test(id) && !assignments.has(id)) assignments.set(id, null);
+}
+
+export function clearPresetAssignments() {
+  assignments.clear();
+  if (typeof document !== 'undefined') {
+    document.getElementById('preset-test-preview-style')?.remove();
+    document.getElementById('preset-test-bootstrap')?.remove();
+  }
+}
 
 export function readPresetExperimentConsent(): string {
   // Without readable consent storage, a prior opt-out cannot be ruled out.
@@ -43,9 +85,17 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
       setAssignment(null);
       setResolved(false);
       if (choice === 'rejected') {
+        clearPresetAssignments();
         setPending(false);
         setResolved(true);
         void fetch('/preset-test', { method: 'DELETE' }).catch((error) => console.warn('Unable to clear preset test cookie', error));
+        return;
+      }
+      const preselected = readPresetAssignment(presetId);
+      if (preselected) {
+        setAssignment(preselected);
+        setPending(false);
+        setResolved(true);
         return;
       }
       setPending(true);
@@ -60,7 +110,10 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
         if (!UUID.test(value.assignment_id) || new URL(value.featured_graphics).protocol !== 'https:') throw new Error('Invalid test preview');
         if (value.cost_credits !== undefined && (!Number.isSafeInteger(value.cost_credits) || value.cost_credits <= 0)) throw new Error('Invalid test price');
         // Image loading must not select which assigned visitors enter the experiment.
-        if (!cancelled && !current.signal.aborted) setAssignment(value);
+        if (!cancelled && !current.signal.aborted) {
+          rememberPresetAssignments({ [presetId]: value });
+          setAssignment(value);
+        }
       } catch (error) {
         if (!cancelled && !current.signal.aborted) console.warn('Using the original preset preview', error);
       } finally {
@@ -132,6 +185,7 @@ function AssignedPresetImage({ resolved, ...props }: ImageProps & { resolved: bo
       )}
       <Image
         {...props}
+        alt={props.alt}
         className={`${props.className || ''} preset-experiment-image${visible ? '' : ' invisible'}`}
         onLoad={(event) => {
           setLoaded(true);

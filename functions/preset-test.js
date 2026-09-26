@@ -1,6 +1,7 @@
 const DEFAULT_URL = 'https://trzgfajvyjpvbqedyxug.supabase.co';
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const COOKIE = 'preset_test_visitor';
+export const CONSENT_COOKIE = 'preset_test_consent';
 const CONSENT_COUNTRIES = new Set('AT BE BG HR CY CZ DK EE FI FR DE EL GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE IS LI NO GB'.split(' '));
 const HEADERS = { 'cache-control': 'private, no-store, max-age=0', 'content-type': 'application/json; charset=utf-8', 'x-robots-tag': 'noindex', 'vary': 'Cookie' };
 
@@ -41,6 +42,34 @@ async function rateLimit(request, env) {
   return result;
 }
 
+export function presetTestCookie(request) {
+  const saved = request.headers.get('cookie')?.split(';').map(value => value.trim()).find(value => value.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1);
+  return UUID.test(saved || '') ? saved.toLowerCase() : null;
+}
+
+export function presetTestConsentCookie(request) {
+  const value = request.headers.get('cookie')?.split(';').map(part => part.trim()).find(part => part.startsWith(`${CONSENT_COOKIE}=`))?.slice(CONSENT_COOKIE.length + 1);
+  return value === 'accepted' || value === 'rejected' ? value : '';
+}
+
+export function presetTestVisitorCookie(visitorId) {
+  return `${COOKIE}=${visitorId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=7776000`;
+}
+
+export async function assignPresetTests(request, env, presetIds) {
+  if (!Array.isArray(presetIds) || presetIds.length > 50 || presetIds.some(id => !UUID.test(id))) {
+    throw new Error('Invalid preset assignment batch');
+  }
+  const limit = await rateLimit(request, env);
+  if (!limit.allowed) return { assignments: null, retryAfter: limit.retry_after_seconds || 60 };
+  const visitorId = presetTestCookie(request) || crypto.randomUUID();
+  const assignments = await rpc(env, 'assign_ai_preset_tests', {
+    p_preset_ids: [...new Set(presetIds)], p_visitor_id: visitorId,
+  });
+  if (!assignments || typeof assignments !== 'object' || Array.isArray(assignments)) throw new Error('Invalid preset assignment response');
+  return { assignments, visitorId: Object.keys(assignments).length ? visitorId : null };
+}
+
 export async function onRequest({ request, env = {} }) {
   const url = new URL(request.url);
   const origin = request.headers.get('origin');
@@ -49,10 +78,11 @@ export async function onRequest({ request, env = {} }) {
   const clearCookie = `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
   if (request.method === 'DELETE') return json(null, 200, { 'set-cookie': clearCookie });
   const choice = url.searchParams.get('consent');
-  if (!experimentConsentAllowed(choice, request.cf?.country)) return json(null, 200, { 'set-cookie': clearCookie });
+  if (presetTestConsentCookie(request) === 'rejected' || !experimentConsentAllowed(choice, request.cf?.country)) {
+    return json(null, 200, { 'set-cookie': clearCookie });
+  }
   try {
-    const saved = request.headers.get('cookie')?.split(';').map(value => value.trim()).find(value => value.startsWith(`${COOKIE}=`))?.slice(COOKIE.length + 1);
-    const savedVisitor = UUID.test(saved || '') ? saved.toLowerCase() : null;
+    const savedVisitor = presetTestCookie(request);
     let event;
     if (request.method === 'POST') {
       const text = await request.text();
@@ -64,7 +94,14 @@ export async function onRequest({ request, env = {} }) {
       event = body;
     }
     const presetId = url.searchParams.get('presetId');
-    if (!event && !UUID.test(presetId || '')) return json({ error: 'Invalid preset' }, 400);
+    const presetIds = url.searchParams.get('presetIds')?.split(',');
+    if (!event && !presetIds && !UUID.test(presetId || '')) return json({ error: 'Invalid preset' }, 400);
+    if (!event && presetIds) {
+      if (presetIds.length > 50 || presetIds.some(id => !UUID.test(id))) return json({ error: 'Invalid presets' }, 400);
+      const batch = await assignPresetTests(request, env, presetIds);
+      if (!batch.assignments) return json({ error: 'Too many requests' }, 429, { 'retry-after': String(batch.retryAfter) });
+      return json(batch.assignments, 200, batch.visitorId ? { 'set-cookie': presetTestVisitorCookie(batch.visitorId) } : {});
+    }
     const limit = await rateLimit(request, env);
     if (!limit.allowed) return json({ error: 'Too many requests' }, 429, { 'retry-after': String(limit.retry_after_seconds || 60) });
     if (event) {
@@ -75,7 +112,7 @@ export async function onRequest({ request, env = {} }) {
     const visitorId = savedVisitor || crypto.randomUUID();
     const assignment = await rpc(env, 'assign_ai_preset_test', { p_preset_id: presetId, p_visitor_id: visitorId });
     return json(assignment, 200, assignment ? {
-      'set-cookie': `${COOKIE}=${visitorId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=7776000`,
+      'set-cookie': presetTestVisitorCookie(visitorId),
     } : {});
   } catch (error) {
     console.error('Preset experiment request failed', { method: request.method, error: error instanceof Error ? error.message : 'Unknown error' });
