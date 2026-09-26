@@ -4,6 +4,7 @@ export interface AiPresetCatalogEntry {
   name: string;
   featured_graphics: string | null;
   featured_graphics_alt: string | null;
+  has_active_test?: boolean;
   created_at: string;
 }
 
@@ -29,6 +30,7 @@ function isCatalogEntry(value: unknown): value is AiPresetCatalogEntry {
     && typeof entry.created_at === 'string'
     && Number.isFinite(Date.parse(entry.created_at))
     && isNullableString(entry.featured_graphics)
+    && (entry.has_active_test === undefined || typeof entry.has_active_test === 'boolean')
     && isNullableString(entry.featured_graphics_alt);
 }
 

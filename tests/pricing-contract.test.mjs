@@ -633,6 +633,8 @@ test('preset static generation uses validated revision-aware build snapshots', a
   assert.match(cacheSource, /snapshotRevision\(value\.presets\) === value\.revision/);
   assert.match(cacheSource, /volume: preset\.volume \?\? null/);
   assert.match(cacheSource, /created_at: preset\.created_at \?\? null/);
+  assert.match(cacheSource, /has_active_test: preset\.has_active_test === true/);
+  assert.match(presetSource, /postPublicSupabaseRpc\('list_ai_presets_for_landing'/);
   assert.match(cacheSource, /age >= 0 && age <= CACHE_MAX_AGE_MS/);
   assert.match(cacheSource, /rename\(temporaryPath, filePath\)/);
   assert.match(presetSource, /for \(const locale of snapshotLocales\)/);
@@ -739,6 +741,13 @@ test('preset catalog validation preserves popular order and sorts newest determi
   ];
 
   assert.deepEqual(catalogModule.parseAiPresetCatalog(catalog), catalog);
+  for (const has_active_test of [true, false]) {
+    const withFlags = catalog.map((preset) => ({ ...preset, has_active_test }));
+    assert.deepEqual(catalogModule.parseAiPresetCatalog(withFlags), withFlags);
+  }
+  assert.throws(() => catalogModule.parseAiPresetCatalog([
+    { ...catalog[0], has_active_test: 'false' },
+  ]), /invalid data/);
   assert.deepEqual(
     catalogModule.sortAiPresetCatalog(catalog, 'popular').map((preset) => preset.slug),
     ['popular-first', 'newest', 'newest-tie-breaker'],
@@ -851,6 +860,59 @@ test('preset detail pages normally receive content and pricing from one RPC and 
     ['get_ai_preset_page', { p_slug: 'missing', p_locale: 'de' }, 3600],
     ['get_ai_preset_page', { p_slug: 'wrong-slug', p_locale: 'de' }, 3600],
   ]);
+});
+
+async function loadPresetCatalogApi(postPublicSupabaseRpc) {
+  return loadTypeScriptModule('src/lib/ai-presets.ts', {
+    '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'de'] },
+    '@/lib/ai-preset-build-cache': {
+      AI_PRESET_REVALIDATE_SECONDS: 3600,
+      readAiPresetBuildSnapshot: async () => null,
+      storeAiPresetBuildSnapshot: async () => 'written',
+    },
+    '@/lib/ai-presets-shared': { AI_PRESETS_PAGE_SIZE: 12 },
+    '@/lib/pricing': { CREDIT_USD_REFERENCE_VALUE: 0.03 },
+    '@/lib/public-supabase': { postPublicSupabaseRpc },
+    '@/lib/seo': {},
+  });
+}
+
+test('landing catalog preserves test flags and multi-photo capability across locales', async () => {
+  const calls = [];
+  const api = await loadPresetCatalogApi(async (...args) => {
+    calls.push(args);
+    return Response.json([true, false].map((has_active_test, index) => ({
+      id: `preset-${index}`, slug: `preset-${index}`, name: `Preset ${index}`,
+      created_at: '2026-09-26T00:00:00Z', total_count: 2,
+      min_input_photos: 1, max_input_photos: 2, has_active_test,
+    })));
+  });
+  const catalog = await api.fetchAiPresetCatalog('de');
+  assert.deepEqual(catalog.map((preset) => preset.has_active_test), [true, false]);
+  assert.equal(calls.length, 2);
+  for (const [index, args] of calls.entries()) {
+    assert.deepEqual(args, ['list_ai_presets_for_landing', {
+      p_locale: ['en', 'de'][index], p_limit: 100, p_offset: 0, p_max_input_photos: 14,
+    }, 3600]);
+  }
+});
+
+test('landing build rejects failed RPCs and missing test flags without a legacy retry', async () => {
+  for (const response of [
+    new Response('Unavailable', { status: 500 }),
+    new Response('Missing RPC', { status: 404 }),
+    Response.json([{ id: 'preset', slug: 'preset', name: 'Preset', total_count: 1 }]),
+    Response.json([{ id: 'preset', slug: 'preset', name: 'Preset', total_count: 1, has_active_test: 'false' }]),
+  ]) {
+    let calls = 0;
+    const api = await loadPresetCatalogApi(async () => { calls++; return response; });
+    await assert.rejects(api.fetchAiPresetsPageStrict('en'), (error) => {
+      assert.match(error.cause.message, response.ok ? /valid test flags/ : /Landing preset RPC returned/);
+      if (response.status === 404) assert.match(error.cause.message, /migration before building/);
+      return true;
+    });
+    assert.equal(calls, 1, 'failure must not retry without multi-photo capability');
+  }
 });
 
 test('mask catalog schema models masks as collection items rather than software apps', async () => {

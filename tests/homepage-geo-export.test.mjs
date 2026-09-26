@@ -161,6 +161,7 @@ test('every exported preset catalog entry has a matching static detail page', as
     'created_at',
     'featured_graphics',
     'featured_graphics_alt',
+    'has_active_test',
     'id',
     'name',
     'slug',
@@ -180,6 +181,7 @@ test('every exported preset catalog entry has a matching static detail page', as
 
     for (const preset of catalog) {
       assert.deepEqual(Object.keys(preset).sort(), expectedKeys);
+      assert.equal(typeof preset.has_active_test, 'boolean');
       const localizedDetailPath = path.join(
         outputRoot,
         locale,

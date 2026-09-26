@@ -80,9 +80,9 @@ async function readAiPresetsPageFromBuildSnapshot(
 }
 
 async function postAiPresetsRpc(body: Record<string, unknown>): Promise<Response> {
-  // public.list_ai_presets is defined in myaiphotoshoot-functions migrations; update
-  // src/types/ai-preset.ts and admin/src/lib/presetService.ts when its output changes.
-  return postPublicSupabaseRpc('list_ai_presets', body, AI_PRESET_REVALIDATE_SECONDS);
+  // Test flags belong to the same deployment snapshot as the routes. Starting or
+  // ending a test requires a landing rebuild to refresh first-visit placeholders.
+  return postPublicSupabaseRpc('list_ai_presets_for_landing', body, AI_PRESET_REVALIDATE_SECONDS);
 }
 
 async function postAiPresetLookupRpc(slug: string, locale: string): Promise<Response> {
@@ -146,26 +146,15 @@ async function fetchAiPresetsPageInternal(
   const offset = (normalizedPage - 1) * normalizedPageSize;
 
   try {
-    let res = await postAiPresetsRpc({
+    const res = await postAiPresetsRpc({
       p_locale: locale,
       p_limit: normalizedPageSize,
       p_offset: offset,
       p_max_input_photos: 14,
     });
-    const paginatedStatus = res.status;
-    let usedLegacyRpc = false;
-
     if (!res.ok) {
-      res = await postAiPresetsRpc({ p_locale: locale });
-      usedLegacyRpc = true;
-      if (!res.ok) {
-        if (strict) {
-          throw new Error(
-            `Paginated RPC returned ${paginatedStatus} and legacy RPC returned ${res.status}.`,
-          );
-        }
-        return emptyAiPresetsPage(normalizedPage, normalizedPageSize);
-      }
+      const hint = res.status === 404 ? ' Apply the landing preset test flags migration before building.' : '';
+      throw new Error(`Landing preset RPC returned ${res.status}.${hint}`);
     }
 
     const data: unknown = await res.json();
@@ -181,15 +170,15 @@ async function fetchAiPresetsPageInternal(
     })) {
       throw new Error('Preset RPC response contained an invalid route record.');
     }
+    if (strict && data.some((item) => typeof item.has_active_test !== 'boolean')) {
+      throw new Error('Landing preset RPC response omitted valid test flags.');
+    }
 
-    const allRows = data.filter(isAiPresetRow).map(normalizeAiPreset);
-    if (strict && normalizedPage === 1 && allRows.length === 0) {
+    const presets = data.filter(isAiPresetRow).map(normalizeAiPreset);
+    if (strict && normalizedPage === 1 && presets.length === 0) {
       throw new Error('Preset RPC response contained no published presets.');
     }
-    const presets = usedLegacyRpc
-      ? allRows.slice(offset, offset + normalizedPageSize)
-      : allRows;
-    if (!usedLegacyRpc && normalizedPage > 1 && presets.length === 0) {
+    if (normalizedPage > 1 && presets.length === 0) {
       const firstPage = await fetchAiPresetsPageInternal(locale, 1, normalizedPageSize, strict);
       if (strict && normalizedPage <= firstPage.totalPages) {
         throw new Error(`Preset RPC returned an empty page ${normalizedPage} of ${firstPage.totalPages}.`);
@@ -207,20 +196,18 @@ async function fetchAiPresetsPageInternal(
     const hasValidReportedTotalCount = typeof reportedTotalCount === 'number'
       && Number.isInteger(reportedTotalCount)
       && reportedTotalCount >= offset + presets.length;
-    if (strict && !usedLegacyRpc && (
+    if (strict && (
       !hasValidReportedTotalCount
       || presets.some((preset) => preset.total_count !== reportedTotalCount)
     )) {
       throw new Error('Paginated preset RPC response contained an invalid or inconsistent total_count.');
     }
 
-    const totalCount = usedLegacyRpc
-      ? allRows.length
-      : hasValidReportedTotalCount
-        ? reportedTotalCount
-        : normalizedPage === 1
-          ? presets.length
-          : offset + presets.length;
+    const totalCount = hasValidReportedTotalCount
+      ? reportedTotalCount
+      : normalizedPage === 1
+        ? presets.length
+        : offset + presets.length;
     const totalPages = Math.max(1, Math.ceil(totalCount / normalizedPageSize));
 
     return {
@@ -518,6 +505,7 @@ export async function fetchAiPresetCatalog(locale: string): Promise<AiPresetCata
       name: preset.name,
       featured_graphics: preset.featured_graphics ?? null,
       featured_graphics_alt: preset.featured_graphics_alt ?? null,
+      has_active_test: preset.has_active_test === true,
       created_at: createdAt,
     };
   });

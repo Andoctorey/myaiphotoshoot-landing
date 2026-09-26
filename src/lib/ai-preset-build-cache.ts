@@ -5,7 +5,7 @@ import { mkdir, readFile, rename, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { AiPreset } from '@/types/ai-preset';
 
-const CACHE_VERSION = 1;
+const CACHE_VERSION = 2;
 export const AI_PRESET_REVALIDATE_SECONDS = 3600;
 const CACHE_MAX_AGE_MS = AI_PRESET_REVALIDATE_SECONDS * 1000;
 const CACHE_DIRECTORY = path.join(process.cwd(), '.next', 'cache', 'ai-preset-content', `v${CACHE_VERSION}`);
@@ -62,6 +62,7 @@ function snapshotRevision(presets: AiPreset[]): string {
       subtitle: preset.subtitle ?? null,
       featured_graphics: preset.featured_graphics ?? null,
       featured_graphics_alt: preset.featured_graphics_alt ?? null,
+      has_active_test: preset.has_active_test === true,
       volume: preset.volume ?? null,
       cost_credits: preset.cost_credits ?? null,
       meta_title: preset.meta_title ?? null,

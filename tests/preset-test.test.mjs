@@ -411,6 +411,53 @@ test('static rendering retains the original image, alt text and canonical app li
   assert.doesNotMatch(markup, /~[a-f\d-]{36}/);
 });
 
+async function loadGridImage(react = React) {
+  const source = await readFile(new URL('../src/components/presets/PresetGridImage.tsx', import.meta.url), 'utf8');
+  const compiled = { exports: {} };
+  const output = ts.transpileModule(source, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
+    fileName: 'PresetGridImage.tsx',
+  }).outputText;
+  const require = createRequire(import.meta.url);
+  new Function('require', 'module', 'exports', output)((name) => (
+    name === 'react' ? react : name === 'next/image' ? { default: 'img' } : require(name)
+  ), compiled, compiled.exports);
+  return compiled.exports.default;
+}
+
+test('grid keeps normal images visible and only hides unresolved split-test previews in static HTML', async () => {
+  const GridImage = await loadGridImage();
+  const props = { src: 'https://example.com/main.jpg', alt: 'Main preview', resolved: false, eager: true };
+  const normal = renderToStaticMarkup(React.createElement(GridImage, { ...props, hasActiveTest: false }));
+  const tested = renderToStaticMarkup(React.createElement(GridImage, { ...props, hasActiveTest: true }));
+  assert.doesNotMatch(normal, /invisible/);
+  assert.match(tested, /object-cover invisible/);
+  for (const html of [normal, tested]) {
+    assert.match(html, /width="640" height="640"/);
+    assert.match(html, /src="https:\/\/example.com\/main.jpg"/);
+    assert.match(html, /alt="Main preview"/);
+  }
+});
+
+test('loading A never reveals A while pending or B before B has loaded', async () => {
+  let loaded = null;
+  const GridImage = await loadGridImage({ ...React, useState: () => [loaded, (value) => { loaded = value; }] });
+  const props = { src: 'https://example.com/main.jpg', alt: '', hasActiveTest: true, resolved: false, eager: false };
+  const hidden = (image) => image.props.className.includes('invisible');
+  let image = GridImage(props);
+  assert.equal(image.key, props.src);
+  assert.equal(hidden(image), true);
+  image.props.onLoad();
+  assert.equal(hidden(GridImage(props)), true, 'loaded Main stays hidden until assignment resolves');
+  assert.equal(hidden(GridImage({ ...props, resolved: true })), false, 'Main or no assignment can show after resolution');
+  image = GridImage({ ...props, src: assignment.featured_graphics, resolved: true });
+  assert.equal(image.key, assignment.featured_graphics, 'replacement unmounts the previous Next Image and its decode callbacks');
+  assert.equal(hidden(image), true, 'old image load cannot reveal the replacement');
+  image.props.onLoad();
+  assert.equal(hidden(GridImage({ ...props, src: assignment.featured_graphics, resolved: true })), false);
+  assert.equal(hidden(GridImage({ ...props, resolved: true })), true, 'consent rejection waits for Main to load again');
+});
+
 // Exercise the provider's effects without a browser or an additional DOM dependency.
 async function clientHarness(t) {
   const states = [], effects = [], scheduled = [];

@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
@@ -20,6 +19,7 @@ import {
   readPresetExperimentConsent,
   resolvePresetAssignments,
 } from '@/lib/preset-assignments';
+import PresetGridImage from './PresetGridImage';
 
 type Props = {
   locale: string;
@@ -30,6 +30,7 @@ type Props = {
 };
 
 type PresetSort = AiPresetCatalogSort;
+type PreviewPreset = AiPreset & { previewResolved?: boolean };
 
 function updateSortUrl(locale: string, sort: PresetSort) {
   const url = new URL(localePath(locale, '/presets/'), window.location.origin);
@@ -56,16 +57,17 @@ function catalogPage(
   };
 }
 
-async function assignedPreviews(presets: AiPreset[]): Promise<AiPreset[]> {
+async function assignedPreviews(presets: AiPreset[]): Promise<PreviewPreset[]> {
+  const originals = presets.map((preset) => ({ ...preset, previewResolved: true }));
   const consent = readPresetExperimentConsent();
-  if (consent === 'rejected') return presets;
+  if (consent === 'rejected') return originals;
   try {
     await resolvePresetAssignments(presets.map((preset) => preset.id));
   } catch (error) {
     console.warn('Using original preset grid previews', error);
   }
-  if (readPresetExperimentConsent() === 'rejected') return presets;
-  return presets.map((preset) => {
+  if (readPresetExperimentConsent() === 'rejected') return originals;
+  return originals.map((preset) => {
     const assignment = readPresetAssignment(preset.id);
     return assignment ? {
       ...preset,
@@ -84,7 +86,7 @@ export default function AiPresetsGrid({
   emptyLabel,
 }: Props) {
   const t = useTranslations('presets');
-  const [presets, setPresets] = useState(initialPage.presets);
+  const [presets, setPresets] = useState<PreviewPreset[]>(initialPage.presets);
   const basePresets = useRef(new Map(initialPage.presets.map((preset) => [preset.id, preset])));
   const [page, setPage] = useState(initialPage.page);
   const [hasMore, setHasMore] = useState(initialPage.hasNextPage);
@@ -198,7 +200,7 @@ export default function AiPresetsGrid({
       const originals = presets.map((preset) => basePresets.current.get(preset.id) || preset);
       if (readPresetExperimentConsent() === 'rejected') {
         clearPresetAssignments();
-        setPresets(originals);
+        setPresets(originals.map((preset) => ({ ...preset, previewResolved: true })));
         void fetch('/preset-test', { method: 'DELETE' }).catch((error) =>
           console.warn('Unable to clear preset test cookie', error));
       } else {
@@ -227,6 +229,7 @@ export default function AiPresetsGrid({
 
   return (
     <>
+      <noscript><style>{'.preset-test-card-image{visibility:visible!important}'}</style></noscript>
       <header className="mb-8">
         <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
           <h1 className="text-3xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
@@ -275,14 +278,12 @@ export default function AiPresetsGrid({
             >
               <div className="preset-test-card-media relative isolate aspect-square overflow-hidden bg-gray-200 dark:bg-gray-800">
                 {preset.featured_graphics ? (
-                  <Image
+                  <PresetGridImage
                     src={preset.featured_graphics}
                     alt={preset.featured_graphics_alt?.trim() || t('imageAlt', { name: preset.name })}
-                    width={640}
-                    height={640}
-                    sizes="(min-width: 1280px) 304px, (min-width: 1100px) calc((100vw - 67px) / 4), (min-width: 830px) calc((100vw - 50px) / 3), calc((100vw - 33px) / 2)"
-                    className="preset-test-card-image h-full w-full object-cover"
-                    loading={eagerImageIds.has(preset.id) ? 'eager' : 'lazy'}
+                    hasActiveTest={preset.has_active_test === true}
+                    resolved={preset.previewResolved === true}
+                    eager={eagerImageIds.has(preset.id)}
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gray-900 text-4xl font-bold text-white dark:bg-gray-800">

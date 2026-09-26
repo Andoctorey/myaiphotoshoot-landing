@@ -1,4 +1,4 @@
-// Public subset of admin Preset plus public.list_ai_presets and
+// Public subset of admin Preset plus public.list_ai_presets_for_landing and
 // public.get_ai_preset_page output.
 // Keep in sync with myaiphotoshoot-admin/src/lib/presetService.ts and
 // myaiphotoshoot-functions migrations/RPCs that expose ai_presets to the landing site.
@@ -9,6 +9,7 @@ export interface AiPreset {
   subtitle?: string | null;
   featured_graphics?: string | null;
   featured_graphics_alt?: string | null;
+  has_active_test?: boolean;
   cost?: number | null;
   cost_credits?: number | null;
   min_input_photos?: number | null;
