@@ -400,11 +400,12 @@ test('static rendering retains the original image, alt text and canonical app li
   const { PresetExperimentProvider, PresetExperimentLink, PresetExperimentImage, PresetExperimentPrice } = await loadClientModule();
   const markup = renderToStaticMarkup(React.createElement(PresetExperimentProvider, {
     presetId, appUrl: 'https://app.example/#preset/portrait', image: 'https://example.com/main.jpg', alt: 'Original preview', credits: 9, locale: 'en',
-  }, React.createElement(PresetExperimentLink, {}, React.createElement(PresetExperimentImage, { width: 960, height: 720 }), React.createElement(PresetExperimentPrice))));
+  }, React.createElement(PresetExperimentLink, {}, React.createElement(PresetExperimentImage, { fill: true, className: 'object-contain' }), React.createElement(PresetExperimentPrice))));
   assert.match(markup, /href="https:\/\/app.example\/#preset\/portrait"/);
   assert.match(markup, /src="https:\/\/example.com\/main.jpg"/);
   assert.match(markup, /alt="Original preview"/);
   assert.match(markup, /preset-experiment-image-placeholder/);
+  assert.match(markup, /viewBox="0 0 1024 1024"/);
   assert.match(markup, /preset-experiment-image invisible/);
   assert.match(markup, /preset-experiment-price inline-flex gap-2 invisible/);
   assert.match(markup, /9 CR/);
@@ -478,6 +479,7 @@ async function clientHarness(t) {
         });
       }
     },
+    useRef: () => ({ current: null }),
     useContext: () => context,
   });
   const timers = new Map();
@@ -508,7 +510,7 @@ async function clientHarness(t) {
       return context;
     },
     image() {
-      const element = client.PresetExperimentImage({ width: 960, height: 720 });
+      const element = client.PresetExperimentImage({ fill: true, className: 'object-contain' });
       if (imageKey !== element.key) {
         imageKey = element.key;
         imageStateIndex = states.length;
@@ -678,11 +680,17 @@ test('assignment and app links activate without waiting for image loading', asyn
     return new Promise(resolve => { resolveAssignment = resolve; });
   });
   const client = await clientHarness(t);
+  const imageLoadEvent = { currentTarget: {
+    naturalWidth: 1024,
+    naturalHeight: 1024,
+    getBoundingClientRect: () => ({ width: 768, height: 375 }),
+  } };
+  const portraitLoadEvent = { currentTarget: { ...imageLoadEvent.currentTarget, naturalHeight: 1536 } };
   assert.equal(client.render().pending, false, 'initial static fallback remains usable without JavaScript');
   assert.equal(client.render().resolved, false, 'the original preview remains covered until assignment resolves');
   const initialImage = client.image().props.children[1];
   assert.match(initialImage.props.className, /invisible/);
-  initialImage.props.onLoad({});
+  initialImage.props.onLoad(imageLoadEvent);
   assert.equal(client.render().pending, true);
   const pendingLink = client.link();
   assert.equal(pendingLink.props.href, undefined, 'a pending assignment cannot open the unassigned app URL');
@@ -701,9 +709,11 @@ test('assignment and app links activate without waiting for image loading', asyn
   const loadingImage = client.image().props.children[1];
   assert.equal(loadingImage.props.src, assignment.featured_graphics);
   assert.match(loadingImage.props.className, /invisible/, 'a loaded main image cannot appear while B loads');
-  loadingImage.props.onLoad({});
-  assert.doesNotMatch(client.image().props.children[1].props.className, /invisible/);
-  initialImage.props.onLoad({});
+  loadingImage.props.onLoad(portraitLoadEvent);
+  const shownImage = client.image().props.children[1];
+  assert.doesNotMatch(shownImage.props.className, /invisible/);
+  assert.equal(shownImage.props.style.clipPath, 'inset(0px 259px round 28px)');
+  initialImage.props.onLoad(imageLoadEvent);
   assert.doesNotMatch(client.image().props.children[1].props.className, /invisible/, 'a late A load cannot hide B');
   assert.match(client.price(), /19 CR/);
   const link = client.link();

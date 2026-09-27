@@ -137,10 +137,9 @@ export default async function AiPresetPage({ locale, preset }: Props) {
             >
               {preset.featured_graphics ? (
                 <PresetExperimentImage
-                  width={960}
-                  height={720}
+                  fill
                   sizes="(min-width: 816px) 768px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
-                  className="absolute inset-0 m-auto block h-auto max-h-full w-auto max-w-full rounded-[28px]"
+                  className="object-contain"
                 />
               ) : (
                 <div className="absolute inset-0 m-auto flex h-full max-h-64 w-full max-w-64 items-center justify-center rounded-[28px] bg-gray-100 text-6xl font-semibold text-gray-400 dark:bg-gray-900 dark:text-gray-600">
