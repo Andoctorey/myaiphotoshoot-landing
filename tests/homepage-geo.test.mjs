@@ -240,9 +240,15 @@ test('homepage collections keep their intentional item counts', async () => {
   );
   assert.equal((featuredUseCases.match(/slug: '/g) || []).length, 6);
   assert.match(blog, /const HOME_BLOG_COUNT = 6/);
-  assert.match(presets, /const HOME_PRESET_COUNT = 6/);
-  assert.match(presets, /const HOME_PRESET_FETCH_SIZE = 12/);
-  assert.match(presets, /\.slice\(0, HOME_PRESET_COUNT\)/);
+  const featuredPresetIds = presets
+    .match(/const FEATURED_PRESET_IDS = \[([\s\S]*?)\] as const;/)?.[1]
+    .match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g) || [];
+  assert.equal(featuredPresetIds.length, 6);
+  assert.equal(new Set(featuredPresetIds).size, 6);
+  assert.match(presets, /fetchAiPresets\(locale\)/);
+  assert.match(presets, /FEATURED_PRESET_IDS\.flatMap/);
+  assert.match(presets, /\.slice\(0, FEATURED_PRESET_IDS\.length\)/);
+  assert.match(presets, /if \(presets\.length === 0\) return null/);
   const demandPriorityMasks = masks.slice(
     masks.indexOf('const DEMAND_PRIORITY_MASKS'),
     masks.indexOf('type MaskComparison'),

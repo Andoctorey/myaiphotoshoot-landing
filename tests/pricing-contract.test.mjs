@@ -782,21 +782,22 @@ test('preset lists omit prices while detail CTAs display backend credit prices',
   assert.doesNotMatch(presetExperiment, />\s*\d+\s+CR\s*</);
 });
 
-test('preset app links open the selected preset in the current tab', async () => {
+test('homepage preset cards open detail pages while detail CTAs open the app in the current tab', async () => {
   const [homePresets, presetPage] = await Promise.all([
     readProjectFile('src/components/features/HomePresets.tsx'),
     readProjectFile('src/components/presets/AiPresetPage.tsx'),
   ]);
   const presetCard = homePresets
-    .match(/<a\b[^>]*>/g)
-    ?.find((candidate) => candidate.includes('href={buildPresetAppUrl(preset.slug)}'));
+    .match(/<Link\b[^>]*>/g)
+    ?.find((candidate) => candidate.includes('href={localePath(locale, `/presets/${preset.slug}/`)}'));
   const presetLinks = presetPage
     .match(/<PresetExperimentLink\b[^>]*>/g)
     ?.filter((candidate) => candidate.includes('href={appUrl}'));
 
-  assert.ok(presetCard, 'Missing homepage preset card link');
+  assert.ok(presetCard, 'Missing localized homepage preset detail link');
   assert.doesNotMatch(presetCard, /\btarget=/);
   assert.match(presetCard, /aria-label=\{preset\.name\}/);
+  assert.doesNotMatch(homePresets, /href=\{buildPresetAppUrl\(preset\.slug\)\}/);
   assert.equal(presetLinks?.length, 3, 'Expected all three preset detail app links');
   for (const presetLink of presetLinks) {
     assert.doesNotMatch(presetLink, /\btarget=/);

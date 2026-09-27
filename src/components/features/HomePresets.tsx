@@ -1,22 +1,43 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { buildPresetAppUrl, fetchAiPresetsPage } from '@/lib/ai-presets';
+import { fetchAiPresets } from '@/lib/ai-presets';
 import { withCdnWidth } from '@/lib/image';
 import { localePath } from '@/lib/seo';
 
-const HOME_PRESET_EXCLUSIONS = new Set(['minecraft-world', 'spider-man-trains']);
-const HOME_PRESET_COUNT = 6;
-const HOME_PRESET_FETCH_SIZE = 12;
+const FEATURED_PRESET_IDS = [
+  'db8751e2-64e9-4b0c-986d-3661682aa6b7',
+  '3bca6079-5551-491c-9c29-73aa87c5ee66',
+  '42ed5020-c688-4ae1-a463-931ece93abcb',
+  '70b37524-b47f-49dc-a8af-a1e57485822e',
+  '8bbf6ee1-c4fb-416d-8cf3-3a9b3b36f326',
+  '022e7890-6090-4cdb-9782-f909c2dc7e68',
+] as const;
+const FALLBACK_PRESET_EXCLUSIONS = new Set(['minecraft-world', 'spider-man-trains']);
 
 export default async function HomePresets({ locale }: { locale: string }) {
-  const [t, presetsPage] = await Promise.all([
+  const [t, allPresets] = await Promise.all([
     getTranslations({ locale, namespace: 'presets' }),
-    fetchAiPresetsPage(locale, 1, HOME_PRESET_FETCH_SIZE),
+    fetchAiPresets(locale),
   ]);
-  const presets = presetsPage.presets
-    .filter((preset) => preset.featured_graphics && !HOME_PRESET_EXCLUSIONS.has(preset.slug))
-    .slice(0, HOME_PRESET_COUNT);
+  const presetsById = new Map(allPresets.map((preset) => [preset.id, preset]));
+  const featuredPresets = FEATURED_PRESET_IDS.flatMap((id) => {
+    const preset = presetsById.get(id);
+    return preset?.featured_graphics ? [preset] : [];
+  });
+  if (featuredPresets.length !== FEATURED_PRESET_IDS.length) {
+    const missingIds = FEATURED_PRESET_IDS.filter((id) => !presetsById.get(id)?.featured_graphics);
+    console.warn(`Featured presets unavailable for locale "${locale}": ${missingIds.join(', ')}`);
+  }
+  const featuredIds = new Set<string>(FEATURED_PRESET_IDS);
+  const presets = featuredPresets.length === FEATURED_PRESET_IDS.length
+    ? featuredPresets
+    : [
+      ...featuredPresets,
+      ...allPresets.filter((preset) => preset.featured_graphics
+        && !featuredIds.has(preset.id)
+        && !FALLBACK_PRESET_EXCLUSIONS.has(preset.slug)),
+    ].slice(0, FEATURED_PRESET_IDS.length);
 
   if (presets.length === 0) return null;
 
@@ -47,33 +68,32 @@ export default async function HomePresets({ locale }: { locale: string }) {
           </div>
 
           <div className="-mx-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
-            <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-3">
+            <div className="flex w-max snap-x snap-mandatory gap-px lg:grid lg:w-full lg:grid-cols-3">
               {presets.map((preset) => (
-                <a
+                <Link
                   key={preset.id}
-                  href={buildPresetAppUrl(preset.slug)}
+                  href={localePath(locale, `/presets/${preset.slug}/`)}
                   aria-label={preset.name}
-                  className="group w-[68vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-900/10 transition duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950 lg:w-auto lg:max-w-none"
+                  className="group block w-[68vw] max-w-[280px] shrink-0 snap-center min-w-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary lg:w-auto lg:max-w-none"
                 >
-                  <Image
-                    src={withCdnWidth(preset.featured_graphics, 640) || preset.featured_graphics!}
-                    alt={preset.featured_graphics_alt?.trim() || t('imageAlt', { name: preset.name })}
-                    width={560}
-                    height={560}
-                    sizes="(max-width: 1023px) 68vw, 24vw"
-                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-950 transition-colors group-hover:text-primary dark:text-white">
+                  <div className="relative isolate aspect-square overflow-hidden bg-gray-200 dark:bg-gray-800">
+                    <Image
+                      src={withCdnWidth(preset.featured_graphics, 640) || preset.featured_graphics!}
+                      alt={preset.featured_graphics_alt?.trim() || t('imageAlt', { name: preset.name })}
+                      width={560}
+                      height={560}
+                      sizes="(max-width: 1023px) 68vw, 24vw"
+                      className="h-full w-full object-cover"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-48% via-black/20 to-black/80"
+                    />
+                    <h3 className="absolute inset-x-0 bottom-0 line-clamp-2 p-2 text-base font-bold leading-tight text-white [overflow-wrap:anywhere]">
                       {preset.name}
                     </h3>
-                    {preset.subtitle ? (
-                      <p className="mt-1 line-clamp-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
-                        {preset.subtitle}
-                      </p>
-                    ) : null}
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
