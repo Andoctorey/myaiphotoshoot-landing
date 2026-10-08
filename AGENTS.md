@@ -6,7 +6,6 @@ deploy proxy: `worker/`; export processing/checks: `scripts/`, `tests/`.
 
 ## Working rules
 
-- Edit only requested repositories; read related repos for context. Ask before expanding scope.
 - Preserve unrelated edits and staged changes. Stage new files with `git add`; stage or unstage
   existing files only when asked. Keep commits scoped.
 - Commits do not authorize pushes or deployments. Report local checks and production status
