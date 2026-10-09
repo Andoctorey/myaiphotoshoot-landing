@@ -27,6 +27,7 @@ export default async function Hero({ locale }: { locale: string }) {
                 googlePlayLabel={tDownload('mobileApps.googlePlay')}
                 appStoreLabel={tDownload('mobileApps.appStore')}
                 className="lg:justify-start"
+                analyticsParams={{ section: 'home', placement: 'hero' }}
               />
             </div>
           </div>

@@ -1,0 +1,9 @@
+/* The page owns the rhythm, even when optional sections are absent or reordered. */
+.sections > section {
+  background: var(--background);
+  scroll-margin-top: 4rem;
+}
+
+.sections > section:nth-of-type(odd) {
+  background-color: color-mix(in srgb, var(--primary-container) 30%, var(--background));
+}

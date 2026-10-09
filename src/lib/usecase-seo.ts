@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { env } from '@/lib/env';
-import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
+import { buildAlternates, buildMetaDescription, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { locales } from '@/i18n/request';
 import type { UseCase } from '@/types/usecase';
 
@@ -134,9 +134,9 @@ export async function generateUseCaseMetadata(slug: string, locale: string): Pro
   const rawDescription = String(uc.meta_description || uc.title || '');
   const normalizedDescription = normalizeUseCaseDescription(rawDescription)
     || normalizeUseCaseTitle(String(uc.title || ''));
-  const description = appendPlanSummary(
+  const description = buildMetaDescription(
     normalizedDescription,
-    tUseCase('offerSummary')
+    tUseCase('fallbackDescription')
   );
   const socialDescription = buildUseCaseSocialDescription(
     normalizedDescription,
@@ -211,27 +211,6 @@ function normalizeUseCaseDescription(value: string): string {
     .filter(Boolean);
 
   return tidyMetaText(withoutStaleClaims.join(' '));
-}
-
-function appendPlanSummary(description: string, planSummary: string): string {
-  const base = tidyMetaText(description);
-  const summary = tidyMetaText(planSummary);
-  if (!summary) return base;
-  if (alreadyDescribesPlans(base)) return base;
-
-  const separator = !base
-    ? ''
-    : /[.!?。！？]$/u.test(base)
-      ? ' '
-      : '. ';
-  const candidate = `${base}${separator}${summary}`;
-  return candidate.length <= MAX_USE_CASE_DESCRIPTION_LENGTH ? candidate : base;
-}
-
-function alreadyDescribesPlans(value: string): boolean {
-  return /\bPro\b/i.test(value)
-    && /\bMax\b/i.test(value)
-    && /\b(?:1K|2K|4K)\b/i.test(value);
 }
 
 function buildUseCaseTitle(baseTitle: string): string {

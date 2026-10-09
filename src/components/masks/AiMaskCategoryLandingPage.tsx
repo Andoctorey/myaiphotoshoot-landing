@@ -88,7 +88,6 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
 
         {category ? (
           <AiMaskCategoryHighlights
-            afterLabel={t('after')}
             beforeLabel={t('before')}
             category={category}
             femaleLabel={t('genderFemale')}

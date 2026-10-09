@@ -6,6 +6,9 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 import ts from 'typescript';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createTranslator } from 'next-intl';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -24,6 +27,7 @@ async function loadTypeScriptModule(relativePath, dependencies = {}) {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2020,
+      jsx: ts.JsxEmit.ReactJSX,
     },
     fileName: path.basename(relativePath),
   }).outputText;
@@ -64,58 +68,31 @@ function placeholders(value) {
   ).sort();
 }
 
-test('US reference pricing matches the release catalog', async () => {
-  const { CREDIT_COSTS, US_REFERENCE_PRICING } = await loadPricingModule();
-  const tiers = Object.fromEntries(US_REFERENCE_PRICING.tiers.map((tier) => [tier.id, tier]));
-  const offers = Object.fromEntries(
-    US_REFERENCE_PRICING.tiers.flatMap((tier) => tier.offers).map((offer) => [offer.id, offer]),
-  );
-
-  assert.equal(US_REFERENCE_PRICING.currency, 'USD');
-  assert.equal(US_REFERENCE_PRICING.referenceMarket, 'US');
-  assert.equal(US_REFERENCE_PRICING.creditsNeverExpire, true);
-  assert.equal(US_REFERENCE_PRICING.trialAvailable, false);
-  assert.deepEqual(
-    Object.fromEntries(Object.entries(offers).map(([id, offer]) => [
-      id,
-      [offer.price, offer.credits, offer.creditGrantPeriod],
-    ])),
-    {
-      'payg-200': [5.99, 200, 'oneTime'],
-      'payg-300': [8.99, 300, 'oneTime'],
-      'pro-annual': [149.9, 200, 'monthly'],
-      'pro-monthly': [14.99, 200, 'monthly'],
-      'pro-weekly': [6.99, 100, 'weekly'],
-      'max-annual': [299.9, 400, 'monthly'],
-      'max-monthly': [29.99, 400, 'monthly'],
-    },
-  );
-  assert.deepEqual(
-    Object.fromEntries(Object.entries(tiers).map(([id, tier]) => [
-      id,
-      [tier.defaultOfferId, tier.maxResolution, tier.training],
-    ])),
-    {
-      payg: ['payg-200', '1K', null],
-      pro: ['pro-annual', '2K', 'standard'],
-      max: ['max-annual', '4K', 'full'],
-    },
-  );
-  assert.deepEqual(
-    CREDIT_COSTS.map(({ id, minCredits, maxCredits }) => [id, minCredits, maxCredits]),
-    [
-      ['standardImage', 3, 3],
-      ['proImage', 7, 10],
-      ['maxImage', 20, 20],
-      ['personalModelImage', 2, 2],
-      ['standardTraining', 150, 150],
-      ['fullTraining', 300, 300],
-    ],
-  );
-  assert.equal(Math.round((1 - offers['pro-annual'].price / (offers['pro-monthly'].price * 12)) * 100), 17);
-  assert.equal(Math.round((1 - offers['max-annual'].price / (offers['max-monthly'].price * 12)) * 100), 17);
-  assert.equal('monthlyEquivalentUsd' in offers['pro-annual'], false);
-  assert.equal('monthlyEquivalentUsd' in offers['max-annual'], false);
+test('V2 reference offers separate weekly grants from one-time credits', async () => {
+  const { US_REFERENCE_PRICING: catalog, annualSavingsPercent } = await loadPricingModule();
+  assert.equal(catalog.catalogVersion, 'v2');
+  assert.equal(catalog.currency, 'USD');
+  assert.deepEqual(catalog.subscriptions.map((offer) => [
+    offer.id, offer.price, offer.credits, offer.creditGrantPeriod,
+  ]), [
+    ['v2:annual', 29.99, 40, 'weekly'],
+    ['v2:weekly', 2.99, 40, 'weekly'],
+  ]);
+  assert.deepEqual(catalog.packages.map((offer) => [
+    offer.id, offer.price, offer.credits, offer.creditGrantPeriod,
+  ]), [
+    ['v2_package_10', 0.99, 10, 'oneTime'],
+    ['v2_package_100', 5.99, 100, 'oneTime'],
+    ['v2_package_500', 14.99, 500, 'oneTime'],
+  ]);
+  assert.equal(annualSavingsPercent(catalog.subscriptions), 81);
+  assert.equal(annualSavingsPercent([catalog.subscriptions[0]]), null);
+  assert.equal(annualSavingsPercent([
+    catalog.subscriptions[0], { ...catalog.subscriptions[1], credits: 20 },
+  ]), null, 'Different weekly allowances cannot share a savings claim');
+  assert.equal(annualSavingsPercent([
+    { ...catalog.subscriptions[0], price: 200 }, catalog.subscriptions[1],
+  ]), null, 'A more expensive yearly offer must not claim savings');
 });
 
 test('credit labels format backend amounts without currency conversion', async () => {
@@ -125,168 +102,165 @@ test('credit labels format backend amounts without currency conversion', async (
   assert.equal(formatCredits(1000, 'de'), '1.000 CR');
 });
 
-test('the Studio page derives quality bands from canonical pricing', async () => {
-  const pricing = await loadPricingModule();
-  const models = await loadModelsModule(pricing);
-  const costs = Object.fromEntries(pricing.CREDIT_COSTS.map((cost) => [cost.id, cost]));
-  const tiers = Object.fromEntries(
-    pricing.US_REFERENCE_PRICING.tiers.map((tier) => [tier.id, tier]),
-  );
-
-  assert.deepEqual(models.qualityBands, [
-    {
-      id: 'payg',
-      minCredits: costs.standardImage.minCredits,
-      maxCredits: costs.standardImage.maxCredits,
-      maxResolution: tiers.payg.maxResolution,
-    },
-    {
-      id: 'pro',
-      minCredits: costs.proImage.minCredits,
-      maxCredits: costs.proImage.maxCredits,
-      maxResolution: tiers.pro.maxResolution,
-    },
-    {
-      id: 'max',
-      minCredits: costs.maxImage.minCredits,
-      maxCredits: costs.maxImage.maxCredits,
-      maxResolution: tiers.max.maxResolution,
-    },
-  ]);
-  assert.deepEqual(models.personalModelCosts, {
-    imageCredits: costs.personalModelImage.minCredits,
-    standardTrainingCredits: costs.standardTraining.minCredits,
-    fullTrainingCredits: costs.fullTraining.minCredits,
-  });
-  assert.equal(models.formatCreditRange(3, 3, 'en'), '3');
-  assert.equal(models.formatCreditRange(7, 10, 'en'), '7–10');
-
-  const modelsSource = await readProjectFile('src/lib/models.ts');
-  assert.match(modelsSource, /CREDIT_COSTS/);
-  assert.match(modelsSource, /US_REFERENCE_PRICING/);
-  assert.doesNotMatch(modelsSource, /supportedModels|providerModel|providerUrl/);
+test('photo estimates match KMP at four credits per base photo', async () => {
+  const { estimatedPhotoCount } = await loadPricingModule();
+  assert.deepEqual([10, 40, 100, 500].map(estimatedPhotoCount), [2, 10, 25, 125]);
 });
 
-test('regional pricing replaces the complete catalog atomically', async () => {
+test('credit pack savings compare localized unit prices with the smallest pack', async () => {
+  const { US_REFERENCE_PRICING, creditPackSavingsPercent } = await loadPricingModule();
+  const offers = US_REFERENCE_PRICING.packages;
+  assert.equal(creditPackSavingsPercent(offers, offers[0]), null);
+  assert.equal(creditPackSavingsPercent(offers, offers[1]), 39);
+  assert.equal(creditPackSavingsPercent([...offers].reverse(), offers[2]), 70);
+
   const { pricingCatalogFromApi } = await loadTypeScriptModule('src/lib/regional-pricing.ts');
-  const response = {
+  const localized = pricingCatalogFromApi(v2PricingResponse()).packages;
+  assert.equal(creditPackSavingsPercent(localized, localized[1]), 40);
+  assert.equal(creditPackSavingsPercent(localized, localized[2]), 70);
+});
+
+test('credit pack savings omit incomparable prices and packs with no discount', async () => {
+  const { US_REFERENCE_PRICING, creditPackSavingsPercent } = await loadPricingModule();
+  const [smallest, larger] = US_REFERENCE_PRICING.packages;
+  assert.equal(creditPackSavingsPercent([], larger), null);
+  assert.equal(creditPackSavingsPercent([larger], larger), null);
+  for (const price of [9.9, 12, 0, -1, NaN, Infinity]) {
+    const offer = { ...larger, price };
+    assert.equal(creditPackSavingsPercent([smallest, offer], offer), null);
+  }
+  assert.equal(creditPackSavingsPercent([{ ...smallest, price: 0 }, larger], larger), null);
+});
+
+test('Studio reference costs match automatic generation and optional personal models', async () => {
+  const pricing = await loadPricingModule();
+  const models = await loadModelsModule(pricing);
+  assert.equal(models.studioPhotoCredits, 4);
+  assert.deepEqual(models.personalModelCosts, {
+    imageCredits: 2,
+    standardTrainingCredits: 150,
+    fullTrainingCredits: 300,
+  });
+});
+
+function v2PricingResponse() {
+  return {
     country_code: 'TH',
-    country_group: 'C',
+    country_group: null,
+    catalog_version: 'v2',
     adaptive_pricing: true,
     packages: [
-      { product_id: 'package_30', included_credits: 30, value: 33, currency: 'THB' },
-      { product_id: 'package_100', included_credits: 100, value: 100, currency: 'THB' },
+      { product_id: 'v2_package_10', included_credits: 10, value: 33, currency: 'THB' },
+      { product_id: 'v2_package_100', included_credits: 100, value: 199, currency: 'THB' },
+      { product_id: 'v2_package_500', included_credits: 500, value: 499, currency: 'THB' },
     ],
     plans: [
-      { product_id: 'pro', base_plan_id: 'weekly', included_credits: 40, value: 100, currency: 'THB' },
-      { product_id: 'pro', base_plan_id: 'monthly', included_credits: 75, value: 167, currency: 'THB' },
-      { product_id: 'pro', base_plan_id: 'annual', included_credits: 75, value: 1670, currency: 'THB' },
-      { product_id: 'max', base_plan_id: 'monthly', included_credits: 150, value: 334, currency: 'THB' },
-      { product_id: 'max', base_plan_id: 'annual', included_credits: 150, value: 3343, currency: 'THB' },
+      { product_id: 'v2', base_plan_id: 'weekly', included_credits: 40, value: 99, currency: 'THB' },
+      { product_id: 'v2', base_plan_id: 'annual', included_credits: 40, value: 999, currency: 'THB' },
     ],
   };
+}
 
+test('regional V2 pricing accepts null country groups and preserves weekly annual grants', async () => {
+  const { pricingCatalogFromApi } = await loadTypeScriptModule('src/lib/regional-pricing.ts');
+  const response = v2PricingResponse();
   const catalog = pricingCatalogFromApi(response);
   assert.ok(catalog);
   assert.equal(catalog.referenceMarket, 'TH');
-  assert.equal(catalog.countryGroup, 'C');
   assert.equal(catalog.currency, 'THB');
-  assert.deepEqual(
-    catalog.tiers[0].offers.map((offer) => [offer.id, offer.price, offer.credits]),
-    [
-      ['payg-30', 33, 30],
-      ['payg-100', 100, 100],
-    ],
-  );
-  assert.equal(catalog.tiers[0].defaultOfferId, 'payg-30');
-  assert.deepEqual(
-    catalog.tiers[1].offers.map((offer) => offer.id),
-    ['pro-annual', 'pro-monthly', 'pro-weekly'],
-  );
-  assert.equal(catalog.tiers[1].offers[0].annualSavingsPercent, 17);
-
-  const indiaResponse = structuredClone(response);
-  indiaResponse.country_code = 'IN';
-  indiaResponse.country_group = 'B';
-  indiaResponse.packages = [
-    { product_id: 'package_100', included_credits: 100, value: 2.99, currency: 'USD' },
-    { product_id: 'package_200', included_credits: 200, value: 5.99, currency: 'USD' },
-  ];
-  indiaResponse.plans = [
-    { product_id: 'pro', base_plan_id: 'weekly', included_credits: 75, value: 4.99, currency: 'USD' },
-    { product_id: 'pro', base_plan_id: 'monthly', included_credits: 150, value: 9.99, currency: 'USD' },
-    { product_id: 'pro', base_plan_id: 'annual', included_credits: 150, value: 99.9, currency: 'USD' },
-    { product_id: 'max', base_plan_id: 'monthly', included_credits: 300, value: 19.99, currency: 'USD' },
-  ];
-  const indiaCatalog = pricingCatalogFromApi(indiaResponse);
-  assert.ok(indiaCatalog);
-  assert.equal(indiaCatalog.tiers[2].defaultOfferId, 'max-monthly');
-  assert.deepEqual(indiaCatalog.tiers[2].offers.map((offer) => offer.id), ['max-monthly']);
-
-  const mixedCurrencyResponse = structuredClone(response);
-  mixedCurrencyResponse.plans[0].currency = 'USD';
-  assert.equal(pricingCatalogFromApi(mixedCurrencyResponse), null);
-  assert.equal(pricingCatalogFromApi({ ...response, packages: [] }), null);
-
-  const additiveResponse = structuredClone(response);
-  additiveResponse.packages.push({
-    product_id: 'package_500',
-    included_credits: 500,
-    value: 500,
-    currency: 'THB',
-  });
-  additiveResponse.plans.push({
-    product_id: 'pro',
-    base_plan_id: 'quarterly',
-    included_credits: 75,
-    value: 500,
-    currency: 'THB',
-  });
-  assert.ok(pricingCatalogFromApi(additiveResponse));
+  assert.deepEqual(catalog.subscriptions.map((offer) => [
+    offer.id, offer.price, offer.credits, offer.creditGrantPeriod,
+  ]), [
+    ['v2:annual', 999, 40, 'weekly'],
+    ['v2:weekly', 99, 40, 'weekly'],
+  ]);
+  assert.deepEqual(catalog.packages.map((offer) => [offer.credits, offer.price]), [
+    [10, 33], [100, 199], [500, 499],
+  ]);
+  response.packages.push({ product_id: 'future_package' });
+  response.plans.push({ product_id: 'v2', base_plan_id: 'quarterly' });
+  assert.deepEqual(pricingCatalogFromApi(response), catalog);
 });
 
-test('the pricing redirect uses country first, locale fallback second, and never caches', async () => {
-  const proxyPath = path.join(projectRoot, 'functions/pricing.js');
-  const { onRequest, resolvePricingCountry } = await import(pathToFileURL(proxyPath).href);
+test('invalid or legacy pricing cannot replace the V2 reference catalog', async () => {
+  const { pricingCatalogFromApi } = await loadTypeScriptModule('src/lib/regional-pricing.ts');
+  const mutate = (change) => {
+    const response = v2PricingResponse();
+    change(response);
+    return pricingCatalogFromApi(response);
+  };
+  assert.equal(mutate((r) => { r.catalog_version = 'legacy'; }), null);
+  assert.equal(mutate((r) => { delete r.catalog_version; }), null);
+  assert.equal(mutate((r) => { r.plans[0].currency = 'USD'; }), null);
+  assert.equal(mutate((r) => { r.packages[0].value = -1; }), null);
+  assert.equal(mutate((r) => { r.packages[0].included_credits = 0.5; }), null);
+  assert.equal(mutate((r) => { r.plans.push(r.plans[0]); }), null);
+  assert.equal(mutate((r) => { r.packages = []; }), null);
+});
+
+test('pricing requests V2 with country first and locale fallback, without forwarding private headers', async (t) => {
+  const { onRequest, resolvePricingCountry } = await import(
+    pathToFileURL(path.join(projectRoot, 'functions/pricing.js')).href
+  );
   assert.equal(resolvePricingCountry('th', 'en'), 'TH');
   assert.equal(resolvePricingCountry('XX', 'hi'), 'IN');
   assert.equal(resolvePricingCountry(undefined, 'zh-Hans'), 'CN');
   assert.equal(resolvePricingCountry(undefined, 'unknown'), 'US');
-
+  const calls = [];
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    calls.push({ url: String(url), options });
+    return Response.json(v2PricingResponse());
+  });
   const methodResponse = await onRequest({
     request: new Request('https://myaiphotoshoot.com/pricing', { method: 'POST' }),
-    env: {},
   });
   assert.equal(methodResponse.status, 405);
-  assert.equal(methodResponse.headers.get('cache-control'), 'no-store, max-age=0');
   assert.equal(methodResponse.headers.get('allow'), 'GET');
+  assert.equal(calls.length, 0);
 
-  const pricingResponse = await onRequest({
-    request: {
-      method: 'GET',
-      url: 'https://myaiphotoshoot.com/pricing?locale=en',
-      cf: { country: 'th' },
-    },
-    env: {},
+  const request = new Request('https://myaiphotoshoot.com/pricing?locale=en', {
+    headers: { authorization: 'private-token', cookie: 'private-cookie' },
   });
-  assert.equal(pricingResponse.status, 307);
-  assert.equal(pricingResponse.headers.get('cache-control'), 'no-store, max-age=0');
+  Object.defineProperty(request, 'cf', { value: { country: 'th' } });
+  const response = await onRequest({ request });
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('cache-control'), 'no-store, max-age=0');
+  assert.deepEqual(await response.json(), v2PricingResponse());
   assert.equal(
-    pricingResponse.headers.get('location'),
+    calls[0].url,
     'https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1/stripe-pricing?country_code=TH',
   );
+  const headers = new Headers(calls[0].options.headers);
+  assert.equal(headers.get('x-app-version'), '1.13.0');
+  assert.equal(headers.has('authorization'), false);
+  assert.equal(headers.has('cookie'), false);
 
+  await onRequest({ request: new Request('https://myaiphotoshoot.com/pricing?locale=hi') });
+  assert.match(calls[1].url, /country_code=IN$/);
   const routes = JSON.parse(await readProjectFile('public/_routes.json'));
   assert.equal(routes.include.includes('/pricing'), true);
   assert.equal(routes.include.includes('/pricing/'), true);
+});
+
+test('pricing upstream failures return an uncached error for the reference-price fallback', async (t) => {
+  const { onRequest } = await import(pathToFileURL(path.join(projectRoot, 'functions/pricing.js')).href);
+  const log = t.mock.method(console, 'error', () => {});
+  const upstream = t.mock.method(globalThis, 'fetch', async () => (
+    new Response('Unavailable', { status: 503 })
+  ));
+  const request = new Request('https://myaiphotoshoot.com/pricing');
+  const response = await onRequest({ request });
+  assert.equal(response.status, 502);
+  assert.equal(response.headers.get('cache-control'), 'no-store, max-age=0');
+  assert.equal(log.mock.callCount(), 1);
+  upstream.mock.mockImplementation(async () => { throw new Error('Network timeout'); });
+  assert.equal((await onRequest({ request })).status, 502);
 });
 
 test('all locales provide the repositioned copy used by the UI', async () => {
   const english = JSON.parse(await readProjectFile('messages/en/index.json'));
   const requiredPaths = [
     'hero.description',
-    'features.easyCustomization.title',
-    'features.easyCustomization.description',
     'navigation.skipToContent',
     'navigation.mainNavigation',
     'navigation.openMenu',
@@ -303,17 +277,19 @@ test('all locales provide the repositioned copy used by the UI', async () => {
     'pageCopy.useCases.metaTitle',
     'pageCopy.useCases.metaDescription',
     'pricing.referenceDisclosure',
-    'pricing.creditsNeverExpire',
-    'pricing.noTrial',
-    'pricing.billing.units.perYear',
-    'pricing.billing.annualTerms',
-    'pricing.plans.payg.cta',
-    'pricing.plans.pro.cta',
-    'pricing.plans.max.cta',
-    'pricing.creditGuide.items.fullTraining',
+    'pricing.subscription.expiry',
+    'pricing.packs.expiry',
+    'pricing.billing.annualCharge',
+    'pricing.billing.weeklyPrice',
+    'pricing.subscription.title',
+    'pricing.packs.title',
+    'pricing.photoEstimate',
+    'pricing.weeklyPhotoEstimate',
+    'faq.creditExpiry.question',
+    'faq.creditExpiry.answer',
     'faq.pricing.answer',
     'faq.subscriptions.answer',
-    'useCase.offerSummary',
+    'useCase.fallbackDescription',
     'useCase.galleryDisclaimer',
     'useCase.howItWorks.step1.title',
     'useCase.howItWorks.step1.desc',
@@ -321,12 +297,11 @@ test('all locales provide the repositioned copy used by the UI', async () => {
     'useCase.howItWorks.step2.desc',
     'useCase.howItWorks.step3.title',
     'useCase.howItWorks.step3.desc',
-    'useCase.pricingCard.payg',
-    'useCase.pricingCard.description',
-    'useCase.pricingCard.pro',
-    'useCase.pricingCard.max',
+    'useCase.cta.title',
+    'useCase.cta.description',
+    'useCase.cta.primary',
+    'useCase.cta.pricing',
     'useCase.schema.serviceType',
-    'useCase.stickyCta.label',
     'studio.meta.imageAlt',
     'masks.creditCost',
   ];
@@ -354,7 +329,7 @@ test('localized changed namespaces stay in lockstep with English', async () => {
 
   for (const locale of localeCodes.filter((code) => code !== 'en')) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
-    for (const namespace of ['pricing', 'studio', 'pageCopy', 'useCase', 'features']) {
+    for (const namespace of ['pricing', 'studio', 'faq', 'pageCopy', 'useCase']) {
       assert.equal(
         Boolean(messages[namespace]) && typeof messages[namespace] === 'object',
         true,
@@ -365,13 +340,13 @@ test('localized changed namespaces stay in lockstep with English', async () => {
         leafPaths(english[namespace]),
         `${locale}.${namespace} keys differ from English`,
       );
-    }
-    for (const dottedPath of leafPaths(english.studio)) {
-      assert.deepEqual(
-        placeholders(valueAtPath(messages.studio, dottedPath)),
-        placeholders(valueAtPath(english.studio, dottedPath)),
-        `${locale}.studio.${dottedPath} placeholders differ from English`,
-      );
+      for (const dottedPath of leafPaths(english[namespace])) {
+        assert.deepEqual(
+          placeholders(valueAtPath(messages[namespace], dottedPath)),
+          placeholders(valueAtPath(english[namespace], dottedPath)),
+          `${locale}.${namespace}.${dottedPath} placeholders differ from English`,
+        );
+      }
     }
   }
 });
@@ -385,11 +360,9 @@ test('creation and editing stay ahead of optional personal-model training', asyn
 
   const homeOrder = [
     '<Hero locale={locale}',
-    '<AppShowcase locale={locale}',
-    '<Features locale={locale}',
+    '<Pricing locale={locale}',
     '<HomePresets locale={locale}',
     '<HomeMasks locale={locale}',
-    '<Pricing locale={locale}',
   ].map((token) => homeSource.indexOf(token));
   assert.equal(homeOrder.every((position) => position >= 0), true, 'homepage sections are missing');
   assert.deepEqual(homeOrder, [...homeOrder].sort((a, b) => a - b));
@@ -398,12 +371,11 @@ test('creation and editing stay ahead of optional personal-model training', asyn
     "t('steps.eyebrow')",
     "t('starts.eyebrow')",
     "t('autoMode.eyebrow')",
-    "t('quality.eyebrow')",
+    "t('credits.title')",
     "t('personal.eyebrow')",
   ].map((token) => studioSource.indexOf(token));
   assert.equal(studioOrder.every((position) => position >= 0), true, 'Studio sections are missing');
   assert.deepEqual(studioOrder, [...studioOrder].sort((a, b) => a - b));
-  assert.match(studioSource, /qualityBands\.map\(\(band\) =>/);
   assert.match(studioSource, /stepKeys\.map\(\(key, index\) =>/);
   assert.match(studioSource, /sourceKeys\.map\(\(key, index\) =>/);
   assert.doesNotMatch(useCaseSource, /howItWorks\.step[123]\.time/);
@@ -416,61 +388,72 @@ test('creation and editing stay ahead of optional personal-model training', asyn
   }
 });
 
-test('Studio explains Auto Mode and quality without reviving a provider picker or service catalog', async () => {
-  const [studioSource, platformButtonsSource] = await Promise.all([
-    readProjectFile('src/components/studio/StudioPage.tsx'),
-    readProjectFile('src/components/features/PlatformButtons.tsx'),
+test('Studio renders automatic generation costs and matching FAQ data in every locale', async () => {
+  const pricing = await loadPricingModule();
+  const [models, appLinks, jsonLd, seo] = await Promise.all([
+    loadModelsModule(pricing),
+    loadTypeScriptModule('src/lib/app-links.ts'),
+    loadTypeScriptModule('src/lib/json-ld.ts'),
+    loadTypeScriptModule('src/lib/seo.ts'),
   ]);
+  const text = (html) => html
+    .replace(/<[^>]+>/g, '')
+    .replaceAll('&#x27;', "'")
+    .replaceAll('&quot;', '"')
+    .replaceAll('&amp;', '&');
 
-  assert.match(studioSource, /const faqKeys = \['writing', 'autoMode', 'quality', 'personal', 'required'\] as const/);
-  assert.match(studioSource, /const faq = faqKeys\.map\(\(key\) => \(\{/);
-  assert.match(studioSource, /'@type': 'WebPage'/);
-  assert.match(studioSource, /'@type': 'Thing'/);
-  assert.match(studioSource, /mainEntity: faq\.map\(\(item\) => \(\{/);
-  assert.match(studioSource, /'@type': 'Question'/);
-  assert.match(studioSource, /'@type': 'Answer'/);
-  assert.match(studioSource, /\{faq\.map\(\(item\) => \(/);
-  assert.match(studioSource, /\{item\.question\}/);
-  assert.match(studioSource, /\{item\.answer\}/);
-  assert.match(studioSource, /t\('autoMode\.control'\)/);
-  assert.match(studioSource, /t\('quality\.visual\.faster'\)/);
-  assert.match(studioSource, /t\('quality\.visual\.higherQuality'\)/);
-  assert.equal((studioSource.match(/qualityBands\.map\(\(band\) =>/g) || []).length, 2);
-  assert.match(studioSource, /WEB_APP_STUDIO_URL/);
-  assert.match(studioSource, /section: 'studio'/);
-  assert.equal((studioSource.match(/<PlatformButtons/g) || []).length, 2);
-  assert.equal((studioSource.match(/webAppUrl=\{WEB_APP_STUDIO_URL\}/g) || []).length, 2);
-  assert.match(studioSource, /placement: 'hero_cta'/);
-  assert.match(studioSource, /placement: 'bottom_cta'/);
-  assert.doesNotMatch(studioSource, /PlatformAppLink/);
-  assert.doesNotMatch(studioSource, /min-h-screen[^"\n]*\bpt-24\b/);
-  assert.doesNotMatch(studioSource, /steps\.jumpLink|href="#how-studio-works"/);
-
-  assert.match(platformButtonsSource, /webAppUrl\?: string/);
-  assert.match(platformButtonsSource, /webAppUrl = WEB_APP_IDEAS_URL/);
-  assert.match(platformButtonsSource, /const attributedWebAppUrl = useAttributedUrl\(webAppUrl\)/);
-  assert.match(platformButtonsSource, /bg-black/);
-  assert.match(platformButtonsSource, /text-white/);
-  assert.match(platformButtonsSource, /h-12 w-\[166px\] shrink-0/);
-  assert.equal((platformButtonsSource.match(/h-12 w-\[180px\]/g) || []).length, 2);
-  assert.match(platformButtonsSource, /aria-label=\{webAppLabel\}/);
-  assert.match(platformButtonsSource, /\{webAppEyebrow\}/);
-  assert.match(platformButtonsSource, /\{webAppTitle\}/);
-  assert.doesNotMatch(platformButtonsSource, /bg-primary|text-on-primary/);
-  assert.doesNotMatch(platformButtonsSource, /dark:bg-black/);
-  assert.equal((platformButtonsSource.match(/analyticsParams\);/g) || []).length, 3);
-
-  assert.doesNotMatch(
-    studioSource,
-    /supportedModels|providerModel|providerUrl|modelsByGroup|modelGroupOrder|orderedModels/,
-  );
-  assert.doesNotMatch(studioSource, /'@type': '(?:Service|ItemList|FAQPage)'/);
+  for (const locale of localeCodes) {
+    const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    const translate = (namespace) => createTranslator({
+      locale,
+      messages,
+      namespace,
+      onError: (error) => { throw error; },
+    });
+    const t = translate('studio');
+    const { default: StudioPage } = await loadTypeScriptModule('src/components/studio/StudioPage.tsx', {
+      'next-intl/server': { getTranslations: async ({ namespace }) => translate(namespace) },
+      'next/link': { default: (props) => createElement('a', props) },
+      '@/components/features/PlatformButtons': {
+        default: ({ webAppUrl, webAppLabel }) => createElement('a', { href: webAppUrl }, webAppLabel),
+      },
+      '@/lib/app-links': appLinks,
+      '@/lib/json-ld': jsonLd,
+      '@/lib/models': models,
+      '@/lib/seo': seo,
+    });
+    const html = renderToStaticMarkup(await StudioPage({ locale }));
+    const script = html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s);
+    assert.ok(script, locale);
+    const schema = JSON.parse(script[1]);
+    const visibleText = text(html.replace(script[0], ''));
+    const costs = text(html.match(/<dl\b[^>]*>(.*?)<\/dl>/s)?.[1] ?? '');
+    for (const [source, credits] of [['photo', 4], ['personal', 2]]) {
+      assert.ok(costs.includes(t(`credits.${source}`) + t('credits.perPhoto', {
+        credits: new Intl.NumberFormat(locale).format(credits),
+      })), locale);
+    }
+    assert.ok(visibleText.includes(t('autoMode.control')), locale);
+    assert.ok(visibleText.includes(t('credits.note')), locale);
+    assert.doesNotMatch(html, /<(?:table|input)\b|role="slider"|[124]K/, locale);
+    assert.equal(schema.url, seo.canonicalUrl(locale, '/studio/'), locale);
+    assert.equal(schema.description, t('meta.description'), locale);
+    assert.deepEqual(schema.mainEntity, ['writing', 'autoMode', 'credits', 'personal', 'required'].map((key) => ({
+      '@type': 'Question',
+      name: t(`faq.${key}.question`),
+      acceptedAnswer: { '@type': 'Answer', text: t(`faq.${key}.answer`) },
+    })), locale);
+    for (const question of schema.mainEntity) {
+      assert.ok(visibleText.includes(question.name), locale);
+      assert.ok(visibleText.includes(question.acceptedAnswer.text), locale);
+    }
+    assert.equal(html.split(`href="${appLinks.WEB_APP_STUDIO_URL}"`).length - 1, 2, locale);
+  }
 });
 
-test('button-style web app links use a black background throughout the site', async () => {
+test('web app buttons outside pricing retain their existing black backgrounds', async () => {
   const [
     platformButtons,
-    pricingPlans,
     footer,
     maskHighlights,
     maskLanding,
@@ -479,7 +462,6 @@ test('button-style web app links use a black background throughout the site', as
     useCase,
   ] = await Promise.all([
     readProjectFile('src/components/features/PlatformButtons.tsx'),
-    readProjectFile('src/components/features/PricingPlans.tsx'),
     readProjectFile('src/components/layout/Footer.tsx'),
     readProjectFile('src/components/masks/AiMaskCategoryHighlights.tsx'),
     readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
@@ -489,7 +471,6 @@ test('button-style web app links use a black background throughout the site', as
   ]);
 
   assert.match(platformButtons, /href=\{attributedWebAppUrl\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.match(pricingPlans, /<PlatformAppLink[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(footer, /href=\{appLink\.url\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(maskHighlights, /href=\{buildMaskAppUrl\(selectedMask\.id\)\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(maskLanding, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
@@ -644,31 +625,25 @@ test('preset static generation uses validated revision-aware build snapshots', a
   assert.match(cacheClearTest, /ai-preset-content/);
 });
 
-test('navigation, homepage links, footer, sitemap, and llms.txt point directly to Studio', async () => {
-  const [navigation, features, footer, pricing, sitemap, llmsText] = await Promise.all([
+test('navigation, footer, sitemap, and llms.txt point directly to Studio', async () => {
+  const [navigation, footer, sitemap, llmsText] = await Promise.all([
     readProjectFile('src/components/layout/Navigation.tsx'),
-    readProjectFile('src/components/features/Features.tsx'),
     readProjectFile('src/components/layout/Footer.tsx'),
-    readProjectFile('src/components/features/Pricing.tsx'),
     readProjectFile('src/app/sitemap.ts'),
     readProjectFile('public/llms.txt'),
   ]);
 
   assert.match(navigation, /t\('studio'\)/);
   assert.match(navigation, /localePath\(locale, '\/studio\/'\)/);
-  assert.match(features, /tNav\('studio'\)/);
-  assert.match(features, /localePath\(locale, '\/studio\/'\)/);
   assert.match(footer, /tNav\('studio'\)/);
   assert.match(footer, /localePath\(locale, '\/studio\/'\)/);
-  assert.match(pricing, /tNav\('studio'\)/);
-  assert.match(pricing, /localePath\(locale, '\/studio\/'\)/);
   assert.match(sitemap, /'\/studio\/'/);
   assert.match(
     llmsText,
     /^- \[Studio – Custom AI Photo Creation\]\(https:\/\/myaiphotoshoot\.com\/studio\/\)$/m,
   );
 
-  for (const [name, source] of Object.entries({ navigation, features, footer, pricing, sitemap, llmsText })) {
+  for (const [name, source] of Object.entries({ navigation, footer, sitemap, llmsText })) {
     assert.doesNotMatch(source, /\/models\//, `${name} still links to /models/`);
   }
 });
@@ -925,6 +900,56 @@ test('landing build rejects failed RPCs and missing test flags without a legacy 
   }
 });
 
+test('mask catalogs request current KMP pricing and preserve the returned credit cost', async () => {
+  const pricing = await loadPricingModule();
+  for (const price of [2, 5]) {
+    const requests = [];
+    const masks = await loadTypeScriptModule('src/lib/ai-masks.ts', {
+      '@/i18n/request': { defaultLocale: 'en' },
+      '@/lib/pricing': pricing,
+      '@/lib/public-supabase': {
+        postPublicSupabaseRpc: async (name, body) => {
+          requests.push({ name, body });
+          return Response.json(name === 'list_ai_mask_categories' ? [{
+            id: 'category', slug: 'hairstyles', name: 'Hairstyles',
+            source_image_url: '/before.webp', audience_gender: 'unisex', sort_order: 0,
+          }] : [{
+            id: 'mask', category_id: 'category', slug: 'bob', name: 'Bob',
+            featured_graphics: '/after.webp', price_credits: price, price_usd: 0.09, sort_order: 0,
+          }]);
+        },
+      },
+    });
+    const catalog = await masks.fetchMasksCatalogStrict('de');
+    assert.deepEqual(requests.filter(({ name }) => name === 'list_ai_masks'), [{
+      name: 'list_ai_masks',
+      body: { p_locale: 'de', p_platform: 'web', p_app_version: '1.13.0' },
+    }]);
+    assert.equal(catalog.masks[0].priceCredits, price);
+  }
+});
+
+test('a missing versioned mask catalog fails without retrying legacy prices', async () => {
+  const requests = [];
+  const masks = await loadTypeScriptModule('src/lib/ai-masks.ts', {
+    '@/i18n/request': { defaultLocale: 'en' },
+    '@/lib/pricing': await loadPricingModule(),
+    '@/lib/public-supabase': {
+      postPublicSupabaseRpc: async (name, body) => {
+        requests.push({ name, body });
+        return name === 'list_ai_mask_categories'
+          ? Response.json([])
+          : Response.json({ code: 'PGRST202' }, { status: 404 });
+      },
+    },
+  });
+  await assert.rejects(masks.fetchMasksCatalogStrict('en'), /Failed to fetch the AI mask catalog/);
+  assert.deepEqual(requests.filter(({ name }) => name === 'list_ai_masks'), [{
+    name: 'list_ai_masks',
+    body: { p_locale: 'en', p_platform: 'web', p_app_version: '1.13.0' },
+  }]);
+});
+
 test('mask catalog schema models masks as collection items rather than software apps', async () => {
   const masksCatalog = await readProjectFile('src/components/masks/AiMasksCatalog.tsx');
 
@@ -1052,7 +1077,6 @@ test('social metadata uses dedicated evergreen copy without changing page SEO co
     assert.doesNotMatch(source, /og-models|\/models\//);
   }
 
-  assert.match(useCaseSeo, /const description = appendPlanSummary\(/);
   assert.match(useCaseSeo, /const socialDescription = buildUseCaseSocialDescription\(/);
   assert.equal((useCaseSeo.match(/description: socialDescription/g) || []).length, 2);
 });
@@ -1074,8 +1098,8 @@ test('the retired Models route and generated page component are absent', async (
 
 test('active copy and SEO do not revive the retired cash-per-image story', async () => {
   const targetedPaths = [
-    'useCase.offerSummary',
-    'useCase.stickyCta.label',
+    'useCase.fallbackDescription',
+    'useCase.cta.primary',
   ];
   const staleClaim = /(?:no monthly plan|no subscription required|\$0\.(?:03|09|19|29)|train(?:ing)? (?:once )?from \$)/i;
 
@@ -1090,7 +1114,6 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
   const pricingUi = await readProjectFile('src/components/features/PricingPlans.tsx');
   assert.match(pricingUi, /fetch\(`\/pricing\?\$\{params\.toString\(\)\}`/);
   assert.match(pricingUi, /cache: 'no-store'/);
-  assert.match(pricingUi, /billing\.units\.perYear/);
 
   const structuredDataSources = await Promise.all([
     readProjectFile('src/components/seo/HomeJsonLd.tsx'),
@@ -1107,9 +1130,7 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
   assert.doesNotMatch(homeStructuredData, /serviceType: 'AI photo/);
   assert.match(homeStructuredData, /serviceType: tSchema\('serviceType'\)/);
   assert.match(useCaseStructuredData, /t\('schema\.serviceType'\)/);
-  for (const tier of ['payg', 'pro', 'max']) {
-    assert.match(useCaseStructuredData, new RegExp(`t\\('pricingCard\\.${tier}'\\)`));
-  }
+  assert.doesNotMatch(structuredData, /plans\.(?:pro|max)|name: '(?:Pro|Max)'/);
 
   const metadataSources = await Promise.all([
     readProjectFile('src/app/layout.tsx'),
@@ -1121,31 +1142,71 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
   assert.doesNotMatch(metadataSources.join('\n'), /\/og-image\.png/);
 });
 
-test('homepage pricing uses one compact plan selector', async () => {
-  const [pricingUi, english] = await Promise.all([
-    readProjectFile('src/components/features/PricingPlans.tsx'),
-    readProjectFile('messages/en/index.json').then(JSON.parse),
-  ]);
+test('pricing displays every offer, KMP photo estimates, and savings without purchase controls', async () => {
+  const pricing = await loadPricingModule();
+  const text = (html) => html
+    .replace(/<[^>]+>/g, '')
+    .replaceAll('&#x27;', "'")
+    .replaceAll('&amp;', '&');
 
-  assert.match(pricingUi, /useState<PricingTierId>\('payg'\)/);
-  assert.match(pricingUi, /name="pricing-tier"/);
-  assert.match(pricingUi, /pricing\.tiers\.find\(\(tier\) => tier\.id === selectedTierId\)/);
-  assert.equal((pricingUi.match(/<article\b/g) || []).length, 1);
-  assert.doesNotMatch(pricingUi, /CREDIT_COSTS|creditGuide\.title/);
-
-  assert.equal(english.pricing.title, 'Choose Your Plan');
-  assert.equal(
-    english.pricing.description,
-    'Compare features, included credits, and billing options.',
-  );
-  assert.equal(
-    english.pricing.plans.pro.features.training,
-    'Standard personal AI model training',
-  );
-  assert.equal(
-    english.pricing.plans.max.features.training,
-    'Full personal AI model training',
-  );
+  for (const locale of localeCodes) {
+    const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    const t = createTranslator({
+      locale,
+      messages,
+      namespace: 'pricing',
+      onError: (error) => { throw error; },
+    });
+    const { default: PricingOfferList } = await loadTypeScriptModule(
+      'src/components/features/PricingOfferList.tsx',
+      {
+        '@/lib/pricing': pricing,
+        '@/lib/utils': {
+          useTranslations: () => t,
+          cn: (...classes) => classes.filter(Boolean).join(' '),
+        },
+      },
+    );
+    const subscription = renderToStaticMarkup(createElement(PricingOfferList, {
+      kind: 'subscription',
+      pricing: pricing.US_REFERENCE_PRICING,
+      locale,
+    }));
+    const packs = renderToStaticMarkup(createElement(PricingOfferList, {
+      kind: 'packs',
+      pricing: pricing.US_REFERENCE_PRICING,
+      locale,
+    }));
+    const subscriptionText = text(subscription);
+    const number = new Intl.NumberFormat(locale);
+    assert.ok(subscriptionText.includes(t('subscription.expiry')), locale);
+    assert.ok(subscriptionText.includes(t('subscription.cancel')), locale);
+    for (const price of [29.99, 2.99]) {
+      assert.ok(subscriptionText.includes(pricing.formatCurrency(price, 'USD', locale)), locale);
+    }
+    const annualPrice = subscription.match(/<dd\b[^>]*>(.*?)<\/dd>/s)?.[1];
+    assert.ok(annualPrice, locale);
+    assert.equal(text(annualPrice.match(/<bdi>(.*?)<\/bdi>/s)?.[1] ?? ''), t('billing.weeklyPrice', {
+      price: pricing.formatCurrency(29.99 / 52, 'USD', locale),
+    }), locale);
+    assert.ok(text(annualPrice).includes(t('billing.annualCharge', {
+      price: pricing.formatCurrency(29.99, 'USD', locale),
+    })), locale);
+    assert.ok(subscriptionText.includes(t('billing.annualSavings', { percent: number.format(81) })), locale);
+    assert.ok(subscriptionText.includes(t('weeklyPhotoEstimate', { photos: number.format(10) })), locale);
+    assert.ok(subscriptionText.includes(t('billing.weeklyCredits', { credits: number.format(40) })), locale);
+    const packText = text(packs);
+    assert.ok(packText.includes(t('packs.expiry')), locale);
+    for (const [credits, price, photos] of [[10, 0.99, 2], [100, 5.99, 25], [500, 14.99, 125]]) {
+      assert.ok(packText.includes(t('creditAmount', { credits: number.format(credits) })), locale);
+      assert.ok(packText.includes(pricing.formatCurrency(price, 'USD', locale)), locale);
+      assert.ok(packText.includes(t('photoEstimate', { photos: number.format(photos) })), locale);
+    }
+    for (const percent of [39, 70]) {
+      assert.ok(packText.includes(t('packs.savings', { percent: number.format(percent) })), locale);
+    }
+    assert.doesNotMatch(subscription + packs, /<(?:a|button|input|select|form)\b/, locale);
+  }
 });
 
 test('Service structured data excludes properties unsupported by the Service type', async () => {

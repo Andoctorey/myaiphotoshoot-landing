@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { serializeJsonLd } from '@/lib/json-ld';
-import { buildDigitalOfferPolicies } from '@/lib/product-offer';
 import { useTranslations } from '@/lib/utils';
 
 type Props = {
@@ -24,7 +23,6 @@ export default function UseCaseProductJsonLd({
   const images = Array.isArray(imageUrls)
     ? imageUrls.filter(Boolean)
     : [];
-  const offerPolicies = buildDigitalOfferPolicies();
 
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -36,42 +34,6 @@ export default function UseCaseProductJsonLd({
     image: images.length ? images.slice(0, 10) : undefined,
     mainEntityOfPage: idUrl,
     provider: { '@type': 'Organization', name: brandName },
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: t('pricingCard.title'),
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          name: t('badges.oneTimeCredits'),
-          url: 'https://app.myaiphotoshoot.com',
-          itemOffered: {
-            '@type': 'Service',
-            name: t('pricingCard.payg'),
-          },
-          ...offerPolicies,
-        },
-        {
-          '@type': 'Offer',
-          name: 'Pro',
-          url: 'https://app.myaiphotoshoot.com',
-          itemOffered: {
-            '@type': 'Service',
-            name: t('pricingCard.pro'),
-          },
-          ...offerPolicies,
-        },
-        {
-          '@type': 'Offer',
-          name: 'Max',
-          url: 'https://app.myaiphotoshoot.com',
-          itemOffered: {
-            '@type': 'Service',
-            name: t('pricingCard.max'),
-          },
-          ...offerPolicies,
-        },
-      ],
-    },
   };
 
   return (

@@ -149,7 +149,8 @@ async function fetchMasksCatalogInternal(locale: string, strict: boolean): Promi
       ),
       postPublicSupabaseRpc(
         'list_ai_masks',
-        { p_locale: locale },
+        // The versioned catalog matches the fixed-model price used by current KMP clients.
+        { p_locale: locale, p_platform: 'web', p_app_version: '1.13.0' },
         MASKS_REVALIDATE_SECONDS,
       ),
     ]);

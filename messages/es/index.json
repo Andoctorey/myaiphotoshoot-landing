@@ -1,7 +1,6 @@
 {
   "navigation": {
     "home": "Inicio",
-    "features": "Funciones",
     "gallery": "Galería",
     "blog": "Blog",
     "pricing": "Precios",
@@ -42,7 +41,7 @@
     "sortError": "No se pudo cambiar el orden. Inténtalo de nuevo.",
     "title": "Presets de fotos con IA",
     "breadcrumb": "Presets de IA",
-    "eyebrow": "Presets rápidos de IA",
+    "eyebrow": "Presets rápidos",
     "heading": "Presets de IA para transformar fotos rápidamente",
     "description": "Elige un preset, sube una foto y crea una transformación con IA para compartir.",
     "empty": "Aún no hay presets de IA publicados.",
@@ -69,43 +68,43 @@
     "paginationPageTitle": "Página {page}"
   },
   "masks": {
-    "title": "Máscaras con IA",
-    "breadcrumb": "Máscaras con IA",
+    "title": "Máscaras",
+    "breadcrumb": "Máscaras",
     "eyebrow": "Una foto. Un look nuevo.",
-    "heading": "Explora las máscaras con IA",
+    "heading": "Explora las máscaras",
     "description": "Sube una foto y prueba peinados, maquillaje, conjuntos, efectos de edad y mucho más.",
     "creditCost": "{credits} créditos",
     "homeTitle": "Prueba un look nuevo con una sola foto",
     "homeDescription": "Prueba peinados, maquillaje, conjuntos, efectos de edad y mucho más a partir de una sola foto.",
     "pricePerImage": "{price} por imagen",
-    "browseAll": "Ver máscaras con IA",
+    "browseAll": "Ver máscaras",
     "before": "Antes",
     "after": "Después",
     "sourceAlt": "Retrato original de la categoría {category}",
-    "resultAlt": "Resultado de la máscara con IA {name}",
-    "tryMasks": "Probar máscaras con IA",
+    "resultAlt": "Resultado de la máscara {name}",
+    "tryMasks": "Probar máscaras",
     "genderLabel": "Género de la vista previa",
     "genderMale": "Masculino",
     "genderFemale": "Femenino",
     "availabilityWebAndroid": "Solo web y Android",
-    "howTitle": "Cómo funcionan las máscaras con IA",
-    "categoryNav": "Explorar categorías de máscaras con IA",
+    "howTitle": "Cómo funcionan las máscaras",
+    "categoryNav": "Explorar categorías de máscaras",
     "maskCount": "{count} máscaras",
     "yourPhoto": "Tu foto",
     "readyTitle": "¿Listo para probar un look nuevo?",
     "readyDescription": "Abre Máscaras en la app y sube un retrato nítido para empezar.",
     "landing": {
-      "categoryGuide": "Guías de categorías de máscaras con IA",
+      "categoryGuide": "Guías de categorías de máscaras",
       "aboutTitle": "Sobre estos looks",
       "holdToCompare": "Mantén pulsado para comparar",
       "iosUnavailable": "Debido a los requisitos de la App Store, esta categoría no está disponible en la app para iOS. Aún puedes usarla en la web y en Android.",
       "photoGuidanceTitle": "Consejos para la foto",
       "expectationsTitle": "Qué puedes esperar",
       "limitationsTitle": "Limitaciones",
-      "masksTitle": "Máscaras con IA disponibles",
+      "masksTitle": "Máscaras disponibles",
       "masksDescription": "Explora las máscaras actuales de esta categoría. Las imágenes, los costes en créditos y la disponibilidad proceden directamente del catálogo publicado.",
-      "trainingQuestion": "¿Las máscaras con IA requieren entrenar un modelo personal?",
-      "trainingAnswer": "No. Las máscaras con IA funcionan con una sola foto, así que no necesitas entrenar un modelo personal de IA.",
+      "trainingQuestion": "¿Las máscaras requieren entrenar un modelo personal?",
+      "trainingAnswer": "No. Las máscaras funcionan con una sola foto, así que no necesitas entrenar un modelo personal de IA.",
       "faqTitle": "Preguntas frecuentes"
     },
     "steps": {
@@ -129,15 +128,6 @@
     "description": "Convierte una foto, una referencia o una idea en fotos profesionales y de perfil, retratos y nuevos looks.",
     "visualAlt": "La misma mujer en retratos con IA profesionales, informales y de estilo editorial"
   },
-  "appShowcase": {
-    "label": "Dentro de la app",
-    "exploreStyles": "Prueba un efecto de AI Masks en un retrato con My AI Photoshoot",
-    "realisticPhotos": "Edita una foto existente con un prompt personalizado en My AI Photoshoot",
-    "photosOfYou": "Usa una foto de referencia y describe el cambio en Studio",
-    "photoIdeas": "Explora presets listos para usar en My AI Photoshoot",
-    "appearanceOptions": "Transforma el rostro, el cabello, el cuerpo, el estilo o la piel con My AI Photoshoot",
-    "noSubscription": "Crea con créditos de compra única o desbloquea más con Pro y Max"
-  },
   "homeUseCases": {
     "eyebrow": "Para cada momento",
     "title": "Una foto para cada faceta de ti",
@@ -151,26 +141,6 @@
       "dating": "Fotos para perfiles de citas",
       "profiles": "Fotos de perfil con IA",
       "portraits": "Retratos con IA"
-    }
-  },
-  "features": {
-    "title": "Crea tu foto a tu manera",
-    "description": "Elige una transformación guiada o usa Studio y prompts personalizados para tener más control.",
-    "advancedAI": {
-      "title": "Elige cómo empezar",
-      "description": "Transforma una foto existente, guía el resultado con una referencia o crea una imagen nueva a partir de un prompt."
-    },
-    "thousandsOfStyles": {
-      "title": "Presets listos para usar y AI Masks",
-      "description": "Elige un preset o una AI Mask para obtener transformaciones rápidas sin escribir un prompt."
-    },
-    "easyCustomization": {
-      "title": "Prompts personalizados en Studio",
-      "description": "Empieza con una foto normal o un modelo personal de IA opcional y describe el resultado que quieres."
-    },
-    "multiplatform": {
-      "title": "Crea desde cualquier lugar",
-      "description": "Abre My AI Photoshoot en la web, iOS o Android."
     }
   },
   "gallery": {
@@ -221,7 +191,7 @@
     },
     "cta": {
       "title": "¿Listo para crear tus fotos con IA?",
-      "description": "Empieza con una foto, un preset, AI Masks o un prompt personalizado y crea el resultado que buscas.",
+      "description": "Empieza con una foto, un preset, Masks o un prompt personalizado y crea el resultado que buscas.",
       "button": "Empezar a crear"
     },
     "tableOfContents": {
@@ -229,78 +199,32 @@
     }
   },
   "pricing": {
-    "title": "Elige tu plan",
-    "description": "Compara funciones, créditos incluidos y opciones de facturación.",
-    "referenceDisclosure": "Se muestran las ofertas de referencia de {market} en {currency}. El precio final localizado, la moneda, los créditos incluidos y la disponibilidad aparecen en la aplicación o la tienda.",
-    "creditsNeverExpire": "Los créditos nunca caducan",
-    "noTrial": "No hay prueba gratuita. Las suscripciones se renuevan hasta que las canceles.",
+    "title": "Precios",
+    "referenceDisclosure": "Los precios pueden variar según la región y la tienda.",
+    "creditAmount": "{credits} créditos",
     "billing": {
-      "cadences": {
-        "oneTime": "Compra única",
-        "weekly": "Semanal",
-        "monthly": "Mensual",
-        "annual": "Anual"
-      },
-      "units": {
-        "oneTime": "una sola vez",
-        "perWeek": "por semana",
-        "perMonth": "por mes",
-        "perYear": "por año"
-      },
-      "oneTimeCredits": "{credits} créditos incluidos",
+      "annual": "Anual",
+      "weekly": "Semanal",
+      "oneTime": "pago único",
       "weeklyCredits": "{credits} créditos cada semana",
-      "monthlyCredits": "{credits} créditos cada mes",
       "annualSavings": "Ahorra un {percent}%",
-      "annualTerms": "{total} se cobra íntegramente una vez al año · se añaden {credits} créditos cada mes"
+      "weeklyPrice": "{price}/semana",
+      "annualCharge": "{price} facturados al año"
     },
-    "plans": {
-      "payg": {
-        "name": "Créditos de compra única",
-        "eyebrow": "Pago por uso",
-        "description": "Compra créditos solo cuando los necesites y crea o edita imágenes con una resolución de hasta 1K.",
-        "optionLabel": "Paquete de créditos",
-        "cta": "Empezar con créditos",
-        "features": {
-          "resolution": "Genera fotos de hasta {resolution}",
-          "flexible": "Paga una vez"
-        }
-      },
-      "pro": {
-        "name": "Pro",
-        "eyebrow": "Mayor resolución + entrenamiento opcional",
-        "description": "Créditos recurrentes, generación de hasta 2K y entrenamiento personal Standard opcional.",
-        "optionLabel": "Plan Pro",
-        "cta": "Elegir Pro",
-        "features": {
-          "resolution": "Genera fotos de hasta {resolution}",
-          "training": "Entrenamiento estándar de tu modelo de IA personal"
-        }
-      },
-      "max": {
-        "name": "Max",
-        "eyebrow": "4K + entrenamiento opcional",
-        "description": "Más créditos recurrentes, generación de hasta 4K y entrenamiento personal Full opcional.",
-        "optionLabel": "Plan Max",
-        "cta": "Elegir Max",
-        "features": {
-          "resolution": "Genera fotos de hasta {resolution}",
-          "training": "Entrenamiento completo de tu modelo de IA personal"
-        }
-      }
+    "subscription": {
+      "title": "Suscripciones",
+      "description": "Créditos nuevos para tus retratos, estilos e ideas.",
+      "expiry": "Los créditos semanales sin usar no se acumulan",
+      "cancel": "Renovación automática. Cancela cuando quieras."
     },
-    "creditGuide": {
-      "title": "Cómo se usan los créditos",
-      "description": "Los créditos se usan al crear o elegir el entrenamiento opcional de un modelo personal. Tu nivel de acceso determina la calidad de generación y la resolución disponibles.",
-      "creditAmount": "{credits} CR",
-      "items": {
-        "personalModelImage": "Imagen con modelo de IA personal",
-        "standardImage": "Imagen Standard en 1K",
-        "proImage": "Imagen Pro en 2K",
-        "maxImage": "Imagen Max en 4K",
-        "standardTraining": "Entrenamiento de IA personal Standard",
-        "fullTraining": "Entrenamiento de IA personal Full"
-      }
-    }
+    "packs": {
+      "title": "Paquetes de créditos",
+      "description": "Una compra puntual para una edición rápida o tu próxima sesión de fotos.",
+      "expiry": "Los créditos comprados nunca caducan",
+      "savings": "Ahorra un {percent}%"
+    },
+    "photoEstimate": "{photos}+ fotos",
+    "weeklyPhotoEstimate": "{photos}+ fotos por semana"
   },
   "download": {
     "title": "Empieza a crear hoy",
@@ -322,7 +246,7 @@
   },
   "footer": {
     "title": "My AI Photoshoot",
-    "description": "Crea y transforma fotos con IA mediante presets, AI Masks, Studio y prompts personalizados.",
+    "description": "Crea y transforma fotos con IA mediante presets, Masks, Studio y prompts personalizados.",
     "links": "Enlaces rápidos",
     "legal": "Legal",
     "imageLicense": "Licencia de imágenes",
@@ -361,23 +285,23 @@
     "description": "Respuestas claras sobre configuración, precio, calidad de imagen, privacidad y dispositivos compatibles.",
     "howItWorks": {
       "question": "¿Cómo funciona?",
-      "answer": "Empieza con una foto, una referencia o una idea. Elige un preset o una AI Mask, o abre Studio y describe lo que quieres. Antes de crear, la app muestra el coste en créditos y si se requiere algún plan."
+      "answer": "Elige un ajuste preestablecido o una máscara, o describe tu idea en Studio. Añade una foto cuando se solicite, comprueba el coste en créditos y crea."
     },
     "sourcePhotos": {
       "question": "¿Es obligatorio entrenar un modelo personal de IA?",
-      "answer": "No. Usa presets, AI Masks y Studio con una foto o referencia sin entrenar un modelo personal. Entrena uno solo cuando quieras que la misma persona siga siendo reconocible en varias fotos; este proceso opcional usa entre 10 y 20 selfies variadas y requiere Pro o Max."
+      "answer": "No. Puedes usar preajustes, máscaras de IA y Studio con una foto o referencia sin entrenar un modelo personal. Para crear varias fotos de la misma persona, puedes entrenar un modelo con entre 10 y 20 selfies variados. Es opcional, consume créditos y no requiere suscripción."
     },
     "pricing": {
       "question": "¿Cuánto cuesta y hay límites?",
-      "answer": "Los créditos de compra única sirven para la creación y edición compatibles en 1K. Los paquetes de referencia de EE. UU. ofrecen 200 créditos por $5.99 o 300 por $8.99. Pro empieza en $6.99 por semana y añade 2K más entrenamiento Standard opcional; Max empieza en $29.99 por mes y añade 4K más entrenamiento Full opcional. Los planes anuales se cobran íntegramente y añaden créditos cada mes. Las ofertas localizadas finales varían según el país y la plataforma, y los créditos nunca caducan."
+      "answer": "Las suscripciones semanales y anuales incluyen 40 créditos cada semana. También puedes comprar un paquete de créditos con un pago único. La app muestra el coste en créditos antes de crear. Los precios finales y las ofertas disponibles aparecen en la app o la tienda."
     },
     "subscriptions": {
       "question": "¿Cómo gestiono o cancelo una suscripción?",
-      "answer": "Gestiona las suscripciones de Apple en tu Apple Account, las de Google en Google Play y las suscripciones web desde los ajustes de facturación o mediante soporte. La cancelación entra en vigor al final del periodo pagado. Conservas los créditos sin usar y los modelos personales de IA que ya hayas entrenado."
+      "answer": "Gestiona o cancela la suscripción desde tu cuenta en la app, tu cuenta de Apple o Google Play, según dónde la compraste. Para compras en la web, usa la gestión de suscripciones en la app o contacta con soporte. Cancelar detiene las futuras renovaciones. Tus créditos comprados y modelos de IA personales entrenados siguen disponibles; los créditos semanales conservan su fecha de caducidad."
     },
     "imageQuality": {
       "question": "¿Qué influye en la calidad de las imágenes?",
-      "answer": "Los resultados dependen de la foto de origen o referencia, del preset o la AI Mask, de la calidad de generación que elijas y del prompt. Usa una foto nítida y bien iluminada cuando el proceso la solicite, y compara varios resultados si es necesario."
+      "answer": "La foto original, el estilo elegido y tu descripción influyen en el resultado. Usa una foto nítida y bien iluminada y describe qué quieres cambiar o conservar."
     },
     "privacy": {
       "question": "¿Cómo se gestionan mis fotos y datos?",
@@ -389,7 +313,11 @@
     },
     "whyNotChatGPT": {
       "question": "¿En qué se diferencia de una herramienta general de imágenes con IA?",
-      "answer": "My AI Photoshoot reúne presets guiados, AI Masks, Studio, prompts personalizados y un control sencillo de la calidad de generación en un único flujo de trabajo para fotos."
+      "answer": "My AI Photoshoot reúne ajustes preestablecidos, máscaras y Studio para que puedas probar nuevos estilos, editar fotos y crear retratos en un solo lugar."
+    },
+    "creditExpiry": {
+      "question": "¿Caducan mis créditos?",
+      "answer": "Los créditos de la suscripción se renuevan cada semana. Los créditos semanales sin usar caducan al terminar su periodo de validez y no se acumulan. Los créditos comprados en paquetes de pago único nunca caducan, así que puedes usarlos cuando quieras."
     }
   },
   "useCase": {
@@ -398,12 +326,6 @@
     },
     "loading": "Cargando...",
     "notFound": "Caso de uso no encontrado.",
-    "badges": {
-      "oneTimeCredits": "Créditos de compra única disponibles",
-      "proAccess": "Pro: hasta 2K + acceso al entrenamiento opcional",
-      "maxAccess": "Max: hasta 4K + acceso al entrenamiento Full opcional"
-    },
-    "offerSummary": "Crea en 1K con créditos de compra única o usa Pro o Max para obtener resoluciones más altas y acceder al entrenamiento opcional de un modelo de IA personal.",
     "galleryDisclaimer": "Los ejemplos mostrados se crearon con My AI Photoshoot.",
     "howItWorks": {
       "title": "Cómo funciona",
@@ -413,37 +335,34 @@
       },
       "step2": {
         "title": "Elige cómo crear",
-        "desc": "Usa un preset o una AI Mask, o describe en Studio el resultado que quieres. Elige una generación más rápida o de mayor calidad antes de crear."
+        "desc": "Prueba un ajuste preestablecido o una máscara, o describe tu idea en Studio."
       },
       "step3": {
         "title": "Revisa y crea",
-        "desc": "Comprueba el coste en créditos y si se requiere algún plan, crea el resultado y descarga las imágenes que quieras conservar."
+        "desc": "Revisa el coste en créditos, crea tu resultado y descarga tus fotos favoritas."
       }
-    },
-    "pricingCard": {
-      "title": "Elige el acceso que mejor se adapte a tu objetivo",
-      "description": "Los créditos nunca caducan. Las suscripciones añaden créditos recurrentes, resoluciones más altas y acceso al entrenamiento opcional de un modelo de IA personal.",
-      "payg": "Créditos de compra única: generación y edición en 1K con modelos compatibles",
-      "pro": "Pro: hasta 2K + acceso al entrenamiento Standard opcional",
-      "max": "Max: hasta 4K + acceso al entrenamiento Full opcional"
-    },
-    "stickyCta": {
-      "label": "Empezar a crear con créditos"
     },
     "benefits": {
       "title": "Beneficios"
     },
     "schema": {
       "serviceType": "Creación, transformación y edición de fotos con IA"
+    },
+    "fallbackDescription": "Explora ideas para fotos, encuentra un estilo que te guste y crea el tuyo con My AI Photoshoot.",
+    "cta": {
+      "title": "Crea tu próximo look",
+      "description": "Explora los ajustes preestablecidos y las máscaras, o crea algo nuevo en Studio.",
+      "primary": "Crear tu foto",
+      "pricing": "Ver precios"
     }
   },
   "studio": {
     "meta": {
       "title": "Studio de fotos con IA y prompts",
-      "description": "Crea y edita fotos con IA en Studio a partir de una foto o un modelo personal. Escribe un prompt, deja que Auto Mode lo mejore y elige la calidad.",
+      "description": "Crea y edita fotos en Studio con una foto o un modelo de IA personal. Describe tu idea y deja que el modo Auto se encargue de generar.",
       "shareTitle": "Crea y edita fotos con IA en Studio",
       "shareDescription": "Empieza con una foto o un modelo personal opcional, describe lo que buscas y deja que Auto Mode mejore el prompt.",
-      "imageAlt": "Ejemplos de fotos de My AI Photoshoot creados con presets, AI Masks y Studio"
+      "imageAlt": "Ejemplos de fotos de My AI Photoshoot creados con presets, Masks y Studio"
     },
     "breadcrumb": "Studio",
     "eyebrow": "Creación personalizada de fotos con IA",
@@ -451,12 +370,7 @@
     "description": "Empieza con una foto o un modelo personal de IA opcional y describe lo que buscas. Usa Studio para editar la imagen original o crear una nueva.",
     "directAnswer": {
       "title": "Describe lo que buscas. Auto Mode mejora el prompt.",
-      "description": "Auto Mode interpreta y mejora cada solicitud de Studio. Cuando empiezas con una foto, también analiza la imagen y usa la Calidad de generación elegida en la app."
-    },
-    "access": {
-      "payg": "Pago por uso",
-      "pro": "Pro",
-      "max": "Max"
+      "description": "Elige una foto o un modelo de IA personal, describe el resultado y revisa el coste en créditos. Studio se encarga de generar automáticamente."
     },
     "starts": {
       "eyebrow": "Elige un punto de partida",
@@ -487,7 +401,7 @@
       },
       "create": {
         "title": "Crea y revisa el resultado",
-        "description": "Cuando empiezas con una foto, Studio usa la Calidad de generación elegida en la app. Crea la foto, revisa el resultado y descárgala cuando estés satisfecho."
+        "description": "Revisa el coste en créditos, crea tu foto y después revisa y descarga el resultado."
       }
     },
     "autoMode": {
@@ -496,48 +410,13 @@
       "description": "Auto Mode convierte tu solicitud en instrucciones claras de generación basadas en el punto de partida y el objetivo que hayas elegido.",
       "photo": {
         "title": "Cuando empiezas con una foto",
-        "description": "Auto Mode analiza la imagen, traduce las instrucciones cuando hace falta, decide qué debe cambiar y qué debe mantenerse, y elige una relación de aspecto y un formato de archivo compatibles."
+        "description": "El modo Auto analiza tu foto e interpreta qué cambiar y qué conservar."
       },
       "personal": {
         "title": "Cuando usas un modelo personal de IA",
-        "description": "Auto Mode traduce y mejora tu solicitud para generar con un modelo personal. No analiza otra foto y el ajuste de Calidad de generación utilizado con fotos no se aplica."
+        "description": "El modo Auto traduce y mejora tu solicitud para tu modelo de IA personal."
       },
-      "control": "Auto Mode mejora la solicitud. Tú sigues eligiendo la Calidad de generación utilizada con fotos."
-    },
-    "quality": {
-      "eyebrow": "Calidad de generación",
-      "title": "Cómo funciona la Calidad de generación con una foto",
-      "description": "Cuando empiezas con una foto, Studio usa la Calidad de generación elegida en la app. Elige 1K para ahorrar tiempo y créditos, o 2K o 4K para obtener más detalle. Los niveles superiores pueden requerir Pro o Max.",
-      "creditUnit": "CR / foto",
-      "maxResolution": "Hasta {resolution}",
-      "visual": {
-        "previewLabel": "Vista previa del control de la app",
-        "title": "Calidad de generación",
-        "creditLabel": "{credits} CR / foto",
-        "faster": "Más rápido",
-        "higherQuality": "Mayor calidad"
-      },
-      "columns": {
-        "access": "Acceso",
-        "bestFor": "Ideal para",
-        "credits": "Créditos por foto",
-        "resolution": "Resolución máxima"
-      },
-      "bands": {
-        "payg": {
-          "title": "Generación 1K más rápida",
-          "description": "Ediciones rápidas y creaciones cotidianas cuando la velocidad y un menor uso de créditos son lo más importante."
-        },
-        "pro": {
-          "title": "Generación 2K de mayor calidad",
-          "description": "Más detalle para retratos cuidados, fotos de perfil y ediciones complejas. Pro incluye dos opciones de calidad en 2K."
-        },
-        "max": {
-          "title": "Generación 4K de máxima calidad",
-          "description": "La máxima resolución disponible para escenas detalladas e imágenes finales que se benefician de una nitidez adicional."
-        }
-      },
-      "note": "Estos costes orientativos en créditos se aplican al generar desde una foto. El control Calidad de generación de la app muestra el coste y el plan requerido para cada opción. Los créditos nunca caducan. Los modelos personales de IA tienen su propio precio en créditos."
+      "control": "Describe el resultado. Studio se encarga de generar y muestra el coste en créditos antes de crear."
     },
     "personal": {
       "eyebrow": "Modelo personal de IA opcional",
@@ -549,8 +428,8 @@
           "description": "Usa fotos nítidas en las que aparezcas a solas, con algunos ángulos y expresiones naturales y una iluminación equilibrada. La app comprueba si son adecuadas antes del entrenamiento."
         },
         "train": {
-          "title": "Elige entrenamiento Estándar o Máx.",
-          "description": "El entrenamiento Estándar requiere Pro. El entrenamiento Máx. requiere Max y tarda más."
+          "title": "Elige entrenamiento estándar o Max",
+          "description": "Elige la opción adecuada para tus fotos. Ambas consumen créditos y no requieren suscripción. El entrenamiento Max tarda más."
         },
         "create": {
           "title": "Usa el modelo en Studio",
@@ -560,33 +439,33 @@
       "costs": {
         "title": "Costes orientativos de un modelo personal",
         "standard": {
-          "title": "Entrenamiento Estándar · Pro",
+          "title": "Entrenamiento estándar",
           "description": "{credits} créditos por cada modelo personal de IA, en un único pago."
         },
         "full": {
-          "title": "Entrenamiento Máx. · Max",
+          "title": "Entrenamiento Max",
           "description": "{credits} créditos por cada modelo personal de IA, en un único pago."
         },
         "photos": {
           "title": "Fotos con un modelo entrenado",
           "description": "{credits} créditos por cada foto creada con un modelo personal de IA existente."
         },
-        "note": "La app muestra el coste antes de empezar el entrenamiento. Si cancelas la suscripción, tus modelos personales de IA y créditos sin usar siguen disponibles."
+        "note": "La app muestra el coste antes de empezar el entrenamiento. Cancelar la suscripción no elimina tus modelos entrenados ni tus créditos comprados. Los créditos semanales siguen caducando en la fecha prevista."
       }
     },
     "related": {
       "eyebrow": "Opciones listas para usar",
       "title": "¿Quieres empezar más rápido?",
-      "description": "Studio te da más control mediante un prompt personalizado. Para empezar más rápido, prueba un preset o una AI Mask.",
+      "description": "Studio te da más control mediante un prompt personalizado. Para empezar más rápido, prueba un preset o una Mask.",
       "presets": {
         "title": "Presets",
         "description": "Elige una idea, añade una foto y crea una transformación guiada sin escribir un prompt desde cero.",
         "link": "Ver presets"
       },
       "masks": {
-        "title": "AI Masks",
+        "title": "Masks",
         "description": "Aplica un estilo o una transformación concreta a una foto existente y compárala con el original.",
-        "link": "Ver AI Masks"
+        "link": "Ver Masks"
       }
     },
     "faq": {
@@ -597,12 +476,8 @@
         "answer": "No. Describe lo que buscas con tus palabras. Auto Mode interpreta la solicitud y mejora el prompt antes de generar la imagen."
       },
       "autoMode": {
-        "question": "¿Auto Mode elige mi Calidad de generación?",
-        "answer": "No. Auto Mode mejora el prompt. Cuando empiezas con una foto, Studio usa la Calidad de generación elegida en la app."
-      },
-      "quality": {
-        "question": "¿Qué calidad de generación debo elegir?",
-        "answer": "Elige «Más rápido» si priorizas la velocidad y un menor uso de créditos. Avanza hacia «Mayor calidad» si necesitas más detalle o una salida en 2K o 4K."
+        "question": "¿Qué hace el modo Auto?",
+        "answer": "Mejora tu prompt y se encarga de generar automáticamente. Cuando usas una foto, también analiza la imagen."
       },
       "personal": {
         "question": "¿Puedo usar Studio con un modelo personal de IA?",
@@ -611,6 +486,10 @@
       "required": {
         "question": "¿Necesito entrenar un modelo personal de IA?",
         "answer": "No. Puedes usar Studio con una foto. Entrena un modelo personal solo cuando quieras crear varias fotos de la misma persona."
+      },
+      "credits": {
+        "question": "¿Dónde puedo ver el coste en créditos?",
+        "answer": "Studio muestra el coste actual en créditos junto al botón de creación. El entrenamiento de un modelo de IA personal se cobra por separado."
       }
     },
     "cta": {
@@ -618,6 +497,13 @@
       "description": "Abre Studio, elige un punto de partida y describe lo que quieres crear.",
       "primary": "Abrir Studio en la web",
       "secondary": "Ver precios"
+    },
+    "credits": {
+      "title": "Créditos por foto",
+      "photo": "Con una foto",
+      "personal": "Con un modelo de IA personal",
+      "perPhoto": "{credits} créditos / foto",
+      "note": "Costes de referencia. La app muestra el coste actual en créditos antes de crear."
     }
   }
 }

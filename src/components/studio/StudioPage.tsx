@@ -3,32 +3,17 @@ import { getTranslations } from 'next-intl/server';
 import PlatformButtons from '@/components/features/PlatformButtons';
 import { WEB_APP_STUDIO_URL } from '@/lib/app-links';
 import { serializeJsonLd } from '@/lib/json-ld';
-import {
-  formatCreditRange,
-  personalModelCosts,
-  qualityBands,
-  type QualityBand,
-} from '@/lib/models';
+import { personalModelCosts, studioPhotoCredits } from '@/lib/models';
 import { canonicalUrl, localePath } from '@/lib/seo';
 
 type Props = {
   locale: string;
 };
 
-const faqKeys = ['writing', 'autoMode', 'quality', 'personal', 'required'] as const;
+const faqKeys = ['writing', 'autoMode', 'credits', 'personal', 'required'] as const;
 const stepKeys = ['source', 'describe', 'create'] as const;
 const sourceKeys = ['photo', 'personal'] as const;
 const relatedKeys = ['presets', 'masks'] as const;
-
-function accessBadgeClass(id: QualityBand['id']): string {
-  if (id === 'max') {
-    return 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-200';
-  }
-  if (id === 'pro') {
-    return 'bg-primary-container text-on-primary-container';
-  }
-  return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200';
-}
 
 export default async function StudioPage({ locale }: Props) {
   const [t, tNav, tDownload] = await Promise.all([
@@ -37,12 +22,6 @@ export default async function StudioPage({ locale }: Props) {
     getTranslations({ locale, namespace: 'download' }),
   ]);
   const pageUrl = canonicalUrl(locale, '/studio/');
-  const qualityPreviewBand = qualityBands.find((band) => band.id === 'pro') ?? qualityBands[0];
-  const qualityPreviewCredits = formatCreditRange(
-    qualityPreviewBand.maxCredits,
-    qualityPreviewBand.maxCredits,
-    locale,
-  );
   const faq = faqKeys.map((key) => ({
     question: t(`faq.${key}.question`),
     answer: t(`faq.${key}.answer`),
@@ -109,7 +88,7 @@ export default async function StudioPage({ locale }: Props) {
 
       <section className="relative overflow-hidden border-b border-brand-100 bg-gradient-to-br from-brand-50 via-white to-brand-100 dark:border-gray-800 dark:from-brand-950/40 dark:via-gray-950 dark:to-brand-900/30">
         <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brand-300/25 blur-3xl dark:bg-brand-700/15" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:px-8 lg:py-16">
+        <div className="relative mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div>
             <nav aria-label="Breadcrumb" className="mb-6 text-sm">
               <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
@@ -148,60 +127,6 @@ export default async function StudioPage({ locale }: Props) {
                 analyticsParams={{ section: 'studio', placement: 'hero_cta' }}
                 className="sm:justify-start"
               />
-            </div>
-          </div>
-
-          <div className="mx-auto w-full max-w-md">
-            <p aria-hidden="true" className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-gray-600 dark:text-gray-300">
-              {t('quality.visual.previewLabel')}
-            </p>
-            <div
-              className="pointer-events-none select-none rounded-[24px] bg-surface-container-highest px-4 py-3 text-on-surface"
-              aria-hidden="true"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <p className="min-w-0 flex-1 truncate text-base font-semibold leading-6 tracking-[0.0125em]">
-                  {t('quality.visual.title')}
-                </p>
-                <span className="max-w-[140px] shrink-0 truncate text-end text-sm font-semibold leading-5 tracking-[0.007em] text-primary">
-                  {t('quality.visual.creditLabel', { credits: qualityPreviewCredits })}
-                </span>
-              </div>
-              <div className="mt-1" dir="ltr">
-                <div className="relative mx-4 h-12">
-                  <span className="absolute -left-4 -right-4 top-1/2 h-6 -translate-y-1/2 rounded-full bg-on-surface/12" />
-                  <span className="absolute -left-4 right-1/3 top-1/2 h-6 -translate-y-1/2 rounded-full bg-primary/82" />
-                  <span className="absolute left-0 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-surface/56" />
-                  <span className="absolute left-1/3 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-surface/56" />
-                  <span className="absolute left-2/3 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-surface/56" />
-                  <span className="absolute right-0 top-1/2 h-1 w-1 translate-x-1/2 -translate-y-1/2 rounded-full bg-on-surface-variant/44" />
-                  <span className="absolute left-2/3 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-outline-variant bg-surface shadow-[0_3px_6px_rgba(0,0,0,0.22)] dark:border-outline dark:bg-on-surface" />
-                </div>
-                <div className="flex justify-between gap-3 text-base font-normal leading-6 tracking-[0.03125em] text-on-surface-variant">
-                  <bdi dir="auto">{t('quality.visual.faster')}</bdi>
-                  <bdi dir="auto">{t('quality.visual.higherQuality')}</bdi>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white/80 shadow-sm backdrop-blur dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-900/80">
-              {qualityBands.map((band) => (
-                <div key={band.id} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <span>
-                    <span className="block font-semibold">{t(`quality.bands.${band.id}.title`)}</span>
-                    <span className="block text-xs text-gray-500 dark:text-gray-400">
-                      {t('quality.maxResolution', { resolution: band.maxResolution })}
-                    </span>
-                  </span>
-                  <span className="text-end">
-                    <span className="block font-bold">
-                      {formatCreditRange(band.minCredits, band.maxCredits, locale)} {t('quality.creditUnit')}
-                    </span>
-                    <span className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold ${accessBadgeClass(band.id)}`}>
-                      {t(`access.${band.id}`)}
-                    </span>
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -277,52 +202,21 @@ export default async function StudioPage({ locale }: Props) {
 
       <section className="bg-gray-50 py-12 dark:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-              {t('quality.eyebrow')}
-            </p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight">{t('quality.title')}</h2>
-            <p className="mt-3 text-lg leading-8 text-gray-700 dark:text-gray-300">{t('quality.description')}</p>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-950">
-            <div className="overflow-x-auto">
-              <table className="min-w-[760px] divide-y divide-gray-200 text-start text-sm dark:divide-gray-800">
-                <thead className="bg-gray-100 text-xs uppercase tracking-wide text-gray-600 dark:bg-gray-900 dark:text-gray-300">
-                  <tr>
-                    <th scope="col" className="px-5 py-3 font-semibold">{t('quality.columns.access')}</th>
-                    <th scope="col" className="px-5 py-3 font-semibold">{t('quality.columns.bestFor')}</th>
-                    <th scope="col" className="px-5 py-3 font-semibold">{t('quality.columns.credits')}</th>
-                    <th scope="col" className="px-5 py-3 font-semibold">{t('quality.columns.resolution')}</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                  {qualityBands.map((band) => (
-                    <tr key={band.id} className="align-top">
-                      <th scope="row" className="px-5 py-5">
-                        <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${accessBadgeClass(band.id)}`}>
-                          {t(`access.${band.id}`)}
-                        </span>
-                        <span className="mt-2 block font-semibold text-gray-950 dark:text-white">
-                          {t(`quality.bands.${band.id}.title`)}
-                        </span>
-                      </th>
-                      <td className="max-w-md px-5 py-5 leading-6 text-gray-700 dark:text-gray-300">
-                        {t(`quality.bands.${band.id}.description`)}
-                      </td>
-                      <td className="px-5 py-5 font-bold text-gray-950 dark:text-white">
-                        {formatCreditRange(band.minCredits, band.maxCredits, locale)} {t('quality.creditUnit')}
-                      </td>
-                      <td className="px-5 py-5 font-semibold text-gray-700 dark:text-gray-300">
-                        {band.maxResolution}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-400">{t('quality.note')}</p>
+          <h2 className="text-3xl font-bold tracking-tight">{t('credits.title')}</h2>
+          <dl className="mt-6 grid gap-4 sm:grid-cols-2">
+            {([
+              ['photo', studioPhotoCredits],
+              ['personal', personalModelCosts.imageCredits],
+            ] as const).map(([source, credits]) => (
+              <div key={source} className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+                <dt className="font-medium text-gray-600 dark:text-gray-300">{t(`credits.${source}`)}</dt>
+                <dd className="mt-2 text-2xl font-semibold tabular-nums">
+                  {t('credits.perPhoto', { credits: new Intl.NumberFormat(locale).format(credits) })}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-400">{t('credits.note')}</p>
         </div>
       </section>
 

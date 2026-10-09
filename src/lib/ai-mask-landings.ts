@@ -118,8 +118,8 @@ export async function generateMaskCategoryLandingMetadata(
   const landing = findPublishedMaskCategoryLanding(landings, slug, locale);
   if (!landing) {
     return {
-      title: 'AI Mask Category',
-      description: 'Explore AI Masks from My AI Photoshoot.',
+      title: 'Mask Category',
+      description: 'Explore Masks from My AI Photoshoot.',
       robots: { index: false, follow: false },
     };
   }

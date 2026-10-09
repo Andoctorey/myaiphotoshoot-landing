@@ -50,16 +50,15 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
   };
 
   const navItemsBeforeUseCases = [
-    { name: t('features'), href: isHomePage ? '#features' : homeHash('#features') },
     { name: t('pricing'), href: isHomePage ? '#pricing' : homeHash('#pricing') },
-  ];
-  const navItemsAfterUseCases = [
-    { name: t('studio'), href: localePath(locale, '/studio/') },
     { name: t('presets'), href: localePath(locale, '/presets/') },
     { name: t('masks'), href: localePath(locale, '/masks/') },
+  ];
+  const navItemsAfterUseCases = [
     { name: t('gallery'), href: isHomePage ? '#gallery' : localePath(locale, '/gallery/') },
     { name: t('blog'), href: isHomePage ? '#home-blog' : homeHash('#home-blog') },
     { name: t('faq'), href: isHomePage ? '#faq' : homeHash('#faq') },
+    { name: t('studio'), href: localePath(locale, '/studio/') },
   ];
 
   useEffect(() => {

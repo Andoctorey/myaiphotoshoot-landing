@@ -32,14 +32,18 @@ export async function onRequest(context) {
   const pricingUrl = new URL(`${DEFAULT_FUNCTIONS_URL}/stripe-pricing`);
   pricingUrl.searchParams.set('country_code', countryCode);
 
-  return new Response(null, {
-    status: 307,
-    headers: {
-      'cache-control': NO_STORE_HEADERS['cache-control'],
-      'location': pricingUrl.toString(),
-      'x-content-type-options': NO_STORE_HEADERS['x-content-type-options'],
-    },
-  });
+  try {
+    // Fetch here so the version header selects V2; a redirect cannot add it.
+    const response = await fetch(pricingUrl, {
+      headers: { 'x-app-version': '1.13.0', accept: 'application/json' },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) throw new Error(`Pricing upstream returned ${response.status}`);
+    return json(await response.json(), 200);
+  } catch (error) {
+    console.error('Unable to load V2 pricing', error);
+    return json({ error: 'Pricing is temporarily unavailable.' }, 502);
+  }
 }
 
 export function resolvePricingCountry(country, locale) {

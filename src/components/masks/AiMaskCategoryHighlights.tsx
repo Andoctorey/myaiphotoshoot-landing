@@ -16,7 +16,6 @@ const PREVIEW_VARIANT_BY_GENDER: Record<PreviewGender, 'white_female' | 'white_m
 };
 
 type Props = {
-  afterLabel: string;
   beforeLabel: string;
   category: AiMaskCategory;
   femaleLabel: string;
@@ -43,7 +42,6 @@ function maskPreviewUrl(mask: AiMask, gender: PreviewGender): string {
 }
 
 export default function AiMaskCategoryHighlights({
-  afterLabel,
   beforeLabel,
   category,
   femaleLabel,
@@ -144,7 +142,7 @@ export default function AiMaskCategoryHighlights({
       <div className={cn('flex justify-center', (canSwitchGender || category.hiddenOnIos) && 'mt-4')}>
         <button
           type="button"
-          aria-label={`${holdToCompareLabel}: ${selectedMask.name}, ${formatCredits(selectedMask.priceCredits, locale)}`}
+          aria-label={`${holdToCompareLabel}: ${selectedMask.name}`}
           aria-pressed={showBefore}
           onPointerDown={startPointerComparison}
           onPointerUp={stopComparing}
@@ -171,12 +169,6 @@ export default function AiMaskCategoryHighlights({
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/75" />
-          <span className="absolute right-3 top-3 rounded-full bg-primary/90 px-3 py-1.5 text-xs font-semibold text-on-primary shadow-sm backdrop-blur-sm">
-            {showBefore ? beforeLabel : afterLabel}
-          </span>
-          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold tabular-nums text-gray-950 shadow-sm backdrop-blur-sm">
-            {formatCredits(selectedMask.priceCredits, locale)}
-          </span>
           <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-2 px-4 py-4 text-left">
             <span className="text-lg font-semibold text-white">{selectedMask.name}</span>
             <span className="rounded-full bg-black/65 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-sm">

@@ -1,7 +1,6 @@
 {
   "navigation": {
     "home": "ホーム",
-    "features": "機能",
     "gallery": "ギャラリー",
     "blog": "ブログ",
     "pricing": "料金",
@@ -42,7 +41,7 @@
     "sortError": "並べ替えを変更できませんでした。もう一度お試しください。",
     "title": "AI写真プリセット",
     "breadcrumb": "AIプリセット",
-    "eyebrow": "クイックAIプリセット",
+    "eyebrow": "クイックプリセット",
     "heading": "写真をすばやく変換するAIプリセット",
     "description": "プリセットを選び、写真を1枚アップロードして、共有できるAI加工を作成します。",
     "empty": "公開済みのAIプリセットはまだありません。",
@@ -69,43 +68,43 @@
     "paginationPageTitle": "{page}ページ"
   },
   "masks": {
-    "title": "AIマスク",
-    "breadcrumb": "AIマスク",
+    "title": "マスク",
+    "breadcrumb": "マスク",
     "eyebrow": "写真1枚で、新しいスタイルへ。",
-    "heading": "AIマスクを探す",
+    "heading": "マスクを探す",
     "description": "写真を1枚アップロードして、髪型、メイク、服装、年齢変化などを試せます。",
     "creditCost": "{credits}クレジット",
     "homeTitle": "写真1枚で新しいスタイルを試す",
-    "homeDescription": "ワンタップのAIマスクで、髪型、メイク、服装、年齢変化などをプレビューできます。",
+    "homeDescription": "ワンタップのマスクで、髪型、メイク、服装、年齢変化などをプレビューできます。",
     "pricePerImage": "1枚 {price}",
-    "browseAll": "AIマスクを見る",
+    "browseAll": "マスクを見る",
     "before": "適用前",
     "after": "適用後",
     "sourceAlt": "{category}カテゴリーの元ポートレート",
-    "resultAlt": "{name} AIマスクの仕上がりイメージ",
-    "tryMasks": "AIマスクを試す",
+    "resultAlt": "{name} マスクの仕上がりイメージ",
+    "tryMasks": "マスクを試す",
     "genderLabel": "プレビューモデルの性別",
     "genderMale": "男性",
     "genderFemale": "女性",
     "availabilityWebAndroid": "Web版・Androidのみ",
-    "howTitle": "AIマスクの使い方",
-    "categoryNav": "AIマスクのカテゴリー一覧",
+    "howTitle": "マスクの使い方",
+    "categoryNav": "マスクのカテゴリー一覧",
     "maskCount": "{count}種類のマスク",
     "yourPhoto": "あなたの写真",
     "readyTitle": "新しいスタイルを試しますか？",
     "readyDescription": "アプリで「マスク」を開き、鮮明なポートレートを1枚アップロードして始めましょう。",
     "landing": {
-      "categoryGuide": "AIマスクのカテゴリーガイド",
+      "categoryGuide": "マスクのカテゴリーガイド",
       "aboutTitle": "これらのスタイルについて",
       "holdToCompare": "長押しして比較",
       "iosUnavailable": "App Storeの要件により、このカテゴリーはiOSアプリでは利用できません。Web版とAndroidでは引き続き利用できます。",
       "photoGuidanceTitle": "写真のポイント",
       "expectationsTitle": "期待できること",
       "limitationsTitle": "制限事項",
-      "masksTitle": "利用できるAIマスク",
+      "masksTitle": "利用できるマスク",
       "masksDescription": "このカテゴリーで現在利用できるマスクをご覧ください。画像、クレジット料金、提供状況は公開済みカタログから直接取得されます。",
-      "trainingQuestion": "AIマスクにパーソナルモデルの学習は必要ですか？",
-      "trainingAnswer": "いいえ。AIマスクは1枚の写真で使えるため、パーソナルAIモデルを学習する必要はありません。",
+      "trainingQuestion": "マスクにパーソナルモデルの学習は必要ですか？",
+      "trainingAnswer": "いいえ。マスクは1枚の写真で使えるため、パーソナルAIモデルを学習する必要はありません。",
       "faqTitle": "よくある質問"
     },
     "steps": {
@@ -129,15 +128,6 @@
     "description": "写真や参考画像、アイデアから、リアルなヘッドショット、プロフィール写真、ポートレート、新しいスタイルを。",
     "visualAlt": "同じ女性をプロフェッショナル、カジュアル、エディトリアル風のAIポートレートで表現"
   },
-  "appShowcase": {
-    "label": "アプリの中身",
-    "exploreStyles": "My AI PhotoshootでポートレートにAI Masksを試す",
-    "realisticPhotos": "My AI Photoshootでカスタムプロンプトを使って既存写真を編集",
-    "photosOfYou": "Studioで参照写真を使い、変更内容を入力",
-    "photoIdeas": "My AI Photoshootで用意されたプリセットを見る",
-    "appearanceOptions": "My AI Photoshootで顔、髪、体型、スタイル、肌を変える",
-    "noSubscription": "1回払いクレジットで作成、またはProとMaxでさらに多くの機能を利用"
-  },
   "homeUseCases": {
     "eyebrow": "どんなシーンにも",
     "title": "どんな自分にも、ぴったりの一枚を",
@@ -151,26 +141,6 @@
       "dating": "マッチングアプリ用写真",
       "profiles": "AIプロフィール画像",
       "portraits": "AIポートレート"
-    }
-  },
-  "features": {
-    "title": "自分の方法で写真を作成",
-    "description": "ガイド付き加工を選ぶか、Studioとカスタムプロンプトでより細かく調整できます。",
-    "advancedAI": {
-      "title": "始め方を選ぶ",
-      "description": "既存の写真を加工したり、参照画像で仕上がりを指定したり、プロンプトから新しい画像を作成したりできます。"
-    },
-    "thousandsOfStyles": {
-      "title": "すぐに使えるプリセットとAI Masks",
-      "description": "プリセットやAI Maskを選び、プロンプトを書かずにすばやく写真を加工できます。"
-    },
-    "easyCustomization": {
-      "title": "Studioのカスタムプロンプト",
-      "description": "通常の写真または任意のパーソナルAIモデルから始め、希望する仕上がりを説明します。"
-    },
-    "multiplatform": {
-      "title": "どこからでも作成",
-      "description": "Web、iOS、AndroidでMy AI Photoshootを利用できます。"
     }
   },
   "gallery": {
@@ -221,7 +191,7 @@
     },
     "cta": {
       "title": "AI写真を作成してみませんか？",
-      "description": "写真、プリセット、AI Masks、カスタムプロンプトから始めて、思いどおりの結果を作成できます。",
+      "description": "写真、プリセット、Masks、カスタムプロンプトから始めて、思いどおりの結果を作成できます。",
       "button": "今すぐ作成する"
     },
     "tableOfContents": {
@@ -229,78 +199,32 @@
     }
   },
   "pricing": {
-    "title": "プランを選択",
-    "description": "機能、付与クレジット、お支払い周期を比較できます。",
-    "referenceDisclosure": "{market}の参考オファーを{currency}で表示しています。最終的な現地価格、通貨、付与クレジット、提供状況はアプリまたはストアに表示されます。",
-    "creditsNeverExpire": "クレジットは無期限",
-    "noTrial": "無料トライアルはありません。サブスクリプションは解約するまで更新されます。",
+    "title": "料金",
+    "referenceDisclosure": "価格は地域やストアによって異なる場合があります。",
+    "creditAmount": "{credits}クレジット",
     "billing": {
-      "cadences": {
-        "oneTime": "1回払い",
-        "weekly": "週間",
-        "monthly": "月間",
-        "annual": "年間"
-      },
-      "units": {
-        "oneTime": "1回払い",
-        "perWeek": "週あたり",
-        "perMonth": "月あたり",
-        "perYear": "年あたり"
-      },
-      "oneTimeCredits": "{credits}クレジット込み",
+      "annual": "年間",
+      "weekly": "週間",
+      "oneTime": "1回払い",
       "weeklyCredits": "毎週{credits}クレジット",
-      "monthlyCredits": "毎月{credits}クレジット",
       "annualSavings": "{percent}%お得",
-      "annualTerms": "{total}を年1回全額請求 · {credits}クレジットを毎月付与"
+      "weeklyPrice": "{price}/週",
+      "annualCharge": "年額{price}を一括払い"
     },
-    "plans": {
-      "payg": {
-        "name": "1回払いクレジット",
-        "eyebrow": "従量課金",
-        "description": "必要なときだけクレジットを購入し、最大1Kで写真を作成・編集できます。",
-        "optionLabel": "クレジットパック",
-        "cta": "クレジットで始める",
-        "features": {
-          "resolution": "最大{resolution}の写真を生成",
-          "flexible": "1回払い"
-        }
-      },
-      "pro": {
-        "name": "Pro",
-        "eyebrow": "高解像度 + 任意の学習",
-        "description": "定期クレジット、最大2Kの生成、任意のStandardパーソナルAI学習。",
-        "optionLabel": "Proプラン",
-        "cta": "Proを選ぶ",
-        "features": {
-          "resolution": "最大{resolution}の写真を生成",
-          "training": "パーソナルAIモデルの標準トレーニング"
-        }
-      },
-      "max": {
-        "name": "Max",
-        "eyebrow": "4K + 任意の学習",
-        "description": "より多くの定期クレジット、最大4Kの生成、任意のFullパーソナルAI学習。",
-        "optionLabel": "Maxプラン",
-        "cta": "Maxを選ぶ",
-        "features": {
-          "resolution": "最大{resolution}の写真を生成",
-          "training": "パーソナルAIモデルのフルトレーニング"
-        }
-      }
+    "subscription": {
+      "title": "サブスクリプション",
+      "description": "新しいポートレートやスタイル、アイデアのためのクレジットを毎週お届け。",
+      "expiry": "未使用の週間クレジットは繰り越されません",
+      "cancel": "自動更新。いつでも解約可能。"
     },
-    "creditGuide": {
-      "title": "クレジットの使い方",
-      "description": "写真の作成時、または任意のパーソナルモデル学習を選んだときにクレジットを使用します。利用レベルによって、使用できる生成品質と解像度が決まります。",
-      "creditAmount": "{credits} CR",
-      "items": {
-        "personalModelImage": "パーソナルAIモデル画像",
-        "standardImage": "Standard 1K画像",
-        "proImage": "Pro 2K画像",
-        "maxImage": "Max 4K画像",
-        "standardTraining": "StandardパーソナルAI学習",
-        "fullTraining": "FullパーソナルAI学習"
-      }
-    }
+    "packs": {
+      "title": "クレジットパック",
+      "description": "ちょっとした編集にも、次のフォトシュートにも使える買い切りパック。",
+      "expiry": "購入したクレジットに有効期限はありません",
+      "savings": "{percent}%お得"
+    },
+    "photoEstimate": "{photos}枚以上の写真",
+    "weeklyPhotoEstimate": "週に{photos}枚以上の写真"
   },
   "download": {
     "title": "今日から作成を開始",
@@ -322,7 +246,7 @@
   },
   "footer": {
     "title": "My AI Photoshoot",
-    "description": "プリセット、AI Masks、Studio、カスタムプロンプトでAI写真を作成・加工できます。",
+    "description": "プリセット、Masks、Studio、カスタムプロンプトでAI写真を作成・加工できます。",
     "links": "クイックリンク",
     "legal": "法的情報",
     "imageLicense": "画像ライセンス",
@@ -361,23 +285,23 @@
     "description": "設定、料金、画像品質、プライバシー、対応デバイスについて分かりやすく説明します。",
     "howItWorks": {
       "question": "どのように使いますか？",
-      "answer": "写真、参照画像、アイデアから始めます。プリセットやAI Maskを選ぶか、Studioを開いて希望する仕上がりを入力します。作成前に、必要なクレジット数とプラン加入の要否が表示されます。"
+      "answer": "プリセットやマスクを選ぶか、Studioでアイデアを言葉にしてください。必要に応じて写真を追加し、必要なクレジットを確認して作成します。"
     },
     "sourcePhotos": {
       "question": "パーソナルAIモデルの学習は必要ですか？",
-      "answer": "いいえ。パーソナルモデルを学習しなくても、写真または参照画像を使ってプリセット、AI Masks、Studioを利用できます。同じ人物らしさを繰り返し作成する写真で保ちたい場合のみ学習してください。この任意のワークフローでは、異なる10～20枚のセルフィーとProまたはMaxが必要です。"
+      "answer": "いいえ。プリセット、マスク、Studioは、パーソナルモデルを学習させなくても写真や参考画像から使えます。同じ人物の写真を繰り返し作りたい場合は、10〜20枚のさまざまな自撮り写真でモデルを学習させることもできます。学習は任意で、クレジットを使います。サブスクリプションは不要です。"
     },
     "pricing": {
       "question": "料金と生成上限を教えてください。",
-      "answer": "1回払いクレジットは、対象となる1Kの作成・編集に利用できます。米国の参考パックは200クレジットが$5.99、300クレジットが$8.99です。Proは週$6.99からで、2Kと任意のStandard学習が加わります。Maxは月$29.99からで、4Kと任意のFull学習が加わります。年間プランは全額を一括請求し、クレジットは毎月付与されます。最終的な現地オファーは国やプラットフォームによって異なり、クレジットに有効期限はありません。"
+      "answer": "週額・年額プランでは、毎週40クレジットが付与されます。クレジットパックの買い切り購入も可能です。作成前にアプリで必要なクレジットを確認できます。最終的な価格と利用できるオファーはアプリまたはストアに表示されます。"
     },
     "subscriptions": {
       "question": "サブスクリプションの管理や解約はどうすればよいですか？",
-      "answer": "AppleのサブスクリプションはApple Account、GoogleのサブスクリプションはGoogle Play、ウェブのサブスクリプションは請求設定またはサポートから管理できます。解約は支払い済み期間の終了時に有効になります。未使用のクレジットと、すでに学習済みのパーソナルAIモデルはそのまま残ります。"
+      "answer": "購入先に応じて、アプリ内のアカウント、Apple Account、Google Playでサブスクリプションを管理・解約できます。Webで購入した場合は、アプリ内のサブスクリプション管理またはサポートをご利用ください。解約すると次回以降の自動更新が停止します。購入済みクレジットと学習済みのパーソナルAIモデルは引き続き利用できます。週間クレジットの有効期限は変わりません。"
     },
     "imageQuality": {
       "question": "画像品質に影響するものは何ですか？",
-      "answer": "結果は、元の写真または参照画像、選んだプリセットまたはAI Mask、生成品質、プロンプトによって変わります。写真が必要なワークフローでは、明るく鮮明な写真を使用し、必要に応じて複数の結果を比較してください。"
+      "answer": "仕上がりは元の写真、選んだスタイル、プロンプトによって変わります。明るく鮮明な写真を使い、変えたい部分や残したい部分を伝えてください。"
     },
     "privacy": {
       "question": "写真とデータはどのように扱われますか？",
@@ -389,7 +313,11 @@
     },
     "whyNotChatGPT": {
       "question": "一般的なAI画像ツールとの違いは何ですか？",
-      "answer": "My AI Photoshootは、ガイド付きプリセット、AI Masks、Studio、カスタムプロンプト、分かりやすい生成品質コントロールを、写真作成に特化した1つのワークフローにまとめています。"
+      "answer": "My AI Photoshootはプリセット、マスク、Studioをまとめたアプリです。新しいスタイルを試したり、写真を編集したり、ポートレートを作成したりできます。"
+    },
+    "creditExpiry": {
+      "question": "クレジットに有効期限はありますか？",
+      "answer": "サブスクリプションのクレジットは毎週補充されます。未使用の週間クレジットは付与された期間の終了時に失効し、繰り越されません。買い切りパックで購入したクレジットに有効期限はなく、好きなときに使えます。"
     }
   },
   "useCase": {
@@ -398,12 +326,6 @@
     },
     "loading": "読み込み中...",
     "notFound": "活用例が見つかりません。",
-    "badges": {
-      "oneTimeCredits": "1回払いクレジットを利用可能",
-      "proAccess": "Pro：最大2K + 任意の学習機能を利用可能",
-      "maxAccess": "Max：最大4K + 任意のFull学習機能を利用可能"
-    },
-    "offerSummary": "1回払いクレジットで1K画像を作成できます。高解像度と任意のパーソナルAIモデル学習を利用する場合は、ProまたはMaxをお使いください。",
     "galleryDisclaimer": "表示されている例は、My AI Photoshootで作成されたものです。",
     "howItWorks": {
       "title": "使い方",
@@ -413,37 +335,34 @@
       },
       "step2": {
         "title": "作成方法を選ぶ",
-        "desc": "プリセットまたはAI Maskを使うか、Studioで希望する仕上がりを入力します。作成前に、生成速度を優先するか品質を優先するかを選びます。"
+        "desc": "プリセットやマスクを試すか、Studioでアイデアを言葉にしてください。"
       },
       "step3": {
         "title": "確認して作成する",
-        "desc": "必要なクレジット数とプラン要件を確認して作成し、残したい画像をダウンロードします。"
+        "desc": "必要なクレジットを確認して作成し、お気に入りの写真をダウンロードしましょう。"
       }
-    },
-    "pricingCard": {
-      "title": "目的に合ったアクセス方法を選択",
-      "description": "クレジットに有効期限はありません。サブスクリプションでは、定期クレジット、高解像度、任意のパーソナルAIモデル学習を利用できます。",
-      "payg": "1回払いクレジット：対象となる1K生成・編集",
-      "pro": "Pro：最大2K + 任意のStandard学習を利用可能",
-      "max": "Max：最大4K + 任意のFull学習を利用可能"
-    },
-    "stickyCta": {
-      "label": "クレジットで作成を始める"
     },
     "benefits": {
       "title": "メリット"
     },
     "schema": {
       "serviceType": "AI写真の作成・変換・編集"
+    },
+    "fallbackDescription": "写真のアイデアからお気に入りのスタイルを見つけて、My AI Photoshootで自分らしい一枚を作りましょう。",
+    "cta": {
+      "title": "新しい自分のスタイルを作ろう",
+      "description": "プリセットやマスクを探すか、Studioで新しい一枚を作りましょう。",
+      "primary": "写真を作成",
+      "pricing": "料金を見る"
     }
   },
   "studio": {
     "meta": {
       "title": "カスタムプロンプト対応のAIフォトStudio",
-      "description": "写真またはパーソナルAIモデルからStudioでAI写真を作成・編集。プロンプトを入力し、Auto Modeで調整して、生成品質を選べます。",
+      "description": "写真やパーソナルAIモデルを使ってStudioで写真を作成・編集。アイデアを伝えると、オートモードが生成を行います。",
       "shareTitle": "StudioでAI写真を作成・編集",
       "shareDescription": "写真または任意のパーソナルAIモデルから始め、希望する仕上がりを説明すると、Auto Modeがプロンプトを調整します。",
-      "imageAlt": "プリセット、AI Masks、Studioで作成したMy AI Photoshootの写真サンプル"
+      "imageAlt": "プリセット、Masks、Studioで作成したMy AI Photoshootの写真サンプル"
     },
     "breadcrumb": "Studio",
     "eyebrow": "AI写真を自由に作成",
@@ -451,12 +370,7 @@
     "description": "写真または任意のパーソナルAIモデルを選び、希望の仕上がりを説明します。Studioで元の写真を編集したり、新しい画像を作成したりできます。",
     "directAnswer": {
       "title": "仕上がりを説明すると、Auto Modeがプロンプトを整えます。",
-      "description": "Auto ModeがStudioのすべてのリクエストを解釈し、プロンプトを調整します。写真から始める場合は画像も解析し、アプリで選択した生成品質を使用します。"
-    },
-    "access": {
-      "payg": "都度払い",
-      "pro": "Pro",
-      "max": "Max"
+      "description": "写真やパーソナルAIモデルを選び、作りたい結果を伝えて、必要なクレジットを確認。Studioが自動で生成します。"
     },
     "starts": {
       "eyebrow": "スタート方法を選択",
@@ -487,7 +401,7 @@
       },
       "create": {
         "title": "作成して結果を確認",
-        "description": "写真から始める場合、Studioはアプリで選択した生成品質を使用します。写真を作成して結果を確認し、気に入ったらダウンロードします。"
+        "description": "必要なクレジットを確認して写真を作成し、結果を確認してダウンロードします。"
       }
     },
     "autoMode": {
@@ -496,48 +410,13 @@
       "description": "Auto Modeが、選んだスタート方法と目的に基づいてリクエストを明確な生成指示に整えます。",
       "photo": {
         "title": "写真から始める場合",
-        "description": "Auto Modeが画像を解析し、必要に応じて指示を翻訳し、変更する部分と残す部分を判断して、対応するアスペクト比とファイル形式を選びます。"
+        "description": "オートモードが写真を分析し、変更する部分と残す部分を判断します。"
       },
       "personal": {
         "title": "パーソナルAIモデルを使う場合",
-        "description": "Auto Modeがパーソナルモデル生成向けにリクエストを翻訳・調整します。別の写真は解析せず、写真から作成するときの生成品質設定も適用されません。"
+        "description": "オートモードがリクエストを翻訳し、パーソナルAIモデル向けに整えます。"
       },
-      "control": "Auto Modeはリクエストを調整します。写真から作成するときの生成品質は自分で選択します。"
-    },
-    "quality": {
-      "eyebrow": "生成品質",
-      "title": "写真での生成品質の仕組み",
-      "description": "写真から始める場合、Studioはアプリで選択した生成品質を使用します。時間とクレジットを抑えるなら速い1K、より多くのディテールが必要なら2Kまたは4Kを選べます。上位レベルにはProまたはMaxが必要な場合があります。",
-      "creditUnit": "CR / 枚",
-      "maxResolution": "最大{resolution}",
-      "visual": {
-        "title": "生成品質",
-        "creditLabel": "{credits} CR / 枚",
-        "faster": "より速く",
-        "higherQuality": "より高品質",
-        "previewLabel": "アプリ内コントロールのプレビュー"
-      },
-      "columns": {
-        "access": "利用条件",
-        "bestFor": "おすすめの用途",
-        "credits": "1枚あたりのクレジット",
-        "resolution": "最大解像度"
-      },
-      "bands": {
-        "payg": {
-          "title": "高速な1K生成",
-          "description": "速度とクレジット消費の少なさを優先したい、手軽な編集や日常的な写真作成に適しています。"
-        },
-        "pro": {
-          "title": "高品質な2K生成",
-          "description": "洗練されたポートレート、プロフィール写真、複雑な編集で、より多くのディテールが必要な場合に適しています。Proには2つの2K品質オプションがあります。"
-        },
-        "max": {
-          "title": "最高品質の4K生成",
-          "description": "細かなシーンや、さらに鮮明な仕上がりが必要な完成画像に使える最高解像度です。"
-        }
-      },
-      "note": "以下は写真から生成する場合の参考クレジット数です。アプリの「生成品質」設定には、各オプションの消費量と必要なプランが表示されます。クレジットに有効期限はありません。パーソナルAIモデルには独自のクレジット料金が適用されます。"
+      "control": "作りたい結果を伝えてください。Studioが生成を行い、作成前に必要なクレジットを表示します。"
     },
     "personal": {
       "eyebrow": "任意のパーソナルAIモデル",
@@ -549,8 +428,8 @@
           "description": "1人だけが写った鮮明な写真を使い、自然な角度や表情をいくつか含め、明るさを均一にします。学習前に、アプリが写真の適性を確認します。"
         },
         "train": {
-          "title": "スタンダードまたはマックス学習を選択",
-          "description": "スタンダード学習にはProが必要です。マックス学習にはMaxが必要で、より時間がかかります。"
+          "title": "標準学習またはMax学習を選ぶ",
+          "description": "写真に合う学習方法を選びましょう。どちらもクレジットを使い、サブスクリプションは不要です。Max学習はより時間がかかります。"
         },
         "create": {
           "title": "Studioでモデルを使用",
@@ -560,33 +439,33 @@
       "costs": {
         "title": "パーソナルモデルの参考料金",
         "standard": {
-          "title": "スタンダード学習 · Pro",
+          "title": "標準学習",
           "description": "パーソナルAIモデル1件につき{credits}クレジット。料金は1回のみです。"
         },
         "full": {
-          "title": "マックス学習 · Max",
+          "title": "Max学習",
           "description": "パーソナルAIモデル1件につき{credits}クレジット。料金は1回のみです。"
         },
         "photos": {
           "title": "学習済みモデルで作る写真",
           "description": "既存のパーソナルAIモデルで作成する写真1枚につき{credits}クレジット。"
         },
-        "note": "学習を開始する前に、アプリに料金が表示されます。サブスクリプションを解約しても、既存のパーソナルAIモデルと未使用クレジットは引き続き利用できます。"
+        "note": "学習開始前に必要なクレジットが表示されます。サブスクリプションを解約しても、学習済みモデルと購入したクレジットは削除されません。週間クレジットは予定の有効期限に失効します。"
       }
     },
     "related": {
       "eyebrow": "すぐ使える選択肢",
       "title": "もっと手軽に始めたいですか？",
-      "description": "Studioではカスタムプロンプトでより細かく調整できます。手軽に始めるなら、プリセットまたはAI Maskをお試しください。",
+      "description": "Studioではカスタムプロンプトでより細かく調整できます。手軽に始めるなら、プリセットまたはMaskをお試しください。",
       "presets": {
         "title": "プリセット",
         "description": "アイデアを選び、写真を追加するだけで、最初からプロンプトを書かずにガイド付きの変換を作成できます。",
         "link": "プリセットを見る"
       },
       "masks": {
-        "title": "AI Masks",
+        "title": "Masks",
         "description": "既存の写真に特定のルックまたは変換を適用し、元の写真と比較できます。",
-        "link": "AI Masksを見る"
+        "link": "Masksを見る"
       }
     },
     "faq": {
@@ -597,12 +476,8 @@
         "answer": "いいえ。希望する仕上がりを自分の言葉で説明してください。生成前にAuto Modeがリクエストを解釈し、プロンプトを調整します。"
       },
       "autoMode": {
-        "question": "Auto Modeが生成品質を選びますか？",
-        "answer": "いいえ。Auto Modeはプロンプトを調整します。写真から始める場合、Studioはアプリで選択した生成品質を使用します。"
-      },
-      "quality": {
-        "question": "どの生成品質を選べばよいですか？",
-        "answer": "速度とクレジット消費の少なさを優先する場合は「より速く」を選びます。より多くのディテールや2K・4K出力が必要な場合は「より高品質」側を選びます。"
+        "question": "オートモードは何をしますか？",
+        "answer": "プロンプトを整え、自動で生成します。写真を使う場合は、画像の分析も行います。"
       },
       "personal": {
         "question": "StudioでパーソナルAIモデルを使用できますか？",
@@ -611,6 +486,10 @@
       "required": {
         "question": "パーソナルAIモデルの学習は必要ですか？",
         "answer": "いいえ。写真だけでもStudioを利用できます。同じ人物の写真を複数作りたい場合だけパーソナルモデルを学習してください。"
+      },
+      "credits": {
+        "question": "必要なクレジットはどこで確認できますか？",
+        "answer": "Studioの作成ボタンのそばに、現在の必要クレジット数が表示されます。パーソナルAIモデルの学習には別途クレジットが必要です。"
       }
     },
     "cta": {
@@ -618,6 +497,13 @@
       "description": "Studioを開き、スタート方法を選んで、作りたいものを説明します。",
       "primary": "WebでStudioを開く",
       "secondary": "料金を見る"
+    },
+    "credits": {
+      "title": "写真1枚あたりのクレジット",
+      "photo": "写真を使う場合",
+      "personal": "パーソナルAIモデルを使う場合",
+      "perPhoto": "1枚あたり{credits}クレジット",
+      "note": "参考クレジット数です。作成前にアプリで現在の必要クレジット数を確認できます。"
     }
   }
 }

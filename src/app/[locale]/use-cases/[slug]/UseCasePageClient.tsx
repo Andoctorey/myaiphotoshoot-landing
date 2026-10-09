@@ -116,14 +116,14 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
   const faqs = (useCase.faqs || t?.faqs || [])
     .map((faq) => ({
       q: cleanUseCaseTitle(faq.q),
-      a: cleanUseCaseCopy(faq.a) || tUseCase('offerSummary'),
+      a: cleanUseCaseCopy(faq.a),
     }))
     .filter((faq) => faq.q && faq.a);
   const benefits = (useCase.benefits || t?.benefits || [])
     .map(cleanUseCaseCopy)
     .filter(Boolean);
   const description = cleanUseCaseCopy(useCase.meta_description || t?.meta_description || '')
-    || tUseCase('offerSummary');
+    || tUseCase('fallbackDescription');
   const sectionSpacing = "mt-12 md:mt-16";
 
   // HowTo JSON-LD steps derived from on-page "How It Works" block (short and consistent)
@@ -237,31 +237,6 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
             {description && (
               <p className="mt-3 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">{description}</p>
             )}
-            {/* Credit and subscription options */}
-            <div className="mt-3 text-base text-gray-900 dark:text-gray-100">
-              <span className="font-semibold">{tUseCase('offerSummary')}</span>
-            </div>
-            {/* Conversion highlights */}
-            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-amber-200 dark:border-amber-900/40 bg-amber-50/70 dark:bg-amber-900/20 text-amber-800 dark:text-amber-200">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
-                  <path d="M7.5 2.25l.77 2.36c.17.53.63.9 1.18.95l2.49.19-1.92 1.43c-.45.33-.64.9-.48 1.44l.74 2.41-1.98-1.36a1.25 1.25 0 00-1.43 0L5.4 11.03l.74-2.41c.16-.54-.03-1.11-.48-1.44L3.74 5.75l2.49-.19c.55-.04 1.01-.42 1.18-.95L7.5 2.25z"/>
-                </svg>
-                {tUseCase('badges.oneTimeCredits')}
-              </span>
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-green-200 dark:border-green-900/40 bg-green-50/70 dark:bg-green-900/20 text-green-800 dark:text-green-200">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
-                  <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-2.34a.75.75 0 10-1.06-1.06l-4.5 4.5-1.44-1.44a.75.75 0 10-1.06 1.06l1.97 1.97a.75.75 0 001.06 0l5.03-5.03z" clipRule="evenodd"/>
-                </svg>
-                {tUseCase('badges.proAccess')}
-              </span>
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-brand-200 dark:border-brand-900/40 bg-brand-50/70 dark:bg-brand-900/20 text-brand-800 dark:text-brand-200">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden>
-                  <path d="M11.48 3.5a.75.75 0 011.04-.02l6 5.5a.75.75 0 11-1.02 1.1L12.75 5.1v14.15a.75.75 0 11-1.5 0V5.1L6.5 10.08a.75.75 0 01-1.02-1.1l6-5.5z"/>
-                </svg>
-                {tUseCase('badges.maxAccess')}
-              </span>
-            </div>
             <div className="mt-5 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
               <a
                 href={attributedWebAppUrl}
@@ -551,12 +526,6 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </section>
       )}
 
-      
-
-      
-
-      
-
       {/* FAQ accordion (simple) */}
       {faqs.length > 0 && (
         <section className="mt-12">
@@ -575,31 +544,39 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
         </section>
       )}
 
-      {/* Credit and subscription options */}
-      <section className={sectionSpacing} aria-label={tUseCase('pricingCard.title')}>
-        <div className="rounded-2xl border border-brand-100 dark:border-brand-900/40 bg-brand-50/60 dark:bg-brand-900/20 p-6 sm:p-7 flex items-start justify-between gap-6 flex-wrap">
-          <div className="min-w-0">
-            <h3 className="text-lg font-semibold text-brand-900 dark:text-brand-200">{tUseCase('pricingCard.title')}</h3>
-            <p className="mt-2 text-gray-700 dark:text-gray-300">{tUseCase('pricingCard.description')}</p>
-            <ul className="mt-2 space-y-1 text-gray-900 dark:text-gray-100">
-              <li>{tUseCase('pricingCard.payg')}</li>
-              <li>{tUseCase('pricingCard.pro')}</li>
-              <li>{tUseCase('pricingCard.max')}</li>
-            </ul>
+      <section className={sectionSpacing} aria-labelledby="usecase-cta-title">
+        <div className="rounded-2xl border border-brand-100 bg-brand-50/60 p-6 sm:p-8 dark:border-brand-900/40 dark:bg-brand-900/20">
+          <h2 id="usecase-cta-title" className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            {tUseCase('cta.title')}
+          </h2>
+          <p className="mt-3 max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+            {tUseCase('cta.description')}
+          </p>
+          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-5">
+            <a
+              href={attributedWebAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-black px-6 py-3 font-semibold text-white transition hover:opacity-90"
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                e.preventDefault();
+                trackEventAndNavigate(
+                  'webapp_cta_click',
+                  attributedWebAppUrl,
+                  { section: 'use_case', placement: 'bottom_cta', slug }
+                );
+              }}
+            >
+              {tUseCase('cta.primary')}
+            </a>
+            <a
+              href={`${localePath(locale, '/')}#pricing`}
+              className="inline-flex min-h-12 items-center justify-center px-2 font-medium text-primary underline-offset-4 hover:underline"
+            >
+              {tUseCase('cta.pricing')}
+            </a>
           </div>
-          <a href={attributedWebAppUrl} target="_blank" rel="noopener noreferrer" className="transform hover:scale-105 transition duration-150" aria-label={tDownload('webApp.button')}
-            onClick={(e) => {
-              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-              e.preventDefault();
-              trackEventAndNavigate(
-                'webapp_cta_click',
-                attributedWebAppUrl,
-                { section: 'use_case', placement: 'pricing_card', slug }
-              );
-            }}
-          >
-            <span className="inline-flex items-center justify-center h-[56px] px-6 rounded-[10px] bg-black text-white border border-white/70">{tDownload('webApp.button')}</span>
-          </a>
         </div>
       </section>
 
@@ -609,7 +586,6 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
           href={attributedWebAppUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={tDownload('webApp.button')}
           className="block"
           onClick={(e) => {
             if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
@@ -626,7 +602,7 @@ export default function UseCasePageClient({ slug, locale, initialUseCase }: Prop
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5" aria-hidden>
                 <path fillRule="evenodd" d="M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0zm8.03-3.28a.75.75 0 10-1.06 1.06L12.94 12l-1.47 1.47a.75.75 0 101.06 1.06L14.06 13.06a1.5 1.5 0 000-2.12L12.53 8.72z" clipRule="evenodd" />
               </svg>
-                <span>{tUseCase('stickyCta.label')}</span>
+                <span>{tUseCase('cta.primary')}</span>
             </span>
           </div>
         </a>

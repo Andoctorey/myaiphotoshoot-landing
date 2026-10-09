@@ -123,24 +123,9 @@ test('homepage translations include active labels and omit retired copy', async 
   for (const locale of locales) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
     assert.equal(
-      typeof messages.appShowcase?.label === 'string' && messages.appShowcase.label.trim().length > 0,
-      true,
-      `${locale} is missing appShowcase.label`,
-    );
-    assert.equal(
-      Object.hasOwn(messages.appShowcase ?? {}, 'trainModel'),
+      Object.hasOwn(messages, 'features'),
       false,
-      `${locale} still contains appShowcase.trainModel`,
-    );
-    assert.equal(
-      Object.hasOwn(messages.features ?? {}, 'optionalPersonalModel'),
-      false,
-      `${locale} still contains features.optionalPersonalModel`,
-    );
-    assert.equal(
-      Object.hasOwn(messages.features ?? {}, 'affordablePricing'),
-      false,
-      `${locale} still contains unused features.affordablePricing`,
+      `${locale} still contains the retired features namespace`,
     );
     assert.equal(
       Object.hasOwn(messages.hero ?? {}, 'microcopy'),
@@ -225,12 +210,11 @@ test('homepage collections scroll on mobile while the full public gallery matche
 });
 
 test('homepage collections keep their intentional item counts', async () => {
-  const [useCases, blog, presets, masks, showcase, gallery] = await Promise.all([
+  const [useCases, blog, presets, masks, gallery] = await Promise.all([
     readProjectFile('src/components/features/HomeUseCases.tsx'),
     readProjectFile('src/components/features/HomeBlog.tsx'),
     readProjectFile('src/components/features/HomePresets.tsx'),
     readProjectFile('src/components/features/HomeMasks.tsx'),
-    readProjectFile('src/components/features/AppShowcase.tsx'),
     readProjectFile('src/components/features/Gallery.tsx'),
   ]);
 
@@ -274,10 +258,6 @@ test('homepage collections keep their intentional item counts', async () => {
   );
   assert.match(masks, /item\.slug === featured\.maskSlug/);
   assert.match(masks, /\.slice\(0, DEMAND_PRIORITY_MASKS\.length\)/);
-  assert.equal((showcase.match(/src: '\/images\/app-showcase\//g) || []).length, 5);
-  assert.match(showcase, /<h2[\s\S]*id="app-showcase-heading"/);
-  assert.match(showcase, /\{t\('label'\)\}/);
-  assert.match(showcase, /text-sm font-semibold uppercase tracking-wide text-primary/);
   assert.match(gallery, /const PAGE_SIZE = 20/);
   assert.match(gallery, /const INITIAL_VISIBLE_COUNT = 20/);
 });
@@ -288,7 +268,6 @@ test('homepage positioning emphasizes core creation workflows', async () => {
     englishMessages.pageCopy.home.metaDescription,
     englishMessages.hero.description,
     englishMessages.homeUseCases.description,
-    englishMessages.features.description,
     englishMessages.footer.description,
     englishMessages.faq.howItWorks.answer,
     englishMessages.faq.whyNotChatGPT.answer,
@@ -302,18 +281,14 @@ test('homepage positioning emphasizes core creation workflows', async () => {
     /personal(?: AI)? models?|personal-model training/i,
   );
   assert.match(englishMessages.hero.description, /photo, reference, or idea/i);
-  assert.match(englishMessages.faq.howItWorks.answer, /photo, reference, or idea/i);
+  assert.match(englishMessages.faq.howItWorks.answer, /Preset.*Mask.*Studio/i);
 
-  const [featuresSource, rootLayout, localeLayout, rootPage, localePage] = await Promise.all([
-    readProjectFile('src/components/features/Features.tsx'),
+  const [rootLayout, localeLayout, rootPage, localePage] = await Promise.all([
     readProjectFile('src/app/layout.tsx'),
     readProjectFile('src/app/[locale]/layout.tsx'),
     readProjectFile('src/app/page.tsx'),
     readProjectFile('src/app/[locale]/page.tsx'),
   ]);
-  assert.match(featuresSource, /t\('easyCustomization\.title'\)/);
-  assert.match(featuresSource, /t\('easyCustomization\.description'\)/);
-  assert.doesNotMatch(featuresSource, /optionalPersonalModel/);
   for (const source of [rootLayout, localeLayout, rootPage, localePage]) {
     assert.doesNotMatch(source, /personal model training is optional/i);
   }

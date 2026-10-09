@@ -49,38 +49,16 @@ export default async function HomeJsonLd({ locale }: { locale: string }) {
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: tPricing('title'),
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          name: tPricing('plans.payg.name'),
-          url: pricingUrl,
-          itemOffered: {
-            '@type': 'Service',
-            name: tPricing('plans.payg.description'),
-          },
-          ...offerPolicies,
+      itemListElement: ['subscription', 'packs'].map((kind) => ({
+        '@type': 'Offer',
+        name: tPricing(kind + '.title'),
+        url: pricingUrl,
+        itemOffered: {
+          '@type': 'Service',
+          name: tPricing(kind + '.description'),
         },
-        {
-          '@type': 'Offer',
-          name: tPricing('plans.pro.name'),
-          url: pricingUrl,
-          itemOffered: {
-            '@type': 'Service',
-            name: tPricing('plans.pro.description'),
-          },
-          ...offerPolicies,
-        },
-        {
-          '@type': 'Offer',
-          name: tPricing('plans.max.name'),
-          url: pricingUrl,
-          itemOffered: {
-            '@type': 'Service',
-            name: tPricing('plans.max.description'),
-          },
-          ...offerPolicies,
-        },
-      ],
+        ...offerPolicies,
+      })),
     },
   };
 
