@@ -5,6 +5,7 @@ import {
   presetTestConsentCookie,
   presetTestVisitorCookie,
 } from './preset-test.js';
+import { redirectLegacyPresetRequest } from './_shared/preset-redirects.js';
 
 const UUID_IN_MARKUP = /data-preset-test-id="([0-9a-f-]{36})"/gi;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -39,6 +40,8 @@ export function presetPreviewMarkup(assignments, requestedIds = Object.keys(assi
 
 export async function onRequest(context) {
   const { request, env } = context;
+  const redirect = redirectLegacyPresetRequest(request);
+  if (redirect) return redirect;
   const response = await context.next();
   const consent = presetTestConsentCookie(request);
   if (request.method !== 'GET' || response.status !== 200 ||
