@@ -264,7 +264,7 @@ test('redirects reported historical blog 404s directly to current canonical URLs
 
   assert.notEqual(start, -1);
   assert.ok(end > start);
-  assert.equal(rules.length, 60);
+  assert.equal(rules.length, 64);
   assert.equal(new Set(rules.map(({ source }) => source)).size, rules.length);
   assert.equal(rules.every(({ status }) => status === '308'), true);
 
