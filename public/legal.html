@@ -753,13 +753,15 @@
             display and new reviews; a background review already started may finish.</p>
         <p><strong>Provider retention.</strong> Replicate's API prediction inputs, outputs,
             files, and logs expire after one hour by default; personal models are separate.
-            OpenAI's default API abuse-monitoring retention is up to 30 days; xAI normally keeps
-            API requests and responses for 30 days. OpenAI and xAI state that they do not train
-            general models on API content by default. Endpoint, account, model, legal, or safety exceptions may
-            extend retention. Our deletion does not override provider retention. See
+            OpenAI's default API abuse-monitoring retention is up to 30 days. Our direct xAI API
+            calls use Zero Data Retention: xAI does not retain their inputs or outputs after
+            processing. This setting does not apply to xAI models accessed through Replicate.
+            OpenAI and xAI state that they do not train general models on API content by default.
+            Other provider retention may vary by endpoint, account, model, or legal and safety
+            obligations. Our deletion does not override provider retention. See
             <a href="https://replicate.com/docs/topics/predictions/data-retention/">Replicate data retention</a>,
             <a href="https://developers.openai.com/api/docs/guides/your-data">OpenAI API data controls</a>,
-            <a href="https://x.ai/legal/faq-enterprise">xAI API privacy and retention</a>,
+            <a href="https://docs.x.ai/developers/faq/security">xAI API data retention</a>,
             and <a href="https://supabase.com/docs/guides/platform/backups">Supabase backup retention</a>.</p>
         <h3>TikTok advertising measurement</h3>
         <p>We use the TikTok App Events SDK in our Android app and the TikTok Pixel on our websites.
