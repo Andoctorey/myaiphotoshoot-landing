@@ -668,11 +668,10 @@
             changes addressing changes made for legal reasons, which will be effective immediately.
             Your continued use of the Site after any change means you agree to the new Terms.</p>
         <h2 id="privacy">Privacy Policy</h2>
-        <p>Our commitment to privacy and data protection is reflected in this Privacy Statement
-            which describes how we collect and process “personal information” that identifies you,
-            like your name or email address. Any other information besides this is "non-personal
-            information." If we store personal information with non-personal information, we'll
-            consider that combination to be personal information.</p>
+        <p>This Privacy Statement covers personal information, including account details, photos,
+            and information derived from photos about identifiable people. Information that cannot
+            reasonably be linked to a person is non-personal; when combined with personal
+            information, we treat it as personal information.</p>
         <p>References to our "Services" at My AI Photoshoot (<a href="https://myaiphotoshoot.com/">myaiphotoshoot.com</a>)
             in this statement include our website, apps, and other products and services. This
             statement applies to our Services that display or reference this Privacy Statement.
@@ -717,35 +716,51 @@
         <p>To improve and develop our Services</p>
         <p>To communicate with you</p>
         <p>To provide customer support</p>
-        <h3>AI photo processing</h3>
-        <p>When you explicitly ask us to create an AI result from a photo, we may send the photo
-            you selected and the generation instructions to Replicate and OpenAI as processors for
-            the limited purpose of fulfilling that request; they return the resulting output to us.
-            On iOS, we disclose this processing before photo selection during first-run onboarding;
-            choosing a photo source after seeing that notice indicates agreement to the disclosed
-            processing. A request to create an AI result does not authorize an unrelated background
-            upload; public-photo review is separately authorized by the public-sharing choice
-            described below.</p>
-        <p>When you explicitly choose to make a generated photo public, we may send that public
-            photo and limited publication context, such as its prompt or share caption, to OpenAI as
-            a processor for automated content-safety classification, platform eligibility, and
-            enforcement of our public-content rules. This review may occur in the background while
-            the photo is marked public. Photos you keep private are not sent for this public-gallery
-            moderation. Making a photo private stops future public display and prevents new
-            moderation jobs from being queued, although a request that already started may complete
-            and provider processing remains subject to the retention terms below.</p>
-        <p>Replicate states that, for predictions created through its API, input parameters, output
-            values, output files, and logs are automatically removed after one hour by default.
-            OpenAI states that API inputs and outputs are not used to train its models by default;
-            its retention depends on the API endpoint and data-control settings that apply to the
-            request. Replicate also publishes model-specific data-privacy terms. Provider practices
-            can change, so their current terms also apply. See
-            <a href="https://replicate.com/docs/topics/predictions/data-retention/">Replicate data retention</a>
-            and <a href="https://platform.openai.com/docs/models/default-usage-policies-by-endpoint">OpenAI API data controls</a>.</p>
-        <p>We separately store the source photo and completed result in our own storage as needed to
-            provide your library and creation history. That storage follows the retention and
-            deletion rules described in this Privacy Policy and is not the same as a provider's
-            temporary API retention.</p>
+        <h3 id="face-data">AI photo processing and face data</h3>
+        <p><strong>Data and use.</strong> We collect uploaded photos, instructions, and generated
+            images. Photos may contain faces. AI analysis estimates appearance, including age,
+            gender, race/ethnicity, hair, skin, and facial features. We use these descriptions for
+            photo suitability, previews, image creation, and personal model training you request,
+            not identity verification or authentication.</p>
+        <p><strong>Providers and consent.</strong> Depending on the feature, we share selected
+            photos, descriptions, and instructions with Replicate (training and generation), OpenAI
+            (analysis, generation, and public-photo review), and xAI (analysis and supported
+            generation, including through Replicate). On iOS, we name these providers and request
+            agreement before your first AI photo upload or use. You can decline.</p>
+        <p><strong>Storage.</strong> Supabase stores uploads, training archives, model covers,
+            older results, and database records in the United States (US East). Bunny stores
+            generated photos in Germany, with replicas in the United States, Singapore, and Brazil,
+            and CDN caches worldwide. Personal model weights are private on Replicate. AI providers
+            and subprocessors may process data in the United States and other countries. Anyone
+            with a generated photo's CDN link can access it, even outside our public gallery.</p>
+        <p><strong>Retention.</strong> Photos, results, and descriptions remain in our active
+            service until you delete the corresponding items or account; personal models until you
+            delete the model or account. Removing a source photo does not remove earlier models or
+            results. Deleted database records may remain in backups until those backups expire.
+            Training archives are queued for cleanup once training finishes or a startup failure is
+            confirmed; they remain while training may still be active. Archives from abandoned
+            training preparations become eligible after 24 hours if no job may still use them.</p>
+        <p><strong>Deletion and withdrawal.</strong> Delete photos, models, or your account in
+            the app. File and CDN cleanup is checked every five minutes and retried on failure, so
+            completion may be delayed. Files remain while another retained item uses them. Account
+            deletion also queues model cleanup and cancellation of active training. Downloaded or
+            device-cached copies cannot be recalled. Withdraw consent to future AI photo processing
+            or request deletion at <a href="mailto:support@myaiphotoshoot.com">support@myaiphotoshoot.com</a>;
+            provider requests already started may finish.</p>
+        <p><strong>Public photos.</strong> Choosing to publish a photo allows OpenAI to review
+            it and limited context, such as its prompt or caption, for safety and eligibility.
+            Private photos are not sent for this review. Making a photo private stops gallery
+            display and new reviews; a background review already started may finish.</p>
+        <p><strong>Provider retention.</strong> Replicate's API prediction inputs, outputs,
+            files, and logs expire after one hour by default; personal models are separate.
+            OpenAI's default API abuse-monitoring retention is up to 30 days; xAI normally keeps
+            API requests and responses for 30 days. OpenAI and xAI state that they do not train
+            general models on API content by default. Endpoint, account, model, legal, or safety exceptions may
+            extend retention. Our deletion does not override provider retention. See
+            <a href="https://replicate.com/docs/topics/predictions/data-retention/">Replicate data retention</a>,
+            <a href="https://developers.openai.com/api/docs/guides/your-data">OpenAI API data controls</a>,
+            <a href="https://x.ai/legal/faq-enterprise">xAI API privacy and retention</a>,
+            and <a href="https://supabase.com/docs/guides/platform/backups">Supabase backup retention</a>.</p>
         <h3>TikTok advertising measurement</h3>
         <p>We use the TikTok App Events SDK in our Android app and the TikTok Pixel on our websites.
             Depending on your device, settings, consent choices, and how you use the Services, these
