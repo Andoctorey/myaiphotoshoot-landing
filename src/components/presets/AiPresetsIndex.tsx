@@ -23,6 +23,8 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
   const pageUrl = canonicalUrl(locale, aiPresetsPagePath(presetsPage.page));
   const title = t('title');
   const description = t('description');
+  const homeLabel = tNav('home');
+  const breadcrumbLabel = t('breadcrumb');
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
@@ -50,18 +52,32 @@ export default async function AiPresetsIndex({ locale, page = 1, pageData }: Pro
           })
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            '@id': `${pageUrl}#breadcrumb`,
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: homeLabel, item: canonicalUrl(locale, '/') },
+              { '@type': 'ListItem', position: 2, name: breadcrumbLabel, item: pageUrl },
+            ],
+          }),
+        }}
+      />
 
       <div className="mx-auto max-w-7xl px-4 pt-6 pb-12 sm:px-6 sm:pt-8 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-6 text-sm">
           <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
             <li>
               <Link href={localePath(locale, '/')} className="hover:text-primary">
-                {tNav('home')}
+                {homeLabel}
               </Link>
             </li>
             <li aria-hidden="true" className="text-gray-400">/</li>
             <li aria-current="page" className="text-gray-800 dark:text-gray-200">
-              {t('breadcrumb')}
+              {breadcrumbLabel}
             </li>
           </ol>
         </nav>
