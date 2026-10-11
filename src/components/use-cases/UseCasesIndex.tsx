@@ -2,42 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { env } from '@/lib/env';
 import { localePath } from '@/lib/seo';
-
-type UseCaseIndexItem = {
-  slug: string;
-  title: string;
-  featured_image_urls?: string[];
-};
-
-type UseCaseApiItem = {
-  slug?: string;
-  title?: string;
-  featured_image_urls?: unknown;
-};
-
-async function fetchUseCases(locale: string): Promise<UseCaseIndexItem[]> {
-  try {
-    const res = await fetch(
-      `${env.SUPABASE_FUNCTIONS_URL}/use-cases?page=1&limit=100&locale=${locale}&platform=web`,
-      { next: { revalidate: 3600 } },
-    );
-    if (!res.ok) {
-      return [];
-    }
-
-    const data = await res.json();
-    const rawItems: UseCaseApiItem[] = Array.isArray(data.items) ? data.items as UseCaseApiItem[] : [];
-    return rawItems
-      .filter((it) => typeof it?.slug === 'string' && typeof it?.title === 'string')
-      .map((it) => ({
-        slug: it.slug as string,
-        title: it.title as string,
-        featured_image_urls: Array.isArray(it.featured_image_urls) ? (it.featured_image_urls as string[]) : undefined,
-      }));
-  } catch {
-    return [];
-  }
-}
+import { fetchUseCasesIndexItems } from '@/lib/use-cases-index';
 
 type Props = {
   locale: string;
@@ -47,7 +12,7 @@ type Props = {
 };
 
 export default async function UseCasesIndex({ locale, title, intro, emptyLabel }: Props) {
-  const items = await fetchUseCases(locale);
+  const items = await fetchUseCasesIndexItems(env.SUPABASE_FUNCTIONS_URL, locale);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
