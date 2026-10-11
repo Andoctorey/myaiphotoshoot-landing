@@ -20,6 +20,9 @@ type Props = {
 
 export default function BlogPageClient({ locale, initialPosts = [], initialPagination, archivePosts = [] }: Props) {
   const t = useTranslations('blog');
+  const title = t('title');
+  const homeLabel = t('breadcrumb.home');
+  const pageUrl = canonicalUrl(locale, '/blog/');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 12;
 
@@ -55,9 +58,9 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           __html: serializeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
-            name: t('title'),
+            name: title,
             description: t('description'),
-            url: canonicalUrl(locale, '/blog/'),
+            url: pageUrl,
             isPartOf: {
               '@type': 'WebSite',
               name: 'My AI Photoshoot',
@@ -73,24 +76,38 @@ export default function BlogPageClient({ locale, initialPosts = [], initialPagin
           })
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            '@id': `${pageUrl}#breadcrumb`,
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: homeLabel, item: canonicalUrl(locale, '/') },
+              { '@type': 'ListItem', position: 2, name: title, item: pageUrl },
+            ],
+          }),
+        }}
+      />
       <div className="min-h-screen pt-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumb" className="mb-6 text-sm overflow-hidden">
             <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
               <li className="flex items-center whitespace-nowrap">
-                <Link href={localePath(locale, '/')} className="hover:text-primary">{t('breadcrumb.home')}</Link>
+                <Link href={localePath(locale, '/')} className="hover:text-primary">{homeLabel}</Link>
               </li>
               <li className="flex items-center whitespace-nowrap">
                 <span className="mx-2 text-gray-400 select-none">/</span>
-                <span aria-current="page" className="text-gray-800 dark:text-gray-200">{t('title')}</span>
+                <span aria-current="page" className="text-gray-800 dark:text-gray-200">{title}</span>
               </li>
             </ol>
           </nav>
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              {t('title')}
+              {title}
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               {t('description')}
