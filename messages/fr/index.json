@@ -20,9 +20,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "My AI Photoshoot : générateur photo IA personnalisé",
-      "metaDescription": "Créez une séance photo IA réaliste à partir d’une photo, d’un prompt ou d’une référence : portraits pro, photos de profil, avatars et nouveaux looks.",
+      "metaDescription": "L’IA transforme votre photo en portraits, photos de profil, avatars et nouveaux looks réalistes. Choisissez un préréglage ou décrivez votre idée dans Studio.",
       "shareTitle": "Une séance photo IA. Toutes vos facettes.",
-      "shareDescription": "Créez des portraits professionnels et créatifs, des photos de profil, avatars et nouveaux looks réalistes à partir d’une photo, d’un prompt ou d’une référence."
+      "shareDescription": "Avec My AI Photoshoot, créez à partir de votre photo des portraits réalistes, des photos de profil, des avatars et de nouveaux looks."
     },
     "useCases": {
       "title": "Usages de la photo IA",
@@ -125,7 +125,7 @@
   "hero": {
     "title": "Une séance photo IA.",
     "titleHighlight": "Toutes vos facettes.",
-    "description": "Créez des portraits réalistes, des photos de profil et de nouveaux looks à partir d’une photo, d’une référence ou d’une simple idée.",
+    "description": "Transformez votre photo en portraits réalistes, photos de profil et nouveaux looks. Choisissez un préréglage ou décrivez dans Studio ce que vous souhaitez créer ou retoucher.",
     "visualAlt": "La même femme dans des portraits IA professionnels, décontractés et de style éditorial"
   },
   "homeUseCases": {

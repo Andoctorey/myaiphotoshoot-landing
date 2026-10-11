@@ -150,15 +150,15 @@ test('homepage SEO copy and focused use-case links stay wired', async () => {
 
   assert.deepEqual(englishMessages.pageCopy.home, {
     metaTitle: 'My AI Photoshoot: Personalized AI Photo Generator',
-    metaDescription: 'Create a realistic AI photoshoot from one photo, a prompt, or a reference image. Make headshots, profile pictures, portraits, avatars, and new looks.',
+    metaDescription: 'Create realistic AI headshots, profile pictures, portraits, avatars, and new looks from your photo. Choose a Preset or describe your result in Studio.',
     shareTitle: 'One AI Photoshoot. Every Version of You.',
-    shareDescription: 'Create realistic headshots, profile pictures, portraits, avatars, and new looks from one photo, a prompt, or a reference image.',
+    shareDescription: 'Create realistic headshots, profile pictures, portraits, avatars, and new looks from your photo with My AI Photoshoot.',
   });
   assert.equal(englishMessages.hero.title, 'One AI Photoshoot.');
   assert.equal(englishMessages.hero.titleHighlight, 'Every Version of You.');
   assert.equal(
     englishMessages.hero.description,
-    'Turn a photo, reference, or idea into realistic headshots, profile pictures, portraits, and new looks.',
+    'Turn your photo into realistic headshots, profile pictures, portraits, and new looks. Choose a Preset, or describe what you want to create or change in Studio.',
   );
 
   assert.doesNotMatch(heroSource, /useCases\.|USE_CASE_LINKS|<nav/);
@@ -280,7 +280,7 @@ test('homepage positioning emphasizes core creation workflows', async () => {
     positioningCopy.join(' '),
     /personal(?: AI)? models?|personal-model training/i,
   );
-  assert.match(englishMessages.hero.description, /photo, reference, or idea/i);
+  assert.match(englishMessages.hero.description, /your photo.*Preset.*Studio/i);
   assert.match(englishMessages.faq.howItWorks.answer, /Preset.*Mask.*Studio/i);
 
   const [rootLayout, localeLayout, rootPage, localePage] = await Promise.all([

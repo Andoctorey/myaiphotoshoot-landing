@@ -20,9 +20,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "My AI Photoshoot：个性化 AI 照片生成器",
-      "metaDescription": "上传一张照片、输入描述或提供参考图，即可打造真实自然的 AI 写真，轻松生成职业照、个人头像、人像大片、虚拟形象和全新造型。",
+      "metaDescription": "用你的照片生成自然逼真的 AI 职业照、头像、人像、虚拟形象和新造型。选择预设，或在 Studio 中描述你想要的效果。",
       "shareTitle": "一场 AI 写真，看见每一面的你。",
-      "shareDescription": "只需一张照片、一段描述或一张参考图，即可生成真实自然的职业照、个人头像、人像大片、虚拟形象和全新造型。"
+      "shareDescription": "用 My AI Photoshoot，将你的照片变成自然逼真的职业照、头像、人像和虚拟形象，尝试全新造型。"
     },
     "useCases": {
       "title": "AI 照片使用场景",
@@ -125,7 +125,7 @@
   "hero": {
     "title": "一场 AI 写真，",
     "titleHighlight": "看见每一面的你。",
-    "description": "一张照片、一张参考图或一个想法，就能生成真实自然的职业照、个人头像、人像大片和全新造型。",
+    "description": "用你的照片生成自然逼真的职业照、头像和人像，尝试全新造型。选择预设，或在 Studio 中描述你想生成的画面或修改的细节。",
     "visualAlt": "同一位女性的专业、休闲和杂志风 AI 肖像"
   },
   "homeUseCases": {

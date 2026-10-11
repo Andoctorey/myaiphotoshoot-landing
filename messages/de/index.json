@@ -20,9 +20,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "My AI Photoshoot: Personalisierter KI-Fotogenerator",
-      "metaDescription": "Erstellen Sie aus einem Foto, Prompt oder Referenzbild ein realistisches KI-Fotoshooting – für Headshots, Profilbilder, Porträts, Avatare und neue Looks.",
+      "metaDescription": "Erstellen Sie aus Ihrem Foto realistische KI-Porträts, Profilbilder, Avatare und neue Looks. Wählen Sie ein Preset oder beschreiben Sie Ihr Motiv in Studio.",
       "shareTitle": "Ein KI-Fotoshooting. All Ihre Facetten.",
-      "shareDescription": "Erstellen Sie realistische Headshots, Profilbilder, Porträts, Avatare und neue Looks aus einem Foto, Prompt oder Referenzbild."
+      "shareDescription": "Mit My AI Photoshoot erstellen Sie aus Ihrem Foto realistische Headshots, Profilbilder, Porträts, Avatare und neue Looks."
     },
     "useCases": {
       "title": "Anwendungsfälle für KI-Fotos",
@@ -125,7 +125,7 @@
   "hero": {
     "title": "Ein KI-Fotoshooting.",
     "titleHighlight": "All Ihre Facetten.",
-    "description": "Verwandeln Sie ein Foto, Referenzbild oder eine Idee in realistische Headshots, Profilbilder, Porträts und neue Looks.",
+    "description": "Verwandeln Sie Ihr Foto in realistische Headshots, Profilbilder, Porträts und neue Looks. Wählen Sie ein Preset oder beschreiben Sie in Studio, was Sie erstellen oder ändern möchten.",
     "visualAlt": "Dieselbe Frau in professionellen, legeren und redaktionellen KI-Porträts"
   },
   "homeUseCases": {

@@ -20,9 +20,9 @@
   "pageCopy": {
     "home": {
       "metaTitle": "My AI Photoshoot: Personalized AI Photo Generator",
-      "metaDescription": "Create a realistic AI photoshoot from one photo, a prompt, or a reference image. Make headshots, profile pictures, portraits, avatars, and new looks.",
+      "metaDescription": "Create realistic AI headshots, profile pictures, portraits, avatars, and new looks from your photo. Choose a Preset or describe your result in Studio.",
       "shareTitle": "One AI Photoshoot. Every Version of You.",
-      "shareDescription": "Create realistic headshots, profile pictures, portraits, avatars, and new looks from one photo, a prompt, or a reference image."
+      "shareDescription": "Create realistic headshots, profile pictures, portraits, avatars, and new looks from your photo with My AI Photoshoot."
     },
     "useCases": {
       "title": "AI Photo Use Cases",
@@ -125,7 +125,7 @@
   "hero": {
     "title": "One AI Photoshoot.",
     "titleHighlight": "Every Version of You.",
-    "description": "Turn a photo, reference, or idea into realistic headshots, profile pictures, portraits, and new looks.",
+    "description": "Turn your photo into realistic headshots, profile pictures, portraits, and new looks. Choose a Preset, or describe what you want to create or change in Studio.",
     "visualAlt": "The same woman shown in professional, casual, and editorial AI portraits"
   },
   "homeUseCases": {
