@@ -68,6 +68,8 @@ const formatDate = (dateString: string | null | undefined, locale: string) => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    // Keep the calendar date identical in the static export and the reader's browser.
+    timeZone: 'UTC',
   });
 };
 
