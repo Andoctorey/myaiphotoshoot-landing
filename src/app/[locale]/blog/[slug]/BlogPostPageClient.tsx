@@ -647,7 +647,12 @@ export default function BlogPostPageClient({ slug, locale, initialPost }: Props)
 
                 <div className="flex items-center gap-2">
                   <UserIcon className="w-4 h-4" />
-                  <span>My AI Photoshoot</span>
+                  <Link
+                    href={localePath(locale, '/')}
+                    className="rounded-sm underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                  >
+                    My AI Photoshoot
+                  </Link>
                 </div>
               </div>
 
