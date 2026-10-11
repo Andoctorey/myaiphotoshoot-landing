@@ -25,7 +25,7 @@ function getUseCasesLabels(messages: unknown) {
   return {
     title: m.pageCopy?.useCases?.title || 'AI Photo Use Cases',
     intro: m.pageCopy?.useCases?.intro
-      || 'Discover ways to create professional headshots, dating profile photos, social content, and creative portraits with AI.',
+      || 'Explore ways to turn your photo into professional headshots, dating profile pictures, avatars, and creative portraits. Browse the guides for example images, prompts, and steps to get started with My AI Photoshoot.',
     metaTitle: m.pageCopy?.useCases?.metaTitle || 'AI Photo Use Cases',
     metaDescription: m.pageCopy?.useCases?.metaDescription
       || 'Explore AI photo use cases for professional headshots, dating profiles, social media, marketing, and creative portraits.',
