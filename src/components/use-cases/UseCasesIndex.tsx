@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { env } from '@/lib/env';
-import { localePath } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/json-ld';
+import { BASE_URL, canonicalUrl, localePath } from '@/lib/seo';
 import { fetchUseCasesIndexItems } from '@/lib/use-cases-index';
 
 type Props = {
@@ -13,9 +14,34 @@ type Props = {
 
 export default async function UseCasesIndex({ locale, title, intro, emptyLabel }: Props) {
   const items = await fetchUseCasesIndexItems(env.SUPABASE_FUNCTIONS_URL, locale);
+  const pageUrl = canonicalUrl(locale, '/use-cases/');
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${pageUrl}#webpage`,
+    name: title,
+    description: intro,
+    url: pageUrl,
+    inLanguage: locale,
+    isPartOf: { '@id': `${BASE_URL}/#website` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: items.length,
+      itemListElement: items.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.title,
+        url: canonicalUrl(locale, `/use-cases/${item.slug}/`),
+      })),
+    },
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
+      />
       <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-3">{title}</h1>
       <p className="max-w-3xl text-base leading-7 text-gray-600 mb-8">{intro}</p>
       {items.length === 0 ? (
