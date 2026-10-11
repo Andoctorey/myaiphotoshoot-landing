@@ -11,3 +11,9 @@
 - [Use Cases](https://myaiphotoshoot.com/use-cases/)
 - [Blog](https://myaiphotoshoot.com/blog/)
 - [Legal](https://myaiphotoshoot.com/legal/)
+
+## Guides
+
+- [AI Headshot Generator](https://myaiphotoshoot.com/use-cases/ai-headshot-generator-for-linkedin-resumes-and-team-pages/): Create headshots for LinkedIn, resumes, and team pages from your photo.
+- [AI Dating Profile Picture Generator](https://myaiphotoshoot.com/use-cases/ai-dating-profile-picture-generator/): Create dating profile photos with clothing and settings that reflect your style.
+- [AI Avatar Generator](https://myaiphotoshoot.com/use-cases/ai-avatar-generator/): Create illustrated or photographic avatars for social profiles, chat icons, and gaming accounts.

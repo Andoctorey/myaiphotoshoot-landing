@@ -294,18 +294,28 @@ test('homepage positioning emphasizes core creation workflows', async () => {
   }
 });
 
-test('llms.txt is concise factual text with exactly the canonical product links', async () => {
+test('llms.txt is concise factual text with canonical product links and annotated guides', async () => {
   const llmsText = await readProjectFile('public/llms.txt');
 
   assert.match(llmsText, /^# My AI Photoshoot\n\n> [^\n]+\n\n## Pages\n/m);
-  assert.ok(Buffer.byteLength(llmsText, 'utf8') < 1_000, 'llms.txt is not concise');
+  assert.ok(Buffer.byteLength(llmsText, 'utf8') < 1_500, 'llms.txt is not concise');
 
   const pages = Array.from(
     llmsText.matchAll(/^- \[([^\]]+)]\((https:\/\/[^)]+)\)$/gm),
     (match) => [match[1], match[2]],
   );
   assert.deepEqual(pages, canonicalPages);
-  for (const [, pageUrl] of pages) {
+  const guidesSection = llmsText.match(/^## Guides\n([\s\S]*)$/m)?.[1];
+  assert.ok(guidesSection, 'llms.txt is missing its Guides section');
+  const guides = Array.from(
+    guidesSection.matchAll(/^- \[([^\]]+)]\((https:\/\/[^)]+)\): ([^\n]+)$/gm),
+    (match) => [match[1], match[2]],
+  );
+  assert.ok(guides.length > 0, 'llms.txt must include annotated guide links');
+  for (const [, guideUrl] of guides) {
+    assert.match(new URL(guideUrl).pathname, /^\/use-cases\/[^/]+\/$/);
+  }
+  for (const [, pageUrl] of [...pages, ...guides]) {
     const url = new URL(pageUrl);
     assert.equal(url.protocol, 'https:');
     assert.equal(url.hostname, 'myaiphotoshoot.com');
