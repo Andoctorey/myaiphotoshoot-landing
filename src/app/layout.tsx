@@ -145,7 +145,6 @@ export default function RootLayout({
               },
               sameAs: [
                 'https://x.com/andoctorey',
-                'https://github.com/Andoctorey/myaiphotoshoot-kmp',
                 'https://apps.apple.com/app/id6744860178',
                 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot'
               ],
