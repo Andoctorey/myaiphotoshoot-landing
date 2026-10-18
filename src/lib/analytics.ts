@@ -3,16 +3,16 @@ export const GA_MEASUREMENT_ID = 'G-0T00P896RF';
 export const TIKTOK_PIXEL_ID = 'D8FEKE3C77U4A83CCF00';
 
 const ATTRIBUTION_PARAMETERS = [
+  'gclid',
+  'gbraid',
+  'wbraid',
+  'dclid',
   'utm_id',
   'utm_source',
   'utm_medium',
   'utm_campaign',
   'utm_term',
   'utm_content',
-  'gclid',
-  'dclid',
-  'gbraid',
-  'wbraid',
   'ttclid',
   'fbclid',
   'msclkid',
@@ -64,9 +64,15 @@ export const withCurrentAttribution = (destination: string): string => {
     if (url.hostname === 'play.google.com') {
       url.searchParams.delete('referrer');
       const installReferrer = new URLSearchParams();
-      copyAttributionParameters(url.searchParams, installReferrer);
+      // Keep click IDs when long optional campaign tags would otherwise discard the whole referrer.
+      ATTRIBUTION_PARAMETERS.forEach((parameter) => {
+        const value = url.searchParams.get(parameter);
+        if (!value) return;
+        installReferrer.set(parameter, value);
+        if (installReferrer.toString().length > 512) installReferrer.delete(parameter);
+      });
       const serializedReferrer = installReferrer.toString();
-      if (serializedReferrer && serializedReferrer.length <= 512) {
+      if (serializedReferrer) {
         url.searchParams.set('referrer', serializedReferrer);
       }
     }
