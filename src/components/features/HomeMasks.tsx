@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
+import MaskAppLink from '@/components/masks/MaskAppLink';
 import {
   fetchMasksCatalog,
   masksForCategory,
@@ -79,52 +80,60 @@ export default async function HomeMasks({ locale }: { locale: string }) {
           <div className="-mx-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0">
             <div className="flex w-max snap-x snap-mandatory gap-4 lg:grid lg:w-full lg:grid-cols-3">
               {comparisons.map(({ category, mask }) => (
-                <a
-                  key={mask.id}
-                  href={buildMaskAppUrl(mask.id)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={mask.name}
-                  className="w-[78vw] max-w-[330px] shrink-0 snap-center overflow-hidden rounded-2xl border border-brand-200/70 bg-white shadow-lg shadow-brand-900/10 transition hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-brand-800/60 dark:bg-gray-800 dark:focus:ring-offset-gray-950 lg:w-auto"
-                >
-                  <div className="grid grid-cols-2">
-                    <div className="relative">
-                      <Image
-                        src={withCdnWidth(category.sourceImageUrl, 420) || category.sourceImageUrl}
-                        alt={t('sourceAlt', { category: category.name })}
-                        width={420}
-                        height={560}
-                        sizes="(max-width: 1023px) 39vw, 12vw"
-                        className="aspect-[3/4] h-full w-full object-cover"
-                      />
-                      <span className="absolute left-2 top-2 rounded-full bg-black/65 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-                        {t('before')}
-                      </span>
+                <div key={mask.id} className="flex w-[78vw] max-w-[330px] shrink-0 snap-center flex-col lg:w-auto">
+                  <a
+                    href={buildMaskAppUrl(mask.id)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={mask.name}
+                    className="overflow-hidden rounded-2xl border border-brand-200/70 bg-white shadow-lg shadow-brand-900/10 transition hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-brand-800/60 dark:bg-gray-800 dark:focus:ring-offset-gray-950"
+                  >
+                    <div className="grid grid-cols-2">
+                      <div className="relative">
+                        <Image
+                          src={withCdnWidth(category.sourceImageUrl, 420) || category.sourceImageUrl}
+                          alt={t('sourceAlt', { category: category.name })}
+                          width={420}
+                          height={560}
+                          sizes="(max-width: 1023px) 39vw, 12vw"
+                          className="aspect-[3/4] h-full w-full object-cover"
+                        />
+                        <span className="absolute left-2 top-2 rounded-full bg-black/65 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+                          {t('before')}
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <Image
+                          src={withCdnWidth(mask.featuredGraphics, 420) || mask.featuredGraphics}
+                          alt={t('resultAlt', { name: mask.name })}
+                          width={420}
+                          height={560}
+                          sizes="(max-width: 1023px) 39vw, 12vw"
+                          className="aspect-[3/4] h-full w-full object-cover"
+                        />
+                        <span className="absolute right-2 top-2 rounded-full bg-primary/90 px-2 py-1 text-[11px] font-semibold text-on-primary backdrop-blur-sm">
+                          {t('after')}
+                        </span>
+                      </div>
                     </div>
-                    <div className="relative">
-                      <Image
-                        src={withCdnWidth(mask.featuredGraphics, 420) || mask.featuredGraphics}
-                        alt={t('resultAlt', { name: mask.name })}
-                        width={420}
-                        height={560}
-                        sizes="(max-width: 1023px) 39vw, 12vw"
-                        className="aspect-[3/4] h-full w-full object-cover"
-                      />
-                      <span className="absolute right-2 top-2 rounded-full bg-primary/90 px-2 py-1 text-[11px] font-semibold text-on-primary backdrop-blur-sm">
-                        {t('after')}
-                      </span>
+                    <div className="p-4">
+                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-brand-600 dark:text-brand-300">
+                        <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
+                        {category.name}
+                      </p>
+                      <h3 className="mt-1 text-lg font-semibold text-gray-950 dark:text-white">
+                        {mask.name}
+                      </h3>
                     </div>
-                  </div>
-                  <div className="p-4">
-                    <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-brand-600 dark:text-brand-300">
-                      <MaskCategoryIcon iconPath={category.iconPath} className="h-4 w-4 shrink-0" />
-                      {category.name}
-                    </p>
-                    <h3 className="mt-1 text-lg font-semibold text-gray-950 dark:text-white">
-                      {mask.name}
-                    </h3>
-                  </div>
-                </a>
+                  </a>
+                  <MaskAppLink
+                    label={t('openInApp')}
+                    locale={locale}
+                    maskId={mask.id}
+                    maskName={mask.name}
+                    hiddenOnIos={category.hiddenOnIos}
+                  />
+                </div>
               ))}
             </div>
           </div>

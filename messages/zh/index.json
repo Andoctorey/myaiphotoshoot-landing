@@ -69,6 +69,7 @@
     "paginationPageTitle": "第 {page} 页"
   },
   "masks": {
+    "openInApp": "在应用中打开",
     "title": "面具",
     "breadcrumb": "面具",
     "eyebrow": "一张照片，焕然一新。",

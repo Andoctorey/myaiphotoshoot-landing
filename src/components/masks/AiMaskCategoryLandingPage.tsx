@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import AiMaskCategoryHighlights from '@/components/masks/AiMaskCategoryHighlights';
+import MaskAppLink from '@/components/masks/MaskAppLink';
 import { AI_MASKS_APP_URL } from '@/lib/app-links';
 import { buildMaskCategoryJsonLdGraph } from '@/lib/ai-mask-category-json-ld';
 import { canonicalUrl, localePath } from '@/lib/seo';
@@ -97,6 +98,7 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
             locale={locale}
             maleLabel={t('genderMale')}
             masks={masks}
+            openInAppLabel={t('openInApp')}
             resultAltLabel={t.raw('resultAlt') as string}
             tryMasksLabel={t('tryMasks')}
           />
@@ -162,6 +164,9 @@ export default async function AiMaskCategoryLandingPage({ locale, landing, catal
           >
             {t('tryMasks')}
           </a>
+          <div className="mt-2">
+            <MaskAppLink label={t('openInApp')} locale={locale} />
+          </div>
         </section>
       </article>
     </div>

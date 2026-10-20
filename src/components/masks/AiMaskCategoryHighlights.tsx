@@ -5,6 +5,7 @@ import { useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { buildMaskAppUrl } from '@/lib/app-links';
 import { formatCredits } from '@/lib/pricing';
 import { cn } from '@/lib/utils';
+import MaskAppLink from './MaskAppLink';
 import type { AiMask, AiMaskCategory, MaskAudienceGender } from '@/types/ai-mask';
 
 type PreviewGender = Extract<MaskAudienceGender, 'female' | 'male'>;
@@ -25,6 +26,7 @@ type Props = {
   locale: string;
   maleLabel: string;
   masks: readonly AiMask[];
+  openInAppLabel: string;
   resultAltLabel: string;
   tryMasksLabel: string;
 };
@@ -51,6 +53,7 @@ export default function AiMaskCategoryHighlights({
   locale,
   maleLabel,
   masks,
+  openInAppLabel,
   resultAltLabel,
   tryMasksLabel,
 }: Props) {
@@ -224,9 +227,9 @@ export default function AiMaskCategoryHighlights({
         </div>
       </div>
 
-      <div className="mt-1 flex justify-center">
+      <div className="mt-1 flex flex-col items-center gap-2">
         <a
-          href={buildMaskAppUrl(selectedMask.id)}
+          href={buildMaskAppUrl(selectedMask.id, gender)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
@@ -235,6 +238,14 @@ export default function AiMaskCategoryHighlights({
           <span aria-hidden="true">·</span>
           <span className="tabular-nums">{formatCredits(selectedMask.priceCredits, locale)}</span>
         </a>
+        <MaskAppLink
+          label={openInAppLabel}
+          locale={locale}
+          maskId={selectedMask.id}
+          maskName={selectedMask.name}
+          gender={gender}
+          hiddenOnIos={category.hiddenOnIos}
+        />
       </div>
     </section>
   );

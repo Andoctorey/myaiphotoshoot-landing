@@ -42,11 +42,11 @@ export function usePlatformAppLink(): PlatformAppLink {
 }
 
 export function useAttributedUrl(url: string): string {
-  const [attributedUrl, setAttributedUrl] = useState(url);
+  const [attributedUrl, setAttributedUrl] = useState({ source: url, value: url });
 
   useEffect(() => {
-    setAttributedUrl(withCurrentAttribution(url));
+    setAttributedUrl({ source: url, value: withCurrentAttribution(url) });
   }, [url]);
 
-  return attributedUrl;
+  return attributedUrl.source === url ? attributedUrl.value : url;
 }

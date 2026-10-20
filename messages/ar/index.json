@@ -69,6 +69,7 @@
     "paginationPageTitle": "الصفحة {page}"
   },
   "masks": {
+    "openInApp": "فتح في التطبيق",
     "title": "أقنعة",
     "breadcrumb": "أقنعة",
     "eyebrow": "صورة واحدة. إطلالة جديدة.",

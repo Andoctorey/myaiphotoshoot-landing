@@ -69,6 +69,7 @@
     "paginationPageTitle": "Страница {page}"
   },
   "masks": {
+    "openInApp": "Открыть в приложении",
     "title": "Маски",
     "breadcrumb": "Маски",
     "eyebrow": "Одно фото — новый образ.",

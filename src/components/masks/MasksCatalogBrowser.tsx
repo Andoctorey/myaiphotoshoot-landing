@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
+import MaskAppLink from '@/components/masks/MaskAppLink';
 import { AI_MASKS_APP_URL, buildMaskAppUrl } from '@/lib/app-links';
 import { localePath } from '@/lib/seo';
 import type {
@@ -24,6 +25,7 @@ export type MasksCatalogLabels = {
   genderLabel: string;
   male: string;
   maskCount: string;
+  openInApp: string;
   readyDescription: string;
   readyTitle: string;
   resultAlt: string;
@@ -231,30 +233,39 @@ export default function MasksCatalogBrowser({
                 </article>
 
                 {masks.map((mask) => (
-                  <a
-                    key={mask.id}
-                    href={buildMaskAppUrl(mask.id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={mask.name}
-                    className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950"
-                  >
-                    <div className="relative overflow-hidden">
-                      <Image
-                        src={maskPreviewUrl(mask, gender)}
-                        alt={interpolate(labels.resultAlt, 'name', mask.name)}
-                        width={560}
-                        height={700}
-                        sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
-                        className="aspect-[4/5] w-full object-cover"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />
-                      <h3 className="absolute inset-x-0 bottom-0 px-3 py-3 text-center text-sm font-semibold leading-tight text-white sm:text-base">
-                        {mask.name}
-                      </h3>
-                    </div>
-                  </a>
+                  <div key={mask.id} className="flex min-w-0 flex-col">
+                    <a
+                      href={buildMaskAppUrl(mask.id, gender)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={mask.name}
+                      className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus:ring-offset-gray-950"
+                    >
+                      <div className="relative overflow-hidden">
+                        <Image
+                          src={maskPreviewUrl(mask, gender)}
+                          alt={interpolate(labels.resultAlt, 'name', mask.name)}
+                          width={560}
+                          height={700}
+                          sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
+                          className="aspect-[4/5] w-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/85" />
+                        <h3 className="absolute inset-x-0 bottom-0 px-3 py-3 text-center text-sm font-semibold leading-tight text-white sm:text-base">
+                          {mask.name}
+                        </h3>
+                      </div>
+                    </a>
+                    <MaskAppLink
+                      label={labels.openInApp}
+                      locale={locale}
+                      maskId={mask.id}
+                      maskName={mask.name}
+                      gender={gender}
+                      hiddenOnIos={category.hiddenOnIos}
+                    />
+                  </div>
                 ))}
               </div>
             </details>
@@ -277,6 +288,9 @@ export default function MasksCatalogBrowser({
         >
           {labels.tryMasks}
         </a>
+        <div className="mt-2">
+          <MaskAppLink label={labels.openInApp} locale={locale} />
+        </div>
       </section>
     </>
   );

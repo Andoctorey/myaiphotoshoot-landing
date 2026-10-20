@@ -69,6 +69,7 @@
     "paginationPageTitle": "{page}ページ"
   },
   "masks": {
+    "openInApp": "アプリで開く",
     "title": "マスク",
     "breadcrumb": "マスク",
     "eyebrow": "写真1枚で、新しいスタイルへ。",

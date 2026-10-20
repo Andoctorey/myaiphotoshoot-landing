@@ -69,6 +69,7 @@
     "paginationPageTitle": "पेज {page}"
   },
   "masks": {
+    "openInApp": "ऐप में खोलें",
     "title": "मास्क",
     "breadcrumb": "मास्क",
     "eyebrow": "एक फोटो। एक नया लुक।",

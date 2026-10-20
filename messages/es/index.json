@@ -69,6 +69,7 @@
     "paginationPageTitle": "Página {page}"
   },
   "masks": {
+    "openInApp": "Abrir en la app",
     "title": "Máscaras",
     "breadcrumb": "Máscaras",
     "eyebrow": "Una foto. Un look nuevo.",

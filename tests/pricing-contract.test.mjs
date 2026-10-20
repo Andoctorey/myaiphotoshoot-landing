@@ -472,7 +472,7 @@ test('web app buttons outside pricing retain their existing black backgrounds', 
 
   assert.match(platformButtons, /href=\{attributedWebAppUrl\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(footer, /href=\{appLink\.url\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.match(maskHighlights, /href=\{buildMaskAppUrl\(selectedMask\.id\)\}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(maskHighlights, /href=\{buildMaskAppUrl\(selectedMask\.id, gender\)\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(maskLanding, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(masksCatalog, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(masksBrowser, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);

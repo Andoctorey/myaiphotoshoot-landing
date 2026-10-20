@@ -97,11 +97,11 @@ test('mask cards and CTAs open the web app in a new tab', async () => {
     readProjectFile('src/components/features/HomeMasks.tsx'),
   ]);
 
-  assert.match(appLinks, /function buildMaskAppUrl\(maskId: string\)/);
-  assert.match(appLinks, /`\$\{AI_MASKS_APP_URL\}\/\$\{encodeURIComponent\(maskId\)\}`/);
+  assert.match(appLinks, /function buildMaskAppUrl\(maskId: string, gender\?: MaskLinkGender\)/);
+  assert.match(appLinks, /`\$\{AI_MASKS_APP_URL\}\/\$\{encodeURIComponent\(maskId\)\}\$\{suffix\}`/);
   assert.match(catalog, /url: buildMaskAppUrl\(mask\.id\)/);
-  assertNewTabAnchor(browser, 'href={buildMaskAppUrl(mask.id)}');
-  assertNewTabAnchor(highlights, 'href={buildMaskAppUrl(selectedMask.id)}');
+  assertNewTabAnchor(browser, 'href={buildMaskAppUrl(mask.id, gender)}');
+  assertNewTabAnchor(highlights, 'href={buildMaskAppUrl(selectedMask.id, gender)}');
   assertNewTabAnchor(homeMasks, 'href={buildMaskAppUrl(mask.id)}');
   for (const source of [catalog, browser, categoryPage]) {
     assertNewTabAnchor(source, 'href={AI_MASKS_APP_URL}');

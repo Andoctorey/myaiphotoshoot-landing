@@ -9,8 +9,22 @@ export const GOOGLE_PLAY_URL =
   `${GOOGLE_PLAY_APP_URL}&utm_source=landing&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1`;
 export const AI_MASKS_APP_URL = `${WEB_APP_URL}/#masks`;
 
-export function buildMaskAppUrl(maskId: string): string {
-  return `${AI_MASKS_APP_URL}/${encodeURIComponent(maskId)}`;
+export type MaskLinkGender = 'female' | 'male';
+const maskIdentifierPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export function buildMaskAppUrl(maskId: string, gender?: MaskLinkGender): string {
+  const suffix = gender ? `/gender/${gender}` : '';
+  return `${AI_MASKS_APP_URL}/${encodeURIComponent(maskId)}${suffix}`;
+}
+
+export function buildMaskNativeAppUrl(maskId: string | undefined, locale: string, gender?: MaskLinkGender): string {
+  if (maskId !== undefined && !maskIdentifierPattern.test(maskId)) {
+    throw new Error('Invalid mask identifier');
+  }
+  const url = new URL(`/open/mask/${encodeURIComponent(maskId ?? 'all')}/`, WEB_APP_URL);
+  url.searchParams.set('locale', locale);
+  if (maskId && gender) url.searchParams.set('gender', gender);
+  return url.toString();
 }
 
 const presetIdentifierPattern = /^[A-Za-z0-9_-]{1,160}(?:~[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})?$/i;

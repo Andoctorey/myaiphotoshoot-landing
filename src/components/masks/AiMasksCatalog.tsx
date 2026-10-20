@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import MasksCatalogBrowser, {
   type MasksCatalogLabels,
 } from '@/components/masks/MasksCatalogBrowser';
+import MaskAppLink from '@/components/masks/MaskAppLink';
 import { AI_MASKS_APP_URL, buildMaskAppUrl } from '@/lib/app-links';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
@@ -28,6 +29,7 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
     genderLabel: t('genderLabel'),
     male: t('genderMale'),
     maskCount: t.raw('maskCount') as string,
+    openInApp: t('openInApp'),
     readyDescription: t('readyDescription'),
     readyTitle: t('readyTitle'),
     resultAlt: t.raw('resultAlt') as string,
@@ -124,6 +126,9 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
           >
             {t('tryMasks')}
           </a>
+          <div className="mt-2">
+            <MaskAppLink label={t('openInApp')} locale={locale} />
+          </div>
         </header>
 
         <MasksCatalogBrowser
