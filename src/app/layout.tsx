@@ -13,6 +13,7 @@ import ConsentBanner from "@/components/ConsentBanner";
 import { env } from "@/lib/env";
 import { serializeJsonLd } from "@/lib/json-ld";
 import { BASE_URL, HOME_METADATA_DEFAULTS } from "@/lib/seo";
+import { presetSmartAppBanner } from "@/lib/app-links";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  other: { 'apple-itunes-app': presetSmartAppBanner(BASE_URL) },
   metadataBase: new URL(BASE_URL),
   title: {
     default: HOME_METADATA_DEFAULTS.title,
@@ -104,11 +106,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="My AI Photoshoot" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        {/* iOS Smart App Banner */}
-        <meta
-          name="apple-itunes-app"
-          content="app-id=6744860178, app-argument=https://myaiphotoshoot.com/"
-        />
         {/* Android App Indexing (legacy hint; primary is Digital Asset Links) */}
         <link
           rel="alternate"

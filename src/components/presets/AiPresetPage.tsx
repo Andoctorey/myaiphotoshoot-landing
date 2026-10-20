@@ -1,5 +1,6 @@
 import { PresetExperimentProvider, PresetExperimentImage, PresetExperimentLink, PresetExperimentPrice } from './PresetExperiment';
 import Link from 'next/link';
+import PresetAppLinks from './PresetAppLinks';
 import { getTranslations } from 'next-intl/server';
 import { buildPresetAppUrl, buildPresetDescription } from '@/lib/ai-presets';
 import { canonicalUrl, localePath } from '@/lib/seo';
@@ -155,6 +156,7 @@ export default async function AiPresetPage({ locale, preset }: Props) {
               {tryPresetLabel}
               <PresetExperimentPrice />
             </PresetExperimentLink>
+            <PresetAppLinks presetId={preset.id} label={t('openInApp')} />
           </header>
         </div>
 

@@ -12,7 +12,7 @@
     "test:image-sitemap": "node --test tests/image-sitemap.test.mjs",
     "test:localized-blog": "node --test tests/localized-blog-alias.test.mjs",
     "test:pricing": "node --test tests/pricing-contract.test.mjs",
-    "test:presets": "node --test tests/preset-test.test.mjs tests/preset-redirects.test.mjs",
+    "test:presets": "node --test tests/preset-test.test.mjs tests/preset-redirects.test.mjs tests/preset-app-links.test.mjs",
     "test:use-cases": "node --test src/lib/use-cases-index.test.mjs",
     "test:use-cases-export": "node --test tests/use-cases-export.test.mjs",
     "test:geo": "node --test tests/homepage-geo.test.mjs",

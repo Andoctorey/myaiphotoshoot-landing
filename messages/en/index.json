@@ -47,6 +47,7 @@
     "empty": "No AI presets are published yet.",
     "quickPreset": "Quick AI preset",
     "tryPreset": "Try this preset",
+    "openInApp": "Open in app",
     "browsePresets": "Browse presets",
     "imageAlt": "{name} AI preset example",
     "readyTitle": "Ready to try it?",

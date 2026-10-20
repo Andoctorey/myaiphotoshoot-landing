@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { withCurrentAttribution } from '@/lib/analytics';
-import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_IDEAS_URL } from '@/lib/app-links';
+import { APP_STORE_URL, GOOGLE_PLAY_URL, mobileAppPlatform, WEB_APP_IDEAS_URL } from '@/lib/app-links';
 
 type PlatformAppLink = {
   event: 'app_store_cta_click' | 'google_play_cta_click' | 'webapp_cta_click';
@@ -18,16 +18,14 @@ export function usePlatformAppLink(): PlatformAppLink {
   const [appLink, setAppLink] = useState<PlatformAppLink>(WEB_APP_LINK);
 
   useEffect(() => {
-    const userAgent = window.navigator.userAgent;
-    const isIOS = /iphone|ipad|ipod/i.test(userAgent)
-      || (/macintosh/i.test(userAgent) && window.navigator.maxTouchPoints > 1);
+    const platform = mobileAppPlatform(window.navigator.userAgent, window.navigator.maxTouchPoints);
 
-    if (isIOS) {
+    if (platform === 'ios') {
       setAppLink({
         event: 'app_store_cta_click',
         url: withCurrentAttribution(APP_STORE_URL),
       });
-    } else if (/android/i.test(userAgent)) {
+    } else if (platform === 'android') {
       setAppLink({
         event: 'google_play_cta_click',
         url: withCurrentAttribution(GOOGLE_PLAY_URL),

@@ -783,6 +783,7 @@ test('homepage preset cards open detail pages while detail CTAs open the app in 
 test('preset detail pages normally receive content and pricing from one RPC and validate route identity', async () => {
   const calls = [];
   const aiPresets = await loadTypeScriptModule('src/lib/ai-presets.ts', {
+    './app-links': await loadTypeScriptModule('src/lib/app-links.ts'),
     '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'de'] },
     '@/lib/ai-preset-build-cache': {
       AI_PRESET_REVALIDATE_SECONDS: 3600,
@@ -849,6 +850,7 @@ test('preset detail pages normally receive content and pricing from one RPC and 
 
 async function loadPresetCatalogApi(postPublicSupabaseRpc) {
   return loadTypeScriptModule('src/lib/ai-presets.ts', {
+    './app-links': await loadTypeScriptModule('src/lib/app-links.ts'),
     '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'de'] },
     '@/lib/ai-preset-build-cache': {
       AI_PRESET_REVALIDATE_SECONDS: 3600,

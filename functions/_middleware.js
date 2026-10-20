@@ -10,6 +10,23 @@ import { redirectLegacyPresetRequest } from './_shared/preset-redirects.js';
 const UUID_IN_MARKUP = /data-preset-test-id="([0-9a-f-]{36})"/gi;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+export function assignedPresetBanner(html, requestUrl, assignment) {
+  if (!UUID.test(assignment?.assignment_id || '') || !previewUrl(assignment?.featured_graphics)) return html;
+  if (assignment.cost_credits !== undefined && (!Number.isSafeInteger(assignment.cost_credits) || assignment.cost_credits <= 0)) return html;
+  const requested = new URL(requestUrl);
+  if (!/^\/(?:(?:[a-z]{2})\/)?presets\/[A-Za-z0-9_-]{1,160}\/?$/.test(requested.pathname)) return html;
+  const target = new URL(requested.pathname, 'https://myaiphotoshoot.com');
+  target.searchParams.set('assignment_id', assignment.assignment_id);
+  for (const key of ['gclid', 'gbraid', 'wbraid', 'dclid', 'utm_id', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'ttclid', 'fbclid', 'msclkid']) {
+    const value = requested.searchParams.get(key);
+    if (value) target.searchParams.set(key, value);
+  }
+  const content = `app-id=6744860178, app-argument=${target.href}`.replace(/&/g, '&amp;');
+  // Safari can read the banner before hydration resolves the visitor's assigned preview.
+  return html.replace(/<meta\b(?=[^>]*\bname=["']apple-itunes-app["'])[^>]*>/i,
+    () => `<meta name="apple-itunes-app" content="${content}">`);
+}
+
 function previewUrl(value) {
   if (typeof value !== 'string') return null;
   try {
@@ -64,7 +81,8 @@ export async function onRequest(context) {
     const vary = headers.get('vary');
     headers.set('vary', vary ? `${vary}, Cookie` : 'Cookie');
     if (result.visitorId) headers.append('set-cookie', presetTestVisitorCookie(result.visitorId));
-    return new Response(html.replace(/<\/head>/i, `${markup}</head>`), { status: response.status, headers });
+    const assignedHtml = ids.length === 1 ? assignedPresetBanner(html, request.url, result.assignments[ids[0]]) : html;
+    return new Response(assignedHtml.replace(/<\/head>/i, `${markup}</head>`), { status: response.status, headers });
   } catch (error) {
     console.error('Preset preview assignment failed', { error: error instanceof Error ? error.message : 'Unknown error' });
     return new Response(html, response);

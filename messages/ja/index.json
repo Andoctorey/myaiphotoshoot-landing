@@ -47,6 +47,7 @@
     "empty": "公開済みのAIプリセットはまだありません。",
     "quickPreset": "クイックAIプリセット",
     "tryPreset": "このプリセットを試す",
+    "openInApp": "アプリで開く",
     "browsePresets": "プリセットを見る",
     "imageAlt": "{name} AIプリセットの例",
     "readyTitle": "試してみますか？",

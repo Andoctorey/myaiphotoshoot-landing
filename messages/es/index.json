@@ -47,6 +47,7 @@
     "empty": "Aún no hay presets de IA publicados.",
     "quickPreset": "Preset rápido de IA",
     "tryPreset": "Probar este preset",
+    "openInApp": "Abrir en la app",
     "browsePresets": "Ver presets",
     "imageAlt": "Ejemplo del preset de IA {name}",
     "readyTitle": "¿Listo para probarlo?",

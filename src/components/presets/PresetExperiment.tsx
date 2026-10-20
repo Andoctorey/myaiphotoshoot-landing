@@ -14,6 +14,10 @@ import {
 type ExperimentContext = { appUrl: string; image: string; alt: string; credits: number | null; locale: string; pending: boolean; resolved: boolean; trackClick: () => void };
 const Context = createContext<ExperimentContext | null>(null);
 
+export function usePresetExperiment() {
+  return useContext(Context);
+}
+
 async function recordEvent(assignmentId: string, event: 'exposure' | 'click') {
   const consent = readPresetExperimentConsent();
   if (consent === 'rejected') return;
