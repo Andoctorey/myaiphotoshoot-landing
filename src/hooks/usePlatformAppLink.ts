@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { withCurrentAttribution } from '@/lib/analytics';
+import { LANDING_HANDOFF_UPDATED } from '@/lib/landing-handoff';
 import { APP_STORE_URL, GOOGLE_PLAY_URL, mobileAppPlatform, WEB_APP_IDEAS_URL } from '@/lib/app-links';
 
 type PlatformAppLink = {
@@ -19,23 +20,19 @@ export function usePlatformAppLink(): PlatformAppLink {
 
   useEffect(() => {
     const platform = mobileAppPlatform(window.navigator.userAgent, window.navigator.maxTouchPoints);
-
-    if (platform === 'ios') {
-      setAppLink({
-        event: 'app_store_cta_click',
-        url: withCurrentAttribution(APP_STORE_URL),
-      });
-    } else if (platform === 'android') {
-      setAppLink({
-        event: 'google_play_cta_click',
-        url: withCurrentAttribution(GOOGLE_PLAY_URL),
-      });
-    } else {
-      setAppLink({
-        ...WEB_APP_LINK,
-        url: withCurrentAttribution(WEB_APP_LINK.url),
-      });
-    }
+    const link: PlatformAppLink = platform === 'ios'
+      ? { event: 'app_store_cta_click', url: APP_STORE_URL }
+      : platform === 'android'
+        ? { event: 'google_play_cta_click', url: GOOGLE_PLAY_URL }
+        : WEB_APP_LINK;
+    const update = () => setAppLink({ ...link, url: withCurrentAttribution(link.url) });
+    update();
+    window.addEventListener(LANDING_HANDOFF_UPDATED, update);
+    window.addEventListener('consent-choice-changed', update);
+    return () => {
+      window.removeEventListener(LANDING_HANDOFF_UPDATED, update);
+      window.removeEventListener('consent-choice-changed', update);
+    };
   }, []);
 
   return appLink;
@@ -45,7 +42,14 @@ export function useAttributedUrl(url: string): string {
   const [attributedUrl, setAttributedUrl] = useState({ source: url, value: url });
 
   useEffect(() => {
-    setAttributedUrl({ source: url, value: withCurrentAttribution(url) });
+    const update = () => setAttributedUrl({ source: url, value: withCurrentAttribution(url) });
+    update();
+    window.addEventListener(LANDING_HANDOFF_UPDATED, update);
+    window.addEventListener('consent-choice-changed', update);
+    return () => {
+      window.removeEventListener(LANDING_HANDOFF_UPDATED, update);
+      window.removeEventListener('consent-choice-changed', update);
+    };
   }, [url]);
 
   return attributedUrl.source === url ? attributedUrl.value : url;

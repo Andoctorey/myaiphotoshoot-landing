@@ -65,6 +65,9 @@ test('secondary action waits for the current assignment and never reuses a stale
   let stateIndex = 0, effectIndex = 0, clicked = 0;
   const meta = { content: 'original preset banner' };
   const events = [];
+  const window = new EventTarget();
+  window.gtag = (...event) => events.push(event);
+  let handoff = '';
   let preset = { appUrl: 'https://app.myaiphotoshoot.com/#preset/anime', locale: 'en', resolved: false, pending: false, trackClick: () => clicked++ };
   const react = {
     useState(initial) {
@@ -83,14 +86,15 @@ test('secondary action waits for the current assignment and never reuses a stale
   const module = { exports: {} };
   const dependencies = {
     react,
-    '@/lib/analytics': { withCurrentAttribution: url => url },
+    '@/lib/analytics': { withCurrentAttribution: url => handoff ? `${url}&ga_handoff=${handoff}` : url },
+    '@/lib/landing-handoff': { LANDING_HANDOFF_UPDATED: 'landing-handoff-updated' },
     '@/lib/app-links': links,
     './PresetExperiment': { usePresetExperiment: () => preset },
   };
   const run = new Function('module', 'exports', 'require', 'navigator', 'document', 'window', 'console', compiled);
   run(module, module.exports, name => dependencies[name] ?? require(name),
     { userAgent: 'iPhone', maxTouchPoints: 1 }, { querySelector: () => meta },
-    { gtag: (...event) => events.push(event) }, { info() {} });
+    window, { info() {} });
   const render = () => {
     stateIndex = effectIndex = 0;
     return module.exports.default({ presetId: 'preset-id', label: 'Open in app' });
@@ -107,6 +111,13 @@ test('secondary action waits for the current assignment and never reuses a stale
   ready.props.onClick({ preventDefault() { assert.fail('resolved tap should navigate'); } });
   assert.equal(clicked, 1);
   assert.equal(events[0][1], 'preset_app_open_click');
+  handoff = 'consented-handoff';
+  window.dispatchEvent(new Event('landing-handoff-updated'));
+  assert.ok(render().props.href.endsWith('&ga_handoff=consented-handoff'));
+  assert.ok(meta.content.includes('ga_handoff=consented-handoff'));
+  handoff = '';
+  window.dispatchEvent(new Event('consent-choice-changed'));
+  assert.equal(render().props.href.includes('ga_handoff'), false);
   preset = { ...preset, appUrl: 'https://app.myaiphotoshoot.com/#preset/anime' };
   assert.equal(render().props.href, undefined);
   flush();

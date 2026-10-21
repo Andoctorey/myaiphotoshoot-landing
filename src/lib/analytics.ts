@@ -1,3 +1,5 @@
+import { LANDING_HANDOFF_PARAMETER, readLandingHandoff } from './landing-handoff';
+
 // Google Analytics configuration
 export const GA_MEASUREMENT_ID = 'G-0T00P896RF';
 export const TIKTOK_PIXEL_ID = 'D8FEKE3C77U4A83CCF00';
@@ -44,10 +46,14 @@ export const captureCurrentAttribution = (): void => {
   const attribution = new URLSearchParams();
   copyAttributionParameters(current, attribution);
   const serializedAttribution = attribution.toString();
-  if (!serializedAttribution) return;
+  const stored = readStoredAttribution();
+  const storedCampaign = new URLSearchParams();
+  copyAttributionParameters(stored, storedCampaign);
+  if (stored.has('landing_path') && (!serializedAttribution || serializedAttribution === storedCampaign.toString())) return;
+  attribution.set('landing_path', window.location.pathname || '/');
 
   try {
-    window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, serializedAttribution);
+    window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, attribution.toString());
   } catch {}
 };
 
@@ -61,16 +67,33 @@ export const withCurrentAttribution = (destination: string): string => {
     const attribution = readStoredAttribution();
     copyAttributionParameters(current, attribution);
     copyAttributionParameters(attribution, url.searchParams);
+    const firstParty = url.protocol === 'https:' &&
+      ['myaiphotoshoot.com', 'www.myaiphotoshoot.com', 'app.myaiphotoshoot.com'].includes(url.hostname);
+    const handoff = readLandingHandoff();
+    const landingPath = attribution.get('landing_path');
+    if (firstParty) {
+      if (handoff) url.searchParams.set(LANDING_HANDOFF_PARAMETER, handoff);
+      else url.searchParams.delete(LANDING_HANDOFF_PARAMETER);
+      if (landingPath) url.searchParams.set('landing_path', landingPath.slice(0, 200));
+    } else {
+      url.searchParams.delete(LANDING_HANDOFF_PARAMETER);
+      url.searchParams.delete('landing_path');
+    }
     if (url.hostname === 'play.google.com') {
       url.searchParams.delete('referrer');
       const installReferrer = new URLSearchParams();
       // Keep click IDs when long optional campaign tags would otherwise discard the whole referrer.
-      ATTRIBUTION_PARAMETERS.forEach((parameter) => {
-        const value = url.searchParams.get(parameter);
+      const addReferrer = (name: string, value: string | null) => {
         if (!value) return;
-        installReferrer.set(parameter, value);
-        if (installReferrer.toString().length > 512) installReferrer.delete(parameter);
-      });
+        installReferrer.set(name, value);
+        if (installReferrer.toString().length > 512) installReferrer.delete(name);
+      };
+      ATTRIBUTION_PARAMETERS.slice(0, 4).forEach(name => addReferrer(name, url.searchParams.get(name)));
+      if (url.protocol === 'https:' && url.searchParams.get('id') === 'com.myaiphotoshoot') {
+        addReferrer(LANDING_HANDOFF_PARAMETER, handoff);
+      }
+      ATTRIBUTION_PARAMETERS.slice(4).forEach(name => addReferrer(name, url.searchParams.get(name)));
+      addReferrer('landing_path', landingPath);
       const serializedReferrer = installReferrer.toString();
       if (serializedReferrer) {
         url.searchParams.set('referrer', serializedReferrer);

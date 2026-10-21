@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { captureCurrentAttribution } from '@/lib/analytics';
+import { prepareLandingHandoff } from '@/lib/landing-handoff';
 
 const CONSENT_REGION = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'EL', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB'];
 
@@ -57,6 +58,15 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
       script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
       document.head.appendChild(script);
     }
+    const prepareHandoff = () => { void prepareLandingHandoff(measurementId); };
+    const analyticsScript = document.getElementById('google-analytics-script');
+    analyticsScript?.addEventListener('load', prepareHandoff);
+    prepareHandoff();
+    window.addEventListener('consent-choice-changed', prepareHandoff);
+    return () => {
+      analyticsScript?.removeEventListener('load', prepareHandoff);
+      window.removeEventListener('consent-choice-changed', prepareHandoff);
+    };
   }, [measurementId]);
 
   return (
@@ -88,6 +98,7 @@ function GoogleAnalyticsPageViewTracker({ measurementId }: GoogleAnalyticsProps)
       page_path: pagePath,
       page_location: window.location.href,
     });
+    void prepareLandingHandoff(measurementId);
   }, [measurementId, pathname, searchParams]);
 
   return null;

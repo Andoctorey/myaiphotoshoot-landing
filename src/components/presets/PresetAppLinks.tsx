@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { withCurrentAttribution } from '@/lib/analytics';
+import { LANDING_HANDOFF_UPDATED } from '@/lib/landing-handoff';
 import { buildPresetMarketingUrl, buildPresetNativeAppUrl, mobileAppPlatform, presetSmartAppBanner } from '@/lib/app-links';
 import { usePresetExperiment } from './PresetExperiment';
 
@@ -19,13 +20,24 @@ export default function PresetAppLinks({ presetId, label }: { presetId: string; 
 
   useEffect(() => {
     if (!resolved || !appUrl || !locale) { setLink(undefined); return; }
-    setLink({ source: appUrl, url: withCurrentAttribution(buildPresetNativeAppUrl(appUrl, locale)) });
     const meta = document.querySelector<HTMLMetaElement>('meta[name="apple-itunes-app"]');
-    if (!meta) return;
-    const previous = meta.content;
-    const content = presetSmartAppBanner(withCurrentAttribution(buildPresetMarketingUrl(appUrl, locale)));
-    meta.content = content;
-    return () => { if (meta.content === content) meta.content = previous; };
+    const previous = meta?.content;
+    let content: string;
+    const update = () => {
+      setLink({ source: appUrl, url: withCurrentAttribution(buildPresetNativeAppUrl(appUrl, locale)) });
+      if (meta) {
+        content = presetSmartAppBanner(withCurrentAttribution(buildPresetMarketingUrl(appUrl, locale)));
+        meta.content = content;
+      }
+    };
+    update();
+    window.addEventListener(LANDING_HANDOFF_UPDATED, update);
+    window.addEventListener('consent-choice-changed', update);
+    return () => {
+      window.removeEventListener(LANDING_HANDOFF_UPDATED, update);
+      window.removeEventListener('consent-choice-changed', update);
+      if (meta && previous !== undefined && meta.content === content) meta.content = previous;
+    };
   }, [appUrl, locale, resolved]);
 
   if (!platform) return null;
