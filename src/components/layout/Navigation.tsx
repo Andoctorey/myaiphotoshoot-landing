@@ -6,7 +6,6 @@ import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/request';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { localePath } from '@/lib/seo';
-import { trackEventAndNavigate } from '@/lib/analytics';
 import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
 import type { NavigationUseCase } from '@/lib/navigationUseCases';
 
@@ -269,13 +268,7 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aria-busy:cursor-wait aria-busy:opacity-60 px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
-                onClick={(e) => {
-                  if (appLink.pending) { e.preventDefault(); return; }
-                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-                  e.preventDefault();
-                  appLink.trackClick?.();
-                  trackEventAndNavigate(appLink.event, appLink.url);
-                }}
+                onClick={appLink.onClick}
               >
                 {t('download')}
               </a>
@@ -443,12 +436,8 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 rel="noopener noreferrer"
                 className="aria-busy:cursor-wait aria-busy:opacity-60 block px-3 py-2 mt-2 rounded-md text-base font-medium text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                 onClick={(e) => {
-                  if (appLink.pending) { e.preventDefault(); return; }
-                  handleNavLinkClick();
-                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-                  e.preventDefault();
-                  appLink.trackClick?.();
-                  trackEventAndNavigate(appLink.event, appLink.url);
+                  if (!appLink.pending) handleNavLinkClick();
+                  appLink.onClick(e);
                 }}
               >
                 {t('download')}

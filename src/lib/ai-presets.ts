@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { presetSmartAppBanner } from './app-links';
+import { smartAppBanner } from './app-links';
 import { defaultLocale, locales } from '@/i18n/request';
 import {
   AI_PRESET_REVALIDATE_SECONDS,
@@ -549,7 +549,7 @@ export async function generateAiPresetMetadata(slug: string, locale: string): Pr
   return {
     title: { absolute: title },
     description,
-    other: { 'apple-itunes-app': presetSmartAppBanner(url) },
+    other: { 'apple-itunes-app': smartAppBanner(url) },
     alternates: buildAlternates(locale, `/presets/${slug}/`, locales),
     robots: {
       index: true,

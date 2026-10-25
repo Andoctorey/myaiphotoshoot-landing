@@ -24,6 +24,55 @@ test('mask native and web actions keep the same selected mask and preview gender
   }
 });
 
+test('initial mask page metadata supplies a contextual banner before client effects run', async () => {
+  const require = createRequire(import.meta.url);
+  const catalog = {
+    categories: [{ id: 'hair', audienceGender: 'unisex', hiddenOnIos: false }],
+    masks: [{ categoryId: 'other', id: 'not-selected' }, { categoryId: 'hair', id: mask }],
+  };
+  const dependencies = {
+    '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'ja'] },
+    '@/lib/app-links': links,
+    '@/lib/ai-masks': { fetchMasksCatalogStrict: async () => catalog },
+    '@/lib/ai-mask-landing-validation': { normalizePublishedMaskCategoryLandings: rows => rows },
+    '@/lib/public-supabase': { postPublicSupabaseRpc: async () => Response.json([
+      { categoryId: 'hair', locale: 'ja', slug: 'hair', title: 'Hair', description: 'Hair styles', introduction: 'Preview hair styles' },
+    ]) },
+    'next-intl/server': { getTranslations: async () => key => key },
+    '@/components/masks/AiMasksCatalog': { default: () => null },
+  };
+  const load = async file => {
+    const module = { exports: {} };
+    const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    new Function('module', 'exports', 'require', compile(source))(
+      module, module.exports, name => dependencies[name] ?? require(name),
+    );
+    return module.exports;
+  };
+  dependencies['@/lib/seo'] = await load('src/lib/seo.ts');
+  const landings = await load('src/lib/ai-mask-landings.ts');
+  dependencies['@/lib/ai-mask-landings'] = landings;
+  const argument = metadata => new URL(metadata.other['apple-itunes-app'].split('app-argument=')[1]);
+  for (const audienceGender of ['unisex', 'female', 'male']) {
+    catalog.categories[0].audienceGender = audienceGender;
+    const target = argument(await landings.generateMaskCategoryLandingMetadata('hair', 'ja'));
+    assert.equal(target.pathname, `/open/mask/${mask}/`);
+    assert.equal(target.searchParams.get('gender'), audienceGender === 'male' ? 'male' : 'female');
+    assert.equal(target.searchParams.get('locale'), 'ja');
+  }
+  catalog.categories[0].hiddenOnIos = true;
+  const unavailable = argument(await landings.generateMaskCategoryLandingMetadata('hair', 'ja'));
+  assert.equal(unavailable.pathname, '/open/mask/all/');
+  assert.equal(unavailable.searchParams.has('gender'), false);
+  for (const [file, locale] of [['src/app/masks/page.tsx', 'en'], ['src/app/[locale]/masks/page.tsx', 'ja']]) {
+    const route = await load(file);
+    const target = argument(await route.generateMetadata({ params: Promise.resolve({ locale }) }));
+    assert.equal(target.pathname, '/open/mask/all/');
+    assert.equal(target.searchParams.has('gender'), false);
+    assert.equal(target.searchParams.get('locale'), locale);
+  }
+});
+
 async function componentHarness(userAgent, maxTouchPoints = 1) {
   const require = createRequire(import.meta.url);
   const states = [], effects = [], scheduled = [], events = [];
@@ -43,6 +92,7 @@ async function componentHarness(userAgent, maxTouchPoints = 1) {
   };
   const dependencies = {
     react,
+    '@/components/ui/PlatformIcons': { StoreIcon: () => null },
     '@/lib/app-links': links,
     '@/components/layout/AndroidInstallLink': { useAndroidInstallLink: () => ({ pending: false }) },
     '@/lib/landing-handoff': { LANDING_HANDOFF_UPDATED: 'landing-handoff-updated' },
@@ -86,7 +136,12 @@ test('changing a selected mask or gender never navigates to the preceding select
   const destination = new URL(nativeDestination(next.props.href));
   assert.equal(destination.pathname, `/open/mask/${nextMask}/`);
   assert.equal(destination.searchParams.get('gender'), 'female');
-  assert.equal(decodeURIComponent(next.props.href.split('S.browser_fallback_url=')[1].split(';end')[0]), destination.href);
+  const play = new URL(decodeURIComponent(next.props.href.split('S.browser_fallback_url=')[1].split(';end')[0]));
+  const installSelection = new URLSearchParams(play.searchParams.get('referrer'));
+  assert.equal(play.hostname, 'play.google.com');
+  assert.equal(installSelection.get('mask'), nextMask);
+  assert.equal(installSelection.get('gender'), 'female');
+  assert.equal(next.props.target, '_blank');
   assert.equal(next.props['aria-label'], 'Open in app: Smile');
   page.flush();
   page.render({ maskId: nextMask, gender: 'female' }).props.onClick();
@@ -108,6 +163,7 @@ test('native actions respect iOS-only restrictions while web mask cards remain a
   const ios = await componentHarness('Mozilla iPhone Safari');
   ios.render(); ios.flush();
   assert.equal(ios.render().props.href.startsWith('https://app.myaiphotoshoot.com/open/mask/'), true);
+  assert.equal(ios.render().props.target, undefined);
 });
 
 test('every landing locale translates the mask action', async () => {

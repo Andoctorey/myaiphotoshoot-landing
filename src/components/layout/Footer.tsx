@@ -3,7 +3,6 @@
 import { useTranslations } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { trackEventAndNavigate } from '@/lib/analytics';
 import { locales } from '@/i18n/request';
 import { localePath } from '@/lib/seo';
 import { usePlatformAppLink } from '@/hooks/usePlatformAppLink';
@@ -35,13 +34,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={tBlog('cta.button')}
-              onClick={(e) => {
-                if (appLink.pending) { e.preventDefault(); return; }
-                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-                e.preventDefault();
-                appLink.trackClick?.();
-                trackEventAndNavigate(appLink.event, appLink.url);
-              }}
+              onClick={appLink.onClick}
             >
               <span>{tBlog('cta.button')}</span>
               <svg

@@ -13,7 +13,7 @@ import ConsentBanner from "@/components/ConsentBanner";
 import { env } from "@/lib/env";
 import { serializeJsonLd } from "@/lib/json-ld";
 import { BASE_URL, HOME_METADATA_DEFAULTS } from "@/lib/seo";
-import { presetSmartAppBanner } from "@/lib/app-links";
+import { smartAppBanner } from "@/lib/app-links";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -30,7 +30,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  other: { 'apple-itunes-app': presetSmartAppBanner(BASE_URL) },
+  other: { 'apple-itunes-app': smartAppBanner(BASE_URL) },
   metadataBase: new URL(BASE_URL),
   title: {
     default: HOME_METADATA_DEFAULTS.title,

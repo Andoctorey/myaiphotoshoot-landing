@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useRef, useState, type AnchorHTMLAttributes, type ReactNode } from 'react';
 import Image, { type ImageProps } from 'next/image';
-import { formatCredits } from '@/lib/pricing';
 import {
   clearPresetAssignments,
   readPresetAssignment,
@@ -11,7 +10,7 @@ import {
   type PresetAssignment,
 } from '@/lib/preset-assignments';
 
-type ExperimentContext = { appUrl: string; image: string; alt: string; credits: number | null; locale: string; pending: boolean; resolved: boolean; trackClick: () => void };
+type ExperimentContext = { appUrl: string; image: string; alt: string; locale: string; pending: boolean; resolved: boolean; trackClick: () => void };
 const Context = createContext<ExperimentContext | null>(null);
 
 export function usePresetExperiment() {
@@ -30,8 +29,8 @@ async function recordEvent(assignmentId: string, event: 'exposure' | 'click') {
   } catch (error) { console.warn('Preset experiment event was not recorded', { event, error }); }
 }
 
-export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits, locale, children }: {
-  presetId: string; appUrl: string; image: string; alt: string; credits: number | null; locale: string; children: ReactNode;
+export function PresetExperimentProvider({ presetId, appUrl, image, alt, locale, children }: {
+  presetId: string; appUrl: string; image: string; alt: string; locale: string; children: ReactNode;
 }) {
   const [assignment, setAssignment] = useState<PresetAssignment | null>(null);
   const [pending, setPending] = useState(false);
@@ -88,7 +87,6 @@ export function PresetExperimentProvider({ presetId, appUrl, image, alt, credits
     appUrl: assignment ? `${appUrl}~${assignment.assignment_id}` : appUrl,
     image: assignment?.featured_graphics || image,
     alt: assignment?.featured_graphics_alt || alt,
-    credits: assignment?.cost_credits ?? credits,
     locale,
     pending,
     resolved,
@@ -169,16 +167,5 @@ function AssignedPresetImage({ resolved, ...props }: ImageProps & { resolved: bo
         }}
       />
     </>
-  );
-}
-
-export function PresetExperimentPrice() {
-  const context = useContext(Context);
-  if (!context?.credits) return null;
-  return (
-    <span className={`preset-experiment-price inline-flex gap-2${context.resolved ? '' : ' invisible'}`}>
-      <span aria-hidden="true">·</span>
-      <span className="tabular-nums">{formatCredits(context.credits, context.locale)}</span>
-    </span>
   );
 }

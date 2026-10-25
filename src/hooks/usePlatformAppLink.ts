@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { withCurrentAttribution } from '@/lib/analytics';
+import { useEffect, useState, type MouseEventHandler } from 'react';
+import { trackEventAndNavigate, withCurrentAttribution } from '@/lib/analytics';
 import { LANDING_HANDOFF_UPDATED } from '@/lib/landing-handoff';
 import { APP_STORE_URL, GOOGLE_PLAY_URL, mobileAppPlatform, WEB_APP_IDEAS_URL } from '@/lib/app-links';
 import { useAndroidInstallLink } from '@/components/layout/AndroidInstallLink';
@@ -18,7 +18,7 @@ const WEB_APP_LINK: PlatformAppLink = {
   url: WEB_APP_IDEAS_URL,
 };
 
-export function usePlatformAppLink(): PlatformAppLink {
+export function usePlatformAppLink(): PlatformAppLink & { onClick: MouseEventHandler<HTMLAnchorElement> } {
   const [platform, setPlatform] = useState<'ios' | 'android' | null>(null);
   const selection = useAndroidInstallLink();
 
@@ -32,7 +32,19 @@ export function usePlatformAppLink(): PlatformAppLink {
       ? { event: 'google_play_cta_click', url: selection.url ?? GOOGLE_PLAY_URL, pending: selection.pending, trackClick: selection.trackClick }
       : WEB_APP_LINK;
   const url = useAttributedUrl(link.url);
-  return { ...link, url };
+  const onClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (link.pending) { event.preventDefault(); return; }
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    link.trackClick?.();
+    if (platform === 'android' || platform === 'ios') {
+      // Keep the browser's new-tab navigation on the original tap; analytics must not delay it.
+      window.gtag?.('event', link.event, { transport_type: 'beacon' });
+      return;
+    }
+    event.preventDefault();
+    trackEventAndNavigate(link.event, url);
+  };
+  return { ...link, url, onClick };
 }
 
 export function useAttributedUrl(url: string): string {

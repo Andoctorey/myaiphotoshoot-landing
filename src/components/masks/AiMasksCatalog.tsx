@@ -4,6 +4,7 @@ import MasksCatalogBrowser, {
   type MasksCatalogLabels,
 } from '@/components/masks/MasksCatalogBrowser';
 import MaskAppLink from '@/components/masks/MaskAppLink';
+import { WebIcon } from '@/components/ui/PlatformIcons';
 import { AI_MASKS_APP_URL, buildMaskAppUrl } from '@/lib/app-links';
 import { canonicalUrl, localePath } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/json-ld';
@@ -124,8 +125,9 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
               href={AI_MASKS_APP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
             >
+              <WebIcon />
               {t('tryMasks')}
             </a>
           </div>

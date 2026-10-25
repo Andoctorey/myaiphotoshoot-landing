@@ -13,15 +13,23 @@ const links = context.exports;
 const assignment = '12345678-1234-4123-8123-123456789abc';
 const nativeDestination = href => href.startsWith('intent:') ? href.split('#Intent;')[0].replace('intent:', 'https:') : href;
 
-test('Android explicitly targets the app with the original attributed URL as browser fallback', () => {
+test('Android opens the app or goes straight to Play with the assigned preset and attribution', () => {
   const native = `https://app.myaiphotoshoot.com/open/preset/anime~${assignment}/?locale=ja&gclid=CaseSensitive&ga_handoff=consented-handoff`;
-  const intent = links.buildNativeAppOpenUrl(native, 'android');
+  const play = new URL(links.buildPresetGooglePlayUrl(`https://app.myaiphotoshoot.com/#preset/anime~${assignment}`));
+  const referrer = new URLSearchParams(play.searchParams.get('referrer'));
+  referrer.set('gclid', 'CaseSensitive');
+  referrer.set('ga_handoff', 'consented-handoff');
+  play.searchParams.set('referrer', referrer.toString());
+  const intent = links.buildNativeAppOpenUrl(native, 'android', play.href);
   assert.equal(nativeDestination(intent), native);
   assert.ok(intent.includes('#Intent;scheme=https;package=com.myaiphotoshoot;'));
-  assert.equal(decodeURIComponent(intent.split('S.browser_fallback_url=')[1].split(';end')[0]), native);
-  assert.equal(links.buildNativeAppOpenUrl(native, 'ios'), native);
+  assert.equal(decodeURIComponent(intent.split('S.browser_fallback_url=')[1].split(';end')[0]), play.href);
+  assert.equal(links.buildNativeAppOpenUrl(native, 'ios', play.href), native);
   for (const invalid of ['https://example.com/open/preset/anime/', 'https://app.myaiphotoshoot.com/#preset/anime']) {
-    assert.throws(() => links.buildNativeAppOpenUrl(invalid, 'android'));
+    assert.throws(() => links.buildNativeAppOpenUrl(invalid, 'android', play.href));
+  }
+  for (const invalid of ['https://example.com/', 'https://play.google.com/store/apps/details?id=another.app']) {
+    assert.throws(() => links.buildNativeAppOpenUrl(native, 'android', invalid));
   }
 });
 
@@ -43,7 +51,7 @@ test('native and banner links preserve the assigned preset without changing the 
   assert.equal(links.buildPresetNativeAppUrl(web, 'ja'), `https://app.myaiphotoshoot.com/open/preset/anime~${assignment}/?locale=ja`);
   assert.equal(links.buildPresetMarketingUrl(web, 'ja'), `https://myaiphotoshoot.com/ja/presets/anime/?assignment_id=${assignment}`);
   assert.equal(links.buildPresetMarketingUrl('https://app.myaiphotoshoot.com/#preset/anime', 'en'), 'https://myaiphotoshoot.com/presets/anime/');
-  assert.equal(links.presetSmartAppBanner('https://myaiphotoshoot.com/presets/anime/'), 'app-id=6744860178, app-argument=https://myaiphotoshoot.com/presets/anime/');
+  assert.equal(links.smartAppBanner('https://myaiphotoshoot.com/presets/anime/'), 'app-id=6744860178, app-argument=https://myaiphotoshoot.com/presets/anime/');
 });
 
 test('only actual preset links can become app-opening links', () => {
@@ -72,8 +80,6 @@ test('every landing locale includes the secondary action', async () => {
 
 for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for the current assignment and never reuses a stale link on ${userAgent}`, async () => {
   const require = createRequire(import.meta.url);
-  const source = await readFile(new URL('../src/components/presets/PresetAppLinks.tsx', import.meta.url), 'utf8');
-  const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const states = [], effects = [], scheduled = [];
   let stateIndex = 0, effectIndex = 0, clicked = 0;
   const meta = { content: 'original preset banner' };
@@ -97,24 +103,33 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
       });
     },
   };
-  const module = { exports: {} };
   const ButtonSpinner = () => null;
+  const StoreIcon = () => null;
   const dependencies = {
     react,
     '@/components/ui/LoadingSpinner': { ButtonSpinner },
+    '@/components/ui/PlatformIcons': { StoreIcon },
     '@/components/layout/AndroidInstallLink': { usePageAndroidInstallLink: (pathname, url, pending, trackClick) => { installTarget = { pathname, url, pending, trackClick }; } },
     '@/lib/analytics': { withCurrentAttribution: url => handoff ? `${url}&ga_handoff=${handoff}` : url },
     '@/lib/landing-handoff': { LANDING_HANDOFF_UPDATED: 'landing-handoff-updated' },
     '@/lib/app-links': links,
     './PresetExperiment': { usePresetExperiment: () => preset },
   };
-  const run = new Function('module', 'exports', 'require', 'navigator', 'document', 'window', 'console', compiled);
-  run(module, module.exports, name => dependencies[name] ?? require(name),
-    { userAgent, maxTouchPoints: 1 }, { querySelector: () => meta },
-    window, { info() {} });
+  const load = async file => {
+    const module = { exports: {} };
+    const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+    new Function('module', 'exports', 'require', 'navigator', 'document', 'window', 'console', compiled)(
+      module, module.exports, name => dependencies[name] ?? require(name),
+      { userAgent, maxTouchPoints: 1 }, { querySelector: () => meta }, window, { info() {} },
+    );
+    return module.exports;
+  };
+  dependencies['@/hooks/useSmartAppBanner'] = await load('src/hooks/useSmartAppBanner.ts');
+  const component = (await load('src/components/presets/PresetAppLinks.tsx')).default;
   const render = () => {
     stateIndex = effectIndex = 0;
-    return module.exports.default({ presetId: 'preset-id', label: 'Open in app', pagePath: '/presets/anime/' });
+    return component({ presetId: 'preset-id', label: 'Open in app', pagePath: '/presets/anime/' });
   };
   const flush = () => { while (scheduled.length) scheduled.shift()(); };
   assert.equal(render(), null);
@@ -123,6 +138,7 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   assert.equal(waiting.props.href, undefined);
   assert.equal(waiting.props['aria-busy'], true);
   assert.equal(installTarget.pending, true);
+  assert.equal(meta.content, 'original preset banner');
   assert.equal(waiting.props.children[0].type, ButtonSpinner);
   let blocked = false;
   waiting.props.onClick({ preventDefault() { blocked = true; } });
@@ -132,13 +148,20 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   render(); flush();
   const ready = render();
   assert.equal(ready.props['aria-busy'], undefined);
-  assert.equal(ready.props.children[0], null);
+  assert.equal(ready.props.children[0].type, StoreIcon);
+  assert.equal(ready.props.children[0].props.platform, userAgent.includes('Android') ? 'android' : 'ios');
   assert.equal(installTarget.pending, false);
   assert.equal(installTarget.pathname, '/presets/anime/');
   assert.equal(new URLSearchParams(new URL(installTarget.url).searchParams.get('referrer')).get('preset'), `anime~${assignment}`);
   assert.equal(installTarget.trackClick, preset.trackClick);
   assert.equal(nativeDestination(ready.props.href), `https://app.myaiphotoshoot.com/open/preset/anime~${assignment}/?locale=en`);
   assert.equal(ready.props.href.startsWith('intent:'), userAgent.includes('Android'));
+  assert.equal(ready.props.target, userAgent.includes('Android') ? '_blank' : undefined);
+  if (userAgent.includes('Android')) {
+    const play = new URL(decodeURIComponent(ready.props.href.split('S.browser_fallback_url=')[1].split(';end')[0]));
+    assert.equal(play.hostname, 'play.google.com');
+    assert.equal(new URLSearchParams(play.searchParams.get('referrer')).get('preset'), `anime~${assignment}`);
+  }
   assert.ok(meta.content.includes(`assignment_id=${assignment}`));
   ready.props.onClick({ preventDefault() { assert.fail('resolved tap should navigate'); } });
   assert.equal(clicked, 1);
@@ -158,5 +181,15 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   assert.equal(new URLSearchParams(new URL(installTarget.url).searchParams.get('referrer')).get('preset'), 'anime');
   flush();
   assert.equal(nativeDestination(render().props.href), 'https://app.myaiphotoshoot.com/open/preset/anime/?locale=en');
+  assert.equal(meta.content.includes('assignment_id='), false);
+  preset = { ...preset, locale: 'ja' };
+  assert.equal(render().props.href, undefined, 'locale changes must not reuse the previous native link');
+  flush();
+  assert.equal(new URL(nativeDestination(render().props.href)).searchParams.get('locale'), 'ja');
+  assert.ok(meta.content.includes('https://myaiphotoshoot.com/ja/presets/anime/'));
+  preset = { ...preset, resolved: false, pending: true };
+  assert.equal(render().props.href, undefined);
+  flush();
+  assert.equal(meta.content, 'original preset banner');
   for (const effect of effects) effect.cleanup?.();
 });

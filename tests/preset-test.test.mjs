@@ -286,7 +286,7 @@ test('preset pages use middleware while SEO identity stays in the static page', 
   const page = await readFile(new URL('../src/components/presets/AiPresetPage.tsx', import.meta.url), 'utf8');
   assert.equal(page.match(/<PresetExperimentLink\b/g)?.length, 3);
   assert.match(page, /<PresetExperimentImage\b/);
-  assert.equal(page.match(/<PresetExperimentPrice\b/g)?.length, 2);
+  assert.doesNotMatch(page, /PresetExperimentPrice/);
   assert.match(page, /<noscript>\s*<style>/);
   assert.match(page, /data-preset-test-id=\{preset.id\}/);
 });
@@ -360,11 +360,8 @@ async function loadClientModule(react = React) {
   const assignments = { exports: {} };
   const assignmentSource = await readFile(new URL('../src/lib/preset-assignments.ts', import.meta.url), 'utf8');
   new Function('module', 'exports', ts.transpileModule(assignmentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText)(assignments, assignments.exports);
-  const pricing = { exports: {} };
-  const pricingSource = await readFile(new URL('../src/lib/pricing.ts', import.meta.url), 'utf8');
-  new Function('module', 'exports', ts.transpileModule(pricingSource, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(pricing, pricing.exports);
   const image = ({ src, alt, width, height, className }) => React.createElement('img', { src, alt, width, height, className });
-  new Function('require', 'module', 'exports', outputText)((name) => name === 'next/image' ? { default: image } : name === 'react' ? react : name === '@/lib/pricing' ? pricing.exports : name === '@/lib/preset-assignments' ? assignments.exports : require(name), compiled, compiled.exports);
+  new Function('require', 'module', 'exports', outputText)((name) => name === 'next/image' ? { default: image } : name === 'react' ? react : name === '@/lib/preset-assignments' ? assignments.exports : require(name), compiled, compiled.exports);
   return { ...compiled.exports, ...assignments.exports };
 }
 
@@ -397,18 +394,17 @@ test('client reads the edge preview from template content', async (t) => {
 });
 
 test('static rendering retains the original image, alt text and canonical app link', async () => {
-  const { PresetExperimentProvider, PresetExperimentLink, PresetExperimentImage, PresetExperimentPrice } = await loadClientModule();
+  const { PresetExperimentProvider, PresetExperimentLink, PresetExperimentImage } = await loadClientModule();
   const markup = renderToStaticMarkup(React.createElement(PresetExperimentProvider, {
-    presetId, appUrl: 'https://app.example/#preset/portrait', image: 'https://example.com/main.jpg', alt: 'Original preview', credits: 9, locale: 'en',
-  }, React.createElement(PresetExperimentLink, {}, React.createElement(PresetExperimentImage, { fill: true, className: 'object-contain' }), React.createElement(PresetExperimentPrice))));
+    presetId, appUrl: 'https://app.example/#preset/portrait', image: 'https://example.com/main.jpg', alt: 'Original preview', locale: 'en',
+  }, React.createElement(PresetExperimentLink, {}, React.createElement(PresetExperimentImage, { fill: true, className: 'object-contain' }))));
   assert.match(markup, /href="https:\/\/app.example\/#preset\/portrait"/);
   assert.match(markup, /src="https:\/\/example.com\/main.jpg"/);
   assert.match(markup, /alt="Original preview"/);
   assert.match(markup, /preset-experiment-image-placeholder/);
   assert.match(markup, /viewBox="0 0 1024 1024"/);
   assert.match(markup, /preset-experiment-image invisible/);
-  assert.match(markup, /preset-experiment-price inline-flex gap-2 invisible/);
-  assert.match(markup, /9 CR/);
+  assert.doesNotMatch(markup, /preset-experiment-price|\bCR\b/);
   assert.doesNotMatch(markup, /~[a-f\d-]{36}/);
 });
 
@@ -505,7 +501,7 @@ async function clientHarness(t) {
     dispose: () => { for (const effect of effects) effect.cleanup?.(); },
     render() {
       stateIndex = effectIndex = 0;
-      context = client.PresetExperimentProvider({ presetId, appUrl: 'https://app.example/#preset/portrait', image: 'https://example.com/main.jpg', alt: 'Main preview', credits: 9, locale: 'en', children: null }).props.value;
+      context = client.PresetExperimentProvider({ presetId, appUrl: 'https://app.example/#preset/portrait', image: 'https://example.com/main.jpg', alt: 'Main preview', locale: 'en', children: null }).props.value;
       while (scheduled.length) scheduled.shift()();
       return context;
     },
@@ -519,7 +515,6 @@ async function clientHarness(t) {
       return element.type(element.props);
     },
     link: () => client.PresetExperimentLink({ children: 'Open app' }),
-    price: () => renderToStaticMarkup(client.PresetExperimentPrice()),
     expire: () => { for (const callback of timers.values()) callback(); },
     consent(value) { choice = value; window.dispatchEvent(new Event('consent-choice-changed')); },
   };
@@ -705,7 +700,6 @@ test('assignment and app links activate without waiting for image loading', asyn
   assert.equal(context.resolved, true);
   assert.equal(context.image, assignment.featured_graphics);
   assert.equal(context.alt, assignment.featured_graphics_alt);
-  assert.equal(context.credits, 19);
   const loadingImage = client.image().props.children[1];
   assert.equal(loadingImage.props.src, assignment.featured_graphics);
   assert.match(loadingImage.props.className, /invisible/, 'a loaded main image cannot appear while B loads');
@@ -715,7 +709,6 @@ test('assignment and app links activate without waiting for image loading', asyn
   assert.equal(shownImage.props.style.clipPath, 'inset(0px 259px round 28px)');
   initialImage.props.onLoad(imageLoadEvent);
   assert.doesNotMatch(client.image().props.children[1].props.className, /invisible/, 'a late A load cannot hide B');
-  assert.match(client.price(), /19 CR/);
   const link = client.link();
   assert.equal(link.props.href, `https://app.example/#preset/portrait~${assignment.assignment_id}`);
   link.props.onClick({ defaultPrevented: false });
@@ -738,7 +731,6 @@ test('no experiment, backend failure and timeouts restore usable canonical links
     await settle();
     assert.equal(client.render().pending, false);
     assert.equal(client.render().resolved, true);
-    assert.match(client.price(), /9 CR/);
     assert.equal(client.link().props.href, 'https://app.example/#preset/portrait');
   });
 });
@@ -756,11 +748,10 @@ test('consent withdrawal cancels pending assignment and ignores its delayed resp
   resolveAssignment(Response.json(assignment));
   await settle();
   assert.equal(client.render().image, 'https://example.com/main.jpg');
-  assert.match(client.price(), /9 CR/);
   assert.equal(client.link().props.href, 'https://app.example/#preset/portrait');
 });
 
-test('legacy assignment responses keep the canonical price', async (t) => {
+test('legacy assignment responses keep their assigned preview and app link', async (t) => {
   const legacyAssignment = { ...assignment };
   delete legacyAssignment.cost_credits;
   t.mock.method(globalThis, 'fetch', async (_url, init) => Response.json(init.method === 'POST' ? { ok: true } : legacyAssignment));
@@ -768,9 +759,8 @@ test('legacy assignment responses keep the canonical price', async (t) => {
   client.render();
   await settle();
   const context = client.render();
-  assert.equal(context.credits, 9);
   assert.equal(context.image, assignment.featured_graphics);
-  assert.match(client.price(), /9 CR/);
+  assert.equal(context.appUrl, `https://app.example/#preset/portrait~${assignment.assignment_id}`);
 });
 
 test('invalid experiment prices do not activate a mismatched app link', async (t) => {
@@ -780,7 +770,7 @@ test('invalid experiment prices do not activate a mismatched app link', async (t
     const client = await clientHarness(t);
     client.render();
     await settle();
-    assert.equal(client.render().credits, 9);
+    assert.equal(client.render().resolved, true);
     assert.equal(client.link().props.href, 'https://app.example/#preset/portrait');
   });
 });

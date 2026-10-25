@@ -77,14 +77,19 @@ export function buildPresetNativeAppUrl(webAppUrl: string, locale: string): stri
   return url.toString();
 }
 
-export function buildNativeAppOpenUrl(nativeAppUrl: string, platform: 'ios' | 'android' | null): string {
+export function buildNativeAppOpenUrl(nativeAppUrl: string, platform: 'ios' | 'android' | null, googlePlayUrl: string): string {
   if (platform !== 'android') return nativeAppUrl;
   const url = new URL(nativeAppUrl);
   if (url.origin !== WEB_APP_URL || !/^\/open\/(preset|mask)\/[^/]+\/$/.test(url.pathname) || url.hash) {
     throw new Error('Expected a native app URL');
   }
-  // An explicit package lets Chrome open the installed app directly from the tap.
-  return `intent://${url.host}${url.pathname}${url.search}#Intent;scheme=https;package=com.myaiphotoshoot;S.browser_fallback_url=${encodeURIComponent(url.href)};end`;
+  const fallback = new URL(googlePlayUrl);
+  if (fallback.origin !== 'https://play.google.com' || fallback.pathname !== '/store/apps/details' ||
+      fallback.searchParams.getAll('id').length !== 1 || fallback.searchParams.get('id') !== 'com.myaiphotoshoot') {
+    throw new Error('Expected the app Google Play URL');
+  }
+  // Launch the app on the tap, or go straight to Play without loading our fallback page.
+  return `intent://${url.host}${url.pathname}${url.search}#Intent;scheme=https;package=com.myaiphotoshoot;S.browser_fallback_url=${encodeURIComponent(fallback.href)};end`;
 }
 
 export function buildPresetMarketingUrl(webAppUrl: string, locale: string): string {
@@ -95,7 +100,7 @@ export function buildPresetMarketingUrl(webAppUrl: string, locale: string): stri
   return url.toString();
 }
 
-export function presetSmartAppBanner(url: string): string {
+export function smartAppBanner(url: string): string {
   return `app-id=${APP_STORE_ID}, app-argument=${url}`;
 }
 

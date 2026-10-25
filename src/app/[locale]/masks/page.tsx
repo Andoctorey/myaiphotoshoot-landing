@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import AiMasksCatalog from '@/components/masks/AiMasksCatalog';
 import { locales } from '@/i18n/request';
 import { fetchMasksCatalogStrict } from '@/lib/ai-masks';
+import { buildMaskNativeAppUrl, smartAppBanner } from '@/lib/app-links';
 import { fetchPublishedMaskCategoryLandings } from '@/lib/ai-mask-landings';
 import {
   buildAlternates,
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: { absolute: title },
     description,
+    other: { 'apple-itunes-app': smartAppBanner(buildMaskNativeAppUrl(undefined, locale)) },
     alternates: buildAlternates(locale, '/masks/', locales),
     robots: {
       index: true,

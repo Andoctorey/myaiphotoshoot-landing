@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { trackEventAndNavigate } from '@/lib/analytics';
 import { APP_STORE_URL, GOOGLE_PLAY_URL, WEB_APP_IDEAS_URL } from '@/lib/app-links';
 import { useAttributedUrl } from '@/hooks/usePlatformAppLink';
+import { WebIcon } from '@/components/ui/PlatformIcons';
 
 type Props = {
   webAppLabel: string;
@@ -44,10 +45,7 @@ export default function PlatformButtons({
           trackEventAndNavigate('webapp_cta_click', attributedWebAppUrl, analyticsParams);
         }}
       >
-        <svg className="h-8 w-8 shrink-0 ltr:mr-2.5 rtl:ml-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="10" strokeWidth={1.8} />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M2 12h20M12 2c2.5 2.73 3.9 6.23 3.9 10S14.5 19.27 12 22M12 2C9.5 4.73 8.1 8.23 8.1 12s1.4 7.27 3.9 10" />
-        </svg>
+        <WebIcon className="h-8 w-8 shrink-0 ltr:mr-2.5 rtl:ml-2.5" />
         <span className="flex min-w-0 flex-1 flex-col items-start text-start leading-none">
           <span className="whitespace-nowrap text-[clamp(8px,2.4vw,10px)] font-normal leading-none">{webAppEyebrow}</span>
           <span className="mt-1 whitespace-nowrap text-[clamp(14px,4.5vw,18px)] font-medium leading-none tracking-[-0.025em]">{webAppTitle}</span>

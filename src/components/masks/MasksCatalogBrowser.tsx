@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
 import MaskAppLink from '@/components/masks/MaskAppLink';
-import { AI_MASKS_APP_URL, buildMaskAppUrl, buildMaskGooglePlayUrl } from '@/lib/app-links';
+import { WebIcon } from '@/components/ui/PlatformIcons';
+import { AI_MASKS_APP_URL, buildMaskAppUrl, buildMaskGooglePlayUrl, buildMaskNativeAppUrl } from '@/lib/app-links';
 import { usePageAndroidInstallLink } from '@/components/layout/AndroidInstallLink';
+import { useSmartAppBanner } from '@/hooks/useSmartAppBanner';
 import { localePath } from '@/lib/seo';
 import type {
   AiMask,
@@ -72,6 +74,7 @@ export default function MasksCatalogBrowser({
   publishedCategoryIds = [],
 }: Props) {
   usePageAndroidInstallLink(localePath(locale, '/masks/'), buildMaskGooglePlayUrl());
+  useSmartAppBanner(buildMaskNativeAppUrl(undefined, locale));
   const [gender, setGender] = useState<PreviewGender>('female');
   const publishedCategoryIdSet = useMemo(
     () => new Set(publishedCategoryIds),
@@ -288,8 +291,9 @@ export default function MasksCatalogBrowser({
             href={AI_MASKS_APP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           >
+            <WebIcon />
             {labels.tryMasks}
           </a>
         </div>

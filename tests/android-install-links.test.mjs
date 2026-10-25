@@ -10,20 +10,31 @@ const mask = '87654321-4321-4321-8321-cba987654321';
 const nextMask = '12345678-1234-4123-8123-123456789abc';
 const referrer = url => new URLSearchParams(new URL(url).searchParams.get('referrer'));
 
-function pageHarness(userAgent = 'Android Chrome') {
+function click(link, modifiers = {}) {
+  let prevented = false;
+  link.onClick({ button: 0, ...modifiers, preventDefault() { prevented = true; } });
+  return prevented;
+}
+
+function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
   const require = createRequire(import.meta.url);
   const contexts = new Map(), frames = new Map(), modules = new Map(), scheduled = [];
   let pathname = '/presets/anime/', frame;
   const storage = new Map();
+  const events = [], timers = [];
+  const meta = { content: 'original page banner' };
+  const document = { querySelector: () => meta, getElementById: () => null };
   const window = Object.assign(new EventTarget(), {
-    navigator: { userAgent, maxTouchPoints: 1 },
-    location: { pathname, origin: 'https://myaiphotoshoot.com', search: '?gclid=click&email=private' },
+    navigator: { userAgent, maxTouchPoints },
+    location: { pathname, href: 'https://myaiphotoshoot.com/presets/anime/', origin: 'https://myaiphotoshoot.com', search: '?gclid=click&email=private', hash: '' },
     sessionStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) },
+    gtag: (...event) => events.push(event),
   });
   const react = {
     ...React,
     createContext(value) { const context = React.createContext(value); contexts.set(context, value); return context; },
     useContext: context => contexts.get(context),
+    useMemo: callback => callback(),
     useState(initial) {
       const owner = frame, index = frame.stateIndex++;
       if (!(index in owner.states)) owner.states[index] = typeof initial === 'function' ? initial() : initial;
@@ -53,6 +64,7 @@ function pageHarness(userAgent = 'Android Chrome') {
       if (name === 'react') return react;
       if (name === 'next/navigation') return { usePathname: () => pathname };
       if (name === 'next/image') return { default: 'img' };
+      if (name === 'next/link') return { default: 'a' };
       if (name === '@/lib/utils') return { cn: (...values) => values.filter(Boolean).join(' ') };
       if (name === './landing-handoff' || name === '@/lib/landing-handoff') {
         return { LANDING_HANDOFF_PARAMETER: 'ga_handoff', LANDING_HANDOFF_UPDATED: 'landing-handoff-updated', readLandingHandoff: () => null };
@@ -65,7 +77,10 @@ function pageHarness(userAgent = 'Android Chrome') {
     const compiled = ts.transpileModule(source, {
       compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
     }).outputText;
-    new Function('module', 'exports', 'require', 'window', 'navigator', compiled)(module, module.exports, dependencies, window, window.navigator);
+    new Function('module', 'exports', 'require', 'window', 'navigator', 'document', 'setTimeout', compiled)(
+      module, module.exports, dependencies, window, window.navigator, document,
+      (callback, delay) => timers.push({ callback, delay }),
+    );
     modules.set(file, module.exports);
     return module.exports;
   }
@@ -81,8 +96,12 @@ function pageHarness(userAgent = 'Android Chrome') {
   }
   function flush() { while (scheduled.length) scheduled.shift()(); }
   return {
-    links, attribution,
-    navigate(value) { pathname = window.location.pathname = value; shell(); },
+    links, attribution, events, timers, window, meta,
+    navigate(value) {
+      pathname = window.location.pathname = value;
+      window.location.href = new URL(value, window.location.origin).href;
+      shell();
+    },
     publish(url, pending = false, trackClick, sourcePathname = pathname) {
       shell();
       render('publisher', () => shared.usePageAndroidInstallLink(sourcePathname, url, pending, trackClick));
@@ -104,6 +123,16 @@ function pageHarness(userAgent = 'Android Chrome') {
       flush();
       return result;
     },
+    catalog(locale) {
+      shell();
+      const component = load('src/components/masks/MasksCatalogBrowser.tsx').default;
+      render('catalog', () => component({ catalog: { masks: [], categories: [] }, locale, labels: {} }));
+      flush();
+    },
+    unmount(name) {
+      for (const effect of frames.get(name)?.effects ?? []) effect?.cleanup?.();
+      frames.delete(name);
+    },
     dispose() { for (const owner of frames.values()) for (const effect of owner.effects) effect?.cleanup?.(); },
   };
 }
@@ -120,6 +149,8 @@ test('both Android shell links wait for assignments, preserve them through click
   assert.ok(page.selections().every(link => link.pending));
   page.publish(page.links.buildPresetGooglePlayUrl('https://app.myaiphotoshoot.com/#preset/anime'), true);
   assert.ok(page.selections().every(link => link.pending));
+  assert.ok(page.selections().every(link => click(link)));
+  assert.equal(page.events.length, 0);
   let clicks = 0;
   page.publish(page.links.buildPresetGooglePlayUrl(`https://app.myaiphotoshoot.com/#preset/anime~${assignment}`), false, () => clicks++);
   for (const link of page.selections()) {
@@ -129,9 +160,16 @@ test('both Android shell links wait for assignments, preserve them through click
     assert.equal(selected.get('preset'), `anime~${assignment}`);
     assert.equal(selected.get('gclid'), 'click');
     assert.equal(selected.has('email'), false);
-    link.trackClick();
+    assert.equal(click(link), false, 'Android must let the prepared new-tab link open immediately');
   }
   assert.equal(clicks, 2);
+  assert.equal(page.window.location.href, 'https://myaiphotoshoot.com/presets/anime/');
+  assert.equal(page.timers.length, 0, 'Android must not schedule analytics navigation callbacks');
+  assert.equal(page.events.length, 2);
+  assert.ok(page.events.every(event => event[1] === 'google_play_cta_click' && event[2].transport_type === 'beacon' && !event[2].event_callback));
+  assert.equal(click(page.selections()[0], { ctrlKey: true }), false);
+  assert.equal(clicks, 2);
+  assert.equal(page.events.length, 2);
   page.publish(page.links.buildPresetGooglePlayUrl('https://app.myaiphotoshoot.com/#preset/anime'), true);
   assert.ok(page.selections().every(link => link.pending));
   page.publish(page.links.buildPresetGooglePlayUrl('https://app.myaiphotoshoot.com/#preset/anime'));
@@ -147,6 +185,22 @@ test('both Android shell links wait for assignments, preserve them through click
   assert.ok(page.selections().every(link => !link.pending && referrer(link.url).get('preset') === 'anime'));
   page.navigate('/');
   assert.ok(page.selections().every(link => !link.pending && !referrer(link.url).has('preset') && !link.trackClick));
+});
+
+test('Android Play links still open normally when analytics is unavailable', t => {
+  const page = pageHarness();
+  t.after(() => page.dispose());
+  let clicks = 0;
+  page.publish(page.links.buildMaskGooglePlayUrl(mask, 'male'), false, () => clicks++);
+  delete page.window.gtag;
+  for (const link of page.selections()) {
+    assert.equal(click(link), false);
+    assert.equal(referrer(link.url).get('mask'), mask);
+    assert.equal(referrer(link.url).get('gender'), 'male');
+  }
+  assert.equal(clicks, 2);
+  assert.equal(page.timers.length, 0);
+  assert.equal(page.window.location.href, 'https://myaiphotoshoot.com/presets/anime/');
 });
 
 test('changing the selected mask and gender updates both shell links, and the catalog does not reuse a selected mask', t => {
@@ -177,17 +231,91 @@ test('changing the selected mask and gender updates both shell links, and the ca
   assert.ok(page.selections().every(link => referrer(link.url).get('mask') === 'all' && !referrer(link.url).has('gender')));
 });
 
-test('page selections do not change iOS and desktop destinations', t => {
-  for (const [userAgent, destination] of [['iPhone Safari', 'https://apps.apple.com/app/id6744860178'], ['Macintosh Safari', 'https://app.myaiphotoshoot.com/#ideas']]) {
-    const page = pageHarness(userAgent);
+test('iPhone and iPad shell App Store links open immediately and keep the landing page open', t => {
+  for (const [userAgent, touchPoints] of [['iPhone Safari', 1], ['Macintosh Safari', 5]]) {
+    const page = pageHarness(userAgent, touchPoints);
     t.after(() => page.dispose());
     page.publish(page.links.buildMaskGooglePlayUrl(mask, 'male'), true);
     for (const link of page.selections()) {
-      const actual = new URL(link.url), expected = new URL(destination);
-      assert.equal(actual.origin + actual.pathname + actual.hash, expected.origin + expected.pathname + expected.hash);
+      const actual = new URL(link.url);
+      assert.equal(actual.origin + actual.pathname, 'https://apps.apple.com/app/id6744860178');
       assert.equal(actual.searchParams.has('referrer'), false);
       assert.equal(!!link.pending, false);
       assert.equal(link.trackClick, undefined);
+      assert.equal(click(link), false, 'App Store navigation must stay on the original tap');
     }
+    assert.equal(page.window.location.href, 'https://myaiphotoshoot.com/presets/anime/');
+    assert.equal(page.timers.length, 0);
+    assert.equal(page.events.length, 2);
+    assert.ok(page.events.every(event => event[1] === 'app_store_cta_click' && event[2].transport_type === 'beacon' && !event[2].event_callback));
+    assert.equal(click(page.selections()[0], { metaKey: true }), false);
+    assert.equal(page.events.length, 2);
+    delete page.window.gtag;
+    assert.ok(page.selections().every(link => !click(link)));
+    assert.equal(page.timers.length, 0);
   }
+});
+
+test('desktop shell links retain their web destination and analytics navigation handling', t => {
+  const page = pageHarness('Macintosh Safari', 0);
+  t.after(() => page.dispose());
+  page.publish(page.links.buildMaskGooglePlayUrl(mask, 'male'), true);
+  for (const link of page.selections()) {
+    const actual = new URL(link.url);
+    assert.equal(actual.origin + actual.pathname + actual.hash, 'https://app.myaiphotoshoot.com/#ideas');
+    assert.equal(!!link.pending, false);
+    assert.equal(click(link), true);
+  }
+  assert.equal(page.timers.length, 2);
+  assert.ok(page.events.every(event => typeof event[2].event_callback === 'function'));
+});
+
+test('mask Smart App Banners follow the selected mask, gender, locale and current attribution', t => {
+  const page = pageHarness('iPhone Safari');
+  t.after(() => page.dispose());
+  page.navigate('/ja/masks/hair/');
+  const props = {
+    category: { id: 'hair', name: 'Hair', audienceGender: 'unisex', sourceImageVariants: {} },
+    masks: [mask, nextMask].map((id, index) => ({ id, name: `Look ${index}`, featuredGraphicsVariants: {} })),
+    locale: 'ja', pagePath: '/ja/masks/hair/', maleLabel: 'Male', femaleLabel: 'Female',
+    beforeLabel: 'Before', genderLabel: 'Gender', holdToCompareLabel: 'Compare', iosUnavailableLabel: 'Web and Android',
+    resultAltLabel: '{name}', tryMasksLabel: 'Try on web', openInAppLabel: 'Open in app',
+  };
+  const argument = () => new URL(page.meta.content.split('app-argument=')[1]);
+  let view = page.highlight(props);
+  assert.equal(argument().pathname, `/open/mask/${mask}/`);
+  assert.equal(argument().searchParams.get('gender'), 'female');
+  assert.equal(argument().searchParams.get('locale'), 'ja');
+  assert.equal(argument().searchParams.get('gclid'), 'click');
+  assert.equal(argument().searchParams.has('email'), false);
+  descendants(view).find(element => element.type === 'button' && element.props['aria-label'] === 'Male').props.onClick();
+  view = page.highlight(props);
+  descendants(view).find(element => element.type === 'button' && element.props['aria-label'] === 'Look 1').props.onClick();
+  page.highlight(props);
+  assert.equal(argument().pathname, `/open/mask/${nextMask}/`);
+  assert.equal(argument().searchParams.get('gender'), 'male');
+  page.window.location.search = '?gclid=updated';
+  page.window.dispatchEvent(new Event('landing-handoff-updated'));
+  assert.equal(argument().searchParams.get('gclid'), 'updated');
+  page.window.location.search = '?gclid=consent-updated';
+  page.window.dispatchEvent(new Event('consent-choice-changed'));
+  assert.equal(argument().searchParams.get('gclid'), 'consent-updated');
+  assert.equal(argument().pathname, `/open/mask/${nextMask}/`);
+  assert.equal(argument().searchParams.get('gender'), 'male');
+  page.unmount('highlight');
+  assert.equal(page.meta.content, 'original page banner');
+  page.window.dispatchEvent(new Event('landing-handoff-updated'));
+  assert.equal(page.meta.content, 'original page banner');
+  page.navigate('/ja/masks/');
+  page.catalog('ja');
+  assert.equal(argument().pathname, '/open/mask/all/');
+  assert.equal(argument().searchParams.has('gender'), false);
+  assert.equal(argument().searchParams.get('locale'), 'ja');
+  page.unmount('catalog');
+  page.highlight({ ...props, category: { ...props.category, hiddenOnIos: true } });
+  assert.equal(argument().pathname, '/open/mask/all/');
+  assert.equal(argument().searchParams.has('gender'), false, 'iOS banners must not target an unavailable mask');
+  page.meta.content = 'next route banner';
+  page.unmount('highlight');
+  assert.equal(page.meta.content, 'next route banner', 'cleanup must not overwrite the next route');
 });

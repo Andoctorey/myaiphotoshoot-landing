@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import { useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { buildMaskAppUrl, buildMaskGooglePlayUrl } from '@/lib/app-links';
+import { buildMaskAppUrl, buildMaskGooglePlayUrl, buildMaskNativeAppUrl } from '@/lib/app-links';
 import { usePageAndroidInstallLink } from '@/components/layout/AndroidInstallLink';
-import { formatCredits } from '@/lib/pricing';
+import { useSmartAppBanner } from '@/hooks/useSmartAppBanner';
+import { WebIcon } from '@/components/ui/PlatformIcons';
 import { cn } from '@/lib/utils';
 import MaskAppLink from './MaskAppLink';
 import type { AiMask, AiMaskCategory, MaskAudienceGender } from '@/types/ai-mask';
@@ -67,6 +68,7 @@ export default function AiMaskCategoryHighlights({
   const canSwitchGender = category.audienceGender === 'unisex';
   const selectedMask = masks.find((mask) => mask.id === selectedMaskId) || masks[0];
   usePageAndroidInstallLink(pagePath, buildMaskGooglePlayUrl(selectedMask?.id, gender));
+  useSmartAppBanner(buildMaskNativeAppUrl(category.hiddenOnIos ? undefined : selectedMask?.id, locale, gender));
   if (!selectedMask) return null;
   const selectedImageUrl = showBefore
     ? categoryPreviewUrl(category, gender)
@@ -246,9 +248,8 @@ export default function AiMaskCategoryHighlights({
           rel="noopener noreferrer"
           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
         >
+          <WebIcon />
           {tryMasksLabel}
-          <span aria-hidden="true">·</span>
-          <span className="tabular-nums">{formatCredits(selectedMask.priceCredits, locale)}</span>
         </a>
       </div>
     </section>

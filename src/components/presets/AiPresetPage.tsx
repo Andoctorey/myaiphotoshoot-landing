@@ -1,6 +1,7 @@
-import { PresetExperimentProvider, PresetExperimentImage, PresetExperimentLink, PresetExperimentPrice } from './PresetExperiment';
+import { PresetExperimentProvider, PresetExperimentImage, PresetExperimentLink } from './PresetExperiment';
 import Link from 'next/link';
 import PresetAppLinks from './PresetAppLinks';
+import { WebIcon } from '@/components/ui/PlatformIcons';
 import { getTranslations } from 'next-intl/server';
 import { buildPresetAppUrl, buildPresetDescription } from '@/lib/ai-presets';
 import { canonicalUrl, localePath } from '@/lib/seo';
@@ -87,14 +88,13 @@ export default async function AiPresetPage({ locale, preset }: Props) {
   };
 
   return (
-    <PresetExperimentProvider key={preset.id} presetId={preset.id} appUrl={appUrl} image={preset.featured_graphics || ''} alt={imageAlt} credits={preset.cost_credits ?? null} locale={locale}>
+    <PresetExperimentProvider key={preset.id} presetId={preset.id} appUrl={appUrl} image={preset.featured_graphics || ''} alt={imageAlt} locale={locale}>
     <div data-preset-test-id={preset.id} className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
       <noscript>
         <style>{`
           .preset-experiment-image { visibility: visible !important; }
           .preset-experiment-image-placeholder { display: none !important; }
-          .preset-experiment-price { visibility: visible !important; }
         `}</style>
       </noscript>
 
@@ -155,8 +155,8 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                 href={appUrl}
                 className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-on-primary transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
               >
+                <WebIcon />
                 {tryPresetLabel}
-                <PresetExperimentPrice />
               </PresetExperimentLink>
             </div>
           </header>
@@ -225,8 +225,8 @@ export default async function AiPresetPage({ locale, preset }: Props) {
                       href={appUrl}
                       className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-on-primary transition hover:bg-primary/90"
                     >
+                      <WebIcon />
                       {tryPresetLabel}
-                      <PresetExperimentPrice />
                     </PresetExperimentLink>
                   </div>
                 </div>
