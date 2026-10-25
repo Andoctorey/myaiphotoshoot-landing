@@ -1,4 +1,5 @@
 import { LANDING_HANDOFF_PARAMETER, readLandingHandoff } from './landing-handoff';
+import { androidInstallSelection } from './app-links';
 
 // Google Analytics configuration
 export const GA_MEASUREMENT_ID = 'G-0T00P896RF';
@@ -80,8 +81,13 @@ export const withCurrentAttribution = (destination: string): string => {
       url.searchParams.delete('landing_path');
     }
     if (url.hostname === 'play.google.com') {
+      const ownPlayApp = url.origin === 'https://play.google.com' && url.pathname === '/store/apps/details' &&
+        url.searchParams.getAll('id').length === 1 && url.searchParams.get('id') === 'com.myaiphotoshoot';
+      const referrers = url.searchParams.getAll('referrer');
+      // Preserve only validated navigation fields; identity and campaigns are refreshed below.
+      const installReferrer = ownPlayApp && referrers.length === 1
+        ? androidInstallSelection(new URLSearchParams(referrers[0])) : new URLSearchParams();
       url.searchParams.delete('referrer');
-      const installReferrer = new URLSearchParams();
       // Keep click IDs when long optional campaign tags would otherwise discard the whole referrer.
       const addReferrer = (name: string, value: string | null) => {
         if (!value) return;
@@ -89,7 +95,7 @@ export const withCurrentAttribution = (destination: string): string => {
         if (installReferrer.toString().length > 512) installReferrer.delete(name);
       };
       ATTRIBUTION_PARAMETERS.slice(0, 4).forEach(name => addReferrer(name, url.searchParams.get(name)));
-      if (url.protocol === 'https:' && url.searchParams.get('id') === 'com.myaiphotoshoot') {
+      if (ownPlayApp) {
         addReferrer(LANDING_HANDOFF_PARAMETER, handoff);
       }
       ATTRIBUTION_PARAMETERS.slice(4).forEach(name => addReferrer(name, url.searchParams.get(name)));

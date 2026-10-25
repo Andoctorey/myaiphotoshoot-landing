@@ -263,13 +263,17 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 </a>
               ))}
               <a
-                href={appLink.url}
+                href={appLink.pending ? undefined : appLink.url}
+                aria-disabled={appLink.pending || undefined}
+                aria-busy={appLink.pending || undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                className="aria-busy:cursor-wait aria-busy:opacity-60 px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium whitespace-nowrap text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 onClick={(e) => {
+                  if (appLink.pending) { e.preventDefault(); return; }
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
+                  appLink.trackClick?.();
                   trackEventAndNavigate(appLink.event, appLink.url);
                 }}
               >
@@ -432,14 +436,18 @@ export default function Navigation({ useCases }: { useCases: NavigationUseCase[]
                 </a>
               ))}
               <a
-                href={appLink.url}
+                href={appLink.pending ? undefined : appLink.url}
+                aria-disabled={appLink.pending || undefined}
+                aria-busy={appLink.pending || undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block px-3 py-2 mt-2 rounded-md text-base font-medium text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
+                className="aria-busy:cursor-wait aria-busy:opacity-60 block px-3 py-2 mt-2 rounded-md text-base font-medium text-primary transition-colors duration-150 hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
                 onClick={(e) => {
+                  if (appLink.pending) { e.preventDefault(); return; }
                   handleNavLinkClick();
                   if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                   e.preventDefault();
+                  appLink.trackClick?.();
                   trackEventAndNavigate(appLink.event, appLink.url);
                 }}
               >

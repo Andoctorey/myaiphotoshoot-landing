@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { buildMaskAppUrl } from '@/lib/app-links';
+import { buildMaskAppUrl, buildMaskGooglePlayUrl } from '@/lib/app-links';
+import { usePageAndroidInstallLink } from '@/components/layout/AndroidInstallLink';
 import { formatCredits } from '@/lib/pricing';
 import { cn } from '@/lib/utils';
 import MaskAppLink from './MaskAppLink';
@@ -24,6 +25,7 @@ type Props = {
   holdToCompareLabel: string;
   iosUnavailableLabel: string;
   locale: string;
+  pagePath: string;
   maleLabel: string;
   masks: readonly AiMask[];
   openInAppLabel: string;
@@ -51,6 +53,7 @@ export default function AiMaskCategoryHighlights({
   holdToCompareLabel,
   iosUnavailableLabel,
   locale,
+  pagePath,
   maleLabel,
   masks,
   openInAppLabel,
@@ -63,6 +66,7 @@ export default function AiMaskCategoryHighlights({
   const [showBefore, setShowBefore] = useState(false);
   const canSwitchGender = category.audienceGender === 'unisex';
   const selectedMask = masks.find((mask) => mask.id === selectedMaskId) || masks[0];
+  usePageAndroidInstallLink(pagePath, buildMaskGooglePlayUrl(selectedMask?.id, gender));
   if (!selectedMask) return null;
   const selectedImageUrl = showBefore
     ? categoryPreviewUrl(category, gender)
@@ -228,6 +232,14 @@ export default function AiMaskCategoryHighlights({
       </div>
 
       <div className="mt-1 flex flex-col items-center gap-2">
+        <MaskAppLink
+          label={openInAppLabel}
+          locale={locale}
+          maskId={selectedMask.id}
+          maskName={selectedMask.name}
+          gender={gender}
+          hiddenOnIos={category.hiddenOnIos}
+        />
         <a
           href={buildMaskAppUrl(selectedMask.id, gender)}
           target="_blank"
@@ -238,14 +250,6 @@ export default function AiMaskCategoryHighlights({
           <span aria-hidden="true">·</span>
           <span className="tabular-nums">{formatCredits(selectedMask.priceCredits, locale)}</span>
         </a>
-        <MaskAppLink
-          label={openInAppLabel}
-          locale={locale}
-          maskId={selectedMask.id}
-          maskName={selectedMask.name}
-          gender={gender}
-          hiddenOnIos={category.hiddenOnIos}
-        />
       </div>
     </section>
   );

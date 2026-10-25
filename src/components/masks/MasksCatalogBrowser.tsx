@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import MaskCategoryIcon from '@/components/masks/MaskCategoryIcon';
 import MaskAppLink from '@/components/masks/MaskAppLink';
-import { AI_MASKS_APP_URL, buildMaskAppUrl } from '@/lib/app-links';
+import { AI_MASKS_APP_URL, buildMaskAppUrl, buildMaskGooglePlayUrl } from '@/lib/app-links';
+import { usePageAndroidInstallLink } from '@/components/layout/AndroidInstallLink';
 import { localePath } from '@/lib/seo';
 import type {
   AiMask,
@@ -70,6 +71,7 @@ export default function MasksCatalogBrowser({
   locale,
   publishedCategoryIds = [],
 }: Props) {
+  usePageAndroidInstallLink(localePath(locale, '/masks/'), buildMaskGooglePlayUrl());
   const [gender, setGender] = useState<PreviewGender>('female');
   const publishedCategoryIdSet = useMemo(
     () => new Set(publishedCategoryIds),
@@ -280,16 +282,16 @@ export default function MasksCatalogBrowser({
         <p className="mx-auto mt-3 max-w-2xl text-gray-600 dark:text-gray-300">
           {labels.readyDescription}
         </p>
-        <a
-          href={AI_MASKS_APP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
-        >
-          {labels.tryMasks}
-        </a>
-        <div className="mt-2">
+        <div className="mt-6 flex flex-col items-center gap-3">
           <MaskAppLink label={labels.openInApp} locale={locale} />
+          <a
+            href={AI_MASKS_APP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+          >
+            {labels.tryMasks}
+          </a>
         </div>
       </section>
     </>

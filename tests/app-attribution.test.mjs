@@ -12,6 +12,9 @@ const handoffSource = await readFile(new URL('../src/lib/landing-handoff.ts', im
 const handoffCompiled = ts.transpileModule(handoffSource, {
   compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020},
 }).outputText;
+const appLinksSource = await readFile(new URL('../src/lib/app-links.ts', import.meta.url), 'utf8');
+const appLinks = vm.createContext({ exports: {}, URL, URLSearchParams });
+vm.runInContext(ts.transpileModule(appLinksSource, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText, appLinks);
 
 function landing(search = '', consent = 'rejected') {
   const storage = new Map();
@@ -23,7 +26,7 @@ function landing(search = '', consent = 'rejected') {
   const handoffContext = vm.createContext({window, exports: {}, URL, URLSearchParams, setTimeout, clearTimeout, Event});
   vm.runInContext(handoffCompiled, handoffContext);
   const context = vm.createContext({window, exports: {}, URL, URLSearchParams,
-    require: () => handoffContext.exports});
+    require: name => name === './app-links' ? appLinks.exports : handoffContext.exports});
   vm.runInContext(compiled, context);
   return {window, ...context.exports, ...handoffContext.exports};
 }
@@ -41,6 +44,59 @@ test('Google Ads landing click survives navigation into the Android install refe
   assert.equal(url.toString().includes('private'), false);
 });
 
+test('preset assignments and mask genders survive repeated attribution without copying unrelated referrer data', () => {
+  const app = landing(`?gclid=click&utm_campaign=${'x'.repeat(800)}`);
+  const assignment = '12345678-1234-4123-8123-123456789abc';
+  const mask = '87654321-4321-4321-8321-cba987654321';
+  for (const destination of [
+    appLinks.exports.buildPresetGooglePlayUrl(`https://app.myaiphotoshoot.com/#preset/anime~${assignment}`),
+    appLinks.exports.buildMaskGooglePlayUrl(mask, 'male'),
+  ]) {
+    const input = new URL(destination);
+    const expected = new URLSearchParams(input.searchParams.get('referrer'));
+    const referrer = new URLSearchParams(expected);
+    referrer.set('email', 'private');
+    referrer.set('ga_handoff', 'stale-identity');
+    input.searchParams.set('referrer', referrer.toString());
+    const once = app.withCurrentAttribution(input.href);
+    const twice = app.withCurrentAttribution(once);
+    const actual = new URLSearchParams(new URL(twice).searchParams.get('referrer'));
+    for (const [key, value] of expected) assert.equal(actual.get(key), value);
+    assert.equal(actual.get('gclid'), 'click');
+    assert.equal(actual.has('utm_campaign'), false);
+    assert.equal(actual.has('email'), false);
+    assert.equal(actual.has('ga_handoff'), false);
+    assert.ok(actual.toString().length <= 512);
+    assert.equal(twice, once);
+  }
+});
+
+test('ambiguous, malformed and foreign install selections are dropped while attribution remains usable', () => {
+  const app = landing('?gclid=click');
+  const mask = '87654321-4321-4321-8321-cba987654321';
+  for (const value of [
+    'preset=anime&preset=other', 'preset=anime~invalid', 'preset=anime%2Fother',
+    `preset=anime&mask=${mask}`, `mask=${mask}&gender=other`, `mask=${mask}&gender=male&gender=female`,
+    'mask=all&gender=male', 'mask=not-a-mask', `preset=anime&gender=male`,
+  ]) {
+    const input = new URL('https://play.google.com/store/apps/details?id=com.myaiphotoshoot');
+    input.searchParams.set('referrer', value);
+    const referrer = new URLSearchParams(new URL(app.withCurrentAttribution(input.href)).searchParams.get('referrer'));
+    assert.equal(referrer.has('preset'), false, value);
+    assert.equal(referrer.has('mask'), false, value);
+    assert.equal(referrer.has('gender'), false, value);
+    assert.equal(referrer.get('gclid'), 'click');
+  }
+  for (const input of [
+    'https://play.google.com/store/apps/details?id=other.app&referrer=preset%3Danime',
+    'http://play.google.com/store/apps/details?id=com.myaiphotoshoot&referrer=preset%3Danime',
+    'https://play.google.com/store/apps/details?id=com.myaiphotoshoot&referrer=preset%3Danime&referrer=preset%3Dother',
+  ]) {
+    const referrer = new URLSearchParams(new URL(app.withCurrentAttribution(input)).searchParams.get('referrer'));
+    assert.equal(referrer.has('preset'), false, input);
+  }
+});
+
 test('consented browser identity survives native links and Play installation without leaking to the App Store', async () => {
   const app = landing('?gclid=click&utm_campaign=anime', 'accepted');
   app.window.gtag = (_command, _id, field, callback) => callback(field === 'client_id' ? '12345678.87654321' : Math.floor(Date.now() / 1000));
@@ -48,9 +104,16 @@ test('consented browser identity survives native links and Play installation wit
   const native = new URL(app.withCurrentAttribution('https://app.myaiphotoshoot.com/open/preset/anime/'));
   assert.match(native.searchParams.get('ga_handoff'), /^1~12345678\.87654321~/);
   assert.equal(native.searchParams.get('landing_path'), '/presets/anime/');
-  const play = new URL(app.withCurrentAttribution('https://play.google.com/store/apps/details?id=com.myaiphotoshoot'));
-  assert.equal(new URLSearchParams(play.searchParams.get('referrer')).get('ga_handoff'), native.searchParams.get('ga_handoff'));
+  const selectedPreset = 'anime~12345678-1234-4123-8123-123456789abc';
+  const play = new URL(app.withCurrentAttribution(appLinks.exports.buildPresetGooglePlayUrl(`https://app.myaiphotoshoot.com/#preset/${selectedPreset}`)));
+  const selectedReferrer = new URLSearchParams(play.searchParams.get('referrer'));
+  assert.equal(selectedReferrer.get('ga_handoff'), native.searchParams.get('ga_handoff'));
+  assert.equal(selectedReferrer.get('preset'), selectedPreset);
   assert.equal(new URL(app.withCurrentAttribution('https://apps.apple.com/app/id6744860178')).searchParams.has('ga_handoff'), false);
+  app.window.localStorage.getItem = () => 'rejected';
+  const revoked = new URLSearchParams(new URL(app.withCurrentAttribution(play.href)).searchParams.get('referrer'));
+  assert.equal(revoked.has('ga_handoff'), false);
+  assert.equal(revoked.get('preset'), selectedPreset);
 });
 
 test('denied consent never reads or forwards the browser identity', async () => {

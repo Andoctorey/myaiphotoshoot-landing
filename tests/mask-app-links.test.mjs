@@ -8,10 +8,11 @@ import ts from 'typescript';
 const compile = source => ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
 }).outputText;
-const appLinks = vm.createContext({ exports: {}, URL });
+const appLinks = vm.createContext({ exports: {}, URL, URLSearchParams });
 vm.runInContext(compile(await readFile(new URL('../src/lib/app-links.ts', import.meta.url), 'utf8')), appLinks);
 const links = appLinks.exports;
 const mask = '87654321-4321-4321-8321-cba987654321';
+const nativeDestination = href => href.startsWith('intent:') ? href.split('#Intent;')[0].replace('intent:', 'https:') : href;
 
 test('mask native and web actions keep the same selected mask and preview gender', () => {
   assert.equal(links.buildMaskAppUrl(mask), `https://app.myaiphotoshoot.com/#masks/${mask}`);
@@ -43,6 +44,7 @@ async function componentHarness(userAgent, maxTouchPoints = 1) {
   const dependencies = {
     react,
     '@/lib/app-links': links,
+    '@/components/layout/AndroidInstallLink': { useAndroidInstallLink: () => ({ pending: false }) },
     '@/lib/landing-handoff': { LANDING_HANDOFF_UPDATED: 'landing-handoff-updated' },
     '@/lib/analytics': { withCurrentAttribution(value) {
       const url = new URL(value);
@@ -77,12 +79,14 @@ test('changing a selected mask or gender never navigates to the preceding select
   const page = await componentHarness('Mozilla Android Chrome');
   assert.equal(page.render(), null);
   page.flush();
-  assert.equal(new URL(page.render().props.href).searchParams.get('gclid'), 'CaseSensitive');
+  assert.equal(new URL(nativeDestination(page.render().props.href)).searchParams.get('gclid'), 'CaseSensitive');
   const nextMask = '12345678-1234-4123-8123-123456789abc';
   const next = page.render({ maskId: nextMask, maskName: 'Smile', gender: 'female' });
-  const destination = new URL(next.props.href);
+  assert.ok(next.props.href.startsWith('intent:'));
+  const destination = new URL(nativeDestination(next.props.href));
   assert.equal(destination.pathname, `/open/mask/${nextMask}/`);
   assert.equal(destination.searchParams.get('gender'), 'female');
+  assert.equal(decodeURIComponent(next.props.href.split('S.browser_fallback_url=')[1].split(';end')[0]), destination.href);
   assert.equal(next.props['aria-label'], 'Open in app: Smile');
   page.flush();
   page.render({ maskId: nextMask, gender: 'female' }).props.onClick();
@@ -103,7 +107,7 @@ test('native actions respect iOS-only restrictions while web mask cards remain a
   }
   const ios = await componentHarness('Mozilla iPhone Safari');
   ios.render(); ios.flush();
-  assert.ok(ios.render());
+  assert.equal(ios.render().props.href.startsWith('https://app.myaiphotoshoot.com/open/mask/'), true);
 });
 
 test('every landing locale translates the mask action', async () => {

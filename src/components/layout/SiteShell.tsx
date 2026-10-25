@@ -1,6 +1,7 @@
 import HtmlLang from '@/components/layout/HtmlLang';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
+import { AndroidInstallLinkProvider } from '@/components/layout/AndroidInstallLink';
 import { isRTLLanguage } from '@/lib/utils';
 import { fetchNavigationUseCases } from '@/lib/navigationUseCases';
 import { getTranslations } from 'next-intl/server';
@@ -26,11 +27,13 @@ export default async function SiteShell({ locale, children }: Props) {
       >
         {t('skipToContent')}
       </a>
-      <Navigation useCases={navigationUseCases} />
-      <main id="main-content" tabIndex={-1} className="scroll-mt-16 pt-16 focus:outline-none">
-        {children}
-      </main>
-      <Footer />
+      <AndroidInstallLinkProvider>
+        <Navigation useCases={navigationUseCases} />
+        <main id="main-content" tabIndex={-1} className="scroll-mt-16 pt-16 focus:outline-none">
+          {children}
+        </main>
+        <Footer />
+      </AndroidInstallLinkProvider>
     </>
   );
 }

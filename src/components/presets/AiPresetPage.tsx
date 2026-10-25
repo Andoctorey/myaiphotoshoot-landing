@@ -149,14 +149,16 @@ export default async function AiPresetPage({ locale, preset }: Props) {
               )}
             </PresetExperimentLink>
 
-            <PresetExperimentLink
-              href={appUrl}
-              className="inline-flex min-h-14 w-full max-w-[420px] shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-on-primary transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-            >
-              {tryPresetLabel}
-              <PresetExperimentPrice />
-            </PresetExperimentLink>
-            <PresetAppLinks presetId={preset.id} label={t('openInApp')} />
+            <div className="flex w-full max-w-[420px] shrink-0 flex-col gap-3">
+              <PresetAppLinks presetId={preset.id} label={t('openInApp')} pagePath={localePath(locale, `/presets/${preset.slug}/`)} />
+              <PresetExperimentLink
+                href={appUrl}
+                className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-on-primary transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              >
+                {tryPresetLabel}
+                <PresetExperimentPrice />
+              </PresetExperimentLink>
+            </div>
           </header>
         </div>
 

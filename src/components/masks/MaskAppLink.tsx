@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAttributedUrl } from '@/hooks/usePlatformAppLink';
-import { buildMaskNativeAppUrl, mobileAppPlatform, type MaskLinkGender } from '@/lib/app-links';
+import { buildMaskNativeAppUrl, buildNativeAppOpenUrl, mobileAppPlatform, type MaskLinkGender } from '@/lib/app-links';
 
 type Props = {
   label: string;
@@ -25,12 +25,12 @@ export default function MaskAppLink({ label, locale, maskId, maskName, gender, h
 
   return (
     <a
-      href={href}
+      href={buildNativeAppOpenUrl(href, platform)}
       aria-label={maskName ? `${label}: ${maskName}` : undefined}
-      className="inline-flex min-h-11 items-center justify-center rounded-full px-5 py-2 text-center text-sm font-semibold text-gray-700 underline decoration-gray-400 underline-offset-4 hover:text-primary dark:text-gray-200"
+      className="inline-flex min-h-14 w-full max-w-[420px] shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/5 px-6 py-3 text-center text-base font-semibold text-primary transition hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       onClick={() => {
         window.gtag?.('event', 'mask_app_open_click', { mask_id: maskId ?? 'all', client_platform: platform });
-        console.info('Opening Masks in native app', { platform });
+        console.info('Opening Masks in native app', { platform, method: platform === 'android' ? 'intent' : 'app_link' });
       }}
     >{label}</a>
   );

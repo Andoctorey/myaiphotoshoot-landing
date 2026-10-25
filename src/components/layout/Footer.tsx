@@ -28,14 +28,18 @@ export default function Footer() {
               {t('description')}
             </p>
             <a
-              href={appLink.url}
-              className="group inline-flex w-full items-center justify-center rounded-xl border border-white/20 bg-black px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-black/30 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-black/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 motion-reduce:transform-none sm:w-auto"
+              href={appLink.pending ? undefined : appLink.url}
+              aria-disabled={appLink.pending || undefined}
+              aria-busy={appLink.pending || undefined}
+              className="aria-busy:cursor-wait aria-busy:opacity-60 group inline-flex w-full items-center justify-center rounded-xl border border-white/20 bg-black px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-black/30 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-xl hover:shadow-black/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 motion-reduce:transform-none sm:w-auto"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={tBlog('cta.button')}
               onClick={(e) => {
+                if (appLink.pending) { e.preventDefault(); return; }
                 if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                 e.preventDefault();
+                appLink.trackClick?.();
                 trackEventAndNavigate(appLink.event, appLink.url);
               }}
             >

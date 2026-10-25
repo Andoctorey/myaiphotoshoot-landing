@@ -39,10 +39,52 @@ function presetAppIdentifier(webAppUrl: string): string {
   return identifier;
 }
 
+export function androidInstallSelection(parameters: URLSearchParams): URLSearchParams {
+  const presets = parameters.getAll('preset');
+  const masks = parameters.getAll('mask');
+  const genders = parameters.getAll('gender');
+  if (presets.length === 1 && masks.length === 0 && genders.length === 0 && presetIdentifierPattern.test(presets[0])) {
+    return new URLSearchParams({ preset: presets[0] });
+  }
+  if (presets.length === 0 && masks.length === 1 && (masks[0] === 'all' || maskIdentifierPattern.test(masks[0])) &&
+      (genders.length === 0 || (genders.length === 1 && masks[0] !== 'all' && /^(female|male)$/i.test(genders[0])))) {
+    const selection = new URLSearchParams({ mask: masks[0] });
+    if (genders.length) selection.set('gender', genders[0].toLowerCase());
+    return selection;
+  }
+  return new URLSearchParams();
+}
+
+export function buildPresetGooglePlayUrl(webAppUrl: string): string {
+  const url = new URL(GOOGLE_PLAY_URL);
+  url.searchParams.set('referrer', new URLSearchParams({ preset: presetAppIdentifier(webAppUrl) }).toString());
+  return url.toString();
+}
+
+export function buildMaskGooglePlayUrl(maskId?: string, gender?: MaskLinkGender): string {
+  const parameters = new URLSearchParams({ mask: maskId ?? 'all' });
+  if (maskId && gender) parameters.set('gender', gender);
+  const selection = androidInstallSelection(parameters);
+  if (!selection.has('mask')) throw new Error('Invalid mask install selection');
+  const url = new URL(GOOGLE_PLAY_URL);
+  url.searchParams.set('referrer', selection.toString());
+  return url.toString();
+}
+
 export function buildPresetNativeAppUrl(webAppUrl: string, locale: string): string {
   const url = new URL(`/open/preset/${encodeURIComponent(presetAppIdentifier(webAppUrl))}/`, WEB_APP_URL);
   url.searchParams.set('locale', locale);
   return url.toString();
+}
+
+export function buildNativeAppOpenUrl(nativeAppUrl: string, platform: 'ios' | 'android' | null): string {
+  if (platform !== 'android') return nativeAppUrl;
+  const url = new URL(nativeAppUrl);
+  if (url.origin !== WEB_APP_URL || !/^\/open\/(preset|mask)\/[^/]+\/$/.test(url.pathname) || url.hash) {
+    throw new Error('Expected a native app URL');
+  }
+  // An explicit package lets Chrome open the installed app directly from the tap.
+  return `intent://${url.host}${url.pathname}${url.search}#Intent;scheme=https;package=com.myaiphotoshoot;S.browser_fallback_url=${encodeURIComponent(url.href)};end`;
 }
 
 export function buildPresetMarketingUrl(webAppUrl: string, locale: string): string {

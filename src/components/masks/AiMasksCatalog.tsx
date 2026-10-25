@@ -118,16 +118,16 @@ export default async function AiMasksCatalog({ locale, catalog, publishedCategor
           <p className="mt-4 text-lg leading-8 text-gray-700 dark:text-gray-300">
             {t('description')}
           </p>
-          <a
-            href={AI_MASKS_APP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-7 inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
-          >
-            {t('tryMasks')}
-          </a>
-          <div className="mt-2">
+          <div className="mt-7 flex flex-col items-center gap-3">
             <MaskAppLink label={t('openInApp')} locale={locale} />
+            <a
+              href={AI_MASKS_APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+            >
+              {t('tryMasks')}
+            </a>
           </div>
         </header>
 
