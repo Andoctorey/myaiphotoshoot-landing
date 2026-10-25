@@ -454,7 +454,6 @@ test('Studio renders automatic generation costs and matching FAQ data in every l
 test('web app buttons outside pricing retain their existing black backgrounds', async () => {
   const [
     platformButtons,
-    footer,
     maskHighlights,
     maskLanding,
     masksCatalog,
@@ -462,7 +461,6 @@ test('web app buttons outside pricing retain their existing black backgrounds', 
     useCase,
   ] = await Promise.all([
     readProjectFile('src/components/features/PlatformButtons.tsx'),
-    readProjectFile('src/components/layout/Footer.tsx'),
     readProjectFile('src/components/masks/AiMaskCategoryHighlights.tsx'),
     readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
     readProjectFile('src/components/masks/AiMasksCatalog.tsx'),
@@ -471,12 +469,40 @@ test('web app buttons outside pricing retain their existing black backgrounds', 
   ]);
 
   assert.match(platformButtons, /href=\{attributedWebAppUrl\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.match(footer, /href=\{appLink\.url\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(maskHighlights, /href=\{buildMaskAppUrl\(selectedMask\.id, gender\)\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(maskLanding, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(masksCatalog, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.match(masksBrowser, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
   assert.equal((useCase.match(/href=\{attributedWebAppUrl\}[\s\S]{0,1000}?\bbg-black\b/g) || []).length, 4);
+});
+
+test('footer app button stays black while its install link is pending and ready', async () => {
+  const appLink = { url: 'https://play.google.com/store/apps/details?id=com.myaiphotoshoot', pending: true };
+  const { default: Footer } = await loadTypeScriptModule('src/components/layout/Footer.tsx', {
+    '@/lib/utils': { useTranslations: (namespace) => (key) => `${namespace}.${key}` },
+    'next/link': { default: (props) => createElement('a', props) },
+    'next/navigation': { usePathname: () => '/' },
+    '@/lib/analytics': {},
+    '@/i18n/request': { locales: localeCodes },
+    '@/lib/seo': await loadTypeScriptModule('src/lib/seo.ts'),
+    '@/hooks/usePlatformAppLink': { usePlatformAppLink: () => appLink },
+  });
+
+  for (const pending of [true, false]) {
+    appLink.pending = pending;
+    const html = renderToStaticMarkup(createElement(Footer));
+    const button = html.match(/<a\b[^>]*aria-label="blog\.cta\.button"[^>]*>/)?.[0];
+    assert.ok(button, 'Footer app button is missing');
+    assert.ok(button.match(/class="([^"]*)"/)?.[1].split(/\s+/).includes('bg-black'));
+    if (pending) {
+      assert.doesNotMatch(button, /\bhref=/);
+      assert.match(button, /aria-disabled="true"/);
+      assert.match(button, /aria-busy="true"/);
+    } else {
+      assert.ok(button.includes(`href="${appLink.url}"`));
+      assert.doesNotMatch(button, /aria-(?:disabled|busy)=/);
+    }
+  }
 });
 
 test('Studio copy stays user-facing and avoids unsupported personal-model promises', async () => {
