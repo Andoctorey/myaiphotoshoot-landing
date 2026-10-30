@@ -13,7 +13,6 @@ import ConsentBanner from "@/components/ConsentBanner";
 import { env } from "@/lib/env";
 import { serializeJsonLd } from "@/lib/json-ld";
 import { BASE_URL, HOME_METADATA_DEFAULTS } from "@/lib/seo";
-import { smartAppBanner } from "@/lib/app-links";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -30,7 +29,6 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  other: { 'apple-itunes-app': smartAppBanner(BASE_URL) },
   metadataBase: new URL(BASE_URL),
   title: {
     default: HOME_METADATA_DEFAULTS.title,
@@ -40,7 +38,6 @@ export const metadata: Metadata = {
   authors: [{ name: "My AI Photoshoot" }],
   creator: "My AI Photoshoot",
   publisher: "My AI Photoshoot",
-  manifest: "/site.webmanifest",
   formatDetection: {
     email: false,
     address: false,
@@ -103,9 +100,6 @@ export default function RootLayout({
       <head>
         <TikTokPixel pixelId={TIKTOK_PIXEL_ID} />
         <meta name="application-name" content="My AI Photoshoot" />
-        <meta name="apple-mobile-web-app-title" content="My AI Photoshoot" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         {/* Android App Indexing (legacy hint; primary is Digital Asset Links) */}
         <link
           rel="alternate"

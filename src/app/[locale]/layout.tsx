@@ -11,7 +11,6 @@ export const metadata: Metadata = {
     template: "%s | My AI Photoshoot",
   },
   description: HOME_METADATA_DEFAULTS.description,
-  manifest: "/site.webmanifest",
   // The OpenGraph and Twitter metadata will be dynamically set based on the locale
 };
 

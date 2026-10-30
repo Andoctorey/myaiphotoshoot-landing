@@ -6,11 +6,9 @@ import { LANDING_HANDOFF_UPDATED } from '@/lib/landing-handoff';
 import {
   buildNativeAppOpenUrl,
   buildPresetGooglePlayUrl,
-  buildPresetMarketingUrl,
   buildPresetNativeAppUrl,
   mobileAppPlatform,
 } from '@/lib/app-links';
-import { useSmartAppBanner } from '@/hooks/useSmartAppBanner';
 import { usePresetExperiment } from './PresetExperiment';
 import { ButtonSpinner } from '@/components/ui/LoadingSpinner';
 import { StoreIcon } from '@/components/ui/PlatformIcons';
@@ -29,7 +27,6 @@ export default function PresetAppLinks({ presetId, label, pagePath }: { presetId
     !resolved || !!context?.pending,
     context?.trackClick,
   );
-  useSmartAppBanner(resolved && appUrl && locale ? buildPresetMarketingUrl(appUrl, locale) : undefined);
 
   useEffect(() => {
     setPlatform(mobileAppPlatform(navigator.userAgent, navigator.maxTouchPoints));

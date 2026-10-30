@@ -22,8 +22,6 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
   let pathname = '/presets/anime/', frame;
   const storage = new Map();
   const events = [], timers = [];
-  const meta = { content: 'original page banner' };
-  const document = { querySelector: () => meta, getElementById: () => null };
   const window = Object.assign(new EventTarget(), {
     navigator: { userAgent, maxTouchPoints },
     location: { pathname, href: 'https://myaiphotoshoot.com/presets/anime/', origin: 'https://myaiphotoshoot.com', search: '?gclid=click&email=private', hash: '' },
@@ -64,7 +62,6 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
       if (name === 'react') return react;
       if (name === 'next/navigation') return { usePathname: () => pathname };
       if (name === 'next/image') return { default: 'img' };
-      if (name === 'next/link') return { default: 'a' };
       if (name === '@/lib/utils') return { cn: (...values) => values.filter(Boolean).join(' ') };
       if (name === './landing-handoff' || name === '@/lib/landing-handoff') {
         return { LANDING_HANDOFF_PARAMETER: 'ga_handoff', LANDING_HANDOFF_UPDATED: 'landing-handoff-updated', readLandingHandoff: () => null };
@@ -77,8 +74,8 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
     const compiled = ts.transpileModule(source, {
       compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
     }).outputText;
-    new Function('module', 'exports', 'require', 'window', 'navigator', 'document', 'setTimeout', compiled)(
-      module, module.exports, dependencies, window, window.navigator, document,
+    new Function('module', 'exports', 'require', 'window', 'navigator', 'setTimeout', compiled)(
+      module, module.exports, dependencies, window, window.navigator,
       (callback, delay) => timers.push({ callback, delay }),
     );
     modules.set(file, module.exports);
@@ -96,7 +93,7 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
   }
   function flush() { while (scheduled.length) scheduled.shift()(); }
   return {
-    links, attribution, events, timers, window, meta,
+    links, attribution, events, timers, window,
     navigate(value) {
       pathname = window.location.pathname = value;
       window.location.href = new URL(value, window.location.origin).href;
@@ -122,16 +119,6 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
       const result = render('highlight', () => component(props));
       flush();
       return result;
-    },
-    catalog(locale) {
-      shell();
-      const component = load('src/components/masks/MasksCatalogBrowser.tsx').default;
-      render('catalog', () => component({ catalog: { masks: [], categories: [] }, locale, labels: {} }));
-      flush();
-    },
-    unmount(name) {
-      for (const effect of frames.get(name)?.effects ?? []) effect?.cleanup?.();
-      frames.delete(name);
     },
     dispose() { for (const owner of frames.values()) for (const effect of owner.effects) effect?.cleanup?.(); },
   };
@@ -268,54 +255,4 @@ test('desktop shell links retain their web destination and analytics navigation 
   }
   assert.equal(page.timers.length, 2);
   assert.ok(page.events.every(event => typeof event[2].event_callback === 'function'));
-});
-
-test('mask Smart App Banners follow the selected mask, gender, locale and current attribution', t => {
-  const page = pageHarness('iPhone Safari');
-  t.after(() => page.dispose());
-  page.navigate('/ja/masks/hair/');
-  const props = {
-    category: { id: 'hair', name: 'Hair', audienceGender: 'unisex', sourceImageVariants: {} },
-    masks: [mask, nextMask].map((id, index) => ({ id, name: `Look ${index}`, featuredGraphicsVariants: {} })),
-    locale: 'ja', pagePath: '/ja/masks/hair/', maleLabel: 'Male', femaleLabel: 'Female',
-    beforeLabel: 'Before', genderLabel: 'Gender', holdToCompareLabel: 'Compare', iosUnavailableLabel: 'Web and Android',
-    resultAltLabel: '{name}', tryMasksLabel: 'Try on web', openInAppLabel: 'Open in app',
-  };
-  const argument = () => new URL(page.meta.content.split('app-argument=')[1]);
-  let view = page.highlight(props);
-  assert.equal(argument().pathname, `/open/mask/${mask}/`);
-  assert.equal(argument().searchParams.get('gender'), 'female');
-  assert.equal(argument().searchParams.get('locale'), 'ja');
-  assert.equal(argument().searchParams.get('gclid'), 'click');
-  assert.equal(argument().searchParams.has('email'), false);
-  descendants(view).find(element => element.type === 'button' && element.props['aria-label'] === 'Male').props.onClick();
-  view = page.highlight(props);
-  descendants(view).find(element => element.type === 'button' && element.props['aria-label'] === 'Look 1').props.onClick();
-  page.highlight(props);
-  assert.equal(argument().pathname, `/open/mask/${nextMask}/`);
-  assert.equal(argument().searchParams.get('gender'), 'male');
-  page.window.location.search = '?gclid=updated';
-  page.window.dispatchEvent(new Event('landing-handoff-updated'));
-  assert.equal(argument().searchParams.get('gclid'), 'updated');
-  page.window.location.search = '?gclid=consent-updated';
-  page.window.dispatchEvent(new Event('consent-choice-changed'));
-  assert.equal(argument().searchParams.get('gclid'), 'consent-updated');
-  assert.equal(argument().pathname, `/open/mask/${nextMask}/`);
-  assert.equal(argument().searchParams.get('gender'), 'male');
-  page.unmount('highlight');
-  assert.equal(page.meta.content, 'original page banner');
-  page.window.dispatchEvent(new Event('landing-handoff-updated'));
-  assert.equal(page.meta.content, 'original page banner');
-  page.navigate('/ja/masks/');
-  page.catalog('ja');
-  assert.equal(argument().pathname, '/open/mask/all/');
-  assert.equal(argument().searchParams.has('gender'), false);
-  assert.equal(argument().searchParams.get('locale'), 'ja');
-  page.unmount('catalog');
-  page.highlight({ ...props, category: { ...props.category, hiddenOnIos: true } });
-  assert.equal(argument().pathname, '/open/mask/all/');
-  assert.equal(argument().searchParams.has('gender'), false, 'iOS banners must not target an unavailable mask');
-  page.meta.content = 'next route banner';
-  page.unmount('highlight');
-  assert.equal(page.meta.content, 'next route banner', 'cleanup must not overwrite the next route');
 });

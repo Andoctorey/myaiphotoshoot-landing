@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { defaultLocale, locales } from '@/i18n/request';
 import { fetchMasksCatalogStrict } from '@/lib/ai-masks';
-import { buildMaskNativeAppUrl, smartAppBanner } from '@/lib/app-links';
 import { normalizePublishedMaskCategoryLandings } from '@/lib/ai-mask-landing-validation';
 import { postPublicSupabaseRpc } from '@/lib/public-supabase';
 import {
@@ -145,13 +144,6 @@ export async function generateMaskCategoryLandingMetadata(
   return {
     title: { absolute: landing.title },
     description,
-    other: {
-      'apple-itunes-app': smartAppBanner(buildMaskNativeAppUrl(
-        category.hiddenOnIos ? undefined : firstMask.id,
-        locale,
-        category.audienceGender === 'male' ? 'male' : 'female',
-      )),
-    },
     alternates: {
       canonical: url,
       languages: buildPublishedMaskCategoryLanguages(landings, landing.categoryId),

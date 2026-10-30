@@ -33,25 +33,9 @@ test('Android opens the app or goes straight to Play with the assigned preset an
   }
 });
 
-test('first-paint Safari banner uses the same assigned preset and strips unrelated query data', async () => {
-  const { assignedPresetBanner } = await import('../functions/_middleware.js');
-  const html = '<head><meta name="apple-itunes-app" content="app-id=6744860178, app-argument=https://myaiphotoshoot.com/"><link rel="canonical" href="/ja/presets/anime/"></head>';
-  const result = assignedPresetBanner(html, 'https://myaiphotoshoot.com/ja/presets/anime/?gclid=CaseSensitive&email=private', {
-    assignment_id: assignment, featured_graphics: 'https://example.com/preview.jpg',
-  });
-  assert.ok(result.includes(`app-argument=https://myaiphotoshoot.com/ja/presets/anime/?assignment_id=${assignment}&amp;gclid=CaseSensitive`));
-  assert.ok(result.includes('rel="canonical" href="/ja/presets/anime/"'));
-  assert.equal(result.includes('private'), false);
-  assert.equal(assignedPresetBanner(html, 'https://myaiphotoshoot.com/presets/anime/', null), html);
-  assert.equal(assignedPresetBanner(html, 'https://myaiphotoshoot.com/presets/', { assignment_id: assignment, featured_graphics: 'https://example.com/preview.jpg' }), html);
-});
-
-test('native and banner links preserve the assigned preset without changing the web destination', () => {
+test('native links preserve the assigned preset and locale', () => {
   const web = `https://app.myaiphotoshoot.com/#preset/anime~${assignment}`;
   assert.equal(links.buildPresetNativeAppUrl(web, 'ja'), `https://app.myaiphotoshoot.com/open/preset/anime~${assignment}/?locale=ja`);
-  assert.equal(links.buildPresetMarketingUrl(web, 'ja'), `https://myaiphotoshoot.com/ja/presets/anime/?assignment_id=${assignment}`);
-  assert.equal(links.buildPresetMarketingUrl('https://app.myaiphotoshoot.com/#preset/anime', 'en'), 'https://myaiphotoshoot.com/presets/anime/');
-  assert.equal(links.smartAppBanner('https://myaiphotoshoot.com/presets/anime/'), 'app-id=6744860178, app-argument=https://myaiphotoshoot.com/presets/anime/');
 });
 
 test('only actual preset links can become app-opening links', () => {
@@ -82,7 +66,6 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   const require = createRequire(import.meta.url);
   const states = [], effects = [], scheduled = [];
   let stateIndex = 0, effectIndex = 0, clicked = 0;
-  const meta = { content: 'original preset banner' };
   const events = [];
   const window = new EventTarget();
   window.gtag = (...event) => events.push(event);
@@ -119,13 +102,12 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
     const module = { exports: {} };
     const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
     const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
-    new Function('module', 'exports', 'require', 'navigator', 'document', 'window', 'console', compiled)(
+    new Function('module', 'exports', 'require', 'navigator', 'window', 'console', compiled)(
       module, module.exports, name => dependencies[name] ?? require(name),
-      { userAgent, maxTouchPoints: 1 }, { querySelector: () => meta }, window, { info() {} },
+      { userAgent, maxTouchPoints: 1 }, window, { info() {} },
     );
     return module.exports;
   };
-  dependencies['@/hooks/useSmartAppBanner'] = await load('src/hooks/useSmartAppBanner.ts');
   const component = (await load('src/components/presets/PresetAppLinks.tsx')).default;
   const render = () => {
     stateIndex = effectIndex = 0;
@@ -138,7 +120,6 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   assert.equal(waiting.props.href, undefined);
   assert.equal(waiting.props['aria-busy'], true);
   assert.equal(installTarget.pending, true);
-  assert.equal(meta.content, 'original preset banner');
   assert.equal(waiting.props.children[0].type, ButtonSpinner);
   let blocked = false;
   waiting.props.onClick({ preventDefault() { blocked = true; } });
@@ -162,7 +143,6 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
     assert.equal(play.hostname, 'play.google.com');
     assert.equal(new URLSearchParams(play.searchParams.get('referrer')).get('preset'), `anime~${assignment}`);
   }
-  assert.ok(meta.content.includes(`assignment_id=${assignment}`));
   ready.props.onClick({ preventDefault() { assert.fail('resolved tap should navigate'); } });
   assert.equal(clicked, 1);
   assert.equal(events[0][1], 'preset_app_open_click');
@@ -172,7 +152,6 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   if (userAgent.includes('Android')) {
     assert.ok(decodeURIComponent(render().props.href.split('S.browser_fallback_url=')[1]).includes('&ga_handoff=consented-handoff'));
   }
-  assert.ok(meta.content.includes('ga_handoff=consented-handoff'));
   handoff = '';
   window.dispatchEvent(new Event('consent-choice-changed'));
   assert.equal(render().props.href.includes('ga_handoff'), false);
@@ -181,15 +160,12 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   assert.equal(new URLSearchParams(new URL(installTarget.url).searchParams.get('referrer')).get('preset'), 'anime');
   flush();
   assert.equal(nativeDestination(render().props.href), 'https://app.myaiphotoshoot.com/open/preset/anime/?locale=en');
-  assert.equal(meta.content.includes('assignment_id='), false);
   preset = { ...preset, locale: 'ja' };
   assert.equal(render().props.href, undefined, 'locale changes must not reuse the previous native link');
   flush();
   assert.equal(new URL(nativeDestination(render().props.href)).searchParams.get('locale'), 'ja');
-  assert.ok(meta.content.includes('https://myaiphotoshoot.com/ja/presets/anime/'));
   preset = { ...preset, resolved: false, pending: true };
   assert.equal(render().props.href, undefined);
   flush();
-  assert.equal(meta.content, 'original preset banner');
   for (const effect of effects) effect.cleanup?.();
 });

@@ -92,18 +92,6 @@ export function buildNativeAppOpenUrl(nativeAppUrl: string, platform: 'ios' | 'a
   return `intent://${url.host}${url.pathname}${url.search}#Intent;scheme=https;package=com.myaiphotoshoot;S.browser_fallback_url=${encodeURIComponent(fallback.href)};end`;
 }
 
-export function buildPresetMarketingUrl(webAppUrl: string, locale: string): string {
-  const [slug, assignmentId] = presetAppIdentifier(webAppUrl).split('~');
-  const prefix = locale === 'en' ? '' : `/${locale}`;
-  const url = new URL(`${prefix}/presets/${encodeURIComponent(slug)}/`, 'https://myaiphotoshoot.com');
-  if (assignmentId) url.searchParams.set('assignment_id', assignmentId);
-  return url.toString();
-}
-
-export function smartAppBanner(url: string): string {
-  return `app-id=${APP_STORE_ID}, app-argument=${url}`;
-}
-
 export function mobileAppPlatform(userAgent: string, maxTouchPoints: number): 'ios' | 'android' | null {
   if (/iphone|ipad|ipod/i.test(userAgent) || (/macintosh/i.test(userAgent) && maxTouchPoints > 1)) return 'ios';
   return /android/i.test(userAgent) ? 'android' : null;

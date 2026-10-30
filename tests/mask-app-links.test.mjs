@@ -24,55 +24,6 @@ test('mask native and web actions keep the same selected mask and preview gender
   }
 });
 
-test('initial mask page metadata supplies a contextual banner before client effects run', async () => {
-  const require = createRequire(import.meta.url);
-  const catalog = {
-    categories: [{ id: 'hair', audienceGender: 'unisex', hiddenOnIos: false }],
-    masks: [{ categoryId: 'other', id: 'not-selected' }, { categoryId: 'hair', id: mask }],
-  };
-  const dependencies = {
-    '@/i18n/request': { defaultLocale: 'en', locales: ['en', 'ja'] },
-    '@/lib/app-links': links,
-    '@/lib/ai-masks': { fetchMasksCatalogStrict: async () => catalog },
-    '@/lib/ai-mask-landing-validation': { normalizePublishedMaskCategoryLandings: rows => rows },
-    '@/lib/public-supabase': { postPublicSupabaseRpc: async () => Response.json([
-      { categoryId: 'hair', locale: 'ja', slug: 'hair', title: 'Hair', description: 'Hair styles', introduction: 'Preview hair styles' },
-    ]) },
-    'next-intl/server': { getTranslations: async () => key => key },
-    '@/components/masks/AiMasksCatalog': { default: () => null },
-  };
-  const load = async file => {
-    const module = { exports: {} };
-    const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
-    new Function('module', 'exports', 'require', compile(source))(
-      module, module.exports, name => dependencies[name] ?? require(name),
-    );
-    return module.exports;
-  };
-  dependencies['@/lib/seo'] = await load('src/lib/seo.ts');
-  const landings = await load('src/lib/ai-mask-landings.ts');
-  dependencies['@/lib/ai-mask-landings'] = landings;
-  const argument = metadata => new URL(metadata.other['apple-itunes-app'].split('app-argument=')[1]);
-  for (const audienceGender of ['unisex', 'female', 'male']) {
-    catalog.categories[0].audienceGender = audienceGender;
-    const target = argument(await landings.generateMaskCategoryLandingMetadata('hair', 'ja'));
-    assert.equal(target.pathname, `/open/mask/${mask}/`);
-    assert.equal(target.searchParams.get('gender'), audienceGender === 'male' ? 'male' : 'female');
-    assert.equal(target.searchParams.get('locale'), 'ja');
-  }
-  catalog.categories[0].hiddenOnIos = true;
-  const unavailable = argument(await landings.generateMaskCategoryLandingMetadata('hair', 'ja'));
-  assert.equal(unavailable.pathname, '/open/mask/all/');
-  assert.equal(unavailable.searchParams.has('gender'), false);
-  for (const [file, locale] of [['src/app/masks/page.tsx', 'en'], ['src/app/[locale]/masks/page.tsx', 'ja']]) {
-    const route = await load(file);
-    const target = argument(await route.generateMetadata({ params: Promise.resolve({ locale }) }));
-    assert.equal(target.pathname, '/open/mask/all/');
-    assert.equal(target.searchParams.has('gender'), false);
-    assert.equal(target.searchParams.get('locale'), locale);
-  }
-});
-
 async function componentHarness(userAgent, maxTouchPoints = 1) {
   const require = createRequire(import.meta.url);
   const states = [], effects = [], scheduled = [], events = [];

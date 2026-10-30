@@ -2,9 +2,8 @@
 
 import Image from 'next/image';
 import { useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { buildMaskAppUrl, buildMaskGooglePlayUrl, buildMaskNativeAppUrl } from '@/lib/app-links';
+import { buildMaskAppUrl, buildMaskGooglePlayUrl } from '@/lib/app-links';
 import { usePageAndroidInstallLink } from '@/components/layout/AndroidInstallLink';
-import { useSmartAppBanner } from '@/hooks/useSmartAppBanner';
 import { WebIcon } from '@/components/ui/PlatformIcons';
 import { cn } from '@/lib/utils';
 import MaskAppLink from './MaskAppLink';
@@ -68,7 +67,6 @@ export default function AiMaskCategoryHighlights({
   const canSwitchGender = category.audienceGender === 'unisex';
   const selectedMask = masks.find((mask) => mask.id === selectedMaskId) || masks[0];
   usePageAndroidInstallLink(pagePath, buildMaskGooglePlayUrl(selectedMask?.id, gender));
-  useSmartAppBanner(buildMaskNativeAppUrl(category.hiddenOnIos ? undefined : selectedMask?.id, locale, gender));
   if (!selectedMask) return null;
   const selectedImageUrl = showBefore
     ? categoryPreviewUrl(category, gender)
