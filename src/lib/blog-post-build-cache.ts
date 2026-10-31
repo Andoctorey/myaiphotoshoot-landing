@@ -15,6 +15,8 @@ const CACHE_VERSION = 1;
 // Cloudflare Pages restores .next/cache between builds; match the existing fetch freshness contract.
 const CACHE_MAX_AGE_MS = BLOG_REVALIDATE_SECONDS * 1000;
 const CACHE_DIRECTORY = path.join(process.cwd(), '.next', 'cache', 'blog-content', `v${CACHE_VERSION}`);
+const BLOG_FETCH_ATTEMPTS = 3;
+const BLOG_RETRY_BASE_DELAY_MS = 500;
 
 type CachedBlogPost = {
   version: number;
@@ -118,6 +120,42 @@ async function writeCachedBlogPost(
   }
 }
 
+async function fetchBlogPostWithRetry(url: string, context: string): Promise<Response> {
+  for (let attempt = 1; ; attempt += 1) {
+    const delayMs = BLOG_RETRY_BASE_DELAY_MS * 2 ** (attempt - 1);
+    let response: Response;
+    try {
+      response = await fetch(url, {
+        next: { revalidate: BLOG_REVALIDATE_SECONDS },
+        // Next.js memoizes failed GETs too; a signal makes retries reach the origin.
+        ...(attempt > 1 ? { signal: new AbortController().signal } : {}),
+      });
+    } catch (error) {
+      if (attempt >= BLOG_FETCH_ATTEMPTS) {
+        throw new Error(`${context}: /blog-post request failed after ${attempt} attempts.`, { cause: error });
+      }
+      console.warn(`${context}: /blog-post request failed; retrying.`, { attempt, delayMs }, error);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      continue;
+    }
+
+    if (response.ok || response.status === 404) return response;
+
+    const retry = [502, 503, 504].includes(response.status) && attempt < BLOG_FETCH_ATTEMPTS;
+    console.warn(`${context}: /blog-post returned HTTP ${response.status}${retry ? '; retrying' : ''}.`, {
+      attempt,
+      ...(retry ? { delayMs } : {}),
+      errorCode: response.headers.get('sb-error-code'),
+      requestId: response.headers.get('sb-request-id'),
+      cfRay: response.headers.get('cf-ray'),
+    });
+    if (!retry) return response;
+
+    void response.body?.cancel().catch(() => undefined);
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+  }
+}
+
 async function loadLandingBlogPost(
   buildFunctionsUrl: BuildFunctionsUrl,
   routeLocale: string,
@@ -147,7 +185,7 @@ async function loadLandingBlogPost(
     platform: 'web',
     view: 'landing-static',
   });
-  const response = await fetch(url, { next: { revalidate: BLOG_REVALIDATE_SECONDS } });
+  const response = await fetchBlogPostWithRetry(url, context);
   if (!response.ok) {
     return { status: response.status, post: null, slugMap };
   }

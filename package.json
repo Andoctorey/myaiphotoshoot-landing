@@ -21,7 +21,7 @@
     "test:masks": "node --test scripts/prune-unpublished-mask-routes.test.mjs src/lib/ai-mask-landing-validation.test.mjs tests/mask-category-landings.test.mjs tests/mask-app-links.test.mjs",
     "test:csp": "node --test scripts/apply-csp.test.js",
     "test:security": "npm run test:json-ld && npm run test:csp",
-    "test:build-cache": "node --test scripts/clear-next-fetch-cache.test.js",
+    "test:build-cache": "node --test scripts/clear-next-fetch-cache.test.js tests/blog-post-build-cache.test.mjs",
     "test:sitemap": "node --test tests/submit-sitemap.test.mjs",
     "test:worker": "node --experimental-default-type=module --test worker/deploy-proxy.test.js"
   },
