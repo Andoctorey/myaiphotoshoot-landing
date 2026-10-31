@@ -115,6 +115,12 @@ export async function fetchCanonicalSlug({ env, locale, slug }) {
     : null;
 }
 
+/**
+ * @param {string} baseUrl
+ * @param {string} path
+ * @param {Record<string, string>} params
+ * @returns {string}
+ */
 export function buildFunctionsUrl(baseUrl, path, params) {
   const base = new URL(baseUrl);
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;

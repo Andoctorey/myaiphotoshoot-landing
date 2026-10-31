@@ -74,7 +74,8 @@ async function submitIndexNow() {
 
   if (!response.ok || !parsed?.success) {
     const message = parsed?.message || `HTTP ${response.status}`;
-    const detail = parsed?.error ? ` (${parsed.error})` : '';
+    const responseError = parsed?.error;
+    const detail = responseError ? ` (${responseError})` : '';
     const responseDetails = parsed ? JSON.stringify(parsed, null, 2) : text.slice(0, 1000);
     console.error('IndexNow submission failed with response:', responseDetails || '(empty response body)');
     throw new Error(`IndexNow submission failed: ${message}${detail}`);

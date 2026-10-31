@@ -43,7 +43,9 @@
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "5.20261031.1",
     "@eslint/eslintrc": "^3.3.7",
+    "@next/env": "15.5.28",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20.19.43",
     "@types/react": "^19.3.0",

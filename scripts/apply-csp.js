@@ -10,6 +10,8 @@ const {
 } = require('worker_threads');
 const { loadEnvConfig } = require('@next/env');
 
+/** @typedef {{ fileCount: number, hashCount: number }} CspResult */
+
 const ROOT_DIR = path.join(__dirname, '..');
 const OUT_DIR = path.join(ROOT_DIR, 'out');
 const DEFAULT_API_ORIGIN = 'https://trzgfajvyjpvbqedyxug.supabase.co';
@@ -109,6 +111,12 @@ function* walkHtml(dir) {
   }
 }
 
+/**
+ * @param {string[]} filePaths
+ * @param {string} apiOrigin
+ * @param {(fileCountDelta: number) => void} [onProgress]
+ * @returns {CspResult}
+ */
 function processHtmlFiles(filePaths, apiOrigin, onProgress = () => {}) {
   const hashCache = new Map();
   let completedSinceProgress = 0;
@@ -142,11 +150,18 @@ function partitionFiles(filePaths, workerCount) {
   return partitions.filter((partition) => partition.length > 0);
 }
 
+/**
+ * @param {string[]} filePaths
+ * @param {string} apiOrigin
+ * @param {(fileCountDelta: number) => void} onProgress
+ * @returns {Promise<CspResult>}
+ */
 function runWorker(filePaths, apiOrigin, onProgress) {
   return new Promise((resolve, reject) => {
     const worker = new Worker(__filename, {
       workerData: { filePaths, apiOrigin },
     });
+    /** @type {CspResult | null} */
     let result = null;
     let settled = false;
 
@@ -174,6 +189,12 @@ function runWorker(filePaths, apiOrigin, onProgress) {
   });
 }
 
+/**
+ * @param {string[]} filePaths
+ * @param {string} apiOrigin
+ * @param {{ workerCount?: number, onProgress?: (completed: number, total: number) => void }} [options]
+ * @returns {Promise<CspResult>}
+ */
 async function applyCspToFiles(filePaths, apiOrigin, options = {}) {
   if (filePaths.length === 0) {
     return { fileCount: 0, hashCount: 0 };

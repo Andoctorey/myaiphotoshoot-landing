@@ -1,3 +1,4 @@
+/** @type {Record<string, Record<string, string>>} */
 export const LEGACY_LOCALIZED_SLUGS = {
   zh: {
     "ao-yun-hui-yun-dong-yuan-zhao-pian": "olympic-athlete-photos",

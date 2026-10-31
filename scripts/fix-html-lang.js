@@ -193,6 +193,11 @@ function encodedBlogPath(locale, slug) {
   return `/${locale}/blog/${encodeURIComponent(slug)}`;
 }
 
+/**
+ * @param {string} sitemapXml
+ * @param {Record<string, Record<string, string>>} [legacyLocalizedSlugs]
+ * @returns {string[]}
+ */
 function generateBlogAliasRedirects(sitemapXml, legacyLocalizedSlugs = {}) {
   // Static alias rules must stay before splat redirects or Cloudflare counts them against dynamic limits.
   const redirects = new Set();
