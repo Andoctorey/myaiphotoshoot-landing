@@ -25,7 +25,7 @@ const post = {
 };
 
 async function loadModule(relativePath, dependencies, globals = {}) {
-  const source = await readFile(new URL(`../${relativePath}`, import.meta.url), 'utf8');
+  const source = await readFile(new URL(`../${relativePath}`, import.meta.url), { encoding: 'utf8' });
   const { outputText } = ts.transpileModule(source, {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,

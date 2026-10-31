@@ -56,7 +56,7 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
   function load(file) {
     if (modules.has(file)) return modules.get(file);
     const compiledModule = { exports: {} };
-    const source = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
+    const source = readFileSync(new URL(`../${file}`, import.meta.url), { encoding: 'utf8' });
     const dependencies = name => {
       if (name === 'react') return react;
       if (name === 'next/navigation') return { usePathname: () => pathname };
@@ -80,9 +80,9 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
     modules.set(file, compiledModule.exports);
     return compiledModule.exports;
   }
-  const shared = load('src/components/layout/AndroidInstallLink.tsx');
+  const shared = /** @type {typeof import('../src/components/layout/AndroidInstallLink')} */ (load('src/components/layout/AndroidInstallLink.tsx'));
   const hooks = load('src/hooks/usePlatformAppLink.ts');
-  const links = load('src/lib/app-links.ts');
+  const links = /** @type {typeof import('../src/lib/app-links')} */ (load('src/lib/app-links.ts'));
   const attribution = load('src/lib/analytics.ts');
   function shell() {
     const outer = render('provider', () => shared.AndroidInstallLinkProvider({ children: null }));

@@ -33,7 +33,7 @@ test('exported use cases schema matches the visible catalog in every locale', as
   for (const { prefix, locale } of routes) {
     const htmlPath = path.join(outputRoot, prefix, 'use-cases', 'index.html');
     const label = path.relative(projectRoot, htmlPath);
-    const html = await readFile(htmlPath, 'utf8');
+    const html = await readFile(htmlPath, { encoding: 'utf8' });
     const schemas = Array.from(
       html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
       (match) => JSON.parse(match[1]),

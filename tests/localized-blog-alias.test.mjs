@@ -250,7 +250,7 @@ test('maps legacy localized slugs back to their English source slugs', () => {
 });
 
 test('redirects reported historical blog 404s directly to current canonical URLs', async () => {
-  const redirects = await readFile(new URL('../public/_redirects', import.meta.url), 'utf8');
+  const redirects = await readFile(new URL('../public/_redirects', import.meta.url), { encoding: 'utf8' });
   const lines = redirects.split(/\r?\n/);
   const start = lines.indexOf('# Search Console blog 404s with verified canonical replacements');
   const end = lines.indexOf('# End Search Console blog 404 redirects');

@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import { createRequire } from 'node:module';
 import ts from 'typescript';
 
-const source = await readFile(new URL('../src/lib/app-links.ts', import.meta.url), 'utf8');
+const source = await readFile(new URL('../src/lib/app-links.ts', import.meta.url), { encoding: 'utf8' });
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 const context = vm.createContext({ exports: {}, URL, URLSearchParams });
 vm.runInContext(compiled, context);
@@ -56,7 +56,7 @@ test('mobile detection supports iPad desktop user agents and leaves desktop on w
 
 test('every landing locale includes the secondary action', async () => {
   for (const locale of ['en', 'zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar']) {
-    const messages = JSON.parse(await readFile(new URL(`../messages/${locale}/index.json`, import.meta.url), 'utf8'));
+    const messages = JSON.parse(await readFile(new URL(`../messages/${locale}/index.json`, import.meta.url), { encoding: 'utf8' }));
     assert.equal(typeof messages.presets.openInApp, 'string', locale);
     assert.ok(messages.presets.openInApp.trim(), locale);
   }
@@ -100,7 +100,7 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
   };
   const load = async file => {
     const compiledModule = { exports: {} };
-    const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    const source = await readFile(new URL(`../${file}`, import.meta.url), { encoding: 'utf8' });
     const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
     new Function('module', 'exports', 'require', 'navigator', 'window', 'console', compiled)(
       compiledModule, compiledModule.exports, name => dependencies[name] ?? require(name),

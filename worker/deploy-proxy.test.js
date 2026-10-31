@@ -189,6 +189,10 @@ function base64Url(bytes) {
     .replace(/=+$/, '');
 }
 
+/**
+ * @param {string} [token]
+ * @param {string} [reason]
+ */
 function deployRequest(token, reason = 'Test deploy') {
   const headers = {
     'Content-Type': 'application/json',

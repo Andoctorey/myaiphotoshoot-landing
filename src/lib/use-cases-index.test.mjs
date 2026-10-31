@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { afterEach, test } from 'node:test';
 import ts from 'typescript';
 
-const source = await readFile(new URL('./use-cases-index.ts', import.meta.url), 'utf8');
+const source = await readFile(new URL('./use-cases-index.ts', import.meta.url), { encoding: 'utf8' });
 const { outputText } = ts.transpileModule(source, {
   compilerOptions: {
     module: ts.ModuleKind.ESNext,

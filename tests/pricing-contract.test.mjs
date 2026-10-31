@@ -18,9 +18,33 @@ const englishShareDescription = 'Create realistic headshots, profile pictures, p
 const commercialShareClaim = /(?:[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन)/iu;
 
 async function readProjectFile(relativePath) {
-  return readFile(path.join(projectRoot, relativePath), 'utf8');
+  return readFile(path.join(projectRoot, relativePath), { encoding: 'utf8' });
 }
 
+/**
+ * @typedef {{
+ *   'src/lib/pricing.ts': typeof import('../src/lib/pricing'),
+ *   'src/lib/models.ts': typeof import('../src/lib/models'),
+ *   'src/lib/regional-pricing.ts': typeof import('../src/lib/regional-pricing'),
+ *   'src/lib/app-links.ts': typeof import('../src/lib/app-links'),
+ *   'src/lib/json-ld.ts': typeof import('../src/lib/json-ld'),
+ *   'src/lib/seo.ts': typeof import('../src/lib/seo'),
+ *   'src/components/studio/StudioPage.tsx': typeof import('../src/components/studio/StudioPage'),
+ *   'src/components/layout/Footer.tsx': typeof import('../src/components/layout/Footer'),
+ *   'src/lib/blog-static-params.ts': typeof import('../src/lib/blog-static-params'),
+ *   'src/lib/ai-preset-catalog.ts': typeof import('../src/lib/ai-preset-catalog'),
+ *   'src/lib/ai-presets.ts': typeof import('../src/lib/ai-presets'),
+ *   'src/lib/ai-masks.ts': typeof import('../src/lib/ai-masks'),
+ *   'src/components/features/PricingOfferList.tsx': typeof import('../src/components/features/PricingOfferList')
+ * }} TestModules
+ */
+
+/**
+ * @template {keyof TestModules} P
+ * @param {P} relativePath
+ * @param {Record<string, unknown>} [dependencies]
+ * @returns {Promise<TestModules[P]>}
+ */
 async function loadTypeScriptModule(relativePath, dependencies = {}) {
   const source = await readProjectFile(relativePath);
   const output = ts.transpileModule(source, {
@@ -32,10 +56,9 @@ async function loadTypeScriptModule(relativePath, dependencies = {}) {
     fileName: path.basename(relativePath),
   }).outputText;
   const loadedModule = { exports: {} };
-  const evaluate = new Function('exports', 'module', 'require', output);
+  const evaluate = new Function('exports', 'module', 'require', `${output}\nreturn module.exports;`);
   const localRequire = (specifier) => dependencies[specifier] ?? require(specifier);
-  evaluate(loadedModule.exports, loadedModule, localRequire);
-  return loadedModule.exports;
+  return evaluate(loadedModule.exports, loadedModule, localRequire);
 }
 
 async function loadPricingModule() {
@@ -52,6 +75,7 @@ function valueAtPath(object, dottedPath) {
   return dottedPath.split('.').reduce((value, key) => value?.[key], object);
 }
 
+/** @returns {string[]} */
 function leafPaths(value, prefix = '') {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     return [prefix];
@@ -177,9 +201,11 @@ test('regional V2 pricing accepts null country groups and preserves weekly annua
   assert.deepEqual(catalog.packages.map((offer) => [offer.credits, offer.price]), [
     [10, 33], [100, 199], [500, 499],
   ]);
-  response.packages.push({ product_id: 'future_package' });
-  response.plans.push({ product_id: 'v2', base_plan_id: 'quarterly' });
-  assert.deepEqual(pricingCatalogFromApi(response), catalog);
+  assert.deepEqual(pricingCatalogFromApi({
+    ...response,
+    packages: [...response.packages, { product_id: 'future_package' }],
+    plans: [...response.plans, { product_id: 'v2', base_plan_id: 'quarterly' }],
+  }), catalog);
 });
 
 test('invalid or legacy pricing cannot replace the V2 reference catalog', async () => {
@@ -390,12 +416,10 @@ test('creation and editing stay ahead of optional personal-model training', asyn
 
 test('Studio renders automatic generation costs and matching FAQ data in every locale', async () => {
   const pricing = await loadPricingModule();
-  const [models, appLinks, jsonLd, seo] = await Promise.all([
-    loadModelsModule(pricing),
-    loadTypeScriptModule('src/lib/app-links.ts'),
-    loadTypeScriptModule('src/lib/json-ld.ts'),
-    loadTypeScriptModule('src/lib/seo.ts'),
-  ]);
+  const models = await loadModelsModule(pricing);
+  const appLinks = await loadTypeScriptModule('src/lib/app-links.ts');
+  const jsonLd = await loadTypeScriptModule('src/lib/json-ld.ts');
+  const seo = await loadTypeScriptModule('src/lib/seo.ts');
   const text = (html) => html
     .replace(/<[^>]+>/g, '')
     .replaceAll('&#x27;', "'")
@@ -593,17 +617,16 @@ test('blog static generation uses compact revision-aware Cloudflare build cachin
     defaultPostPage,
     localizedPostPage,
     blogHook,
-    blogStaticParams,
   ] = await Promise.all([
     readProjectFile('src/lib/blog-static-params.ts'),
     readProjectFile('src/lib/blog-post-build-cache.ts'),
     readProjectFile('src/app/blog/[slug]/page.tsx'),
     readProjectFile('src/app/[locale]/blog/[slug]/page.tsx'),
     readProjectFile('src/hooks/useBlog.ts'),
-    loadTypeScriptModule('src/lib/blog-static-params.ts', {
-      '@/i18n/request': { defaultLocale: 'en' },
-    }),
   ]);
+  const blogStaticParams = await loadTypeScriptModule('src/lib/blog-static-params.ts', {
+    '@/i18n/request': { defaultLocale: 'en' },
+  });
 
   assert.match(inventorySource, /sitemap: '1',[\s\S]{0,120}view: 'landing-static'/);
   assert.match(cacheSource, /\.next', 'cache', 'blog-content'/);
@@ -784,18 +807,21 @@ test('homepage preset cards open detail pages while detail CTAs open the app in 
     readProjectFile('src/components/features/HomePresets.tsx'),
     readProjectFile('src/components/presets/AiPresetPage.tsx'),
   ]);
+  /** @type {string | undefined} */
   const presetCard = homePresets
     .match(/<Link\b[^>]*>/g)
     ?.find((candidate) => candidate.includes('href={localePath(locale, `/presets/${preset.slug}/`)}'));
-  const presetLinks = presetPage
-    .match(/<PresetExperimentLink\b[^>]*>/g)
-    ?.filter((candidate) => candidate.includes('href={appUrl}'));
+  /** @type {string[]} */
+  const presetLinks = Array.from(
+    presetPage.matchAll(/<PresetExperimentLink\b[^>]*>/g),
+    (match) => match[0],
+  ).filter((candidate) => candidate.includes('href={appUrl}'));
 
   assert.ok(presetCard, 'Missing localized homepage preset detail link');
   assert.doesNotMatch(presetCard, /\btarget=/);
   assert.match(presetCard, /aria-label=\{preset\.name\}/);
   assert.doesNotMatch(homePresets, /href=\{buildPresetAppUrl\(preset\.slug\)\}/);
-  assert.equal(presetLinks?.length, 3, 'Expected all three preset detail app links');
+  assert.equal(presetLinks.length, 3, 'Expected all three preset detail app links');
   for (const presetLink of presetLinks) {
     assert.doesNotMatch(presetLink, /\btarget=/);
   }
@@ -984,6 +1010,7 @@ test('mask catalog schema models masks as collection items rather than software 
 });
 
 test('localized page and social metadata stays concise, translated, and evergreen', async () => {
+  /** @type {typeof import('../messages/en/index.json')} */
   const english = JSON.parse(await readProjectFile('messages/en/index.json'));
 
   for (const locale of localeCodes) {
@@ -1175,6 +1202,7 @@ test('pricing displays every offer, KMP photo estimates, and savings without pur
 
   for (const locale of localeCodes) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
+    /** @type {(key: string, values?: import('next-intl').TranslationValues) => string} */
     const t = createTranslator({
       locale,
       messages,
@@ -1293,7 +1321,10 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
     readProjectFile('src/lib/ai-presets.ts'),
     readProjectFile('src/lib/usecase-seo.ts'),
   ]);
-  const genericCardReferences = genericCardSources.join('\n').match(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=8)?/g) || [];
+  const genericCardReferences = Array.from(
+    genericCardSources.join('\n').matchAll(/(?:https:\/\/myaiphotoshoot\.com)?\/og-image-v2\.jpg(?:\?v=8)?/g),
+    (match) => match[0],
+  );
   assert.ok(genericCardReferences.length > 0);
   assert.equal(
     genericCardReferences.every((reference) => reference.endsWith('?v=8')),

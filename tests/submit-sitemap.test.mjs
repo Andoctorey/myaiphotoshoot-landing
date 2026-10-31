@@ -4,7 +4,7 @@ import { afterEach, test } from 'node:test';
 
 const functionSource = await readFile(
   new URL('../functions/submit-sitemap.js', import.meta.url),
-  'utf8'
+  { encoding: 'utf8' }
 );
 const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSource).toString('base64')}`;
 const { onRequest } = await import(functionModuleUrl);

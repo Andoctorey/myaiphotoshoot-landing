@@ -9,7 +9,7 @@ const compile = source => ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
 }).outputText;
 const appLinks = vm.createContext({ exports: {}, URL, URLSearchParams });
-vm.runInContext(compile(await readFile(new URL('../src/lib/app-links.ts', import.meta.url), 'utf8')), appLinks);
+vm.runInContext(compile(await readFile(new URL('../src/lib/app-links.ts', import.meta.url), { encoding: 'utf8' })), appLinks);
 const links = appLinks.exports;
 const mask = '87654321-4321-4321-8321-cba987654321';
 const nativeDestination = href => href.startsWith('intent:') ? href.split('#Intent;')[0].replace('intent:', 'https:') : href;
@@ -54,7 +54,7 @@ async function componentHarness(userAgent, maxTouchPoints = 1) {
     } },
   };
   const load = async file => {
-    const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    const source = await readFile(new URL(`../${file}`, import.meta.url), { encoding: 'utf8' });
     const compiledModule = { exports: {} };
     new Function('module', 'exports', 'require', 'navigator', 'window', 'console', compile(source))(
       compiledModule, compiledModule.exports, name => dependencies[name] ?? require(name),
@@ -101,11 +101,11 @@ test('changing a selected mask or gender never navigates to the preceding select
 });
 
 test('native actions respect iOS-only restrictions while web mask cards remain available', async () => {
-  for (const [userAgent, touchPoints, visible] of [
-    ['Mozilla iPhone Safari', 1, false],
-    ['Mozilla Macintosh Safari', 5, false],
-    ['Mozilla Macintosh Safari', 0, false],
-    ['Mozilla Android Chrome', 1, true],
+  for (const { userAgent, touchPoints, visible } of [
+    { userAgent: 'Mozilla iPhone Safari', touchPoints: 1, visible: false },
+    { userAgent: 'Mozilla Macintosh Safari', touchPoints: 5, visible: false },
+    { userAgent: 'Mozilla Macintosh Safari', touchPoints: 0, visible: false },
+    { userAgent: 'Mozilla Android Chrome', touchPoints: 1, visible: true },
   ]) {
     const page = await componentHarness(userAgent, touchPoints);
     page.render({ hiddenOnIos: true }); page.flush();
@@ -119,7 +119,7 @@ test('native actions respect iOS-only restrictions while web mask cards remain a
 
 test('every landing locale translates the mask action', async () => {
   for (const locale of ['en', 'zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar']) {
-    const messages = JSON.parse(await readFile(new URL(`../messages/${locale}/index.json`, import.meta.url), 'utf8'));
+    const messages = JSON.parse(await readFile(new URL(`../messages/${locale}/index.json`, import.meta.url), { encoding: 'utf8' }));
     assert.equal(typeof messages.masks.openInApp, 'string', locale);
     assert.ok(messages.masks.openInApp.trim(), locale);
   }

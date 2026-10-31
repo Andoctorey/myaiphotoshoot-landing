@@ -4,7 +4,7 @@ import { afterEach, test } from 'node:test';
 
 const functionSource = await readFile(
   new URL('../functions/submit-indexnow.js', import.meta.url),
-  'utf8'
+  { encoding: 'utf8' }
 );
 const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSource).toString('base64')}`;
 const { onRequest } = await import(functionModuleUrl);
@@ -82,6 +82,11 @@ test('submits only URLs whose hostname exactly matches the configured host', asy
   ]);
 });
 
+/**
+ * @param {string} [token]
+ * @param {string} [authorization]
+ * @param {{ action?: string, urls?: string[] }} [payload]
+ */
 function submissionRequest(token, authorization, payload = { action: 'submit-indexnow' }) {
   const headers = {
     'Content-Type': 'application/json'

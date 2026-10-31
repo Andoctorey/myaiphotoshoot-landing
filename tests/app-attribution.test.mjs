@@ -4,15 +4,15 @@ import { test } from 'node:test';
 import vm from 'node:vm';
 import ts from 'typescript';
 
-const source = await readFile(new URL('../src/lib/analytics.ts', import.meta.url), 'utf8');
+const source = await readFile(new URL('../src/lib/analytics.ts', import.meta.url), { encoding: 'utf8' });
 const compiled = ts.transpileModule(source, {
   compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020},
 }).outputText;
-const handoffSource = await readFile(new URL('../src/lib/landing-handoff.ts', import.meta.url), 'utf8');
+const handoffSource = await readFile(new URL('../src/lib/landing-handoff.ts', import.meta.url), { encoding: 'utf8' });
 const handoffCompiled = ts.transpileModule(handoffSource, {
   compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020},
 }).outputText;
-const appLinksSource = await readFile(new URL('../src/lib/app-links.ts', import.meta.url), 'utf8');
+const appLinksSource = await readFile(new URL('../src/lib/app-links.ts', import.meta.url), { encoding: 'utf8' });
 const appLinks = vm.createContext({ exports: {}, URL, URLSearchParams });
 vm.runInContext(ts.transpileModule(appLinksSource, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText, appLinks);
 
@@ -175,7 +175,7 @@ test('a slow Google script still prepares the browser identity when it finishes 
     createElement: () => new EventTarget(),
     head: {appendChild: element => { script = element; }},
   };
-  const source = await readFile(new URL('../src/components/GoogleAnalytics.tsx', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/GoogleAnalytics.tsx', import.meta.url), { encoding: 'utf8' });
   const compiled = ts.transpileModule(source, {
     compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, jsx: ts.JsxEmit.ReactJSX},
   }).outputText;

@@ -18,7 +18,7 @@ const canonicalPages = [
 ];
 
 async function readProjectFile(relativePath) {
-  return readFile(path.join(projectRoot, relativePath), 'utf8');
+  return readFile(path.join(projectRoot, relativePath), { encoding: 'utf8' });
 }
 
 async function loadHomepageGalleryModule() {

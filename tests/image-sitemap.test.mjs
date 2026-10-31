@@ -31,7 +31,7 @@ test('writes up to 1,000 unique popular gallery images as XML', async (t) => {
   };
 
   const result = await generateImageSitemap({ fetchImpl, outputPath });
-  const xml = await readFile(outputPath, 'utf8');
+  const xml = await readFile(outputPath, { encoding: 'utf8' });
 
   assert.equal(result.imageCount, 1000);
   assert.deepEqual(requestedPages.sort((a, b) => a - b), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -73,11 +73,11 @@ test('does not publish a partial sitemap when an upstream page fails', async (t)
 
 test('deployment serves the photo shell and image sitemap as static files', async () => {
   const [routesSource, redirects, headers, robotsSource, packageSource] = await Promise.all([
-    readFile(new URL('../public/_routes.json', import.meta.url), 'utf8'),
-    readFile(new URL('../public/_redirects', import.meta.url), 'utf8'),
-    readFile(new URL('../public/_headers', import.meta.url), 'utf8'),
-    readFile(new URL('../src/app/robots.ts', import.meta.url), 'utf8'),
-    readFile(new URL('../package.json', import.meta.url), 'utf8'),
+    readFile(new URL('../public/_routes.json', import.meta.url), { encoding: 'utf8' }),
+    readFile(new URL('../public/_redirects', import.meta.url), { encoding: 'utf8' }),
+    readFile(new URL('../public/_headers', import.meta.url), { encoding: 'utf8' }),
+    readFile(new URL('../src/app/robots.ts', import.meta.url), { encoding: 'utf8' }),
+    readFile(new URL('../package.json', import.meta.url), { encoding: 'utf8' }),
   ]);
   const routes = JSON.parse(routesSource);
   const packageJson = JSON.parse(packageSource);

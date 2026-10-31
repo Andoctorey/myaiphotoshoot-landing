@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const readProjectFile = (file) => readFile(path.join(root, file), 'utf8');
+const readProjectFile = (file) => readFile(path.join(root, file), { encoding: 'utf8' });
 
 function assertNewTabAnchor(source, href) {
   const anchor = source.match(/<a\b[^>]*>/g)?.find((candidate) => candidate.includes(href));

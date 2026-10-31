@@ -2,11 +2,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { createRequire } from 'node:module';
-import React from 'react';
+import React, { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import ts from 'typescript';
 
-const source = await readFile(new URL('../functions/preset-test.js', import.meta.url), 'utf8');
+// Select the function-component overload for dynamically compiled components.
+/** @type {<P>(component: import('react').FunctionComponent<P>, props: import('react').Attributes & P) => import('react').FunctionComponentElement<P>} */
+const createComponentElement = createElement;
+
+/** @typedef {typeof import('../src/components/presets/PresetExperiment') & typeof import('../src/lib/preset-assignments')} PresetClient */
+
+const source = await readFile(new URL('../functions/preset-test.js', import.meta.url), { encoding: 'utf8' });
 const { onRequest: handleRequest, experimentConsentAllowed } = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
 const env = { SUPABASE_URL: 'https://backend.example', SUPABASE_SERVICE_ROLE_KEY: 'server-only-test-key' };
 const onRequest = context => handleRequest({ env, ...context });
@@ -277,13 +283,13 @@ test('backend failure is non-cacheable and does not expose internal errors', asy
 });
 
 test('preset pages use middleware while SEO identity stays in the static page', async () => {
-  const routes = JSON.parse(await readFile(new URL('../public/_routes.json', import.meta.url), 'utf8'));
+  const routes = JSON.parse(await readFile(new URL('../public/_routes.json', import.meta.url), { encoding: 'utf8' }));
   assert.ok(routes.include.includes('/preset-test'));
   assert.ok(routes.include.includes('/preset-test/'));
   assert.ok(routes.include.includes('/presets/*'));
   assert.ok(routes.include.includes('/*/presets/*'));
   assert.ok(!routes.include.includes('/*'));
-  const page = await readFile(new URL('../src/components/presets/AiPresetPage.tsx', import.meta.url), 'utf8');
+  const page = await readFile(new URL('../src/components/presets/AiPresetPage.tsx', import.meta.url), { encoding: 'utf8' });
   assert.equal(page.match(/<PresetExperimentLink\b/g)?.length, 3);
   assert.match(page, /<PresetExperimentImage\b/);
   assert.doesNotMatch(page, /PresetExperimentPrice/);
@@ -352,17 +358,21 @@ test('the edge does not assign a first request that might belong to a legacy opt
   assert.equal(fetch.mock.callCount(), 0);
 });
 
+/**
+ * @param {object} [react]
+ * @returns {Promise<PresetClient>}
+ */
 async function loadClientModule(react = React) {
-  const source = await readFile(new URL('../src/components/presets/PresetExperiment.tsx', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/presets/PresetExperiment.tsx', import.meta.url), { encoding: 'utf8' });
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } });
   const require = createRequire(import.meta.url);
   const compiled = { exports: {} };
   const assignments = { exports: {} };
-  const assignmentSource = await readFile(new URL('../src/lib/preset-assignments.ts', import.meta.url), 'utf8');
+  const assignmentSource = await readFile(new URL('../src/lib/preset-assignments.ts', import.meta.url), { encoding: 'utf8' });
   new Function('module', 'exports', ts.transpileModule(assignmentSource, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText)(assignments, assignments.exports);
-  const image = ({ src, alt, width, height, className }) => React.createElement('img', { src, alt, width, height, className });
+  const image = ({ src, alt, width, height, className }) => createElement('img', { src, alt, width, height, className });
   new Function('require', 'module', 'exports', outputText)((name) => name === 'next/image' ? { default: image } : name === 'react' ? react : name === '@/lib/preset-assignments' ? assignments.exports : require(name), compiled, compiled.exports);
-  return { ...compiled.exports, ...assignments.exports };
+  return /** @type {PresetClient} */ ({ ...compiled.exports, ...assignments.exports });
 }
 
 test('unavailable consent storage never silently opts visitors into experiments', async (t) => {
@@ -395,9 +405,9 @@ test('client reads the edge preview from template content', async (t) => {
 
 test('static rendering retains the original image, alt text and canonical app link', async () => {
   const { PresetExperimentProvider, PresetExperimentLink, PresetExperimentImage } = await loadClientModule();
-  const markup = renderToStaticMarkup(React.createElement(PresetExperimentProvider, {
+  const markup = renderToStaticMarkup(createElement(PresetExperimentProvider, {
     presetId, appUrl: 'https://app.example/#preset/portrait', image: 'https://example.com/main.jpg', alt: 'Original preview', locale: 'en',
-  }, React.createElement(PresetExperimentLink, {}, React.createElement(PresetExperimentImage, { fill: true, className: 'object-contain' }))));
+  }, createElement(PresetExperimentLink, {}, createComponentElement(PresetExperimentImage, { fill: true, className: 'object-contain' }))));
   assert.match(markup, /href="https:\/\/app.example\/#preset\/portrait"/);
   assert.match(markup, /src="https:\/\/example.com\/main.jpg"/);
   assert.match(markup, /alt="Original preview"/);
@@ -408,8 +418,12 @@ test('static rendering retains the original image, alt text and canonical app li
   assert.doesNotMatch(markup, /~[a-f\d-]{36}/);
 });
 
+/**
+ * @param {object} [react]
+ * @returns {Promise<typeof import('../src/components/presets/PresetGridImage').default>}
+ */
 async function loadGridImage(react = React) {
-  const source = await readFile(new URL('../src/components/presets/PresetGridImage.tsx', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../src/components/presets/PresetGridImage.tsx', import.meta.url), { encoding: 'utf8' });
   const compiled = { exports: {} };
   const output = ts.transpileModule(source, {
     compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
@@ -425,8 +439,8 @@ async function loadGridImage(react = React) {
 test('grid keeps normal images visible and only hides unresolved split-test previews in static HTML', async () => {
   const GridImage = await loadGridImage();
   const props = { src: 'https://example.com/main.jpg', alt: 'Main preview', resolved: false, eager: true };
-  const normal = renderToStaticMarkup(React.createElement(GridImage, { ...props, hasActiveTest: false }));
-  const tested = renderToStaticMarkup(React.createElement(GridImage, { ...props, hasActiveTest: true }));
+  const normal = renderToStaticMarkup(createComponentElement(GridImage, { ...props, hasActiveTest: false }));
+  const tested = renderToStaticMarkup(createComponentElement(GridImage, { ...props, hasActiveTest: true }));
   assert.doesNotMatch(normal, /invisible/);
   assert.match(tested, /object-cover invisible/);
   for (const html of [normal, tested]) {

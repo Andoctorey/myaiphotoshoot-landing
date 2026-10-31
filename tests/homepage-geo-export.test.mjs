@@ -62,8 +62,8 @@ test('exported homepage gallery payloads use only compact DTO fields', async () 
     const htmlPath = `${homepageBase}.html`;
     const rscPath = `${homepageBase}.txt`;
     const [html, rsc] = await Promise.all([
-      readFile(htmlPath, 'utf8'),
-      readFile(rscPath, 'utf8'),
+      readFile(htmlPath, { encoding: 'utf8' }),
+      readFile(rscPath, { encoding: 'utf8' }),
     ]);
     const relativeHtmlPath = path.relative(projectRoot, htmlPath);
     const relativeRscPath = path.relative(projectRoot, rscPath);
@@ -102,13 +102,13 @@ test('exported homepage gallery payloads use only compact DTO fields', async () 
 
 test('the production export copies llms.txt without adding robots directives', async () => {
   const [source, exported] = await Promise.all([
-    readFile(path.join(projectRoot, 'public', 'llms.txt'), 'utf8'),
-    readFile(path.join(outputRoot, 'llms.txt'), 'utf8'),
+    readFile(path.join(projectRoot, 'public', 'llms.txt'), { encoding: 'utf8' }),
+    readFile(path.join(outputRoot, 'llms.txt'), { encoding: 'utf8' }),
   ]);
 
   assert.equal(exported, source);
 
-  const robots = await readFile(path.join(outputRoot, 'robots.txt'), 'utf8');
+  const robots = await readFile(path.join(outputRoot, 'robots.txt'), { encoding: 'utf8' });
   assert.doesNotMatch(robots, /llms\.txt/i);
 });
 
@@ -122,13 +122,13 @@ test('the production export keeps photo pages noindex and publishes the image si
     routesSource,
     headers,
   ] = await Promise.all([
-    readFile(path.join(outputRoot, 'photo', 'index.html'), 'utf8'),
-    readFile(path.join(outputRoot, 'image-sitemap.xml'), 'utf8'),
-    readFile(path.join(outputRoot, 'sitemap.xml'), 'utf8'),
-    readFile(path.join(outputRoot, 'robots.txt'), 'utf8'),
-    readFile(path.join(outputRoot, '_redirects'), 'utf8'),
-    readFile(path.join(outputRoot, '_routes.json'), 'utf8'),
-    readFile(path.join(outputRoot, '_headers'), 'utf8'),
+    readFile(path.join(outputRoot, 'photo', 'index.html'), { encoding: 'utf8' }),
+    readFile(path.join(outputRoot, 'image-sitemap.xml'), { encoding: 'utf8' }),
+    readFile(path.join(outputRoot, 'sitemap.xml'), { encoding: 'utf8' }),
+    readFile(path.join(outputRoot, 'robots.txt'), { encoding: 'utf8' }),
+    readFile(path.join(outputRoot, '_redirects'), { encoding: 'utf8' }),
+    readFile(path.join(outputRoot, '_routes.json'), { encoding: 'utf8' }),
+    readFile(path.join(outputRoot, '_headers'), { encoding: 'utf8' }),
   ]);
   const routes = JSON.parse(routesSource);
   const imageCount = (imageSitemap.match(/<image:image>/g) ?? []).length;
@@ -169,7 +169,7 @@ test('every exported preset catalog entry has a matching static detail page', as
 
   for (const locale of localeCodes) {
     const catalogPath = path.join(outputRoot, 'preset-catalog', locale);
-    const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+    const catalog = JSON.parse(await readFile(catalogPath, { encoding: 'utf8' }));
     assert.ok(catalog.length > 0, `${locale} preset catalog is empty`);
     const catalogSlugs = catalog.map((preset) => preset.slug).sort();
     const localizedPresetsRoot = path.join(outputRoot, locale, 'presets');
@@ -189,9 +189,9 @@ test('every exported preset catalog entry has a matching static detail page', as
         preset.slug,
         'index.html',
       );
-      await readFile(localizedDetailPath, 'utf8');
+      await readFile(localizedDetailPath, { encoding: 'utf8' });
       if (locale === 'en') {
-        await readFile(path.join(outputRoot, 'presets', preset.slug, 'index.html'), 'utf8');
+        await readFile(path.join(outputRoot, 'presets', preset.slug, 'index.html'), { encoding: 'utf8' });
       }
     }
 
@@ -204,6 +204,6 @@ test('every exported preset catalog entry has a matching static detail page', as
     }
   }
 
-  const headers = await readFile(path.join(outputRoot, '_headers'), 'utf8');
+  const headers = await readFile(path.join(outputRoot, '_headers'), { encoding: 'utf8' });
   assert.match(headers, /^\/preset-catalog\/\*[\s\S]*?X-Robots-Tag: noindex, follow/m);
 });
