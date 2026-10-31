@@ -67,7 +67,7 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
         throw new Error('Blog cards response did not contain a posts array.');
       }
 
-      const validatedPosts = posts.map((post, index) => {
+      return posts.map((post, index) => {
         if (!post || typeof post !== 'object') {
           throw new Error(`Blog cards response item ${index} was not an object.`);
         }
@@ -96,8 +96,6 @@ export async function fetchHomeData(locale: string): Promise<HomeData> {
           created_at: createdAt,
         };
       });
-
-      return validatedPosts;
     }, []),
     loadHomeSection<HomeData['initialUseCases']>('use cases', locale, async () => {
       const response = await fetch(

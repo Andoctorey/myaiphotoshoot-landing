@@ -24,7 +24,7 @@ export default function PresetAppLinks({ presetId, label, pagePath }: { presetId
   usePageAndroidInstallLink(
     pagePath,
     appUrl ? buildPresetGooglePlayUrl(appUrl) : undefined,
-    !resolved || !!context?.pending,
+    !resolved || context?.pending,
     context?.trackClick,
   );
 

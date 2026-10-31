@@ -1,5 +1,3 @@
-import { env } from '@/lib/env';
-
 /**
  * Fetcher function for SWR
  * @param url The URL to fetch data from
@@ -21,8 +19,7 @@ export const fetcher = async <T>(url: string): Promise<T> => {
       throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     clearTimeout(timeout);
     if (error instanceof Error && error.name === 'AbortError') {
@@ -31,21 +28,3 @@ export const fetcher = async <T>(url: string): Promise<T> => {
     throw error;
   }
 };
-
-/**
- * Fetch gallery photos with error handling
- * @param page Page number
- * @param limit Items per page
- * @returns Array of gallery items
- */
-export async function fetchGalleryPhotos<T>(page = 1, limit = 100): Promise<T> {
-  const url = `${env.SUPABASE_FUNCTIONS_URL}/public-gallery?page=${page}&limit=${limit}&sort=popular&platform=web`;
-  return fetcher<T>(url);
-}
-
-/**
- * Fetch a single photo by ID
- * @param id Photo ID
- * @returns Gallery item or null if not found
- */
-// Note: fetchPhotoById removed along with /photo/[id] route

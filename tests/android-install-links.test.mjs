@@ -32,7 +32,6 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
     ...React,
     createContext(value) { const context = React.createContext(value); contexts.set(context, value); return context; },
     useContext: context => contexts.get(context),
-    useMemo: callback => callback(),
     useState(initial) {
       const owner = frame, index = frame.stateIndex++;
       if (!(index in owner.states)) owner.states[index] = typeof initial === 'function' ? initial() : initial;

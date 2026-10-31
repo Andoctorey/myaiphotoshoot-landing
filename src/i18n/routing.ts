@@ -10,4 +10,4 @@ export const routing = defineRouting({
 });
 
 // Export navigation APIs that work with static export
-export const { Link, redirect, usePathname, useRouter, getPathname } = createNavigation(routing); 
+export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);

@@ -67,26 +67,6 @@ export function LoadingSpinner({
   );
 }
 
-export function LoadingOverlay({
-  size,
-  variant,
-  className,
-  label = 'Loading...',
-}: LoadingSpinnerProps) {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-gray-900/80 z-10 rounded-lg">
-      <div className="flex flex-col items-center gap-2">
-        <div
-          className={cn(spinnerVariants({ size, variant }), className)}
-          aria-label={label}
-          role="status"
-        />
-        {label && <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>}
-      </div>
-    </div>
-  );
-}
-
 export function ButtonSpinner({
   size = 'sm',
   variant = 'white',
@@ -98,4 +78,4 @@ export function ButtonSpinner({
       aria-hidden="true"
     />
   );
-} 
+}

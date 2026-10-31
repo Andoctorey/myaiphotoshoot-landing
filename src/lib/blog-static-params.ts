@@ -238,21 +238,6 @@ export function normalizeBlogRouteSlug(slug: string): string {
   }
 }
 
-export function getBlogSlugMapForRoute(
-  posts: BlogListEntry[],
-  routeLocale: string,
-  routeSlug: string,
-  supportedLocales: readonly string[],
-): Record<string, string> {
-  const routeData = resolveBlogRoute(posts, routeLocale, routeSlug, supportedLocales);
-  if (!routeData) {
-    throw new Error(
-      `Expected one blog inventory match for locale "${routeLocale}" and slug "${routeSlug}", found 0.`,
-    );
-  }
-  return routeData.slugMap;
-}
-
 export function resolveBlogRoute(
   posts: BlogListEntry[],
   routeLocale: string,

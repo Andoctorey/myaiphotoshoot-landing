@@ -181,11 +181,6 @@
   [dir="rtl"] {
     font-family: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
   }
-
-  /* RTL-specific form styling */
-  [dir="rtl"] .form-input {
-    text-align: right;
-  }
 }
 
 html {

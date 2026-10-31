@@ -43,20 +43,3 @@ export interface BlogTranslation {
   content?: string;
   meta_description?: string;
 }
-
-// Blog metadata for SEO
-export interface BlogMetadata {
-  title: string;
-  description: string;
-  image?: string;
-  url: string;
-  publishedAt: string;
-  updatedAt: string;
-}
-
-// Blog navigation item
-export interface BlogNavItem {
-  title: string;
-  slug: string;
-  publishedAt: string;
-}

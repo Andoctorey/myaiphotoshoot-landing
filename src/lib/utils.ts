@@ -4,7 +4,7 @@ import { ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 // RTL language codes
-export const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur'];
+const RTL_LANGUAGES = ['ar', 'he', 'fa', 'ur'];
 
 // Helper function to get the current locale from the pathname
 export function getLocaleFromPathname(pathname: string): string {
@@ -32,12 +32,3 @@ export function useLocale() {
 export function isRTLLanguage(locale: string): boolean {
   return RTL_LANGUAGES.includes(locale);
 }
-
-export function useIsRTL(): boolean {
-  const locale = useLocale();
-  return isRTLLanguage(locale);
-}
-
-export function getDirectionClass(locale: string): string {
-  return isRTLLanguage(locale) ? 'rtl' : 'ltr';
-} 

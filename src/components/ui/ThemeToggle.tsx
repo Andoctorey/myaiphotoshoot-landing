@@ -25,7 +25,6 @@ export default function ThemeToggle() {
   }
 
   const isDark = theme === 'dark';
-  const modeText = mode;
 
   return (
     <button
@@ -33,7 +32,7 @@ export default function ThemeToggle() {
       onKeyDown={handleKeyDown}
       className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none"
       aria-label={mode === 'dark' ? 'Switch to light mode' : mode === 'light' ? 'Switch to system mode' : 'Switch to dark mode'}
-      title={`Current theme: ${modeText}`}
+      title={`Current theme: ${mode}`}
       role="switch"
       aria-checked={isDark}
       tabIndex={0}

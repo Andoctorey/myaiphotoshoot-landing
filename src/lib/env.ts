@@ -25,6 +25,3 @@ export const env = {
   SUPABASE_FUNCTIONS_URL: SUPABASE_FUNCTIONS_URL || 'https://trzgfajvyjpvbqedyxug.supabase.co/functions/v1',
   TURNSTILE_SITE_KEY: TURNSTILE_SITE_KEY || '',
 };
-
-// This ensures we're using environment variables safely
-export type EnvVariables = typeof env; 

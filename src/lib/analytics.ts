@@ -111,15 +111,6 @@ export const withCurrentAttribution = (destination: string): string => {
   }
 };
 
-// Utility function to track page views
-export const trackPageView = (url: string) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('config', GA_MEASUREMENT_ID, {
-      page_location: url,
-    });
-  }
-};
-
 // Utility function to track events
 export const trackEvent = (action: string, category: string, label?: string, value?: number) => {
   if (typeof window !== 'undefined' && window.gtag) {
