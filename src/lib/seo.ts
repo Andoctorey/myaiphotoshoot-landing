@@ -66,7 +66,7 @@ export function hreflangLanguages(
   return map;
 }
 
-/** Convenience builder for Next.js metadata.alternates */
+/** Convenience builder for the `alternates` field in Next.js metadata. */
 export function buildAlternates(
   locale: string,
   path: string,

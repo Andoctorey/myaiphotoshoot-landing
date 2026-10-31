@@ -329,21 +329,3 @@ export const LEGACY_LOCALIZED_SLUGS = {
     "نصائح-تصوير-تحت-الماء": "underwater-portrait-tips"
   }
 };
-
-export function getLegacyEnglishSlug(locale, slug) {
-  const legacySlugsForLocale = LEGACY_LOCALIZED_SLUGS[locale];
-  if (!legacySlugsForLocale) {
-    return null;
-  }
-
-  const decodedSlug = decodeSlug(slug);
-  return legacySlugsForLocale[decodedSlug] || null;
-}
-
-function decodeSlug(slug) {
-  try {
-    return decodeURIComponent(slug);
-  } catch {
-    return slug;
-  }
-}
