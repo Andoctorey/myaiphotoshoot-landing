@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type * as React from "react";
 import "../globals.css";
 import { locales } from "@/i18n/request";
 import { NextIntlClientProvider } from 'next-intl';

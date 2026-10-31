@@ -99,14 +99,14 @@ for (const userAgent of ['iPhone', 'Android Chrome']) test(`app action waits for
     './PresetExperiment': { usePresetExperiment: () => preset },
   };
   const load = async file => {
-    const module = { exports: {} };
+    const compiledModule = { exports: {} };
     const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
     const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
     new Function('module', 'exports', 'require', 'navigator', 'window', 'console', compiled)(
-      module, module.exports, name => dependencies[name] ?? require(name),
+      compiledModule, compiledModule.exports, name => dependencies[name] ?? require(name),
       { userAgent, maxTouchPoints: 1 }, window, { info() {} },
     );
-    return module.exports;
+    return compiledModule.exports;
   };
   const component = (await load('src/components/presets/PresetAppLinks.tsx')).default;
   const render = () => {

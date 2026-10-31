@@ -7,7 +7,7 @@
     "dev": "next dev --turbopack",
     "build": "npm run test:attribution && npm run test:pricing && npm run test:presets && npm run test:use-cases && npm run test:geo && npm run test:image-sitemap && npm run test:security && npm run test:masks && npm run test:build-cache && node scripts/clear-next-fetch-cache.js && next build && node scripts/generate-image-sitemap.mjs && node scripts/prune-unpublished-mask-routes.mjs && node scripts/fix-html-lang.js && node scripts/apply-csp.js && npm run test:geo-export && npm run test:use-cases-export",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --max-warnings 0",
     "test:indexnow": "node --test tests/submit-indexnow.test.mjs",
     "test:image-sitemap": "node --test tests/image-sitemap.test.mjs",
     "test:localized-blog": "node --test tests/localized-blog-alias.test.mjs",
@@ -23,7 +23,8 @@
     "test:security": "npm run test:json-ld && npm run test:csp",
     "test:build-cache": "node --test scripts/clear-next-fetch-cache.test.js tests/blog-post-build-cache.test.mjs",
     "test:sitemap": "node --test tests/submit-sitemap.test.mjs",
-    "test:worker": "node --experimental-default-type=module --test worker/deploy-proxy.test.js"
+    "test:search-prechecks": "node --test tests/search-submission-precheck.test.mjs",
+    "test:worker": "node --test worker/deploy-proxy.test.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from '@/lib/ThemeContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type KeyboardEvent } from 'react';
 
 export default function ThemeToggle() {
   const { theme, mode, toggleTheme } = useTheme();
@@ -13,7 +13,7 @@ export default function ThemeToggle() {
   }, []);
 
   // Handle keyboard events for accessibility
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       toggleTheme();
@@ -107,4 +107,4 @@ export default function ThemeToggle() {
       )}
     </button>
   );
-} 
+}

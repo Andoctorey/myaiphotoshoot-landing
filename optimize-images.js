@@ -12,7 +12,7 @@ const path = require('path');
 // Check if sharp is installed
 try {
   require.resolve('sharp');
-} catch (e) {
+} catch {
   console.log('Installing sharp for image optimization...');
   execSync('npm install --save-dev sharp', { stdio: 'inherit' });
 }
@@ -62,4 +62,4 @@ async function optimizeImages() {
 optimizeImages().catch(err => {
   console.error('Error during image processing:', err);
   process.exit(1);
-}); 
+});

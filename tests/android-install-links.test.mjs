@@ -56,7 +56,7 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
   }
   function load(file) {
     if (modules.has(file)) return modules.get(file);
-    const module = { exports: {} };
+    const compiledModule = { exports: {} };
     const source = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
     const dependencies = name => {
       if (name === 'react') return react;
@@ -75,11 +75,11 @@ function pageHarness(userAgent = 'Android Chrome', maxTouchPoints = 1) {
       compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
     }).outputText;
     new Function('module', 'exports', 'require', 'window', 'navigator', 'setTimeout', compiled)(
-      module, module.exports, dependencies, window, window.navigator,
+      compiledModule, compiledModule.exports, dependencies, window, window.navigator,
       (callback, delay) => timers.push({ callback, delay }),
     );
-    modules.set(file, module.exports);
-    return module.exports;
+    modules.set(file, compiledModule.exports);
+    return compiledModule.exports;
   }
   const shared = load('src/components/layout/AndroidInstallLink.tsx');
   const hooks = load('src/hooks/usePlatformAppLink.ts');

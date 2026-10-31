@@ -9,8 +9,8 @@ const MAX_REASON_LENGTH = 200;
 const ACCESS_JWT_HEADER = 'Cf-Access-Jwt-Assertion';
 const CLOCK_SKEW_SECONDS = 60;
 
-export default {
-  async fetch(request, env, ctx) {
+const deployProxy = {
+  async fetch(request, env) {
     // Only allow POST requests
     if (request.method !== 'POST') {
       return response('Method not allowed', 405);
@@ -37,7 +37,7 @@ export default {
         if (typeof requestBody.reason === 'string' && requestBody.reason.trim()) {
           deploymentReason = requestBody.reason.trim().slice(0, MAX_REASON_LENGTH);
         }
-      } catch (e) {
+      } catch {
         // If JSON parsing fails, use default reason
         console.warn('Failed to parse request body, using default reason');
       }
@@ -90,6 +90,8 @@ export default {
     }
   },
 };
+
+export default deployProxy;
 
 async function authorizeRequest(request, env) {
   if (!env.TEAM_DOMAIN || !env.POLICY_AUD) {

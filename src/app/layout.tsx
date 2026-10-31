@@ -1,5 +1,6 @@
 // noinspection HtmlRequiredTitleElement
 import type { Metadata, Viewport } from "next";
+import type * as React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/ThemeContext";

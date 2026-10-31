@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import SiteShell from '@/components/layout/SiteShell';
 import { defaultLocale } from '@/i18n/request';

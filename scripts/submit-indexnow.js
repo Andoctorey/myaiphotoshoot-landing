@@ -15,7 +15,7 @@ async function checkSitemapExists(maxRetries = 5, delayMs = 3000) {
 
       const response = await fetch(SITEMAP_URL, {
         method: 'HEAD',
-        timeout: 10000,
+        signal: AbortSignal.timeout(10000),
         headers: {
           'User-Agent': 'MyAIPhotoShoot-IndexNowBot/1.0'
         }

@@ -55,14 +55,14 @@ async function componentHarness(userAgent, maxTouchPoints = 1) {
   };
   const load = async file => {
     const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
-    const module = { exports: {} };
+    const compiledModule = { exports: {} };
     new Function('module', 'exports', 'require', 'navigator', 'window', 'console', compile(source))(
-      module, module.exports, name => dependencies[name] ?? require(name),
+      compiledModule, compiledModule.exports, name => dependencies[name] ?? require(name),
       { userAgent, maxTouchPoints },
       { gtag: (...event) => events.push(event), addEventListener() {}, removeEventListener() {} },
       { info() {} },
     );
-    return module.exports;
+    return compiledModule.exports;
   };
   dependencies['@/hooks/usePlatformAppLink'] = await load('src/hooks/usePlatformAppLink.ts');
   const component = (await load('src/components/masks/MaskAppLink.tsx')).default;

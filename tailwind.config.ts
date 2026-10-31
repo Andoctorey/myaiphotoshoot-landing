@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   // In Tailwind 4, darkMode: 'class' is no longer needed when using @custom-variant
@@ -39,26 +41,20 @@ const config: Config = {
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),
-    // Custom RTL variants that work with all Tailwind versions
-    // @ts-ignore
-    function ({ addVariant }) {
+    typography,
+    plugin(({ addVariant, addUtilities }) => {
       addVariant('ltr', '[dir="ltr"] &');
       addVariant('rtl', '[dir="rtl"] &');
-    },
-    // @ts-ignore - Ignoring the type issue with addUtilities
-    function ({ addUtilities }) {
-      const newUtilities = {
+      addUtilities({
         '.text-shadow': {
           textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)',
         },
         '.text-shadow-none': {
           textShadow: 'none',
         },
-      };
-      addUtilities(newUtilities);
-    },
+      });
+    }),
   ],
 };
 
-export default config; 
+export default config;
