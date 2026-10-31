@@ -1,25 +1,10 @@
+import { buildFunctionsUrl } from '@/lib/functions-url';
 import { NextResponse } from 'next/server';
-import { env } from '@/lib/env';
 import { locales } from '@/i18n/request';
 import { localePath } from '@/lib/seo';
 import { fetchAllPublishedBlogPosts, getBlogSlugForLocale } from '@/lib/blog-static-params';
 
 export const dynamic = 'force-static';
-
-const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
-  const base = new URL(env.SUPABASE_FUNCTIONS_URL);
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  const basePath = base.pathname.replace(/\/$/, '');
-  base.pathname = `${basePath}${normalizedPath}`;
-  if (params) {
-    const searchParams = new URLSearchParams(base.search);
-    Object.entries(params).forEach(([key, value]) => {
-      searchParams.set(key, value);
-    });
-    base.search = searchParams.toString();
-  }
-  return base.toString();
-};
 
 export async function GET() {
   const site = 'https://myaiphotoshoot.com';

@@ -1,3 +1,5 @@
+import { hasValidBearerToken } from './_shared/search-submission-auth.js';
+
 /**
  * Cloudflare Pages Function for Google Search Console Sitemap Submission
  * 
@@ -117,32 +119,6 @@ export async function onRequest(context) {
   }
 }
 
-async function hasValidBearerToken(request, expectedToken) {
-  const authorization = request.headers.get('Authorization') || '';
-  if (!authorization.startsWith('Bearer ')) {
-    return false;
-  }
-
-  const providedToken = authorization.slice('Bearer '.length);
-  if (!providedToken) {
-    return false;
-  }
-
-  const encoder = new TextEncoder();
-  const [providedHash, expectedHash] = await Promise.all([
-    crypto.subtle.digest('SHA-256', encoder.encode(providedToken)),
-    crypto.subtle.digest('SHA-256', encoder.encode(expectedToken))
-  ]);
-  const providedBytes = new Uint8Array(providedHash);
-  const expectedBytes = new Uint8Array(expectedHash);
-  let difference = 0;
-
-  for (let i = 0; i < providedBytes.length; i++) {
-    difference |= providedBytes[i] ^ expectedBytes[i];
-  }
-
-  return difference === 0;
-}
 
 function jsonResponse(payload, status = 200, additionalHeaders = {}) {
   return new Response(JSON.stringify(payload, null, 2), {

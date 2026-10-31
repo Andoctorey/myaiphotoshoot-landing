@@ -1335,6 +1335,8 @@ test('the social card is cache-busted, correctly sized, and replaces the stale a
   assert.deepEqual(legacyPng, currentPng);
 
   const genericCardSources = await Promise.all([
+    readProjectFile('src/lib/blog-index.ts'),
+    readProjectFile('src/lib/blog-post-metadata.ts'),
     readProjectFile('src/app/layout.tsx'),
     readProjectFile('src/app/page.tsx'),
     readProjectFile('src/app/[locale]/page.tsx'),

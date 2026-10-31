@@ -1,33 +1,9 @@
+import { getUseCasesLabels } from '@/lib/use-cases-labels';
 import type { Metadata } from 'next';
 import UseCasesIndex from '@/components/use-cases/UseCasesIndex';
 import { defaultLocale, locales } from '@/i18n/request';
 import { buildAlternates, canonicalUrl, ogAlternateLocales, ogLocaleFromAppLocale } from '@/lib/seo';
 import { loadMessages } from '@/lib/i18n-messages';
-
-type UseCasesI18n = {
-  navigation?: { noUseCases?: string };
-  pageCopy?: {
-    useCases?: {
-      intro?: string;
-      metaDescription?: string;
-      metaTitle?: string;
-      title?: string;
-    };
-  };
-};
-
-function getUseCasesLabels(messages: unknown) {
-  const m = messages as UseCasesI18n;
-  return {
-    title: m.pageCopy?.useCases?.title || 'AI Photo Use Cases',
-    intro: m.pageCopy?.useCases?.intro
-      || 'Explore ways to turn your photo into professional headshots, dating profile pictures, avatars, and creative portraits. Browse the guides for example images, prompts, and steps to get started with My AI Photoshoot.',
-    metaTitle: m.pageCopy?.useCases?.metaTitle || 'AI Photo Use Cases',
-    metaDescription: m.pageCopy?.useCases?.metaDescription
-      || 'Explore AI photo use cases for professional headshots, dating profiles, social media, marketing, and creative portraits.',
-    emptyLabel: typeof m.navigation?.noUseCases === 'string' ? m.navigation.noUseCases : 'No use cases yet',
-  };
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const messages = await loadMessages(defaultLocale);

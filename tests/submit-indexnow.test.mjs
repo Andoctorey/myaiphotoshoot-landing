@@ -1,13 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import { afterEach, test } from 'node:test';
 
-const functionSource = await readFile(
-  new URL('../functions/submit-indexnow.js', import.meta.url),
-  { encoding: 'utf8' }
-);
-const functionModuleUrl = `data:text/javascript;base64,${Buffer.from(functionSource).toString('base64')}`;
-const { onRequest } = await import(functionModuleUrl);
+import { onRequest } from '../functions/submit-indexnow.js';
 
 const originalFetch = globalThis.fetch;
 const submissionToken = 'test-search-submission-token';

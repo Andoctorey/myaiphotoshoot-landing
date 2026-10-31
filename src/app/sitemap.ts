@@ -1,6 +1,6 @@
+import { buildFunctionsUrl } from '@/lib/functions-url';
 import { MetadataRoute } from 'next'
 import { defaultLocale, locales } from '@/i18n/request'
-import { env } from '@/lib/env'
 import { fetchPublishedBlogInventory, getBlogSlugForLocale, getBlogSlugMap } from '@/lib/blog-static-params'
 import { AI_PRESETS_PAGE_SIZE, aiPresetsPagePath, fetchAiPresetsStrict } from '@/lib/ai-presets'
 import { fetchUseCaseInventory } from '@/lib/usecase-seo'
@@ -35,21 +35,6 @@ interface SitemapAiPreset {
   updated_at?: string | null
   featured_graphics?: string | null
 }
-
-const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
-  const base = new URL(env.SUPABASE_FUNCTIONS_URL);
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  const basePath = base.pathname.replace(/\/$/, '');
-  base.pathname = `${basePath}${normalizedPath}`;
-  if (params) {
-    const searchParams = new URLSearchParams(base.search);
-    Object.entries(params).forEach(([key, value]) => {
-      searchParams.set(key, value);
-    });
-    base.search = searchParams.toString();
-  }
-  return base.toString();
-};
 
 /**
  * Build full URL for a localized path.

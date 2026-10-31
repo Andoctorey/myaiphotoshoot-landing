@@ -1,3 +1,4 @@
+import { buildFunctionsUrl } from '@/lib/functions-url';
 import { env } from '@/lib/env';
 import {
   fetchAllPublishedBlogPosts,
@@ -12,21 +13,6 @@ export type HomeData = {
   initialGallerySession: GalleryRandomSession;
   initialBlog: BlogListItem[];
   initialUseCases: Array<{ slug: string; title: string; featured_image_urls?: string[] }>;
-};
-
-const buildFunctionsUrl = (path: string, params?: Record<string, string>) => {
-  const base = new URL(env.SUPABASE_FUNCTIONS_URL);
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  const basePath = base.pathname.replace(/\/$/, '');
-  base.pathname = `${basePath}${normalizedPath}`;
-  if (params) {
-    const searchParams = new URLSearchParams(base.search);
-    Object.entries(params).forEach(([key, value]) => {
-      searchParams.set(key, value);
-    });
-    base.search = searchParams.toString();
-  }
-  return base.toString();
 };
 
 async function loadHomeSection<T>(
