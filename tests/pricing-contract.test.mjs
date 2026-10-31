@@ -912,6 +912,37 @@ async function loadPresetCatalogApi(postPublicSupabaseRpc) {
   });
 }
 
+test('preset list failures retain diagnostics in lenient fallbacks and causes in strict mode', async (t) => {
+  const networkError = new TypeError('Connection reset');
+  for (const scenario of [
+    { name: 'HTTP error', response: async () => new Response(null, { status: 503 }), cause: /returned 503/ },
+    { name: 'invalid shape', response: async () => Response.json({ error: 'Unavailable' }), cause: /not an array/ },
+    { name: 'invalid JSON', response: async () => new Response('not JSON'), cause: /JSON/ },
+    { name: 'network error', response: async () => { throw networkError; }, cause: /Connection reset/ },
+  ]) {
+    await t.test(scenario.name, async (t) => {
+      const log = t.mock.method(console, 'error', () => {});
+      const api = await loadPresetCatalogApi(scenario.response);
+      const fallback = await api.fetchAiPresetsPage('de', 2, 12);
+      assert.deepEqual(fallback.presets, []);
+      assert.equal(fallback.page, 2);
+      assert.equal(fallback.hasNextPage, false);
+      assert.equal(log.mock.callCount(), 1);
+      assert.match(log.mock.calls[0].arguments[0], /locale "de", page 2/);
+      assert.match(log.mock.calls[0].arguments[1].message, scenario.cause);
+      if (scenario.name === 'network error') assert.equal(log.mock.calls[0].arguments[1], networkError);
+
+      await assert.rejects(api.fetchAiPresetsPageStrict('de', 2, 12), (error) => {
+        assert.match(error.message, /locale "de", page 2/);
+        assert.match(error.cause.message, scenario.cause);
+        if (scenario.name === 'network error') assert.equal(error.cause, networkError);
+        return true;
+      });
+      assert.equal(log.mock.callCount(), 1, 'strict failures propagate to their caller for handling');
+    });
+  }
+});
+
 test('landing catalog preserves test flags and multi-photo capability across locales', async () => {
   const calls = [];
   const api = await loadPresetCatalogApi(async (...args) => {

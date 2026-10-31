@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { env } from '@/lib/env';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     // Parse the request body
     const body = await request.json();
@@ -44,7 +44,11 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
-      throw new Error(`Supabase function responded with status: ${response.status}`);
+      console.error('Error sending support request:', { status: response.status });
+      return NextResponse.json(
+        { error: 'Failed to send support request' },
+        { status: 500 }
+      );
     }
 
     // Return success response
@@ -57,4 +61,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

@@ -24,6 +24,33 @@ const post = {
   translations: { ru: { slug: 'kontur-avatar', title: 'Контурный аватар' } },
 };
 
+test('blog inventory retries HTTP failures directly and retains the last failure cause', async () => {
+  const calls = [];
+  const api = await loadModule('src/lib/blog-static-params.ts', {
+    '@/i18n/request': { defaultLocale: 'en' },
+  }, {
+    fetch: async (url) => {
+      calls.push(url);
+      return calls.length === 1 ? new Response(null, { status: 503 }) : Response.json({ posts: inventory });
+    },
+  });
+  const buildUrl = (endpoint, params) => `https://functions.example.test${endpoint}?${new URLSearchParams(params)}`;
+  const items = await api.fetchPublishedBlogInventory(buildUrl, 'Blog inventory');
+  assert.equal(items[0].slug, inventory[0].slug);
+  assert.equal(calls.length, 2);
+  assert.equal(new URL(calls[0]).searchParams.has('inventory_retry'), false);
+  assert.equal(new URL(calls[1]).searchParams.get('inventory_retry'), '1');
+
+  const failed = await loadModule('src/lib/blog-static-params.ts', {
+    '@/i18n/request': { defaultLocale: 'en' },
+  }, { fetch: async () => new Response(null, { status: 502 }) });
+  await assert.rejects(failed.fetchPublishedBlogInventory(buildUrl, 'Blog inventory'), (error) => {
+    assert.match(error.message, /failed to fetch the complete localized blog inventory/);
+    assert.equal(error.cause.message, 'Request failed with status 502.');
+    return true;
+  });
+});
+
 async function loadModule(relativePath, dependencies, globals = {}) {
   const source = await readFile(new URL(`../${relativePath}`, import.meta.url), { encoding: 'utf8' });
   const { outputText } = ts.transpileModule(source, {

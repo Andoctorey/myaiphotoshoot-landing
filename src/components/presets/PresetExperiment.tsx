@@ -25,7 +25,9 @@ async function recordEvent(assignmentId: string, event: 'exposure' | 'click') {
       method: 'POST', headers: { 'content-type': 'application/json' }, keepalive: true,
       body: JSON.stringify({ assignmentId, event }),
     });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    if (!response.ok) {
+      console.warn('Preset experiment event was not recorded', { event, status: response.status });
+    }
   } catch (error) { console.warn('Preset experiment event was not recorded', { event, error }); }
 }
 

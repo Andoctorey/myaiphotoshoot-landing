@@ -169,7 +169,8 @@ export async function fetchPublishedBlogInventory(
     try {
       const response = await fetch(inventoryUrl, { next: { revalidate: BLOG_REVALIDATE_SECONDS } });
       if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}.`);
+        lastError = new Error(`Request failed with status ${response.status}.`);
+        continue;
       }
       const data = await response.json();
       return normalizeBlogPosts(data, context);

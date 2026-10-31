@@ -28,7 +28,11 @@ export async function GET() {
     );
     
     if (!response.ok) {
-      throw new Error('Failed to fetch gallery data');
+      console.error('Error fetching gallery data:', { status: response.status });
+      return NextResponse.json(
+        { error: 'Failed to fetch gallery data' },
+        { status: 500 }
+      );
     }
 
     const data = await response.json();

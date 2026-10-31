@@ -50,12 +50,12 @@ export async function fetchPublishedMaskCategoryLandings(
     let body: unknown;
     try {
       body = JSON.parse(responseText);
-    } catch {
+    } catch (error) {
       if (response.status === 404) {
         logMissingRpc(undefined);
         return [];
       }
-      throw new Error('RPC response was not valid JSON.');
+      throw new Error('RPC response was not valid JSON.', { cause: error });
     }
     if (!response.ok) {
       if (isMissingRpcResponse(response.status, body)) {

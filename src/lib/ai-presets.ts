@@ -159,10 +159,7 @@ async function fetchAiPresetsPageInternal(
 
     const data: unknown = await res.json();
     if (!Array.isArray(data)) {
-      if (strict) {
-        throw new Error('Preset RPC response was not an array.');
-      }
-      return emptyAiPresetsPage(normalizedPage, normalizedPageSize);
+      throw new Error('Preset RPC response was not an array.');
     }
     if (strict && data.some((item) => {
       if (!isAiPresetRow(item)) return true;
@@ -225,6 +222,7 @@ async function fetchAiPresetsPageInternal(
         cause: error,
       });
     }
+    console.error(`Failed to load AI presets for locale "${locale}", page ${normalizedPage}.`, error);
     return emptyAiPresetsPage(normalizedPage, normalizedPageSize);
   }
 }

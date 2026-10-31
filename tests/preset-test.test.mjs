@@ -730,6 +730,30 @@ test('assignment and app links activate without waiting for image loading', asyn
   assert.deepEqual(events, ['exposure', 'click', 'click'].map(event => ({ assignmentId: assignment.assignment_id, event })));
 });
 
+test('failed experiment events keep app links usable and log each failure once', async (t) => {
+  for (const scenario of ['HTTP', 'network']) await t.test(scenario, async (t) => {
+    const networkError = new TypeError('Connection reset');
+    const warn = t.mock.method(console, 'warn', () => {});
+    t.mock.method(globalThis, 'fetch', async (_url, init) => {
+      if (init.method !== 'POST') return Response.json(assignment);
+      if (scenario === 'network') throw networkError;
+      return new Response(null, { status: 503 });
+    });
+    const client = await clientHarness(t);
+    client.render();
+    await settle();
+    assert.equal(client.render().pending, false);
+    const link = client.link();
+    assert.equal(link.props.href, `https://app.example/#preset/portrait~${assignment.assignment_id}`);
+    link.props.onClick({ defaultPrevented: false });
+    await settle();
+    assert.deepEqual(warn.mock.calls.map((call) => call.arguments[1]), ['exposure', 'click'].map((event) => (
+      scenario === 'HTTP' ? { event, status: 503 } : { event, error: networkError }
+    )));
+    assert.equal(client.link().props.href, link.props.href);
+  });
+});
+
 test('no experiment, backend failure and timeouts restore usable canonical links', async (t) => {
   for (const scenario of ['none', 'failure', 'timeout']) await t.test(scenario, async (t) => {
     t.mock.method(console, 'warn', () => {});
