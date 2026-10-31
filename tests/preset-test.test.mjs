@@ -304,7 +304,7 @@ test('a preset page gets a first-paint preview in one backend call without chang
     assert.deepEqual(JSON.parse(init.body).p_preset_ids, [presetId]);
     return Response.json({ [presetId]: assignment });
   });
-  const html = `<html><head><link rel="canonical" href="https://example.com/presets/example/"></head><body><div data-preset-test-id="${presetId}"><svg class="preset-experiment-image-placeholder"></svg></div></body></html>`;
+  const html = `<html lang="en"><head><link rel="canonical" href="https://example.com/presets/example/"></head><body><div data-preset-test-id="${presetId}"><svg class="preset-experiment-image-placeholder"></svg></div></body></html>`;
   const response = await middleware({
     request: request('', { headers: { cookie: `preset_test_visitor=${visitorId}` } }, 'US'), env,
     next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),
@@ -322,7 +322,7 @@ test('a preset page gets a first-paint preview in one backend call without chang
 test('EEA preset pages without consent remain unchanged', async (t) => {
   const { onRequest: middleware } = await import('../functions/_middleware.js');
   const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected network'); });
-  const html = `<html><head></head><body data-preset-test-id="${presetId}"></body></html>`;
+  const html = `<html lang="en"><head></head><body data-preset-test-id="${presetId}"></body></html>`;
   const response = await middleware({
     request: request('', {}, 'DE'), env,
     next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),
@@ -337,7 +337,7 @@ test('accepted consent allows the edge to assign an EEA visitor', async (t) => {
     assert.match(url, /\/assign_ai_preset_tests_rate_limited$/);
     return Response.json({ [presetId]: assignment });
   });
-  const html = `<html><head></head><body data-preset-test-id="${presetId}"></body></html>`;
+  const html = `<html lang="en"><head></head><body data-preset-test-id="${presetId}"></body></html>`;
   const response = await middleware({
     request: request('', { headers: { cookie: 'preset_test_consent=accepted' } }, 'DE'), env,
     next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),
@@ -349,7 +349,7 @@ test('accepted consent allows the edge to assign an EEA visitor', async (t) => {
 test('the edge does not assign a first request that might belong to a legacy opt-out', async (t) => {
   const { onRequest: middleware } = await import('../functions/_middleware.js');
   const fetch = t.mock.method(globalThis, 'fetch', async () => { throw new Error('Unexpected network'); });
-  const html = `<html><head></head><body data-preset-test-id="${presetId}"></body></html>`;
+  const html = `<html lang="en"><head></head><body data-preset-test-id="${presetId}"></body></html>`;
   const response = await middleware({
     request: request('', {}, 'US'), env,
     next: async () => new Response(html, { headers: { 'content-type': 'text/html' } }),

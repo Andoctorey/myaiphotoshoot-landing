@@ -25,9 +25,9 @@ function writeSitemap(outDir, routes) {
 function makeOutput(t) {
   const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'landing-mask-export-test-'));
   t.after(() => fs.rmSync(outDir, { recursive: true, force: true }));
-  writeRoute(outDir, '/masks/', '<html><head></head><body>Mask index</body></html>');
-  writeRoute(outDir, '/en/masks/', '<html><head></head><body>Redirected mask index</body></html>');
-  writeRoute(outDir, '/fr/masks/', '<html><head></head><body>Index des masques</body></html>');
+  writeRoute(outDir, '/masks/', '<html lang="en"><head></head><body>Mask index</body></html>');
+  writeRoute(outDir, '/en/masks/', '<html lang="en"><head></head><body>Redirected mask index</body></html>');
+  writeRoute(outDir, '/fr/masks/', '<html lang="fr"><head></head><body>Index des masques</body></html>');
   return outDir;
 }
 
@@ -52,33 +52,33 @@ test('keeps sitemap-listed exports and removes every generated unpublished route
   const published = writeRoute(
     outDir,
     '/masks/hair/',
-    '<html><head><meta name="robots" content="index, follow"/></head><body>Hair guide</body></html>',
+    '<html lang="en"><head><meta name="robots" content="index, follow"/></head><body>Hair guide</body></html>',
   );
   const localizedPublished = writeRoute(
     outDir,
     '/fr/masks/cheveux/',
-    '<html><head><meta name="robots" content="index, follow"/></head><body>Cheveux</body></html>',
+    '<html lang="fr"><head><meta name="robots" content="index, follow"/></head><body>Cheveux</body></html>',
   );
   const unpublished = writeRoute(
     outDir,
     '/masks/beard/',
-    '<html><head><meta name="robots" content="noindex"/></head><body>404</body></html>',
+    '<html lang="en"><head><meta name="robots" content="noindex"/></head><body>404</body></html>',
     'NEXT_HTTP_ERROR_FALLBACK;404',
   );
   const localizedUnpublished = writeRoute(
     outDir,
     '/fr/masks/body/',
-    '<html><head><meta name="robots" content="noindex"/></head><body>404</body></html>',
+    '<html lang="fr"><head><meta name="robots" content="noindex"/></head><body>404</body></html>',
   );
   const englishAlias = writeRoute(
     outDir,
     '/en/masks/hair/',
-    '<html><head><meta name="robots" content="index, follow"/></head><body>Alias</body></html>',
+    '<html lang="en"><head><meta name="robots" content="index, follow"/></head><body>Alias</body></html>',
   );
   const unrelated = writeRoute(
     outDir,
     '/blog/noindex-article/',
-    '<html><head><meta name="robots" content="noindex"/></head><body>Draft</body></html>',
+    '<html lang="en"><head><meta name="robots" content="noindex"/></head><body>Draft</body></html>',
   );
   writeSitemap(outDir, ['/masks/', '/masks/hair/', '/fr/masks/cheveux/']);
 
@@ -97,8 +97,8 @@ test('keeps sitemap-listed exports and removes every generated unpublished route
 
 test('supports a build with zero published mask category routes', (t) => {
   const outDir = makeOutput(t);
-  writeRoute(outDir, '/masks/aging/', '<html><head><meta name="robots" content="noindex"/></head></html>');
-  writeRoute(outDir, '/fr/masks/aging/', '<html><head><meta name="robots" content="noindex"/></head></html>');
+  writeRoute(outDir, '/masks/aging/', '<html lang="en"><head><meta name="robots" content="noindex"/></head></html>');
+  writeRoute(outDir, '/fr/masks/aging/', '<html lang="fr"><head><meta name="robots" content="noindex"/></head></html>');
   writeSitemap(outDir, ['/masks/', '/fr/masks/']);
 
   assert.deepEqual(pruneUnpublishedMaskRoutes(outDir), ['/fr/masks/aging/', '/masks/aging/']);
@@ -112,7 +112,7 @@ test('fails before pruning when a sitemap-listed route is missing or noindex', (
   const unpublished = writeRoute(
     outDir,
     '/masks/beard/',
-    '<html><head><meta name="robots" content="noindex"/></head><body>404</body></html>',
+    '<html lang="en"><head><meta name="robots" content="noindex"/></head><body>404</body></html>',
   );
   writeSitemap(outDir, ['/masks/hair/']);
 
@@ -125,7 +125,7 @@ test('fails before pruning when a sitemap-listed route is missing or noindex', (
   writeRoute(
     outDir,
     '/masks/hair/',
-    '<html><head><meta content="noindex, nofollow" name="robots"/></head><body>404</body></html>',
+    '<html lang="en"><head><meta content="noindex, nofollow" name="robots"/></head><body>404</body></html>',
   );
   assert.throws(
     () => pruneUnpublishedMaskRoutes(outDir),

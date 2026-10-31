@@ -13,13 +13,13 @@ const {
 } = require('./apply-csp');
 
 test('hashes each distinct inline script and injects CSP before page content', () => {
-  const html = '<html><head><script>alert(1)</script></head><body><script>alert(1)</script><script>ok()</script></body></html>';
+  const html = '<html lang="en"><head><script>alert(1)</script></head><body><script>alert(1)</script><script>ok()</script></body></html>';
   const hashes = scriptHashes(html);
   const result = applyCsp(html, 'https://api.example.com');
 
   assert.equal(hashes.length, 2);
   assert.equal(result.hashCount, 2);
-  assert.match(result.html, /^<html><head><meta http-equiv="Content-Security-Policy"/);
+  assert.match(result.html, /^<html lang="en"><head><meta http-equiv="Content-Security-Policy"/);
   for (const hash of hashes) {
     assert.equal(result.html.includes(hash), true);
   }
@@ -60,7 +60,7 @@ test('processes exported HTML across workers and reports aggregate progress', as
     const filePath = path.join(tempDir, `page-${index}.html`);
     fs.writeFileSync(
       filePath,
-      `<html><head><script>shared()</script></head><body><script>page(${index})</script></body></html>`,
+      `<html lang="en"><head><script>shared()</script></head><body><script>page(${index})</script></body></html>`,
     );
     return filePath;
   });
