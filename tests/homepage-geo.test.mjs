@@ -76,19 +76,19 @@ test('gallery is loaded dynamically with the compact DTO mapper', async () => {
     readProjectFile('src/types/gallery.ts'),
   ]);
 
-  assert.match(homeDataSource, /const initialGallery: HomepageGalleryItem\[\] = \[\]/);
+  assert.match(homeDataSource, /const initialGallery: HomepageGalleryItem\[] = \[]/);
   assert.doesNotMatch(homeDataSource, /\/public-gallery\?/);
   assert.match(gallerySource, /data\.map\(toHomepageGalleryItem\)/);
   assert.match(gallerySource, /platform: 'web'/);
   assert.match(gallerySource, /item\.promptSummary/);
   assert.doesNotMatch(gallerySource, /item\.prompt\b/);
-  assert.match(gallerySource, /src=\{item\.publicUrl\}/);
-  assert.match(gallerySource, /linkHref=\{buildGalleryItemAppHref\(item, locale\)\}/);
-  assert.match(gallerySource, /\?lang=\$\{encodeURIComponent\(locale\)\}/);
+  assert.match(gallerySource, /src=\{item\.publicUrl}/);
+  assert.match(gallerySource, /linkHref=\{buildGalleryItemAppHref\(item, locale\)}/);
+  assert.match(gallerySource, /\?lang=\$\{encodeURIComponent\(locale\)}/);
   assert.match(gallerySource, /useState<GallerySort>\(preview \? 'random' : 'popular'\)/);
-  assert.match(gallerySource, /alt=\{`\$\{t\('altPrefix'\)\}: \$\{item\.promptSummary\}`\}/);
-  assert.match(gallerySource, /ariaLabel=\{`\$\{t\('captionPrefix'\)\}: \$\{item\.promptSummary\}`\}/);
-  assert.match(gallerySource, /<figcaption[^>]*>[\s\S]*\{item\.promptSummary\}[\s\S]*<\/figcaption>/);
+  assert.match(gallerySource, /alt=\{`\$\{t\('altPrefix'\)}: \$\{item\.promptSummary}`}/);
+  assert.match(gallerySource, /ariaLabel=\{`\$\{t\('captionPrefix'\)}: \$\{item\.promptSummary}`}/);
+  assert.match(gallerySource, /<figcaption[^>]*>[\s\S]*\{item\.promptSummary}[\s\S]*<\/figcaption>/);
   assert.match(galleryTypesSource, /interface HomepageGalleryItem/);
   assert.match(galleryTypesSource, /promptSummary:\s*string/);
   assert.doesNotMatch(galleryTypesSource, /^\s*prompt:\s*string/m);
@@ -102,7 +102,7 @@ test('public photo routes use the static client shell and remain noindex', async
     readProjectFile('public/_routes.json'),
   ]);
 
-  assert.match(localPageSource, /new URLSearchParams\(\{ id, platform: 'web' \}\)/);
+  assert.match(localPageSource, /new URLSearchParams\(\{ id, platform: 'web' }\)/);
   assert.match(localLayoutSource, /index: false/);
   assert.match(localLayoutSource, /follow: true/);
   assert.match(redirects, /^\/photo\/\* \/photo\/ 200$/m);
@@ -166,10 +166,10 @@ test('homepage SEO copy and focused use-case links stay wired', async () => {
     assert.match(homeUseCasesSource, new RegExp(`cards\\.${key}`));
     assert.match(homeUseCasesSource, new RegExp(`slug: '${slug}'`));
   }
-  assert.match(homeUseCasesSource, /localePath\(locale, `\/use-cases\/\$\{it\.slug\}\/`\)/);
+  assert.match(homeUseCasesSource, /localePath\(locale, `\/use-cases\/\$\{it\.slug}\/`\)/);
   assert.match(homeUseCasesSource, /overflow-x-auto/);
   assert.match(homeUseCasesSource, /snap-x snap-mandatory/);
-  assert.match(homeUseCasesSource, /w-\[78vw\][^"\n]*snap-center/);
+  assert.match(homeUseCasesSource, /w-\[78vw][^"\n]*snap-center/);
   assert.match(homeUseCasesSource, /lg:grid[^"\n]*lg:grid-cols-3/);
 
   for (const locale of ['en', 'es', 'fr', 'de', 'ru', 'ja', 'zh', 'ar', 'hi']) {
@@ -193,16 +193,16 @@ test('homepage collections scroll on mobile while the full public gallery matche
 
   assert.match(blogSource, /overflow-x-auto/);
   assert.match(blogSource, /snap-x snap-mandatory/);
-  assert.match(blogSource, /w-\[78vw\][^"\n]*snap-center/);
+  assert.match(blogSource, /w-\[78vw][^"\n]*snap-center/);
   assert.match(blogSource, /lg:grid[^"\n]*lg:grid-cols-3/);
   assert.match(blogSource, /takeFirst\(sortByMostRecent\(initialPosts\), HOME_BLOG_COUNT\)/);
   assert.doesNotMatch(blogSource, /index >= 3|hidden md:block|columns-[123]/);
 
   assert.match(gallerySource, /overflow-x-auto/);
   assert.match(gallerySource, /snap-x snap-mandatory/);
-  assert.match(gallerySource, /w-\[68vw\][^"\n]*shrink-0 snap-center[^"\n]*lg:w-auto/);
+  assert.match(gallerySource, /w-\[68vw][^"\n]*shrink-0 snap-center[^"\n]*lg:w-auto/);
   assert.match(gallerySource, /lg:grid[^"\n]*lg:grid-cols-5/);
-  assert.match(gallerySource, /grid grid-cols-2 gap-px min-\[830px\]:grid-cols-3 min-\[1100px\]:grid-cols-4/);
+  assert.match(gallerySource, /grid grid-cols-2 gap-px min-\[830px]:grid-cols-3 min-\[1100px]:grid-cols-4/);
   assert.match(gallerySource, /new IntersectionObserver/);
   assert.match(gallerySource, /rounded-full border border-gray-300/);
   assert.match(gallerySectionSource, /aria-label="Breadcrumb"/);
@@ -225,7 +225,7 @@ test('homepage collections keep their intentional item counts', async () => {
   assert.equal((featuredUseCases.match(/slug: '/g) || []).length, 6);
   assert.match(blog, /const HOME_BLOG_COUNT = 6/);
   const featuredPresetIds = presets
-    .match(/const FEATURED_PRESET_IDS = \[([\s\S]*?)\] as const;/)?.[1]
+    .match(/const FEATURED_PRESET_IDS = \[([\s\S]*?)] as const;/)?.[1]
     .match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g) || [];
   assert.equal(featuredPresetIds.length, 6);
   assert.equal(new Set(featuredPresetIds).size, 6);
@@ -254,7 +254,7 @@ test('homepage collections keep their intentional item counts', async () => {
   }
   assert.match(
     demandPriorityMasks,
-    /\{ categorySlug: 'outfit-men', maskSlug: 'cardigan' \},\s*\] as const;/,
+    /\{ categorySlug: 'outfit-men', maskSlug: 'cardigan' },\s*] as const;/,
   );
   assert.match(masks, /item\.slug === featured\.maskSlug/);
   assert.match(masks, /\.slice\(0, DEMAND_PRIORITY_MASKS\.length\)/);

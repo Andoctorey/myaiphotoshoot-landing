@@ -15,7 +15,7 @@ const require = createRequire(import.meta.url);
 const localeCodes = ['en', 'zh', 'hi', 'es', 'de', 'ja', 'ru', 'fr', 'ar'];
 const englishShareTitle = 'One AI Photoshoot. Every Version of You.';
 const englishShareDescription = 'Create realistic headshots, profile pictures, portraits, avatars, and new looks from your photo with My AI Photoshoot.';
-const commercialShareClaim = /(?:[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन)/iu;
+const commercialShareClaim = /[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन/iu;
 
 async function readProjectFile(relativePath) {
   return readFile(path.join(projectRoot, relativePath), { encoding: 'utf8' });
@@ -492,12 +492,12 @@ test('web app buttons outside pricing retain their existing black backgrounds', 
     readProjectFile('src/app/[locale]/use-cases/[slug]/UseCasePageClient.tsx'),
   ]);
 
-  assert.match(platformButtons, /href=\{attributedWebAppUrl\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.match(maskHighlights, /href=\{buildMaskAppUrl\(selectedMask\.id, gender\)\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.match(maskLanding, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.match(masksCatalog, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.match(masksBrowser, /href=\{AI_MASKS_APP_URL\}[\s\S]{0,300}className="[^"]*bg-black/);
-  assert.equal((useCase.match(/href=\{attributedWebAppUrl\}[\s\S]{0,1000}?\bbg-black\b/g) || []).length, 4);
+  assert.match(platformButtons, /href=\{attributedWebAppUrl}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(maskHighlights, /href=\{buildMaskAppUrl\(selectedMask\.id, gender\)}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(maskLanding, /href=\{AI_MASKS_APP_URL}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(masksCatalog, /href=\{AI_MASKS_APP_URL}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.match(masksBrowser, /href=\{AI_MASKS_APP_URL}[\s\S]{0,300}className="[^"]*bg-black/);
+  assert.equal((useCase.match(/href=\{attributedWebAppUrl}[\s\S]{0,1000}?\bbg-black\b/g) || []).length, 4);
 });
 
 test('footer app button stays black while its install link is pending and ready', async () => {
@@ -606,7 +606,7 @@ test('sitemap content entries prefer update timestamps with creation fallbacks',
   );
   assert.match(
     sitemapSource,
-    /for \(const item of useCases\) \{[\s\S]{0,300}const lastModified = item\.updated_at \|\| item\.created_at;[\s\S]{0,500}\.\.\.\(lastModified \? \{ lastModified: new Date\(lastModified\) \} : \{\}\),/,
+    /for \(const item of useCases\) \{[\s\S]{0,300}const lastModified = item\.updated_at \|\| item\.created_at;[\s\S]{0,500}\.\.\.\(lastModified \? \{ lastModified: new Date\(lastModified\) } : \{}\),/,
   );
 });
 
@@ -689,7 +689,7 @@ test('navigation, footer, sitemap, and llms.txt point directly to Studio', async
   assert.match(sitemap, /'\/studio\/'/);
   assert.match(
     llmsText,
-    /^- \[Studio – Custom AI Photo Creation\]\(https:\/\/myaiphotoshoot\.com\/studio\/\)$/m,
+    /^- \[Studio – Custom AI Photo Creation]\(https:\/\/myaiphotoshoot\.com\/studio\/\)$/m,
   );
 
   for (const [name, source] of Object.entries({ navigation, footer, sitemap, llmsText })) {
@@ -715,9 +715,9 @@ test('preset infinite loading keeps a crawlable next-page fallback', async () =>
   ]);
 
   assert.match(presetsGrid, /aiPresetsPagePath\(page \+ 1\)/);
-  assert.match(presetsGrid, /href=\{nextPageHref\}/);
+  assert.match(presetsGrid, /href=\{nextPageHref}/);
   assert.match(presetsGrid, /rel="next"/);
-  assert.match(defaultPaginatedRoute, /<NextIntlClientProvider locale=\{defaultLocale\} messages=\{messages\}>/);
+  assert.match(defaultPaginatedRoute, /<NextIntlClientProvider locale=\{defaultLocale} messages=\{messages}>/);
 });
 
 test('preset sorting and pagination use the static deployment catalog', async () => {
@@ -731,7 +731,7 @@ test('preset sorting and pagination use the static deployment catalog', async ()
   assert.match(presetsGrid, /sortAiPresetCatalog\(catalog, sort\)/);
   assert.doesNotMatch(presetsGrid, /postPublicSupabaseRpc|list_ai_presets/);
   assert.match(catalogRoute, /fetchAiPresetCatalog\(locale\)/);
-  assert.match(catalogRoute, /locales\.map\(\(locale\) => \(\{ locale \}\)\)/);
+  assert.match(catalogRoute, /locales\.map\(\(locale\) => \(\{ locale }\)\)/);
   assert.match(headers, /^\/preset-catalog\/\*[\s\S]*?X-Robots-Tag: noindex, follow/m);
 });
 
@@ -819,13 +819,13 @@ test('homepage preset cards open detail pages while detail CTAs open the app in 
 
   assert.ok(presetCard, 'Missing localized homepage preset detail link');
   assert.doesNotMatch(presetCard, /\btarget=/);
-  assert.match(presetCard, /aria-label=\{preset\.name\}/);
-  assert.doesNotMatch(homePresets, /href=\{buildPresetAppUrl\(preset\.slug\)\}/);
+  assert.match(presetCard, /aria-label=\{preset\.name}/);
+  assert.doesNotMatch(homePresets, /href=\{buildPresetAppUrl\(preset\.slug\)}/);
   assert.equal(presetLinks.length, 3, 'Expected all three preset detail app links');
   for (const presetLink of presetLinks) {
     assert.doesNotMatch(presetLink, /\btarget=/);
   }
-  assert.match(homePresets, /href=\{localePath\(locale, '\/presets\/'\)\}/);
+  assert.match(homePresets, /href=\{localePath\(locale, '\/presets\/'\)}/);
 });
 
 test('preset detail pages normally receive content and pricing from one RPC and validate route identity', async () => {
@@ -1183,7 +1183,7 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
     'useCase.fallbackDescription',
     'useCase.cta.primary',
   ];
-  const staleClaim = /(?:no monthly plan|no subscription required|\$0\.(?:03|09|19|29)|train(?:ing)? (?:once )?from \$)/i;
+  const staleClaim = /no monthly plan|no subscription required|\$0\.(?:03|09|19|29)|train(?:ing)? (?:once )?from \$/i;
 
   for (const locale of localeCodes) {
     const messages = JSON.parse(await readProjectFile(`messages/${locale}/index.json`));
@@ -1194,7 +1194,7 @@ test('active copy and SEO do not revive the retired cash-per-image story', async
   }
 
   const pricingUi = await readProjectFile('src/components/features/PricingPlans.tsx');
-  assert.match(pricingUi, /fetch\(`\/pricing\?\$\{params\.toString\(\)\}`/);
+  assert.match(pricingUi, /fetch\(`\/pricing\?\$\{params\.toString\(\)}`/);
   assert.match(pricingUi, /cache: 'no-store'/);
 
   const structuredDataSources = await Promise.all([

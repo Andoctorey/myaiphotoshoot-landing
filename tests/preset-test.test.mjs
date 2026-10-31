@@ -294,7 +294,7 @@ test('preset pages use middleware while SEO identity stays in the static page', 
   assert.match(page, /<PresetExperimentImage\b/);
   assert.doesNotMatch(page, /PresetExperimentPrice/);
   assert.match(page, /<noscript>\s*<style>/);
-  assert.match(page, /data-preset-test-id=\{preset.id\}/);
+  assert.match(page, /data-preset-test-id=\{preset.id}/);
 });
 
 test('a preset page gets a first-paint preview in one backend call without changing canonical metadata', async (t) => {

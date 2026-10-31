@@ -15,8 +15,8 @@ const STALE_PRICE_CLAIM_PATTERN = new RegExp(
   String.raw`(?:\b(?:from|starting(?:\s+at)?|starts?\s+at|for|only|costs?|priced?\s+at)\s*)?${STALE_DOLLAR_PRICE_PATTERN_SOURCE}(?:\s*(?:each|per\s+(?:photo|image|model|generation)))?`,
   'gi'
 );
-const NO_SUBSCRIPTION_REQUIRED_PATTERN = /(?:\b(?:with\s+)?no subscription required\b|\bsin suscripci[oó]n(?: obligatoria| requerida)?\b|\bkein(?:e|es)? abonnement erforderlich\b|\baucun abonnement (?:n['’]est )?requis\b|\bподписка не требуется\b|无需订阅|サブスクリプション不要|सदस्यता की आवश्यकता नहीं|لا يلزم اشتراك)/giu;
-const SOCIAL_COMMERCIAL_CLAIM_PATTERN = /(?:[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन)/iu;
+const NO_SUBSCRIPTION_REQUIRED_PATTERN = /\b(?:with\s+)?no subscription required\b|\bsin suscripci[oó]n(?: obligatoria| requerida)?\b|\bkein(?:e|es)? abonnement erforderlich\b|\baucun abonnement (?:n['’]est )?requis\b|\bподписка не требуется\b|无需订阅|サブスクリプション不要|सदस्यता की आवश्यकता नहीं|لا يلزم اشتراك/giu;
+const SOCIAL_COMMERCIAL_CLAIM_PATTERN = /[$€£¥₹₽]\s*\d|\d+\s*cr\b|\b(?:credits?|pro|max|subscriptions?|subs?|pay[\s-]*as[\s-]*you[\s-]*go|plans?|pricing|prices?|resolution|[1248]k)\b|cr[eé]dit(?:s|os)?|kredit(?:e|en|s)?|abonnement|suscripci[oó]n|forfait|tarif|кредит|подписк|тариф|积分|订阅|套餐|クレジット|サブスクリプション|プラン|क्रेडिट|सदस्यता|प्लान|أرصدة|رصيد|اشتراك|خطة|الدقة|auflösung|r[ée]solution|resoluci[oó]n|разрешени|分辨率|画质|解像度|रिज़ॉल्यूशन/iu;
 const PRICE_BASED_TITLE_SUFFIX_PATTERN = new RegExp(
   String.raw`\s*(?:[|–—-]\s*)?(?:(?:from|starting(?:\s+at)?|starts?\s+at|only)\s*)?${STALE_DOLLAR_PRICE_PATTERN_SOURCE}(?:\s*(?:each|per\s+(?:photo|image|model|generation)))?(?:\s*[|–—-]\s*My AI Photoshoot)?\s*$`,
   'i'

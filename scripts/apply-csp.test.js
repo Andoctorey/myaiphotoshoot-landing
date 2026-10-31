@@ -51,7 +51,7 @@ test('rejects non-HTTPS API URLs', () => {
 test('static responses prevent post-build script injection', () => {
   const headers = fs.readFileSync(path.join(__dirname, '../public/_headers'), 'utf8');
 
-  assert.match(headers, /\/\*\n  Cache-Control: [^\n]*\bno-transform\b/);
+  assert.match(headers, /\/\*\n {2}Cache-Control: [^\n]*\bno-transform\b/);
 });
 
 test('processes exported HTML across workers and reports aggregate progress', async () => {

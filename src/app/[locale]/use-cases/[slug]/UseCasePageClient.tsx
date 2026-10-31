@@ -23,8 +23,8 @@ interface Props {
   initialUseCase?: UseCase;
 }
 
-const RETIRED_PRICE_PATTERN = /(?:\$(?:2\.99|4\.99|5\.99|9\.99|0\.03|0\.09|0\.19|0\.29)(?!\d)|(?:2,99|4,99|5,99|9,99|0,03|0,09|0,19|0,29)\s*\$)/i;
-const RETIRED_NO_SUBSCRIPTION_PATTERN = /(?:\b(?:with\s+)?no subscription required\b|\bsin suscripci[oó]n(?: obligatoria| requerida)?\b|\bkein(?:e|es)? abonnement erforderlich\b|\baucun abonnement (?:n['’]est )?requis\b|\bподписка не требуется\b|无需订阅|サブスクリプション不要|सदस्यता की आवश्यकता नहीं|لا يلزم اشتراك)/giu;
+const RETIRED_PRICE_PATTERN = /\$(?:2\.99|4\.99|5\.99|9\.99|0\.03|0\.09|0\.19|0\.29)(?!\d)|(?:2,99|4,99|5,99|9,99|0,03|0,09|0,19|0,29)\s*\$/i;
+const RETIRED_NO_SUBSCRIPTION_PATTERN = /\b(?:with\s+)?no subscription required\b|\bsin suscripci[oó]n(?: obligatoria| requerida)?\b|\bkein(?:e|es)? abonnement erforderlich\b|\baucun abonnement (?:n['’]est )?requis\b|\bподписка не требуется\b|无需订阅|サブスクリプション不要|सदस्यता की आवश्यकता नहीं|لا يلزم اشتراك/giu;
 
 function cleanUseCaseCopy(value: string): string {
   const sentences = value

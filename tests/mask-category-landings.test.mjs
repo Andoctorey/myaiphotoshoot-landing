@@ -29,7 +29,7 @@ test('mask category routes are published-only static exports that fail closed on
     assert.match(source, /if \(!categoryExists \|\| !categoryHasMasks\) notFound\(\)/);
     assert.doesNotMatch(source, /export const revalidate = 0/);
   }
-  assert.match(englishRoute, /catalog\.categories\.map\(\(category\) => \(\{ slug: category\.slug \}\)\)/);
+  assert.match(englishRoute, /catalog\.categories\.map\(\(category\) => \(\{ slug: category\.slug }\)\)/);
   assert.match(localizedRoute, /locales\.flatMap\(\(locale\) => catalog\.categories\.map/);
 });
 
@@ -41,11 +41,11 @@ test('mask category metadata and sitemap use only published localized siblings',
 
   assert.match(landingLib, /buildPublishedMaskCategoryLanguages/);
   assert.match(landingLib, /publishedMaskCategorySiblings/);
-  assert.match(landingLib, /languages\['x-default'\]/);
+  assert.match(landingLib, /languages\['x-default']/);
   assert.match(landingLib, /body\.code === 'PGRST202'/);
   assert.match(landingLib, /response\.status === 404/);
   assert.match(sitemap, /maskCategoryLandings\.map/);
-  assert.match(sitemap, /landing\.locale, `\/masks\/\$\{landing\.slug\}\//);
+  assert.match(sitemap, /landing\.locale, `\/masks\/\$\{landing\.slug}\//);
   assert.match(sitemap, /buildPublishedMaskCategoryLanguages\(maskCategoryLandings, landing\.categoryId\)/);
   assert.doesNotMatch(sitemap, /for \(const locale of locales\)[\s\S]{0,200}maskCategoryEntries/);
 });
@@ -64,7 +64,7 @@ test('visible category content matches FAQ, breadcrumb, collection, and item-lis
   assert.match(component, /landing\.faqs\.map/);
   assert.match(jsonLd, /'@type': 'CollectionPage'/);
   assert.match(jsonLd, /'@type': 'ItemList'/);
-  assert.match(jsonLd, /'@id': `\$\{pageUrl\}#mask-\$\{mask\.slug\}`/);
+  assert.match(jsonLd, /'@id': `\$\{pageUrl}#mask-\$\{mask\.slug}`/);
   assert.match(jsonLd, /'@type': 'BreadcrumbList'/);
   assert.match(jsonLd, /'@type': 'FAQPage'/);
   assert.doesNotMatch(jsonLd, /HowTo/);
@@ -76,14 +76,14 @@ test('mask index links every published guide and labels outfit guides by gender'
     readProjectFile('src/components/masks/AiMaskCategoryLandingPage.tsx'),
   ]);
   assert.match(browser, /publishedCategories = useMemo/);
-  assert.match(browser, /OUTFIT_CATEGORY_SLUGS = new Set\(\['outfit', 'outfit-men'\]\)/);
+  assert.match(browser, /OUTFIT_CATEGORY_SLUGS = new Set\(\['outfit', 'outfit-men']\)/);
   assert.match(browser, /function categoryGuideName/);
   assert.match(browser, /category\.audienceGender === 'female'.*labels\.female/);
   assert.match(browser, /category\.audienceGender === 'male'.*labels\.male/);
   assert.match(browser, /publishedCategories\.map/);
   assert.match(browser, /const guideName = categoryGuideName\(category, labels\)/);
-  assert.match(browser, /href=\{localePath\(locale, `\/masks\/\$\{category\.slug\}\/`\)\}/);
-  assert.doesNotMatch(categoryPage, /publishedCategoryIds=\{\[landing\.categoryId\]\}/);
+  assert.match(browser, /href=\{localePath\(locale, `\/masks\/\$\{category\.slug}\/`\)}/);
+  assert.doesNotMatch(categoryPage, /publishedCategoryIds=\{\[landing\.categoryId]}/);
   assert.doesNotMatch(categoryPage, /categoryGuideName/);
 });
 
@@ -98,7 +98,7 @@ test('mask cards and CTAs open the web app in a new tab', async () => {
   ]);
 
   assert.match(appLinks, /function buildMaskAppUrl\(maskId: string, gender\?: MaskLinkGender\)/);
-  assert.match(appLinks, /`\$\{AI_MASKS_APP_URL\}\/\$\{encodeURIComponent\(maskId\)\}\$\{suffix\}`/);
+  assert.match(appLinks, /`\$\{AI_MASKS_APP_URL}\/\$\{encodeURIComponent\(maskId\)}\$\{suffix}`/);
   assert.match(catalog, /url: buildMaskAppUrl\(mask\.id\)/);
   assertNewTabAnchor(browser, 'href={buildMaskAppUrl(mask.id, gender)}');
   assertNewTabAnchor(highlights, 'href={buildMaskAppUrl(selectedMask.id, gender)}');
